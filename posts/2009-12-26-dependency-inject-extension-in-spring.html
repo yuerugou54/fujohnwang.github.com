@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+  <head>
+	  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	  <title>扩展Spring的依赖注入行为两例</title>
+	  <meta name="author" content="FuqiangWang">
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="shortcut icon" href="favicon.ico">
+            <style type="text/css">
+    table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+      margin: 0; padding: 0; vertical-align: baseline; border: none; }
+    table.sourceCode { width: 100%; line-height: 100%; }
+    td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+    td.sourceCode { padding-left: 5px; }
+    code > span.kw { color: #007020; font-weight: bold; }
+    code > span.dt { color: #902000; }
+    code > span.dv { color: #40a070; }
+    code > span.bn { color: #40a070; }
+    code > span.fl { color: #40a070; }
+    code > span.ch { color: #4070a0; }
+    code > span.st { color: #4070a0; }
+    code > span.co { color: #60a0b0; font-style: italic; }
+    code > span.ot { color: #007020; }
+    code > span.al { color: #ff0000; font-weight: bold; }
+    code > span.fu { color: #06287e; }
+    code > span.er { color: #ff0000; font-weight: bold; }
+    </style>
+                
+    <link href='/font/Syncopate/stylesheet.css' rel='stylesheet' type='text/css'>
+    <link href='/font/News_Cycle/stylesheet.css' rel='stylesheet' type='text/css'>
+
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/bootstrap-theme.min.css" rel="stylesheet">
+    <link href="/css/afoo.me.css" rel="stylesheet">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-3 sidebar">
+            <a href="/">
+                <img src="/images/profile-icon.png" class="img-circle img-responsive" width="160px" style="margin: 0 auto;" />
+                <h2 class="text-center">AFOO.ME</h2>
+            </a>
+            <p class="text-center lead slogan"><a href="/slogan.html">lollapalooza &amp; positioning</a></p>
+
+            <ul class="nav nav-pills nav-stacked">
+              <li><a href="/favorite.html" class="text-center"><i class="icon-star-empty"></i> Favorite</a></li>
+              <li><a href="/dashboard.html" class="text-center"><i class="icon-fullscreen"></i> Dashboard</a></li>
+              <li><a href="/" class="text-center"><i class="icon-folder-close-alt"></i> Archives</a></li>
+              <li><a href="/whoami.html" class="text-center"><i class="icon-user-md"></i> About</a></li>
+            </ul>
+
+        </div>
+        <div class="col-md-9 col-md-offset-3 main">
+            <div class="row">
+              <div class="container-fluid">
+                
+                <div class="row">
+                                <div id="header">
+                <p class="lead">
+                <h1 class="title">扩展Spring的依赖注入行为两例&nbsp;&nbsp;
+                <small>
+                                </small>
+                </h1>
+                </p>
+                </div>
+                                <div>
+
+                <hr>
+
+                                <div id="TOC">
+                <ul>
+                <li><a href="#注入以enum作为key的map依赖"><span class="toc-section-number">1</span> 注入以Enum作为Key的Map依赖</a><ul>
+                <li><a href="#自定义factorybean"><span class="toc-section-number">1.1</span> 自定义FactoryBean</a></li>
+                <li><a href="#自定义beanpostprocessort"><span class="toc-section-number">1.2</span> 自定义BeanPostProcessort</a></li>
+                <li><a href="#自定义propertyeditor"><span class="toc-section-number">1.3</span> 自定义PropertyEditor?</a></li>
+                </ul></li>
+                <li><a href="#注入容器中某一类型所有依赖对象"><span class="toc-section-number">2</span> 注入容器中某一类型所有依赖对象</a><ul>
+                <li><a href="#自定义factorybean-1"><span class="toc-section-number">2.1</span> 自定义FactoryBean</a></li>
+                <li><a href="#自定义beanpostprocessor"><span class="toc-section-number">2.2</span> 自定义BeanPostProcessor</a></li>
+                </ul></li>
+                <li><a href="#结束语"><span class="toc-section-number">3</span> 结束语</a></li>
+                </ul>
+                </div>
+                                <p>前阵子“袜子 ”电话里随便聊了点儿有关在Spring里面如何扩展某些行为的话题, 其实, 这些话题本身没有什么技术含量, 完全是根据使用场景来权衡罢了, “袜子 ”心里肯定也已经有数了,不过,感觉就这两个话题来说说也挺好的, 因为跟阿九这阵子的路子有些吻合, 讲简单的东西,但一定要把简单的东西讲清楚, 讲架构当然更能吸引眼球,但我一直认为“The problem is not the design, it's the implementation. ”, 所以, 我还是愿意说些很简单,很基本的东西.</p>
+<h1 id="注入以enum作为key的map依赖"><span class="header-section-number">1</span> 注入以Enum作为Key的Map依赖</h1>
+<p>在现有Spring框架的默认支持下,我们可以注入单独声明的Enum类型的依赖关系, 例如:</p>
+<pre class="sourceCode java"><code class="sourceCode java"><span class="kw">public</span> <span class="kw">enum</span> FixtureEnum {  
+    FIXTURE_ONE, FIXTURE_TWO;  
+}  
+              
+<span class="kw">public</span> <span class="kw">class</span> Sample{  
+    <span class="kw">private</span> FixtureEnum fOne;  
+    <span class="kw">...  </span>
+}  </code></pre>
+<pre class="sourceCode xml"><code class="sourceCode xml"><span class="kw">&lt;bean</span><span class="ot"> id=</span><span class="st">&quot;target&quot;</span><span class="ot"> class=</span><span class="st">&quot;...Sample&quot;</span><span class="kw">&gt;</span>  
+    <span class="kw">&lt;property</span><span class="ot"> name=</span><span class="st">&quot;fOne&quot;</span><span class="ot"> value=</span><span class="st">&quot;FIXTURE_ONE&quot;</span><span class="kw">/&gt;</span>  
+<span class="kw">&lt;/bean&gt;</span> </code></pre>
+<p>我们也可以注入以String或者复杂对象类型作为key的Map:</p>
+<pre class="sourceCode xml"><code class="sourceCode xml"><span class="kw">&lt;bean</span><span class="ot"> id=</span><span class="st">&quot;target&quot;</span><span class="ot"> class=</span><span class="st">&quot;...&quot;</span><span class="kw">&gt;</span>  
+    <span class="kw">&lt;property</span><span class="ot"> name=</span><span class="st">&quot;mapping&quot;</span><span class="kw">&gt;</span>  
+        <span class="kw">&lt;map&gt;</span>  
+            <span class="kw">&lt;entry</span><span class="ot"> key-ref=</span><span class="st">&quot;complexObject&quot;</span><span class="ot"> value=</span><span class="st">&quot;anything&quot;</span><span class="kw">/&gt;</span>  
+            <span class="kw">&lt;entry</span><span class="ot"> key=</span><span class="st">&quot;stringvalue&quot;</span><span class="ot"> value-ref=</span><span class="st">&quot;...&quot;</span><span class="kw">/&gt;</span>  
+        <span class="kw">&lt;/map&gt;</span>  
+    <span class="kw">&lt;/property&gt;</span>  
+<span class="kw">&lt;/bean&gt;</span>  
+  
+<span class="kw">&lt;bean</span><span class="ot"> id=</span><span class="st">&quot;complexObject&quot;</span><span class="ot"> class=</span><span class="st">&quot;...&quot;</span><span class="kw">&gt;</span>  
+<span class="kw">&lt;/bean&gt;</span> </code></pre>
+<p>可是,把这两个结合起来, 我们要注入以Enum作为Key的Map的话,可能默认的支持就帮不了什么大忙了, 如果我们声明一个Map依赖对象, 但它的Key是Enum类型的话:</p>
+<pre class="sourceCode java"><code class="sourceCode java"><span class="kw">public</span> <span class="kw">class</span> InjectionTarget {  
+      
+    <span class="fu">@EnumKeyType</span>(FixtureEnum.<span class="fu">class</span>)  
+    <span class="kw">private</span> Map&lt;FixtureEnum,String&gt; mapping;  
+  
+    <span class="kw">... </span><span class="co">// setters or getters and other things  </span>
+}  </code></pre>
+<p>如果单单简单的定义依赖注入关系如下:</p>
+<pre class="sourceCode xml"><code class="sourceCode xml"><span class="kw">&lt;bean</span><span class="ot"> id=</span><span class="st">&quot;target&quot;</span><span class="ot"> class=</span><span class="st">&quot;...InjectionTarget&quot;</span><span class="kw">&gt;</span>  
+    <span class="kw">&lt;property</span><span class="ot"> name=</span><span class="st">&quot;mapping&quot;</span><span class="kw">&gt;</span>  
+        <span class="kw">&lt;map&gt;</span>  
+            <span class="kw">&lt;entry</span><span class="ot"> key=</span><span class="st">&quot;FIXTURE_TWO&quot;</span><span class="ot"> value=</span><span class="st">&quot;FIXTURE TWO&quot;</span><span class="kw">/&gt;</span>  
+        <span class="kw">&lt;/map&gt;</span>  
+    <span class="kw">&lt;/property&gt;</span>  
+<span class="kw">&lt;/bean&gt;</span>  </code></pre>
+<p>恐怕最终得到的不是一个Map<FixtureEnum,String>类型的Map,而是一个Map<String,String>类型的Map, 小沈阳语:为什么那?</p>
+<p>Java5的Generic是Erase-Based, 这就意味着,运行期间无法获得Map的Key相关的Generic类型信息, 那么, Spring在做注入的时候,也就没法知道应该将String形式表达的依赖对象转换成什么类型, 只好保持原样啦, 所以,以通常形式表达的map注入,最终得到的就成了一个Map<String,..>类型的Map,而不是Map<Enum,..>类型的Map.那谁可能说了,那怎么其它复杂对象作为Key怎么没问题那? 原因很简单嘛, 你直接指定了对象的引用嘛,不服,你把对象类型直接写上试试?</p>
+<p>那怎么解决这个问题那? 显然我们无法在运行期间通过反射之类的途径来获得Map的Key类型了,那么,我们就明确指定呗,如何明确指定那?可以考虑几种方式...</p>
+<h2 id="自定义factorybean"><span class="header-section-number">1.1</span> 自定义FactoryBean</h2>
+<p>我们可以自定义一个FactoryBean来“生产 ”以Enum类型作为Key的Map,通过该自定义FactoryBean的某个Property类指定Key的Enum类型是什么, 就可以在“生产 ”过程中生成或者转换出相应的Map实例, Spring默认提供了一个MapFactoryBean,我们可以在这个父类的基础上做进一步的工作,说白了,就是直接根据明确指定的Enum类型将已经注入的Key值做一下转换, 之后,Map的Key就从String变成了指定的Enum类型, 一个实例代码可以实现如下:</p>
+<pre class="sourceCode java"><code class="sourceCode java"><span class="kw">public</span> <span class="kw">class</span> EnumKeyMapFactoryBean <span class="kw">extends</span> MapFactoryBean {  
+      
+    <span class="kw">private</span> Class&lt;? <span class="kw">extends</span> Enum&lt;?&gt;&gt; enumType;  
+    <span class="kw">private</span> EnumKeyConversionSupport conversionSupport = <span class="kw">new</span> <span class="fu">EnumKeyConversionSupport</span>();  
+    <span class="fu">@Override</span>  
+    <span class="kw">protected</span> Object <span class="fu">createInstance</span>() {  
+        <span class="kw">return</span> conversionSupport.<span class="fu">convert</span>(<span class="kw">super</span>.<span class="fu">createInstance</span>(), enumType);  
+    }  
+  
+    <span class="kw">public</span> <span class="dt">void</span> <span class="fu">setEnumType</span>(Class&lt;? <span class="kw">extends</span> Enum&lt;?&gt;&gt; enumType) {  
+        <span class="kw">this</span>.<span class="fu">enumType</span> = enumType;  
+    }  
+  
+    <span class="kw">public</span> Class&lt;? <span class="kw">extends</span> Enum&lt;?&gt;&gt; <span class="fu">getEnumType</span>() {  
+        <span class="kw">return</span> enumType;  
+    }  
+      
+} </code></pre>
+<p>super.createInstance()返回的是最初的Map实例,我们通过EnumKeyConversionSupport这个类和明确指定的Enum类型进行一下转换, 就可以获得最终想要的Map实例了. EnumKeyMapFactoryBean的适用看起来如下:</p>
+<pre class="sourceCode xml"><code class="sourceCode xml"><span class="kw">&lt;bean</span><span class="ot"> id=</span><span class="st">&quot;ekMap&quot;</span><span class="ot"> class=</span><span class="st">&quot;cn.spring21.sandbox.springext.EnumKeyMapFactoryBean&quot;</span><span class="kw">&gt;</span>  
+    <span class="kw">&lt;property</span><span class="ot"> name=</span><span class="st">&quot;enumType&quot;</span><span class="ot"> value=</span><span class="st">&quot;cn.spring21.sandbox.springext.FixtureEnum&quot;</span><span class="kw">/&gt;</span>  
+    <span class="kw">&lt;property</span><span class="ot"> name=</span><span class="st">&quot;sourceMap&quot;</span><span class="kw">&gt;</span>  
+        <span class="kw">&lt;map&gt;</span>  
+            <span class="kw">&lt;entry</span><span class="ot"> key=</span><span class="st">&quot;FIXTURE_ONE&quot;</span><span class="ot"> value=</span><span class="st">&quot;anything&quot;</span><span class="kw">/&gt;</span>  
+            <span class="kw">&lt;entry</span><span class="ot"> key=</span><span class="st">&quot;FIXTURE_TWO&quot;</span><span class="ot"> value=</span><span class="st">&quot;anything&quot;</span><span class="kw">/&gt;</span>  
+        <span class="kw">&lt;/map&gt;</span>  
+    <span class="kw">&lt;/property&gt;</span>  
+<span class="kw">&lt;/bean&gt;</span> </code></pre>
+<p>ekMap现在的Key就是我们最终想要的FixtureEnum类型.</p>
+<blockquote>
+<p>NOTE</p>
+<p>如果感觉上面的配置方式很繁琐,可以考虑自定义XML Schema类简化配置,类似于spring的util命名空间提供的简化配置形式.</p>
+</blockquote>
+<h2 id="自定义beanpostprocessort"><span class="header-section-number">1.2</span> 自定义BeanPostProcessort</h2>
+<p>自定义FactoryBean的形式当然可以达成目的,不过, 使用上来看,可能不是太方便,毕竟,每次遇到这样的情况都需要声明那么一个FactoryBean的bean定义, 而且,配置的形式也不是那么简洁,本着“精益求精 ”的精神,我们是不是可以想一下,还可以有更好的方法那? 要明确指定Map的Key的类型是Enum类型,不一定非要通过XML配置的形式,我们还可以使用Annotation,通过为相应的Map标注某一表明了Key的Enum类型的Annotation, 我们同样可以获得Key的Enum类型信息,例如,我们可以声明某一Annotation如下:</p>
+<pre class="sourceCode java"><code class="sourceCode java"><span class="fu">@Retention</span>(RetentionPolicy.<span class="fu">RUNTIME</span>)  
+<span class="fu">@Target</span>(ElementType.<span class="fu">FIELD</span>)  
+<span class="kw">public</span> <span class="kw">@interface</span> EnumKeyType {  
+    Class&lt;?&gt; <span class="fu">value</span>();  
+} </code></pre>
+<p>然后在遇到适用Enum作为Key的Map的情况下,就可以通过这一Annotation对这样的Map进行标注:</p>
+<pre class="sourceCode java"><code class="sourceCode java"><span class="kw">public</span> <span class="kw">class</span> InjectionTarget {  
+      
+    <span class="fu">@EnumKeyType</span>(FixtureEnum.<span class="fu">class</span>)  
+    <span class="kw">private</span> Map&lt;FixtureEnum,String&gt; mapping;  
+  
+    <span class="kw">...   </span>
+} </code></pre>
+<p>这样,虽然我们无法在运行期间获得Map的Key的Generic类型信息,但可以通过Annotation来获得,不过, 光标注一下,Spring可不会聪明到马上知道你标注这么个Annotation要干嘛,我们得写点儿东西让Spring知道遇到这个 Annotation该干点儿什么事情, 所以,可以定义一个BeanPostProcessor来做这个事情,例如:</p>
+<pre class="sourceCode java"><code class="sourceCode java"><span class="kw">public</span> <span class="kw">class</span> EnumKeyMapBeanPostProcessor <span class="kw">implements</span> BeanPostProcessor {  
+  
+    <span class="kw">protected</span> <span class="dt">static</span> <span class="dt">final</span> <span class="kw">transient</span> Logger logger = LoggerFactory.<span class="fu">getLogger</span>(EnumKeyMapBeanPostProcessor.<span class="fu">class</span>);  
+      
+    <span class="kw">private</span> EnumKeyConversionSupport conversionSupport = <span class="kw">new</span> <span class="fu">EnumKeyConversionSupport</span>();  
+      
+    <span class="fu">@Override</span>  
+    <span class="kw">public</span> Object <span class="fu">postProcessAfterInitialization</span>(Object bean, String beanName)  
+            <span class="kw">throws</span> BeansException {  
+        Field[] fields = bean.<span class="fu">getClass</span>().<span class="fu">getDeclaredFields</span>();  
+        <span class="kw">for</span>(Field field:fields)  
+        {  
+            <span class="kw">if</span>(field.<span class="fu">isAnnotationPresent</span>(EnumKeyType.<span class="fu">class</span>))  
+            {  
+                <span class="kw">try</span> {  
+                    <span class="fu">convertKeyType</span>(field,bean);  
+                } <span class="kw">catch</span> (Exception e) {  
+                    logger.<span class="fu">warn</span>(<span class="st">&quot;failed to do map key convert.</span><span class="ch">\n</span><span class="st">{}&quot;</span>,e);  
+                }  
+            }  
+        }  
+        <span class="kw">return</span> bean;  
+    }  
+  
+    <span class="kw">protected</span> <span class="dt">void</span> <span class="fu">convertKeyType</span>(Field field,Object bean) <span class="kw">throws</span> Exception {  
+        EnumKeyType eType= field.<span class="fu">getAnnotation</span>(EnumKeyType.<span class="fu">class</span>);  
+        Class&lt;?&gt; clazz = eType.<span class="fu">value</span>();  
+        field.<span class="fu">setAccessible</span>(<span class="kw">true</span>);  
+        Object map = field.<span class="fu">get</span>(bean);  
+        <span class="kw">if</span>(Map.<span class="fu">class</span>.<span class="fu">isAssignableFrom</span>(map.<span class="fu">getClass</span>()) &amp;&amp; clazz != <span class="kw">null</span>)  
+        {  
+            Map&lt;Object, Object&gt; result = conversionSupport.<span class="fu">convert</span>(map, clazz);  
+            field.<span class="fu">set</span>(bean, result);  
+        }  
+    }  
+  
+    <span class="fu">@Override</span>  
+    <span class="kw">public</span> Object <span class="fu">postProcessBeforeInitialization</span>(Object bean, String beanName)  
+            <span class="kw">throws</span> BeansException {  
+        <span class="kw">return</span> bean;  
+    }  
+  
+}  </code></pre>
+<p>只要将这个EnumKeyMapBeanPostProcessor注册到Spring的ApplicationContext, 那么,之后要注入以Enum作为Key的Map的时候,只要简单的使用EnumKeyType标注一下这些Map就可以了,一劳多得, 如果应用中有多处需要这样的Map注入,使用这种方式显然要比适用自定义的FactoryBean要省事不少.</p>
+<h2 id="自定义propertyeditor"><span class="header-section-number">1.3</span> 自定义PropertyEditor?</h2>
+<p>我们知道, Spring内部在做类型转换的时候,会使用一些默认注册的PropertyEditor来做类型转换,而且,也允许我们注册自定义的PropertyEditor, 那么, 自然而然的,我们会想到提供一个针对这种情况的自定义PropertyEditor实现,那么,是否可行那? 如果感兴趣的话, 你可以试一下,呵呵</p>
+<h1 id="注入容器中某一类型所有依赖对象"><span class="header-section-number">2</span> 注入容器中某一类型所有依赖对象</h1>
+<p>默认情况下,我们可以通过Spring的XML配置文件中的<list>或者<set>等元素为某一个对象注入一组依赖对象,只要我们能够确定容器中的哪些bean定义应该纳入这组依赖对象就行,例如:</p>
+<pre class="sourceCode java"><code class="sourceCode java"><span class="kw">public</span> <span class="kw">class</span> InjectionTarget {  
+      
+    <span class="kw">private</span> List&lt;T&gt; collection;  
+    <span class="kw">...  </span>
+} </code></pre>
+<pre class="sourceCode xml"><code class="sourceCode xml"><span class="kw">&lt;bean</span><span class="ot"> id=</span><span class="st">&quot;it&quot;</span><span class="ot"> class=</span><span class="st">&quot;...InjectionTarget&quot;</span><span class="kw">&gt;</span>  
+    <span class="kw">&lt;property</span><span class="ot"> name=</span><span class="st">&quot;collection&quot;</span><span class="kw">&gt;</span>  
+        <span class="kw">&lt;list&gt;</span>  
+            <span class="kw">&lt;ref</span><span class="ot"> bean=</span><span class="st">&quot;t1&quot;</span><span class="kw">/&gt;</span>  
+            <span class="kw">&lt;ref</span><span class="ot"> bean=</span><span class="st">&quot;t2&quot;</span><span class="kw">/&gt;</span>  
+            ...  
+        <span class="kw">&lt;/list&gt;</span>  
+    <span class="kw">&lt;/property&gt;</span>  
+<span class="kw">&lt;/bean&gt;</span>  
+  
+<span class="kw">&lt;bean</span><span class="ot"> id=</span><span class="st">&quot;t1&quot;</span><span class="ot"> class=</span><span class="st">&quot;...&quot;</span><span class="kw">/&gt;</span>  
+<span class="kw">&lt;bean</span><span class="ot"> id=</span><span class="st">&quot;t2&quot;</span><span class="ot"> class=</span><span class="st">&quot;...&quot;</span><span class="kw">/&gt;</span>  
+...  </code></pre>
+<p>可是,大部分情况下,list里面都是同一类型的依赖对象(你要混合元素类型,那是你的事情),每次添加一个这样类型的依赖对象,就需要配置文件里添加一 个bean定义,然后<list>处改一下,很是烦躁,是吧? 我们可以通过某些方式来简化这种场景下的配置或者消除它,例如...</p>
+<h2 id="自定义factorybean-1"><span class="header-section-number">2.1</span> 自定义FactoryBean</h2>
+<p>我们可以自定义一个FactoryBean,让它替我们自动去容器里查找指定类型的一组依赖对象,然后,我们只要把这个FactoryBean挂接到依赖这组依赖对象的bean定义上就行了. 要让自定义的FactoryBean能够查找容器中指定类型的对象,我们可以让它实现ApplicationContextAware接口(这个接口能做啥事儿我就不多说了):</p>
+<pre class="sourceCode java"><code class="sourceCode java"><span class="kw">public</span> <span class="kw">class</span> CollectionInjectionFactoryBean <span class="kw">implements</span> FactoryBean,ApplicationContextAware {  
+  
+    <span class="kw">private</span> ApplicationContext applicationContext;  
+    <span class="kw">private</span> Class&lt;?&gt; componentType;  
+      
+    <span class="fu">@Override</span>  
+    <span class="kw">public</span> Object <span class="fu">getObject</span>() <span class="kw">throws</span> Exception {  
+        <span class="fu">@SuppressWarnings</span>(<span class="st">&quot;unchecked&quot;</span>)  
+        Map&lt;String,Object&gt; map = <span class="kw">this</span>.<span class="fu">applicationContext</span>.<span class="fu">getBeansOfType</span>(<span class="fu">getComponentType</span>());  
+        <span class="kw">if</span>(map == <span class="kw">null</span> || map.<span class="fu">isEmpty</span>())  
+        {  
+            <span class="kw">return</span> Collections.<span class="fu">EMPTY_LIST</span>;  
+        }  
+        <span class="kw">return</span> map.<span class="fu">values</span>();  
+    }  
+    <span class="fu">@SuppressWarnings</span>(<span class="st">&quot;unchecked&quot;</span>)  
+    <span class="fu">@Override</span>  
+    <span class="kw">public</span> Class <span class="fu">getObjectType</span>() {  
+        <span class="kw">return</span> Collection.<span class="fu">class</span>;  
+    }  
+  
+    <span class="fu">@Override</span>  
+    <span class="kw">public</span> <span class="dt">boolean</span> <span class="fu">isSingleton</span>() {  
+        <span class="kw">return</span> <span class="kw">false</span>;  
+    }  
+  
+    <span class="fu">@Override</span>  
+    <span class="kw">public</span> <span class="dt">void</span> <span class="fu">setApplicationContext</span>(ApplicationContext arg0)  
+            <span class="kw">throws</span> BeansException {  
+        <span class="kw">this</span>.<span class="fu">applicationContext</span> = arg0;   
+    }  
+  
+    <span class="kw">public</span> <span class="dt">void</span> <span class="fu">setComponentType</span>(Class&lt;?&gt; componentType) {  
+        <span class="kw">this</span>.<span class="fu">componentType</span> = componentType;  
+    }  
+  
+    <span class="kw">public</span> Class&lt;?&gt; <span class="fu">getComponentType</span>() {  
+        <span class="kw">return</span> componentType;  
+    }  
+  
+} </code></pre>
+<p>有了它之后,如果你想为某个对象注入一族A类型的依赖对象,那么就定义一个CollectionInjectionFactoryBean,并指定它的componentType为A; 如果想注入一族B类型的依赖对象,就指定它的componentType为B,依此类推.例如:</p>
+<pre class="sourceCode xml"><code class="sourceCode xml"><span class="kw">&lt;bean</span><span class="ot"> id=</span><span class="st">&quot;target&quot;</span> <span class="er">..</span><span class="kw">&gt;</span>  
+    <span class="kw">&lt;property</span><span class="ot"> name=</span><span class="st">&quot;..&quot;</span><span class="ot"> ref=</span><span class="st">&quot;collectionInjectionFB&quot;</span><span class="kw">/&gt;</span>  
+<span class="kw">&lt;/bean&gt;</span>  
+          
+<span class="kw">&lt;bean</span><span class="ot"> id=</span><span class="st">&quot;collectionInjectionFB&quot;</span><span class="ot"> class=</span><span class="st">&quot;cn.spring21.sandbox.springext.CollectionInjectionFactoryBean&quot;</span><span class="kw">&gt;</span>  
+    <span class="kw">&lt;property</span><span class="ot"> name=</span><span class="st">&quot;componentType&quot;</span><span class="ot"> value=</span><span class="st">&quot;...AType&quot;</span><span class="kw">/&gt;</span>  
+<span class="kw">&lt;/bean&gt;</span>  </code></pre>
+<p>如果应用里这种场景不多,那使用这种自定义FactoryBean的方式还可以将就一下,但多的话,那也依然减少不了多少配置,这个时候,可以考虑下面这种方式.</p>
+<h2 id="自定义beanpostprocessor"><span class="header-section-number">2.2</span> 自定义BeanPostProcessor</h2>
+<p>如果可能,开发人员肯定不愿在java代码与配置文件之间切换,最好是只关注Java代码文件,这也就是为啥Annotation很受开发人员欢迎的原因之一. 所以,如果某个对象的属性需要注入一组依赖对象,那么,最好的方式就是直接在Java代码中直接标注这种依赖关系,鉴于此,我们定义一用于此目的的Annotation如下:</p>
+<pre class="sourceCode java"><code class="sourceCode java"><span class="fu">@Retention</span>(RetentionPolicy.<span class="fu">RUNTIME</span>)  
+<span class="fu">@Target</span>(ElementType.<span class="fu">FIELD</span>)  
+<span class="kw">public</span> <span class="kw">@interface</span> InjectCollectionOf {  
+    Class&lt;?&gt; <span class="fu">value</span>();  
+}  </code></pre>
+<p>有了该Annotation之后,我们就可以在对象中需要注入一组依赖对象的Property处标注该Annotation:</p>
+<pre class="sourceCode java"><code class="sourceCode java"><span class="kw">public</span> <span class="kw">class</span> InjectionTarget {  
+      
+    <span class="fu">@InjectCollectionOf</span>(SomeType.<span class="fu">class</span>)  
+    <span class="kw">private</span> Collection&lt;SomeType&gt; collection;  
+    <span class="kw">...  </span>
+}  </code></pre>
+<p>为了让容器按照我们的旨意行事,我们最后需要提供一个自定义的BeanPostProcessor实现,如下所示:</p>
+<pre class="sourceCode java"><code class="sourceCode java"><span class="kw">public</span> <span class="kw">class</span> CollectionInjectionBeanPostProcessor <span class="kw">implements</span> BeanPostProcessor,ApplicationContextAware {  
+  
+    <span class="kw">private</span> <span class="dt">static</span> <span class="dt">final</span> Logger logger = LoggerFactory.<span class="fu">getLogger</span>(CollectionInjectionBeanPostProcessor.<span class="fu">class</span>);  
+      
+    <span class="kw">private</span> ApplicationContext applicationContext;  
+      
+    <span class="fu">@Override</span>  
+    <span class="kw">public</span> Object <span class="fu">postProcessAfterInitialization</span>(Object bean, String beanName)  
+            <span class="kw">throws</span> BeansException {  
+          
+        Field[] fields = bean.<span class="fu">getClass</span>().<span class="fu">getDeclaredFields</span>();  
+        <span class="kw">for</span>(Field field:fields)  
+        {  
+            <span class="kw">if</span>(field.<span class="fu">isAnnotationPresent</span>(InjectCollectionOf.<span class="fu">class</span>))  
+            {  
+                Class&lt;?&gt; componentType = field.<span class="fu">getAnnotation</span>(InjectCollectionOf.<span class="fu">class</span>).<span class="fu">value</span>();  
+                <span class="kw">if</span>(componentType == <span class="kw">null</span>)  
+                {  
+                    <span class="kw">continue</span>;  
+                }  
+                <span class="fu">@SuppressWarnings</span>(<span class="st">&quot;unchecked&quot;</span>)  
+                Map&lt;String,Object&gt; componentCandidates = <span class="kw">this</span>.<span class="fu">applicationContext</span>.<span class="fu">getBeansOfType</span>(componentType);  
+                <span class="kw">if</span>(componentCandidates != <span class="kw">null</span> &amp;&amp; !componentCandidates.<span class="fu">isEmpty</span>()){  
+                    field.<span class="fu">setAccessible</span>(<span class="kw">true</span>);  
+                    <span class="kw">try</span> {  
+                        field.<span class="fu">set</span>(bean,componentCandidates.<span class="fu">values</span>());  
+                    } <span class="kw">catch</span> (IllegalArgumentException e) {  
+                        logger.<span class="fu">warn</span>(<span class="st">&quot;argument is not a collection.</span><span class="ch">\n</span><span class="st">{}&quot;</span>,ExceptionUtils.<span class="fu">getFullStackTrace</span>(e));  
+                    } <span class="kw">catch</span> (IllegalAccessException e) {  
+                        logger.<span class="fu">warn</span>(ExceptionUtils.<span class="fu">getFullStackTrace</span>(e));  
+                    }  
+                }  
+            }  
+        }  
+        <span class="kw">return</span> bean;  
+    }  
+  
+    <span class="fu">@Override</span>  
+    <span class="kw">public</span> Object <span class="fu">postProcessBeforeInitialization</span>(Object arg0, String arg1)  
+            <span class="kw">throws</span> BeansException {  
+        <span class="kw">return</span> arg0;  
+    }  
+  
+    <span class="fu">@Override</span>  
+    <span class="kw">public</span> <span class="dt">void</span> <span class="fu">setApplicationContext</span>(ApplicationContext arg0)  
+            <span class="kw">throws</span> BeansException {  
+        <span class="kw">this</span>.<span class="fu">applicationContext</span> = arg0;  
+    }  
+  
+}  </code></pre>
+<p>实现原理上跟自定义的FactoryBean差不多,无非就是多了Annotation检测相关逻辑, 最后,只要将这个自定义的BeanPostProcessor注册到容器, 所有标注了@InjectCollectionOf的Property就可以被正确的注入了:</p>
+<pre class="sourceCode xml"><code class="sourceCode xml"><span class="kw">&lt;bean</span><span class="ot"> id=</span><span class="st">&quot;target&quot;</span><span class="ot"> class=</span><span class="st">&quot;..InjectionTarget&quot;</span><span class="kw">&gt;</span>  
+    ...  
+<span class="kw">&lt;/bean&gt;</span>  
+  
+<span class="kw">&lt;bean</span><span class="ot"> class=</span><span class="st">&quot;...CollectionInjectionBeanPostProcessor&quot;</span><span class="kw">/&gt;</span>  </code></pre>
+<p>如果需要针对Collection的明确子类型的类似注入需求, 依葫芦画瓢就可以了.</p>
+<h1 id="结束语"><span class="header-section-number">3</span> 结束语</h1>
+<p>无论是设计还是实现,都是在各种因素之间进行权衡, 没有普遍适用的设计方案,也没有普遍适用的实现方案, 因时因地而权衡吧! 经济学第一原则不是“People face tradeoffs ”嘛, 其实哪里都一样.</p>
+                
+                <!--百度分享按钮-->
+                <div class="pull-left bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a><a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a></div>
+                <script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"1","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+
+                <!--二维码分享-->
+                <div id="wx_qr"></div>
+                <script type="text/javascript">
+                  var baseUrl = "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data="
+                  var qrUrl = baseUrl.concat(document.URL)
+                  var img = document.createElement("img")
+                  img.setAttribute("src", qrUrl)
+
+                  document.getElementById("wx_qr").appendChild(img)
+                </script>
+
+
+                <div id="disqus_thread"></div>
+                <script type="text/javascript">
+                    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+                    var disqus_shortname = 'afoo'; // required: replace example with your forum shortname
+
+                    /* * * DON'T EDIT BELOW THIS LINE * * */
+                    (function() {
+                        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                    })();
+                </script>
+                <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+                <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+              </div>
+              </div>
+              </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 footer">
+                  <hr>
+                  <p>©FuqiangWang@<a href="http://keevol.com">keevol.com</a></p>
+                  <p>Powered by <a href="http://johnmacfarlane.net/pandoc/">pandoc</a> and <a href="http://pages.github.com/">github pages</a></p>
+                </div>
+            </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="/js/jquery-2.1.1.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1000502179'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s11.cnzz.com/z_stat.php%3Fid%3D1000502179%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));</script>
+  </body>
+
+</html>

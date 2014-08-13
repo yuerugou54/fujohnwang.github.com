@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+  <head>
+	  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	  <title>并发控制总是必需的吗</title>
+	  <meta name="author" content="FuqiangWang">
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="shortcut icon" href="favicon.ico">
+                    
+    <link href='/font/Syncopate/stylesheet.css' rel='stylesheet' type='text/css'>
+    <link href='/font/News_Cycle/stylesheet.css' rel='stylesheet' type='text/css'>
+
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/bootstrap-theme.min.css" rel="stylesheet">
+    <link href="/css/afoo.me.css" rel="stylesheet">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-3 sidebar">
+            <a href="/">
+                <img src="/images/profile-icon.png" class="img-circle img-responsive" width="160px" style="margin: 0 auto;" />
+                <h2 class="text-center">AFOO.ME</h2>
+            </a>
+            <p class="text-center lead slogan"><a href="/slogan.html">lollapalooza &amp; positioning</a></p>
+
+            <ul class="nav nav-pills nav-stacked">
+              <li><a href="/favorite.html" class="text-center"><i class="icon-star-empty"></i> Favorite</a></li>
+              <li><a href="/dashboard.html" class="text-center"><i class="icon-fullscreen"></i> Dashboard</a></li>
+              <li><a href="/" class="text-center"><i class="icon-folder-close-alt"></i> Archives</a></li>
+              <li><a href="/whoami.html" class="text-center"><i class="icon-user-md"></i> About</a></li>
+            </ul>
+
+        </div>
+        <div class="col-md-9 col-md-offset-3 main">
+            <div class="row">
+              <div class="container-fluid">
+                
+                <div class="row">
+                                <div id="header">
+                <p class="lead">
+                <h1 class="title">并发控制总是必需的吗&nbsp;&nbsp;
+                <small>
+                                </small>
+                </h1>
+                </p>
+                </div>
+                                <div>
+
+                <hr>
+
+                                <p>当我们初次踏入Java的世界，初次学习线程的时候，有没有想过为什么要有这个东西？为什么我写了那么些年程序，好像根本就没有更多的使用到它那？</p>
+<p>当JSR166随着Java5的发布而姗姗来迟的时候，为什么我们对它依然那么的一往情深？没有它，我们之前不也一样活吗?</p>
+<p>当我们阅读过林林总总的讲并发编程理论和实践的书籍之后， 《JAVA并发编程实践 》 <a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a> 也好，《Java并发编程—设计原则与模式》<a href="#fn2" class="footnoteRef" id="fnref2"><sup>2</sup></a> 也好， 这些书里的那些理论的本质是什么，它们又是不是放之四海而皆准那？</p>
+<p>所有有关并发的介绍和理论，都是建立在什么东西的基础之上？如果我们仅仅局限在并发控制的世界之中（并非只是指Java的并发）， 会不会有些“偏听则暗 ”之忧哪？</p>
+<p>我们为什么需要并发控制？它能够帮助我们提高数据的处理速度，充分运用CPU？ 或许这是一个方面，或者是表象，使用并发控制，最主要的一个原因，个人觉得，就是需要维护某个“共享 ”的数据状态的完整性。 也就是说，是否存在共享的数据状态，决定着我们是否需要引入并发控制。</p>
+<ul>
+<li>如果存在共享的数据状态，并且，又有多个“人 ”（Thread）要对这一共享的数据状态进行更新操作， 那么，为了保证其状态的完整性和正确性，我们就必须引入并发控制； 反之，如果这些“人 ”（Thread）仅仅只是读这一共享的数据状态，没有任何的更新操作，那并发的引入则是没有必要的。</li>
+<li>如果没有共享的数据状态，通常意味着每个人（线程）有自己的数据拷贝，那么，你爱怎么折腾怎么折腾，引入并发控制一点儿意义都没有。</li>
+</ul>
+<p>从某个角度来说，并发控制可以分为两种：</p>
+<ul>
+<li>乐观型策略. 这种策略通常应用在并发性不是很高，并发强度为中低档水平的时候，比如STM(Software Transaction Memory)或者CAS（Compare and Swap/Compare and Set）这些理念或者实现方式。</li>
+<li>悲观型策略. 这种策略通常应用在高并发性场合，因为这种情况下，这种策略要比乐观型策略获得更好的效果。像Lock和Synchronization就属于这种情况。</li>
+</ul>
+<p>实际上，你完全可以用数据库的乐观锁和悲观锁来类比并推演出这两种策略。 既然并发控制的存在是因为存在共享的数据状态，那么避免甚至移除这些共享的数据状态是不是就意味着能够避免并发，甚至前进到并行处理的世界那？ More or less, I think.</p>
+<p>当提到Thread confinement的时候，或者更具体一些，提到ThreadLocal的时候， 我们是不是马上就能想到，它不就是通过为每个人（线程）分配不同的数据拷贝而避免了并发控制嘛！ Erlang的书买了还没看，不过，他的share-nothing的理念不正是他能够在并行处理的世界里自由驰骋的保证吗？</p>
+<p>share something, or share nothing, 这才是并发存在与否的前提，不是吗？</p>
+<p>P.S. 并发与并行计算绝对不是我这么几句闲扯就能囊括过来的，哪位要是有兴趣可以从其它角度来阐述这个问题(比如硬件的角度)，俺们都洗耳恭听中，呵呵</p>
+<div class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p>英文名《Java Concurrency in Practice》<a href="#fnref1">↩</a></p></li>
+<li id="fn2"><p>英文名《Concurrent Programming in Java Design Principles and Patterns》<a href="#fnref2">↩</a></p></li>
+</ol>
+</div>
+                
+                <!--百度分享按钮-->
+                <div class="pull-left bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a><a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a></div>
+                <script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"1","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+
+                <!--二维码分享-->
+                <div id="wx_qr"></div>
+                <script type="text/javascript">
+                  var baseUrl = "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data="
+                  var qrUrl = baseUrl.concat(document.URL)
+                  var img = document.createElement("img")
+                  img.setAttribute("src", qrUrl)
+
+                  document.getElementById("wx_qr").appendChild(img)
+                </script>
+
+
+                <div id="disqus_thread"></div>
+                <script type="text/javascript">
+                    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+                    var disqus_shortname = 'afoo'; // required: replace example with your forum shortname
+
+                    /* * * DON'T EDIT BELOW THIS LINE * * */
+                    (function() {
+                        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                    })();
+                </script>
+                <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+                <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+              </div>
+              </div>
+              </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 footer">
+                  <hr>
+                  <p>©FuqiangWang@<a href="http://keevol.com">keevol.com</a></p>
+                  <p>Powered by <a href="http://johnmacfarlane.net/pandoc/">pandoc</a> and <a href="http://pages.github.com/">github pages</a></p>
+                </div>
+            </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="/js/jquery-2.1.1.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1000502179'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s11.cnzz.com/z_stat.php%3Fid%3D1000502179%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));</script>
+  </body>
+
+</html>

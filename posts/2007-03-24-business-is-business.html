@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+  <head>
+	  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	  <title>就事儿论事儿</title>
+	  <meta name="author" content="FuqiangWang">
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="shortcut icon" href="favicon.ico">
+                    
+    <link href='/font/Syncopate/stylesheet.css' rel='stylesheet' type='text/css'>
+    <link href='/font/News_Cycle/stylesheet.css' rel='stylesheet' type='text/css'>
+
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/bootstrap-theme.min.css" rel="stylesheet">
+    <link href="/css/afoo.me.css" rel="stylesheet">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-3 sidebar">
+            <a href="/">
+                <img src="/images/profile-icon.png" class="img-circle img-responsive" width="160px" style="margin: 0 auto;" />
+                <h2 class="text-center">AFOO.ME</h2>
+            </a>
+            <p class="text-center lead slogan"><a href="/slogan.html">lollapalooza &amp; positioning</a></p>
+
+            <ul class="nav nav-pills nav-stacked">
+              <li><a href="/favorite.html" class="text-center"><i class="icon-star-empty"></i> Favorite</a></li>
+              <li><a href="/dashboard.html" class="text-center"><i class="icon-fullscreen"></i> Dashboard</a></li>
+              <li><a href="/" class="text-center"><i class="icon-folder-close-alt"></i> Archives</a></li>
+              <li><a href="/whoami.html" class="text-center"><i class="icon-user-md"></i> About</a></li>
+            </ul>
+
+        </div>
+        <div class="col-md-9 col-md-offset-3 main">
+            <div class="row">
+              <div class="container-fluid">
+                
+                <div class="row">
+                                <div id="header">
+                <p class="lead">
+                <h1 class="title">就事儿论事儿&nbsp;&nbsp;
+                <small>
+                                </small>
+                </h1>
+                </p>
+                </div>
+                                <div>
+
+                <hr>
+
+                                <blockquote>
+<p>2014年从msn space存档中重新恢复出来！</p>
+</blockquote>
+<p>事先声明哈，以下文字并不针对个人，只是就事儿论事儿...</p>
+<p>一大清早的，刚上班没多长时间，周周就乐呵呵的跑过来跟我继续探讨昨天那场他认为还没有结束的“论战”。事情是这个样子的，前几天日本人想把FX交易系统的保证金逻辑进行变更，原来100倍杠杆的保证金通常都是10000日元（定死不变的），现在他们想根据每日的TTM汇率乘以杠杆然后乘以日元换算汇率来每日动态计算相应商品的保证金，这样就相当于顾客所购买的外汇商品的保证金额度每天都在变了。这样的前提下，我们讨论报表上应该如何来显示这种情况。</p>
+<p>我跟文艺的观点是相同的，那就是我顾客购买商品那天保证金是多少，此后直到这笔新规约定决计完成，这段时间他所需要缴纳的保证金是不变的，就应该是顾客新规购买该外汇商品那天的系统保证金，此后，不管你每日保证金如何变，与我当前商品不发生任何关系；</p>
+<p>而周周则顺着日方的需求，认为商品最终的保证金，应该是商品决计时刻的保证金，也就是我可能3日购买了该外汇商品，而到5日决计，当时3日的保证金为10000日元，而到5日已经是15000日元了，这个时候，我要以15000日元的保证金进行计算；</p>
+<p>后来，菅原和伊东也认同我的观点，不过，他们也不确定，所以最后还是发送日方确认，今天早上日方答复，想都按照最新的保证金显示，也就是如果顾客的商品还没有决计，那就按照当天最新的保证金计算和显示；如果决计了，则按照决计当天的保证金来显示。</p>
+<p>如果说从这个结果来看，周周的观点最终是和日方想要的结果吻合的，可能昨天我的言辞过于强烈，使得他很不爽（呵呵，我这几天是有些吃了枪药，我承认),所以，他早上还是要过来confirm一下他的观点是对的。</p>
+<p>不过，我觉得这个事情不是用对与错来评判的，为什么这么说那？！</p>
+<p>虽然日方最后决定按照每日最新的保证金来进行计算和显示，但是，我们认为是不合理的！It is NOT Rational! 这样处理，可能顾客昨天持仓保证金还是充足的，而一到第二天，保证金动态变更之后，顾客的保证金就不足了，你系统这个时候就把人家的持仓losscut掉，这样做合理嘛？！就好比我到商场谈好价钱购买了某件商品，当时说好1000块钱，而且也签了合同，但第二天送货的时候，商场说，我这个商品涨价了，你需要支付1500，你觉得你会答应嘛？！合同订的就是1000，凭什么要给你1500？！你商品涨价跟我何干啊？！</p>
+<p>我是说话很冲，但我说的话绝对不是胡搅蛮缠啊！央行加息你每月就得多还贷款，你没辙，但不意味着这就是合理的啊！是不！？</p>
+                
+                <!--百度分享按钮-->
+                <div class="pull-left bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a><a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a></div>
+                <script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"1","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+
+                <!--二维码分享-->
+                <div id="wx_qr"></div>
+                <script type="text/javascript">
+                  var baseUrl = "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data="
+                  var qrUrl = baseUrl.concat(document.URL)
+                  var img = document.createElement("img")
+                  img.setAttribute("src", qrUrl)
+
+                  document.getElementById("wx_qr").appendChild(img)
+                </script>
+
+
+                <div id="disqus_thread"></div>
+                <script type="text/javascript">
+                    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+                    var disqus_shortname = 'afoo'; // required: replace example with your forum shortname
+
+                    /* * * DON'T EDIT BELOW THIS LINE * * */
+                    (function() {
+                        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                    })();
+                </script>
+                <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+                <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+              </div>
+              </div>
+              </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 footer">
+                  <hr>
+                  <p>©FuqiangWang@<a href="http://keevol.com">keevol.com</a></p>
+                  <p>Powered by <a href="http://johnmacfarlane.net/pandoc/">pandoc</a> and <a href="http://pages.github.com/">github pages</a></p>
+                </div>
+            </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="/js/jquery-2.1.1.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1000502179'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s11.cnzz.com/z_stat.php%3Fid%3D1000502179%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));</script>
+  </body>
+
+</html>

@@ -1,0 +1,6 @@
+#!/bin/sh
+
+for f in `ls posts/*.m*` 
+do
+	./compile $f
+done

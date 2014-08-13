@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+  <head>
+	  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	  <title>docbook addict</title>
+	  <meta name="author" content="FuqiangWang">
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="shortcut icon" href="favicon.ico">
+                    
+    <link href='/font/Syncopate/stylesheet.css' rel='stylesheet' type='text/css'>
+    <link href='/font/News_Cycle/stylesheet.css' rel='stylesheet' type='text/css'>
+
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/bootstrap-theme.min.css" rel="stylesheet">
+    <link href="/css/afoo.me.css" rel="stylesheet">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-3 sidebar">
+            <a href="/">
+                <img src="/images/profile-icon.png" class="img-circle img-responsive" width="160px" style="margin: 0 auto;" />
+                <h2 class="text-center">AFOO.ME</h2>
+            </a>
+            <p class="text-center lead slogan"><a href="/slogan.html">lollapalooza &amp; positioning</a></p>
+
+            <ul class="nav nav-pills nav-stacked">
+              <li><a href="/favorite.html" class="text-center"><i class="icon-star-empty"></i> Favorite</a></li>
+              <li><a href="/dashboard.html" class="text-center"><i class="icon-fullscreen"></i> Dashboard</a></li>
+              <li><a href="/" class="text-center"><i class="icon-folder-close-alt"></i> Archives</a></li>
+              <li><a href="/whoami.html" class="text-center"><i class="icon-user-md"></i> About</a></li>
+            </ul>
+
+        </div>
+        <div class="col-md-9 col-md-offset-3 main">
+            <div class="row">
+              <div class="container-fluid">
+                
+                <div class="row">
+                                <div id="header">
+                <p class="lead">
+                <h1 class="title">docbook addict&nbsp;&nbsp;
+                <small>
+                                </small>
+                </h1>
+                </p>
+                </div>
+                                <div>
+
+                <hr>
+
+                                <blockquote>
+<p>2014年从msn space存档中重新恢复出来！</p>
+</blockquote>
+<p>自从打算写点儿东西，就一直在寻摸该使用什么编辑器进行：</p>
+<ul>
+<li>word吧，文件大了还不好弄，而且格式啥的还得时不时的调整；</li>
+<li>LaTex吧，好像学术论文比较合适；</li>
+<li>直接文本文件？更不行，图片啥的都不支持；</li>
+</ul>
+<p>最后想到《Process XML With Java》的作者提到他写书的时候使用的Docbook，所以，就开始上网挖相关资料了...</p>
+<p>docbook纯粹的用xml来保存数据，其实就是普通的文本，但他有一套标准的xml标签，这些标签对book，article等内部的组织结构进行了定义，用户使用的时候直接通过相应的xml标签来限定相应block中的内容即可。作者要做的就是这些，关于最终的发布出版啥的，可以在后期处理。通过XSL转换成HTML或者通过FOP转换成PDF，如果需要，通过其他式样表，也可以转换成其他格式的文档，只不过，如果现在没有相关的实现的话，重新写一套这样的式样表和相应的转换程序可能需要耗费时日。也就是说，这种文档格式的可移植性非常好，docbook文档专门负责数据，也就是内容，最终输出格式则由专门的式样表和转换程序来管，分工明确，在软件工程里面这叫耦合性极低，呵呵</p>
+因为docbook标准xml标签很多，所以，刚开始接触这个东西，还是有些费劲的，不过经过几天环境的折腾，现在已经小有成就，呵呵，发布出来的HTML已经很激动人心了，目录章节索引全部自动生成（当然，这个是写xsl那帮兄弟的功劳，<dedication>
+<title>
+Thanks
+</title><para>
+thanks to docbook.sourceforge.net
+</para>
+<p></dedication>）。当真正入手之后，这种只需要一个文本编辑器就可以进行的写作方式会给你带来比较上瘾的感觉，写东西，发布到net上与大家分享。</p>
+<p>像SUN，LINUX Howto的文档都是以docbook编写并以各自的式样表格式化发布的，Spring的reference也是，所以，如果在某个组织内部实行这种技术或者产品文档的管理，应该是比较有效的。通过CVS或者Subversion对文档内容进行统一管理，发布的产品文档也可以组织内统一风格的式样表格式化输出，不是很cool嘛？我想比CVS管理的word或者excel要来的方便，只要通过一个文档服务器入口，完全可以覆盖整个的产品文档。</p>
+<p>通过internet共享当然是没有问题，我现在担心的是各个出版社是否支持这种格式的文档发布。</p>
+<p>Anyway，之后我希望能够沉浸在docbook的世界中，为了码字而奋斗，hoho</p>
+                
+                <!--百度分享按钮-->
+                <div class="pull-left bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a><a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a></div>
+                <script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"1","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+
+                <!--二维码分享-->
+                <div id="wx_qr"></div>
+                <script type="text/javascript">
+                  var baseUrl = "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data="
+                  var qrUrl = baseUrl.concat(document.URL)
+                  var img = document.createElement("img")
+                  img.setAttribute("src", qrUrl)
+
+                  document.getElementById("wx_qr").appendChild(img)
+                </script>
+
+
+                <div id="disqus_thread"></div>
+                <script type="text/javascript">
+                    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+                    var disqus_shortname = 'afoo'; // required: replace example with your forum shortname
+
+                    /* * * DON'T EDIT BELOW THIS LINE * * */
+                    (function() {
+                        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                    })();
+                </script>
+                <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+                <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+              </div>
+              </div>
+              </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 footer">
+                  <hr>
+                  <p>©FuqiangWang@<a href="http://keevol.com">keevol.com</a></p>
+                  <p>Powered by <a href="http://johnmacfarlane.net/pandoc/">pandoc</a> and <a href="http://pages.github.com/">github pages</a></p>
+                </div>
+            </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="/js/jquery-2.1.1.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1000502179'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s11.cnzz.com/z_stat.php%3Fid%3D1000502179%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));</script>
+  </body>
+
+</html>

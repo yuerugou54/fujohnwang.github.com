@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+  <head>
+	  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	  <title>有关PGP的基本概念</title>
+	  <meta name="author" content="FuqiangWang">
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="shortcut icon" href="favicon.ico">
+                    
+    <link href='/font/Syncopate/stylesheet.css' rel='stylesheet' type='text/css'>
+    <link href='/font/News_Cycle/stylesheet.css' rel='stylesheet' type='text/css'>
+
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/bootstrap-theme.min.css" rel="stylesheet">
+    <link href="/css/afoo.me.css" rel="stylesheet">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-3 sidebar">
+            <a href="/">
+                <img src="/images/profile-icon.png" class="img-circle img-responsive" width="160px" style="margin: 0 auto;" />
+                <h2 class="text-center">AFOO.ME</h2>
+            </a>
+            <p class="text-center lead slogan"><a href="/slogan.html">lollapalooza &amp; positioning</a></p>
+
+            <ul class="nav nav-pills nav-stacked">
+              <li><a href="/favorite.html" class="text-center"><i class="icon-star-empty"></i> Favorite</a></li>
+              <li><a href="/dashboard.html" class="text-center"><i class="icon-fullscreen"></i> Dashboard</a></li>
+              <li><a href="/" class="text-center"><i class="icon-folder-close-alt"></i> Archives</a></li>
+              <li><a href="/whoami.html" class="text-center"><i class="icon-user-md"></i> About</a></li>
+            </ul>
+
+        </div>
+        <div class="col-md-9 col-md-offset-3 main">
+            <div class="row">
+              <div class="container-fluid">
+                
+                <div class="row">
+                                <div id="header">
+                <p class="lead">
+                <h1 class="title">有关PGP的基本概念&nbsp;&nbsp;
+                <small>
+                                </small>
+                </h1>
+                </p>
+                </div>
+                                <div>
+
+                <hr>
+
+                                <blockquote>
+<p>2014年从msn space存档中重新恢复出来！</p>
+</blockquote>
+<p>以下内容摘自bouncycastle的邮件列表中针对某人问题的回复，对于理解PGP的基本概念有所帮助，故此摘录如下，以备参考。</p>
+<pre>
+If I'm saying anything basic that you already know, please forgive me.
+I mean no offense; I'm just not sure what level to start from.
+
+You mentioned a five digit PIN number and a certificate. It sounds like
+you need to encrypt the PIN number so you can send it across the network,
+and some other party can read it?
+
+Allow me to offer a few basics. DES and Triple-DES ("3DES" or "DESede") are
+"symmetric cipher algorithms." This means they use the same key to
+encrypt and to decrypt. This key is usually called a "secret key".
+DES keys are 8 bytes long (64 bits, of which 8 are parity).
+Triple-DES keys are 24 bytes long (192 bits of key, 24 bits of parity).
+
+Also, DES and 3DES are "block cipher" algorithms. That is, they work on
+blocks of data. The block size for DES and 3DES is 64 bits, or 8 bytes.
+
+By comparison, RSA is a "public key" algorithm. That is, RSA actually
+uses a key pair. There is a "public key" and a matching "private key."
+The public key is usually distributed inside an X.509 certificate, though
+this is not strictly required. As the name suggests, the private key is
+never distributed.
+
+These days, RSA keys are typically 1024 bits long, or 128 bytes. Using
+the default algorithm, an RSA key can be used to encrypt up to N-11 bytes
+of data, where N is the key length in bytes.
+
+Normally, one does not encrypt data directly with an RSA key. Instead,
+one creates a one-time-use random key for a symmetric cipher. (For
+instance, one might generate 24 bytes of random data for use as a 3DES
+key.) For convenience, let's call that key "Kmsg" (the "message" key).
+One would then encrypt the actual message data using this message key.
+Then, one encrypts Kmsg using the RSA public key of the intended
+message recipient. Finally, send the encrypted message and the
+encrypted Kmsg to the recipient.
+
+As a specific example, suppose Alice wants to send Bob an encrypted
+message. Let's say Alice decides to use DES. Alice generates Kmsg.
+Let's suppose Kmsg = 0x1234567812345678 (eight bytes). We'll call the
+message M.
+
+Alice applies DES to encrypt M with Kmsg: DES(M,Kmsg)
+
+Now, Alice encrypts Kmsg with Bob's public key: RSAPUB(Kmsg,Bob)
+
+Alice sends Bob both DES(M,Kmsg) and RSAPUB(Kmsg,Bob). Bob uses his
+private key: RSAPRIV (RSAPUB (Kmsg, Bob), Bob) == Kmsg. Then, Bob
+uses the recovered Kmsg to decrypt DES(M,Kmsg) and gets back M.
+
+One nice advantage of this scheme is that Alice can send the encrypted
+message to all of Bob, Carol, and David very simply. Alice simply sends:
+
+{ DES(M,Kmsg), RSAPUB(Kmsg,Bob), RSAPUB(Kmsg,Carol), RSAPUB(Kmsg,David) }
+
+Each recipient uses the corresponding private key to decrypt one of the
+RSAPUBs and then decrypt the original message. In fact, this is how
+encrypted mail (S/MIME) works.
+
+Phew, now, back to your case. If you really have a five digit PIN, you
+can actually encrypt the PIN directly using RSA, or you can do what is
+described above.
+
+Hope this helps clarify matters some.
+</pre>
+                
+                <!--百度分享按钮-->
+                <div class="pull-left bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a><a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a></div>
+                <script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"1","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+
+                <!--二维码分享-->
+                <div id="wx_qr"></div>
+                <script type="text/javascript">
+                  var baseUrl = "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data="
+                  var qrUrl = baseUrl.concat(document.URL)
+                  var img = document.createElement("img")
+                  img.setAttribute("src", qrUrl)
+
+                  document.getElementById("wx_qr").appendChild(img)
+                </script>
+
+
+                <div id="disqus_thread"></div>
+                <script type="text/javascript">
+                    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+                    var disqus_shortname = 'afoo'; // required: replace example with your forum shortname
+
+                    /* * * DON'T EDIT BELOW THIS LINE * * */
+                    (function() {
+                        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                    })();
+                </script>
+                <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+                <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+              </div>
+              </div>
+              </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 footer">
+                  <hr>
+                  <p>©FuqiangWang@<a href="http://keevol.com">keevol.com</a></p>
+                  <p>Powered by <a href="http://johnmacfarlane.net/pandoc/">pandoc</a> and <a href="http://pages.github.com/">github pages</a></p>
+                </div>
+            </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="/js/jquery-2.1.1.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1000502179'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s11.cnzz.com/z_stat.php%3Fid%3D1000502179%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));</script>
+  </body>
+
+</html>

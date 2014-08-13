@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+  <head>
+	  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	  <title>Casual Thoughts On Distributed RPC Service Framework</title>
+	  <meta name="author" content="FuqiangWang">
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="shortcut icon" href="favicon.ico">
+        <meta name="date" content="2011-09-07" />
+                    
+    <link href='/font/Syncopate/stylesheet.css' rel='stylesheet' type='text/css'>
+    <link href='/font/News_Cycle/stylesheet.css' rel='stylesheet' type='text/css'>
+
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/bootstrap-theme.min.css" rel="stylesheet">
+    <link href="/css/afoo.me.css" rel="stylesheet">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-3 sidebar">
+            <a href="/">
+                <img src="/images/profile-icon.png" class="img-circle img-responsive" width="160px" style="margin: 0 auto;" />
+                <h2 class="text-center">AFOO.ME</h2>
+            </a>
+            <p class="text-center lead slogan"><a href="/slogan.html">lollapalooza &amp; positioning</a></p>
+
+            <ul class="nav nav-pills nav-stacked">
+              <li><a href="/favorite.html" class="text-center"><i class="icon-star-empty"></i> Favorite</a></li>
+              <li><a href="/dashboard.html" class="text-center"><i class="icon-fullscreen"></i> Dashboard</a></li>
+              <li><a href="/" class="text-center"><i class="icon-folder-close-alt"></i> Archives</a></li>
+              <li><a href="/whoami.html" class="text-center"><i class="icon-user-md"></i> About</a></li>
+            </ul>
+
+        </div>
+        <div class="col-md-9 col-md-offset-3 main">
+            <div class="row">
+              <div class="container-fluid">
+                
+                <div class="row">
+                                <div id="header">
+                <p class="lead">
+                <h1 class="title">Casual Thoughts On Distributed RPC Service Framework&nbsp;&nbsp;
+                <small>
+                                    fujohnwang
+                                </small>
+                </h1>
+                </p>
+                </div>
+                                <div>
+
+                <hr>
+
+                                <div id="TOC">
+                <ul>
+                <li><a href="#service-identity"><span class="toc-section-number">1</span> service identity</a></li>
+                <li><a href="#service-identity-1"><span class="toc-section-number">2</span> service identity</a></li>
+                <li><a href="#service-lookup"><span class="toc-section-number">3</span> service lookup</a></li>
+                <li><a href="#service-extensions"><span class="toc-section-number">4</span> service extensions</a></li>
+                <li><a href="#service-upgrade"><span class="toc-section-number">5</span> service upgrade</a></li>
+                <li><a href="#service-deployment"><span class="toc-section-number">6</span> service deployment</a></li>
+                <li><a href="#potential-points"><span class="toc-section-number">7</span> potential points</a></li>
+                </ul>
+                </div>
+                                <p><strong>author: fujohnwang</strong></p>
+<h1 id="service-identity"><span class="header-section-number">1</span> service identity</h1>
+<p>[artifact version] + FQname + version</p>
+<h1 id="service-identity-1"><span class="header-section-number">2</span> service identity</h1>
+<p>[artifact version] + FQname + version</p>
+<h1 id="service-lookup"><span class="header-section-number">3</span> service lookup</h1>
+<ol style="list-style-type: decimal">
+<li>how many services exist?</li>
+<li>what kind of details operations/services in each service?!</li>
+<li>what's the signature of each operations?</li>
+</ol>
+<h1 id="service-extensions"><span class="header-section-number">4</span> service extensions</h1>
+<ol style="list-style-type: decimal">
+<li>can I replace the data structure serialization and deserialization?!
+<ul>
+<li>use custom serialization mechanism</li>
+<li>some flag to indicate the mechanism that's used by service providers</li>
+</ul></li>
+<li>can I intercept service operations without service implementations' intrusion?!</li>
+<li>can I replace default service lookup service provider?</li>
+<li>can I hook in custom LB and failover mechanisms in the service users' side?</li>
+<li>can I hook in audit and monitoring concerns?</li>
+<li>can I tune the server side of the service exposion?
+<ul>
+<li>TcpNoDelay?!</li>
+<li>send buffer or receive buffer size</li>
+<li>timeout</li>
+<li>etc.</li>
+</ul></li>
+<li>can I expose same service via different transports at the same time?!</li>
+</ol>
+<h1 id="service-upgrade"><span class="header-section-number">5</span> service upgrade</h1>
+<ol style="list-style-type: decimal">
+<li>service framework upgrade</li>
+<li>service upgrade</li>
+</ol>
+<h1 id="service-deployment"><span class="header-section-number">6</span> service deployment</h1>
+<ol style="list-style-type: decimal">
+<li>how to ease the large scale service deployment?! even make it automatically?</li>
+<li>template publication node?!</li>
+</ol>
+<h1 id="potential-points"><span class="header-section-number">7</span> potential points</h1>
+<ol style="list-style-type: decimal">
+<li>are overloaded methods allowed?!</li>
+<li>are multiple languages inter-operations supported?!</li>
+<li>If you want to provide OO-RPC interface for clients to use, what kind of interception mechanisms u want to use? reflection or bytecode gen? Are there some overheads in this point?</li>
+</ol>
+                
+                <!--百度分享按钮-->
+                <div class="pull-left bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a><a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a></div>
+                <script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"1","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+
+                <!--二维码分享-->
+                <div id="wx_qr"></div>
+                <script type="text/javascript">
+                  var baseUrl = "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data="
+                  var qrUrl = baseUrl.concat(document.URL)
+                  var img = document.createElement("img")
+                  img.setAttribute("src", qrUrl)
+
+                  document.getElementById("wx_qr").appendChild(img)
+                </script>
+
+
+                <div id="disqus_thread"></div>
+                <script type="text/javascript">
+                    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+                    var disqus_shortname = 'afoo'; // required: replace example with your forum shortname
+
+                    /* * * DON'T EDIT BELOW THIS LINE * * */
+                    (function() {
+                        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                    })();
+                </script>
+                <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+                <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+              </div>
+              </div>
+              </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 footer">
+                  <hr>
+                  <p>©FuqiangWang@<a href="http://keevol.com">keevol.com</a></p>
+                  <p>Powered by <a href="http://johnmacfarlane.net/pandoc/">pandoc</a> and <a href="http://pages.github.com/">github pages</a></p>
+                </div>
+            </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="/js/jquery-2.1.1.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1000502179'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s11.cnzz.com/z_stat.php%3Fid%3D1000502179%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));</script>
+  </body>
+
+</html>

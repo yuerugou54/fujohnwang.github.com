@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+  <head>
+	  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	  <title>Valang Validator under the hood</title>
+	  <meta name="author" content="FuqiangWang">
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="shortcut icon" href="favicon.ico">
+            <style type="text/css">
+    table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+      margin: 0; padding: 0; vertical-align: baseline; border: none; }
+    table.sourceCode { width: 100%; line-height: 100%; }
+    td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+    td.sourceCode { padding-left: 5px; }
+    code > span.kw { color: #007020; font-weight: bold; }
+    code > span.dt { color: #902000; }
+    code > span.dv { color: #40a070; }
+    code > span.bn { color: #40a070; }
+    code > span.fl { color: #40a070; }
+    code > span.ch { color: #4070a0; }
+    code > span.st { color: #4070a0; }
+    code > span.co { color: #60a0b0; font-style: italic; }
+    code > span.ot { color: #007020; }
+    code > span.al { color: #ff0000; font-weight: bold; }
+    code > span.fu { color: #06287e; }
+    code > span.er { color: #ff0000; font-weight: bold; }
+    </style>
+                
+    <link href='/font/Syncopate/stylesheet.css' rel='stylesheet' type='text/css'>
+    <link href='/font/News_Cycle/stylesheet.css' rel='stylesheet' type='text/css'>
+
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/bootstrap-theme.min.css" rel="stylesheet">
+    <link href="/css/afoo.me.css" rel="stylesheet">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-3 sidebar">
+            <a href="/">
+                <img src="/images/profile-icon.png" class="img-circle img-responsive" width="160px" style="margin: 0 auto;" />
+                <h2 class="text-center">AFOO.ME</h2>
+            </a>
+            <p class="text-center lead slogan"><a href="/slogan.html">lollapalooza &amp; positioning</a></p>
+
+            <ul class="nav nav-pills nav-stacked">
+              <li><a href="/favorite.html" class="text-center"><i class="icon-star-empty"></i> Favorite</a></li>
+              <li><a href="/dashboard.html" class="text-center"><i class="icon-fullscreen"></i> Dashboard</a></li>
+              <li><a href="/" class="text-center"><i class="icon-folder-close-alt"></i> Archives</a></li>
+              <li><a href="/whoami.html" class="text-center"><i class="icon-user-md"></i> About</a></li>
+            </ul>
+
+        </div>
+        <div class="col-md-9 col-md-offset-3 main">
+            <div class="row">
+              <div class="container-fluid">
+                
+                <div class="row">
+                                <div id="header">
+                <p class="lead">
+                <h1 class="title">Valang Validator under the hood&nbsp;&nbsp;
+                <small>
+                                </small>
+                </h1>
+                </p>
+                </div>
+                                <div>
+
+                <hr>
+
+                                <div id="TOC">
+                <ul>
+                <li><a href="#valang-validator-under-the-hood"><span class="toc-section-number">1</span> Valang Validator under the hood</a><ul>
+                <li><a href="#how-to-convert-valang-syntax-expression-into-validationrule-object-model"><span class="toc-section-number">1.1</span> How to Convert Valang syntax Expression into ValidationRule Object model?</a></li>
+                <li><a href="#custom-valangvalidator-or-validationrule"><span class="toc-section-number">1.2</span> Custom ValangValidator or ValidationRule</a></li>
+                </ul></li>
+                </ul>
+                </div>
+                                <h1 id="valang-validator-under-the-hood"><span class="header-section-number">1</span> Valang Validator under the hood</h1>
+<h2 id="how-to-convert-valang-syntax-expression-into-validationrule-object-model"><span class="header-section-number">1.1</span> How to Convert Valang syntax Expression into ValidationRule Object model?</h2>
+<p>org.springmodules.validation.valang.parser.ValangParser is the key class that will help on this task.</p>
+<p>If you are able to construct a valid valang-syntax expression from some other sources, you can use ValangParser to parse these kinds of expressions into Valang's Object model. for example:</p>
+<pre class="sourceCode java"><code class="sourceCode java">Errors errors = ...;
+Object target = ...;
+                
+ValangParser parser = <span class="kw">new</span> <span class="fu">ValangParser</span>(<span class="st">&quot;{ &lt;key&gt; : &lt;expression&gt; : &lt;error_message&gt; [ : &lt;error_key&gt; [ : &lt;error_args&gt; ] ]}&quot;</span>);
+<span class="kw">try</span> {
+    Collection&lt;ValidationRule&gt; rules = parser.<span class="fu">parseValidation</span>();
+    <span class="kw">if</span>(CollectionUtils.<span class="fu">isNotEmpty</span>(rules))
+    {
+        Iterator&lt;ValidationRule&gt; iter = rules.<span class="fu">iterator</span>();
+        <span class="kw">while</span>(iter.<span class="fu">hasNext</span>()){
+            ValidationRule rule = iter.<span class="fu">next</span>();
+            rule.<span class="fu">validate</span>(target, errors);
+        }
+    }
+} <span class="kw">catch</span> (ParseException e) {
+    <span class="co">// handle exception here.</span>
+}</code></pre>
+<p>with sample code above, I think you can figure out how the ValangValidator class do its work.</p>
+<p>Since you can “setValang(String valang) ”, you can “setCustomFunctions(..) ”, in the “validate(Object target, Errors errors) ” method, the ValangValidator only need use ValangParser to parse the expression set via “setValang(String) ” method. After a collection of ValidationRule is available, the left things is almost the same like code above.</p>
+<p>Of course, since ValangValidator use ValangParser to do the parsing things, you can use ValangValidator or its super class, that's, org.springmodules.validation.valang.parser.SimpleValangBased , to do the same thing. I mean, to parse the valang expression.</p>
+<h2 id="custom-valangvalidator-or-validationrule"><span class="header-section-number">1.2</span> Custom ValangValidator or ValidationRule</h2>
+<p>when I want to add GlobalError support for ROMA framework, I found that as if Valang doesn't support such GlobalError expression things, so I have to find another way.</p>
+<p>In a valang-syntax expression, the first token is the <key>, it's mandatory. But for a global error, it's meaningless. so even we provide a dummy <key> value, and make the expression-parsing pass, when we invoke the “#validate(target, errors) ” method of ValidationRule, an exception will still be raised, because, the ValidationRule can't find a property on the target object. In order to fix this, we have to break down the “#validate(target, errors) ” method's logic. Here is what I will do.</p>
+<p>If we inspect the type of the ValidationRule returned from “parser.parseValidation() ”, we will find that it's type is org.springmodules.validation.valang.predicates.BasicValidationRule . This is the default value object that hold every part of the parsed Valang expression. Since we can get everything with it, we then can filter the returned collection of ValidationRule. The code seems like:</p>
+<pre class="sourceCode java"><code class="sourceCode java">ValangValidator validator = <span class="kw">new</span> <span class="fu">ValangValidator</span>();
+        validator.<span class="fu">setValang</span>(<span class="st">&quot;&quot;</span>);
+        <span class="fu">@SuppressWarnings</span>(<span class="st">&quot;unchecked&quot;</span>)
+        Collection&lt;ValidationRule&gt; rules = validator.<span class="fu">getRules</span>();
+        <span class="fu">@SuppressWarnings</span>(<span class="st">&quot;unchecked&quot;</span>)
+        Collection&lt;ValidationRule&gt; globalErrorRules = CollectionUtils.<span class="fu">transformedCollection</span>(rules, <span class="kw">new</span> Transformer() {
+            <span class="kw">public</span> Object <span class="fu">transform</span>(Object arg) {
+                <span class="dt">final</span> BasicValidationRule rule = (BasicValidationRule)arg;
+                <span class="kw">return</span> <span class="kw">new</span> <span class="fu">ValidationRule</span>() {
+                    <span class="kw">public</span> <span class="dt">void</span> <span class="fu">validate</span>(Object target, org.<span class="fu">springframework</span>.<span class="fu">validation</span>.<span class="fu">Errors</span> errors) {
+                        String errorKey = rule.<span class="fu">getErrorKey</span>();
+                        String message = rule.<span class="fu">getErrorMessage</span>();
+                        <span class="fu">@SuppressWarnings</span>(<span class="st">&quot;unchecked&quot;</span>)
+                        Collection args = rule.<span class="fu">getErrorArgs</span>();
+                        <span class="kw">if</span>(CollectionUtils.<span class="fu">isEmpty</span>(args))
+                        {
+                            errors.<span class="fu">reject</span>(errorKey, message);
+                        }
+                        <span class="kw">else</span>
+                        {
+                            <span class="fu">@SuppressWarnings</span>(<span class="st">&quot;unchecked&quot;</span>)
+                            Object[] argArray = args.<span class="fu">toArray</span>(<span class="kw">new</span> Object[args.<span class="fu">size</span>()]);
+                            errors.<span class="fu">reject</span>(errorKey, argArray, message);
+                        }
+                    }
+                };
+            }
+        });</code></pre>
+<p>since FiledError is added with “#rejectValue(..) ”, we use “#reject(..) ” to fill GlobalError to Errors . After these rules are applied to the target object, the corresponding global errors will be available. You can pull them in you view via spring's RequestContext or other way you resort to.</p>
+                
+                <!--百度分享按钮-->
+                <div class="pull-left bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a><a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a></div>
+                <script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"1","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+
+                <!--二维码分享-->
+                <div id="wx_qr"></div>
+                <script type="text/javascript">
+                  var baseUrl = "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data="
+                  var qrUrl = baseUrl.concat(document.URL)
+                  var img = document.createElement("img")
+                  img.setAttribute("src", qrUrl)
+
+                  document.getElementById("wx_qr").appendChild(img)
+                </script>
+
+
+                <div id="disqus_thread"></div>
+                <script type="text/javascript">
+                    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+                    var disqus_shortname = 'afoo'; // required: replace example with your forum shortname
+
+                    /* * * DON'T EDIT BELOW THIS LINE * * */
+                    (function() {
+                        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                    })();
+                </script>
+                <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+                <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+              </div>
+              </div>
+              </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 footer">
+                  <hr>
+                  <p>©FuqiangWang@<a href="http://keevol.com">keevol.com</a></p>
+                  <p>Powered by <a href="http://johnmacfarlane.net/pandoc/">pandoc</a> and <a href="http://pages.github.com/">github pages</a></p>
+                </div>
+            </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="/js/jquery-2.1.1.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1000502179'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s11.cnzz.com/z_stat.php%3Fid%3D1000502179%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));</script>
+  </body>
+
+</html>

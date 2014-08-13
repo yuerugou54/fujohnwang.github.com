@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+  <head>
+	  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	  <title>普通文本的“麻雀变凤凰”之路</title>
+	  <meta name="author" content="FuqiangWang">
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="shortcut icon" href="favicon.ico">
+            <style type="text/css">
+    table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+      margin: 0; padding: 0; vertical-align: baseline; border: none; }
+    table.sourceCode { width: 100%; line-height: 100%; }
+    td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+    td.sourceCode { padding-left: 5px; }
+    code > span.kw { color: #007020; font-weight: bold; }
+    code > span.dt { color: #902000; }
+    code > span.dv { color: #40a070; }
+    code > span.bn { color: #40a070; }
+    code > span.fl { color: #40a070; }
+    code > span.ch { color: #4070a0; }
+    code > span.st { color: #4070a0; }
+    code > span.co { color: #60a0b0; font-style: italic; }
+    code > span.ot { color: #007020; }
+    code > span.al { color: #ff0000; font-weight: bold; }
+    code > span.fu { color: #06287e; }
+    code > span.er { color: #ff0000; font-weight: bold; }
+    </style>
+                
+    <link href='/font/Syncopate/stylesheet.css' rel='stylesheet' type='text/css'>
+    <link href='/font/News_Cycle/stylesheet.css' rel='stylesheet' type='text/css'>
+
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/bootstrap-theme.min.css" rel="stylesheet">
+    <link href="/css/afoo.me.css" rel="stylesheet">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-3 sidebar">
+            <a href="/">
+                <img src="/images/profile-icon.png" class="img-circle img-responsive" width="160px" style="margin: 0 auto;" />
+                <h2 class="text-center">AFOO.ME</h2>
+            </a>
+            <p class="text-center lead slogan"><a href="/slogan.html">lollapalooza &amp; positioning</a></p>
+
+            <ul class="nav nav-pills nav-stacked">
+              <li><a href="/favorite.html" class="text-center"><i class="icon-star-empty"></i> Favorite</a></li>
+              <li><a href="/dashboard.html" class="text-center"><i class="icon-fullscreen"></i> Dashboard</a></li>
+              <li><a href="/" class="text-center"><i class="icon-folder-close-alt"></i> Archives</a></li>
+              <li><a href="/whoami.html" class="text-center"><i class="icon-user-md"></i> About</a></li>
+            </ul>
+
+        </div>
+        <div class="col-md-9 col-md-offset-3 main">
+            <div class="row">
+              <div class="container-fluid">
+                
+                <div class="row">
+                                <div id="header">
+                <p class="lead">
+                <h1 class="title">普通文本的“麻雀变凤凰”之路&nbsp;&nbsp;
+                <small>
+                                </small>
+                </h1>
+                </p>
+                </div>
+                                <div>
+
+                <hr>
+
+                                <div id="TOC">
+                <ul>
+                <li><a href="#基于普通文本的标记文本"><span class="toc-section-number">1</span> 基于普通文本的标记文本</a><ul>
+                <li><a href="#wiki"><span class="toc-section-number">1.1</span> WIKI</a></li>
+                <li><a href="#texlatex"><span class="toc-section-number">1.2</span> Tex/LaTex</a></li>
+                <li><a href="#blueclothredcloth"><span class="toc-section-number">1.3</span> BlueCloth/RedCloth</a></li>
+                <li><a href="#其他..."><span class="toc-section-number">1.4</span> 其他...</a></li>
+                </ul></li>
+                <li><a href="#基于xml格式的标记文本"><span class="toc-section-number">2</span> 基于XML格式的标记文本</a></li>
+                <li><a href="#小结"><span class="toc-section-number">3</span> 小结</a></li>
+                </ul>
+                </div>
+                                <p>整个标题整得有些过于夸张了（这种行为好像是称作“标题党 ”吧？！）， 呵呵，实际上，仅仅是因为无意间翻了翻“搞头书 ” <a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a> ， 发现个叫“BlueCloth ”的Gem库可以将普通文本标记转换成HTML格式， 从而牵连出自己脑海中的其它几种完成类似功能的工具选择，故此借机汇聚一下， 当然了，更希望是“抛砖引玉 ”，各位同仁如果还有更多的选择，不妨尽情添附，以(之)享整个社区。</p>
+<p>对于文档之类的编写工作来说，大家或许早就习惯了MS Word之类工具倡导的“所见即所得(WYSIWYG) ”编写方式， 属于这一类的工具很多，包括:</p>
+<ol style="list-style-type: decimal">
+<li>Microsoft Word</li>
+<li>OpenOffice Writer</li>
+<li>DreamWeaver(我不知道把它罗列在这里是否合适，呵呵)</li>
+<li>Buzzword(http://buzzword.acrobat.com)</li>
+</ol>
+<p>但是，所有这些并不能代表整个世界，当我们透过镜子的这一面看过去的时候，就会发现， 在镜子的另一面，“所见即所得 ”并不像我们最初所想象的那样处处受欢迎， 因为在这里，“基于标记文本的文字编写方式 ”才是统治镜子另一面的那个“人 ”。 :-)</p>
+<p>我们不妨将“基于标记文本的文字编写方式 ”划分为两类，第一类不妨称其为“基于普通文本的标记文本 ”， 第二类不妨称其为“基于XML格式的标记文本 ”，下面我们分别对这两类标记文本方式进行细谈...</p>
+<h1 id="基于普通文本的标记文本"><span class="header-section-number">1</span> 基于普通文本的标记文本</h1>
+<p>通常情况下，“基于普通文本的标记文本 ”都是在普通文本中间“穿插 ”一些具有特殊意义的标记文本， 然后通过某种能够识别这些预先定义的标记文本的工具，对这些普通文本进行处理或者说转换，最终输出成各种格式的文档，比如最常见的就是输出成HTML文件。</p>
+<h2 id="wiki"><span class="header-section-number">1.1</span> WIKI</h2>
+<p>属于此种范畴的“人选 ”，第一个当属“WIKI ”，大名鼎鼎的Wikipedia（http://en.wikipedia.org/wiki/Main_Page）想必大家都已经早有耳闻了。 WIKI形式的文档就是，编辑的时候以普通文本形式进行编辑，而显示的时候，则根据普通文本内容中嵌入的各种标记进行格式化输出成HTML进行显示。对WIKI的总体情况，笔者其实不是很熟悉， 好像各家WIKI都有各自都有的标记文本语法(Syntax)，而笔者充其量也只是早些年前自己装过“MoinMoin Wiki(http://moinmoin.wikiwikiweb.de/) ”，自己把玩了一把而已。</p>
+<p>WIKI的实现产品很多，基于各种编程语言的WIKI都会各自涌现一些优秀的产品，像MoinMoin Wiki就是使用Python语言开发的， 除此之外，还有使用Java语言开发的XWiki，使用Perl开发的最早的Wiki应用WikiWikiWeb等等。 你可以从http://en.wikipedia.org/wiki/Wiki_software获取更多使用其他语言开发的Wiki软件的相关信息。</p>
+<p>还记得前阵子在图灵的论坛里，刘江老师发起一个倡导大家通过Wiki合作写书的想法，可见Wiki并非浪得虚名，仅是说说而已了。</p>
+<h2 id="texlatex"><span class="header-section-number">1.2</span> Tex/LaTex</h2>
+<p>笔者想当年因为经济条件没有考研，所以也就没有真正验证过，只是听说，只要是读过研究生写过论文的， 好像大多数都接触过LaTeX（http://www.latex-project.org/），它属于TeX的改进版，但同样属于基于普通标记文本的文字编写方式。 LaTeX好像对各种公式的表达支持很好，不过，对于中文的支持来说，好像要诉诸于CTeX之类的本地化版本，但这都是笔者道听途说， 如果您对这种基于TeX/LaTeX的编辑方式感兴趣，倒是应该自己验证一下。俺此行的目的，仅仅是为了罗列选择项而已。</p>
+<p>这里有一个摘自LaTeX网站的实例，或许能够让我们有一个感性的认识。如果编写如下源文本：</p>
+<pre class="sourceCode latex"><code class="sourceCode latex">\documentclass{article}
+\title{Cartesian closed categories and the price of eggs}
+\author{Jane Doe}
+\date{September 1994}
+\begin{document}
+   \maketitle
+   Hello world!
+\end{document}</code></pre>
+<p>那么，通过LaTeX处理后，将输出类似如下形式的显示效果(下面的输出无法完全反映效果，可以参考LaTeX网站上的样子)：</p>
+<pre>
+Cartesian closed categories and the price of eggs
+
+
+
+
+Jane Doe
+September 1994
+
+Hello world!
+</pre>
+
+
+<h2 id="blueclothredcloth"><span class="header-section-number">1.3</span> BlueCloth/RedCloth</h2>
+<p>前面说了，这篇文字是由BlueCloth（http://www.deveiate.org/projects/BlueCloth/）引出的， 这是一个基于Markdown(http://daringfireball.net/projects/markdown/)标记语法的Ruby Gem库， 使用它，我们可以在Ruby程序中将符合Markdown标记语法的普通文本转换成HTML格式的文本以供显示。</p>
+<p>在Ruby世界里，有一个BlueCloth的同胞兄弟，叫做RedCloth，它也是一个Ruby的Gem库，同样用于将普通的标记文本转换成HTML格式的文本， 但是，RedCloth所遵循的标记语法与BlueCloth是不一样的，它遵循的是Textism(http://www.textism.com/tools/textile/)所规定的标记语法。 ## A9text</p>
+<p>这个是自己兄弟阿九的开源项目，主要基于Javascript实现，采用自己的标记文本语法，同样采用的是基于普通标记文本格式。 A9Text可以让你在本机方便的进行文档编写，而不用去操心各种格式的编排之类的琐事，你可以从http://trydofor.iteye.com/获取更多A9Text的信息。</p>
+<h2 id="其他..."><span class="header-section-number">1.4</span> 其他...</h2>
+<p>我想，许多思想都是相似的，在其他的计算机语言或者说技术社区中，应该也存在许多基于同一思想的软件或者说产品， 只是，俺不是超人，不可能去一一认识，列位如若晓得，不妨道明，也让俺开阔些眼界。</p>
+<h1 id="基于xml格式的标记文本"><span class="header-section-number">2</span> 基于XML格式的标记文本</h1>
+<p>这部分其实只是想说说DocBook，因为笔者现在已经习惯了基于docbook的文档编写方式，谁让俺没能精通Word的使用那，呵呵。 最初决定使用docbook的时候，是记得好像OReilly内部是使用docbook作为内部格式的，后来才发现，当初没有充分考虑国情， 因为国内还是用Word进行排版的，好在使用Docbook的好处就是，我只需要关注内容就可以了，至于最终的输出格式， 可以视情况而定，我可以将同样一份docbook输出成单页的HTML，多页的HTML，PDF等格式，甚至于如果我们能够知道Word文档的内部结构， 也可以写一个转换程序，将同一份docbook文档直接转换成Word文档。</p>
+<p>实际上，这篇文字就是使用docbook编写的，通过Velocity项目提供的Docbook Framework，只需要少许几步， 就可以在Eclipse中搭建一个完备的文档编写工程，如果不考虑交换的话，只是自己编写一些东西，离了word，其实也满逍遥的。</p>
+<h1 id="小结"><span class="header-section-number">3</span> 小结</h1>
+<p>或许真的就跟Linkin Park乐队在一首歌的结尾所说的那样，“Difference Is Good ”， 即使是基于相同的理念或者说思想，但各个产品之间还是会存在些许差异，或者是标记语法的差异，或者是实现语音的差异，等等。 这就跟经常见到的语言之争，框架之争一样，或许都只是个人喜好决定的，也正是如此，才会让整个世界变得如此斑斓。</p>
+<p>但话又说回来了，有时候，选择太多了也不好，或许会让大家选择的很累，这个时候，过多的差异反而成为了问题， 能够一统天下的方式，或许又会更受欢迎，谁又知道那？！</p>
+<div class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p>《Programming Ruby》 2nd Edition<a href="#fnref1">↩</a></p></li>
+</ol>
+</div>
+                
+                <!--百度分享按钮-->
+                <div class="pull-left bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a><a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a></div>
+                <script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"1","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+
+                <!--二维码分享-->
+                <div id="wx_qr"></div>
+                <script type="text/javascript">
+                  var baseUrl = "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data="
+                  var qrUrl = baseUrl.concat(document.URL)
+                  var img = document.createElement("img")
+                  img.setAttribute("src", qrUrl)
+
+                  document.getElementById("wx_qr").appendChild(img)
+                </script>
+
+
+                <div id="disqus_thread"></div>
+                <script type="text/javascript">
+                    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+                    var disqus_shortname = 'afoo'; // required: replace example with your forum shortname
+
+                    /* * * DON'T EDIT BELOW THIS LINE * * */
+                    (function() {
+                        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                    })();
+                </script>
+                <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+                <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+              </div>
+              </div>
+              </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 footer">
+                  <hr>
+                  <p>©FuqiangWang@<a href="http://keevol.com">keevol.com</a></p>
+                  <p>Powered by <a href="http://johnmacfarlane.net/pandoc/">pandoc</a> and <a href="http://pages.github.com/">github pages</a></p>
+                </div>
+            </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="/js/jquery-2.1.1.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1000502179'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s11.cnzz.com/z_stat.php%3Fid%3D1000502179%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));</script>
+  </body>
+
+</html>

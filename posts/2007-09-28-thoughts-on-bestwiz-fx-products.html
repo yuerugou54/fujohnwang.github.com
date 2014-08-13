@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+  <head>
+	  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	  <title>Bestwiz FX产品化路上的建议</title>
+	  <meta name="author" content="FuqiangWang">
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="shortcut icon" href="favicon.ico">
+                    
+    <link href='/font/Syncopate/stylesheet.css' rel='stylesheet' type='text/css'>
+    <link href='/font/News_Cycle/stylesheet.css' rel='stylesheet' type='text/css'>
+
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/bootstrap-theme.min.css" rel="stylesheet">
+    <link href="/css/afoo.me.css" rel="stylesheet">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-3 sidebar">
+            <a href="/">
+                <img src="/images/profile-icon.png" class="img-circle img-responsive" width="160px" style="margin: 0 auto;" />
+                <h2 class="text-center">AFOO.ME</h2>
+            </a>
+            <p class="text-center lead slogan"><a href="/slogan.html">lollapalooza &amp; positioning</a></p>
+
+            <ul class="nav nav-pills nav-stacked">
+              <li><a href="/favorite.html" class="text-center"><i class="icon-star-empty"></i> Favorite</a></li>
+              <li><a href="/dashboard.html" class="text-center"><i class="icon-fullscreen"></i> Dashboard</a></li>
+              <li><a href="/" class="text-center"><i class="icon-folder-close-alt"></i> Archives</a></li>
+              <li><a href="/whoami.html" class="text-center"><i class="icon-user-md"></i> About</a></li>
+            </ul>
+
+        </div>
+        <div class="col-md-9 col-md-offset-3 main">
+            <div class="row">
+              <div class="container-fluid">
+                
+                <div class="row">
+                                <div id="header">
+                <p class="lead">
+                <h1 class="title">Bestwiz FX产品化路上的建议&nbsp;&nbsp;
+                <small>
+                                </small>
+                </h1>
+                </p>
+                </div>
+                                <div>
+
+                <hr>
+
+                                <div id="TOC">
+                <ul>
+                <li><a href="#系统架构上的调整"><span class="toc-section-number">1</span> 系统架构上的调整</a><ul>
+                <li><a href="#程序架构上的调整"><span class="toc-section-number">1.1</span> 程序架构上的调整</a></li>
+                <li><a href="#整体架构上的调整"><span class="toc-section-number">1.2</span> 整体架构上的调整</a></li>
+                </ul></li>
+                <li><a href="#应该加入统一的管理接口"><span class="toc-section-number">2</span> 应该加入统一的管理接口</a></li>
+                </ul>
+                </div>
+                                <blockquote>
+<p>2014年从msn space存档中重新恢复出来！</p>
+</blockquote>
+<p>因为一直忙于BATCH TEAM的日常管理和开发任务，可能对整体系统把握上不是十分的全面，故此，以下观点可能存在些许偏颇，如要施行，希望仅以谨慎之态度而为之。</p>
+<h1 id="系统架构上的调整"><span class="header-section-number">1</span> 系统架构上的调整</h1>
+<h2 id="程序架构上的调整"><span class="header-section-number">1.1</span> 程序架构上的调整</h2>
+<p>核心模块和功能不应该过于耦合与底层资源以及其他功能实现的管理，进而导致各个模块与核心模块的耦合性过高，作为核心模块以及提供的功能，应该提供足够的灵活性以保证依赖于之的各个模块和功能能够容易的集成，而不应该强求各个模块紧密耦合于核心模块和功能所依附的底层资源和功能。</p>
+<p>应该在现有程序架构基础上，抽取并规范各个模块交互和功能的接口，以保证各个模块之间的规范化交互和整体上的一致性，对于任何机构和产品来说，一致性是至关重要的。</p>
+<h2 id="整体架构上的调整"><span class="header-section-number">1.2</span> 整体架构上的调整</h2>
+<ul>
+<li>逐步抽取并规范主要模块和功能，使之可以独立于各外层模块，而不应该与各外层模块绑定太紧，实际上，可能原来的设计理念就是在核心模块和功能之上包括不同的facade以保证整个系统的可扩展性，但起码现在没有得到严格的贯彻和执行。</li>
+<li>引入可插拔的模块设计，新的功能模块可以以热部署的方式发布，尽量保证服务不重启的情况下进行模块发布和维护工作。这样的好处就是，即使某个模块新的版本出现问题，也可以通过rollback到上一个版本来避免长时间的服务中断。当然，这个理念实现和执行起来可能不是像说的那么容易，毕竟，这个需要从整体系统进行考虑，单一模块实现模块的版本化控制没有太大意义，虽然也会带来一定的好处。</li>
+</ul>
+<h1 id="应该加入统一的管理接口"><span class="header-section-number">2</span> 应该加入统一的管理接口</h1>
+<p>现在整个系统没有统一的管理接口，只有被动的监控机能，而且监控方式繁多。对于一个系统来说，监控是一方面，可以对系统状态进行调整则是另一方面。</p>
+<p>监控可以有很多手段，但如果针对同一个系统，却拥有方式繁多的监控手段，对于系统维护和运营不能不说是一个很大的负担，统一化监控手段应该是产品化的路上的一个关注点。</p>
+<p>一个成熟的产品，不应该只靠被动的监控来保证系统的正常运行，更应该考虑主动的对系统状态进行调整。这实际上是现在的FX产品中最缺少的一环。如果某个系统参数导致系统性能下降，不应该是靠重启服务来调整，在运行时调整并保证服务的正常执行才是比较令人满意的解决方式。</p>
+<p>待续...</p>
+<p>BTW. 今天晚上酒喝大了，头疼的情况下写下的文字，恐怕只是部分呓语，呵呵，看官最好加入自己的判断。可能以上所有的东西都是Nonsense。</p>
+                
+                <!--百度分享按钮-->
+                <div class="pull-left bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a><a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a></div>
+                <script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"1","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+
+                <!--二维码分享-->
+                <div id="wx_qr"></div>
+                <script type="text/javascript">
+                  var baseUrl = "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data="
+                  var qrUrl = baseUrl.concat(document.URL)
+                  var img = document.createElement("img")
+                  img.setAttribute("src", qrUrl)
+
+                  document.getElementById("wx_qr").appendChild(img)
+                </script>
+
+
+                <div id="disqus_thread"></div>
+                <script type="text/javascript">
+                    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+                    var disqus_shortname = 'afoo'; // required: replace example with your forum shortname
+
+                    /* * * DON'T EDIT BELOW THIS LINE * * */
+                    (function() {
+                        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                    })();
+                </script>
+                <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+                <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+              </div>
+              </div>
+              </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 footer">
+                  <hr>
+                  <p>©FuqiangWang@<a href="http://keevol.com">keevol.com</a></p>
+                  <p>Powered by <a href="http://johnmacfarlane.net/pandoc/">pandoc</a> and <a href="http://pages.github.com/">github pages</a></p>
+                </div>
+            </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="/js/jquery-2.1.1.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1000502179'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s11.cnzz.com/z_stat.php%3Fid%3D1000502179%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));</script>
+  </body>
+
+</html>

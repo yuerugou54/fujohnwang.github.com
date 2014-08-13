@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+  <head>
+	  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	  <title>Java Daemon Control</title>
+	  <meta name="author" content="FuqiangWang">
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="shortcut icon" href="favicon.ico">
+            <style type="text/css">
+    table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+      margin: 0; padding: 0; vertical-align: baseline; border: none; }
+    table.sourceCode { width: 100%; line-height: 100%; }
+    td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+    td.sourceCode { padding-left: 5px; }
+    code > span.kw { color: #007020; font-weight: bold; }
+    code > span.dt { color: #902000; }
+    code > span.dv { color: #40a070; }
+    code > span.bn { color: #40a070; }
+    code > span.fl { color: #40a070; }
+    code > span.ch { color: #4070a0; }
+    code > span.st { color: #4070a0; }
+    code > span.co { color: #60a0b0; font-style: italic; }
+    code > span.ot { color: #007020; }
+    code > span.al { color: #ff0000; font-weight: bold; }
+    code > span.fu { color: #06287e; }
+    code > span.er { color: #ff0000; font-weight: bold; }
+    </style>
+                
+    <link href='/font/Syncopate/stylesheet.css' rel='stylesheet' type='text/css'>
+    <link href='/font/News_Cycle/stylesheet.css' rel='stylesheet' type='text/css'>
+
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/bootstrap-theme.min.css" rel="stylesheet">
+    <link href="/css/afoo.me.css" rel="stylesheet">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-3 sidebar">
+            <a href="/">
+                <img src="/images/profile-icon.png" class="img-circle img-responsive" width="160px" style="margin: 0 auto;" />
+                <h2 class="text-center">AFOO.ME</h2>
+            </a>
+            <p class="text-center lead slogan"><a href="/slogan.html">lollapalooza &amp; positioning</a></p>
+
+            <ul class="nav nav-pills nav-stacked">
+              <li><a href="/favorite.html" class="text-center"><i class="icon-star-empty"></i> Favorite</a></li>
+              <li><a href="/dashboard.html" class="text-center"><i class="icon-fullscreen"></i> Dashboard</a></li>
+              <li><a href="/" class="text-center"><i class="icon-folder-close-alt"></i> Archives</a></li>
+              <li><a href="/whoami.html" class="text-center"><i class="icon-user-md"></i> About</a></li>
+            </ul>
+
+        </div>
+        <div class="col-md-9 col-md-offset-3 main">
+            <div class="row">
+              <div class="container-fluid">
+                
+                <div class="row">
+                                <div id="header">
+                <p class="lead">
+                <h1 class="title">Java Daemon Control&nbsp;&nbsp;
+                <small>
+                                </small>
+                </h1>
+                </p>
+                </div>
+                                <div>
+
+                <hr>
+
+                                <div id="TOC">
+                <ul>
+                <li><a href="#old-days-solutions"><span class="toc-section-number">1</span> Old Days Solutions</a></li>
+                <li><a href="#alternatives-available-today"><span class="toc-section-number">2</span> Alternatives Available Today</a></li>
+                <li><a href="#my-choice"><span class="toc-section-number">3</span> My Choice</a><ul>
+                <li><a href="#signal"><span class="toc-section-number">3.1</span> Signal</a></li>
+                <li><a href="#signalhandler"><span class="toc-section-number">3.2</span> SignalHandler</a></li>
+                <li><a href="#glue-them-together"><span class="toc-section-number">3.3</span> Glue them together</a></li>
+                </ul></li>
+                <li><a href="#参考文档"><span class="toc-section-number">4</span> 参考文档</a></li>
+                </ul>
+                </div>
+                                <p>As to desktop or normal Java applications, we can easily know when we should shutdown the application or not, because users have explicit ways to do this, for example, for a Swing Application, usually a &quot;CLOSE&quot; menu or tool-bar item will be available, or directly click the &quot;X&quot; icon on the left/right top of the window. But for a Java application that will be run as a server process(which don't need interactive behavior), what we do?</p>
+<h1 id="old-days-solutions"><span class="header-section-number">1</span> Old Days Solutions</h1>
+<p>Directly “kill -9 ” ? Of course, that's a way, but that's too brutal.</p>
+<p>A Java process that will be run as a server process usually will be sent to OS's background to run, that's called “daemon ” on Unix and “service ” on Windows. A Simple way to control the life-cycle of a Java daemon is to start a loop and wait for user input, like this:</p>
+<pre class="sourceCode java"><code class="sourceCode java">BufferedReader reader = <span class="kw">new</span> BufferedReader(<span class="kw">new</span> InputStreamReader(System.<span class="fu">in</span>));  
+String line = <span class="kw">null</span>;  
+<span class="kw">do</span> {  
+    line = reader.<span class="fu">readLine</span>();  
+    <span class="kw">if</span> (line != <span class="kw">null</span> &amp;&amp; line.<span class="fu">equals</span>(<span class="st">&quot;quit&quot;</span>)) {  
+        <span class="kw">break</span>; <span class="co">// and exit gracefully  </span>
+    }  
+}  
+<span class="kw">while</span> (<span class="kw">true</span>);  
+  
+<span class="co">// clean up and exit  </span></code></pre>
+<p>This solution is better than just start an infinite loop and do nothing, because the latter solution will occupy all of your CPU's power(I have seen such a stupid solution and it does exist). But this is still not a best one, although users can interactive with it, the process itself have no way to notify the process to exit. That's, you can control it from outside, but can't do it from inside.</p>
+<p>Another mostly used solution is, start a TCP server socket and listen control requests, when termination control request is received, a loop based on control flag will break and exit. This is similar to above solution, just with another communication channel. <a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a></p>
+<p>A common pattern for both solution can be found,that's, set up a control flag to start a loop with, and then wait for other channels to change the control flag. This can be formulated as:</p>
+<pre class="sourceCode java"><code class="sourceCode java"><span class="dt">boolean</span> running = <span class="kw">true</span>;  
+  
+<span class="kw">while</span>(running)  
+{  
+    <span class="co">// do Sth.  </span>
+}  
+<span class="co">// exit</span></code></pre>
+<p>As to how to change the control flag, there are two solutions presented, can you find more?</p>
+<h1 id="alternatives-available-today"><span class="header-section-number">2</span> Alternatives Available Today</h1>
+<p>Old Days Solutions have their pros and cons, today more solutions are available for us.</p>
+<p>The first one is Jakarta Commons Daemon . It provides a Java daemon solution with native Jsvc and Procrun support.</p>
+<p>The second and third are Java Service Wrapper and yajsw , The former is a commerce solution now, and the latter is an open source one which has some works based on the former(there is a possibility that I misunderstand its introduction).</p>
+<p>Other Solutions are Akuma , Start-Stop-Daemon, or Classword , but I don't get patience to read their document. If you are interested in them,follow the links I provide or google them.</p>
+<h1 id="my-choice"><span class="header-section-number">3</span> My Choice</h1>
+<p>I choose to combine shell and “sun.misc.Signal ” and “sun.misc.SignalHandler ” to achieve Java daemon, because they are much simpler to me to understand them and use them. The Shell will take care of running-in-background stuff:</p>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="co">#!/bin/sh  </span>
+<span class="kw">java</span> -cp your_class_path com.domain.main_class <span class="kw">&lt;&amp;-</span> <span class="kw">&amp;</span>  
+<span class="ot">pid=$!</span>  
+<span class="kw">echo</span> <span class="ot">${pid}</span> <span class="kw">&gt;</span> mydaemon.pid  </code></pre>
+<p>And “sun.misc.Signal ” and “sun.misc.SignalHandler ” will take care of controlling the life-cycle of the program. About “sun.misc.Signal ” and “sun.misc.SignalHandler ” , you can find more information at 参考文档 , here I just simply introduce how to use them together to achieve asynchronous communication between processes or just internally in a same process.</p>
+<p>The concept of “sun.misc.Signal ” and “sun.misc.SignalHandler ” is simple</p>
+<h2 id="signal"><span class="header-section-number">3.1</span> Signal</h2>
+<p>Signal is the signal that u will send to SignalHandler to process, so you can create a Signal just like instantiate a simple value object:</p>
+<pre class="sourceCode java"><code class="sourceCode java">Signal sig = <span class="kw">new</span> <span class="fu">Signal</span>(<span class="st">&quot;USR1&quot;</span>);  </code></pre>
+<p>The signal names you pass to “Signal ” conform a pattern, that's, remove the prefix &quot;SIG&quot; from the name of the standard signals that's used by JVM. For example, if you want to send “SIGINT ” , then you create “Signal ” instance with name of “INT ” ; If you want to send “SIGTERM ” , you create “Signal ” instance with name of “TERM ” :</p>
+<pre class="sourceCode java"><code class="sourceCode java">Signal interactiveSignal = <span class="kw">new</span> <span class="fu">Signal</span>(<span class="st">&quot;INT&quot;</span>);  
+Signal terminationSignal = <span class="kw">new</span> <span class="fu">Signal</span>(<span class="st">&quot;TERM&quot;</span>);</code></pre>
+<p>Fucking Simple, right?</p>
+<p>After you have a Signal, you can send it out by using “Signal ” class's “raise ” method:</p>
+<pre class="sourceCode java"><code class="sourceCode java">Signal.<span class="fu">raise</span>(sig);   
+Signal.<span class="fu">raise</span>(interactiveSignal);   
+Signal.<span class="fu">raise</span>(terminationSignal);   </code></pre>
+<h2 id="signalhandler"><span class="header-section-number">3.2</span> SignalHandler</h2>
+<p>As the name indicates, “SignalHandler ” will take the responsibility of handling the “Signal ” s. You implements your own signal handlers by implementing the “SignalHandler ” interface. It has only one method:</p>
+<pre class="sourceCode java"><code class="sourceCode java"><span class="kw">public</span> <span class="kw">class</span> MySigHandler <span class="kw">implements</span> SignalHandler {  
+  
+    <span class="kw">public</span> <span class="dt">void</span> <span class="fu">handle</span>(Signal sig) {  
+        <span class="co">// ...  </span>
+    }  
+}  </code></pre>
+<p>It's fucking simple too.</p>
+<h2 id="glue-them-together"><span class="header-section-number">3.3</span> Glue them together</h2>
+<p>After you get both “Signal ” and “SignalHandler ” of your own, you should link them together to make it work. This is by “Signal ” class's static method “handle ” :</p>
+<pre class="sourceCode java"><code class="sourceCode java">MySigHandler sigHandler = <span class="kw">new</span> <span class="fu">MySigHandler</span>();  
+Signal.<span class="fu">handle</span>(sig, sigHandler);  
+Signal.<span class="fu">handle</span>(interactiveSignal, sigHandler);  
+Signal.<span class="fu">handle</span>(terminationSignal, sigHandler);  </code></pre>
+<p>Now as long as you add them to your java programs and send proper signals to it, the pairs of “Signal ” and “SignalHandler ” will work for you.</p>
+<p>You have 2 ways to send signals to your program's process:</p>
+<ol style="list-style-type: decimal">
+<li>Use Signal.raise() internally.
+<ul>
+<li>This can help to coordinate application's internal state and help to control the life-cycle internally. For example, as long as internal worker thread dies, it can send out a signal, when signal hander finds that all other the worker threads die, it can change the control flag of the whole process and terminate it gracefully.</li>
+</ul></li>
+<li>Send Signal from other processes.
+<ul>
+<li>directly send out supported OS signal via shell scripts: <code>kill -s SIGUSR1 &lt;pid of the process&gt;</code>, combining the pid you get in before shell, this works perfectly.</li>
+</ul></li>
+</ol>
+<p>The only cons to use “Signal ” and “SignalHandler ” is, they are both restricted API which are not guaranteed.</p>
+<h1 id="参考文档"><span class="header-section-number">4</span> 参考文档</h1>
+<ol style="list-style-type: decimal">
+<li>Revelations on Java signal handling and termination . http://www.ibm.com/developerworks/java/library/i-signalhandling/ .</li>
+<li>基于OS信号实现Java异步通知 . http://kenwublog.com/java-asynchronous-notify-based-on-signal .</li>
+<li>Java Daemon . http://barelyenough.org/blog/2005/03/java-daemon/ .</li>
+</ol>
+<div class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p>To use this solution, you'd better add authentication to your control service so that others with malicious purpose will not hurt you.<a href="#fnref1">↩</a></p></li>
+</ol>
+</div>
+                
+                <!--百度分享按钮-->
+                <div class="pull-left bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a><a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a></div>
+                <script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"1","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+
+                <!--二维码分享-->
+                <div id="wx_qr"></div>
+                <script type="text/javascript">
+                  var baseUrl = "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data="
+                  var qrUrl = baseUrl.concat(document.URL)
+                  var img = document.createElement("img")
+                  img.setAttribute("src", qrUrl)
+
+                  document.getElementById("wx_qr").appendChild(img)
+                </script>
+
+
+                <div id="disqus_thread"></div>
+                <script type="text/javascript">
+                    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+                    var disqus_shortname = 'afoo'; // required: replace example with your forum shortname
+
+                    /* * * DON'T EDIT BELOW THIS LINE * * */
+                    (function() {
+                        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                    })();
+                </script>
+                <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+                <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+              </div>
+              </div>
+              </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 footer">
+                  <hr>
+                  <p>©FuqiangWang@<a href="http://keevol.com">keevol.com</a></p>
+                  <p>Powered by <a href="http://johnmacfarlane.net/pandoc/">pandoc</a> and <a href="http://pages.github.com/">github pages</a></p>
+                </div>
+            </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="/js/jquery-2.1.1.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1000502179'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s11.cnzz.com/z_stat.php%3Fid%3D1000502179%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));</script>
+  </body>
+
+</html>

@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+  <head>
+	  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	  <title>pandoc中文pdf转换攻略</title>
+	  <meta name="author" content="FuqiangWang">
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="shortcut icon" href="favicon.ico">
+            <style type="text/css">
+    table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+      margin: 0; padding: 0; vertical-align: baseline; border: none; }
+    table.sourceCode { width: 100%; line-height: 100%; }
+    td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+    td.sourceCode { padding-left: 5px; }
+    code > span.kw { color: #007020; font-weight: bold; }
+    code > span.dt { color: #902000; }
+    code > span.dv { color: #40a070; }
+    code > span.bn { color: #40a070; }
+    code > span.fl { color: #40a070; }
+    code > span.ch { color: #4070a0; }
+    code > span.st { color: #4070a0; }
+    code > span.co { color: #60a0b0; font-style: italic; }
+    code > span.ot { color: #007020; }
+    code > span.al { color: #ff0000; font-weight: bold; }
+    code > span.fu { color: #06287e; }
+    code > span.er { color: #ff0000; font-weight: bold; }
+    </style>
+                
+    <link href='/font/Syncopate/stylesheet.css' rel='stylesheet' type='text/css'>
+    <link href='/font/News_Cycle/stylesheet.css' rel='stylesheet' type='text/css'>
+
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/bootstrap-theme.min.css" rel="stylesheet">
+    <link href="/css/afoo.me.css" rel="stylesheet">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-3 sidebar">
+            <a href="/">
+                <img src="/images/profile-icon.png" class="img-circle img-responsive" width="160px" style="margin: 0 auto;" />
+                <h2 class="text-center">AFOO.ME</h2>
+            </a>
+            <p class="text-center lead slogan"><a href="/slogan.html">lollapalooza &amp; positioning</a></p>
+
+            <ul class="nav nav-pills nav-stacked">
+              <li><a href="/favorite.html" class="text-center"><i class="icon-star-empty"></i> Favorite</a></li>
+              <li><a href="/dashboard.html" class="text-center"><i class="icon-fullscreen"></i> Dashboard</a></li>
+              <li><a href="/" class="text-center"><i class="icon-folder-close-alt"></i> Archives</a></li>
+              <li><a href="/whoami.html" class="text-center"><i class="icon-user-md"></i> About</a></li>
+            </ul>
+
+        </div>
+        <div class="col-md-9 col-md-offset-3 main">
+            <div class="row">
+              <div class="container-fluid">
+                
+                <div class="row">
+                                <div id="header">
+                <p class="lead">
+                <h1 class="title">pandoc中文pdf转换攻略&nbsp;&nbsp;
+                <small>
+                                    王福强
+                                </small>
+                </h1>
+                </p>
+                </div>
+                                <div>
+
+                <hr>
+
+                                <p>按照pandoc官方网站说明，下载<a href="http://www.tug.org/mactex/morepackages.html">BasicTex</a>以及MacTeX-Additions， 不管三七二十一，一并装了，才占用几百M，在这个年月，&quot;洒洒水&quot;啦~</p>
+<p>装完后，运行<code>pandoc --latex-engine=xelatex -V mainfont=Hei 统一投放平台规划与设想.md -o tek.pdf</code>, 发现tnd不给换行，太长的行直接截断，好啦，第一个症状出现了...</p>
+<p>遂Google之， 发现了这篇<a href="https://groups.google.com/forum/#!topic/pandoc-discuss/GIy4crum8II">https://groups.google.com/forum/#!topic/pandoc-discuss/GIy4crum8II</a>, 但貌似还是没有答案，也不知道纠结了多久，在pandoc官网导航栏里，点了[<a href="https://github.com/jgm/pandoc/wiki/Pandoc-Extras">Extras</a>], 寻摸， 突然发现接近页尾的地方有中文翻译的pandoc文档项目，有转换时用的命令行说明以及其他几个文档，点进<a href="https://github.com/tzengyuxio/pages/blob/gh-pages/pandoc/convert.sh">https://github.com/tzengyuxio/pages/blob/gh-pages/pandoc/convert.sh</a>,发现如下命令赫然在目:</p>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">pandoc</span> pandoc.markdown -o pandoc-zhtw.pdf --toc --smart --template=pm-template --latex-engine=xelatex -V mainfont=<span class="st">&#39;LiHei Pro&#39;</span></code></pre>
+<p>哈哈， 太爽了， 马上<code>git clone</code>这个项目到本地，查看输出的pdf，发现格式完全没有问题，我直接把模板拿过来用不就搞定了嘛，so:</p>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">pandoc</span> --latex-engine=xelatex -V mainfont=<span class="st">&#39;LiHei Pro&#39;</span> --template=pm-template 统一投放平台规划与设想.md -o tek.pdf</code></pre>
+<p>But， Shit happens...</p>
+<pre>
+pandoc: Error producing PDF from TeX source.
+! LaTeX Error: File `titling.sty' not found.
+
+Type X to quit or <RETURN> to proceed,
+or enter new name. (Default extension: sty)
+
+Enter file name:
+! Emergency stop.
+<read *>
+
+l.65 \setlength
+</pre>
+
+<p>没关系， 继续google， 嗯，貌似是某个Latex包没有， 发现CTAN有这么个包下载，可下下来也不会安装啊，应该有现成的包管理器吧？！ 搜来搜去，果然有，嘿嘿:</p>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">sudo</span> tlmgr install titling</code></pre>
+<p>继续运行， 发现还缺“lastpage.sty”， 同理安装， 再运行， No news is good news, 命令运行成功， 马上查看运行结果，NND，内容是生成了，咋许多汉字变成了方框啊！！！</p>
+<p>哦，对了， LiHei Pro这个字体貌似不是完全支持中文的字体，换换命令：<code>pandoc --latex-engine=xelatex -V mainfont=Hei --template=pm-template 统一投放平台规划与设想.md -o tek.pdf</code>, 换成黑体，运行后还是方框， fuck， 打开pm-template.latex，发现有字体设置的地方也是LiHei Pro，改之， 再运行， OH YEAH, 完美结果！</p>
+<p>好啦， 最后总结一下：</p>
+<ol style="list-style-type: decimal">
+<li>安装BasicTex;</li>
+<li>把<https://github.com/tzengyuxio/pages>项目中的pm-template.latex模板提前弄下来，将LiHei Pro字体改为黑体或者其它完全支持中文的字体；</li>
+<li>使用tlmgr包管理器把titling.sty和lastpage.sty两个依赖装上；</li>
+<li>运行pandoc生成pdf， 当然，不要忘了要使用到第二步更改过的template文件，并指定&quot;--latex-engine=xelatex -V mainfont=Hei&quot;</li>
+</ol>
+<p>仅此文献给那些依然为相似问题而苦恼的兄弟姐妹们， 如果可以，记得请我吃饭，比如海宝同学，哈哈哈</p>
+<hr />
+<p><strong>补充部分</strong></p>
+<p>有些时候， 默认的repository下找不到相应的包，所以， 这个时候可以使用<code>sudo tlmgr --repository http://mirrors.ustc.edu.cn/CTAN/systems/texlive/tlnet install CJKfntef</code>类似的命令来安装，但是，因为授权协议之类问题， 即使指定repository也不一定找得到， 最后就得手动安装了。</p>
+首先运行<code>kpsewhich -var-value=TEXMFHOME</code>找出tex安装目录（我本地系统是在/Users/fujohnwang/Library/texmf）， 然后：
+<pre>
+sudo mkdir -p texmf/tex/latex/local/
+sudo cp Downloads/CJKfntef.sty ~/Library/texmf/tex/latex/local
+</pre>
+
+
+<blockquote>
+<p>MMD， pandoc的markdown中如果插入图片的话，经常报错， 这个时候，检查一下图片是否是gif格式，如果是，那么将其转成png格式， 这真是一个大坑，老子耗费了差不多一天的时间来解决这个问题， 因为报错信息基本没参考价值， 就各种google， 各种装依赖尝试， 各种改模板，总之各种折腾， 最后是通过先转成latex中间格式，然后再使用xelatex从latex格式转pdf的log中才瞅出些许端倪，然后将gif改成png格式之后， 哇啦， 顺利通关！</p>
+</blockquote>
+                
+                <!--百度分享按钮-->
+                <div class="pull-left bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a><a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a></div>
+                <script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"1","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+
+                <!--二维码分享-->
+                <div id="wx_qr"></div>
+                <script type="text/javascript">
+                  var baseUrl = "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data="
+                  var qrUrl = baseUrl.concat(document.URL)
+                  var img = document.createElement("img")
+                  img.setAttribute("src", qrUrl)
+
+                  document.getElementById("wx_qr").appendChild(img)
+                </script>
+
+
+                <div id="disqus_thread"></div>
+                <script type="text/javascript">
+                    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+                    var disqus_shortname = 'afoo'; // required: replace example with your forum shortname
+
+                    /* * * DON'T EDIT BELOW THIS LINE * * */
+                    (function() {
+                        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                    })();
+                </script>
+                <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+                <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+              </div>
+              </div>
+              </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 footer">
+                  <hr>
+                  <p>©FuqiangWang@<a href="http://keevol.com">keevol.com</a></p>
+                  <p>Powered by <a href="http://johnmacfarlane.net/pandoc/">pandoc</a> and <a href="http://pages.github.com/">github pages</a></p>
+                </div>
+            </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="/js/jquery-2.1.1.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1000502179'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s11.cnzz.com/z_stat.php%3Fid%3D1000502179%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));</script>
+  </body>
+
+</html>

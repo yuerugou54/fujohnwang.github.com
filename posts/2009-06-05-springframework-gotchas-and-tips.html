@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+  <head>
+	  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	  <title>Spring使用中的陷阱和诀窍（Spring Gochas and Tips）</title>
+	  <meta name="author" content="FuqiangWang">
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="shortcut icon" href="favicon.ico">
+            <style type="text/css">
+    table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+      margin: 0; padding: 0; vertical-align: baseline; border: none; }
+    table.sourceCode { width: 100%; line-height: 100%; }
+    td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+    td.sourceCode { padding-left: 5px; }
+    code > span.kw { color: #007020; font-weight: bold; }
+    code > span.dt { color: #902000; }
+    code > span.dv { color: #40a070; }
+    code > span.bn { color: #40a070; }
+    code > span.fl { color: #40a070; }
+    code > span.ch { color: #4070a0; }
+    code > span.st { color: #4070a0; }
+    code > span.co { color: #60a0b0; font-style: italic; }
+    code > span.ot { color: #007020; }
+    code > span.al { color: #ff0000; font-weight: bold; }
+    code > span.fu { color: #06287e; }
+    code > span.er { color: #ff0000; font-weight: bold; }
+    </style>
+                
+    <link href='/font/Syncopate/stylesheet.css' rel='stylesheet' type='text/css'>
+    <link href='/font/News_Cycle/stylesheet.css' rel='stylesheet' type='text/css'>
+
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/bootstrap-theme.min.css" rel="stylesheet">
+    <link href="/css/afoo.me.css" rel="stylesheet">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-3 sidebar">
+            <a href="/">
+                <img src="/images/profile-icon.png" class="img-circle img-responsive" width="160px" style="margin: 0 auto;" />
+                <h2 class="text-center">AFOO.ME</h2>
+            </a>
+            <p class="text-center lead slogan"><a href="/slogan.html">lollapalooza &amp; positioning</a></p>
+
+            <ul class="nav nav-pills nav-stacked">
+              <li><a href="/favorite.html" class="text-center"><i class="icon-star-empty"></i> Favorite</a></li>
+              <li><a href="/dashboard.html" class="text-center"><i class="icon-fullscreen"></i> Dashboard</a></li>
+              <li><a href="/" class="text-center"><i class="icon-folder-close-alt"></i> Archives</a></li>
+              <li><a href="/whoami.html" class="text-center"><i class="icon-user-md"></i> About</a></li>
+            </ul>
+
+        </div>
+        <div class="col-md-9 col-md-offset-3 main">
+            <div class="row">
+              <div class="container-fluid">
+                
+                <div class="row">
+                                <div id="header">
+                <p class="lead">
+                <h1 class="title">Spring使用中的陷阱和诀窍（Spring Gochas and Tips）&nbsp;&nbsp;
+                <small>
+                                </small>
+                </h1>
+                </p>
+                </div>
+                                <div>
+
+                <hr>
+
+                                <div id="TOC">
+                <ul>
+                <li><a href="#陷阱gochas"><span class="toc-section-number">1</span> 陷阱(Gochas)</a><ul>
+                <li><a href="#说事儿"><span class="toc-section-number">1.1</span> 说事儿</a></li>
+                <li><a href="#结论"><span class="toc-section-number">1.2</span> 结论</a></li>
+                </ul></li>
+                <li><a href="#诀窍tips"><span class="toc-section-number">2</span> 诀窍(Tips)</a><ul>
+                <li><a href="#说事儿-1"><span class="toc-section-number">2.1</span> 说事儿</a></li>
+                <li><a href="#结论-1"><span class="toc-section-number">2.2</span> 结论</a></li>
+                <li><a href="#caution"><span class="toc-section-number">2.3</span> CAUTION</a></li>
+                </ul></li>
+                </ul>
+                </div>
+                                <p>本来想就这个写一系列的东西，不过， 很难拼凑足够数量的案例(自然也成不了书)，所以， 先暂且随手捡两个掰一掰， 一个黑的，一个红的...</p>
+<h1 id="陷阱gochas"><span class="header-section-number">1</span> 陷阱(Gochas)</h1>
+<h2 id="说事儿"><span class="header-section-number">1.1</span> 说事儿</h2>
+<p>话说PACMAN项目需要对DTC来的消息处理过程进行优化，这活儿到我头上了， 本来吧， 小事儿， 虽然数据量一下子从两三万蹿到100万左右， 首先咱可以提高worker threads的数量嘛， 实在不行， 咱再考虑分布， 但这是宏观上的， 这里的小陷阱存在于细节中， 有句话叫做“The problem isn't design; it's implementation.”， 说的就是这个道理， 不过，这有些扯远了...</p>
+<p>程序重构完了，该测试了。 第一次启动Weblogic， 测了一轮， 有些地方需要持续修正， 程序部署之后， 重新启动Weblogic，当当， 异常来啦！</p>
+<pre>
+javax.jms.JMSException: Duplicate durable subcription detected
+        at com.tibco.tibjms.Tibjmsx.buildException(Tibjmsx.java:562)
+        at com.tibco.tibjms.TibjmsSession._createConsumer(TibjmsSession.java:437)
+        at com.tibco.tibjms.TibjmsSession._createConsumer(TibjmsSession.java:366)
+        at com.tibco.tibjms.TibjmsSession.createDurableSubscriber(TibjmsSession.java:3950)
+        at com.tibco.tibjms.TibjmsTopicSession.createDurableSubscriber(TibjmsTopicSession.java:114)
+        at com.citigroup.posmgmt.util.consumer.JMSTopicConsumer.initialiseService(JMSTopicConsumer.java:105)
+        at com.citigroup.posmgmt.util.consumer.DTCMsgConsumer.initService(DTCMsgConsumer.java:146)
+        at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+        at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:39)
+        at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:25)
+        at java.lang.reflect.Method.invoke(Method.java:585)
+        at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeCustomInitMethod(AbstractAutowireCapableBeanFactory.java:1133)
+        at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1095)
+        at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:396)
+        at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:233)
+        at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:145)
+        at com.citigroup.posmgmt.ejb.AdminMsgHandler.startRealTimeConsumer(AdminMsgHandler.java:135)
+        at com.citigroup.posmgmt.ejb.AdminMsgHandler.onMessage(AdminMsgHandler.java:68)
+        at weblogic.ejb.container.internal.MDListener.execute(MDListener.java:429)
+        at weblogic.ejb.container.internal.MDListener.transactionalOnMessage(MDListener.java:335)
+        at weblogic.ejb.container.internal.MDListener.onMessage(MDListener.java:291)
+        at weblogic.jms.client.JMSSession.onMessage(JMSSession.java:4072)
+        at weblogic.jms.client.JMSSession.execute(JMSSession.java:3962)
+        at weblogic.jms.client.JMSSession$UseForRunnable.run(JMSSession.java:4490)
+        at weblogic.work.ExecuteRequestAdapter.execute(ExecuteRequestAdapter.java:21)
+        at weblogic.kernel.ExecuteThread.execute(ExecuteThread.java:145)
+        at weblogic.kernel.ExecuteThread.run(ExecuteThread.java:117)
+</pre>
+
+
+<p>他娘的， 不能把？！怎么隐约记得之前好象测试其他地方的时候也遇到过类似的问题那？ 不过， 那时候也不知道怎么糊弄过去了， 看来不成， 确实哪里有问题啊！</p>
+<p>EMS服务器还是人家NY的， 咱也上不去阿， 能上去也好看一下是不是其他连接在那里， 到底谁在捣乱， 发信给NY，告诉没权限， nnd， google吧， 围绕EMS和这个异常折腾了好是一通， 未果。 忘了都折腾啥了， 反正我是彻底的翻了一遍code和spring配置文件， destroy方法真真切切的在那里，我都挨个字母得对名称啊， 对完了也没发现有问题。</p>
+<p>最后， 不管了， 出去溜达了一圈， 回头一想， tnnd，不会之前的代码没有触发对象销毁的行为吧？不然，这多出来的连接到底哪里来的？好像除了我也没人在做同样的事情啊！ 查入口类StartupManager， 得， 还真他娘的是这么回事， shutDownService（）方法只有抛出Exception的情况下才会被调用到， 正常情况下， 反而没有被调用， 靠， 这代码都跑了2年了， 这帮人居然没发现， 还好意思说， 代码都跑了两年了，没有遇到这样的问题啊， 这Batch从市场关闭到市场开启的近乎半天时间里， 你就算不关Connection， 那服务器那边也会按照超时给你“咔嚓”掉吧？这样的跑了两年当然没问题啦！</p>
+<h2 id="结论"><span class="header-section-number">1.2</span> 结论</h2>
+<p>生活在Spring容器中的对象， 他们的生命周期是由容器来管理的， 但是， 仅仅通过实现DisposableBean接口或者通过destroy-method配置项， 甚至通过JSR250的@PreDestroy标注， 容器并不会在程序退出的时候，自动调用这些对象销毁的回调，我们必须在程序的主入口类或者其它合适的位置明确告知Spring容器， “哥们， 我要下班了，你把那些家伙都收拾了吧！”， 之后， 你通过以上所有方式指定的对象销毁逻辑才会被调用，否则， 哼哼...</p>
+<p>用行话来说就是， 如果你使用的是BeanFactory类型的IoC容器，那么，你最好在容器构造完成后， 保险起见，顺便加上以下这样的代码片断:</p>
+<pre class="sourceCode java"><code class="sourceCode java">Runtime.<span class="fu">getRuntime</span>().<span class="fu">addShutdownHook</span>(<span class="kw">new</span> Thread(){
+        <span class="fu">@Override</span>
+        <span class="kw">public</span> <span class="dt">void</span> <span class="fu">run</span>() {
+            <span class="kw">if</span>(beanFactory != <span class="kw">null</span>){
+            beanFactory.<span class="fu">destroySingletons</span>();
+            }
+        }
+    });
+    </code></pre>
+<p>如果你使用的是ApplicationContext类型的IoC容器，那么， 与上面类似</p>
+<pre class="sourceCode java"><code class="sourceCode java">ApplicationContext ctx = ...;
+((AbstractApplicationContext)ctx).<span class="fu">registerShutdownHook</span>();</code></pre>
+<p>当然了， 道理实际上跟上面BeanFactory对应的处理差不多。</p>
+<p>这样的处理虽然不能保证100%的安全，不过，只要你不是太粗鲁的对待你的应用程序，比如kill -9或者直接System.halt()之类， 这道安全网还是必要的。</p>
+<blockquote>
+<p>NOTE</p>
+<p>这个问题实际上早就写入了《Spring揭密》之中，只不过， 既然书还没出来，那就再重复一下这一言论吧！</p>
+</blockquote>
+<h1 id="诀窍tips"><span class="header-section-number">2</span> 诀窍(Tips)</h1>
+<h2 id="说事儿-1"><span class="header-section-number">2.1</span> 说事儿</h2>
+<p>还是跟JMS连接有关， 话说纽约DDI Team某天突然发彪，说， “要连接到我们的EMS服务器订阅消息，必须通过用户和密码验证， 那种不验证就使用我们服务的日子已经一去不复返了。”</p>
+<p>收到旨意之后， 你得赶快行动啊， 不然，下个release拿不到trades信息可就是你自己的问题了， 还好啦， 现在的Subscriber已经提供了这样的支持， 直接设置相应的username和pasword就行了。 不过那，如果你是通过JmsTemplate或者MessageListenerContainer来发送或者接受消息的话， 你该怎么做哪？！ 也只是通过为JmsTemplate或者MessageListenerContainer提供连接的用户名和密码设置就行了？呵呵，倒是找找看， 你是否能找到相应的setter方法吧。</p>
+<h2 id="结论-1"><span class="header-section-number">2.2</span> 结论</h2>
+<p>摘录一段别人的代码如下:</p>
+<pre class="sourceCode java"><code class="sourceCode java"><span class="kw">if</span>(String.<span class="fu">valueOf</span>(userName).<span class="fu">trim</span>().<span class="fu">length</span>()&gt;<span class="dv">0</span>) {
+    topicConn = connFactory.<span class="fu">createTopicConnection</span>(userName,password);
+} <span class="kw">else</span> {
+    topicConn = connFactory.<span class="fu">createTopicConnection</span>();
+}</code></pre>
+<p>如果你觉得JmsTemplate或者MessageListenerContainer在实现的时候也是这样处理的，那么， 在上面的那个场景中，你将浪费某些精力和时间去寻找这个方向上的答案， 但即使你去查代码，估计你也不会有啥收获。实际上，针对这个问题， Spring框架已经提供了对应的解决方案， 但是， 解决问题的角度不同而已。</p>
+<p>Spring提供了一个UserCredentialsConnectionFactoryAdapter， 通过它，对你提供给JmsTemplate或者MessageListenerContainer使用的ConnectionFactory稍微“打扮”一下就行了， 例如：</p>
+<pre class="sourceCode java"><code class="sourceCode java">ConnectionFactory cf = (ConnectionFactory) ctx.<span class="fu">lookup</span>(connectionFactoryJndiName);
+
+UserCredentialsConnectionFactoryAdapter connectionFactoryAdaptor = <span class="kw">new</span> <span class="fu">UserCredentialsConnectionFactoryAdapter</span>();
+connectionFactoryAdaptor.<span class="fu">setTargetConnectionFactory</span>(cf);
+connectionFactoryAdaptor.<span class="fu">setUsername</span>(<span class="st">&quot;ddi_admin&quot;</span>);
+connectionFactoryAdaptor.<span class="fu">setPassword</span>(<span class="st">&quot;ddi_admin&quot;</span>);
+<span class="kw">... </span><span class="co">// ***</span>
+JmsTemplate jmsTemplate = <span class="kw">new</span> <span class="fu">JmsTemplate</span>(connectionFactoryAdaptor);</code></pre>
+<p>现在， 验证信息可以生效了。 说白了， 还是包装，包装，再包装，最终都是为了“偷梁换柱”！</p>
+<h2 id="caution"><span class="header-section-number">2.3</span> CAUTION</h2>
+<p>如果是使用JmsTemplate来发送消息，为了避免JmsTemplate内部不断创建新的连接， 保险起见， 可以使用SingleConnectionFactory对ConnectionFactory再包装一层（当然了，如果拿到的ConnectionFactory早已配置了连接池来控制资源的使用，也可以不用这么做），例如：</p>
+<pre class="sourceCode java"><code class="sourceCode java">ConnectionFactory cf = (ConnectionFactory) ctx.<span class="fu">lookup</span>(connectionFactoryJndiName);
+
+UserCredentialsConnectionFactoryAdapter connectionFactoryAdaptor = <span class="kw">new</span> <span class="fu">UserCredentialsConnectionFactoryAdapter</span>();
+connectionFactoryAdaptor.<span class="fu">setTargetConnectionFactory</span>(cf);
+connectionFactoryAdaptor.<span class="fu">setUsername</span>(<span class="st">&quot;ddi_admin&quot;</span>);
+connectionFactoryAdaptor.<span class="fu">setPassword</span>(<span class="st">&quot;ddi_admin&quot;</span>);
+
+<span class="dt">final</span> SingleConnectionFactory singleCf = <span class="kw">new</span> <span class="fu">SingleConnectionFactory</span>(connectionFactoryAdaptor); 
+                                          
+    Runtime.<span class="fu">getRuntime</span>().<span class="fu">addShutdownHook</span>(<span class="kw">new</span> Thread() {
+        <span class="fu">@Override</span>
+        <span class="kw">public</span> <span class="dt">void</span> <span class="fu">run</span>() {
+        <span class="kw">try</span> {
+            singleCf.<span class="fu">destroy</span>();
+        } <span class="kw">catch</span> (Exception e) {
+            logger.<span class="fu">error</span>(<span class="st">&quot;failed to destroy single connection factory.</span><span class="ch">\n</span><span class="st">&quot;</span>);
+            logger.<span class="fu">error</span>(ExceptionUtils.<span class="fu">getFullStackTrace</span>(e));
+        }
+        }
+    });
+    
+JmsTemplate jmsTemplate = <span class="kw">new</span> <span class="fu">JmsTemplate</span>(singleCf);</code></pre>
+<p>安全第一， 安全第一...</p>
+<p>Get to Know Spring And Have Fun With Spring.</p>
+                
+                <!--百度分享按钮-->
+                <div class="pull-left bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a><a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a></div>
+                <script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"1","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+
+                <!--二维码分享-->
+                <div id="wx_qr"></div>
+                <script type="text/javascript">
+                  var baseUrl = "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data="
+                  var qrUrl = baseUrl.concat(document.URL)
+                  var img = document.createElement("img")
+                  img.setAttribute("src", qrUrl)
+
+                  document.getElementById("wx_qr").appendChild(img)
+                </script>
+
+
+                <div id="disqus_thread"></div>
+                <script type="text/javascript">
+                    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+                    var disqus_shortname = 'afoo'; // required: replace example with your forum shortname
+
+                    /* * * DON'T EDIT BELOW THIS LINE * * */
+                    (function() {
+                        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                    })();
+                </script>
+                <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+                <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+              </div>
+              </div>
+              </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 footer">
+                  <hr>
+                  <p>©FuqiangWang@<a href="http://keevol.com">keevol.com</a></p>
+                  <p>Powered by <a href="http://johnmacfarlane.net/pandoc/">pandoc</a> and <a href="http://pages.github.com/">github pages</a></p>
+                </div>
+            </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="/js/jquery-2.1.1.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1000502179'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s11.cnzz.com/z_stat.php%3Fid%3D1000502179%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));</script>
+  </body>
+
+</html>

@@ -1,0 +1,23 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><link rel="stylesheet" type="text/css" href="style.css" /><title>&#26685;&#20102;&#65292;&#21621;&#21621;</title></head><body><h1 id="blog-Title"><a href="index.html">&#21073; &#27589; &#38401;&#91;EVOLUTION&#93;</a></h1><div id="bp"><h2 id="bp-BF4768EE8B110260_691-Title">&#26685;&#20102;&#65292;&#21621;&#21621;</h2><h5 id="bp-BF4768EE8B110260_691-publish">11/8/2007 12&#58;34&#58;41 PM</h5><div id="bp-BF4768EE8B110260_691-content" class="blogpost"><div>         今天在一个问题上让李鲁朋给鄙视了，哈哈，不过这种旮旯的东西也没办法，了解就可以了，所以，贴一下权威的解释吧。</div>
+<div>  源自：  <a href="http&#58;//today.java.net/lpt/a/178"><font color="#0070c0"><u>http&#58;//today.java.net/lpt/a/178</u></font></a></div>
+<div>
+<h2>Immutable Objects</h2>
+<p>Consider the following code fragment&#58; <pre><code>
+   Integer i1 = 100;
+   Integer i2 = 100;
+   Integer i3 = 1000;
+   Integer i4 = 1000;
+   System.out.println(i1==i2);
+   System.out.println(i3==i4);
+</code></pre>
+<p>Can you guess what will be printed on the screen? If your answer is <code>false</code>--well, you're wrong.
+<p>In this case, J2SE 5.0 works differently. Certain ranges of values are stored as immutable objects by the Java Virtual Machine. So, in this case, the output is&#58;<pre><code>true
+false</code></pre>
+<p>Normally, when the primitive types are boxed into the wrapper types, the JVM allocates memory and creates a new object. But for some special cases, the JVM reuses the same object. 
+<p>The following is the list of primitives stored as immutable objects&#58; 
+<ul>
+<li><code>boolean</code> values <code>true</code> and <code>false</code>
+<li>All <code>byte</code> values
+<li><code>short</code> values between -128 and 127
+<li><code>int</code> values between -128 and 127
+<li><code>char</code> in the range <code>\u0000</code> to <code>\u007F</code></ul></div></div><h3>Comments</h3><div id="bp-BF4768EE8B110260_691-comments" class="comments"></div></div></body></html>

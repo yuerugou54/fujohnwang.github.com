@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+  <head>
+	  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	  <title>Excel-Launching With Jacob</title>
+	  <meta name="author" content="FuqiangWang">
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="shortcut icon" href="favicon.ico">
+            <style type="text/css">
+    table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+      margin: 0; padding: 0; vertical-align: baseline; border: none; }
+    table.sourceCode { width: 100%; line-height: 100%; }
+    td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+    td.sourceCode { padding-left: 5px; }
+    code > span.kw { color: #007020; font-weight: bold; }
+    code > span.dt { color: #902000; }
+    code > span.dv { color: #40a070; }
+    code > span.bn { color: #40a070; }
+    code > span.fl { color: #40a070; }
+    code > span.ch { color: #4070a0; }
+    code > span.st { color: #4070a0; }
+    code > span.co { color: #60a0b0; font-style: italic; }
+    code > span.ot { color: #007020; }
+    code > span.al { color: #ff0000; font-weight: bold; }
+    code > span.fu { color: #06287e; }
+    code > span.er { color: #ff0000; font-weight: bold; }
+    </style>
+                
+    <link href='/font/Syncopate/stylesheet.css' rel='stylesheet' type='text/css'>
+    <link href='/font/News_Cycle/stylesheet.css' rel='stylesheet' type='text/css'>
+
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/bootstrap-theme.min.css" rel="stylesheet">
+    <link href="/css/afoo.me.css" rel="stylesheet">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-3 sidebar">
+            <a href="/">
+                <img src="/images/profile-icon.png" class="img-circle img-responsive" width="160px" style="margin: 0 auto;" />
+                <h2 class="text-center">AFOO.ME</h2>
+            </a>
+            <p class="text-center lead slogan"><a href="/slogan.html">lollapalooza &amp; positioning</a></p>
+
+            <ul class="nav nav-pills nav-stacked">
+              <li><a href="/favorite.html" class="text-center"><i class="icon-star-empty"></i> Favorite</a></li>
+              <li><a href="/dashboard.html" class="text-center"><i class="icon-fullscreen"></i> Dashboard</a></li>
+              <li><a href="/" class="text-center"><i class="icon-folder-close-alt"></i> Archives</a></li>
+              <li><a href="/whoami.html" class="text-center"><i class="icon-user-md"></i> About</a></li>
+            </ul>
+
+        </div>
+        <div class="col-md-9 col-md-offset-3 main">
+            <div class="row">
+              <div class="container-fluid">
+                
+                <div class="row">
+                                <div id="header">
+                <p class="lead">
+                <h1 class="title">Excel-Launching With Jacob&nbsp;&nbsp;
+                <small>
+                                    FuqiangWang
+                                </small>
+                </h1>
+                </p>
+                </div>
+                                <div>
+
+                <hr>
+
+                                <blockquote>
+<p>2014年从msn space存档中重新恢复出来！</p>
+</blockquote>
+<p>今天发现原来的JacobExcelLauncher类有问题，不确定问题到底出在哪里，但是如果当前页面有一个该类的实例的话，从该页面重新打开一个页面，在这个新打开的页面中，重新实例化一个该类的实例，那么在新打开的页面中使用这个新的实例启动Excel文件后，原来页面中的launcher在启动Excel文件的时候就会一闪之后而没有任何反应。</p>
+<p>分析代码后估计是两个实例指向了同一个automation（具体原因确实无从考证，因为偶对于微软的程序相关的东西实在不甚了了），所以前一个实例指向的automation被改动或者破坏了，从而导致以上问题。</p>
+<p>所以，直接改为直接静态实例化，并将调用方法同时改为static的，这样反而减少了调用时候实例化的繁琐，只要最后在系统的Shell dispose的时候调用JacobExcelLauncher的release方法就可以了。</p>
+<p>附上改动后的程序代码：</p>
+<pre class="sourceCode java"><code class="sourceCode java"><span class="co">/**</span>
+
+<span class="co">* </span><span class="kw">@author </span><span class="co">Darren.Wang</span>
+
+<span class="co">* 2005/03/17</span>
+
+<span class="co">* Thanks to Samir(who is in Australia), without his help , I can&#39;t complete this work.</span>
+
+<span class="co">*/</span>
+
+<span class="kw">public</span> <span class="kw">class</span> JacobExcelLauncher {
+
+<span class="co">// excel automation</span>
+
+<span class="kw">private</span> <span class="dt">static</span> ActiveXComponent excel;
+
+
+<span class="dt">static</span>
+
+{
+
+<span class="co">// start the Excel</span>
+
+excel = <span class="kw">new</span> <span class="fu">ActiveXComponent</span>(<span class="st">&quot;Excel.Application&quot;</span>);
+
+<span class="co">// first time, we need set the excel to be invisible</span>
+
+excel.<span class="fu">setProperty</span>(<span class="st">&quot;Visible&quot;</span>,<span class="kw">new</span> <span class="fu">Variant</span>(<span class="kw">false</span>));
+
+}
+
+<span class="co">/*</span>
+
+<span class="co">* Launch Excel file with this method,</span>
+
+<span class="co">* it can be invoked many times</span>
+
+<span class="co">*/</span>
+
+<span class="kw">public</span> <span class="dt">static</span> <span class="dt">void</span> <span class="fu">launch</span>(String fileName)
+
+{
+
+<span class="co">// now make it appear,for we have set it to be invisible before</span>
+
+excel.<span class="fu">setProperty</span>(<span class="st">&quot;Visible&quot;</span>,<span class="kw">new</span> <span class="fu">Variant</span>(<span class="kw">true</span>));
+
+<span class="co">// open the excel file</span>
+
+Dispatch.<span class="fu">callN</span>(excel.<span class="fu">getProperty</span>(<span class="st">&quot;WorkBooks&quot;</span>).<span class="fu">toDispatch</span>(),<span class="st">&quot;Open&quot;</span>,<span class="kw">new</span> Object[]{fileName});
+
+}
+
+
+<span class="co">/*</span>
+
+<span class="co">* Release the resources and kill the excel process</span>
+
+<span class="co">*/</span>
+
+<span class="kw">public</span> <span class="dt">static</span> <span class="dt">void</span> <span class="fu">release</span>()
+
+{
+
+<span class="co">// quit the excel application</span>
+
+excel.<span class="fu">invoke</span>(<span class="st">&quot;Quit&quot;</span>,<span class="kw">new</span> Variant[]{});
+
+<span class="co">// invoke the method to count down the numbers of the reference,</span>
+
+<span class="co">// and release them one by one to kill the excel process finally.</span>
+
+ComThread.<span class="fu">Release</span>();
+
+}
+
+}</code></pre>
+                
+                <!--百度分享按钮-->
+                <div class="pull-left bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a><a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a></div>
+                <script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"1","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+
+                <!--二维码分享-->
+                <div id="wx_qr"></div>
+                <script type="text/javascript">
+                  var baseUrl = "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data="
+                  var qrUrl = baseUrl.concat(document.URL)
+                  var img = document.createElement("img")
+                  img.setAttribute("src", qrUrl)
+
+                  document.getElementById("wx_qr").appendChild(img)
+                </script>
+
+
+                <div id="disqus_thread"></div>
+                <script type="text/javascript">
+                    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+                    var disqus_shortname = 'afoo'; // required: replace example with your forum shortname
+
+                    /* * * DON'T EDIT BELOW THIS LINE * * */
+                    (function() {
+                        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                    })();
+                </script>
+                <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+                <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+              </div>
+              </div>
+              </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 footer">
+                  <hr>
+                  <p>©FuqiangWang@<a href="http://keevol.com">keevol.com</a></p>
+                  <p>Powered by <a href="http://johnmacfarlane.net/pandoc/">pandoc</a> and <a href="http://pages.github.com/">github pages</a></p>
+                </div>
+            </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="/js/jquery-2.1.1.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1000502179'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s11.cnzz.com/z_stat.php%3Fid%3D1000502179%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));</script>
+  </body>
+
+</html>

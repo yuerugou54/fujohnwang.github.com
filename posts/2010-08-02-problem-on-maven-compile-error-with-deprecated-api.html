@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+  <head>
+	  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	  <title>有关Maven编译DeprecatedAPI失败的问题</title>
+	  <meta name="author" content="FuqiangWang">
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="shortcut icon" href="favicon.ico">
+            <style type="text/css">
+    table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+      margin: 0; padding: 0; vertical-align: baseline; border: none; }
+    table.sourceCode { width: 100%; line-height: 100%; }
+    td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+    td.sourceCode { padding-left: 5px; }
+    code > span.kw { color: #007020; font-weight: bold; }
+    code > span.dt { color: #902000; }
+    code > span.dv { color: #40a070; }
+    code > span.bn { color: #40a070; }
+    code > span.fl { color: #40a070; }
+    code > span.ch { color: #4070a0; }
+    code > span.st { color: #4070a0; }
+    code > span.co { color: #60a0b0; font-style: italic; }
+    code > span.ot { color: #007020; }
+    code > span.al { color: #ff0000; font-weight: bold; }
+    code > span.fu { color: #06287e; }
+    code > span.er { color: #ff0000; font-weight: bold; }
+    </style>
+                
+    <link href='/font/Syncopate/stylesheet.css' rel='stylesheet' type='text/css'>
+    <link href='/font/News_Cycle/stylesheet.css' rel='stylesheet' type='text/css'>
+
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/bootstrap-theme.min.css" rel="stylesheet">
+    <link href="/css/afoo.me.css" rel="stylesheet">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-3 sidebar">
+            <a href="/">
+                <img src="/images/profile-icon.png" class="img-circle img-responsive" width="160px" style="margin: 0 auto;" />
+                <h2 class="text-center">AFOO.ME</h2>
+            </a>
+            <p class="text-center lead slogan"><a href="/slogan.html">lollapalooza &amp; positioning</a></p>
+
+            <ul class="nav nav-pills nav-stacked">
+              <li><a href="/favorite.html" class="text-center"><i class="icon-star-empty"></i> Favorite</a></li>
+              <li><a href="/dashboard.html" class="text-center"><i class="icon-fullscreen"></i> Dashboard</a></li>
+              <li><a href="/" class="text-center"><i class="icon-folder-close-alt"></i> Archives</a></li>
+              <li><a href="/whoami.html" class="text-center"><i class="icon-user-md"></i> About</a></li>
+            </ul>
+
+        </div>
+        <div class="col-md-9 col-md-offset-3 main">
+            <div class="row">
+              <div class="container-fluid">
+                
+                <div class="row">
+                                <div id="header">
+                <p class="lead">
+                <h1 class="title">有关Maven编译DeprecatedAPI失败的问题&nbsp;&nbsp;
+                <small>
+                                </small>
+                </h1>
+                </p>
+                </div>
+                                <div>
+
+                <hr>
+
+                                <p>在项目代码里用了sun.misc.Signal和sun.misc.SignalHandler， 自己的Mac下编译没问题， 在别人的Windows下编译报&quot;警告：sun.misc.Signal 是 Sun 的专用 API，可能会在未来版本中删除&quot;， 警告也就算了， 还tmd编译失败， <code>maven -e</code>打出来的异常是：</p>
+<pre class="sourceCode java"><code class="sourceCode java">[INFO] Trace  
+org.<span class="fu">apache</span>.<span class="fu">maven</span>.<span class="fu">BuildFailureException</span>: Compilation failure  
+        at org.<span class="fu">apache</span>.<span class="fu">maven</span>.<span class="fu">lifecycle</span>.<span class="fu">DefaultLifecycleExecutor</span>.<span class="fu">executeGoals</span>(DefaultLifecycleExecutor.<span class="fu">java</span>:<span class="dv">715</span>)  
+        at org.<span class="fu">apache</span>.<span class="fu">maven</span>.<span class="fu">lifecycle</span>.<span class="fu">DefaultLifecycleExecutor</span>.<span class="fu">executeGoalWithLifecycle</span>(DefaultLifecycleExecutor.<span class="fu">java</span>:<span class="dv">556</span>)  
+        at org.<span class="fu">apache</span>.<span class="fu">maven</span>.<span class="fu">lifecycle</span>.<span class="fu">DefaultLifecycleExecutor</span>.<span class="fu">executeGoal</span>(DefaultLifecycleExecutor.<span class="fu">java</span>:<span class="dv">535</span>)  
+        at org.<span class="fu">apache</span>.<span class="fu">maven</span>.<span class="fu">lifecycle</span>.<span class="fu">DefaultLifecycleExecutor</span>.<span class="fu">executeGoalAndHandleFailures</span>(DefaultLifecycleExecutor.<span class="fu">java</span>:<span class="dv">387</span>)  
+        at org.<span class="fu">apache</span>.<span class="fu">maven</span>.<span class="fu">lifecycle</span>.<span class="fu">DefaultLifecycleExecutor</span>.<span class="fu">executeTaskSegments</span>(DefaultLifecycleExecutor.<span class="fu">java</span>:<span class="dv">348</span>)  
+        at org.<span class="fu">apache</span>.<span class="fu">maven</span>.<span class="fu">lifecycle</span>.<span class="fu">DefaultLifecycleExecutor</span>.<span class="fu">execute</span>(DefaultLifecycleExecutor.<span class="fu">java</span>:<span class="dv">180</span>)  
+        at org.<span class="fu">apache</span>.<span class="fu">maven</span>.<span class="fu">DefaultMaven</span>.<span class="fu">doExecute</span>(DefaultMaven.<span class="fu">java</span>:<span class="dv">328</span>)  
+        at org.<span class="fu">apache</span>.<span class="fu">maven</span>.<span class="fu">DefaultMaven</span>.<span class="fu">execute</span>(DefaultMaven.<span class="fu">java</span>:<span class="dv">138</span>)  
+        at org.<span class="fu">apache</span>.<span class="fu">maven</span>.<span class="fu">cli</span>.<span class="fu">MavenCli</span>.<span class="fu">main</span>(MavenCli.<span class="fu">java</span>:<span class="dv">362</span>)  
+        at org.<span class="fu">apache</span>.<span class="fu">maven</span>.<span class="fu">cli</span>.<span class="fu">compat</span>.<span class="fu">CompatibleMain</span>.<span class="fu">main</span>(CompatibleMain.<span class="fu">java</span>:<span class="dv">60</span>)  
+        at sun.<span class="fu">reflect</span>.<span class="fu">NativeMethodAccessorImpl</span>.<span class="fu">invoke0</span>(Native Method)  
+        at sun.<span class="fu">reflect</span>.<span class="fu">NativeMethodAccessorImpl</span>.<span class="fu">invoke</span>(NativeMethodAccessorImpl.<span class="fu">java</span>:<span class="dv">39</span>)  
+        at sun.<span class="fu">reflect</span>.<span class="fu">DelegatingMethodAccessorImpl</span>.<span class="fu">invoke</span>(DelegatingMethodAccessorImpl.<span class="fu">java</span>:<span class="dv">25</span>)  
+        at java.<span class="fu">lang</span>.<span class="fu">reflect</span>.<span class="fu">Method</span>.<span class="fu">invoke</span>(Method.<span class="fu">java</span>:<span class="dv">597</span>)  
+        at org.<span class="fu">codehaus</span>.<span class="fu">classworlds</span>.<span class="fu">Launcher</span>.<span class="fu">launchEnhanced</span>(Launcher.<span class="fu">java</span>:<span class="dv">315</span>)  
+        at org.<span class="fu">codehaus</span>.<span class="fu">classworlds</span>.<span class="fu">Launcher</span>.<span class="fu">launch</span>(Launcher.<span class="fu">java</span>:<span class="dv">255</span>)  
+        at org.<span class="fu">codehaus</span>.<span class="fu">classworlds</span>.<span class="fu">Launcher</span>.<span class="fu">mainWithExitCode</span>(Launcher.<span class="fu">java</span>:<span class="dv">430</span>)  
+        at org.<span class="fu">codehaus</span>.<span class="fu">classworlds</span>.<span class="fu">Launcher</span>.<span class="fu">main</span>(Launcher.<span class="fu">java</span>:<span class="dv">375</span>)  
+Caused by: org.<span class="fu">apache</span>.<span class="fu">maven</span>.<span class="fu">plugin</span>.<span class="fu">CompilationFailureException</span>: Compilation failure  
+        at org.<span class="fu">apache</span>.<span class="fu">maven</span>.<span class="fu">plugin</span>.<span class="fu">AbstractCompilerMojo</span>.<span class="fu">execute</span>(AbstractCompilerMojo.<span class="fu">java</span>:<span class="dv">516</span>)  
+        at org.<span class="fu">apache</span>.<span class="fu">maven</span>.<span class="fu">plugin</span>.<span class="fu">CompilerMojo</span>.<span class="fu">execute</span>(CompilerMojo.<span class="fu">java</span>:<span class="dv">114</span>)  
+        at org.<span class="fu">apache</span>.<span class="fu">maven</span>.<span class="fu">plugin</span>.<span class="fu">DefaultPluginManager</span>.<span class="fu">executeMojo</span>(DefaultPluginManager.<span class="fu">java</span>:<span class="dv">490</span>)  
+        at org.<span class="fu">apache</span>.<span class="fu">maven</span>.<span class="fu">lifecycle</span>.<span class="fu">DefaultLifecycleExecutor</span>.<span class="fu">executeGoals</span>(DefaultLifecycleExecutor.<span class="fu">java</span>:<span class="dv">694</span>)  
+        <span class="kw">... </span><span class="dv">17</span> more </code></pre>
+<p>看到这个我估计就是maven的问题了， 搜了一下， 居然发现“钱总”在部门的team blog里发了篇有关这个问题的blog ，真tmd悲剧，早知道也不用费那么些周折搜来搜去了。</p>
+<p>恍然记得平台另一个框架里也用了sun.misc包里的东西，就问了下他们怎么编译过的， 最后的答案是直接把类拷贝出来了 ：-（ 这也行...</p>
+<p>这里是钱总那里讨过来的解决方法：</p>
+<pre class="sourceCode xml"><code class="sourceCode xml"><span class="kw">&lt;plugin&gt;</span>   
+    <span class="kw">&lt;groupId&gt;</span>org.apache.maven.plugins<span class="kw">&lt;/groupId&gt;</span>   
+    <span class="kw">&lt;artifactId&gt;</span>maven-compiler-plugin<span class="kw">&lt;/artifactId&gt;</span>   
+    <span class="kw">&lt;version&gt;</span>2.3.1<span class="kw">&lt;/version&gt;</span>   
+    <span class="kw">&lt;configuration&gt;</span>   
+        <span class="kw">&lt;optimize&gt;</span>true<span class="kw">&lt;/optimize&gt;</span>   
+    <span class="kw">&lt;/configuration&gt;</span>   
+    <span class="kw">&lt;dependencies&gt;</span>   
+        <span class="kw">&lt;dependency&gt;</span>   
+        <span class="kw">&lt;groupId&gt;</span>org.codehaus.plexus<span class="kw">&lt;/groupId&gt;</span>   
+        <span class="kw">&lt;artifactId&gt;</span>plexus-compiler-javac<span class="kw">&lt;/artifactId&gt;</span>   
+        <span class="kw">&lt;version&gt;</span>1.8.1-patch<span class="kw">&lt;/version&gt;</span>   
+            <span class="kw">&lt;/dependency&gt;</span>   
+    <span class="kw">&lt;/dependencies&gt;</span>   
+<span class="kw">&lt;/plugin&gt;</span></code></pre>
+<p>其实最简单的方法就是别用中文的locale，哈哈</p>
+                
+                <!--百度分享按钮-->
+                <div class="pull-left bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a><a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a></div>
+                <script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"1","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+
+                <!--二维码分享-->
+                <div id="wx_qr"></div>
+                <script type="text/javascript">
+                  var baseUrl = "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data="
+                  var qrUrl = baseUrl.concat(document.URL)
+                  var img = document.createElement("img")
+                  img.setAttribute("src", qrUrl)
+
+                  document.getElementById("wx_qr").appendChild(img)
+                </script>
+
+
+                <div id="disqus_thread"></div>
+                <script type="text/javascript">
+                    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+                    var disqus_shortname = 'afoo'; // required: replace example with your forum shortname
+
+                    /* * * DON'T EDIT BELOW THIS LINE * * */
+                    (function() {
+                        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                    })();
+                </script>
+                <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+                <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+              </div>
+              </div>
+              </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 footer">
+                  <hr>
+                  <p>©FuqiangWang@<a href="http://keevol.com">keevol.com</a></p>
+                  <p>Powered by <a href="http://johnmacfarlane.net/pandoc/">pandoc</a> and <a href="http://pages.github.com/">github pages</a></p>
+                </div>
+            </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="/js/jquery-2.1.1.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1000502179'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s11.cnzz.com/z_stat.php%3Fid%3D1000502179%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));</script>
+  </body>
+
+</html>

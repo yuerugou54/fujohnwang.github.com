@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+  <head>
+	  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	  <title>sbt-native-packager快速上手</title>
+	  <meta name="author" content="FuqiangWang">
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="shortcut icon" href="favicon.ico">
+                    
+    <link href='/font/Syncopate/stylesheet.css' rel='stylesheet' type='text/css'>
+    <link href='/font/News_Cycle/stylesheet.css' rel='stylesheet' type='text/css'>
+
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/bootstrap-theme.min.css" rel="stylesheet">
+    <link href="/css/afoo.me.css" rel="stylesheet">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-3 sidebar">
+            <a href="/">
+                <img src="/images/profile-icon.png" class="img-circle img-responsive" width="160px" style="margin: 0 auto;" />
+                <h2 class="text-center">AFOO.ME</h2>
+            </a>
+            <p class="text-center lead slogan"><a href="/slogan.html">lollapalooza &amp; positioning</a></p>
+
+            <ul class="nav nav-pills nav-stacked">
+              <li><a href="/favorite.html" class="text-center"><i class="icon-star-empty"></i> Favorite</a></li>
+              <li><a href="/dashboard.html" class="text-center"><i class="icon-fullscreen"></i> Dashboard</a></li>
+              <li><a href="/" class="text-center"><i class="icon-folder-close-alt"></i> Archives</a></li>
+              <li><a href="/whoami.html" class="text-center"><i class="icon-user-md"></i> About</a></li>
+            </ul>
+
+        </div>
+        <div class="col-md-9 col-md-offset-3 main">
+            <div class="row">
+              <div class="container-fluid">
+                
+                <div class="row">
+                                <div id="header">
+                <p class="lead">
+                <h1 class="title">sbt-native-packager快速上手&nbsp;&nbsp;
+                <small>
+                                    WangFuqiang
+                                </small>
+                </h1>
+                </p>
+                </div>
+                                <div>
+
+                <hr>
+
+                                <div id="TOC">
+                <ul>
+                <li><a href="#安装"><span class="toc-section-number">1</span> 安装</a></li>
+                <li><a href="#使用"><span class="toc-section-number">2</span> 使用</a></li>
+                <li><a href="#添加配置文件"><span class="toc-section-number">3</span> 添加配置文件</a><ul>
+                <li><a href="#jvm相应配置"><span class="toc-section-number">3.1</span> JVM相应配置</a></li>
+                <li><a href="#命令行参数指定应用配置"><span class="toc-section-number">3.2</span> 命令行参数指定应用配置</a></li>
+                </ul></li>
+                <li><a href="#覆盖默认脚本"><span class="toc-section-number">4</span> 覆盖默认脚本</a></li>
+                </ul>
+                </div>
+                                <p>插件项目地址: <a href="http://www.scala-sbt.org/sbt-native-packager">http://www.scala-sbt.org/sbt-native-packager</a></p>
+<h1 id="安装"><span class="header-section-number">1</span> 安装</h1>
+<p><code>project/plugins.sbt</code>中添加：</p>
+<blockquote>
+<p>addSbtPlugin(&quot;com.typesafe.sbt&quot; % &quot;sbt-native-packager&quot; % &quot;0.7.1&quot;)</p>
+</blockquote>
+build.sbt文件中添加:
+<pre>
+import com.typesafe.sbt.SbtNativePackager._
+import NativePackagerKeys._
+
+...
+
+packageArchetype.java_application
+</pre>
+
+<blockquote>
+<p>java_application - Defines packaging of your project with a start script and automatic PATH additions java_server - Defines packaging of your project with automatic service start scripts (supports System V + init.d).</p>
+</blockquote>
+<h1 id="使用"><span class="header-section-number">2</span> 使用</h1>
+<p>运行<code>sbt stage</code>可以在路径<code>target/universal/stage/</code>下查看要发布的文件目录结构， 其中包含bin, lib等目录</p>
+<blockquote>
+<p>NOTE: 如果bin目录没有出现，可能因为当前sbt项目包含多个main class，这个时候，可以在build.sbt中明确指定使用哪个mainClass， 比如: mainClass in (Compile) := Some(&quot;com...Main&quot;)</p>
+</blockquote>
+<p>运行<code>sbt dist</code>发布相应的packages</p>
+<p>其它可以用的tasks包括：</p>
+<ul>
+<li>universal:packageBin - Generates a universal zip file</li>
+<li>universal:packageZipTarball - Generates a universal tgz file</li>
+<li>debian:packageBin - Generates a deb</li>
+<li>docker:publishLocal - Builds a Docker image using the local Docker server</li>
+<li>rpm:packageBin - Generates an rpm</li>
+<li>universal::packageOsxDmg - Generates a DMG file with the same contents as the universal zip/tgz.</li>
+<li>windows:packageBin - Generates an MSI</li>
+</ul>
+<h1 id="添加配置文件"><span class="header-section-number">3</span> 添加配置文件</h1>
+<p>配置文件有两种： 1. jvm相应的配置，比如虚拟机参数，这些会包含到自动生成的启动脚本中； 2. 应用特定的配置文件，比如spring xml， application.conf， logback.xml等</p>
+<p>创建<code>src/universal/conf</code>目录，并将这些文件添加进去</p>
+<blockquote>
+<p>默认情况下， <code>src/universal</code>目录会被包含到发布包中， 所以像lisence, readme之类的文件也可以放进去一并发布。</p>
+</blockquote>
+<h2 id="jvm相应配置"><span class="header-section-number">3.1</span> JVM相应配置</h2>
+<p>新建<code>src/universal/conf/jvmopts</code>文件，其中， jvmopts文件中保存了自定义的虚拟机参数，如果要让这些参数在发布后的script启动脚本中生效，我们需要在build.sbt中添加配置:</p>
+<blockquote>
+<p>bashScriptConfigLocation := Some(&quot;${app_home}/../conf/jvmopts&quot;)</p>
+</blockquote>
+<h2 id="命令行参数指定应用配置"><span class="header-section-number">3.2</span> 命令行参数指定应用配置</h2>
+<p>比如logback或者typesafe config等库可以通过启动参数指定配置(<code>-Dconfig.file=...</code>), 为了把这些配置文件的位置也添加到启动脚本， 我们需要在build.sbt中添加配置:</p>
+<blockquote>
+<p>bashScriptExtraDefines += &quot;&quot;&quot;addJava &quot;-Dconfig.file=${app_home}/../conf/app.config&quot;&quot;&quot;&quot;</p>
+</blockquote>
+<p>当然了，假设我们不通过命令行参数使用这些配置文件，那么我们完全可以通过相对路径来加载指定目录conf下的配置文件。</p>
+<h1 id="覆盖默认脚本"><span class="header-section-number">4</span> 覆盖默认脚本</h1>
+<p>如果自动打包的启动脚本有bug或者其它原因， 可以覆盖之， 参考<a href="http://www.scala-sbt.org/sbt-native-packager/GettingStartedApplications/OverridingTemplates.html">http://www.scala-sbt.org/sbt-native-packager/GettingStartedApplications/OverridingTemplates.html</a>, 不过一般情况下不建议完全覆盖和替换。</p>
+                
+                <!--百度分享按钮-->
+                <div class="pull-left bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a><a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a></div>
+                <script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"1","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+
+                <!--二维码分享-->
+                <div id="wx_qr"></div>
+                <script type="text/javascript">
+                  var baseUrl = "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data="
+                  var qrUrl = baseUrl.concat(document.URL)
+                  var img = document.createElement("img")
+                  img.setAttribute("src", qrUrl)
+
+                  document.getElementById("wx_qr").appendChild(img)
+                </script>
+
+
+                <div id="disqus_thread"></div>
+                <script type="text/javascript">
+                    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+                    var disqus_shortname = 'afoo'; // required: replace example with your forum shortname
+
+                    /* * * DON'T EDIT BELOW THIS LINE * * */
+                    (function() {
+                        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                    })();
+                </script>
+                <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+                <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+              </div>
+              </div>
+              </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 footer">
+                  <hr>
+                  <p>©FuqiangWang@<a href="http://keevol.com">keevol.com</a></p>
+                  <p>Powered by <a href="http://johnmacfarlane.net/pandoc/">pandoc</a> and <a href="http://pages.github.com/">github pages</a></p>
+                </div>
+            </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="/js/jquery-2.1.1.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1000502179'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s11.cnzz.com/z_stat.php%3Fid%3D1000502179%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));</script>
+  </body>
+
+</html>

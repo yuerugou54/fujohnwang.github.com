@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+  <head>
+	  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	  <title>有关SSL的一些tips</title>
+	  <meta name="author" content="FuqiangWang">
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="shortcut icon" href="favicon.ico">
+            <style type="text/css">
+    table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+      margin: 0; padding: 0; vertical-align: baseline; border: none; }
+    table.sourceCode { width: 100%; line-height: 100%; }
+    td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+    td.sourceCode { padding-left: 5px; }
+    code > span.kw { color: #007020; font-weight: bold; }
+    code > span.dt { color: #902000; }
+    code > span.dv { color: #40a070; }
+    code > span.bn { color: #40a070; }
+    code > span.fl { color: #40a070; }
+    code > span.ch { color: #4070a0; }
+    code > span.st { color: #4070a0; }
+    code > span.co { color: #60a0b0; font-style: italic; }
+    code > span.ot { color: #007020; }
+    code > span.al { color: #ff0000; font-weight: bold; }
+    code > span.fu { color: #06287e; }
+    code > span.er { color: #ff0000; font-weight: bold; }
+    </style>
+                
+    <link href='/font/Syncopate/stylesheet.css' rel='stylesheet' type='text/css'>
+    <link href='/font/News_Cycle/stylesheet.css' rel='stylesheet' type='text/css'>
+
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/bootstrap-theme.min.css" rel="stylesheet">
+    <link href="/css/afoo.me.css" rel="stylesheet">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-3 sidebar">
+            <a href="/">
+                <img src="/images/profile-icon.png" class="img-circle img-responsive" width="160px" style="margin: 0 auto;" />
+                <h2 class="text-center">AFOO.ME</h2>
+            </a>
+            <p class="text-center lead slogan"><a href="/slogan.html">lollapalooza &amp; positioning</a></p>
+
+            <ul class="nav nav-pills nav-stacked">
+              <li><a href="/favorite.html" class="text-center"><i class="icon-star-empty"></i> Favorite</a></li>
+              <li><a href="/dashboard.html" class="text-center"><i class="icon-fullscreen"></i> Dashboard</a></li>
+              <li><a href="/" class="text-center"><i class="icon-folder-close-alt"></i> Archives</a></li>
+              <li><a href="/whoami.html" class="text-center"><i class="icon-user-md"></i> About</a></li>
+            </ul>
+
+        </div>
+        <div class="col-md-9 col-md-offset-3 main">
+            <div class="row">
+              <div class="container-fluid">
+                
+                <div class="row">
+                                <div id="header">
+                <p class="lead">
+                <h1 class="title">有关SSL的一些tips&nbsp;&nbsp;
+                <small>
+                                    FuqiangWang
+                                </small>
+                </h1>
+                </p>
+                </div>
+                                <div>
+
+                <hr>
+
+                                <blockquote>
+<p>2014年从msn space存档中重新恢复出来！</p>
+</blockquote>
+<p>回大连后几天一直忙，所以没有时间写blog，今天忙里偷闲，写写回大连后的第一篇blog...</p>
+<p>这一天到两天我在搞SSL，在客户端程序里面实现https连接，以实现用户认证信息的安全传输。因为原来一直做web方面的，现在转到c/s模式有些不适应，而且，以前对java security也没有深入过，所以，现在有些费力。</p>
+<p>开始是使用URLConnection和HttpsURLConnection做，但是当时因为证书的问题一直没有能够成功，也查了国外各个网站和forum，大部分说得都差不多，呵呵，就是不成功阿，后来转向Apache 的httpClient，用它先实现了简单的客户端基于http的通信，当转向https的时候同样遇到不可信任证书的问题，后来通过他的custom功能才可以解决。不过，现在对于整个知识的完整性还是欠缺，有时间的话，需要好好研究一下java的security部分。</p>
+<p>下面是在resin应用服务器中配置ssl的脚本配置片断，列于下，只作记录, 需要两步：</p>
+<ol style="list-style-type: decimal">
+<li>添加security provider：<code>&lt;security-provider id='com.sun.net.ssl.internal.ssl.Provider'/&gt;</code></li>
+<li>配置ssl端口和keystore等</li>
+</ol>
+<pre class="sourceCode xml"><code class="sourceCode xml"><span class="kw">&lt;http</span><span class="ot"> port=</span><span class="er">8443&gt;</span>
+ <span class="er">&lt;ssl&gt;true&lt;/ssl&gt;</span>
+ <span class="er">&lt;key-store-type&gt;jks&lt;/key-store-type&gt;</span>
+ <span class="er">&lt;key-store-file&gt;file://D:/resin-2.1.9/keys/private.keystore&lt;/key-store-file&gt;</span>
+ <span class="er">&lt;key-store-password&gt;darrenwang&lt;/key-store-password&gt;</span>
+<span class="er">&lt;/http&gt;</span></code></pre>
+<p>这些可以在resin的conf里面找到实例，另外，其实要使之ssl运行，在此之前需要配置JSSE或者是OpenSSL，但是因为笔者使用了jdk1.4.x，而jdk1.4.x已经集成了JSSE，所以这些可以省略，如果使用jdk1.3或者以前的jdk，需要单独下载JSSE，并按照JSSE提供的步骤进行JSSE的安装。</p>
+<p>然后，通过keytool为keystore加入相应的证书。</p>
+<p>最后，就可以使用HttpClient来访问server端程序了，比如servlet等。</p>
+<p>下面是使用HttpClient进行https连接的demo代码片断：</p>
+<pre class="sourceCode java"><code class="sourceCode java">Protocol myhttps = <span class="kw">new</span> <span class="fu">Protocol</span>(<span class="st">&quot;https&quot;</span>, <span class="kw">new</span> <span class="fu">EasySSLProtocolSocketFactory</span>(), <span class="dv">8443</span>);
+Protocol.<span class="fu">registerProtocol</span>(<span class="st">&quot;https&quot;</span>,myhttps);
+
+HttpClient client = <span class="kw">new</span> <span class="fu">HttpClient</span>();
+client.<span class="fu">getHostConfiguration</span>().<span class="fu">setHost</span>(<span class="st">&quot;127.0.0.1&quot;</span>, <span class="dv">8443</span>, myhttps);
+
+PostMethod method = <span class="kw">new</span> <span class="fu">PostMethod</span>(<span class="st">&quot;/examples/basic/servlet/UserAuthServlet&quot;</span>;
+<span class="co">//PostMethod method = new PostMethod(&quot;::URL::http://localhost:8080/examples/basic/servlet/UserAuthServlet&quot; ;</span>
+NameValuePair nameParam = <span class="kw">new</span> NameValuePair(<span class="st">&quot;username&quot;</span>,name);
+NameValuePair pwdParam = <span class="kw">new</span> NameValuePair(<span class="st">&quot;psssword&quot;</span>,pwd);
+method.<span class="fu">setRequestBody</span>(<span class="kw">new</span> NameValuePair[]{nameParam,pwdParam});
+
+method.<span class="fu">setDoAuthentication</span>(<span class="kw">false</span>);
+
+<span class="dt">int</span> statusCode = client.<span class="fu">executeMethod</span>(method);
+<span class="kw">if</span>(statusCode==-<span class="dv">1</span>)
+{
+<span class="kw">throw</span> <span class="kw">new</span> Exception(<span class="st">&quot;[Post method execute Exception Failed!]&quot;</span>;
+}
+<span class="co">//get Response info</span>
+InputStream ins = method.<span class="fu">getResponseBodyAsStream</span>();
+BufferedReader in = <span class="kw">new</span> BufferedReader(<span class="kw">new</span> InputStreamReader(ins));
+StringBuffer resultBuffer = <span class="kw">new</span> StringBuffer();
+String line;
+<span class="kw">while</span>((line = in.<span class="fu">readLine</span>())!=<span class="kw">null</span>)
+{
+resultBuffer.<span class="fu">append</span>(line);
+}
+in.<span class="fu">close</span>();
+ins.<span class="fu">close</span>();
+method.<span class="fu">releaseConnection</span>();</code></pre>
+<p>OK，先写这些，以后有时间将对SSL以及java security方面进行更多阐述。</p>
+                
+                <!--百度分享按钮-->
+                <div class="pull-left bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a><a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a></div>
+                <script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"1","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+
+                <!--二维码分享-->
+                <div id="wx_qr"></div>
+                <script type="text/javascript">
+                  var baseUrl = "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data="
+                  var qrUrl = baseUrl.concat(document.URL)
+                  var img = document.createElement("img")
+                  img.setAttribute("src", qrUrl)
+
+                  document.getElementById("wx_qr").appendChild(img)
+                </script>
+
+
+                <div id="disqus_thread"></div>
+                <script type="text/javascript">
+                    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+                    var disqus_shortname = 'afoo'; // required: replace example with your forum shortname
+
+                    /* * * DON'T EDIT BELOW THIS LINE * * */
+                    (function() {
+                        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                    })();
+                </script>
+                <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+                <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+              </div>
+              </div>
+              </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 footer">
+                  <hr>
+                  <p>©FuqiangWang@<a href="http://keevol.com">keevol.com</a></p>
+                  <p>Powered by <a href="http://johnmacfarlane.net/pandoc/">pandoc</a> and <a href="http://pages.github.com/">github pages</a></p>
+                </div>
+            </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="/js/jquery-2.1.1.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1000502179'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s11.cnzz.com/z_stat.php%3Fid%3D1000502179%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));</script>
+  </body>
+
+</html>

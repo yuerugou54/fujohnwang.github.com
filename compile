@@ -1,0 +1,17 @@
+#!/bin/sh
+
+CURRENT_DIR=`dirname "${BASH_SOURCE-$0}"`
+
+if [ $CURRENT_DIR != "." ]; then
+	echo "the compile command must be run under the folder it exist"
+	exit
+fi
+
+if [ $# -eq 1 ]; then
+	SOURCE_FILE=$1
+	DEST_FILE="`echo $1|cut -d'.' -f 1`.html"
+	echo "transform $SOURCE_FILE to $DEST_FILE with pandoc"
+	pandoc -s -N --toc --template=templates/post -f markdown -t html $SOURCE_FILE > $DEST_FILE
+else
+	echo "the file to be transformed must be provided"
+fi

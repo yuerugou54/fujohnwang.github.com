@@ -1,0 +1,31 @@
+% 闲话SpringAOP的应用
+% FuqiangWang
+
+> 2014年从msn space存档中重新恢复出来！
+
+在实现MailMonitor的时候，并没有考虑BackOffice已经实现的HADR问题，所以，一直都是单一数据源提供数据存储和访问，但是，近来日方要求MailMonitor和csvMail子模块都实现HADR，也就是可以在一个数据库down掉之后，可以立刻转到双机热备的slave数据库进行数据存储，从而引出我对于Spring AOP的再次接触。
+
+刚开始的时候，我并没有马上就想到使用spring提供的aop，因为在此之前，也就是在看jbossAop的时候（半年多以前），我其实已经dip into过springAOP，但是，当时因为主要是了解JbossAOP，所以，对于SpringAOP也就没有太用心，而且，估计对于AOP概念的接受是以JbossAOP为切入口的，所以，感觉SpringAOP有些“奇怪”（这个将在后面解释），也就没有深入之。既然当时就先入为主了，那么现在也不会这么快就马上接受他来解决问题咯… 
+
+在搜遍www和各大forum之后，初步有了一些印象，估计可以使用Spring的DelegatingDataSource或者HotSwappableTargetSource来解决这个问题，但是，后者牵扯SpringAOP，而且时间上也不是太允许，我重点攻击前者。具体就是在捕捉到数据库不可用相关的异常之后，重新设置DelegatingDataSource的targetDataSouce，这样在这次事务失败之后，下次就可以重新在slave数据库上进行。
+
+很自然的，我考虑了使用Observer模式来指导具体实现，虽然这个方案最终让我否决了，但是，还是有必要在这里提一下原来在JavaWorld网站发布的一篇The event generator idiom 所提倡的思想。
+
+1. 我继承java.util.EventObject类来实现自己系统所需要的DatabaseCrashEvent类；
+2. 实现Listener接口，继承java.util. EventListener接口来实现自定义的DatabaseCrashListener类；
+3. 因为Adaptor对于我们现在的实现没有什么意义，所以，我没有实现；
+4. 设计并实现被监听类，他保存所有监听者引用，并在适当时候激发相应的事件，这里是DatabaseCrashEvent事件；
+5. 给出具体的监听者实现类，也就是实现了DatabaseCrashListener接口的实现类，在该实现类里面，我们提供了在数据库down掉后要进行处理的逻辑，也就是重新定向数据源，将可用的数据源设置为当前数据源；（具体实现的逻辑知道就是这样，如果说要进一步了解该idiom，可以去JavaWorld网站查找一下该篇文章）
+
+那么，我为什么会最终否决该实现方案那？针对这种情况，难道该模式不正是解决问题之道嘛？说实在的，对于我一个模块来说，因为也只是使用了一个单一的DAO，使用该模式其实也可以完成所要求的功能，我只要在DAO中捕捉Spring提供的DataAccessResourceFailureException，并在该异常发生后，激发DatabaseCrashEvent事件，以便通知相应的DatabaseCrashListener实现类来swap数据源就可以了。但是，即使这样，我依然感觉到这种实现的“丑陋性”，呵呵，或许我是个完美主义者吧！如果说实现中有多个DAO的话（这种情况才是系统开发中最常见的），我是不是要在所有的DAO中提供事件源的引用，并在各个DAO中分别捕捉DataAccessResourceFailureException异常来激发数据库crash掉的事件以便通知监听者处理数据源的互换那？呵呵，太蠢了！
+
+OK，其实，处理这种情况，AOP才是正道啊！我只需要实现Throws Advice来处理swap数据源的逻辑就可以了，而且，也可以将该问题从业务逻辑中抽出来，不管从维护角度还是说设计实现的角度，都是很干净的，不是嘛？在锁定了他的jointpoint之后，剩下的就由AOP的具体实现来将该Advice和提供的pointCut Weaving在一起了。
+而说道weaving，这就扯出为什么当时我会认为SpringAOP有些奇怪了，呵呵。
+
+当时因为借助JbossAOP来作为了解AOP的介入口，所以，不管是概念还是weaving的过程，都是从JbossAOP得来得认识，这也就难怪当时会认为SpringAOP有些“奇怪”了。
+
+因为，AOP的weaving过程基本上可以分为三种：编译期间织入（weaving），class Load的时候织入，以及runtime期间的织入（Weaving）。JbossAOP使用的是自定义的classLoader来实现织入过程，也就是说，我实现了Intercepter（在JbossAOP中是单一功能的Advice）并指定完pointcut之后，剩下的事情就全都交给JbossAOP来处理了；但是SpringAOP则不同，他使用的是第三种织入方式，即runtime weaving，而且还将pointcut和advice放在了他提供的advisor概念中，所以，这就是为什么我当时会认为其实现有些“奇怪”，不过现在，完全可以解开这个迷了，不是嘛？！至于第一种织入方式，就是AspectJ提供的啦，做为第一代的AOP实现，好处那，我不想说，因为我对于它没有太大兴趣，除了它是AOP概念的始源。先不说它提供了自己的编译器，但说其学习曲线我就不能接受，我那里有那么些时间那，java我还没有expert那！
+
+Wokao，要下班了，先写这些吧，改天再细说SpringAOP吧…
+
+老话，预知后事如何，且听下回分解，呵呵 :em510:

@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+  <head>
+	  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	  <title>Using Java Reflection In a DSL-like Style</title>
+	  <meta name="author" content="FuqiangWang">
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="shortcut icon" href="favicon.ico">
+            <style type="text/css">
+    table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+      margin: 0; padding: 0; vertical-align: baseline; border: none; }
+    table.sourceCode { width: 100%; line-height: 100%; }
+    td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+    td.sourceCode { padding-left: 5px; }
+    code > span.kw { color: #007020; font-weight: bold; }
+    code > span.dt { color: #902000; }
+    code > span.dv { color: #40a070; }
+    code > span.bn { color: #40a070; }
+    code > span.fl { color: #40a070; }
+    code > span.ch { color: #4070a0; }
+    code > span.st { color: #4070a0; }
+    code > span.co { color: #60a0b0; font-style: italic; }
+    code > span.ot { color: #007020; }
+    code > span.al { color: #ff0000; font-weight: bold; }
+    code > span.fu { color: #06287e; }
+    code > span.er { color: #ff0000; font-weight: bold; }
+    </style>
+                
+    <link href='/font/Syncopate/stylesheet.css' rel='stylesheet' type='text/css'>
+    <link href='/font/News_Cycle/stylesheet.css' rel='stylesheet' type='text/css'>
+
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/bootstrap-theme.min.css" rel="stylesheet">
+    <link href="/css/afoo.me.css" rel="stylesheet">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-3 sidebar">
+            <a href="/">
+                <img src="/images/profile-icon.png" class="img-circle img-responsive" width="160px" style="margin: 0 auto;" />
+                <h2 class="text-center">AFOO.ME</h2>
+            </a>
+            <p class="text-center lead slogan"><a href="/slogan.html">lollapalooza &amp; positioning</a></p>
+
+            <ul class="nav nav-pills nav-stacked">
+              <li><a href="/favorite.html" class="text-center"><i class="icon-star-empty"></i> Favorite</a></li>
+              <li><a href="/dashboard.html" class="text-center"><i class="icon-fullscreen"></i> Dashboard</a></li>
+              <li><a href="/" class="text-center"><i class="icon-folder-close-alt"></i> Archives</a></li>
+              <li><a href="/whoami.html" class="text-center"><i class="icon-user-md"></i> About</a></li>
+            </ul>
+
+        </div>
+        <div class="col-md-9 col-md-offset-3 main">
+            <div class="row">
+              <div class="container-fluid">
+                
+                <div class="row">
+                                <div id="header">
+                <p class="lead">
+                <h1 class="title">Using Java Reflection In a DSL-like Style&nbsp;&nbsp;
+                <small>
+                                </small>
+                </h1>
+                </p>
+                </div>
+                                <div>
+
+                <hr>
+
+                                <p>I know someone must have heard or known about a library named FEST-Reflect, and maybe you are just using it. It's an interesting library that let you write code of java reflection in a DSL-like style. For example:</p>
+<pre class="sourceCode java"><code class="sourceCode java">String name = <span class="fu">method</span>(<span class="st">&quot;get&quot;</span>).<span class="fu">withReturnType</span>(String.<span class="fu">class</span>)  
+                           .<span class="fu">withParameterTypes</span>(<span class="dt">int</span>.<span class="fu">class</span>)  
+                           .<span class="fu">in</span>(names)  
+                           .<span class="fu">invoke</span>(<span class="dv">8</span>);  </code></pre>
+<p>It's just another way to express same logic, but it give you another way to write your code which make your code more readable. If you want to write your code this way, of course, you can use FEST-reflect directly, but that's not why wrote words below, what I try to tell you is, you can implement such things yourself with little effort. I will draft a prototype to implement such a DSL-like style Java Reflection usage API, If you are interested, read on...</p>
+<p>To enable the users to use our API in a DSL-like style like code sample above, it's easy to figure out 2 things:</p>
+<ol style="list-style-type: decimal">
+<li>We have to enable method chaining.</li>
+<li>Static import feature after Java5 may be needed so that the code looks like a DSL syntax.</li>
+</ol>
+<p>So first, we have to find out which operations or methods can be used.</p>
+<p>We focus on only java reflection usage on Instance Method, since it's not a difficult thing to find out what we can do with Method, An abstraction can be given below:</p>
+<pre class="sourceCode java"><code class="sourceCode java"><span class="co">/** </span>
+<span class="co"> * method(&quot;name&quot;).on(targetobject).withArgumentTypes(...).invoke(...); </span>
+<span class="co"> *  </span>
+<span class="co"> * </span><span class="kw">@author </span><span class="co">fujohnwang </span>
+<span class="co"> * </span><span class="kw">@since </span><span class="co"> 1.0  </span>
+<span class="co"> */</span>  
+<span class="kw">public</span> <span class="kw">interface</span> IMethodDSL {  
+      
+    IMethodDSL <span class="fu">on</span>(Object target);  
+      
+    IMethodDSL <span class="fu">withArgumentTypes</span>(Class&lt;?&gt;<span class="kw">... </span>args);  
+      
+    IMethodDSL <span class="fu">makeAccessible</span>(<span class="dt">boolean</span> flag);  
+      
+    &lt;T&gt; T <span class="fu">invoke</span>(Object<span class="kw">... </span>args) <span class="kw">throws</span> InvocationTargetException;  
+}  </code></pre>
+<p>We express the abstraction in an Java interface, except for the last “invoke ” method, other operations have a return type of the same interface, that's, IMethodDSL itself. That's the way we implement a method chaining behavior.</p>
+<p>Since we have had the key abstraction, we can give it an implementation now, it looks like below:</p>
+<pre class="sourceCode java"><code class="sourceCode java"><span class="co">/** </span>
+<span class="er"> * Default IMethodDSL implementation.&lt;br&gt; </span>
+<span class="co"> *  </span>
+<span class="co"> * </span><span class="kw">@author </span><span class="co">fujohnwang </span>
+<span class="co"> * </span><span class="kw">@since </span><span class="co"> 1.0  </span>
+<span class="co"> * </span><span class="kw">@see    ReflectDSL </span>
+<span class="co"> * </span><span class="kw">@see    IMethodDSL </span>
+<span class="co"> */</span>  
+<span class="kw">public</span> <span class="kw">class</span> MethodDSL <span class="kw">implements</span> IMethodDSL {  
+  
+    <span class="kw">private</span> <span class="dt">static</span> <span class="dt">final</span> Logger logger = LoggerFactory.<span class="fu">getLogger</span>(MethodDSL.<span class="fu">class</span>);  
+  
+    <span class="kw">private</span> String methodName;  
+    <span class="kw">private</span> Object target;  
+    <span class="kw">private</span> Class&lt;?&gt;[] argTypes;  
+    <span class="kw">private</span> <span class="dt">boolean</span> accessible;  
+  
+    <span class="kw">public</span> <span class="fu">MethodDSL</span>(String methodName) {  
+        <span class="kw">this</span>.<span class="fu">methodName</span> = methodName;  
+    }  
+  
+    <span class="kw">public</span> &lt;T&gt; T <span class="fu">invoke</span>(Object<span class="kw">... </span>args) <span class="kw">throws</span> InvocationTargetException {  
+        <span class="fu">checkInvokeDependencies</span>();  
+        <span class="kw">try</span> {  
+            Method method = <span class="fu">findQualifiedMethod</span>(target.<span class="fu">getClass</span>());  
+            <span class="kw">if</span>(<span class="kw">this</span>.<span class="fu">accessible</span>)  
+            {  
+                method.<span class="fu">setAccessible</span>(<span class="kw">true</span>);  
+            }  
+            <span class="co">/** </span>
+<span class="co">             * usually, the caller will be required to declare proper return type of the method invocation, </span>
+<span class="co">             * so cast to the type they declared is acceptable.  </span>
+<span class="co">             * the return type the caller declared should be the returnType they have assigned. </span>
+<span class="co">             */</span>  
+            <span class="fu">@SuppressWarnings</span>(<span class="st">&quot;unchecked&quot;</span>)  
+            T result = (T)method.<span class="fu">invoke</span>(target, PreConditions.<span class="fu">nullAsEmpty</span>(args,Object.<span class="fu">class</span>));  
+            <span class="kw">return</span> result;  
+        } <span class="kw">catch</span> (SecurityException e) {  
+            <span class="kw">throw</span> <span class="kw">new</span> InvocationTargetException(e);  
+        } <span class="kw">catch</span> (NoSuchMethodException e) {  
+            <span class="kw">throw</span> <span class="kw">new</span> InvocationTargetException(e);  
+        } <span class="kw">catch</span> (IllegalArgumentException e) {  
+            <span class="kw">throw</span> <span class="kw">new</span> InvocationTargetException(e);  
+        } <span class="kw">catch</span> (IllegalAccessException e) {  
+            <span class="kw">throw</span> <span class="kw">new</span> InvocationTargetException(e);  
+        }  
+    }  
+  
+    <span class="kw">protected</span> Method <span class="fu">findQualifiedMethod</span>(Class&lt;?&gt; clazz) <span class="kw">throws</span> SecurityException, NoSuchMethodException {  
+        <span class="kw">if</span>(<span class="kw">this</span>.<span class="fu">argTypes</span> == <span class="kw">null</span>)  
+        {  
+            Method qualifiedMethod = <span class="kw">null</span>;  
+            <span class="kw">for</span>(Method method : clazz.<span class="fu">getDeclaredMethods</span>())  
+            {  
+                <span class="kw">if</span>(method.<span class="fu">getName</span>().<span class="fu">equals</span>(<span class="kw">this</span>.<span class="fu">methodName</span>))  
+                {  
+                    <span class="kw">if</span>(qualifiedMethod != <span class="kw">null</span>)  
+                    {  
+                        <span class="kw">throw</span> <span class="kw">new</span> IllegalStateException(<span class="st">&quot;please provide arguments of method if you want to invoke on overloaded methods.&quot;</span>);  
+                    }  
+                    qualifiedMethod = method;  
+                }  
+            }  
+            <span class="kw">if</span>(qualifiedMethod == <span class="kw">null</span>)  
+            {  
+                <span class="kw">throw</span> <span class="kw">new</span> NoSuchMethodException();  
+            }  
+            <span class="kw">return</span> qualifiedMethod;  
+        }  
+        <span class="kw">else</span>  
+        {  
+            <span class="kw">return</span> clazz.<span class="fu">getDeclaredMethod</span>(<span class="kw">this</span>.<span class="fu">methodName</span>, <span class="kw">this</span>.<span class="fu">argTypes</span>);  
+        }  
+    }  
+    <span class="co">/** </span>
+<span class="er">     * usually, these information like &quot;methodName&quot;, &quot;target&quot; are required, &lt;br&gt; </span>
+<span class="co">     * but in case special situations, this method is declared protected so that in those situations,  </span>
+<span class="co">     * others can override this default behavior. </span>
+<span class="co">     */</span>  
+    <span class="kw">protected</span> <span class="dt">void</span> <span class="fu">checkInvokeDependencies</span>() {  
+        logger.<span class="fu">info</span>(<span class="st">&quot;the data is lazily bound before the real invocation of the method, check before invocation here.&quot;</span>);  
+        PreConditions.<span class="fu">isNotEmpty</span>(methodName);  
+        PreConditions.<span class="fu">isNotNull</span>(target);  
+    }  
+  
+    <span class="kw">public</span> IMethodDSL <span class="fu">on</span>(Object target) {  
+        <span class="kw">this</span>.<span class="fu">target</span> = target;  
+        <span class="kw">return</span> <span class="kw">this</span>;  
+    }  
+  
+    <span class="kw">public</span> IMethodDSL <span class="fu">withArgumentTypes</span>(Class&lt;?&gt;<span class="kw">... </span>args) {  
+        <span class="kw">this</span>.<span class="fu">argTypes</span> = args;  
+        <span class="kw">return</span> <span class="kw">this</span>;  
+    }  
+  
+    <span class="kw">public</span> IMethodDSL <span class="fu">makeAccessible</span>(<span class="dt">boolean</span> flag) {  
+        <span class="kw">this</span>.<span class="fu">accessible</span> = flag;  
+        <span class="kw">return</span> <span class="kw">this</span>;  
+    }  
+  
+}  </code></pre>
+<p>The intermediate operations just accept the parameter value and “return this; ” to achieve method chaining, the key point is the last operation, that's, the “invoke ” method, this is where all of the real stuff take effect. We check the preconditions before invoking Java Reflection API, and then find proper Method with attribute the API user have passed in as chaining-method's parameter. At last, cast the invocation result to the type the users expect to get. That's all, very simple , isn't it?</p>
+<p>To make API users to use this more DSL-likely, we need to offer a Factory-method for our MethodDSL, it looks like:</p>
+<pre class="sourceCode java"><code class="sourceCode java"><span class="kw">public</span> <span class="kw">abstract</span> <span class="kw">class</span> ReflectDSL {  
+      
+    <span class="kw">public</span> <span class="dt">static</span> IMethodDSL <span class="fu">method</span>(String methodName)  
+    {  
+        <span class="kw">return</span> <span class="kw">new</span> <span class="fu">MethodDSL</span>(methodName);  
+    }  
+    <span class="kw">...  </span>
+}  </code></pre>
+<p>With this, we can use our DSL-like Java Reflection API this way:</p>
+<pre class="sourceCode java"><code class="sourceCode java"><span class="kw">import static ..ReflectionDSL.*;</span>  
+  
+<span class="fu">method</span>(<span class="st">&quot;methodName&quot;</span>)  
+        .<span class="fu">on</span>(targetObject)  
+        .<span class="fu">withArgumentTypes</span>(...)  
+        .<span class="fu">makeAccessable</span>(<span class="kw">true</span>)  
+        .<span class="fu">invoke</span>(...); </code></pre>
+<p>Of course, some parameters are optional, like the makeAccessable() if it's a public method.</p>
+<p>Until now, we have implement a simple DSL-like style java reflection AP for method, you can move on to provide such similar APIs for Field and Constructor and Static Method and so on.</p>
+<p>The way we used to implement such DSL-like style API have some limitations or defects, for example, we bind intermediate method late and the final effect takes at last, that means, if users use our API in an improper way, they will not get warnings or errors until runtime. To fix this, we can use intermediate type for chaining methods, how? try it yourself and have fun ;-)</p>
+<blockquote>
+<p>NOTE</p>
+<p>IMHO, this may not bring any benefits for you or your customers, it's just another way to write your code and make it more readable, make a balance to figure out whether it's proper to do it in your own situations.</p>
+</blockquote>
+                
+                <!--百度分享按钮-->
+                <div class="pull-left bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a><a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a></div>
+                <script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"1","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+
+                <!--二维码分享-->
+                <div id="wx_qr"></div>
+                <script type="text/javascript">
+                  var baseUrl = "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data="
+                  var qrUrl = baseUrl.concat(document.URL)
+                  var img = document.createElement("img")
+                  img.setAttribute("src", qrUrl)
+
+                  document.getElementById("wx_qr").appendChild(img)
+                </script>
+
+
+                <div id="disqus_thread"></div>
+                <script type="text/javascript">
+                    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+                    var disqus_shortname = 'afoo'; // required: replace example with your forum shortname
+
+                    /* * * DON'T EDIT BELOW THIS LINE * * */
+                    (function() {
+                        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                    })();
+                </script>
+                <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+                <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+              </div>
+              </div>
+              </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 footer">
+                  <hr>
+                  <p>©FuqiangWang@<a href="http://keevol.com">keevol.com</a></p>
+                  <p>Powered by <a href="http://johnmacfarlane.net/pandoc/">pandoc</a> and <a href="http://pages.github.com/">github pages</a></p>
+                </div>
+            </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="/js/jquery-2.1.1.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1000502179'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s11.cnzz.com/z_stat.php%3Fid%3D1000502179%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));</script>
+  </body>
+
+</html>

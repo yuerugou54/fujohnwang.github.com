@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+  <head>
+	  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	  <title>门外汉谈建筑的抗震设计</title>
+	  <meta name="author" content="FuqiangWang">
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="shortcut icon" href="favicon.ico">
+                    
+    <link href='/font/Syncopate/stylesheet.css' rel='stylesheet' type='text/css'>
+    <link href='/font/News_Cycle/stylesheet.css' rel='stylesheet' type='text/css'>
+
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/bootstrap-theme.min.css" rel="stylesheet">
+    <link href="/css/afoo.me.css" rel="stylesheet">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-3 sidebar">
+            <a href="/">
+                <img src="/images/profile-icon.png" class="img-circle img-responsive" width="160px" style="margin: 0 auto;" />
+                <h2 class="text-center">AFOO.ME</h2>
+            </a>
+            <p class="text-center lead slogan"><a href="/slogan.html">lollapalooza &amp; positioning</a></p>
+
+            <ul class="nav nav-pills nav-stacked">
+              <li><a href="/favorite.html" class="text-center"><i class="icon-star-empty"></i> Favorite</a></li>
+              <li><a href="/dashboard.html" class="text-center"><i class="icon-fullscreen"></i> Dashboard</a></li>
+              <li><a href="/" class="text-center"><i class="icon-folder-close-alt"></i> Archives</a></li>
+              <li><a href="/whoami.html" class="text-center"><i class="icon-user-md"></i> About</a></li>
+            </ul>
+
+        </div>
+        <div class="col-md-9 col-md-offset-3 main">
+            <div class="row">
+              <div class="container-fluid">
+                
+                <div class="row">
+                                <div id="header">
+                <p class="lead">
+                <h1 class="title">门外汉谈建筑的抗震设计&nbsp;&nbsp;
+                <small>
+                                    王福强
+                                </small>
+                </h1>
+                </p>
+                </div>
+                                <div>
+
+                <hr>
+
+                                <p>今天微博上好多地方看到芦山某处老屋地震之后我自岿然不动的转发，比如：</p>
+<blockquote>
+【芦山“屋坚强”】这座张家大院是瓦木结构四合院，坐落于龙门乡古城村山脚下，主人说这老房子建于清朝同治年间，而在地震中，除了屋脊脱落几块瓦片外，没有任何损伤。7户人家在房子里照常生活……古宅真不是吹的
+</blockquote>
+
+<blockquote>
+【芦山地震震中一座百年老宅屹立不倒 居民照常生活(图)】【奇迹，震中一座百年老宅巍然屹立，堪称“屋坚强” 】7户张姓人家震后在这里照常生活。张家大院为瓦木结构四合院，坐落于芦山县龙门乡古城村山脚下，主人之一张大金说：“建于清朝同治年间的老宅 http://t.cn/zTXAtxG
+</blockquote>
+
+<p>然后就相应微博评论里就很容易想到的凸显出带有倾向性的谩骂与讥讽，好在哥现在心态比较淡定，而且又在间歇性的通过《全能住宅改造王》这种非专业娱乐节目来多多少少的去了解一些建筑上的设计，借此看能否借鉴人家的经验并apply到软件架构的设计和系统建设当中去，所以，就借这个话题，说说我这建筑行业门外汉的点滴看法...</p>
+<p>我第一眼看到这些微博报道的时候，第一个关注的词是&quot;瓦木结构&quot;， 因为这让之前看节目的时候脑海里一直萦绕的一个疑云开始看到了一缕阳光， 灵光乍现哦，哈哈（不过有可能让建筑行业的耻笑，太小儿科了）</p>
+<p>在看了很多集《全能住宅改造王》之后，我发现，他们的房屋大都是横木做地基 + 木柱做主要支撑和横梁， 开始会多少受反日“营销“的影响，觉得日本的房子能够这么搞， 完全是因为tmd能够从我们伟大的祖国这里低成本的进口木材，可是哥已经没有那么愤青了，就避开这个观点，暂时先suspend这个疑问，等等触发重新调度...</p>
+<p>日本的住宅内使用木材有一个原因是希望通过木材的柔和来烘托建筑的温暖，以此来对比水泥的冰冷，当然了，一级建筑士们可以通过小的trick来让水泥也带来些许的温情，只是，从材质上对人的第一感觉来说，水泥还是冰冷的，而木材却是柔和而温暖的，但是，这只是木材在他们建筑中使用而体现的功用的一个方面，而另一个方面，在看到我们的瓦木结构的屋坚强之后，“抗震”这词儿就忽然跃入哥的脑海了,哈哈</p>
+<p>如果看官与哥同业，那在软件架构设计的时候，应该会考虑系统弹性的问题， 通过加入诸如buffer等机制来缓冲外部压力对系统的冲击， 那回头来看，木材柔韧的特性，在抗震的时候，是不是就可以发挥作用了那？！ 不过反过来， 农村的纯砖和水泥的结构，在抗震层面的表现估计就惨不忍睹。 至于钢筋混凝土， 如果钢筋的布局和用量到位，那么应该也是有一定抗震性的，不过，前提是从地基到整体结构上能够协同才行， 局部做的太好，整体架子烂了，不倒都难...</p>
+<p>其实抗震结构在节目里还有其他的设计，太久远，记不太清了，这里牵扯用料， 物理， 力学等多个层面的考虑， 就不班门弄斧了。</p>
+<p>不管我的前提和解释是否专业或者靠谱，反正哥解开了一个心结， 很高兴，哈哈哈，顺道做做伪科普^_^</p>
+<p>BTW. 某些entity被骂也是应该的，不用叫屈，谁让你tmd不好好搞教育那，不好好搞architecture和 rules<a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a>，怀疑某些entity很欢迎被骂似的。 还是自学成才吧，亲～</p>
+<p>另外，再补充一下， 这个屋子真不是最牛逼的， 你知道日本一个破茅草屋都能300年屹立不倒吗？</p>
+<div class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p>(这个词儿其实不贴切的，为啥自己想)<a href="#fnref1">↩</a></p></li>
+</ol>
+</div>
+                
+                <!--百度分享按钮-->
+                <div class="pull-left bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a><a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a></div>
+                <script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"1","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+
+                <!--二维码分享-->
+                <div id="wx_qr"></div>
+                <script type="text/javascript">
+                  var baseUrl = "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data="
+                  var qrUrl = baseUrl.concat(document.URL)
+                  var img = document.createElement("img")
+                  img.setAttribute("src", qrUrl)
+
+                  document.getElementById("wx_qr").appendChild(img)
+                </script>
+
+
+                <div id="disqus_thread"></div>
+                <script type="text/javascript">
+                    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+                    var disqus_shortname = 'afoo'; // required: replace example with your forum shortname
+
+                    /* * * DON'T EDIT BELOW THIS LINE * * */
+                    (function() {
+                        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                    })();
+                </script>
+                <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+                <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+              </div>
+              </div>
+              </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 footer">
+                  <hr>
+                  <p>©FuqiangWang@<a href="http://keevol.com">keevol.com</a></p>
+                  <p>Powered by <a href="http://johnmacfarlane.net/pandoc/">pandoc</a> and <a href="http://pages.github.com/">github pages</a></p>
+                </div>
+            </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="/js/jquery-2.1.1.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1000502179'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s11.cnzz.com/z_stat.php%3Fid%3D1000502179%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));</script>
+  </body>
+
+</html>

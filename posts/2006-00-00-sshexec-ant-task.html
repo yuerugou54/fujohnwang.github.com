@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+  <head>
+	  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	  <title>扩展Ant Task之sshexec</title>
+	  <meta name="author" content="FuqiangWang">
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="shortcut icon" href="favicon.ico">
+            <style type="text/css">
+    table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+      margin: 0; padding: 0; vertical-align: baseline; border: none; }
+    table.sourceCode { width: 100%; line-height: 100%; }
+    td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+    td.sourceCode { padding-left: 5px; }
+    code > span.kw { color: #007020; font-weight: bold; }
+    code > span.dt { color: #902000; }
+    code > span.dv { color: #40a070; }
+    code > span.bn { color: #40a070; }
+    code > span.fl { color: #40a070; }
+    code > span.ch { color: #4070a0; }
+    code > span.st { color: #4070a0; }
+    code > span.co { color: #60a0b0; font-style: italic; }
+    code > span.ot { color: #007020; }
+    code > span.al { color: #ff0000; font-weight: bold; }
+    code > span.fu { color: #06287e; }
+    code > span.er { color: #ff0000; font-weight: bold; }
+    </style>
+                
+    <link href='/font/Syncopate/stylesheet.css' rel='stylesheet' type='text/css'>
+    <link href='/font/News_Cycle/stylesheet.css' rel='stylesheet' type='text/css'>
+
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/bootstrap-theme.min.css" rel="stylesheet">
+    <link href="/css/afoo.me.css" rel="stylesheet">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-3 sidebar">
+            <a href="/">
+                <img src="/images/profile-icon.png" class="img-circle img-responsive" width="160px" style="margin: 0 auto;" />
+                <h2 class="text-center">AFOO.ME</h2>
+            </a>
+            <p class="text-center lead slogan"><a href="/slogan.html">lollapalooza &amp; positioning</a></p>
+
+            <ul class="nav nav-pills nav-stacked">
+              <li><a href="/favorite.html" class="text-center"><i class="icon-star-empty"></i> Favorite</a></li>
+              <li><a href="/dashboard.html" class="text-center"><i class="icon-fullscreen"></i> Dashboard</a></li>
+              <li><a href="/" class="text-center"><i class="icon-folder-close-alt"></i> Archives</a></li>
+              <li><a href="/whoami.html" class="text-center"><i class="icon-user-md"></i> About</a></li>
+            </ul>
+
+        </div>
+        <div class="col-md-9 col-md-offset-3 main">
+            <div class="row">
+              <div class="container-fluid">
+                
+                <div class="row">
+                                <div id="header">
+                <p class="lead">
+                <h1 class="title">扩展Ant Task之sshexec&nbsp;&nbsp;
+                <small>
+                                    FuqiangWang
+                                </small>
+                </h1>
+                </p>
+                </div>
+                                <div>
+
+                <hr>
+
+                                <blockquote>
+<p>2014年从msn space存档中重新恢复出来！</p>
+</blockquote>
+<p>随着日方系统管理安全级别的提高，原来自动上传文件的crUploader(自己用RCP写的一个小工具)不能用了，而又不想再返回到原来那种WinScp和SecureCRT手动干预的年代，所以，转而让Ant帮我把上传，执行command，发送邮件等事情全部搞定，不过因为现在执行command的时候都需要指定用户用sudo来执行，所以，其间需要一个手动干预输入password的过程，而Ant提供的默认sshexec又不支持自动给你添入password这个动作，所以相当于将我的后继流程拦腰斩断，实在是如鲠在喉，就因为它，我就得分别手动上传并发送邮件，所以，今天痛下决心，铲除这个刺芒，so here we go...</p>
+<p>要扩展ant task，通常都是extends org.apache.tools.ant.Task这个类，不过，既然ant已经提供了ssh的相关类，所以，我们还是extends org.apache.tools.ant.taskdefs.optional.ssh.SSHBase类比较好，呵呵，这样我们就有了：</p>
+<pre class="sourceCode java"><code class="sourceCode java"><span class="kw">public</span> <span class="kw">class</span> SshExecWithInteractivePassword <span class="kw">extends</span> SSHBase</code></pre>
+<p>为了有助于理解，后面会给出一些代码片段，不过在此之前，我想先说一下原理比较好哈，其实也很简单，sshexec默认只是打开一个ChannelExec类型的Channel，然后为其设置要执行的command以及command执行后的输出dump到哪里，如果出错，那就抛出BuildException；说白了就是如果执行成功了，把输出打印给你，否则报错；但我们则需要除了输出信息之外，还要通过判断输出，来输入相应信息，也就是sudo后提示的password，鉴于此，我们只需要检测跟Channel相关联的InputStream，如果发现password提示，则向Channel相关联的OutputStream中write相应的password就可以了，easy，right？！</p>
+<p>以下是Task的execute()方法的代码：</p>
+<pre class="sourceCode java"><code class="sourceCode java"><span class="kw">public</span> <span class="dt">void</span> <span class="fu">execute</span>() <span class="kw">throws</span> BuildException {
+<span class="co">// super.execute();</span>
+<span class="kw">if</span>(<span class="fu">getHost</span>() == <span class="kw">null</span>)
+{
+<span class="kw">throw</span> <span class="kw">new</span> <span class="fu">BuildException</span>(<span class="st">&quot;Host is required.&quot;</span>);
+}
+<span class="kw">if</span>(<span class="fu">getUserInfo</span>().<span class="fu">getName</span>() == <span class="kw">null</span>)
+{
+<span class="kw">throw</span> <span class="kw">new</span> <span class="fu">BuildException</span>(<span class="st">&quot;Username is required.&quot;</span>);
+}
+<span class="kw">if</span>(<span class="fu">getUserInfo</span>().<span class="fu">getKeyfile</span>() == <span class="kw">null</span> &amp;&amp; <span class="fu">getUserInfo</span>().<span class="fu">getPassword</span>() == <span class="kw">null</span>)
+{
+<span class="kw">throw</span> <span class="kw">new</span> <span class="fu">BuildException</span>(<span class="st">&quot;Password or Keyfile is required.&quot;</span>);
+}
+<span class="kw">if</span>(command == <span class="kw">null</span>)
+{
+<span class="kw">throw</span> <span class="kw">new</span> <span class="fu">BuildException</span>(<span class="st">&quot;Command is required.&quot;</span>);
+}
+Session session = <span class="kw">null</span>;
+Channel channel = <span class="kw">null</span>;
+<span class="kw">try</span>
+{
+session = <span class="fu">openSession</span>();
+channel = session.<span class="fu">openChannel</span>(<span class="st">&quot;exec&quot;</span>);
+((ChannelExec) channel).<span class="fu">setPty</span>(<span class="kw">true</span>);
+((ChannelExec)channel).<span class="fu">setCommand</span>(command);
+channel.<span class="fu">connect</span>();
+<span class="fu">executeInChannel</span>(channel);
+}
+<span class="kw">catch</span>(Exception e)
+{
+<span class="kw">throw</span> <span class="kw">new</span> <span class="fu">BuildException</span>(e);
+}
+<span class="kw">finally</span>
+{
+<span class="fu">dispose</span>(session,channel);
+}
+}</code></pre>
+<p>很粗糙的实现，在<code>executeInChannel(channel)</code>方法中，我们检测输出并输入所要求的输入（哈哈，有点儿别扭，不过，相对于Channel来说，它的输入，就是我们的输出），类似于：</p>
+<pre class="sourceCode java"><code class="sourceCode java">InputStream in = channel.<span class="fu">getInputStream</span>();
+OutputStream out = channel.<span class="fu">getOutputStream</span>();
+InputStream err = ((ChannelExec) channel).<span class="fu">getErrStream</span>();
+<span class="dt">byte</span> tmp[] = <span class="kw">new</span> <span class="dt">byte</span>[<span class="dv">2048</span>];
+<span class="kw">do</span> {
+<span class="kw">while</span> (in.<span class="fu">available</span>() &gt; <span class="dv">0</span>) {
+<span class="dt">int</span> i = in.<span class="fu">read</span>(tmp, <span class="dv">0</span>, <span class="dv">2048</span>);
+String line = <span class="kw">new</span> String(tmp, <span class="dv">0</span>, i);
+<span class="fu">log</span>(line+<span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>);
+<span class="kw">if</span>(i&gt;<span class="dv">0</span> &amp;&amp; PASSWORD_PATTERN.<span class="fu">matcher</span>(line).<span class="fu">find</span>())
+{
+out.<span class="fu">write</span>(<span class="kw">super</span>.<span class="fu">getUserInfo</span>().<span class="fu">getPassword</span>().<span class="fu">getBytes</span>());
+out.<span class="fu">write</span>(<span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>.<span class="fu">getBytes</span>());
+out.<span class="fu">flush</span>();
+<span class="kw">break</span>;
+}
+}
+<span class="kw">while</span>(err.<span class="fu">available</span>() &gt; <span class="dv">0</span>)
+{
+<span class="dt">int</span> i = in.<span class="fu">read</span>(tmp, <span class="dv">0</span>, <span class="dv">2048</span>);
+String line = <span class="kw">new</span> String(tmp, <span class="dv">0</span>, i);
+<span class="fu">log</span>(line+<span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>);
+}
+<span class="kw">if</span> (channel.<span class="fu">isClosed</span>()) {
+<span class="dt">int</span> exitStatus = channel.<span class="fu">getExitStatus</span>();
+<span class="kw">if</span> (exitStatus != <span class="dv">0</span>) {
+StringBuffer exp = <span class="kw">new</span> StringBuffer();
+exp.<span class="fu">append</span>(<span class="st">&quot;Error Exit Status with Value:&quot;</span>).<span class="fu">append</span>(
+exitStatus).<span class="fu">append</span>(<span class="st">&quot;</span><span class="ch">\n\n</span><span class="st">&quot;</span>);
+<span class="kw">throw</span> <span class="kw">new</span> <span class="fu">BuildException</span>(exp.<span class="fu">toString</span>());
+}
+<span class="kw">break</span>;
+}
+<span class="kw">try</span> {
+Thread.<span class="fu">sleep</span>(1000L);
+} <span class="kw">catch</span> (Exception exception) {
+}
+} <span class="kw">while</span> (<span class="kw">true</span>);</code></pre>
+<p>呵呵，我知道代码很烂，不过将就看吧，我也不会为了这么个简单的小功能去费那个劳神子，一切OK之后，打包成jar，扔到ANT-HOME/lib下，这样你就可以使用它了：</p>
+<pre class="sourceCode xml"><code class="sourceCode xml"><span class="kw">&lt;taskdef</span><span class="ot"> name=</span><span class="st">&quot;dsshexec&quot;</span><span class="ot"> classname=</span><span class="st">&quot;org.darrenstudio.extension.anttasks.SshExecWithInteractivePassword&quot;</span><span class="kw">/&gt;</span>
+<span class="kw">&lt;dsshexec</span><span class="ot"> host=</span><span class="st">&quot;server&quot;</span><span class="ot"> username=</span><span class="st">&quot;user&quot;</span><span class="ot"> password=</span><span class="st">&quot;pwd&quot;</span><span class="ot"> command=</span><span class="st">&quot;sudo cp /home/wfq/result.txt /usr/local/&quot;</span><span class="ot"> trust=</span><span class="st">&quot;true&quot;</span><span class="kw">/&gt;</span></code></pre>
+<p>注意哦，上面的情况可不是普遍适用的，只是给你一个类似问题的提示而已，使用的话，可能要根据环境adapt一下,OK,打完收工！</p>
+<p>By the Way：上次那个Gotches是我的疏忽，敲错一个字母，应该是Gotchas,意即“I've got you&quot;，不过，一般字典上查不到</p>
+                
+                <!--百度分享按钮-->
+                <div class="pull-left bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a><a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a></div>
+                <script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"1","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+
+                <!--二维码分享-->
+                <div id="wx_qr"></div>
+                <script type="text/javascript">
+                  var baseUrl = "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data="
+                  var qrUrl = baseUrl.concat(document.URL)
+                  var img = document.createElement("img")
+                  img.setAttribute("src", qrUrl)
+
+                  document.getElementById("wx_qr").appendChild(img)
+                </script>
+
+
+                <div id="disqus_thread"></div>
+                <script type="text/javascript">
+                    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+                    var disqus_shortname = 'afoo'; // required: replace example with your forum shortname
+
+                    /* * * DON'T EDIT BELOW THIS LINE * * */
+                    (function() {
+                        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                    })();
+                </script>
+                <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+                <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+              </div>
+              </div>
+              </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 footer">
+                  <hr>
+                  <p>©FuqiangWang@<a href="http://keevol.com">keevol.com</a></p>
+                  <p>Powered by <a href="http://johnmacfarlane.net/pandoc/">pandoc</a> and <a href="http://pages.github.com/">github pages</a></p>
+                </div>
+            </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="/js/jquery-2.1.1.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1000502179'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s11.cnzz.com/z_stat.php%3Fid%3D1000502179%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));</script>
+  </body>
+
+</html>

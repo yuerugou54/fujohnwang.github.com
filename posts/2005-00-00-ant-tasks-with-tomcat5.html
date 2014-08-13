@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+  <head>
+	  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	  <title>Ant Tasks Supplied With Tomcat5</title>
+	  <meta name="author" content="FuqiangWang">
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="shortcut icon" href="favicon.ico">
+            <style type="text/css">
+    table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+      margin: 0; padding: 0; vertical-align: baseline; border: none; }
+    table.sourceCode { width: 100%; line-height: 100%; }
+    td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+    td.sourceCode { padding-left: 5px; }
+    code > span.kw { color: #007020; font-weight: bold; }
+    code > span.dt { color: #902000; }
+    code > span.dv { color: #40a070; }
+    code > span.bn { color: #40a070; }
+    code > span.fl { color: #40a070; }
+    code > span.ch { color: #4070a0; }
+    code > span.st { color: #4070a0; }
+    code > span.co { color: #60a0b0; font-style: italic; }
+    code > span.ot { color: #007020; }
+    code > span.al { color: #ff0000; font-weight: bold; }
+    code > span.fu { color: #06287e; }
+    code > span.er { color: #ff0000; font-weight: bold; }
+    </style>
+                
+    <link href='/font/Syncopate/stylesheet.css' rel='stylesheet' type='text/css'>
+    <link href='/font/News_Cycle/stylesheet.css' rel='stylesheet' type='text/css'>
+
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/bootstrap-theme.min.css" rel="stylesheet">
+    <link href="/css/afoo.me.css" rel="stylesheet">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-3 sidebar">
+            <a href="/">
+                <img src="/images/profile-icon.png" class="img-circle img-responsive" width="160px" style="margin: 0 auto;" />
+                <h2 class="text-center">AFOO.ME</h2>
+            </a>
+            <p class="text-center lead slogan"><a href="/slogan.html">lollapalooza &amp; positioning</a></p>
+
+            <ul class="nav nav-pills nav-stacked">
+              <li><a href="/favorite.html" class="text-center"><i class="icon-star-empty"></i> Favorite</a></li>
+              <li><a href="/dashboard.html" class="text-center"><i class="icon-fullscreen"></i> Dashboard</a></li>
+              <li><a href="/" class="text-center"><i class="icon-folder-close-alt"></i> Archives</a></li>
+              <li><a href="/whoami.html" class="text-center"><i class="icon-user-md"></i> About</a></li>
+            </ul>
+
+        </div>
+        <div class="col-md-9 col-md-offset-3 main">
+            <div class="row">
+              <div class="container-fluid">
+                
+                <div class="row">
+                                <div id="header">
+                <p class="lead">
+                <h1 class="title">Ant Tasks Supplied With Tomcat5&nbsp;&nbsp;
+                <small>
+                                    FuqiangWang
+                                </small>
+                </h1>
+                </p>
+                </div>
+                                <div>
+
+                <hr>
+
+                                <blockquote>
+<p>2014年从msn space存档中重新恢复出来！</p>
+</blockquote>
+<p>对于tomcat5来说，因为catalina已经提供了管理所需要的ant任务，所以，可以再外面通过ant来管理tomcat的webapp的部署等工作。</p>
+<p>下面是如何定义和使用这些ant任务的脚本表示：</p>
+<ol style="list-style-type: decimal">
+<li>定义一个tomcatTask.properties文件，文件中按照ant的taskdef任务文件定义的内容格式来定义以下内容：</li>
+</ol>
+<pre>
+deploy=org.apache.catalina.ant.DeployTask
+ undeploy=org.apache.catalina.ant.UndeployTask
+ remove=org.apache.catalina.ant.RemoveTask
+ reload=org.apache.catalina.ant.ReloadTask
+ start=org.apache.catalina.ant.StartTask
+ stop=org.apache.catalina.ant.StopTask
+ list=org.apache.catalina.ant.ListTask
+</pre>
+
+<blockquote>
+<p>注：【taskName=Task的实现class】是ant的taskdef规定的格式，当然，1和2完全可以按照每个task都对应自己的taskdef。</p>
+</blockquote>
+<ol start="2" style="list-style-type: decimal">
+<li>在ant的构建脚本build.xml中定义tomcat管理所用的Tasks</li>
+</ol>
+<pre class="sourceCode xml"><code class="sourceCode xml"><span class="kw">&lt;taskdef</span><span class="ot"> file=</span><span class="st">&quot;tomcatTasks.properties&quot;</span><span class="kw">&gt;</span>
+  <span class="kw">&lt;classpath&gt;</span>
+   <span class="kw">&lt;pathelement</span><span class="ot"> path=</span><span class="st">&quot;${tomcat.home}/server/lib/catalina-ant.jar&quot;</span><span class="kw">/&gt;</span>
+  <span class="kw">&lt;/classpath&gt;</span>
+ <span class="kw">&lt;/taskdef&gt;</span></code></pre>
+<ol start="3" style="list-style-type: decimal">
+<li>Tasks定义完成后，就可以定义tomcat管理的target来对tomcat进行管理了：</li>
+</ol>
+<pre class="sourceCode xml"><code class="sourceCode xml">    <span class="kw">&lt;target</span><span class="ot"> name=</span><span class="st">&quot;install&quot;</span><span class="ot"> description=</span><span class="st">&quot;Install application in Tomcat&quot;</span><span class="ot"> depends=</span><span class="st">&quot;war&quot;</span><span class="kw">&gt;</span>
+        <span class="kw">&lt;deploy</span><span class="ot"> url=</span><span class="st">&quot;${tomcat.manager.url}&quot;</span>
+<span class="ot">            username=</span><span class="st">&quot;${tomcat.manager.username}&quot;</span>
+<span class="ot">            password=</span><span class="st">&quot;${tomcat.manager.password}&quot;</span>
+<span class="ot">            path=</span><span class="st">&quot;/${webapp.name}&quot;</span>
+<span class="ot">            war=</span><span class="st">&quot;file:${dist.dir}/${webapp.name}.war&quot;</span><span class="kw">/&gt;</span>
+    <span class="kw">&lt;/target&gt;</span>
+
+    <span class="kw">&lt;target</span><span class="ot"> name=</span><span class="st">&quot;remove&quot;</span><span class="ot"> description=</span><span class="st">&quot;Remove application from Tomcat&quot;</span><span class="kw">&gt;</span>
+        <span class="kw">&lt;undeploy</span><span class="ot"> url=</span><span class="st">&quot;${tomcat.manager.url}&quot;</span>
+<span class="ot">            username=</span><span class="st">&quot;${tomcat.manager.username}&quot;</span>
+<span class="ot">            password=</span><span class="st">&quot;${tomcat.manager.password}&quot;</span>
+<span class="ot">            path=</span><span class="st">&quot;/${webapp.name}&quot;</span><span class="kw">/&gt;</span>
+    <span class="kw">&lt;/target&gt;</span>
+
+    <span class="kw">&lt;target</span><span class="ot"> name=</span><span class="st">&quot;reload&quot;</span><span class="ot"> description=</span><span class="st">&quot;Reload application in Tomcat&quot;</span><span class="kw">&gt;</span>
+        <span class="kw">&lt;reload</span><span class="ot"> url=</span><span class="st">&quot;${tomcat.manager.url}&quot;</span>
+<span class="ot">            username=</span><span class="st">&quot;${tomcat.manager.username}&quot;</span>
+<span class="ot">            password=</span><span class="st">&quot;${tomcat.manager.password}&quot;</span>
+<span class="ot">            path=</span><span class="st">&quot;/${webapp.name}&quot;</span><span class="kw">/&gt;</span>
+    <span class="kw">&lt;/target&gt;</span>
+
+    <span class="kw">&lt;target</span><span class="ot"> name=</span><span class="st">&quot;start&quot;</span><span class="ot"> description=</span><span class="st">&quot;Start Tomcat application&quot;</span><span class="kw">&gt;</span>
+        <span class="kw">&lt;start</span><span class="ot"> url=</span><span class="st">&quot;${tomcat.manager.url}&quot;</span>
+<span class="ot">            username=</span><span class="st">&quot;${tomcat.manager.username}&quot;</span>
+<span class="ot">            password=</span><span class="st">&quot;${tomcat.manager.password}&quot;</span>
+<span class="ot">            path=</span><span class="st">&quot;/${webapp.name}&quot;</span><span class="kw">/&gt;</span>
+    <span class="kw">&lt;/target&gt;</span>
+
+    <span class="kw">&lt;target</span><span class="ot"> name=</span><span class="st">&quot;stop&quot;</span><span class="ot"> description=</span><span class="st">&quot;Stop Tomcat application&quot;</span><span class="kw">&gt;</span>
+        <span class="kw">&lt;stop</span><span class="ot"> url=</span><span class="st">&quot;${tomcat.manager.url}&quot;</span>
+<span class="ot">            username=</span><span class="st">&quot;${tomcat.manager.username}&quot;</span>
+<span class="ot">            password=</span><span class="st">&quot;${tomcat.manager.password}&quot;</span>
+<span class="ot">            path=</span><span class="st">&quot;/${webapp.name}&quot;</span><span class="kw">/&gt;</span>
+    <span class="kw">&lt;/target&gt;</span>
+
+    <span class="kw">&lt;target</span><span class="ot"> name=</span><span class="st">&quot;list&quot;</span><span class="ot"> description=</span><span class="st">&quot;List Tomcat applications&quot;</span><span class="kw">&gt;</span>
+        <span class="kw">&lt;list</span><span class="ot"> url=</span><span class="st">&quot;${tomcat.manager.url}&quot;</span>
+<span class="ot">            username=</span><span class="st">&quot;${tomcat.manager.username}&quot;</span>
+<span class="ot">            password=</span><span class="st">&quot;${tomcat.manager.password}&quot;</span><span class="kw">/&gt;</span>
+    <span class="kw">&lt;/target&gt;</span></code></pre>
+<ol start="4" style="list-style-type: decimal">
+<li>另外，上面的task中时间上用到了与tomcat相关的一些property，所以，我们在build.properties中定义他们，当然也可以在其他地方定义他们，但总之，在用之前，需要定义这些properties。</li>
+</ol>
+<pre>
+tomcat.manager.url=http://localhost:8080/manager
+tomcat.manager.username=admin(对应你自己的username)
+tomcat.manager.password=admin(对应你自己的password)
+</pre>
+
+<p>之后，在build.xml的开始部分，定义<property file="build.properties"/>将这些properties引入。</p>
+<p>OK，以上就是使用tomcat5提供的ant任务对其进行管理的Overview，仅供Reference。</p>
+                
+                <!--百度分享按钮-->
+                <div class="pull-left bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a><a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a></div>
+                <script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"1","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+
+                <!--二维码分享-->
+                <div id="wx_qr"></div>
+                <script type="text/javascript">
+                  var baseUrl = "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data="
+                  var qrUrl = baseUrl.concat(document.URL)
+                  var img = document.createElement("img")
+                  img.setAttribute("src", qrUrl)
+
+                  document.getElementById("wx_qr").appendChild(img)
+                </script>
+
+
+                <div id="disqus_thread"></div>
+                <script type="text/javascript">
+                    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+                    var disqus_shortname = 'afoo'; // required: replace example with your forum shortname
+
+                    /* * * DON'T EDIT BELOW THIS LINE * * */
+                    (function() {
+                        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                    })();
+                </script>
+                <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+                <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+              </div>
+              </div>
+              </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 footer">
+                  <hr>
+                  <p>©FuqiangWang@<a href="http://keevol.com">keevol.com</a></p>
+                  <p>Powered by <a href="http://johnmacfarlane.net/pandoc/">pandoc</a> and <a href="http://pages.github.com/">github pages</a></p>
+                </div>
+            </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="/js/jquery-2.1.1.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1000502179'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s11.cnzz.com/z_stat.php%3Fid%3D1000502179%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));</script>
+  </body>
+
+</html>

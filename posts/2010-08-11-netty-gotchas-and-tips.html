@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+  <head>
+	  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	  <title>Netty Framework Tips And Gotchas</title>
+	  <meta name="author" content="FuqiangWang">
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="shortcut icon" href="favicon.ico">
+            <style type="text/css">
+    table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+      margin: 0; padding: 0; vertical-align: baseline; border: none; }
+    table.sourceCode { width: 100%; line-height: 100%; }
+    td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+    td.sourceCode { padding-left: 5px; }
+    code > span.kw { color: #007020; font-weight: bold; }
+    code > span.dt { color: #902000; }
+    code > span.dv { color: #40a070; }
+    code > span.bn { color: #40a070; }
+    code > span.fl { color: #40a070; }
+    code > span.ch { color: #4070a0; }
+    code > span.st { color: #4070a0; }
+    code > span.co { color: #60a0b0; font-style: italic; }
+    code > span.ot { color: #007020; }
+    code > span.al { color: #ff0000; font-weight: bold; }
+    code > span.fu { color: #06287e; }
+    code > span.er { color: #ff0000; font-weight: bold; }
+    </style>
+                
+    <link href='/font/Syncopate/stylesheet.css' rel='stylesheet' type='text/css'>
+    <link href='/font/News_Cycle/stylesheet.css' rel='stylesheet' type='text/css'>
+
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/bootstrap-theme.min.css" rel="stylesheet">
+    <link href="/css/afoo.me.css" rel="stylesheet">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-3 sidebar">
+            <a href="/">
+                <img src="/images/profile-icon.png" class="img-circle img-responsive" width="160px" style="margin: 0 auto;" />
+                <h2 class="text-center">AFOO.ME</h2>
+            </a>
+            <p class="text-center lead slogan"><a href="/slogan.html">lollapalooza &amp; positioning</a></p>
+
+            <ul class="nav nav-pills nav-stacked">
+              <li><a href="/favorite.html" class="text-center"><i class="icon-star-empty"></i> Favorite</a></li>
+              <li><a href="/dashboard.html" class="text-center"><i class="icon-fullscreen"></i> Dashboard</a></li>
+              <li><a href="/" class="text-center"><i class="icon-folder-close-alt"></i> Archives</a></li>
+              <li><a href="/whoami.html" class="text-center"><i class="icon-user-md"></i> About</a></li>
+            </ul>
+
+        </div>
+        <div class="col-md-9 col-md-offset-3 main">
+            <div class="row">
+              <div class="container-fluid">
+                
+                <div class="row">
+                                <div id="header">
+                <p class="lead">
+                <h1 class="title">Netty Framework Tips And Gotchas&nbsp;&nbsp;
+                <small>
+                                </small>
+                </h1>
+                </p>
+                </div>
+                                <div>
+
+                <hr>
+
+                                <div id="TOC">
+                <ul>
+                <li><a href="#tips-of-netty"><span class="toc-section-number">1</span> Tips of Netty</a></li>
+                <li><a href="#gotchas-of-netty"><span class="toc-section-number">2</span> Gotchas of Netty</a></li>
+                </ul>
+                </div>
+                                <p><em>target on netty 3.x</em></p>
+<h1 id="tips-of-netty"><span class="header-section-number">1</span> Tips of Netty</h1>
+<ol style="list-style-type: decimal">
+<li>annotation doesn't effect anything, pipeline factory do!</li>
+<li>always provide your own PipelineFactory so that others can see your pipeline overview; add java doc(<span class="citation">@see</span>) in your ChannelHandler to point to the PipelineFactory definition class for further documentation;</li>
+<li>prevent re-invent the wheels that has been available;(Since Netty has provided lot of available ChannelHandler implementations we can use.)</li>
+<li>pay attention to event-driven attribute of Netty, simply put, the &quot;messageReceived&quot; method will be invoked multiple times, so take care of the state of your data carefully.</li>
+<li>use LoggingHandler to debug.
+<ul>
+<li>LoggingHandler use JDK logging as default logging facility. If we want to change to use other ones, we need invoke InternalLoggingFactory.setDefaultFactory(..) before any netty classes are loaded. for example, if we want to use slf4j logging facility: <code>InternalLoggingFactory.setDefaultFactory(new Slf4JLoggingFactory();</code></li>
+</ul></li>
+<li>You have to invoke channel.close() in another thread other than the IOWorker thread.</li>
+</ol>
+<pre class="sourceCode java"><code class="sourceCode java"><span class="kw">public</span> <span class="dt">void</span> <span class="fu">exceptionCaught</span>(<span class="dt">final</span> ChannelHandlerContext ctx, ExceptionEvent e) <span class="kw">throws</span> Exception {  
+            <span class="kw">new</span> Thread(){  
+                <span class="kw">public</span> <span class="dt">void</span> <span class="fu">run</span>(){  
+                    ctx.<span class="fu">getChannel</span>().<span class="fu">close</span>().<span class="fu">addListener</span>(<span class="kw">new</span> <span class="fu">ChannelFutureListener</span>() {  
+                        <span class="kw">public</span> <span class="dt">void</span> <span class="fu">operationComplete</span>(ChannelFuture future) <span class="kw">throws</span> Exception {  
+                            future.<span class="fu">awaitUninterruptibly</span>();  
+                            <span class="fu">getBoostrap</span>().<span class="fu">releaseExternalResources</span>();  
+                            logger.<span class="fu">debug</span>(<span class="st">&quot;shutdown&quot;</span>);  
+                        }  
+                    });  
+                }  
+            }.<span class="fu">start</span>();  
+    }  </code></pre>
+<ol start="7" style="list-style-type: decimal">
+<li>use IdleStateHandler and IdleStateAwareChannelHandler together to achieve some functionalities like connection status checking, long-push server mocks, etc.
+<ul>
+<li>NOTE: use a global Timer to share between all of you IdleStateHandlers instead of creating each for them. A Timer can suffice because of its implementation mechanism(TimerWheel).</li>
+</ul></li>
+<li>always set “connectTimeoutMillis” connection option to achieve timeout return. without this option, future.awaitUninterruptibly(timeoutValue) means less.</li>
+<li>More...</li>
+</ol>
+<h1 id="gotchas-of-netty"><span class="header-section-number">2</span> Gotchas of Netty</h1>
+<ol style="list-style-type: decimal">
+<li>在使用ChannelBuffer的readBytes和getBytes的时候要注意index的意义不同.
+<ul>
+<li>例 如: 当前ChannelBuffer中有10个byte, 你通过readBytes读取了4个, 然后, 想查看一下下一个byte的值, 那么,你可以通过readByte()方法, 然后resetReaderIndex(); 或者, 你可以通过getByte(4)来peek这个值, 这里要注意的就是, getByte传入的index是最初的ChannelBuffer开始位置进行计算, 而不是剩余的bytes的位置进行计算. 即不是getByte(0).</li>
+</ul></li>
+<li><span class="citation">@ChannelPipelineCoverage</span>(&quot;one&quot;) Annotation doesn’t mean too much. It only works as a tip, nothing more. If you think you mark a ChannelHandler with “one” and Netty will use the ChannelHandler as a prototype, then you are wrong. It’s still your responsibility to ensure the scope semantics of singleton and prototype.</li>
+<li>在ChannelHandler中， 通过exceptionCaught方法再次将异常抛出以期望更上层来处理是没有前途的。 因为这种情况下抛出的异常将只是由DefaultChannelPipeline记录一条warning的日志，仅此而已， 你无法进一步插足该异常的处理。另选方案可能是， 在exceptionCaught方法中将要抛出以交给其他对象处理的异常放入某个共享状态中， 比如某个queue， 然后， 对这些异常感兴趣的对象可以对该队列进行轮询以处理之。</li>
+<li>More...</li>
+</ol>
+                
+                <!--百度分享按钮-->
+                <div class="pull-left bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a><a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a></div>
+                <script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"1","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+
+                <!--二维码分享-->
+                <div id="wx_qr"></div>
+                <script type="text/javascript">
+                  var baseUrl = "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data="
+                  var qrUrl = baseUrl.concat(document.URL)
+                  var img = document.createElement("img")
+                  img.setAttribute("src", qrUrl)
+
+                  document.getElementById("wx_qr").appendChild(img)
+                </script>
+
+
+                <div id="disqus_thread"></div>
+                <script type="text/javascript">
+                    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+                    var disqus_shortname = 'afoo'; // required: replace example with your forum shortname
+
+                    /* * * DON'T EDIT BELOW THIS LINE * * */
+                    (function() {
+                        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                    })();
+                </script>
+                <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+                <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+              </div>
+              </div>
+              </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 footer">
+                  <hr>
+                  <p>©FuqiangWang@<a href="http://keevol.com">keevol.com</a></p>
+                  <p>Powered by <a href="http://johnmacfarlane.net/pandoc/">pandoc</a> and <a href="http://pages.github.com/">github pages</a></p>
+                </div>
+            </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="/js/jquery-2.1.1.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1000502179'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s11.cnzz.com/z_stat.php%3Fid%3D1000502179%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));</script>
+  </body>
+
+</html>

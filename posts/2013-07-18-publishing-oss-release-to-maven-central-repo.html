@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+  <head>
+	  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	  <title>发布开源项目到Maven Central</title>
+	  <meta name="author" content="FuqiangWang">
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="shortcut icon" href="favicon.ico">
+            <style type="text/css">
+    table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+      margin: 0; padding: 0; vertical-align: baseline; border: none; }
+    table.sourceCode { width: 100%; line-height: 100%; }
+    td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+    td.sourceCode { padding-left: 5px; }
+    code > span.kw { color: #007020; font-weight: bold; }
+    code > span.dt { color: #902000; }
+    code > span.dv { color: #40a070; }
+    code > span.bn { color: #40a070; }
+    code > span.fl { color: #40a070; }
+    code > span.ch { color: #4070a0; }
+    code > span.st { color: #4070a0; }
+    code > span.co { color: #60a0b0; font-style: italic; }
+    code > span.ot { color: #007020; }
+    code > span.al { color: #ff0000; font-weight: bold; }
+    code > span.fu { color: #06287e; }
+    code > span.er { color: #ff0000; font-weight: bold; }
+    </style>
+                
+    <link href='/font/Syncopate/stylesheet.css' rel='stylesheet' type='text/css'>
+    <link href='/font/News_Cycle/stylesheet.css' rel='stylesheet' type='text/css'>
+
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/bootstrap-theme.min.css" rel="stylesheet">
+    <link href="/css/afoo.me.css" rel="stylesheet">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-3 sidebar">
+            <a href="/">
+                <img src="/images/profile-icon.png" class="img-circle img-responsive" width="160px" style="margin: 0 auto;" />
+                <h2 class="text-center">AFOO.ME</h2>
+            </a>
+            <p class="text-center lead slogan"><a href="/slogan.html">lollapalooza &amp; positioning</a></p>
+
+            <ul class="nav nav-pills nav-stacked">
+              <li><a href="/favorite.html" class="text-center"><i class="icon-star-empty"></i> Favorite</a></li>
+              <li><a href="/dashboard.html" class="text-center"><i class="icon-fullscreen"></i> Dashboard</a></li>
+              <li><a href="/" class="text-center"><i class="icon-folder-close-alt"></i> Archives</a></li>
+              <li><a href="/whoami.html" class="text-center"><i class="icon-user-md"></i> About</a></li>
+            </ul>
+
+        </div>
+        <div class="col-md-9 col-md-offset-3 main">
+            <div class="row">
+              <div class="container-fluid">
+                
+                <div class="row">
+                                <div id="header">
+                <p class="lead">
+                <h1 class="title">发布开源项目到Maven Central&nbsp;&nbsp;
+                <small>
+                                    王福强
+                                </small>
+                </h1>
+                </p>
+                </div>
+                                <div>
+
+                <hr>
+
+                                <div id="TOC">
+                <ul>
+                <li><a href="#总体路线概述"><span class="toc-section-number">1</span> 总体路线概述</a></li>
+                <li><a href="#申请账号并提交ticket"><span class="toc-section-number">2</span> 申请账号并提交Ticket</a></li>
+                <li><a href="#规范pom"><span class="toc-section-number">3</span> 规范POM</a></li>
+                <li><a href="#配置pgp"><span class="toc-section-number">4</span> 配置PGP</a></li>
+                <li><a href="#发布snapshot版本"><span class="toc-section-number">5</span> 发布SNAPSHOT版本</a></li>
+                <li><a href="#发布staging版本"><span class="toc-section-number">6</span> 发布Staging版本</a></li>
+                <li><a href="#正式发布"><span class="toc-section-number">7</span> 正式发布</a></li>
+                <li><a href="#总结"><span class="toc-section-number">8</span> 总结</a></li>
+                <li><a href="#参考资料"><span class="toc-section-number">9</span> 参考资料</a></li>
+                </ul>
+                </div>
+                                <p>过程比较繁琐曲折，其实按照<a href="https://docs.sonatype.org/display/Repository/Sonatype+OSS+Maven+Repository+Usage+Guide">官方文档</a>一步一步做，大部分情况下是可以搞定的， 不过，为了方便后面查阅，简单整理为此文档。</p>
+<h1 id="总体路线概述"><span class="header-section-number">1</span> 总体路线概述</h1>
+<p>直接发布到central repo其实是不行的，所以，其实我们是发布到sonatype的repository， 然后sonatype的repository会定期把我们的artifacts同步到maven的central repo中。</p>
+<p>基本上，如果我们的项目是第一次发布到sonatype，那么需要申请一个账号，并提交New Project的Ticket等待审批，审批之后，就可以开始准备发布项目所需的各项要求了。当然，因为Ticket审批需要2个工作日，那么，其实可以在这段时间就把准备工作做掉。</p>
+<p>初次发布，POM文件需要规范为sonatype要求的格式，该添加的element还是要添加一下，另外， 因为需要对要发布的artifacts做签名，也需要安装一下GnuPGP，并将public key上传到指定的key server上去(hkp://pool.sks-keyservers.net)， 并在.m2/settings.xml中添加相应的passphrase配置。</p>
+<p>所有这些事儿搞定之后，就可以执行命令开始发布， 总体流程大体如此。</p>
+<h1 id="申请账号并提交ticket"><span class="header-section-number">2</span> 申请账号并提交Ticket</h1>
+<p>这一步没啥难度，参考官方文档的说明即可：</p>
+<ol style="list-style-type: decimal">
+<li>到https://issues.sonatype.org/申请账号</li>
+<li>到<https://issues.sonatype.org/browse/OSSRH>通过'+Create Issue'创建新的Ticket， 类型为New Project, 其它信息按照人家要求填写就行了</li>
+</ol>
+<p>Ticket提交完了就等着就好了，人家说了要2个工作日才能审批完成，运气好估计会快点儿吧， 偶第一次因为SB网速，提交了2个相同的Ticket...</p>
+<h1 id="规范pom"><span class="header-section-number">3</span> 规范POM</h1>
+<p>这些element人家说了，必须要：</p>
+<pre><code>&lt;modelVersion&gt;
+&lt;groupId&gt;
+&lt;artifactId&gt;
+&lt;version&gt;
+&lt;packaging&gt;
+&lt;name&gt;
+&lt;description&gt;
+&lt;url&gt;
+&lt;licenses&gt;
+&lt;scm&gt;&lt;url&gt;
+&lt;scm&gt;&lt;connection&gt;
+&lt;developers&gt;</code></pre>
+<p>另外， 除了二进制jar包，相对应的-sources.jar和-javadoc.jar也是必须的，所有这些jar以及pom.xml都需要通过PGP签名，所以，我们需要在pom.xml里添加相应的maven插件来帮助我们搞定这些：</p>
+<pre><code>            &lt;plugin&gt;
+                &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;
+                &lt;artifactId&gt;maven-source-plugin&lt;/artifactId&gt;
+                &lt;executions&gt;
+                    &lt;execution&gt;
+                        &lt;id&gt;attach-sources&lt;/id&gt;
+                        &lt;goals&gt;
+                            &lt;goal&gt;jar&lt;/goal&gt;
+                        &lt;/goals&gt;
+                    &lt;/execution&gt;
+                &lt;/executions&gt;
+            &lt;/plugin&gt;
+            &lt;plugin&gt;
+                &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;
+                &lt;artifactId&gt;maven-javadoc-plugin&lt;/artifactId&gt;
+                &lt;configuration&gt;
+                    &lt;charset&gt;${file_encoding}&lt;/charset&gt;
+                    &lt;encoding&gt;${file_encoding}&lt;/encoding&gt;
+                &lt;/configuration&gt;
+                &lt;executions&gt;
+                    &lt;execution&gt;
+                        &lt;id&gt;attach-javadocs&lt;/id&gt;
+                        &lt;goals&gt;
+                            &lt;goal&gt;jar&lt;/goal&gt;
+                        &lt;/goals&gt;
+                    &lt;/execution&gt;
+                &lt;/executions&gt;
+            &lt;/plugin&gt;</code></pre>
+<p>我们不想任何时候都做pgp签名，这样会比较耗费时间，一般只是在发布的时候才执行pgp前面，所以，我们将maven的pgp插件放入pom.xml里单独的一个profile中：</p>
+<pre><code>    &lt;profiles&gt;
+        &lt;profile&gt;
+            &lt;id&gt;release-sign-artifacts&lt;/id&gt;
+            &lt;activation&gt;
+                &lt;property&gt;
+                    &lt;name&gt;performRelease&lt;/name&gt;
+                    &lt;value&gt;true&lt;/value&gt;
+                &lt;/property&gt;
+            &lt;/activation&gt;
+            &lt;build&gt;
+                &lt;plugins&gt;
+                    &lt;plugin&gt;
+                        &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;
+                        &lt;artifactId&gt;maven-gpg-plugin&lt;/artifactId&gt;
+                        &lt;version&gt;1.1&lt;/version&gt;
+                        &lt;executions&gt;
+                            &lt;execution&gt;
+                                &lt;id&gt;sign-artifacts&lt;/id&gt;
+                                &lt;phase&gt;verify&lt;/phase&gt;
+                                &lt;goals&gt;
+                                    &lt;goal&gt;sign&lt;/goal&gt;
+                                &lt;/goals&gt;
+                            &lt;/execution&gt;
+                        &lt;/executions&gt;
+                    &lt;/plugin&gt;
+                &lt;/plugins&gt;
+            &lt;/build&gt;
+        &lt;/profile&gt;
+    &lt;/profiles&gt;</code></pre>
+<p>除此之外， 我们的pom应该继承自sonatype oss:</p>
+<pre><code>  &lt;parent&gt;
+    &lt;groupId&gt;org.sonatype.oss&lt;/groupId&gt;
+    &lt;artifactId&gt;oss-parent&lt;/artifactId&gt;
+    &lt;version&gt;7&lt;/version&gt;
+  &lt;/parent&gt;</code></pre>
+<p>并且，有关SCM的信息需要严格填写， maven将在发布的时候自动checkout并打标发布。</p>
+<h1 id="配置pgp"><span class="header-section-number">4</span> 配置PGP</h1>
+<p>如果发布机上没有安装，需要安装一下， 俺本地因为是mac，所以直接下了pgptools，一键安装， very easy～</p>
+<p>安装后，创建一个pgp key，并发布到指定的key server - <code>hkp://pool.sks-keyservers.net</code>， 因为pgptools默认是发布到gnu的key server，所以，需要在PGP Keychain Access.app的Preferences里将key server选择为hkp://pool.sks-keyservers.net</p>
+<p>所有这些搞定之后，在~/.m2/settings.xml中添加：</p>
+<pre><code>&lt;settings&gt;
+  ...
+  &lt;servers&gt;
+    &lt;server&gt;
+      &lt;id&gt;sonatype-nexus-snapshots&lt;/id&gt;
+      &lt;username&gt;your-jira-id&lt;/username&gt;
+      &lt;password&gt;your-jira-pwd&lt;/password&gt;
+    &lt;/server&gt;
+    &lt;server&gt;
+      &lt;id&gt;sonatype-nexus-staging&lt;/id&gt;
+      &lt;username&gt;your-jira-id&lt;/username&gt;
+      &lt;password&gt;your-jira-pwd&lt;/password&gt;
+    &lt;/server&gt;
+  &lt;/servers&gt;
+  ...
+&lt;/settings&gt;</code></pre>
+<p>用户名和密码在一开始已经申请过了，填上即可。</p>
+<p>更详细步骤参看<a href="https://docs.sonatype.org/display/Repository/How+To+Generate+PGP+Signatures+With+Maven">https://docs.sonatype.org/display/Repository/How+To+Generate+PGP+Signatures+With+Maven</a></p>
+<h1 id="发布snapshot版本"><span class="header-section-number">5</span> 发布SNAPSHOT版本</h1>
+<pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">mvn</span> clean deploy</code></pre>
+<h1 id="发布staging版本"><span class="header-section-number">6</span> 发布Staging版本</h1>
+<pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">mvn</span> release:clean
+$ <span class="kw">mvn</span> release:prepare
+$ <span class="kw">mvn</span> release:perform</code></pre>
+<p>期间会提示需要输入pgp key的passphrase，照办就是了。</p>
+哥的Ticket当天没批下来，所以，运行会告诉我没有权限上传artifacts:
+<pre>
+ [ERROR] Failed to execute goal org.apache.maven.plugins:maven-deploy-plugin:2.5:deploy (default-deploy) on project cobar-client: Failed to deploy artifacts: Could not transfer artifact com.alibaba.cobar:cobar-client:jar:1.0.5 from/to sonatype-nexus-staging (https://oss.sonatype.org/service/local/staging/deploy/maven2/): Access denied to: https://oss.sonatype.org/service/local/staging/deploy/maven2/com/alibaba/cobar/cobar-client/1.0.5/cobar-client-1.0.5.jar -> [Help 1]
+</pre>
+
+<p>没办法，等吧～</p>
+<h1 id="正式发布"><span class="header-section-number">7</span> 正式发布</h1>
+<p>访问web地址：<a href="https://oss.sonatype.org/">https://oss.sonatype.org/</a></p>
+<p>登陆， 选择左边栏里的&quot;Staging Repositories&quot;, 然后点Close按钮，sonatype会做响应的validation，通过的话，就可以点Release发布啦，如果不通过，或者人工检查有问题，就先Drop，并重新做Staging发布， 知道搞定之后，再行发布。 没Release之前随便搞， Release之后就板上钉钉了。</p>
+<h1 id="总结"><span class="header-section-number">8</span> 总结</h1>
+<p>第一次搞需要拢的东西比较多，而且很久没搞Maven了(俺现在搞SBT比较多，u know的)， 所以，搞的期间偶尔出点儿小问题刺挠刺挠我，都是小事儿，总体上来讲， 官方文档还是比较靠谱的。</p>
+<h1 id="参考资料"><span class="header-section-number">9</span> 参考资料</h1>
+<ol style="list-style-type: decimal">
+<li><a href="https://docs.sonatype.org/display/Repository/Sonatype+OSS+Maven+Repository+Usage+Guide">官方文档</a></li>
+<li><a href="http://datumedge.blogspot.com/2012/05/publishing-from-github-to-maven-central.html">http://datumedge.blogspot.com/2012/05/publishing-from-github-to-maven-central.html</a></li>
+<li><a href="https://docs.sonatype.org/display/Repository/How+To+Generate+PGP+Signatures+With+Maven">https://docs.sonatype.org/display/Repository/How+To+Generate+PGP+Signatures+With+Maven</a></li>
+</ol>
+                
+                <!--百度分享按钮-->
+                <div class="pull-left bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a><a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a></div>
+                <script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"1","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+
+                <!--二维码分享-->
+                <div id="wx_qr"></div>
+                <script type="text/javascript">
+                  var baseUrl = "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data="
+                  var qrUrl = baseUrl.concat(document.URL)
+                  var img = document.createElement("img")
+                  img.setAttribute("src", qrUrl)
+
+                  document.getElementById("wx_qr").appendChild(img)
+                </script>
+
+
+                <div id="disqus_thread"></div>
+                <script type="text/javascript">
+                    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+                    var disqus_shortname = 'afoo'; // required: replace example with your forum shortname
+
+                    /* * * DON'T EDIT BELOW THIS LINE * * */
+                    (function() {
+                        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                    })();
+                </script>
+                <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+                <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+              </div>
+              </div>
+              </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 footer">
+                  <hr>
+                  <p>©FuqiangWang@<a href="http://keevol.com">keevol.com</a></p>
+                  <p>Powered by <a href="http://johnmacfarlane.net/pandoc/">pandoc</a> and <a href="http://pages.github.com/">github pages</a></p>
+                </div>
+            </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="/js/jquery-2.1.1.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1000502179'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s11.cnzz.com/z_stat.php%3Fid%3D1000502179%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));</script>
+  </body>
+
+</html>

@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+  <head>
+	  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	  <title>HA狭义与广义论</title>
+	  <meta name="author" content="FuqiangWang">
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="shortcut icon" href="favicon.ico">
+                    
+    <link href='/font/Syncopate/stylesheet.css' rel='stylesheet' type='text/css'>
+    <link href='/font/News_Cycle/stylesheet.css' rel='stylesheet' type='text/css'>
+
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/bootstrap-theme.min.css" rel="stylesheet">
+    <link href="/css/afoo.me.css" rel="stylesheet">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-3 sidebar">
+            <a href="/">
+                <img src="/images/profile-icon.png" class="img-circle img-responsive" width="160px" style="margin: 0 auto;" />
+                <h2 class="text-center">AFOO.ME</h2>
+            </a>
+            <p class="text-center lead slogan"><a href="/slogan.html">lollapalooza &amp; positioning</a></p>
+
+            <ul class="nav nav-pills nav-stacked">
+              <li><a href="/favorite.html" class="text-center"><i class="icon-star-empty"></i> Favorite</a></li>
+              <li><a href="/dashboard.html" class="text-center"><i class="icon-fullscreen"></i> Dashboard</a></li>
+              <li><a href="/" class="text-center"><i class="icon-folder-close-alt"></i> Archives</a></li>
+              <li><a href="/whoami.html" class="text-center"><i class="icon-user-md"></i> About</a></li>
+            </ul>
+
+        </div>
+        <div class="col-md-9 col-md-offset-3 main">
+            <div class="row">
+              <div class="container-fluid">
+                
+                <div class="row">
+                                <div id="header">
+                <p class="lead">
+                <h1 class="title">HA狭义与广义论&nbsp;&nbsp;
+                <small>
+                                </small>
+                </h1>
+                </p>
+                </div>
+                                <div>
+
+                <hr>
+
+                                <p>HA概念本身平淡无奇， HA者， High Availability的简称嘛！不过， 或许真的是自身愚笨， HA， HA的听多了， 还真没把它当回事。 很多年之后才真正“吃”出点儿味儿来。</p>
+<p>我得说， 大家通常挂在嘴边的HA应该属于狭义概念上的HA， 它通常指代某种Active+Standby的Pair Service， 最长见的当然就是数据库的主备结构。反正大家天天这么招呼， 在狭义的HA层面上也能达成一定的共识， 不过， HA概念本身其实简单背后蕴含着更多的玄机。</p>
+<p>从更广义的角度来说， HA就是HA（这可能听着有点儿绕）， 为了让我们的系统可以高可用(High Availability), 我们有许多手段或者说方式来达成这个目的， 而我们常常挂在嘴边的HA， 实际上只是其中的一个手段或者几个手段的代称而已。</p>
+<p>为了保证系统的高可用， 我们有许多种手段和方式， 下面是几种较为常见的手段和方式（不限于）：</p>
+<ul>
+<li><p><strong>复制与备份（Replication And Backup)</strong>. 这主要是从存储的角度保证状态的可用性， 比如采用RAID（冗余磁盘阵列）通过冗余的数据备份存储保证数据的高可用性； 比如， 异地数据中心之间的数据备份与灾难恢复； 又比如当下KV engine实现中采用的 R+W &gt; N 的原则等都可以属于这个范畴。</p></li>
+<li><p><strong>Failover</strong>. 为了保证系统的高可用性， 我们还可以引入Failover机制， 比如应用程序运行期间的hot swap， 或者Virtual IP之间的切换等，都属于Failover的范畴。</p></li>
+<li><p><strong>Cluster</strong>. 集群也是通过冗余来保证系统的高可用性， 只不过， 它侧重的是服务的冗余， 而不是状态的冗余（虽然也包含）。 集群内部可以存在交互，也可以不存在交互， 存在交互的集群内部各个结点通常是不对等的， 而不存在交互的集群内部各个结点通常则是对等的。 集群内部的交互， 简单的机制当然是Heart Beat， 复杂的机制可能有组播， 广播等。总之就是， 挂了我一个， 还有后来人， 预备役多着那。</p></li>
+<li><p><strong>Load balance</strong>. 负载均衡扔这里可能会感觉牵强附会，不过， 从其所起的作用来看， 把它看作保证系统高可用的一种手段也不为过。负载均衡可以减轻单一或者多个结点的负载压力， 将整体负载均衡的分配到多个结点上去，你想啊， 如果没有负载均衡， 将整个的负载都压到一个结点上去， 那这个结点不废废才怪那， 还谈啥高可用性啊， 连用都用不了了。</p></li>
+</ul>
+<p>其它的手段和方式欢迎补充， 不多扯了。</p>
+<p>另外， 如果实在不能达成系统某种程度的高可用性， 我们还可以选择某些妥协方案， 比如， 考虑系统的“优雅降级”（又是一个长挂嘴边的词儿）， 或者允许系统小部分的不可用等。</p>
+<p>总之那， HA就是HA（还是那么绕）， 简单又不简单。为了这么个简单的概念， 诸君却需要付出不简单的努力。</p>
+                
+                <!--百度分享按钮-->
+                <div class="pull-left bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a><a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a></div>
+                <script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"1","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+
+                <!--二维码分享-->
+                <div id="wx_qr"></div>
+                <script type="text/javascript">
+                  var baseUrl = "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data="
+                  var qrUrl = baseUrl.concat(document.URL)
+                  var img = document.createElement("img")
+                  img.setAttribute("src", qrUrl)
+
+                  document.getElementById("wx_qr").appendChild(img)
+                </script>
+
+
+                <div id="disqus_thread"></div>
+                <script type="text/javascript">
+                    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+                    var disqus_shortname = 'afoo'; // required: replace example with your forum shortname
+
+                    /* * * DON'T EDIT BELOW THIS LINE * * */
+                    (function() {
+                        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                    })();
+                </script>
+                <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+                <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+              </div>
+              </div>
+              </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 footer">
+                  <hr>
+                  <p>©FuqiangWang@<a href="http://keevol.com">keevol.com</a></p>
+                  <p>Powered by <a href="http://johnmacfarlane.net/pandoc/">pandoc</a> and <a href="http://pages.github.com/">github pages</a></p>
+                </div>
+            </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="/js/jquery-2.1.1.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1000502179'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s11.cnzz.com/z_stat.php%3Fid%3D1000502179%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));</script>
+  </body>
+
+</html>

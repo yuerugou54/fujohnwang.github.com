@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+  <head>
+	  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	  <title>Simple Introduction On Akka Actor</title>
+	  <meta name="author" content="FuqiangWang">
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="shortcut icon" href="favicon.ico">
+        <meta name="date" content="2011-04-29" />
+            <style type="text/css">
+    table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+      margin: 0; padding: 0; vertical-align: baseline; border: none; }
+    table.sourceCode { width: 100%; line-height: 100%; }
+    td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+    td.sourceCode { padding-left: 5px; }
+    code > span.kw { color: #007020; font-weight: bold; }
+    code > span.dt { color: #902000; }
+    code > span.dv { color: #40a070; }
+    code > span.bn { color: #40a070; }
+    code > span.fl { color: #40a070; }
+    code > span.ch { color: #4070a0; }
+    code > span.st { color: #4070a0; }
+    code > span.co { color: #60a0b0; font-style: italic; }
+    code > span.ot { color: #007020; }
+    code > span.al { color: #ff0000; font-weight: bold; }
+    code > span.fu { color: #06287e; }
+    code > span.er { color: #ff0000; font-weight: bold; }
+    </style>
+                
+    <link href='/font/Syncopate/stylesheet.css' rel='stylesheet' type='text/css'>
+    <link href='/font/News_Cycle/stylesheet.css' rel='stylesheet' type='text/css'>
+
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/bootstrap-theme.min.css" rel="stylesheet">
+    <link href="/css/afoo.me.css" rel="stylesheet">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-3 sidebar">
+            <a href="/">
+                <img src="/images/profile-icon.png" class="img-circle img-responsive" width="160px" style="margin: 0 auto;" />
+                <h2 class="text-center">AFOO.ME</h2>
+            </a>
+            <p class="text-center lead slogan"><a href="/slogan.html">lollapalooza &amp; positioning</a></p>
+
+            <ul class="nav nav-pills nav-stacked">
+              <li><a href="/favorite.html" class="text-center"><i class="icon-star-empty"></i> Favorite</a></li>
+              <li><a href="/dashboard.html" class="text-center"><i class="icon-fullscreen"></i> Dashboard</a></li>
+              <li><a href="/" class="text-center"><i class="icon-folder-close-alt"></i> Archives</a></li>
+              <li><a href="/whoami.html" class="text-center"><i class="icon-user-md"></i> About</a></li>
+            </ul>
+
+        </div>
+        <div class="col-md-9 col-md-offset-3 main">
+            <div class="row">
+              <div class="container-fluid">
+                
+                <div class="row">
+                                <div id="header">
+                <p class="lead">
+                <h1 class="title">Simple Introduction On Akka Actor&nbsp;&nbsp;
+                <small>
+                                    fujohnwang
+                                </small>
+                </h1>
+                </p>
+                </div>
+                                <div>
+
+                <hr>
+
+                                <div id="TOC">
+                <ul>
+                <li><a href="#actor-vs.-task"><span class="toc-section-number">1</span> Actor Vs. Task</a></li>
+                <li><a href="#akka-actor-quick-start"><span class="toc-section-number">2</span> Akka Actor Quick Start</a><ul>
+                <li><a href="#untyped-actor"><span class="toc-section-number">2.1</span> UnTyped Actor</a><ul>
+                <li><a href="#akka-actor的创建和启动"><span class="toc-section-number">2.1.1</span> Akka Actor的创建和启动</a></li>
+                <li><a href="#akka-actor的使用"><span class="toc-section-number">2.1.2</span> Akka Actor的使用</a></li>
+                <li><a href="#stop-or-killtheactor"><span class="toc-section-number">2.1.3</span> Stop or KillTheActor</a></li>
+                <li><a href="#lifecycle-callbacks"><span class="toc-section-number">2.1.4</span> Lifecycle Callbacks</a></li>
+                <li><a href="#other-features"><span class="toc-section-number">2.1.5</span> Other Features</a></li>
+                </ul></li>
+                <li><a href="#typed-actor"><span class="toc-section-number">2.2</span> Typed Actor</a></li>
+                </ul></li>
+                <li><a href="#dispatcher"><span class="toc-section-number">3</span> Dispatcher</a></li>
+                <li><a href="#fault-tolerance-facility"><span class="toc-section-number">4</span> Fault Tolerance Facility</a></li>
+                <li><a href="#remote-actor"><span class="toc-section-number">5</span> Remote Actor</a></li>
+                <li><a href="#conclusion"><span class="toc-section-number">6</span> Conclusion</a></li>
+                </ul>
+                </div>
+                                <p><strong>author: fujohnwang</strong></p>
+<p>Simple Introduction就是简单的介绍， 呵呵，所以， 这篇文字只是初级的浮于表面的泛泛之谈， 不要期望写的有多么事无巨细， 写得有多么深入人心，简单了解一下吧，感兴趣自己再找资料啃呗！</p>
+<p>Akka Framework有一堆modules， 这里只扯它的Actor支持， 什么不知道Actor是啥？哦， 那先去看看Erlanga啦， Wikipedia啦， Scala Actor啦， 然后再回来看这篇文字，呵呵，因为我不会那么详细的告诉你Actor到底是个什么东西， ：）</p>
+<h1 id="actor-vs.-task"><span class="header-section-number">1</span> Actor Vs. Task</h1>
+<p>Actor和Task那， 可以说是Share Nothing/Message Passing Concurrency跟Shared State Concurrency的标志性 “建筑物” ， 要比较很细的话， 可能也是一家有一家的话要说， 我那只说一点我的观点， 各位看官要是看得不爽， 也别喷， 欢迎纠正，使得我也可以迷途知返嘛！</p>
+<p>我的观点，简单来说， Actor可以维护多次逻辑执行的状态， 而Task则不维护这种逻辑多次执行的状态。 举例来说， 你把一个Callable或者Runnable提交给ExecutorService，并且当这个Task(Callable和Runnable算是Task的某些具体形式)执行完成后， 它的状态就此完结， 不会对下一个提交并执行的Task产生任何影响（当然， task与task之间通过某种全局的状态管理的情况除外）； 而Actor则不同， 一笔按照Actor的逻辑执行后， 大部分会对下一笔程序同样逻辑执行产生影响，因为它们的执行状态是通过Actor本身来维护的。 本质上，这种情况算是基于Task的并发建模与基于数据的并发建模的差异所造成的。</p>
+<p>扯完这些，我们下面看本篇文字的主角-Akka Actor。</p>
+<h1 id="akka-actor-quick-start"><span class="header-section-number">2</span> Akka Actor Quick Start</h1>
+<p>Akka Actor是Scala平台上的一种Actor实现， 其它的还有Scala本身类库提供的默认Actor实现，Lift框架的Actor实现，等等， 但Akka相对于其它Actor实现来说， “忽悠” 的名声有点儿大（ 因为基本上所有Actor实现上， 一些基本的组件都会有的，只不过，它忽悠的也还好， 性能确实比Scala默认提供的Actor实现要好），所以这也就是为啥要简单介绍一下它的原因啦～</p>
+<p>AkkaActor分两种， 一种叫Untyped Actor， 这种Actor就是常见的跟Erlang的ActorAPI实现和使用方式类似的那种， 而另一种叫Typed Actor, 它是通过API的强类型约束来声明和实现Actor， 后面会详细介绍它，我们先看Untyped Actor...</p>
+<h2 id="untyped-actor"><span class="header-section-number">2.1</span> UnTyped Actor</h2>
+<p>Untyped Actor的实现很简单，只要实现akka.actor.Actor这个trait就行：</p>
+<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">class</span> MyActor <span class="kw">extends</span> Actor{
+     <span class="kw">protected</span> <span class="kw">def</span> receive = {
+       <span class="kw">case</span> msg:String=&gt; <span class="fu">println</span>(<span class="st">&quot;receives message:&quot;</span>+msg)
+       <span class="kw">case</span> _=&gt; <span class="fu">println</span>(<span class="st">&quot;unexpected message&quot;</span>)
+     }
+}</code></pre>
+<p>一个Untyped Actor，只要实现receive方法就行了， Akka会有外围的调度框架来调度和执行它。知道了怎么定义一个Akka Actor， 那下面就是怎么创建和使用它了。</p>
+<h3 id="akka-actor的创建和启动"><span class="header-section-number">2.1.1</span> Akka Actor的创建和启动</h3>
+<p>AkkaActor并不是直接实例化你的Actor定义并使用它，而是通过ActorRef来引用和管理你的Actor实例， 代码说话：</p>
+<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> myActor:ActorRef = actorOf[MyActor]
+myActor.<span class="fu">start</span>     </code></pre>
+<p>akka.actor.Actor.actorOf工厂方法会根据你的Actor定义的类型来实例化和启动相应的Actor实例， 返回的Actor实例是ActorRef类型，而不是Actor类型，这个与Scala的Actor是不同的地方。（以上myActor定义的时候声明的类型是为了强调， 实际上因为有Scala的类型推导，此处的类型是可以省略的） akka.actor.Actor.actorOf还有许多变体（重载）， 比如， 如果我们的Actor定义有构造方法参数：</p>
+<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">class</span> <span class="fu">MyActor</span>(id:String) <span class="kw">extends</span> Actor{
+     <span class="kw">protected</span> <span class="kw">def</span> receive = {
+       <span class="kw">case</span> msg:String=&gt; <span class="fu">println</span>(<span class="st">&quot;receives message:&quot;</span>+msg)
+       <span class="kw">case</span> _=&gt; <span class="fu">println</span>(<span class="st">&quot;unexpected message&quot;</span>)
+     }
+}</code></pre>
+<p>那么， 可以使用以下形式来实例化和启动Actor:</p>
+<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> myActor:ActorRef = <span class="fu">actorOf</span>(<span class="kw">new</span> Actor(<span class="st">&quot;my actor&#39;s id&quot;</span>))
+myActor.<span class="fu">start</span>     </code></pre>
+<p>更多构造方式可以参阅Akka的Scaladoc， 此处有在线版本: http://akka.io/api/1.0/akka-actor/</p>
+<pre><code>Tip
+Actor的实例化和启动也可以以chaining的方式一次搞定:
+    val myActor:ActorRef = actorOf(new Actor(&quot;my actor&#39;s id&quot;)).start   
+ </code></pre>
+<h3 id="akka-actor的使用"><span class="header-section-number">2.1.2</span> Akka Actor的使用</h3>
+<p>Actor是以消息传递(Message Passing)的方式来实现并发的，所以， 使用Actor基本上就可以简化为Actor间的发送消息， 与大部分Actor一样， AkkaActor提供了以下几种消息发送方式:</p>
+<ul>
+<li>! - 异步消息发送. (!在这里读“bang”， 单一的!表示fire-and-forget形式的异步消息发送，该方法会即可返回而不用等消息处理完毕， 属于最常见的actor操作，也是效率更高的。 异步意味着系统的各个部分和资源可以得到更有效的利用.)</li>
+<li>!! - 异步消息发送并且同步等待. (bangbang可以表述为fire-and-wait, 消息也是异步处理，但知道消息处理完成之前， !!方法不会返回。 显然这种方式效率不如!的形式， 最好是迫不得已的特定场景下才选用它。)</li>
+<li>!!! - 异步发送消息并返回Future. (bangbangbang与我们executor.submit返回一个future类似， 它发送完消息之后即可返回一个future， 拿到这个future之后，用户自己来决定等待还是先做其它事情。可以描述为fire-and-reply-asynchronously.)</li>
+</ul>
+<p>为了说明以上说明场景，假设我们有这么一个Actor，它收到数字类型的消息，则直接异步处理； 收到字符串形式的消息， 则将其变为大写，并返回， 该Actor定义如下：</p>
+<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">class</span> MyActor <span class="kw">extends</span> Actor{
+  <span class="kw">protected</span> <span class="kw">def</span> receive = {
+    <span class="kw">case</span> n:Int =&gt; <span class="fu">println</span>(<span class="st">&quot;receives number:&quot;</span>+n)
+    <span class="kw">case</span> msg:String=&gt; self.<span class="fu">reply</span>(msg.<span class="fu">toUpperCase</span>)
+    <span class="kw">case</span> _=&gt; <span class="fu">println</span>(<span class="st">&quot;unexpected message&quot;</span>)
+  }
+}</code></pre>
+<p>现在，要Actor开工:</p>
+<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> myActor:ActorRef = actorOf[MyActor].<span class="fu">start</span>
+myActor ! <span class="dv">1</span>                            <span class="co">//receives number:1</span>
+<span class="fu">println</span>((myActor !! <span class="st">&quot;darren&quot;</span>).<span class="fu">getOrElse</span>(<span class="st">&quot;impossible&quot;</span>))        <span class="co">// DARREN</span>
+<span class="kw">val</span> future = myActor !!! <span class="st">&quot;darren&quot;</span>
+<span class="co">// do something else</span>
+future.<span class="fu">await</span>
+future.<span class="fu">result</span>.<span class="fu">asInstanceOf</span>[Option[String]] <span class="kw">match</span>{
+   <span class="kw">case</span> Some(str)=&gt; <span class="fu">println</span>(<span class="st">&quot;converted string:&quot;</span>+str)  <span class="co">// converted string:DARREN</span>
+   <span class="kw">case</span> None =&gt; <span class="fu">println</span>(<span class="st">&quot;impossible&quot;</span>)
+}</code></pre>
+<p>See？ Easy And Fun! 就这么简单， 别在问我其它的了，我也不知道 ：-）</p>
+<h3 id="stop-or-killtheactor"><span class="header-section-number">2.1.3</span> Stop or KillTheActor</h3>
+<p>Actor干完活， 不能让它在哪儿浪费资源不是？！ 要关闭/停止Actor， 可以采用多种形式， 最常见的就是直接掉actor.stop, 其它几种方式还有:</p>
+<p>1- Actor接收到特定消息后主动退出.</p>
+<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">case</span> <span class="kw">object</span> ShutdownSignal
+
+<span class="kw">class</span> MyActor <span class="kw">extends</span> Actor{
+  <span class="kw">protected</span> <span class="kw">def</span> receive = {
+ <span class="kw">case</span> ShutdownSignal =&gt; exit
+ <span class="kw">case</span> _=&gt; ...
+  }
+}</code></pre>
+<p>2- 喂毒药. 每次定义个ShutdownSignal啥的， 还得每次都在Actor实现的时候处理， 真麻烦， 时不？ 其实，可以不这么干， 直接喂你的Actor， 毒死它，哈哈.... 只要<code>myActor ! akka.actor.PoisonPill</code>， 你懂的...</p>
+<p>3- 通过ActorRegistry统一关闭. <code>Actor.registry.shutdownAll</code>， 你也懂的</p>
+<h3 id="lifecycle-callbacks"><span class="header-section-number">2.1.4</span> Lifecycle Callbacks</h3>
+<p>除了启动和关闭Actor， Akka Actor还有其它几个有关其生命周期的回掉方法:</p>
+<ul>
+<li>preStart</li>
+<li>postStop</li>
+<li>preRestart</li>
+<li>postRestart</li>
+</ul>
+<p>具体在啥时候触发，方法名已经很明了了， 至于用来干什么，也不用多说吧？！做做资源初始化啦， 资源清理啦，这是最常见的用途咯</p>
+<h3 id="other-features"><span class="header-section-number">2.1.5</span> Other Features</h3>
+<p>Akka Actor还有些比较有趣的特性，比如运行期间的Actor逻辑互换， 即在运行期间，将当前的处理逻辑替换为新的处理逻辑， 这可以通过Hotswap消息或者become方法来实现， 以Hotswap消息为例(摘自Akka Actor文档):</p>
+<pre class="sourceCode scala"><code class="sourceCode scala">actor ! <span class="fu">HotSwap</span>( self =&gt; {
+  <span class="kw">case</span> message =&gt; self.<span class="fu">reply</span>(<span class="st">&quot;hotswapped body&quot;</span>)
+})</code></pre>
+<p>当actor收到这个消息之后，就会使用新的处理逻辑来处理后继的消息。这个新的block会被放到最stack的最上面， 本着“自己的屁股自己擦”的原则，是不是用完后要处理掉那？ become和unbecome可能更能说明这个问题， 有创建就有销毁嘛！</p>
+<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">class</span> Swapper <span class="kw">extends</span> Actor {
+ <span class="kw">def</span> receive = {
+   <span class="kw">case</span> Swap =&gt;
+     <span class="fu">println</span>(<span class="st">&quot;Hi&quot;</span>)
+     become {
+       <span class="kw">case</span> Swap =&gt;
+         <span class="fu">println</span>(<span class="st">&quot;Ho&quot;</span>)
+         unbecome <span class="co">// resets the latest &#39;become&#39; (just for fun)</span>
+     }
+ }
+}</code></pre>
+<p>Hi， Ho， Hi，Ho...</p>
+<h2 id="typed-actor"><span class="header-section-number">2.2</span> Typed Actor</h2>
+<p>Typed Actor就是通过强类型的接口约束以及其POJO形式的实现而表现出来的一种Actor形式。Akka框架通过AOP对这些POJO实现相应的接口方法进行拦截和代理， 从而实现跟UntypeActor类似的异步消息处理。 反正方法调用本来也是消息传递的一种嘛。</p>
+<p>Typed Actor是根据接口的方法定义的Signature来决定处理语义的， 比如是异步的消息处理，还是异步接收同步返回， 以以下接口为例：</p>
+<pre class="sourceCode scala"><code class="sourceCode scala">interface RegistrationService {
+  void <span class="fu">register</span>(User user, Credentials cred)
+  User <span class="fu">getUserFor</span>(String username)
+}</code></pre>
+<p>返回值为void的方法， 相当于Untyped Actor的！方法， 而有返回值的， 则相当于！！， 至于跟!!!相当的方法定义，就得返回特定的akka.dispatch.Future类型咯。</p>
+<p>Typed Actor个人没有啥喜好，所以不做赘述， 感兴趣可以参考 官方文档 。</p>
+<h1 id="dispatcher"><span class="header-section-number">3</span> Dispatcher</h1>
+所有的AkkaActor创建之后，如果没有特殊设置，都会使用Dispatchers<span class="math"><em>g</em><em>l</em><em>o</em><em>b</em><em>a</em><em>l</em><em>E</em><em>x</em><em>e</em><em>c</em><em>u</em><em>t</em><em>o</em><em>r</em><em>B</em><em>a</em><em>s</em><em>e</em><em>d</em><em>E</em><em>v</em><em>e</em><em>n</em><em>t</em><em>D</em><em>r</em><em>i</em><em>v</em><em>e</em><em>n</em><em>D</em><em>i</em><em>s</em><em>p</em><em>a</em><em>t</em><em>c</em><em>h</em><em>e</em><em>r</em></span>进行运行调度， 从运行日志就可以看出:
+<pre>
+14:27:19.659 [main] DEBUG a.d.Dispatchers$globalExecutorBasedEventDrivenDispatcher$ 
+   - Starting up Dispatchers$globalExecutorBasedEventDrivenDispatcher$[akka:event-driven:dispatcher:global]
+ with throughput [5]
+ </pre>
+ 
+<p>但很多时候， 所有的Actor使用同一个Dispatcher是远远不够的。</p>
+<p>要定制相应Actor的运行调度， 可以为其设置特定的Dispatcher实现， 常见的Dispatcher实现在akka.dispatch包下， 如:</p>
+<ul>
+<li>ExecutorBasedEventDrivenDispatcher</li>
+<li>ExecutorBasedEventDrivenWorkStealingDispatcher</li>
+<li>HawtDispatcher</li>
+<li>可以通过两种方式为我们的Actor指定自己的Dispatcher， 第一种， 直接在Actor定义中指定：</li>
+</ul>
+<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">class</span> MyActor <span class="kw">extends</span> Actor{
+ self.<span class="fu">dispatcher</span> = ...
+}</code></pre>
+<p>使用哪种现有的Dispatcher实现或者自己实现， 可以根据自己的当前环境来决定。 另一种， 可以在Actor的ActorRef上设置:</p>
+<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> myActor = <span class="fu">actorOf</span>(..)
+myActor.<span class="fu">dispatcher</span> = ...
+myActor.<span class="fu">start</span></code></pre>
+<p>只要在Actor启动前设置即可， 个人倾向于这种方式。</p>
+<h1 id="fault-tolerance-facility"><span class="header-section-number">4</span> Fault Tolerance Facility</h1>
+<p>为了保证系统的健壮性， Akka提供了类似于Erlang的Actor Supervisor的策略， 那个图我就不贴了，就是按照层次， 上层监控下层，如果下层有Actor挂掉了， 那么由上层的Supervisor来决定是重启这个Actor那，还是重启Supervisor当前监控的所有Actor， 所谓的OneForOne和AllForOne策略。</p>
+<p>基于Supervisor的策略的基本原则是Let it crash, 当目标Actor crash掉之后， 要么重启它或者相关的actors， 要么正常关闭它。所以， 有几点主要要素要考虑在内， 其一， 需要监控哪些条件来判断目标的Actor有没有crash， 这通常是通过Exception来确定的；其二， 当监控到目标Actor crash之后， 是要重启它，还是直接关闭它？ 其三， 当要重启它的时候，是只重其它那，还是重启跟它相关的所有Actors？ 本着这几个要素，Akka 提供了相应的设施来界定这些关注点。</p>
+<p>要实现基于Supervisor的Fault Tolerance管理， Akka中通常采用所谓的声明式的实现方式， 以下是常见的代码：</p>
+<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> supervisor = <span class="fu">Supervisor</span>(
+  <span class="fu">SupervisorConfig</span>(
+    <span class="fu">AllForOneStrategy</span>(List(classOf[Exception]), <span class="dv">3</span>, <span class="dv">1000</span>),
+    <span class="fu">Supervise</span>(
+      actorOf[MyActor1],
+      Permanent) ::
+    <span class="fu">Supervise</span>(
+      actorOf[MyActor2],
+      Permanent) ::
+    Nil))   </code></pre>
+<p>Supervisor有一个company object提供了工厂方法来创建和启动一个Supervisor实例，即以上代码种的supervisor， 该工厂方法接受一个SupervisorConfig参数， 而SupervisorConfig参数可以定义Fault Handling的策略，以及要对哪些actor进行监控， 在以上代码中， AllForOneStrategy(List(classOf[Exception]), 3, 1000)定义了当捕获到目标Actor抛出Exception之后， 重启当前supervisor监控的所有actors， 并且最多重启3次， 时间不超出1秒钟。该项配置阐述了我们之前提到的第一和第三要素。SupervisorConfig第二个参数是接受了一组Supervise的List， 每个Supervise定义一个被当前supervisor监控的actor信息， 比如要监控的actor实例引用，以及该actor crash掉之后， 只要一直重启还是只是正常关闭它， 这阐述了我们之前提到的第二个要素。</p>
+<p>通过Supervisor创建Supervisor， 最终创建后的实例是已经start的， 不需要显式的start； 不过， 如果需要控制实例创建的时机以及start的时机， 可以使用akka.actor.SupervisorFactory类:</p>
+<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> factory = <span class="fu">SupervisorFactory</span>(
+   <span class="fu">SupervisorConfig</span>(
+     <span class="fu">AllForOneStrategy</span>(OneForOne, <span class="dv">3</span>, <span class="dv">10</span>, List(classOf[Exception]),
+     <span class="fu">Supervise</span>(
+       myFirstActor,
+       Permanent) ::
+     <span class="fu">Supervise</span>(
+       mySecondActor,
+       Permanent) ::
+     Nil))  
+<span class="kw">val</span> supervisor = factory.<span class="fu">newInstance</span>
+supervisor.<span class="fu">start</span> <span class="co">// start up all managed server </span></code></pre>
+<p>不过，大多数情况下，使用Supervisor就OK啦。</p>
+<p>以下是一个完整的实例， 可以一窥声明式的Fault Handling是多么的简单和容易理解：</p>
+<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">class</span> MyActor <span class="kw">extends</span> Actor {
+ <span class="co">// self.setLifeCycle(akka.config.Supervision.permanent)</span>
+      <span class="kw">override</span> <span class="kw">def</span> <span class="fu">postRestart</span>(reason: Throwable) {
+        <span class="fu">println</span>(<span class="st">&quot;restart is done.&quot;</span>)
+      }
+      <span class="kw">protected</span> <span class="kw">def</span> receive = {
+        <span class="kw">case</span> n: Int =&gt; <span class="fu">println</span>(<span class="st">&quot;receives number:&quot;</span> + n)
+        <span class="kw">case</span> msg: String =&gt; self.<span class="fu">reply</span>(msg.<span class="fu">toUpperCase</span>)
+        <span class="kw">case</span> _ =&gt; <span class="kw">throw</span> <span class="kw">new</span> Exception(<span class="st">&quot;xxxx&quot;</span>)
+      }
+    }
+    <span class="kw">import</span> akka.<span class="fu">config</span>.<span class="fu">Supervision</span>.<span class="fu">_</span>
+    <span class="kw">val</span> myActor: ActorRef = actorOf[MyActor].<span class="fu">start</span>
+    <span class="kw">val</span> supervisor = <span class="fu">Supervisor</span>(<span class="fu">SupervisorConfig</span>(
+      <span class="fu">AllForOneStrategy</span>(List(classOf[Exception]), <span class="dv">3</span>, <span class="dv">1000</span>),
+      <span class="fu">Supervise</span>(
+        myActor,
+        Permanent) ::
+        Nil))
+ <span class="co">// supervisor.link(myActor)</span>
+    myActor ! Array[Byte](<span class="bn">0x00</span>)
+    myActor ! <span class="dv">111</span>
+
+    TimeUnit.<span class="fu">SECONDS</span>.<span class="fu">sleep</span>(<span class="dv">5</span>)
+
+    supervisor.<span class="fu">shutdown</span>
+    myActor.<span class="fu">stop</span></code></pre>
+<p>在myActor ! Array<a href="0x00">Byte</a>之后， myActor会抛出异常， 但因为有supervisor监控它并重启了它，所以myActor ! 111可以正常处理。 如果不使用声明式的fault handling， 那么需要在supervisor以及被监控actor内部各自声明一些钩子， 以上代码实例中被注视的代码算是一部分， 使用了声明式的方式，这些就都不需要了。</p>
+<p>要了解fault handling更多信息，包括编程式的fault handling方式， 可以参考 这里 .</p>
+<h1 id="remote-actor"><span class="header-section-number">5</span> Remote Actor</h1>
+<p>使用就不扯了，简单说一下原理，不过我自己瞎猜的，没看它代码，呵呵， RemoteActor要实现起来其实很简单， 直接对ActorRef做Proxy， 发送端结点与接收端结点采用不同的逻辑实现， 即接收端结点起相应的TCP服务接收请求， 然后对接收到的请求进行分类并分发给相应的本地Actor， 如果是异步消息，则返回；否则等处理完后， 再将处理结果通过TCP连接发送回发送端结点；发送端结点的Proxy直接发起TCP连接到目标接收端， 之后，只要本地Actor收到请求，就通过该TCP连接将消息发送给目标端TCP Server，server处理逻辑前面已经说了。</p>
+<p>在这里， 如果设计好的话， tcp的交互协议可以扩展， tcp的通信序列化协议也可以扩展， 比如， 针对Akka不支持protostuff的现状， 插入自定义的protostuff序列化装置就很好嘛，哈哈</p>
+<h1 id="conclusion"><span class="header-section-number">6</span> Conclusion</h1>
+<p>AkkaActor相对于其它的实现来说更成熟一些， 但没有最好，只有更好，希望Scala平台的Actor更加成熟，更加快速，更加强大...</p>
+                
+                <!--百度分享按钮-->
+                <div class="pull-left bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a><a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a></div>
+                <script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"1","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+
+                <!--二维码分享-->
+                <div id="wx_qr"></div>
+                <script type="text/javascript">
+                  var baseUrl = "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data="
+                  var qrUrl = baseUrl.concat(document.URL)
+                  var img = document.createElement("img")
+                  img.setAttribute("src", qrUrl)
+
+                  document.getElementById("wx_qr").appendChild(img)
+                </script>
+
+
+                <div id="disqus_thread"></div>
+                <script type="text/javascript">
+                    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+                    var disqus_shortname = 'afoo'; // required: replace example with your forum shortname
+
+                    /* * * DON'T EDIT BELOW THIS LINE * * */
+                    (function() {
+                        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                    })();
+                </script>
+                <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+                <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+              </div>
+              </div>
+              </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 footer">
+                  <hr>
+                  <p>©FuqiangWang@<a href="http://keevol.com">keevol.com</a></p>
+                  <p>Powered by <a href="http://johnmacfarlane.net/pandoc/">pandoc</a> and <a href="http://pages.github.com/">github pages</a></p>
+                </div>
+            </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="/js/jquery-2.1.1.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1000502179'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s11.cnzz.com/z_stat.php%3Fid%3D1000502179%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));</script>
+  </body>
+
+</html>

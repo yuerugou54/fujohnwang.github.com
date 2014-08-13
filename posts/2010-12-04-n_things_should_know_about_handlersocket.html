@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+  <head>
+	  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	  <title>N Things You should know about HandlerSocket</title>
+	  <meta name="author" content="FuqiangWang">
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="shortcut icon" href="favicon.ico">
+        <meta name="date" content="2010-12-04" />
+                    
+    <link href='/font/Syncopate/stylesheet.css' rel='stylesheet' type='text/css'>
+    <link href='/font/News_Cycle/stylesheet.css' rel='stylesheet' type='text/css'>
+
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/bootstrap-theme.min.css" rel="stylesheet">
+    <link href="/css/afoo.me.css" rel="stylesheet">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-3 sidebar">
+            <a href="/">
+                <img src="/images/profile-icon.png" class="img-circle img-responsive" width="160px" style="margin: 0 auto;" />
+                <h2 class="text-center">AFOO.ME</h2>
+            </a>
+            <p class="text-center lead slogan"><a href="/slogan.html">lollapalooza &amp; positioning</a></p>
+
+            <ul class="nav nav-pills nav-stacked">
+              <li><a href="/favorite.html" class="text-center"><i class="icon-star-empty"></i> Favorite</a></li>
+              <li><a href="/dashboard.html" class="text-center"><i class="icon-fullscreen"></i> Dashboard</a></li>
+              <li><a href="/" class="text-center"><i class="icon-folder-close-alt"></i> Archives</a></li>
+              <li><a href="/whoami.html" class="text-center"><i class="icon-user-md"></i> About</a></li>
+            </ul>
+
+        </div>
+        <div class="col-md-9 col-md-offset-3 main">
+            <div class="row">
+              <div class="container-fluid">
+                
+                <div class="row">
+                                <div id="header">
+                <p class="lead">
+                <h1 class="title">N Things You should know about HandlerSocket&nbsp;&nbsp;
+                <small>
+                                    fujohnwang
+                                </small>
+                </h1>
+                </p>
+                </div>
+                                <div>
+
+                <hr>
+
+                                <div id="TOC">
+                <ul>
+                <li><a href="#what-whats-handlersocket啥啥是handlersocket"><span class="toc-section-number">1</span> What? What's HandlerSocket?(啥?啥是HandlerSocket？)</a></li>
+                <li><a href="#things-you-should-know"><span class="toc-section-number">2</span> Things You should know</a><ul>
+                <li><a href="#binlog-is-still-available-with-handlersocket"><span class="toc-section-number">2.1</span> Binlog is still available with Handlersocket</a></li>
+                <li><a href="#play-around-with-hs-via-telnet"><span class="toc-section-number">2.2</span> Play around with HS via telnet</a></li>
+                <li><a href="#the-insert-columns-have-nothing-to-do-with-the-openindex-columns"><span class="toc-section-number">2.3</span> The Insert columns have nothing to do with the OpenIndex columns;</a></li>
+                <li><a href="#auto_increment-indeed-is-the-problem-here-with-hs."><span class="toc-section-number">2.4</span> auto_increment indeed is the problem here with HS.</a></li>
+                <li><a href="#handlersocket-doesnt-support-transaction"><span class="toc-section-number">2.5</span> HandlerSocket doesn't support transaction</a></li>
+                <li><a href="#why-handlersocket-is-fast"><span class="toc-section-number">2.6</span> Why HandlerSocket is fast?</a></li>
+                </ul></li>
+                <li><a href="#last-words-on-this"><span class="toc-section-number">3</span> Last Words On This</a></li>
+                </ul>
+                </div>
+                                <p><strong>author: fujohnwang</strong></p>
+<p>关于Mysql HandlerSocket Plugin你不得不知的几件事儿</p>
+<h1 id="what-whats-handlersocket啥啥是handlersocket"><span class="header-section-number">1</span> What? What's HandlerSocket?(啥?啥是HandlerSocket？)</h1>
+<p>As you may know, after Mysql5.1, plugin mechanism is introduced into the mysql server.With Plugins, we can extend or customize the functionalities or behaviors of Mysql server. While HandlerSocket is one custom plugin for Mysql, it enables you to access the underlying storage engines of Mysql server(currently, only InnoDB is supported), without any overhead on Sql parsing things, execution planning things, etc. As the author of HandlerSocket states, with HandlerSocket, you can achieve 750000 qps, sounds fantasitic ha? To find more details on HandlerSocket, refer to this original blog about HS. Of course, you can also refer to the official site of HS on the github where you can find almost anything and get you updated with the current development process of HS.</p>
+<p>Oh, By the way, after you want to get started with HS, and you would like to read something useful on HS in Chinese, read this , hehe, one of my old fellow wrote it.</p>
+<h1 id="things-you-should-know"><span class="header-section-number">2</span> Things You should know</h1>
+<p>OK, now, let's get to the topic today.</p>
+<h2 id="binlog-is-still-available-with-handlersocket"><span class="header-section-number">2.1</span> Binlog is still available with Handlersocket</h2>
+<p>I am sorry I said binlog is not availabe when we use HandlerSocket to do data access, that's not true. In fact, HandlerSocket implements as a Handler in mysql, and that means a callback for binlog writing needs to be implemented, so HandlerSocket will still write binlogs in the process of data access. One word, HandlerSocket will write binlog in row-based format. ## What if I only want to update specific columns of a table instead of all? When only want to update several columns, open an index with these several columns only. This is a trick, but it's necessary for you to know it. ## pst_id will be confined in each connection, it's mapped to prep_stat in HS codebase; So as long as you keep the pst_id identical in one connection, the index will not be crashed. Most of the time, The client should take care of the pst_id/indexId generation and management ## QueryCache invalidation issue Currently, HandlerSocket will not invalidate the query cache when updating the database, but the auther told me in the github forum that he would like to add this feature in the near futuer, maybe it will come soon;</p>
+<p>(<strong>Update: the new version of HS has fixed this issure</strong>) ## encoded string issue When encoding the string as per the HS protocol, you have to convert a string to an array of bytes, but the protocol doesn't mention the conversion charset, as I have asked such a question in the forum of github, the author answered we should use the encoding of the target table.</p>
+<p>As to the string encoding, another point I should mention, as the protocol states, the client should encoding column values before sending them to HS server, but since special bytes are kept(e.g. 0x00 as null, 0x09 as delimeter, etc.), so the protocol states that if the byte value is between 0x00 and 0x0f, special treat should be taken, that's, encoding these special bytes by prefixing 0x01 after bitwise 0x40. But as I know, most of the Java clients didn't pay attention to the encoding issue(Most of the time, I live in Java world, Although recently I starts to join Scala's one), so take care on this point when you try to pick up an Opensource Java client for HandlerSocket.</p>
+<h2 id="play-around-with-hs-via-telnet"><span class="header-section-number">2.2</span> Play around with HS via telnet</h2>
+<pre><code>HandlerSocket protocol is a small-sized text based protocol. Like memcached text protocol, you can use telnet to get rows through HandlerSocket.</code></pre>
+<p>So let's have some fun.</p>
+Firstly, let's create a table to play with:
+<pre>
+create table dw(
+ id int(10) unsigned auto_increment not null, 
+ value varchar(25), primary key(id)) engine=InnoDB;
+ </pre>
+ 
+Then, here is what we may do next:
+<pre>
+Example 1. 
+fujohnwangs-MacBook-Pro:~ fujohnwang$ telnet 10.16.201.39 9999
+Trying 10.16.201.39...
+Connected to 10.16.201.39.
+Escape character is '^]'.
+P 0 test dw PRIMARY value   
+0 1
+0 + 2 1 darren
+0 1
+0 = 1 0 1 0 D
+0 1 1
+</pre>
+
+<p>Just for hint, the delimeter between value columns above is tab(0x09), not space, just as the protocol states. But in your first time, you may ignore this and cause unsuccessful interaction with HS.</p>
+<h2 id="the-insert-columns-have-nothing-to-do-with-the-openindex-columns"><span class="header-section-number">2.3</span> The Insert columns have nothing to do with the OpenIndex columns;</h2>
+<p>Let's say, we have a table which has 2 columns (id int unsigned PRIMARY KEY auth_increment, value VARCHAR(25)), since we define id as auto_increment, when insert records into this table, we may only care about the value column, so we may do:</p>
+<pre>
+Example 2. 
+P 0 test my_table PRIMARY value
+// 0 1
+0 + 1 stringvalue
+// 1 1
+</pre>
+
+<p>what? the error code is 1, not 0, it means there is something wrong. yes, Not like Update operations, the insert operation will ALWAYS insert columns from the 1st column to the last column of the table, even we only Open index with value column. In the above sample, the operation in fact try to insert stringvalue as int value which indeed will cause error.</p>
+<blockquote>
+In fact, sometimes stringvalue will be converted to 0 instead of raising error. But the gotcha with insert is the key point here.
+</blockquote>
+
+<h2 id="auto_increment-indeed-is-the-problem-here-with-hs."><span class="header-section-number">2.4</span> auto_increment indeed is the problem here with HS.</h2>
+<p>why? see item above. ^<em>^ Of course, most of the times, it's not a big deal as per HS's typical usage scenarios. In distributed environments, auth</em>increment is not prefered.</p>
+<p>(<strong>Update: auto_increment works now</strong>)</p>
+<h2 id="handlersocket-doesnt-support-transaction"><span class="header-section-number">2.5</span> HandlerSocket doesn't support transaction</h2>
+<p>But the data changes are durable. Use HandlerSocket properly and visely in suitable scenarios.</p>
+<h2 id="why-handlersocket-is-fast"><span class="header-section-number">2.6</span> Why HandlerSocket is fast?</h2>
+<p>The original blog has explanation about this, here is just a conclusion:</p>
+<ol style="list-style-type: decimal">
+<li>much lower CPU usage (analysis with oprofile)</li>
+<li>execute multiple requests in bulk on server side which cause low CPU/disk usage</li>
+<li>custom effecient text-based communication protocol, at least more effecient than mysql's one</li>
+</ol>
+<h1 id="last-words-on-this"><span class="header-section-number">3</span> Last Words On This</h1>
+<p>I don't think I can list everything here on HandlerSocket, since HS will evolve continuously, So stay tuned on HS and on this topic which I may update in the future.</p>
+                
+                <!--百度分享按钮-->
+                <div class="pull-left bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a><a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a></div>
+                <script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"1","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+
+                <!--二维码分享-->
+                <div id="wx_qr"></div>
+                <script type="text/javascript">
+                  var baseUrl = "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data="
+                  var qrUrl = baseUrl.concat(document.URL)
+                  var img = document.createElement("img")
+                  img.setAttribute("src", qrUrl)
+
+                  document.getElementById("wx_qr").appendChild(img)
+                </script>
+
+
+                <div id="disqus_thread"></div>
+                <script type="text/javascript">
+                    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+                    var disqus_shortname = 'afoo'; // required: replace example with your forum shortname
+
+                    /* * * DON'T EDIT BELOW THIS LINE * * */
+                    (function() {
+                        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                    })();
+                </script>
+                <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+                <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+              </div>
+              </div>
+              </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 footer">
+                  <hr>
+                  <p>©FuqiangWang@<a href="http://keevol.com">keevol.com</a></p>
+                  <p>Powered by <a href="http://johnmacfarlane.net/pandoc/">pandoc</a> and <a href="http://pages.github.com/">github pages</a></p>
+                </div>
+            </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="/js/jquery-2.1.1.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1000502179'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s11.cnzz.com/z_stat.php%3Fid%3D1000502179%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));</script>
+  </body>
+
+</html>

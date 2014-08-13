@@ -1,0 +1,9 @@
+#!/bin/sh
+
+./compile dashboard.markdown
+./compile favorite.markdown
+./compile free-programming-books.md
+./compile slogan.md
+./compile whoami.md
+
+sbt run

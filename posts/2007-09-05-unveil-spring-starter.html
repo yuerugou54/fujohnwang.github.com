@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+  <head>
+	  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	  <title>unveil spring starter</title>
+	  <meta name="author" content="FuqiangWang">
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="shortcut icon" href="favicon.ico">
+                    
+    <link href='/font/Syncopate/stylesheet.css' rel='stylesheet' type='text/css'>
+    <link href='/font/News_Cycle/stylesheet.css' rel='stylesheet' type='text/css'>
+
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/bootstrap-theme.min.css" rel="stylesheet">
+    <link href="/css/afoo.me.css" rel="stylesheet">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-3 sidebar">
+            <a href="/">
+                <img src="/images/profile-icon.png" class="img-circle img-responsive" width="160px" style="margin: 0 auto;" />
+                <h2 class="text-center">AFOO.ME</h2>
+            </a>
+            <p class="text-center lead slogan"><a href="/slogan.html">lollapalooza &amp; positioning</a></p>
+
+            <ul class="nav nav-pills nav-stacked">
+              <li><a href="/favorite.html" class="text-center"><i class="icon-star-empty"></i> Favorite</a></li>
+              <li><a href="/dashboard.html" class="text-center"><i class="icon-fullscreen"></i> Dashboard</a></li>
+              <li><a href="/" class="text-center"><i class="icon-folder-close-alt"></i> Archives</a></li>
+              <li><a href="/whoami.html" class="text-center"><i class="icon-user-md"></i> About</a></li>
+            </ul>
+
+        </div>
+        <div class="col-md-9 col-md-offset-3 main">
+            <div class="row">
+              <div class="container-fluid">
+                
+                <div class="row">
+                                <div id="header">
+                <p class="lead">
+                <h1 class="title">unveil spring starter&nbsp;&nbsp;
+                <small>
+                                </small>
+                </h1>
+                </p>
+                </div>
+                                <div>
+
+                <hr>
+
+                                <blockquote>
+<p>2014年从msn space存档中重新恢复出来！</p>
+</blockquote>
+<p>This is just a draft for my first book to which I would like to give the name &lt;<unveil spring>&gt;, anyway, I hope to give it a birth as soon as possible. I am so eager to get there[眨眼].</p>
+<p>OK, the draft index is listed as follow:</p>
+<pre>
+1-prefeace
+2-spring ioc container
+          2.1 ioc concept
+                 2.1.1 ioc intro
+                 2.1.2 ioc types
+                         2.1.2.1 type 1 (interface injection)
+                         2.1.2.2 type 2 (setter injection)
+                         2.1.2.3 type 3 (constructor injection)
+                 2.1.3 ioc benefits
+          2.2 spring ioc container
+                2.2.1 basic configuration intro
+                2.2.2 bean factory
+                        2.2.2.1 bean scope
+                        2.2.2.2 auto wire
+                        2.2.2.3 bean post processor
+                        2.2.2.4 beanfactory post processor
+                        ...pending
+               2.2.3 application context
+                       2.2.3.1 internationalization support
+                       2.2.3.2 application context event support
+                       2.2.3.3 resource abstration interface
+                       2.2.3.4 multi-context construction
+3-spring aop
+       3.1 aop basic concepts
+            3.1.1 join point
+            3.1.2 pointcut
+            3.1.3 advice
+                   3.1.3.1 before advice
+                   3.1.3.2 after advice
+                             3.1.3.2.1 after returning advice
+                             3.1.3.2.2 after throwing advice
+                             3.1.3.2.3 after advice
+                   3.1.3.3 around advice
+                   3.1.3.4 introduction(mixin)
+           3.1.4 aspect
+      3.2 spring aop 
+            3.2.1 proxy pattern
+            3.2.2 proxyfactorybean
+            3.2.3 auto proxy
+            3.2.4 aspectj integration
+      3.3 aop solutions 
+           3.3.1 aop implementation strategy
+           3.2.2 aop weave timing
+4-spring dao
+     4.1 dao exception hierarchy
+     4.2 spring jdbc
+     4.3 hibernate with spring
+     4.4 ibatis with spring
+     4.5 jdo with spring
+     4.6 jpa with spring(after spring2.0)
+5-spring transaction
+     5.1 basic transaction concepts
+          5.1.1 ACID
+          5.1.2 isolation
+          5.1.3 local tx mgt vs. global tx mgt
+     5.2 spring tx abstraction
+          5.2.1 PlatformTransactionManager
+                  5.2.1.1 AbstractTransactionManager
+                  5.2.1.2 DataSourceTransactionManager
+                  5.2.1.3 HibernateTransactionManager
+                  5.2.1.4 JdoTransactionManager
+                  5.2.1.5 JtaTransactionManager
+                  ...
+          5.2.2 TransactionDefiniation
+          5.2.3 TransactionStatus
+          5.2.4 TransactionTemplate
+     5.3 declarative or programatic tx management
+6-spring mvc
+ pending
+7-spring remoting
+     7.1 basic spring remoting architecture
+     7.2 RMI remoting with spring
+     7.3 Hession and Burlap remoting with spring from caucho
+     7.4 specific HttpInvoker remoting with spring 
+     7.5 basic WebService integration with spring
+8-spring jee service integration
+     8.1 jms made easy with spring
+          8.1.1 synchronous message sending and receiving
+          8.1.2 asynchronous message receiving
+     8.2 jmx in spring
+     8.3 job schedule with Timer,Quartz and TaskExecutor in Spring
+          8.3.1 Job Schedule with Timer
+          8.3.2 Job Schedule with OpenSymphony Quartz
+          8.3.3 Job Schedule with Java5 Executor
+     8.4 java mail abstration layer of spring
+     8.5 JNDI in an easy way
+9-spring sub projects
+     9.1 spring web flow
+     9.2 spring web service
+     9.3 spring security - acegi security framework
+     9.4 spring LDAP
+     9.5 spring Rich Client
+     9.6 spring extensions (spring modules)
+          9.6.1 declarative Cache service support
+          9.6.2 rule engines integration support
+          9.6.3 template engines integration support
+          9.6.4 etc.
+     9.7 spring IDE for Eclipse
+     9.8 spring BeanDoc
+     9.9 spring OSGi
+     9.10 spring JavaConfig
+     9.11 spring .Net
+     9.12 spring Batch
+10-conclusion
+</pre>
+
+<p>I hope there is something that you expect to see, of course , if you want to use the word &quot;eager&quot;, I will be much more cheerful,hehe</p>
+                
+                <!--百度分享按钮-->
+                <div class="pull-left bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a><a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a></div>
+                <script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"1","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+
+                <!--二维码分享-->
+                <div id="wx_qr"></div>
+                <script type="text/javascript">
+                  var baseUrl = "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data="
+                  var qrUrl = baseUrl.concat(document.URL)
+                  var img = document.createElement("img")
+                  img.setAttribute("src", qrUrl)
+
+                  document.getElementById("wx_qr").appendChild(img)
+                </script>
+
+
+                <div id="disqus_thread"></div>
+                <script type="text/javascript">
+                    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+                    var disqus_shortname = 'afoo'; // required: replace example with your forum shortname
+
+                    /* * * DON'T EDIT BELOW THIS LINE * * */
+                    (function() {
+                        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                    })();
+                </script>
+                <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+                <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+              </div>
+              </div>
+              </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 footer">
+                  <hr>
+                  <p>©FuqiangWang@<a href="http://keevol.com">keevol.com</a></p>
+                  <p>Powered by <a href="http://johnmacfarlane.net/pandoc/">pandoc</a> and <a href="http://pages.github.com/">github pages</a></p>
+                </div>
+            </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="/js/jquery-2.1.1.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1000502179'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s11.cnzz.com/z_stat.php%3Fid%3D1000502179%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));</script>
+  </body>
+
+</html>

@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+  <head>
+	  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	  <title>Git对非ASCII文件名的Octal Escape处理说明</title>
+	  <meta name="author" content="FuqiangWang">
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="shortcut icon" href="favicon.ico">
+                    
+    <link href='/font/Syncopate/stylesheet.css' rel='stylesheet' type='text/css'>
+    <link href='/font/News_Cycle/stylesheet.css' rel='stylesheet' type='text/css'>
+
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/bootstrap-theme.min.css" rel="stylesheet">
+    <link href="/css/afoo.me.css" rel="stylesheet">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-3 sidebar">
+            <a href="/">
+                <img src="/images/profile-icon.png" class="img-circle img-responsive" width="160px" style="margin: 0 auto;" />
+                <h2 class="text-center">AFOO.ME</h2>
+            </a>
+            <p class="text-center lead slogan"><a href="/slogan.html">lollapalooza &amp; positioning</a></p>
+
+            <ul class="nav nav-pills nav-stacked">
+              <li><a href="/favorite.html" class="text-center"><i class="icon-star-empty"></i> Favorite</a></li>
+              <li><a href="/dashboard.html" class="text-center"><i class="icon-fullscreen"></i> Dashboard</a></li>
+              <li><a href="/" class="text-center"><i class="icon-folder-close-alt"></i> Archives</a></li>
+              <li><a href="/whoami.html" class="text-center"><i class="icon-user-md"></i> About</a></li>
+            </ul>
+
+        </div>
+        <div class="col-md-9 col-md-offset-3 main">
+            <div class="row">
+              <div class="container-fluid">
+                
+                <div class="row">
+                                <div id="header">
+                <p class="lead">
+                <h1 class="title">Git对非ASCII文件名的Octal Escape处理说明&nbsp;&nbsp;
+                <small>
+                                    王福强
+                                </small>
+                </h1>
+                </p>
+                </div>
+                                <div>
+
+                <hr>
+
+                                <p>在Mac上如果将文件命名为中文，当将这个文件<code>git add .</code>之后， 在<code>git st</code>中显示的文件名将类似于如下的形式：</p>
+<pre>
+Wangs-MacBook-Pro:docworks fujohnwang$ git add .
+Wangs-MacBook-Pro:docworks fujohnwang$ git st
+# On branch master
+# Changes to be committed:
+#   (use "git reset HEAD <file>..." to unstage)
+#
+#   modified:   worksheets/daily_todo.md
+#   new file:   "worksheets/\345\205\263\351\224\256\350\257\215\345\272\223\345\273\272\350\256\276\350\257\264\346\230\216.md"
+</pre>
+
+<p>之前对这种现象一直熟视无睹，今天“良心发现”，就抠了一下， 反正Google了一堆文档，简单总结下来是这样的： git会对Non-ASCII的文件名进行编码(如果本地编码是utf8, 那就用utf8进行编码)， 编码之后，将编码转变为octal escape形式显示，从而，就变成了上面所看到的那个样子。</p>
+引用一下别人的说法，或许信息量更大一些:
+<pre>
+You can git-add files with non-ASCII characters, but you can't sensibly work with
+them as Git stores them as sequences of raw bytes in whatever codepage GetACP()
+returns (cp1251 in your case). This is documented in git-show(1) for instance.
+
+In general, this means you can only add non-ASCII filenames if you're sure no one
+will ever clone your repo to a machine with different codepage/charset (on a Unix
+box, for instance), as these filenames are recorded in a non-portable way.
+
+Additional inconvenience is that some command-line Git tools (namely, git-log,
+git-add and git-commit) show bytes above 0x7F in filenames using "octal escapes",
+like this: "\346\356\357\340" (in other words, on displaying, filenames are
+"normalized" to strict ASCII).
+
+So, to sum this up:
+1) Non-ASCII filenames are handled mostly OK, except for the output (`git-log
+--name-status` shows octal-escaped names for instance).
+2) The repository is non-portable.
+</pre>
+
+关于Octal Escape形式的Literal, Java里的定义是这样的：
+<pre>
+OctalEscape:
+    \ OctalDigit
+    \ OctalDigit OctalDigit
+    \ ZeroToThree OctalDigit OctalDigit
+
+OctalDigit: one of
+    0 1 2 3 4 5 6 7
+
+ZeroToThree: one of
+    0 1 2 3
+</pre>
+<p>简单来讲，就是范围是<code>\0-\377</code>, 换算到十进制是<code>0-255</code>。</p>
+<p>不过Octal Escape算是C时代的遗老了，现在都加都倾向于utf8/unicode，比如<http://www.marshut.com/munzm/any-interest-in-keeping-octal-escape-literals.html>这里的倡议。</p>
+<p>如果想在Octal Escape字面量与字符之间互转， 在Java里做可能还会有点儿小坑爹的， 除了要做2层转换(字面量到encoding的值，encoding的值到字符)， 还要注意char在java里的存储，怎么搞？ 感兴趣的话，看官自己去折腾折腾吧～</p>
+<p><strong>参考链接</strong></p>
+<ol style="list-style-type: decimal">
+<li><a href="https://code.google.com/p/msysgit/issues/detail?id=230">msysgit: Issue 230: Question: How I can add files in national character</a></li>
+<li><a href="http://stackoverflow.com/questions/9543026/why-do-java-octal-escapes-only-go-up-to-255">http://stackoverflow.com/questions/9543026/why-do-java-octal-escapes-only-go-up-to-255</a></li>
+<li><a href="http://stackoverflow.com/questions/5581857/git-and-the-umlaut-problem-on-mac-os-x">http://stackoverflow.com/questions/5581857/git-and-the-umlaut-problem-on-mac-os-x</a></li>
+<li><a href="http://stackoverflow.com/questions/4144417/how-to-handle-asian-characters-in-file-names-in-git-on-os-x">http://stackoverflow.com/questions/4144417/how-to-handle-asian-characters-in-file-names-in-git-on-os-x</a></li>
+</ol>
+                
+                <!--百度分享按钮-->
+                <div class="pull-left bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a><a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a></div>
+                <script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"1","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+
+                <!--二维码分享-->
+                <div id="wx_qr"></div>
+                <script type="text/javascript">
+                  var baseUrl = "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data="
+                  var qrUrl = baseUrl.concat(document.URL)
+                  var img = document.createElement("img")
+                  img.setAttribute("src", qrUrl)
+
+                  document.getElementById("wx_qr").appendChild(img)
+                </script>
+
+
+                <div id="disqus_thread"></div>
+                <script type="text/javascript">
+                    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+                    var disqus_shortname = 'afoo'; // required: replace example with your forum shortname
+
+                    /* * * DON'T EDIT BELOW THIS LINE * * */
+                    (function() {
+                        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                    })();
+                </script>
+                <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+                <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+              </div>
+              </div>
+              </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 footer">
+                  <hr>
+                  <p>©FuqiangWang@<a href="http://keevol.com">keevol.com</a></p>
+                  <p>Powered by <a href="http://johnmacfarlane.net/pandoc/">pandoc</a> and <a href="http://pages.github.com/">github pages</a></p>
+                </div>
+            </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="/js/jquery-2.1.1.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1000502179'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s11.cnzz.com/z_stat.php%3Fid%3D1000502179%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));</script>
+  </body>
+
+</html>

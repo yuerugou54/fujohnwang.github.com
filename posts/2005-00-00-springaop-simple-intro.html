@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+  <head>
+	  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	  <title>闲话SpringAOP的应用</title>
+	  <meta name="author" content="FuqiangWang">
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="shortcut icon" href="favicon.ico">
+                    
+    <link href='/font/Syncopate/stylesheet.css' rel='stylesheet' type='text/css'>
+    <link href='/font/News_Cycle/stylesheet.css' rel='stylesheet' type='text/css'>
+
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/bootstrap-theme.min.css" rel="stylesheet">
+    <link href="/css/afoo.me.css" rel="stylesheet">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-3 sidebar">
+            <a href="/">
+                <img src="/images/profile-icon.png" class="img-circle img-responsive" width="160px" style="margin: 0 auto;" />
+                <h2 class="text-center">AFOO.ME</h2>
+            </a>
+            <p class="text-center lead slogan"><a href="/slogan.html">lollapalooza &amp; positioning</a></p>
+
+            <ul class="nav nav-pills nav-stacked">
+              <li><a href="/favorite.html" class="text-center"><i class="icon-star-empty"></i> Favorite</a></li>
+              <li><a href="/dashboard.html" class="text-center"><i class="icon-fullscreen"></i> Dashboard</a></li>
+              <li><a href="/" class="text-center"><i class="icon-folder-close-alt"></i> Archives</a></li>
+              <li><a href="/whoami.html" class="text-center"><i class="icon-user-md"></i> About</a></li>
+            </ul>
+
+        </div>
+        <div class="col-md-9 col-md-offset-3 main">
+            <div class="row">
+              <div class="container-fluid">
+                
+                <div class="row">
+                                <div id="header">
+                <p class="lead">
+                <h1 class="title">闲话SpringAOP的应用&nbsp;&nbsp;
+                <small>
+                                    FuqiangWang
+                                </small>
+                </h1>
+                </p>
+                </div>
+                                <div>
+
+                <hr>
+
+                                <blockquote>
+<p>2014年从msn space存档中重新恢复出来！</p>
+</blockquote>
+<p>在实现MailMonitor的时候，并没有考虑BackOffice已经实现的HADR问题，所以，一直都是单一数据源提供数据存储和访问，但是，近来日方要求MailMonitor和csvMail子模块都实现HADR，也就是可以在一个数据库down掉之后，可以立刻转到双机热备的slave数据库进行数据存储，从而引出我对于Spring AOP的再次接触。</p>
+<p>刚开始的时候，我并没有马上就想到使用spring提供的aop，因为在此之前，也就是在看jbossAop的时候（半年多以前），我其实已经dip into过springAOP，但是，当时因为主要是了解JbossAOP，所以，对于SpringAOP也就没有太用心，而且，估计对于AOP概念的接受是以JbossAOP为切入口的，所以，感觉SpringAOP有些“奇怪”（这个将在后面解释），也就没有深入之。既然当时就先入为主了，那么现在也不会这么快就马上接受他来解决问题咯…</p>
+<p>在搜遍www和各大forum之后，初步有了一些印象，估计可以使用Spring的DelegatingDataSource或者HotSwappableTargetSource来解决这个问题，但是，后者牵扯SpringAOP，而且时间上也不是太允许，我重点攻击前者。具体就是在捕捉到数据库不可用相关的异常之后，重新设置DelegatingDataSource的targetDataSouce，这样在这次事务失败之后，下次就可以重新在slave数据库上进行。</p>
+<p>很自然的，我考虑了使用Observer模式来指导具体实现，虽然这个方案最终让我否决了，但是，还是有必要在这里提一下原来在JavaWorld网站发布的一篇The event generator idiom 所提倡的思想。</p>
+<ol style="list-style-type: decimal">
+<li>我继承java.util.EventObject类来实现自己系统所需要的DatabaseCrashEvent类；</li>
+<li>实现Listener接口，继承java.util. EventListener接口来实现自定义的DatabaseCrashListener类；</li>
+<li>因为Adaptor对于我们现在的实现没有什么意义，所以，我没有实现；</li>
+<li>设计并实现被监听类，他保存所有监听者引用，并在适当时候激发相应的事件，这里是DatabaseCrashEvent事件；</li>
+<li>给出具体的监听者实现类，也就是实现了DatabaseCrashListener接口的实现类，在该实现类里面，我们提供了在数据库down掉后要进行处理的逻辑，也就是重新定向数据源，将可用的数据源设置为当前数据源；（具体实现的逻辑知道就是这样，如果说要进一步了解该idiom，可以去JavaWorld网站查找一下该篇文章）</li>
+</ol>
+<p>那么，我为什么会最终否决该实现方案那？针对这种情况，难道该模式不正是解决问题之道嘛？说实在的，对于我一个模块来说，因为也只是使用了一个单一的DAO，使用该模式其实也可以完成所要求的功能，我只要在DAO中捕捉Spring提供的DataAccessResourceFailureException，并在该异常发生后，激发DatabaseCrashEvent事件，以便通知相应的DatabaseCrashListener实现类来swap数据源就可以了。但是，即使这样，我依然感觉到这种实现的“丑陋性”，呵呵，或许我是个完美主义者吧！如果说实现中有多个DAO的话（这种情况才是系统开发中最常见的），我是不是要在所有的DAO中提供事件源的引用，并在各个DAO中分别捕捉DataAccessResourceFailureException异常来激发数据库crash掉的事件以便通知监听者处理数据源的互换那？呵呵，太蠢了！</p>
+<p>OK，其实，处理这种情况，AOP才是正道啊！我只需要实现Throws Advice来处理swap数据源的逻辑就可以了，而且，也可以将该问题从业务逻辑中抽出来，不管从维护角度还是说设计实现的角度，都是很干净的，不是嘛？在锁定了他的jointpoint之后，剩下的就由AOP的具体实现来将该Advice和提供的pointCut Weaving在一起了。 而说道weaving，这就扯出为什么当时我会认为SpringAOP有些奇怪了，呵呵。</p>
+<p>当时因为借助JbossAOP来作为了解AOP的介入口，所以，不管是概念还是weaving的过程，都是从JbossAOP得来得认识，这也就难怪当时会认为SpringAOP有些“奇怪”了。</p>
+<p>因为，AOP的weaving过程基本上可以分为三种：编译期间织入（weaving），class Load的时候织入，以及runtime期间的织入（Weaving）。JbossAOP使用的是自定义的classLoader来实现织入过程，也就是说，我实现了Intercepter（在JbossAOP中是单一功能的Advice）并指定完pointcut之后，剩下的事情就全都交给JbossAOP来处理了；但是SpringAOP则不同，他使用的是第三种织入方式，即runtime weaving，而且还将pointcut和advice放在了他提供的advisor概念中，所以，这就是为什么我当时会认为其实现有些“奇怪”，不过现在，完全可以解开这个迷了，不是嘛？！至于第一种织入方式，就是AspectJ提供的啦，做为第一代的AOP实现，好处那，我不想说，因为我对于它没有太大兴趣，除了它是AOP概念的始源。先不说它提供了自己的编译器，但说其学习曲线我就不能接受，我那里有那么些时间那，java我还没有expert那！</p>
+<p>Wokao，要下班了，先写这些吧，改天再细说SpringAOP吧…</p>
+<p>老话，预知后事如何，且听下回分解，呵呵 :em510:</p>
+                
+                <!--百度分享按钮-->
+                <div class="pull-left bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a><a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a></div>
+                <script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"1","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+
+                <!--二维码分享-->
+                <div id="wx_qr"></div>
+                <script type="text/javascript">
+                  var baseUrl = "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data="
+                  var qrUrl = baseUrl.concat(document.URL)
+                  var img = document.createElement("img")
+                  img.setAttribute("src", qrUrl)
+
+                  document.getElementById("wx_qr").appendChild(img)
+                </script>
+
+
+                <div id="disqus_thread"></div>
+                <script type="text/javascript">
+                    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+                    var disqus_shortname = 'afoo'; // required: replace example with your forum shortname
+
+                    /* * * DON'T EDIT BELOW THIS LINE * * */
+                    (function() {
+                        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                    })();
+                </script>
+                <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+                <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+              </div>
+              </div>
+              </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 footer">
+                  <hr>
+                  <p>©FuqiangWang@<a href="http://keevol.com">keevol.com</a></p>
+                  <p>Powered by <a href="http://johnmacfarlane.net/pandoc/">pandoc</a> and <a href="http://pages.github.com/">github pages</a></p>
+                </div>
+            </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="/js/jquery-2.1.1.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1000502179'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s11.cnzz.com/z_stat.php%3Fid%3D1000502179%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));</script>
+  </body>
+
+</html>

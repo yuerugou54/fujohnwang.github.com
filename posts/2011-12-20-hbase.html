@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+  <head>
+	  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	  <title>&quot;HBase&quot;</title>
+	  <meta name="author" content="FuqiangWang">
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="shortcut icon" href="favicon.ico">
+        <meta name="date" content="2011-12-20" />
+                    
+    <link href='/font/Syncopate/stylesheet.css' rel='stylesheet' type='text/css'>
+    <link href='/font/News_Cycle/stylesheet.css' rel='stylesheet' type='text/css'>
+
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/bootstrap-theme.min.css" rel="stylesheet">
+    <link href="/css/afoo.me.css" rel="stylesheet">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-3 sidebar">
+            <a href="/">
+                <img src="/images/profile-icon.png" class="img-circle img-responsive" width="160px" style="margin: 0 auto;" />
+                <h2 class="text-center">AFOO.ME</h2>
+            </a>
+            <p class="text-center lead slogan"><a href="/slogan.html">lollapalooza &amp; positioning</a></p>
+
+            <ul class="nav nav-pills nav-stacked">
+              <li><a href="/favorite.html" class="text-center"><i class="icon-star-empty"></i> Favorite</a></li>
+              <li><a href="/dashboard.html" class="text-center"><i class="icon-fullscreen"></i> Dashboard</a></li>
+              <li><a href="/" class="text-center"><i class="icon-folder-close-alt"></i> Archives</a></li>
+              <li><a href="/whoami.html" class="text-center"><i class="icon-user-md"></i> About</a></li>
+            </ul>
+
+        </div>
+        <div class="col-md-9 col-md-offset-3 main">
+            <div class="row">
+              <div class="container-fluid">
+                
+                <div class="row">
+                                <div id="header">
+                <p class="lead">
+                <h1 class="title">&quot;HBase&quot;&nbsp;&nbsp;
+                <small>
+                                    fujohnwang
+                                </small>
+                </h1>
+                </p>
+                </div>
+                                <div>
+
+                <hr>
+
+                                <div id="TOC">
+                <ul>
+                <li><a href="#hbase的前世今生"><span class="toc-section-number">1</span> HBase的前世今生</a></li>
+                <li><a href="#hbase的配置"><span class="toc-section-number">2</span> HBase的配置</a><ul>
+                <li><a href="#依赖前提"><span class="toc-section-number">2.1</span> 依赖前提</a></li>
+                <li><a href="#分布式部署"><span class="toc-section-number">2.2</span> 分布式部署</a></li>
+                <li><a href="#cautions"><span class="toc-section-number">2.3</span> Cautions</a></li>
+                </ul></li>
+                <li><a href="#hbase-replication"><span class="toc-section-number">3</span> HBase Replication</a><ul>
+                <li><a href="#hbase-replication-ref"><span class="toc-section-number">3.1</span> HBase Replication Ref</a></li>
+                <li><a href="#issues"><span class="toc-section-number">3.2</span> Issues</a></li>
+                </ul></li>
+                <li><a href="#schema-design"><span class="toc-section-number">4</span> Schema Design</a></li>
+                <li><a href="#distributions"><span class="toc-section-number">5</span> Distributions</a></li>
+                <li><a href="#原理"><span class="toc-section-number">6</span> 原理</a></li>
+                <li><a href="#references"><span class="toc-section-number">7</span> References</a></li>
+                </ul>
+                </div>
+                                <h1 id="hbase的前世今生"><span class="header-section-number">1</span> HBase的前世今生</h1>
+<p>Born from the idea of Google Bigtable</p>
+<h1 id="hbase的配置"><span class="header-section-number">2</span> HBase的配置</h1>
+<h2 id="依赖前提"><span class="header-section-number">2.1</span> 依赖前提</h2>
+<ol style="list-style-type: decimal">
+<li>Java 6 or above</li>
+<li>SSH - using passwordless login (Google &quot;<em>ssh passwordless login</em>&quot;)</li>
+<li>DNS</li>
+<li>NTP</li>
+<li>ulimit and nproc
+<ul>
+<li>base需要很多文件句柄，所以系统默认的文件句柄数基本上不够，一般需要设置为1w以上</li>
+<li>&quot;upping the file descriptors and nproc for the user who is running the HBase process is an operating system configuration, not an HBase configuration.&quot;</li>
+</ul></li>
+</ol>
+<h2 id="分布式部署"><span class="header-section-number">2.2</span> 分布式部署</h2>
+<p>Hbase的配置需要在所有结点之间同步， 可以在一台机器上编辑完，然后用rsync同步，或者，专门搞一台发布机，集中管理配置， 然后分发（puppet之类的软件应该是干这个事情的）。</p>
+<p>配置hbase的时候， 最基本的需要通过override默认的配置，告知hbase：</p>
+<ol style="list-style-type: decimal">
+<li>使用什么FileSystem，是local的还是HDFS等；</li>
+<li>要使用的zookeeper部署位置是什么；</li>
+</ol>
+<h2 id="cautions"><span class="header-section-number">2.3</span> Cautions</h2>
+<blockquote>
+<p>HBase will lose data unless it is running on an HDFS that has a durable <strong><em>sync</em></strong>.</p>
+</blockquote>
+<h1 id="hbase-replication"><span class="header-section-number">3</span> HBase Replication</h1>
+<pre><code>8.6.4. Write Ahead Log (WAL)
+    The WAL is in HDFS in /hbase/.logs/ with subdirectories per region.</code></pre>
+<p><strong>应该需要了解region server在zk里的ephemeral node，以便在region server failover之后，eromanga也可以转到新的region server上从新的hlog开始抓取变更。</strong></p>
+<p>API - <a href="http://hbase.apache.org/apidocs/org/apache/hadoop/hbase/replication/package-summary.html#requirements">http://hbase.apache.org/apidocs/org/apache/hadoop/hbase/replication/package-summary.html#requirements</a></p>
+<p>Once a HRegionServer starts and is opening the regions it hosts it checks if there are some left over log files and applies those all the way down in Store.doReconstructionLog(). Replaying a log is simply done by reading the log and adding the contained edits to the current MemStore. At the end an explicit flush of the MemStore (note, this is not the flush of the log!) helps writing those changes out to disk.</p>
+<p>|----HLog Replay</p>
+<h2 id="hbase-replication-ref"><span class="header-section-number">3.1</span> HBase Replication Ref</h2>
+<ol style="list-style-type: decimal">
+<li><a href="http://hbase.apache.org/replication.html">http://hbase.apache.org/replication.html</a></li>
+<li><a href="http://hbase.apache.org/apidocs/org/apache/hadoop/hbase/regionserver/wal/HLog.html">http://hbase.apache.org/apidocs/org/apache/hadoop/hbase/regionserver/wal/HLog.html</a></li>
+<li><a href="http://blog.sematext.com/2011/03/11/hbase-backup-options/">http://blog.sematext.com/2011/03/11/hbase-backup-options/</a> - HBase Backup Options &gt; You might want to check out at MapR’s distro for Apache Hadoop (www.mapr.com). It has consistent point-in-time snapshots, as well the ability to mirror the snapshots to another data-center for disaster-recovery.</li>
+<li><a href="https://github.com/mozilla-metrics/akela/blob/master/src/main/java/com/mozilla/hadoop/Backup.java">https://github.com/mozilla-metrics/akela/blob/master/src/main/java/com/mozilla/hadoop/Backup.java</a> | <a href="http://blog.mozilla.com/data/2011/02/04/migrating-hbase-in-the-trenches/">http://blog.mozilla.com/data/2011/02/04/migrating-hbase-in-the-trenches/</a> - Mozilla Backup tool</li>
+<li><a href="http://javamaster.wordpress.com/2010/03/19/replication-architecture-in-cassandra-and-hbase/">http://javamaster.wordpress.com/2010/03/19/replication-architecture-in-cassandra-and-hbase/</a> <img src="http://javamaster.files.wordpress.com/2010/03/hbasereplication.png?w=460&amp;h=359" /></li>
+<li><a href="http://koven2049.iteye.com/blog/983633">http://koven2049.iteye.com/blog/983633</a></li>
+<li><a href="http://highscalability.com/blog/2009/8/24/how-google-serves-data-from-multiple-datacenters.html">How Google Serves Data From Multiple Datacenters</a></li>
+<li><a href="http://punishzhou.iteye.com/blog/1286230">Hbase的log管理(一)</a></li>
+<li><a href="http://punishzhou.iteye.com/blog/1288175">Hbase的log管理(二)</a></li>
+<li><a href="http://www.spnguru.com/2011/03/hbase%E5%BC%82%E5%B8%B8%E2%80%94%E2%80%94%E5%BD%93regionserver-crash%E4%B9%8B%E5%90%8E/">HBase异常——当RegionServer Crash之后</a></li>
+<li></li>
+</ol>
+<h2 id="issues"><span class="header-section-number">3.2</span> Issues</h2>
+<ol style="list-style-type: decimal">
+<li><a href="https://issues.apache.org/jira/browse/HBASE-2958">When hbase.hlog.split.skip.errors is set to false, we fail the split but thats it</a></li>
+<li><a href="https://issues.apache.org/jira/browse/HBASE-2643">Figure how to deal with eof splitting logs</a></li>
+<li><a href="https://issues.apache.org/jira/browse/HBASE-1295">Multi data center replication</a></li>
+<li></li>
+</ol>
+<h1 id="schema-design"><span class="header-section-number">4</span> Schema Design</h1>
+<blockquote>
+<p>in general its best to avoid using a timestamp or a sequence (e.g. 1, 2, 3) as the row-key.</p>
+</blockquote>
+<blockquote>
+<p><a href="http://ikaisays.com/2011/01/25/app-engine-datastore-tip-monotonically-increasing-values-are-bad/">http://ikaisays.com/2011/01/25/app-engine-datastore-tip-monotonically-increasing-values-are-bad/</a></p>
+</blockquote>
+<h1 id="distributions"><span class="header-section-number">5</span> Distributions</h1>
+<ol style="list-style-type: decimal">
+<li>Apache HBase</li>
+<li>Cloudera</li>
+<li>Others</li>
+</ol>
+<h1 id="原理"><span class="header-section-number">6</span> 原理</h1>
+<ol style="list-style-type: decimal">
+<li><a href="http://koven2049.iteye.com/blog/974714">hbase 源码解析之master篇1</a></li>
+<li><a href="http://koven2049.iteye.com/blog/976619">hbase 源码解析之master篇2</a></li>
+</ol>
+<h1 id="references"><span class="header-section-number">7</span> References</h1>
+<ol style="list-style-type: decimal">
+<li><a href="http://www.pigi-project.org/">http://www.pigi-project.org/</a> - Powerful, Invincible, Great Indexing for HBase</li>
+<li>** <a href="https://db.usenix.org//events/osdi06/tech/chang/chang_html/">Bigtable: A Distributed Storage System for Structured Data</a> **</li>
+<li><a href="http://java.dzone.com/videos/hbase-schema-design-things-you">HBase Schema Design - Things you need to know</a></li>
+<li><a href="http://www.larsgeorge.com/2009/10/hbase-architecture-101-storage.html">HBase Architecture 101 - Storage</a></li>
+<li><a href="http://www.larsgeorge.com/2010/01/hbase-architecture-101-write-ahead-log.html">HBase Architecture 101 - Write-ahead-Log</a></li>
+<li><a href="http://java.dzone.com/videos/hbase-schema-design-things-you">HBase Schema Design - Things you need to know</a></li>
+<li><a href="http://www.spnguru.com/tag/hbase/">http://www.spnguru.com/tag/hbase/ - 趋势科技中国研发中心SPN研发团队hbase tag</a></li>
+<li><a href="https://issues.apache.org/jira/browse/HBASE-1512">Coprocessors: Support aggregate functions</a></li>
+<li><a href="http://blog.nosqlfan.com/html/3694.html">HBase在淘宝的应用和优化小结</a></li>
+<li><a href="http://www.meetup.com/hbaseusergroup/files/">http://www.meetup.com/hbaseusergroup/files/</a></li>
+</ol>
+                
+                <!--百度分享按钮-->
+                <div class="pull-left bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a><a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a></div>
+                <script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"1","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+
+                <!--二维码分享-->
+                <div id="wx_qr"></div>
+                <script type="text/javascript">
+                  var baseUrl = "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data="
+                  var qrUrl = baseUrl.concat(document.URL)
+                  var img = document.createElement("img")
+                  img.setAttribute("src", qrUrl)
+
+                  document.getElementById("wx_qr").appendChild(img)
+                </script>
+
+
+                <div id="disqus_thread"></div>
+                <script type="text/javascript">
+                    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+                    var disqus_shortname = 'afoo'; // required: replace example with your forum shortname
+
+                    /* * * DON'T EDIT BELOW THIS LINE * * */
+                    (function() {
+                        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                    })();
+                </script>
+                <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+                <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+              </div>
+              </div>
+              </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 footer">
+                  <hr>
+                  <p>©FuqiangWang@<a href="http://keevol.com">keevol.com</a></p>
+                  <p>Powered by <a href="http://johnmacfarlane.net/pandoc/">pandoc</a> and <a href="http://pages.github.com/">github pages</a></p>
+                </div>
+            </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="/js/jquery-2.1.1.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1000502179'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s11.cnzz.com/z_stat.php%3Fid%3D1000502179%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));</script>
+  </body>
+
+</html>
