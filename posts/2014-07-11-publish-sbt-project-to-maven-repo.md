@@ -34,5 +34,6 @@ host参数只写IP或者域名，不需要添加port！
 运行`sbt publish`, 等待结果...
 
 
-
+# 其它参考
+1. [Publishing artefacts to OSS Sonatype Nexus using SBT and Travis CI Here...](http://www.cakesolutions.net/teamblogs/publishing-artefacts-to-oss-sonatype-nexus-using-sbt-and-travis-ci-here...)
 
