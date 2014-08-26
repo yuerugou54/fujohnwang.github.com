@@ -39,6 +39,7 @@
               <li><a href="/favorite.html" class="text-center"><i class="icon-star-empty"></i> Favorite</a></li>
               <li><a href="/dashboard.html" class="text-center"><i class="icon-fullscreen"></i> Dashboard</a></li>
               <li><a href="/" class="text-center"><i class="icon-folder-close-alt"></i> Archives</a></li>
+              <li><a href="/feeds.xml" class="text-center"><i class="icon-folder-close-alt"></i> <img src="/images/rss.png"/></a></li>
               <li><a href="/whoami.html" class="text-center"><i class="icon-user-md"></i> About</a></li>
             </ul>
 
@@ -66,6 +67,7 @@
                 <li><a href="#准备配置内容"><span class="toc-section-number">1</span> 准备配置内容</a></li>
                 <li><a href="#本地测试"><span class="toc-section-number">2</span> 本地测试</a></li>
                 <li><a href="#正式发布"><span class="toc-section-number">3</span> 正式发布</a></li>
+                <li><a href="#其它参考"><span class="toc-section-number">4</span> 其它参考</a></li>
                 </ul>
                 </div>
                                 <p>--阶段性反刍--</p>
@@ -91,6 +93,10 @@ credentials += Credentials("${realm}", "${host}", "${username}", "${password}")
 <p>可以通过<code>sbt publish-local</code>先本地测试一下， 发布到本地maven库中并检查是否有遗漏或者错误</p>
 <h1 id="正式发布"><span class="header-section-number">3</span> 正式发布</h1>
 <p>运行<code>sbt publish</code>, 等待结果...</p>
+<h1 id="其它参考"><span class="header-section-number">4</span> 其它参考</h1>
+<ol style="list-style-type: decimal">
+<li><a href="http://www.cakesolutions.net/teamblogs/publishing-artefacts-to-oss-sonatype-nexus-using-sbt-and-travis-ci-here...">Publishing artefacts to OSS Sonatype Nexus using SBT and Travis CI Here...</a></li>
+</ol>
                 
                 <!--百度分享按钮-->
                 <div class="pull-left bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a><a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a></div>
@@ -131,7 +137,7 @@ credentials += Credentials("${realm}", "${host}", "${username}", "${password}")
                 <div class="col-md-12 footer">
                   <hr>
                   <p>©FuqiangWang@<a href="http://keevol.com">keevol.com</a></p>
-                  <p>Powered by <a href="http://johnmacfarlane.net/pandoc/">pandoc</a> and <a href="http://pages.github.com/">github pages</a></p>
+                  <p>Powered by <a href="http://johnmacfarlane.net/pandoc/">pandoc</a>, <a href="http://rometools.github.io/rome/index.html">ROME</a> and <a href="http://pages.github.com/">github pages</a></p>
                 </div>
             </div>
         </div>
