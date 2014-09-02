@@ -5,6 +5,13 @@
     <link>http://afoo.me</link>
     <description>一个架构士的思考与实践点滴记录</description>
     <item>
+      <title>了解tmux</title>
+      <link>http://afoo.me/posts/2014-09-01-get-to-know-tmux.html</link>
+      <pubDate>Sun, 31 Aug 2014 16:00:00 GMT</pubDate>
+      <guid>http://afoo.me/posts/2014-09-01-get-to-know-tmux.html</guid>
+      <dc:date>2014-08-31T16:00:00Z</dc:date>
+    </item>
+    <item>
       <title>借记卡-准贷记卡与贷记卡的区别[转]</title>
       <link>http://afoo.me/posts/2014-08-06-cards-intro.html</link>
       <pubDate>Tue, 05 Aug 2014 16:00:00 GMT</pubDate>
@@ -44,13 +51,6 @@
       <link>http://afoo.me/posts/2014-07-06-血色浪漫-信天游.html</link>
       <pubDate>Sat, 05 Jul 2014 16:00:00 GMT</pubDate>
       <guid>http://afoo.me/posts/2014-07-06-血色浪漫-信天游.html</guid>
-      <dc:date>2014-07-05T16:00:00Z</dc:date>
-    </item>
-    <item>
-      <title>分润 #What's in a story#</title>
-      <link>http://afoo.me/posts/2014-07-06-share-the-profit.html</link>
-      <pubDate>Sat, 05 Jul 2014 16:00:00 GMT</pubDate>
-      <guid>http://afoo.me/posts/2014-07-06-share-the-profit.html</guid>
       <dc:date>2014-07-05T16:00:00Z</dc:date>
     </item>
   </channel>

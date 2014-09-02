@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+  <head>
+	  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	  <title>了解tmux</title>
+	  <meta name="author" content="FuqiangWang">
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="shortcut icon" href="favicon.ico">
+            <style type="text/css">
+    table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+      margin: 0; padding: 0; vertical-align: baseline; border: none; }
+    table.sourceCode { width: 100%; line-height: 100%; }
+    td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+    td.sourceCode { padding-left: 5px; }
+    code > span.kw { color: #007020; font-weight: bold; }
+    code > span.dt { color: #902000; }
+    code > span.dv { color: #40a070; }
+    code > span.bn { color: #40a070; }
+    code > span.fl { color: #40a070; }
+    code > span.ch { color: #4070a0; }
+    code > span.st { color: #4070a0; }
+    code > span.co { color: #60a0b0; font-style: italic; }
+    code > span.ot { color: #007020; }
+    code > span.al { color: #ff0000; font-weight: bold; }
+    code > span.fu { color: #06287e; }
+    code > span.er { color: #ff0000; font-weight: bold; }
+    </style>
+                
+    <link href='/font/Syncopate/stylesheet.css' rel='stylesheet' type='text/css'>
+    <link href='/font/News_Cycle/stylesheet.css' rel='stylesheet' type='text/css'>
+
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/bootstrap-theme.min.css" rel="stylesheet">
+    <link href="/css/afoo.me.css" rel="stylesheet">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-3 sidebar">
+            <a href="/">
+                <img src="/images/profile-icon.png" class="img-circle img-responsive" width="160px" style="margin: 0 auto;" />
+                <h2 class="text-center">AFOO.ME</h2>
+            </a>
+            <p class="text-center lead slogan"><a href="/slogan.html">lollapalooza &amp; positioning</a></p>
+
+            <ul class="nav nav-pills nav-stacked">
+              <li><a href="/favorite.html" class="text-center"><i class="icon-star-empty"></i> Favorite</a></li>
+              <li><a href="/dashboard.html" class="text-center"><i class="icon-fullscreen"></i> Dashboard</a></li>
+              <li><a href="/" class="text-center"><i class="icon-folder-close-alt"></i> Archives</a></li>
+              <li><a href="/feeds.xml" class="text-center"><i class="icon-folder-close-alt"></i> RSS</a></li>
+              <li><a href="/whoami.html" class="text-center"><i class="icon-user-md"></i> About</a></li>
+            </ul>
+
+        </div>
+        <div class="col-md-9 col-md-offset-3 main">
+            <div class="row">
+              <div class="container-fluid">
+                
+                <div class="row">
+                                <div id="header">
+                <p class="lead">
+                <h1 class="title">了解tmux&nbsp;&nbsp;
+                <small>
+                                    FuqiangWang
+                                </small>
+                </h1>
+                </p>
+                </div>
+                                <div>
+
+                <hr>
+
+                                <div id="TOC">
+                <ul>
+                <li><a href="#基本命令"><span class="toc-section-number">1</span> 基本命令</a></li>
+                <li><a href="#拷贝模式"><span class="toc-section-number">2</span> 拷贝模式</a></li>
+                <li><a href="#say-goodbye-to-nohup"><span class="toc-section-number">3</span> Say Goodbye to nohup &amp;</a></li>
+                <li><a href="#cheatsheet"><span class="toc-section-number">4</span> Cheatsheet</a></li>
+                </ul>
+                </div>
+                                <p>tmux = terminal multiplexer</p>
+<p>tmux就是一个允许我们创建多个命令行窗口的程序， 采用C/S结构， tmux server运行在后台， tmux client连接到tmux server创建多个session和window， pane等， 即使关掉tmux client的窗口， 创建的session相关进程将持续在后台的tmux server上执行，除非所有的session都关闭。</p>
+<p>对于“键盘人”来说，尤其是vim或者emacs重度用户， tmux会让他们更爽； 即使对于其它客户，当管理服务器的时候，tmux也可以让命令行窗口更具“扩展性”。</p>
+<h1 id="基本命令"><span class="header-section-number">1</span> 基本命令</h1>
+<pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">tmux</span>  // 新建匿名session
+$ <span class="kw">tmux</span> new -s [session name] // 新建命名session
+$ <span class="kw">tmux</span> list-sessions
+$ <span class="kw">tmux</span> detach // 脱离当前session
+$ <span class="kw">tmux</span> attach -t [session name]  // 重新attach到某个session
+$ <span class="kw">tmux</span> kill-session -t [session]  // 杀掉某个指定的session
+$ <span class="kw">tmux</span> kill-server //杀掉后台所有session</code></pre>
+<p>Prefix快捷键默认是Control + b， 在Mac下，我们通过更改~/.tmux.conf，将其更改为Control + a:</p>
+<pre>
+# improve colors
+set -g default-terminal "screen-256color"
+
+# act like GNU screen
+unbind C-b
+set -g prefix C-a
+bind-key C-a send-prefix
+</pre>
+
+<p>Prefix快捷键的使用是， 首先按Prefix快捷键组合，然后松开，再紧跟着按相应命令的快捷键， 比如， 新建窗口的话，我们先按Control + a, 然后再按c，则完成在当前session下创建窗口的工作， 其它窗口(Window)操作包括：</p>
+<pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">Ctrl</span> + a, c   // 创建窗口
+$ <span class="kw">Ctrl</span> + a, [0 - 9] // 输入0到9任何一个数字选择相应的窗口， 相当于命令tmux select-window 
+$ <span class="kw">Ctrl</span> + a, %       // 分割split窗口为多个pane
+$ <span class="kw">Ctrl</span> + a, ← <span class="kw">|</span> →   <span class="kw">//</span> 从窗口的pane跳到左边或者右边的pane</code></pre>
+<h1 id="拷贝模式"><span class="header-section-number">2</span> 拷贝模式</h1>
+<p><code>Ctrl + a, [</code>进入拷贝模式， 敲空格开始拷贝，回车结束拷贝， 敲<code>Ctrl + a, ]</code>退出拷贝模式。</p>
+<h1 id="say-goodbye-to-nohup"><span class="header-section-number">3</span> Say Goodbye to nohup &amp;</h1>
+<p>在服务器上安装tmux之后， 本地ssh登陆上去执行tmux，然后随便创建Window或者Pane， 甚至detach或者直接关掉命令行， 运行的进程和session状态将持续在后台的tmux server上运行。</p>
+<h1 id="cheatsheet"><span class="header-section-number">4</span> Cheatsheet</h1>
+<pre>
+tmux -- terminal multiplexer
+
+Managing tmux sessions:
+$ tmux      # start tmux server
+$ tmux at   # attach running sessions to a terminal
+$ tmux ls   # list running tmux sessions
+$ exit      # close tmux session
+
+Sharing sessions between terminals:
+$ tmux new -s session_name # make new named session
+$ tmux at -t session_name  # attach to exist session (allowing shared sessions)
+$ tmux kill-session -t session_name  # kill named session
+
+Commands (used within a running tmux session):
+
+NOTE: All commands need to be prefixed with the action key.
+      By default, this is CTRL-b
+
+ c  - create new window
+n/p - move to next/previous window
+0-9 - move to window number 0-9
+ f  - find window by name
+ w  - menu with all windows
+ &  - kill current window
+ ,  - rename window
+
+ %  - split window, adding a vertical pane to the right
+ "  - split window, adding an horizontal pane below
+←/→ - move focus to left/right pane
+↑/↓ - move focus to upper/lower pane
+
+ !  - Break current pane into new window
+ x  - Kill the current pane.
+ d  - detach the current client
+
+ [  - enter copy mode (then use emacs select/yank keys)
+      * press CTRL-SPACE or CTRL-@ to start selecting text
+      * move cursor to end of desired text
+      * press ALT-w to copy selected text
+
+ ]  - paste copied text
+
+ ?  - show tmux key bindings
+</pre>
+                
+                <!--百度分享按钮-->
+                <div class="pull-left bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a><a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a></div>
+                <script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"1","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+
+                <!--二维码分享-->
+                <div id="wx_qr"></div>
+                <script type="text/javascript">
+                  var baseUrl = "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data="
+                  var qrUrl = baseUrl.concat(document.URL)
+                  var img = document.createElement("img")
+                  img.setAttribute("src", qrUrl)
+
+                  document.getElementById("wx_qr").appendChild(img)
+                </script>
+
+
+                <div id="disqus_thread"></div>
+                <script type="text/javascript">
+                    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+                    var disqus_shortname = 'afoo'; // required: replace example with your forum shortname
+
+                    /* * * DON'T EDIT BELOW THIS LINE * * */
+                    (function() {
+                        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                    })();
+                </script>
+                <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+                <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+              </div>
+              </div>
+              </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 footer">
+                  <hr>
+                  <p>©FuqiangWang@<a href="http://keevol.com">keevol.com</a></p>
+                  <p>Powered by <a href="http://johnmacfarlane.net/pandoc/">pandoc</a>, <a href="http://rometools.github.io/rome/index.html">ROME</a> and <a href="http://pages.github.com/">github pages</a></p>
+                </div>
+            </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="/js/jquery-2.1.1.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1000502179'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s11.cnzz.com/z_stat.php%3Fid%3D1000502179%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));</script>
+  </body>
+
+</html>
