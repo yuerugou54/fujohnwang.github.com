@@ -111,6 +111,44 @@
                 <span class="kw">&lt;artifactId&gt;</span>maven-deploy-plugin<span class="kw">&lt;/artifactId&gt;</span>
             <span class="kw">&lt;/plugin&gt;</span>
         <span class="kw">&lt;/plugins&gt;</span></code></pre>
+<p>顺便把这些plugin一起配置，这样可以jar， source jar， javadoc jar一起发布：</p>
+<pre class="sourceCode xml"><code class="sourceCode xml">            <span class="kw">&lt;plugin&gt;</span>
+                <span class="kw">&lt;groupId&gt;</span>org.apache.maven.plugins<span class="kw">&lt;/groupId&gt;</span>
+                <span class="kw">&lt;artifactId&gt;</span>maven-compiler-plugin<span class="kw">&lt;/artifactId&gt;</span>
+                <span class="kw">&lt;configuration&gt;</span>
+                    <span class="kw">&lt;source&gt;</span>${java_source_version}<span class="kw">&lt;/source&gt;</span>
+                    <span class="kw">&lt;target&gt;</span>${java_target_version}<span class="kw">&lt;/target&gt;</span>
+                    <span class="kw">&lt;encoding&gt;</span>${file_encoding}<span class="kw">&lt;/encoding&gt;</span>
+                <span class="kw">&lt;/configuration&gt;</span>
+            <span class="kw">&lt;/plugin&gt;</span>
+            <span class="kw">&lt;plugin&gt;</span>
+                <span class="kw">&lt;groupId&gt;</span>org.apache.maven.plugins<span class="kw">&lt;/groupId&gt;</span>
+                <span class="kw">&lt;artifactId&gt;</span>maven-source-plugin<span class="kw">&lt;/artifactId&gt;</span>
+                <span class="kw">&lt;executions&gt;</span>
+                    <span class="kw">&lt;execution&gt;</span>
+                        <span class="kw">&lt;id&gt;</span>attach-sources<span class="kw">&lt;/id&gt;</span>
+                        <span class="kw">&lt;goals&gt;</span>
+                            <span class="kw">&lt;goal&gt;</span>jar<span class="kw">&lt;/goal&gt;</span>
+                        <span class="kw">&lt;/goals&gt;</span>
+                    <span class="kw">&lt;/execution&gt;</span>
+                <span class="kw">&lt;/executions&gt;</span>
+            <span class="kw">&lt;/plugin&gt;</span>
+            <span class="kw">&lt;plugin&gt;</span>
+                <span class="kw">&lt;groupId&gt;</span>org.apache.maven.plugins<span class="kw">&lt;/groupId&gt;</span>
+                <span class="kw">&lt;artifactId&gt;</span>maven-javadoc-plugin<span class="kw">&lt;/artifactId&gt;</span>
+                <span class="kw">&lt;configuration&gt;</span>
+                    <span class="kw">&lt;charset&gt;</span>${file_encoding}<span class="kw">&lt;/charset&gt;</span>
+                    <span class="kw">&lt;encoding&gt;</span>${file_encoding}<span class="kw">&lt;/encoding&gt;</span>
+                <span class="kw">&lt;/configuration&gt;</span>
+                <span class="kw">&lt;executions&gt;</span>
+                    <span class="kw">&lt;execution&gt;</span>
+                        <span class="kw">&lt;id&gt;</span>attach-javadocs<span class="kw">&lt;/id&gt;</span>
+                        <span class="kw">&lt;goals&gt;</span>
+                            <span class="kw">&lt;goal&gt;</span>jar<span class="kw">&lt;/goal&gt;</span>
+                        <span class="kw">&lt;/goals&gt;</span>
+                    <span class="kw">&lt;/execution&gt;</span>
+                <span class="kw">&lt;/executions&gt;</span>
+            <span class="kw">&lt;/plugin&gt;</span></code></pre>
 <h2 id="settings.xml配置"><span class="header-section-number">1.2</span> settings.xml配置</h2>
 <p>Nexus通常会设置认证， 只允许指定的credentials可以发布artifacts到nexus， 而这些认证信息就配置在settings.xml中：</p>
 <pre class="sourceCode xml"><code class="sourceCode xml">    <span class="kw">&lt;servers&gt;</span>

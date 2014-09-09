@@ -35,6 +35,47 @@
         </plugins>
 ~~~~~~~
 
+顺便把这些plugin一起配置，这样可以jar， source jar， javadoc jar一起发布：
+
+~~~~~~~ {.xml}
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>${java_source_version}</source>
+                    <target>${java_target_version}</target>
+                    <encoding>${file_encoding}</encoding>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <configuration>
+                    <charset>${file_encoding}</charset>
+                    <encoding>${file_encoding}</encoding>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>attach-javadocs</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+~~~~~~~
 
 
 ## settings.xml配置
@@ -57,6 +98,13 @@ Nexus通常会设置认证， 只允许指定的credentials可以发布artifacts
 # 执行发布/部署
 
 在当前项目目录下执行`mvn deploy`坐等发布成功！
+
+
+
+
+
+
+
 
 
 
