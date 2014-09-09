@@ -35,32 +35,7 @@
         </plugins>
 ~~~~~~~
 
-
-
-## settings.xml配置
-Nexus通常会设置认证， 只允许指定的credentials可以发布artifacts到nexus， 而这些认证信息就配置在settings.xml中：
-
-
-~~~~~~~ {.xml}
-    <servers>
-        <server>
-            <id>deployment</id>
-            <username>deployment</username>
-            <password>${password}</password>
-        </server>
-    </servers>
-~~~~~~~
-
-
-> 注意： server的id值需要跟pom.xml中每一个repository的id值相对应！！！ （因为我们是为这些distributionManagement的repository提供认证信息）
-
-# 执行发布/部署
-
-在当前项目目录下执行`mvn deploy`坐等发布成功！
-
-# 后话
-
-pom.xml中添加如下配置，之后再发布， 否则只会发布bin的jar包：
+顺便把这些plugin一起配置，这样可以jar， source jar， javadoc jar一起发布：
 
 ~~~~~~~ {.xml}
             <plugin>
@@ -101,6 +76,35 @@ pom.xml中添加如下配置，之后再发布， 否则只会发布bin的jar包
                 </executions>
             </plugin>
 ~~~~~~~
+
+
+## settings.xml配置
+Nexus通常会设置认证， 只允许指定的credentials可以发布artifacts到nexus， 而这些认证信息就配置在settings.xml中：
+
+
+~~~~~~~ {.xml}
+    <servers>
+        <server>
+            <id>deployment</id>
+            <username>deployment</username>
+            <password>${password}</password>
+        </server>
+    </servers>
+~~~~~~~
+
+
+> 注意： server的id值需要跟pom.xml中每一个repository的id值相对应！！！ （因为我们是为这些distributionManagement的repository提供认证信息）
+
+# 执行发布/部署
+
+在当前项目目录下执行`mvn deploy`坐等发布成功！
+
+
+
+
+
+
+
 
 
 

@@ -88,7 +88,6 @@
                 <li><a href="#settings.xml配置"><span class="toc-section-number">1.2</span> settings.xml配置</a></li>
                 </ul></li>
                 <li><a href="#执行发布部署"><span class="toc-section-number">2</span> 执行发布/部署</a></li>
-                <li><a href="#后话"><span class="toc-section-number">3</span> 后话</a></li>
                 </ul>
                 </div>
                                 <h1 id="配置结构关系"><span class="header-section-number">1</span> 配置结构关系</h1>
@@ -112,22 +111,7 @@
                 <span class="kw">&lt;artifactId&gt;</span>maven-deploy-plugin<span class="kw">&lt;/artifactId&gt;</span>
             <span class="kw">&lt;/plugin&gt;</span>
         <span class="kw">&lt;/plugins&gt;</span></code></pre>
-<h2 id="settings.xml配置"><span class="header-section-number">1.2</span> settings.xml配置</h2>
-<p>Nexus通常会设置认证， 只允许指定的credentials可以发布artifacts到nexus， 而这些认证信息就配置在settings.xml中：</p>
-<pre class="sourceCode xml"><code class="sourceCode xml">    <span class="kw">&lt;servers&gt;</span>
-        <span class="kw">&lt;server&gt;</span>
-            <span class="kw">&lt;id&gt;</span>deployment<span class="kw">&lt;/id&gt;</span>
-            <span class="kw">&lt;username&gt;</span>deployment<span class="kw">&lt;/username&gt;</span>
-            <span class="kw">&lt;password&gt;</span>${password}<span class="kw">&lt;/password&gt;</span>
-        <span class="kw">&lt;/server&gt;</span>
-    <span class="kw">&lt;/servers&gt;</span></code></pre>
-<blockquote>
-<p>注意： server的id值需要跟pom.xml中每一个repository的id值相对应！！！ （因为我们是为这些distributionManagement的repository提供认证信息）</p>
-</blockquote>
-<h1 id="执行发布部署"><span class="header-section-number">2</span> 执行发布/部署</h1>
-<p>在当前项目目录下执行<code>mvn deploy</code>坐等发布成功！</p>
-<h1 id="后话"><span class="header-section-number">3</span> 后话</h1>
-<p>pom.xml中添加如下配置，之后再发布， 否则只会发布bin的jar包：</p>
+<p>顺便把这些plugin一起配置，这样可以jar， source jar， javadoc jar一起发布：</p>
 <pre class="sourceCode xml"><code class="sourceCode xml">            <span class="kw">&lt;plugin&gt;</span>
                 <span class="kw">&lt;groupId&gt;</span>org.apache.maven.plugins<span class="kw">&lt;/groupId&gt;</span>
                 <span class="kw">&lt;artifactId&gt;</span>maven-compiler-plugin<span class="kw">&lt;/artifactId&gt;</span>
@@ -165,6 +149,20 @@
                     <span class="kw">&lt;/execution&gt;</span>
                 <span class="kw">&lt;/executions&gt;</span>
             <span class="kw">&lt;/plugin&gt;</span></code></pre>
+<h2 id="settings.xml配置"><span class="header-section-number">1.2</span> settings.xml配置</h2>
+<p>Nexus通常会设置认证， 只允许指定的credentials可以发布artifacts到nexus， 而这些认证信息就配置在settings.xml中：</p>
+<pre class="sourceCode xml"><code class="sourceCode xml">    <span class="kw">&lt;servers&gt;</span>
+        <span class="kw">&lt;server&gt;</span>
+            <span class="kw">&lt;id&gt;</span>deployment<span class="kw">&lt;/id&gt;</span>
+            <span class="kw">&lt;username&gt;</span>deployment<span class="kw">&lt;/username&gt;</span>
+            <span class="kw">&lt;password&gt;</span>${password}<span class="kw">&lt;/password&gt;</span>
+        <span class="kw">&lt;/server&gt;</span>
+    <span class="kw">&lt;/servers&gt;</span></code></pre>
+<blockquote>
+<p>注意： server的id值需要跟pom.xml中每一个repository的id值相对应！！！ （因为我们是为这些distributionManagement的repository提供认证信息）</p>
+</blockquote>
+<h1 id="执行发布部署"><span class="header-section-number">2</span> 执行发布/部署</h1>
+<p>在当前项目目录下执行<code>mvn deploy</code>坐等发布成功！</p>
                 
                 <!--百度分享按钮-->
                 <div class="pull-left bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a><a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a></div>
