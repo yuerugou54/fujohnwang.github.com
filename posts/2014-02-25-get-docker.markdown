@@ -176,7 +176,7 @@ CMD           ["/bin/true"]
 3. [How it works: Docker](http://traveling-railsman.com/blog/how-it-works-docker)
 4. [BUILDING A DOCKER-BASED MYSQL SERVER](http://ijonas.com/devops-2/building-a-docker-based-mysql-server/)
 5. [What is Containerization?](http://mutteringsontech.com/post/what-is-containerization)
-
+6. [Panamax: Docker Management for Humans](http://panamax.io/)
 
 
 
