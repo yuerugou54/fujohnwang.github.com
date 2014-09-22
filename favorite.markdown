@@ -224,6 +224,7 @@ with MapReduce](http://lintool.github.com/MapReduceAlgorithms/index.html) ^^^
 ## Shell
 1. [http://explainshell.com/](http://explainshell.com/)
 2. [http://www.commandlinefu.com/](http://www.commandlinefu.com/)
+3. [Advanced Bash-Scripting Guide](http://www.tldp.org/LDP/abs/html/index.html)
 
 ## Bootstrap
 1. [http://startbootstrap.com/](http://startbootstrap.com/)
