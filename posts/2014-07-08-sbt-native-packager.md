@@ -68,6 +68,21 @@ packageArchetype.java_application
 如果自动打包的启动脚本有bug或者其它原因， 可以覆盖之， 参考<http://www.scala-sbt.org/sbt-native-packager/GettingStartedApplications/OverridingTemplates.html>, 不过一般情况下不建议完全覆盖和替换。
 
 
+# 添加自定义随同发布文件和目录
+
+
+~~~~~~~ {.scala}
+import com.typesafe.sbt.SbtNativePackager._
+import NativePackagerKeys._
+
+// ...
+
+mappings in Universal += file("ReleaseNote.md") -> "ReleaseNote.md"
+
+mappings in Universal ++= directory("conf")
+
+mappings in Universal ++= directory("agent")
+~~~~~~~
 
 
 
