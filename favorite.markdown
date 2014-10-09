@@ -190,6 +190,7 @@ with MapReduce](http://lintool.github.com/MapReduceAlgorithms/index.html) ^^^
 1. <http://www.thegeekstuff.com/>
 2. <http://www.commandlinefu.com/commands/browse>
 	- many commands demonstrated for misc. senarios
+	
 ### Docker
 1. [Docker 中文社区](https://www.dockboard.org/)
 2. <https://hub.docker.com/>
@@ -225,6 +226,7 @@ with MapReduce](http://lintool.github.com/MapReduceAlgorithms/index.html) ^^^
 1. [http://explainshell.com/](http://explainshell.com/)
 2. [http://www.commandlinefu.com/](http://www.commandlinefu.com/)
 3. [Advanced Bash-Scripting Guide](http://www.tldp.org/LDP/abs/html/index.html)
+4. [The Linux Command Line 的中文版](http://billie66.github.io/TLCL/book/)
 
 ## Bootstrap
 1. [http://startbootstrap.com/](http://startbootstrap.com/)
