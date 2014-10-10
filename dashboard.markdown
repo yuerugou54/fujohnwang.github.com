@@ -3,7 +3,7 @@
 
 ## Forex(外汇)
 
-1. [CNY/JPY/USD/EUR](https://www.google.com/finance?chdnp=1&chdd=1&chds=1&chdv=1&chvs=Linear&chdeh=0&chfdeh=0&chdet=1364598000000&chddm=360441&cmpto=CURRENCY:CNYUSD;CURRENCY:CNYEUR&cmptdms=0;0&q=CURRENCY:CNYJPY&ntsp=0&ei=4lJVUbG0E4n7kAW-Bg)
+1. [CNY/JPY/USD/EUR](https://www.google.com/finance?chdnp=1&chdd=1&chds=1&chdv=1&chvs=Linear&chdeh=0&chfdeh=0&chdet=1412905881144&chddm=27620&q=CURRENCY:USDCNY&ntsp=0&ei=lzs3VJDTKMGZqAHtoYHIBw)
 2. [中国人民银行总行外汇牌价](http://www.boc.cn/sourcedb/lswhpj/)
 
 
@@ -17,6 +17,8 @@
 ![](http://image.sinajs.cn/newchart/daily/n/sz000623.gif)
 
 ![](http://image.sinajs.cn/newchart/daily/n/sh601628.gif)
+
+
 
 
 ## Gold(贵金属)
