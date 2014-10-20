@@ -24,7 +24,6 @@ credentials += Credentials("${realm}", "${host}", "${username}", "${password}")
 
 host参数只写IP或者域名，不需要添加port！
 
-
 # 本地测试
 
 可以通过`sbt publish-local`先本地测试一下， 发布到本地maven库中并检查是否有遗漏或者错误
@@ -33,6 +32,22 @@ host参数只写IP或者域名，不需要添加port！
 
 运行`sbt publish`, 等待结果...
 
+# 关于Credentials
+直接写到project的build文件当然可以，但还是放到独立的一台发布机上比较靠谱一些，所以，我们可以在project的build文件里只声明credential文件的位置：
+
+<pre>
+      credentials += Credentials(Path.userHome / ".ivy2" / ".credentials_busymachines_snapshots"),
+      credentials += Credentials(Path.userHome / ".ivy2" / ".credentials_busymachines_releases")      
+</pre>
+
+然后在相应的credentials文件中在存放相应的credential信息：
+
+<pre>
+realm=Repository Archiva Managed snapshots Repository
+host=archiva.busymachines.com
+user=myuser
+password=mypass
+</pre>
 
 # 其它参考
 1. [Publishing artefacts to OSS Sonatype Nexus using SBT and Travis CI Here...](http://www.cakesolutions.net/teamblogs/publishing-artefacts-to-oss-sonatype-nexus-using-sbt-and-travis-ci-here...)

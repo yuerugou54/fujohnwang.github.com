@@ -67,7 +67,8 @@
                 <li><a href="#准备配置内容"><span class="toc-section-number">1</span> 准备配置内容</a></li>
                 <li><a href="#本地测试"><span class="toc-section-number">2</span> 本地测试</a></li>
                 <li><a href="#正式发布"><span class="toc-section-number">3</span> 正式发布</a></li>
-                <li><a href="#其它参考"><span class="toc-section-number">4</span> 其它参考</a></li>
+                <li><a href="#关于credentials"><span class="toc-section-number">4</span> 关于Credentials</a></li>
+                <li><a href="#其它参考"><span class="toc-section-number">5</span> 其它参考</a></li>
                 </ul>
                 </div>
                                 <p>--阶段性反刍--</p>
@@ -86,14 +87,26 @@ publishTo := {
 
 credentials += Credentials("${realm}", "${host}", "${username}", "${password}")
 </pre>
-
 <p>对于Nexus来说，默认的realm是“Sonatype Nexus Repository Manager”，如果不确定的话， 可以通过命令<code>curl -X POST http://${port}:${port}/nexus/content/repositories/releases -v</code>来获得，或者直接不写username和password，待报错的时候获得相应信息，因为sbt使用WWW-AUthenticate这个header来确定basic auth的realm。</p>
 <p>host参数只写IP或者域名，不需要添加port！</p>
 <h1 id="本地测试"><span class="header-section-number">2</span> 本地测试</h1>
 <p>可以通过<code>sbt publish-local</code>先本地测试一下， 发布到本地maven库中并检查是否有遗漏或者错误</p>
 <h1 id="正式发布"><span class="header-section-number">3</span> 正式发布</h1>
 <p>运行<code>sbt publish</code>, 等待结果...</p>
-<h1 id="其它参考"><span class="header-section-number">4</span> 其它参考</h1>
+<h1 id="关于credentials"><span class="header-section-number">4</span> 关于Credentials</h1>
+<p>直接写到project的build文件当然可以，但还是放到独立的一台发布机上比较靠谱一些，所以，我们可以在project的build文件里只声明credential文件的位置：</p>
+<pre>
+      credentials += Credentials(Path.userHome / ".ivy2" / ".credentials_busymachines_snapshots"),
+      credentials += Credentials(Path.userHome / ".ivy2" / ".credentials_busymachines_releases")      
+</pre>
+<p>然后在相应的credentials文件中在存放相应的credential信息：</p>
+<pre>
+realm=Repository Archiva Managed snapshots Repository
+host=archiva.busymachines.com
+user=myuser
+password=mypass
+</pre>
+<h1 id="其它参考"><span class="header-section-number">5</span> 其它参考</h1>
 <ol style="list-style-type: decimal">
 <li><a href="http://www.cakesolutions.net/teamblogs/publishing-artefacts-to-oss-sonatype-nexus-using-sbt-and-travis-ci-here...">Publishing artefacts to OSS Sonatype Nexus using SBT and Travis CI Here...</a></li>
 </ol>
