@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+  <head>
+	  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	  <title>让Lombok跟Maven和IntelliJ完美的工作在一起</title>
+	  <meta name="author" content="FuqiangWang">
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="shortcut icon" href="favicon.ico">
+            <style type="text/css">
+    table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+      margin: 0; padding: 0; vertical-align: baseline; border: none; }
+    table.sourceCode { width: 100%; line-height: 100%; }
+    td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+    td.sourceCode { padding-left: 5px; }
+    code > span.kw { color: #007020; font-weight: bold; }
+    code > span.dt { color: #902000; }
+    code > span.dv { color: #40a070; }
+    code > span.bn { color: #40a070; }
+    code > span.fl { color: #40a070; }
+    code > span.ch { color: #4070a0; }
+    code > span.st { color: #4070a0; }
+    code > span.co { color: #60a0b0; font-style: italic; }
+    code > span.ot { color: #007020; }
+    code > span.al { color: #ff0000; font-weight: bold; }
+    code > span.fu { color: #06287e; }
+    code > span.er { color: #ff0000; font-weight: bold; }
+    </style>
+                
+    <link href='/font/Syncopate/stylesheet.css' rel='stylesheet' type='text/css'>
+    <link href='/font/News_Cycle/stylesheet.css' rel='stylesheet' type='text/css'>
+
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/bootstrap-theme.min.css" rel="stylesheet">
+    <link href="/css/afoo.me.css" rel="stylesheet">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-3 sidebar">
+            <a href="/">
+                <img src="/images/profile-icon.png" class="img-circle img-responsive" width="160px" style="margin: 0 auto;" />
+                <h2 class="text-center">AFOO.ME</h2>
+            </a>
+            <p class="text-center lead slogan"><a href="/slogan.html">lollapalooza &amp; positioning</a></p>
+
+            <ul class="nav nav-pills nav-stacked">
+              <li><a href="/favorite.html" class="text-center"><i class="icon-star-empty"></i> Favorite</a></li>
+              <li><a href="/dashboard.html" class="text-center"><i class="icon-fullscreen"></i> Dashboard</a></li>
+              <li><a href="/" class="text-center"><i class="icon-folder-close-alt"></i> Archives</a></li>
+              <li><a href="/feeds.xml" class="text-center"><i class="icon-folder-close-alt"></i> RSS</a></li>
+              <li><a href="/whoami.html" class="text-center"><i class="icon-user-md"></i> About</a></li>
+            </ul>
+
+        </div>
+        <div class="col-md-9 col-md-offset-3 main">
+            <div class="row">
+              <div class="container-fluid">
+                
+                <div class="row">
+                                <div id="header">
+                <p class="lead">
+                <h1 class="title">让Lombok跟Maven和IntelliJ完美的工作在一起&nbsp;&nbsp;
+                <small>
+                                    王福强
+                                </small>
+                </h1>
+                </p>
+                </div>
+                                <div>
+
+                <hr>
+
+                                <div id="TOC">
+                <ul>
+                <li><a href="#lombok和maven"><span class="toc-section-number">1</span> Lombok和Maven</a></li>
+                <li><a href="#intellij的配置"><span class="toc-section-number">2</span> IntelliJ的配置</a></li>
+                </ul>
+                </div>
+                                <h1 id="lombok和maven"><span class="header-section-number">1</span> Lombok和Maven</h1>
+<p>通过<a href="http://awhitford.github.io/lombok.maven/lombok-maven-plugin/index.html">lombok-maven-plugin</a>， 我们可以让这两者工作在一起：</p>
+<pre class="sourceCode xml"><code class="sourceCode xml"><span class="kw">&lt;?xml</span> version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;<span class="kw">?&gt;</span>
+<span class="kw">&lt;project</span><span class="ot"> xmlns=</span><span class="st">&quot;http://maven.apache.org/POM/4.0.0&quot;</span>
+<span class="ot">         xmlns:xsi=</span><span class="st">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span>
+<span class="ot">         xsi:schemaLocation=</span><span class="st">&quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&quot;</span><span class="kw">&gt;</span>
+    <span class="kw">&lt;modelVersion&gt;</span>4.0.0<span class="kw">&lt;/modelVersion&gt;</span>
+
+    <span class="kw">&lt;groupId&gt;</span>test<span class="kw">&lt;/groupId&gt;</span>
+    <span class="kw">&lt;artifactId&gt;</span>test<span class="kw">&lt;/artifactId&gt;</span>
+    <span class="kw">&lt;version&gt;</span>1.0-SNAPSHOT<span class="kw">&lt;/version&gt;</span>
+
+    <span class="kw">&lt;properties&gt;</span>
+        <span class="kw">&lt;compiler.version&gt;</span>1.6<span class="kw">&lt;/compiler.version&gt;</span>
+        <span class="kw">&lt;java_source_version&gt;</span>1.6<span class="kw">&lt;/java_source_version&gt;</span>
+        <span class="kw">&lt;java_target_version&gt;</span>1.6<span class="kw">&lt;/java_target_version&gt;</span>
+        <span class="kw">&lt;file_encoding&gt;</span>UTF-8<span class="kw">&lt;/file_encoding&gt;</span>
+    <span class="kw">&lt;/properties&gt;</span>
+
+    <span class="kw">&lt;build&gt;</span>
+        <span class="kw">&lt;plugins&gt;</span>
+            <span class="co">&lt;!-- Java Compiler --&gt;</span>
+            <span class="kw">&lt;plugin&gt;</span>
+                <span class="kw">&lt;groupId&gt;</span>org.apache.maven.plugins<span class="kw">&lt;/groupId&gt;</span>
+                <span class="kw">&lt;artifactId&gt;</span>maven-compiler-plugin<span class="kw">&lt;/artifactId&gt;</span>
+                <span class="kw">&lt;configuration&gt;</span>
+                    <span class="kw">&lt;compilerVersion&gt;</span>${compiler.version}<span class="kw">&lt;/compilerVersion&gt;</span>
+                    <span class="kw">&lt;source&gt;</span>${java_source_version}<span class="kw">&lt;/source&gt;</span>
+                    <span class="kw">&lt;target&gt;</span>${java_target_version}<span class="kw">&lt;/target&gt;</span>
+                    <span class="kw">&lt;encoding&gt;</span>${file_encoding}<span class="kw">&lt;/encoding&gt;</span>
+                <span class="kw">&lt;/configuration&gt;</span>
+            <span class="kw">&lt;/plugin&gt;</span>
+            <span class="kw">&lt;plugin&gt;</span>
+                <span class="kw">&lt;groupId&gt;</span>org.apache.maven.plugins<span class="kw">&lt;/groupId&gt;</span>
+                <span class="kw">&lt;artifactId&gt;</span>maven-source-plugin<span class="kw">&lt;/artifactId&gt;</span>
+                <span class="kw">&lt;executions&gt;</span>
+                    <span class="kw">&lt;execution&gt;</span>
+                        <span class="kw">&lt;id&gt;</span>attach-sources<span class="kw">&lt;/id&gt;</span>
+                        <span class="kw">&lt;goals&gt;</span>
+                            <span class="kw">&lt;goal&gt;</span>jar<span class="kw">&lt;/goal&gt;</span>
+                        <span class="kw">&lt;/goals&gt;</span>
+                    <span class="kw">&lt;/execution&gt;</span>
+                <span class="kw">&lt;/executions&gt;</span>
+            <span class="kw">&lt;/plugin&gt;</span>
+            <span class="kw">&lt;plugin&gt;</span>
+                <span class="kw">&lt;groupId&gt;</span>org.apache.maven.plugins<span class="kw">&lt;/groupId&gt;</span>
+                <span class="kw">&lt;artifactId&gt;</span>maven-javadoc-plugin<span class="kw">&lt;/artifactId&gt;</span>
+                <span class="kw">&lt;configuration&gt;</span>
+                    <span class="kw">&lt;charset&gt;</span>${file_encoding}<span class="kw">&lt;/charset&gt;</span>
+                    <span class="kw">&lt;encoding&gt;</span>${file_encoding}<span class="kw">&lt;/encoding&gt;</span>
+                <span class="kw">&lt;/configuration&gt;</span>
+                <span class="kw">&lt;executions&gt;</span>
+                    <span class="kw">&lt;execution&gt;</span>
+                        <span class="kw">&lt;id&gt;</span>attach-javadocs<span class="kw">&lt;/id&gt;</span>
+                        <span class="kw">&lt;goals&gt;</span>
+                            <span class="kw">&lt;goal&gt;</span>jar<span class="kw">&lt;/goal&gt;</span>
+                        <span class="kw">&lt;/goals&gt;</span>
+                    <span class="kw">&lt;/execution&gt;</span>
+                <span class="kw">&lt;/executions&gt;</span>
+            <span class="kw">&lt;/plugin&gt;</span>
+            <span class="kw">&lt;plugin&gt;</span>
+                <span class="kw">&lt;groupId&gt;</span>org.projectlombok<span class="kw">&lt;/groupId&gt;</span>
+                <span class="kw">&lt;artifactId&gt;</span>lombok-maven-plugin<span class="kw">&lt;/artifactId&gt;</span>
+                <span class="kw">&lt;version&gt;</span>1.14.8.0<span class="kw">&lt;/version&gt;</span>
+                <span class="kw">&lt;configuration&gt;</span>
+                    <span class="kw">&lt;encoding&gt;</span>${file_encoding}<span class="kw">&lt;/encoding&gt;</span>
+                <span class="kw">&lt;/configuration&gt;</span>
+                <span class="kw">&lt;executions&gt;</span>
+                    <span class="kw">&lt;execution&gt;</span>
+                        <span class="kw">&lt;phase&gt;</span>generate-sources<span class="kw">&lt;/phase&gt;</span>
+                        <span class="kw">&lt;goals&gt;</span>
+                            <span class="kw">&lt;goal&gt;</span>delombok<span class="kw">&lt;/goal&gt;</span>
+                        <span class="kw">&lt;/goals&gt;</span>
+                    <span class="kw">&lt;/execution&gt;</span>
+                <span class="kw">&lt;/executions&gt;</span>
+            <span class="kw">&lt;/plugin&gt;</span>
+        <span class="kw">&lt;/plugins&gt;</span>
+    <span class="kw">&lt;/build&gt;</span>
+    <span class="kw">&lt;profiles&gt;</span>
+        <span class="kw">&lt;profile&gt;</span>
+            <span class="kw">&lt;id&gt;</span>lombok-needs-tools-jar<span class="kw">&lt;/id&gt;</span>
+            <span class="kw">&lt;activation&gt;</span>
+                <span class="kw">&lt;file&gt;</span>
+                    <span class="kw">&lt;exists&gt;</span>${java.home}/../lib/tools.jar<span class="kw">&lt;/exists&gt;</span>
+                <span class="kw">&lt;/file&gt;</span>
+            <span class="kw">&lt;/activation&gt;</span>
+            <span class="kw">&lt;build&gt;</span>
+                <span class="kw">&lt;plugins&gt;</span>
+                    <span class="kw">&lt;plugin&gt;</span>
+                        <span class="kw">&lt;groupId&gt;</span>org.projectlombok<span class="kw">&lt;/groupId&gt;</span>
+                        <span class="kw">&lt;artifactId&gt;</span>lombok-maven-plugin<span class="kw">&lt;/artifactId&gt;</span>
+                        <span class="kw">&lt;version&gt;</span>1.14.8.0<span class="kw">&lt;/version&gt;</span>
+                        <span class="kw">&lt;dependencies&gt;</span>
+                            <span class="kw">&lt;dependency&gt;</span>
+                                <span class="kw">&lt;groupId&gt;</span>sun.jdk<span class="kw">&lt;/groupId&gt;</span>
+                                <span class="kw">&lt;artifactId&gt;</span>tools<span class="kw">&lt;/artifactId&gt;</span>
+                                <span class="kw">&lt;version&gt;</span>1.6<span class="kw">&lt;/version&gt;</span>
+                                <span class="kw">&lt;scope&gt;</span>system<span class="kw">&lt;/scope&gt;</span>
+                                <span class="kw">&lt;systemPath&gt;</span>${java.home}/../lib/tools.jar<span class="kw">&lt;/systemPath&gt;</span>
+                            <span class="kw">&lt;/dependency&gt;</span>
+                        <span class="kw">&lt;/dependencies&gt;</span>
+                    <span class="kw">&lt;/plugin&gt;</span>
+                <span class="kw">&lt;/plugins&gt;</span>
+            <span class="kw">&lt;/build&gt;</span>
+        <span class="kw">&lt;/profile&gt;</span>
+    <span class="kw">&lt;/profiles&gt;</span>
+    <span class="kw">&lt;dependencies&gt;</span>
+        <span class="kw">&lt;dependency&gt;</span>
+            <span class="kw">&lt;groupId&gt;</span>org.projectlombok<span class="kw">&lt;/groupId&gt;</span>
+            <span class="kw">&lt;artifactId&gt;</span>lombok<span class="kw">&lt;/artifactId&gt;</span>
+            <span class="kw">&lt;version&gt;</span>1.14.8<span class="kw">&lt;/version&gt;</span>
+            <span class="kw">&lt;scope&gt;</span>provided<span class="kw">&lt;/scope&gt;</span>
+        <span class="kw">&lt;/dependency&gt;</span>
+    <span class="kw">&lt;/dependencies&gt;</span>
+
+<span class="kw">&lt;/project&gt;</span></code></pre>
+<p>配置profile的目的是为了解决非Mac系统下lombok依赖jdk的tools.jar的问题。</p>
+<h1 id="intellij的配置"><span class="header-section-number">2</span> IntelliJ的配置</h1>
+<p>首先，<a href="https://code.google.com/p/lombok-intellij-plugin/">这里</a>有一个intellij的插件， 装上！ 但它只负责通过inspect字节码来提供编辑器内代码语法的高亮和提示等功能， 而lombok得以生效的机制确实需要首先执行annotation processor，才会在字节码中生成那些辅助方法， 所以，即使我们已经配置了lombok-maven-plugin， 要想使用到这个intellij插件的好处，还是要每次都<code>mvn compile</code>一下 <a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a>，这显然不胜烦琐，不过，别急，稍微设置一下intellij就可以了。</p>
+<p>进intellij的Preferences， 选择Compiler设置， 然后再展开子树，选择Annotation Processors， 勾选“Enable annotation processing” <a href="#fn2" class="footnoteRef" id="fnref2"><sup>2</sup></a>, OK保存退出， 开始爽吧！</p>
+<div class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p>或者执行maven的generate-sources之后任何一个phase<a href="#fnref1">↩</a></p></li>
+<li id="fn2"><p>Obtain processors from project classpath默认选择了<a href="#fnref2">↩</a></p></li>
+</ol>
+</div>
+                
+                <!--百度分享按钮-->
+                <div class="pull-left bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a><a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a></div>
+                <script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"1","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+
+                <!--二维码分享-->
+                <div id="wx_qr"></div>
+                <script type="text/javascript">
+                  var baseUrl = "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data="
+                  var qrUrl = baseUrl.concat(document.URL)
+                  var img = document.createElement("img")
+                  img.setAttribute("src", qrUrl)
+
+                  document.getElementById("wx_qr").appendChild(img)
+                </script>
+
+
+                <div id="disqus_thread"></div>
+                <script type="text/javascript">
+                    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+                    var disqus_shortname = 'afoo'; // required: replace example with your forum shortname
+
+                    /* * * DON'T EDIT BELOW THIS LINE * * */
+                    (function() {
+                        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                    })();
+                </script>
+                <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+                <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+              </div>
+              </div>
+              </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 footer">
+                  <hr>
+                  <p>©FuqiangWang@<a href="http://keevol.com">keevol.com</a></p>
+                  <p>Powered by <a href="http://johnmacfarlane.net/pandoc/">pandoc</a>, <a href="http://rometools.github.io/rome/index.html">ROME</a> and <a href="http://pages.github.com/">github pages</a></p>
+                </div>
+            </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="/js/jquery-2.1.1.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1000502179'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s11.cnzz.com/z_stat.php%3Fid%3D1000502179%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));</script>
+  </body>
+
+</html>

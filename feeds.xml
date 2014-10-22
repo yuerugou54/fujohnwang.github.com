@@ -5,6 +5,13 @@
     <link>http://afoo.me</link>
     <description>一个架构士的思考与实践点滴记录</description>
     <item>
+      <title>让Lombok跟Maven和IntelliJ完美的工作在一起</title>
+      <link>http://afoo.me/posts/2014-10-22-lombok-maven-and-intellij.html</link>
+      <pubDate>Tue, 21 Oct 2014 16:00:00 GMT</pubDate>
+      <guid>http://afoo.me/posts/2014-10-22-lombok-maven-and-intellij.html</guid>
+      <dc:date>2014-10-21T16:00:00Z</dc:date>
+    </item>
+    <item>
       <title>了解tmux</title>
       <link>http://afoo.me/posts/2014-09-01-get-to-know-tmux.html</link>
       <pubDate>Sun, 31 Aug 2014 16:00:00 GMT</pubDate>
@@ -45,13 +52,6 @@
       <pubDate>Mon, 07 Jul 2014 16:00:00 GMT</pubDate>
       <guid>http://afoo.me/posts/2014-07-08-sbt-native-packager.html</guid>
       <dc:date>2014-07-07T16:00:00Z</dc:date>
-    </item>
-    <item>
-      <title>《血色浪漫》中的信天游</title>
-      <link>http://afoo.me/posts/2014-07-06-血色浪漫-信天游.html</link>
-      <pubDate>Sat, 05 Jul 2014 16:00:00 GMT</pubDate>
-      <guid>http://afoo.me/posts/2014-07-06-血色浪漫-信天游.html</guid>
-      <dc:date>2014-07-05T16:00:00Z</dc:date>
     </item>
   </channel>
 </rss>
