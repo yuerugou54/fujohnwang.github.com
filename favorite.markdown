@@ -24,7 +24,7 @@
 * [http://www.ksvali.com/ - Practical Topics for IT professionals of Capital Markets](http://www.ksvali.com/)
 * [中国量化投资学会](http://kan.weibo.com/kan/3515306971365898)
 * [Wireshark Display Filter Reference - Financial Information eXchange Protocol](http://www.wireshark.org/docs/dfref/f/fix.html)
-
+* [MBA智库百科](http://wiki.mbalib.com/wiki/%E9%A6%96%E9%A1%B5)
 
 ## Open Courses
 * [CNS(Center For Network Systems) Lecture Archives](http://cns.ucsd.edu/lecturearchive.shtml)
