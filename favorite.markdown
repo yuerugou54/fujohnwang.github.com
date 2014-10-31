@@ -251,6 +251,7 @@ with MapReduce](http://lintool.github.com/MapReduceAlgorithms/index.html) ^^^
 3. [阳光电影](http://www.ygdy8.com/)
 4. [电影天堂](http://www.dytt8.net)
 5. [人人影视](http://www.yyets.com)
+6. [飘花资源网](http://www.piaohua.com/)
 
 ## BT Search
 1. <http://btdigg.org/>
