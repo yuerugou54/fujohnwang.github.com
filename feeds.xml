@@ -5,11 +5,32 @@
     <link>http://afoo.me</link>
     <description>一个架构士的思考与实践点滴记录</description>
     <item>
+      <title>SBT免翻墙手册</title>
+      <link>http://afoo.me/posts/2014-11-05-how-make-sbt-jump-over-GFW.html</link>
+      <pubDate>Tue, 04 Nov 2014 16:00:00 GMT</pubDate>
+      <guid>http://afoo.me/posts/2014-11-05-how-make-sbt-jump-over-GFW.html</guid>
+      <dc:date>2014-11-04T16:00:00Z</dc:date>
+    </item>
+    <item>
+      <title>创建纯基于SBT的Play工程</title>
+      <link>http://afoo.me/posts/2014-10-28-create-play-project-with-bare-sbt.html</link>
+      <pubDate>Mon, 27 Oct 2014 16:00:00 GMT</pubDate>
+      <guid>http://afoo.me/posts/2014-10-28-create-play-project-with-bare-sbt.html</guid>
+      <dc:date>2014-10-27T16:00:00Z</dc:date>
+    </item>
+    <item>
       <title>《少谈些主义， 多做些需求》摘录</title>
       <link>http://afoo.me/posts/2014-10-27-digest-of-a-PD-s-talk.html</link>
       <pubDate>Sun, 26 Oct 2014 16:00:00 GMT</pubDate>
       <guid>http://afoo.me/posts/2014-10-27-digest-of-a-PD-s-talk.html</guid>
       <dc:date>2014-10-26T16:00:00Z</dc:date>
+    </item>
+    <item>
+      <title>How To Shutdown Java Service Gracefully [Tutorial]</title>
+      <link>http://afoo.me/posts/2014-10-24-how-to-shutdown-java-service-gracefully.html</link>
+      <pubDate>Thu, 23 Oct 2014 16:00:00 GMT</pubDate>
+      <guid>http://afoo.me/posts/2014-10-24-how-to-shutdown-java-service-gracefully.html</guid>
+      <dc:date>2014-10-23T16:00:00Z</dc:date>
     </item>
     <item>
       <title>让Lombok跟Maven和IntelliJ完美的工作在一起</title>
@@ -31,27 +52,6 @@
       <pubDate>Tue, 05 Aug 2014 16:00:00 GMT</pubDate>
       <guid>http://afoo.me/posts/2014-08-06-cards-intro.html</guid>
       <dc:date>2014-08-05T16:00:00Z</dc:date>
-    </item>
-    <item>
-      <title>Cobar分区函数扩展项目简介(cobar-extra-rules)</title>
-      <link>http://afoo.me/posts/2014-07-17-intro-cobar-extra-rules.html</link>
-      <pubDate>Wed, 16 Jul 2014 16:00:00 GMT</pubDate>
-      <guid>http://afoo.me/posts/2014-07-17-intro-cobar-extra-rules.html</guid>
-      <dc:date>2014-07-16T16:00:00Z</dc:date>
-    </item>
-    <item>
-      <title>Maven项目发布到公司内部Repository(Nexus) #阶段性反刍#</title>
-      <link>http://afoo.me/posts/2014-07-11-quick-start-maven-project-deployment.html</link>
-      <pubDate>Thu, 10 Jul 2014 16:00:00 GMT</pubDate>
-      <guid>http://afoo.me/posts/2014-07-11-quick-start-maven-project-deployment.html</guid>
-      <dc:date>2014-07-10T16:00:00Z</dc:date>
-    </item>
-    <item>
-      <title>Publish SBT project to Maven repo(Nexus?)</title>
-      <link>http://afoo.me/posts/2014-07-11-publish-sbt-project-to-maven-repo.html</link>
-      <pubDate>Thu, 10 Jul 2014 16:00:00 GMT</pubDate>
-      <guid>http://afoo.me/posts/2014-07-11-publish-sbt-project-to-maven-repo.html</guid>
-      <dc:date>2014-07-10T16:00:00Z</dc:date>
     </item>
   </channel>
 </rss>
