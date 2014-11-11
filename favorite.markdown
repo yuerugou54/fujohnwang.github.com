@@ -140,7 +140,7 @@ with MapReduce](http://lintool.github.com/MapReduceAlgorithms/index.html) ^^^
 * [free-programming-books on github](https://github.com/vhf/free-programming-books/blob/master/free-programming-books.md) ****
 * [OReilly's Bookshelf](http://prasoonagrawal.com/library/oreilly/)
 * [Learning Advanced JavaScript](http://ejohn.org/apps/learn/)
-
+* <http://programming-motherfucker.com/become.html> - 一堆书和资料的汇总
 
 ## MySQL
 * [MySQL Internals Manual](http://dev.mysql.com/doc/internals/en/index.html) ****
@@ -252,6 +252,9 @@ with MapReduce](http://lintool.github.com/MapReduceAlgorithms/index.html) ^^^
 4. [电影天堂](http://www.dytt8.net)
 5. [人人影视](http://www.yyets.com)
 6. [飘花资源网](http://www.piaohua.com/)
+7. [BT天堂](http://www.bttiantang.cc/)
+
+
 
 ## BT Search
 1. <http://btdigg.org/>

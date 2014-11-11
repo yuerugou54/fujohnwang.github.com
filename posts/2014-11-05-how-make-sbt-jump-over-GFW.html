@@ -3,13 +3,32 @@
 
   <head>
 	  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-	  <title></title>
+	  <title>SBT免翻墙手册</title>
 	  <meta name="author" content="FuqiangWang">
     <meta charset='utf-8'>
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link rel="shortcut icon" href="favicon.ico">
-                    
+            <style type="text/css">
+    table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+      margin: 0; padding: 0; vertical-align: baseline; border: none; }
+    table.sourceCode { width: 100%; line-height: 100%; }
+    td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+    td.sourceCode { padding-left: 5px; }
+    code > span.kw { color: #007020; font-weight: bold; }
+    code > span.dt { color: #902000; }
+    code > span.dv { color: #40a070; }
+    code > span.bn { color: #40a070; }
+    code > span.fl { color: #40a070; }
+    code > span.ch { color: #4070a0; }
+    code > span.st { color: #4070a0; }
+    code > span.co { color: #60a0b0; font-style: italic; }
+    code > span.ot { color: #007020; }
+    code > span.al { color: #ff0000; font-weight: bold; }
+    code > span.fu { color: #06287e; }
+    code > span.er { color: #ff0000; font-weight: bold; }
+    </style>
+                
     <link href='/font/Syncopate/stylesheet.css' rel='stylesheet' type='text/css'>
     <link href='/font/News_Cycle/stylesheet.css' rel='stylesheet' type='text/css'>
 
@@ -49,50 +68,27 @@
               <div class="container-fluid">
                 
                 <div class="row">
+                                <div id="header">
+                <p class="lead">
+                <h1 class="title">SBT免翻墙手册&nbsp;&nbsp;
+                <small>
+                                    FuqiangWang
+                                </small>
+                </h1>
+                </p>
+                </div>
                                 <div>
 
                 <hr>
 
-                                <div id="TOC">
-                <ul>
-                <li><a href="#我是谁who-am-i"><span class="toc-section-number">1</span> 我是谁(Who Am I)</a></li>
-                <li><a href="#我的著作"><span class="toc-section-number">2</span> 我的著作</a><ul>
-                <li><a href="#spring揭秘"><span class="toc-section-number">2.1</span> 《Spring揭秘》</a></li>
-                <li><a href="#real-world-scala"><span class="toc-section-number">2.2</span> 《Real World Scala》</a></li>
-                <li><a href="#our-story-with-zookeeper"><span class="toc-section-number">2.3</span> Our Story With Zookeeper</a></li>
-                </ul></li>
-                <li><a href="#我在线上"><span class="toc-section-number">3</span> 我在线上</a></li>
-                </ul>
-                </div>
-                                <h1 id="我是谁who-am-i"><span class="header-section-number">1</span> 我是谁(Who Am I)</h1>
-<p><img src="images/profile.png" alt="WangFuqiang's portrait"/></p>
-<p>王福强，《Spring揭秘》作者, 浸淫Java平台多年，然近年更喜Scala, 专注于并发并行编程，HPC，分布式系统设计与实现，Big Data， 实时数据追踪与流计算等领域, 相关Web Framework, DDAL(Distributed Data Access Layer)<a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a>, Middleware的Product Owner/Co-owner.</p>
-<p>年轻时好武，玩过散打，拳击，跆拳道，太极，终无定性； 亦好文，好藏书，之前看技术书居多，现尝试更往杂了读；</p>
-<p>参与并领导过包括信贷，债券，外汇(保证金)交易等多种金融系统的设计与开发工作;</p>
-<p>原阿里巴巴平台技术部海量数据部门打造数据中间件与产品服务化；</p>
-<p>原天猫产品技术部导购部资深架构师，兼顾负责SEO/流量拓展相关工作， 规划并推动了统一投放平台的整体落地， 即使再规划和推动&quot;reactive tmall&quot;的idea，也已经不会给我带来更大的满足感，所以最终选择了离开；</p>
-<p>现回归金融， 任<a href="http://www.wacai.com">挖财</a>资深架构士(Principal Architect)，希望在互联网金融的这波大潮中享受波涛中拼搏的乐趣...</p>
-<p>BTW. 如果有哪位同学对互联网金融感兴趣，且认同我们在做的事情，也请毫不犹豫的联系我(fujohnwang AT gmail DOT com), 热切盼望各路技术或者金融人才&quot;聚义梁山&quot;， 挖财每一位员工都是财宝，如果你认为自己就是财宝，那还在犹豫什么？！</p>
-<h1 id="我的著作"><span class="header-section-number">2</span> 我的著作</h1>
-<h2 id="spring揭秘"><span class="header-section-number">2.1</span> 《Spring揭秘》</h2>
-<p><a href="http://product.china-pub.com/195969"><img alt="Spring揭秘" src="http://images.china-pub.com/ebook195001-200000/195969/zcover.jpg?2013-3-2%2022:00:02"/></a></p>
-<h2 id="real-world-scala"><span class="header-section-number">2.2</span> 《Real World Scala》</h2>
-<p><a href="https://github.com/fujohnwang/real_world_scala">Real World Scala</a>本来希望对Scala的整体生态环境进行一个实践性的介绍，不过，暂时只有SBT一章算较为圆满的完成，后面是否继续看心情 ;)</p>
-<h2 id="our-story-with-zookeeper"><span class="header-section-number">2.3</span> Our Story With Zookeeper</h2>
-<p>发表于<a href="http://sdjournal.org/">Software Developer's Journal</a>杂志的一篇文章，介绍了我们在alibaba b2b平台部门时候使用Zookeeper的一些实践和故事。</p>
-<p><img src="images/sdj.png"/></p>
-<h1 id="我在线上"><span class="header-section-number">3</span> 我在线上</h1>
-<ul>
-<li>微博 - <span class="citation">[@福强王]</span>(http://www.weibo.com/fujohnwang)</li>
-<li>Twitter - <span class="citation">[@fujohnwang]</span>(https://twitter.com/fujohnwang)</li>
-<li>slideshare - 如果各位看官对偶之前的一些<code>骗骗他</code>(PPT)感兴趣的话，可以参看<a href="http://www.slideshare.net/fujohnwang/" class="uri">http://www.slideshare.net/fujohnwang/</a></li>
-</ul>
-<div class="footnotes">
-<hr />
-<ol>
-<li id="fn1"><p><a href="https://github.com/alibaba/cobarclient" class="uri">https://github.com/alibaba/cobarclient</a><a href="#fnref1">↩</a></p></li>
-</ol>
-</div>
+                                <p>簡単です，直接覆盖(Override)当前项目build文件中的fullResolvers就行了， 指向自己想要指向的repo地址， oh yeah！</p>
+<pre class="sourceCode scala"><code class="sourceCode scala">fullResolvers := Seq(
+  <span class="st">&quot;Local Maven Repository&quot;</span> at <span class="st">&quot;file://&quot;</span>+Path.<span class="fu">userHome</span>.<span class="fu">absolutePath</span>+<span class="st">&quot;/.m2/repository&quot;</span>,
+  <span class="st">&quot;SBT Plugins Release&quot;</span> at <span class="st">&quot;http://repo.scala-sbt.org/scalasbt/sbt-plugin-releases/&quot;</span>,
+  <span class="st">&quot;Typesafe Ivy Release&quot;</span> at <span class="st">&quot;http://repo.typesafe.com/typesafe/ivy-releases/&quot;</span>,
+  <span class="st">&quot;Typesafe Maven Release&quot;</span> at <span class="st">&quot;http://repo.typesafe.com/typesafe/maven-releases/&quot;</span>,
+  <span class="st">&quot;Central Maven Repository&quot;</span> at <span class="st">&quot;https://repo1.maven.org/maven2/&quot;</span>
+)</code></pre>
                 
                 <!--百度分享按钮-->
                 <div class="pull-left bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a><a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a></div>
