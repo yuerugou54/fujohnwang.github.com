@@ -12,13 +12,9 @@
 1. <http://finance.qq.com/stock/>
 2. <http://quote.hexun.com/>
 
----
+### OTC
 
-![](http://image.sinajs.cn/newchart/daily/n/sz000623.gif)
-
-![](http://image.sinajs.cn/newchart/daily/n/sh601628.gif)
-
-
+[上海股权托管交易中心](http://www.china-see.com/index.do)
 
 
 ## Gold(贵金属)
