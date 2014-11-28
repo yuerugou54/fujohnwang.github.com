@@ -250,10 +250,10 @@ with MapReduce](http://lintool.github.com/MapReduceAlgorithms/index.html) ^^^
 2. [ed2000电影](http://www.ed2000.com/FileList.asp?FileCategory=%E7%94%B5%E5%BD%B1)
 3. [阳光电影](http://www.ygdy8.com/)
 4. [电影天堂](http://www.dytt8.net)
-5. [人人影视](http://www.yyets.com)
+5. ~~[人人影视](http://www.yyets.com)~~
 6. [飘花资源网](http://www.piaohua.com/)
 7. [BT天堂](http://www.bttiantang.cc/)
-
+8. [人人影视海外版](http://yzys.tv/)
 
 
 ## BT Search
