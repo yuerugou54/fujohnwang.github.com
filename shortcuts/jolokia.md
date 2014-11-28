@@ -15,9 +15,9 @@ http://localhost:8778/jolokia/read/java.lang:type=OperatingSystem/*
 
 http://localhost:8778/jolokia/read/java.lang:type=Runtime/*
 
-http://localhost:8778/jolokia/read/java.lang:type=GarbageCollector,name=PS%20MarkSweep/*
+http://localhost:8778/jolokia/read/java.lang:type=GarbageCollector,name=PS%20MarkSweep/*   --- (Old GC)
 
-http://localhost:8778/jolokia/read/java.lang:type=GarbageCollector,name=PS%20Scavenge/*
+http://localhost:8778/jolokia/read/java.lang:type=GarbageCollector,name=PS%20Scavenge/*    --- (Young GC)
 
 
 ----------------------------------------------
