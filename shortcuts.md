@@ -6,5 +6,5 @@
 
 # MySQL
 
-[MySQL整数型类型区别](shortcuts/mysql-integer-types.md.html)
+[MySQL整数型类型区别](shortcuts/mysql-integer-types.html)
 
