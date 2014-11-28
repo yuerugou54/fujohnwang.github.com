@@ -49,7 +49,6 @@
       <div class="row">
         <div class="col-md-3 sidebar">
             <a href="/">
-                <img src="/images/profile-icon.png" class="img-circle img-responsive" width="160px" style="margin: 0 auto;" />
                 <h2 class="text-center">AFOO.ME</h2>
             </a>
             <p class="text-center lead slogan"><a href="/slogan.html">lollapalooza &amp; positioning</a></p>
@@ -57,7 +56,7 @@
             <ul class="nav nav-pills nav-stacked">
               <li><a href="/favorite.html" class="text-center"><i class="icon-star-empty"></i> Favorite</a></li>
               <li><a href="/dashboard.html" class="text-center"><i class="icon-fullscreen"></i> Dashboard</a></li>
-              <li><a href="/" class="text-center"><i class="icon-folder-close-alt"></i> Archives</a></li>
+              <li><a href="shortcuts/shortcuts.html" class="text-center"><i class="icon-folder-close-alt"></i> Shortcuts</a></li>
               <li><a href="/feeds.xml" class="text-center"><i class="icon-folder-close-alt"></i> RSS</a></li>
               <li><a href="/whoami.html" class="text-center"><i class="icon-user-md"></i> About</a></li>
             </ul>
@@ -106,7 +105,6 @@
 0, 2014 = 0
 2014, = 1
 </pre>
-
 <p>具体配置规则为：</p>
 <ol style="list-style-type: decimal">
 <li>每一行代表一条路由规则； （以#或者//开头的行为注释， 不会作为路由规则）;</li>
@@ -127,7 +125,6 @@
 2014-06-27 01:11:51, 2014-07-27 01:11:51=0
 2014-07-27 01:11:51, = 1
 </pre>
-
 <p>同样，最后一条区间结束可以不写，代表开区间。</p>
 <h1 id="数据扩展与迁移"><span class="header-section-number">3</span> 数据扩展与迁移</h1>
 <p>因为数据属性是线性增长，所以，只要在某个区间即将饱和之前， 添加新的data node就可以保证数据的横向扩展。 当然， 添加了新的data node，需要在规则文件中同样反映出来。</p>

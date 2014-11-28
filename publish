@@ -5,6 +5,5 @@
 ./compile free-programming-books.md
 ./compile slogan.md
 ./compile whoami.md
-./compile jolokia.md
 
 sbt run

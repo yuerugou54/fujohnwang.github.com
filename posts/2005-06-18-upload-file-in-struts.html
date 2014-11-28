@@ -50,7 +50,6 @@
       <div class="row">
         <div class="col-md-3 sidebar">
             <a href="/">
-                <img src="/images/profile-icon.png" class="img-circle img-responsive" width="160px" style="margin: 0 auto;" />
                 <h2 class="text-center">AFOO.ME</h2>
             </a>
             <p class="text-center lead slogan"><a href="/slogan.html">lollapalooza &amp; positioning</a></p>
@@ -58,7 +57,7 @@
             <ul class="nav nav-pills nav-stacked">
               <li><a href="/favorite.html" class="text-center"><i class="icon-star-empty"></i> Favorite</a></li>
               <li><a href="/dashboard.html" class="text-center"><i class="icon-fullscreen"></i> Dashboard</a></li>
-              <li><a href="/" class="text-center"><i class="icon-folder-close-alt"></i> Archives</a></li>
+              <li><a href="shortcuts/shortcuts.html" class="text-center"><i class="icon-folder-close-alt"></i> Shortcuts</a></li>
               <li><a href="/feeds.xml" class="text-center"><i class="icon-folder-close-alt"></i> RSS</a></li>
               <li><a href="/whoami.html" class="text-center"><i class="icon-user-md"></i> About</a></li>
             </ul>
@@ -259,7 +258,6 @@ file.<span class="fu">destroy</span>();
 >multipartClass属性指定被controller使用的MultipartRequestHandler类的全名，也是可选属性，默认为org.apache.struts.upload.CommonsMultipartRequestHandler。
 >tempDir属性指定处理文件上传时候使用的临时工作目录，同样是可选属性。
 </pre>
-
 <ol start="2" style="list-style-type: decimal">
 <li>在ActionForm的validate（）方法中进行文件大小是否超出规定大小进行检查，那么如何知道文件是否超出规定大小那？具体实现是这样的：</li>
 </ol>

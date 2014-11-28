@@ -49,7 +49,6 @@
       <div class="row">
         <div class="col-md-3 sidebar">
             <a href="/">
-                <img src="/images/profile-icon.png" class="img-circle img-responsive" width="160px" style="margin: 0 auto;" />
                 <h2 class="text-center">AFOO.ME</h2>
             </a>
             <p class="text-center lead slogan"><a href="/slogan.html">lollapalooza &amp; positioning</a></p>
@@ -57,7 +56,7 @@
             <ul class="nav nav-pills nav-stacked">
               <li><a href="/favorite.html" class="text-center"><i class="icon-star-empty"></i> Favorite</a></li>
               <li><a href="/dashboard.html" class="text-center"><i class="icon-fullscreen"></i> Dashboard</a></li>
-              <li><a href="/" class="text-center"><i class="icon-folder-close-alt"></i> Archives</a></li>
+              <li><a href="shortcuts/shortcuts.html" class="text-center"><i class="icon-folder-close-alt"></i> Shortcuts</a></li>
               <li><a href="/feeds.xml" class="text-center"><i class="icon-folder-close-alt"></i> RSS</a></li>
               <li><a href="/whoami.html" class="text-center"><i class="icon-user-md"></i> About</a></li>
             </ul>
@@ -128,8 +127,6 @@ javax.jms.JMSException: Duplicate durable subcription detected
         at weblogic.kernel.ExecuteThread.execute(ExecuteThread.java:145)
         at weblogic.kernel.ExecuteThread.run(ExecuteThread.java:117)
 </pre>
-
-
 <p>他娘的， 不能把？！怎么隐约记得之前好象测试其他地方的时候也遇到过类似的问题那？ 不过， 那时候也不知道怎么糊弄过去了， 看来不成， 确实哪里有问题啊！</p>
 <p>EMS服务器还是人家NY的， 咱也上不去阿， 能上去也好看一下是不是其他连接在那里， 到底谁在捣乱， 发信给NY，告诉没权限， nnd， google吧， 围绕EMS和这个异常折腾了好是一通， 未果。 忘了都折腾啥了， 反正我是彻底的翻了一遍code和spring配置文件， destroy方法真真切切的在那里，我都挨个字母得对名称啊， 对完了也没发现有问题。</p>
 <p>最后， 不管了， 出去溜达了一圈， 回头一想， tnnd，不会之前的代码没有触发对象销毁的行为吧？不然，这多出来的连接到底哪里来的？好像除了我也没人在做同样的事情啊！ 查入口类StartupManager， 得， 还真他娘的是这么回事， shutDownService（）方法只有抛出Exception的情况下才会被调用到， 正常情况下， 反而没有被调用， 靠， 这代码都跑了2年了， 这帮人居然没发现， 还好意思说， 代码都跑了两年了，没有遇到这样的问题啊， 这Batch从市场关闭到市场开启的近乎半天时间里， 你就算不关Connection， 那服务器那边也会按照超时给你“咔嚓”掉吧？这样的跑了两年当然没问题啦！</p>

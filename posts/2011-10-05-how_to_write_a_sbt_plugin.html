@@ -50,7 +50,6 @@
       <div class="row">
         <div class="col-md-3 sidebar">
             <a href="/">
-                <img src="/images/profile-icon.png" class="img-circle img-responsive" width="160px" style="margin: 0 auto;" />
                 <h2 class="text-center">AFOO.ME</h2>
             </a>
             <p class="text-center lead slogan"><a href="/slogan.html">lollapalooza &amp; positioning</a></p>
@@ -58,7 +57,7 @@
             <ul class="nav nav-pills nav-stacked">
               <li><a href="/favorite.html" class="text-center"><i class="icon-star-empty"></i> Favorite</a></li>
               <li><a href="/dashboard.html" class="text-center"><i class="icon-fullscreen"></i> Dashboard</a></li>
-              <li><a href="/" class="text-center"><i class="icon-folder-close-alt"></i> Archives</a></li>
+              <li><a href="shortcuts/shortcuts.html" class="text-center"><i class="icon-folder-close-alt"></i> Shortcuts</a></li>
               <li><a href="/feeds.xml" class="text-center"><i class="icon-folder-close-alt"></i> RSS</a></li>
               <li><a href="/whoami.html" class="text-center"><i class="icon-user-md"></i> About</a></li>
             </ul>
@@ -115,9 +114,6 @@ resolvers += "Typesafe Repo" at "http://repo.typesafe.com/typesafe/releases/"
 
 libraryDependencies ++= Seq("org.aspectj" % "aspectjtools" % "1.6.11.RELEASE", "org.aspectj" % "aspectjrt" % "1.6.11.RELEASE","org.aspectj" % "aspectjweaver" % "1.6.11.RELEASE")
 </pre>
- 
-
-
 <h1 id="the-definition-file-of-the-plugin-samplesrcmainscala.scala"><span class="header-section-number">2</span> the definition file of the plugin sample(src/main/scala/*.scala)</h1>
 <pre class="sourceCode scala"><code class="sourceCode scala">
 <span class="kw">import</span> sbt.<span class="fu">_</span>
@@ -157,7 +153,6 @@ libraryDependencies ++= Seq("org.aspectj" % "aspectjtools" % "1.6.11.RELEASE", "
 
  addSbtPlugin("name.fujohnwang" % "aspectj_sbt_plugin" % "0.0.1")   // declare to use your plugin
 </pre>
-
 <p>2- build.sbt under the root path of your project(light configuration) or project/Build.scala(full configuration)</p>
 <p>usually, you can customize the settings of the plugin or add necessary dependencies in your build file(s), this is variable as per your usage scenarios. If default values are ok for you, nothing about plugin is needed to add to your build file.</p>
 <h1 id="what-u-can-learn-from-the-experience-of-writing-a-plugin"><span class="header-section-number">4</span> What U can learn from the experience of writing a plugin?</h1>
@@ -166,9 +161,9 @@ libraryDependencies ++= Seq("org.aspectj" % "aspectjtools" % "1.6.11.RELEASE", "
 <p>3- each Keys(Setting or Task) can be initialized or implemented by &lt;&lt;= with other Key(s)</p>
 <h1 id="references"><span class="header-section-number">5</span> References:</h1>
 <ol style="list-style-type: decimal">
-<li><a href="https://github.com/harrah/xsbt/wiki/Plugins-Best-Practices">https://github.com/harrah/xsbt/wiki/Plugins-Best-Practices</a></li>
-<li><a href="https://github.com/harrah/xsbt/wiki/sbt-0.10-plugins-list">https://github.com/harrah/xsbt/wiki/sbt-0.10-plugins-list</a></li>
-<li><a href="http://eed3si9n.com/sbt-010-guide">http://eed3si9n.com/sbt-010-guide</a></li>
+<li><a href="https://github.com/harrah/xsbt/wiki/Plugins-Best-Practices" class="uri">https://github.com/harrah/xsbt/wiki/Plugins-Best-Practices</a></li>
+<li><a href="https://github.com/harrah/xsbt/wiki/sbt-0.10-plugins-list" class="uri">https://github.com/harrah/xsbt/wiki/sbt-0.10-plugins-list</a></li>
+<li><a href="http://eed3si9n.com/sbt-010-guide" class="uri">http://eed3si9n.com/sbt-010-guide</a></li>
 <li>The AspectJ compiler API</li>
 <li>typesafehub-sbt-aspectj plugin</li>
 </ol>

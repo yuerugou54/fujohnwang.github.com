@@ -49,7 +49,6 @@
       <div class="row">
         <div class="col-md-3 sidebar">
             <a href="/">
-                <img src="/images/profile-icon.png" class="img-circle img-responsive" width="160px" style="margin: 0 auto;" />
                 <h2 class="text-center">AFOO.ME</h2>
             </a>
             <p class="text-center lead slogan"><a href="/slogan.html">lollapalooza &amp; positioning</a></p>
@@ -57,7 +56,7 @@
             <ul class="nav nav-pills nav-stacked">
               <li><a href="/favorite.html" class="text-center"><i class="icon-star-empty"></i> Favorite</a></li>
               <li><a href="/dashboard.html" class="text-center"><i class="icon-fullscreen"></i> Dashboard</a></li>
-              <li><a href="/" class="text-center"><i class="icon-folder-close-alt"></i> Archives</a></li>
+              <li><a href="shortcuts/shortcuts.html" class="text-center"><i class="icon-folder-close-alt"></i> Shortcuts</a></li>
               <li><a href="/feeds.xml" class="text-center"><i class="icon-folder-close-alt"></i> RSS</a></li>
               <li><a href="/whoami.html" class="text-center"><i class="icon-user-md"></i> About</a></li>
             </ul>
@@ -107,7 +106,6 @@ if(paymethod == 2)
 }
 // ...etc.
 </pre>
-
 <p>我想这个是最一般的实现了，但是，最一般的实现通常也是最有改进余地的实现，所以，让我们来看一下如何对这个进行改进吧！ 我们的目的是去除代码中的条件判断，而实现这个目的，我这里给出2个实现途径：</p>
 <ol style="list-style-type: decimal">
 <li>使用反射（java reflection）支持</li>
@@ -119,7 +117,6 @@ if(paymethod == 2)
 2=templateLocation4PayMethod2,renderReport4PayMethod2
 ...
 </pre>
-
 <p>其中，等号前面是以payMethod的值作为key，出于其他情况考虑，你也可以使用其他的作为key，只要保证唯一性就可以；等号后面第一项为对应的模板的位置，第二项为对应的报表render方法，这个方法通常在实现类里实现。</p>
 <p>（注：以上配置也可以通过Jakarta commons Configuration来实现或者自己写一个实现也可以）</p>
 <p>东风有了之后，我们开始行船啦。</p>

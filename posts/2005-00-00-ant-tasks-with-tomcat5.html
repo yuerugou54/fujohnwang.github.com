@@ -49,7 +49,6 @@
       <div class="row">
         <div class="col-md-3 sidebar">
             <a href="/">
-                <img src="/images/profile-icon.png" class="img-circle img-responsive" width="160px" style="margin: 0 auto;" />
                 <h2 class="text-center">AFOO.ME</h2>
             </a>
             <p class="text-center lead slogan"><a href="/slogan.html">lollapalooza &amp; positioning</a></p>
@@ -57,7 +56,7 @@
             <ul class="nav nav-pills nav-stacked">
               <li><a href="/favorite.html" class="text-center"><i class="icon-star-empty"></i> Favorite</a></li>
               <li><a href="/dashboard.html" class="text-center"><i class="icon-fullscreen"></i> Dashboard</a></li>
-              <li><a href="/" class="text-center"><i class="icon-folder-close-alt"></i> Archives</a></li>
+              <li><a href="shortcuts/shortcuts.html" class="text-center"><i class="icon-folder-close-alt"></i> Shortcuts</a></li>
               <li><a href="/feeds.xml" class="text-center"><i class="icon-folder-close-alt"></i> RSS</a></li>
               <li><a href="/whoami.html" class="text-center"><i class="icon-user-md"></i> About</a></li>
             </ul>
@@ -98,7 +97,6 @@ deploy=org.apache.catalina.ant.DeployTask
  stop=org.apache.catalina.ant.StopTask
  list=org.apache.catalina.ant.ListTask
 </pre>
-
 <blockquote>
 <p>注：【taskName=Task的实现class】是ant的taskdef规定的格式，当然，1和2完全可以按照每个task都对应自己的taskdef。</p>
 </blockquote>
@@ -162,7 +160,6 @@ tomcat.manager.url=http://localhost:8080/manager
 tomcat.manager.username=admin(对应你自己的username)
 tomcat.manager.password=admin(对应你自己的password)
 </pre>
-
 <p>之后，在build.xml的开始部分，定义<property file="build.properties"/>将这些properties引入。</p>
 <p>OK，以上就是使用tomcat5提供的ant任务对其进行管理的Overview，仅供Reference。</p>
                 

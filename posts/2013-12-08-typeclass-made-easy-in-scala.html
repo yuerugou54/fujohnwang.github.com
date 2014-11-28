@@ -49,7 +49,6 @@
       <div class="row">
         <div class="col-md-3 sidebar">
             <a href="/">
-                <img src="/images/profile-icon.png" class="img-circle img-responsive" width="160px" style="margin: 0 auto;" />
                 <h2 class="text-center">AFOO.ME</h2>
             </a>
             <p class="text-center lead slogan"><a href="/slogan.html">lollapalooza &amp; positioning</a></p>
@@ -57,7 +56,7 @@
             <ul class="nav nav-pills nav-stacked">
               <li><a href="/favorite.html" class="text-center"><i class="icon-star-empty"></i> Favorite</a></li>
               <li><a href="/dashboard.html" class="text-center"><i class="icon-fullscreen"></i> Dashboard</a></li>
-              <li><a href="/" class="text-center"><i class="icon-folder-close-alt"></i> Archives</a></li>
+              <li><a href="shortcuts/shortcuts.html" class="text-center"><i class="icon-folder-close-alt"></i> Shortcuts</a></li>
               <li><a href="/feeds.xml" class="text-center"><i class="icon-folder-close-alt"></i> RSS</a></li>
               <li><a href="/whoami.html" class="text-center"><i class="icon-user-md"></i> About</a></li>
             </ul>
@@ -93,7 +92,6 @@ class String {
     def compare(another:String) : Integer = {...}
 }
 </pre>
-
 <p>但既然这种<strong>可比较</strong>行为是共通的，我们就可以抽取到某种类型中定义，并让想有这些行为的类型遵守这种行为契约，那么，在OO中就变成了：</p>
 <pre>
 interface Comparable<T>{
@@ -103,7 +101,6 @@ interface Comparable<T>{
 class Integer implements Comparable<Integer> {...}
 class String implements Comparable<String>{...}
 </pre>
-
 <p>这里， Comparable就是某种typeclass，用于定义可比较的行为契约。 而Integer和String则是这个typeclass的Type Instance（注意，跟对象实例-object instance相区分）， 如果后面还有其它类型也想要符合这种行为契约，那么只需要将自己实现为这个typeclass的一个Type Instance即可。</p>
 <hr />
 <p>在Java中， Interface是体现typeclass的理想装备，在Scala中，我们则需要使用无状态，无方法实现的Trait来定义typeclass（typeclass只定义行为契约，remember？）。</p>
