@@ -89,6 +89,7 @@
 * [Practical type mining in Scala](http://www.slideshare.net/prasinous/scaladays-2013-final) - Scala2.10 Reflection
 * [Introduction to Functional Patterns](http://jsuereth.com/intro-to-fp/print.html)
 * [Scala’s Types of Types](http://ktoso.github.io/scala-types-of-types/)
+* [Scala Compiler Phases Wiki](https://wiki.scala-lang.org/display/SIW/Overview+of+Compiler+Phases)
 
 ## FP
 * [Tutorial Papers in Functional Programming](http://www.cse.chalmers.se/~rjmh/tutorials.html)
