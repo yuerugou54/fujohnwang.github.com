@@ -3,13 +3,32 @@
 
   <head>
 	  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-	  <title>快捷参考</title>
+	  <title>我的Git参考手册</title>
 	  <meta name="author" content="FuqiangWang">
     <meta charset='utf-8'>
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link rel="shortcut icon" href="favicon.ico">
-                    
+            <style type="text/css">
+    table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+      margin: 0; padding: 0; vertical-align: baseline; border: none; }
+    table.sourceCode { width: 100%; line-height: 100%; }
+    td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+    td.sourceCode { padding-left: 5px; }
+    code > span.kw { color: #007020; font-weight: bold; }
+    code > span.dt { color: #902000; }
+    code > span.dv { color: #40a070; }
+    code > span.bn { color: #40a070; }
+    code > span.fl { color: #40a070; }
+    code > span.ch { color: #4070a0; }
+    code > span.st { color: #4070a0; }
+    code > span.co { color: #60a0b0; font-style: italic; }
+    code > span.ot { color: #007020; }
+    code > span.al { color: #ff0000; font-weight: bold; }
+    code > span.fu { color: #06287e; }
+    code > span.er { color: #ff0000; font-weight: bold; }
+    </style>
+                
     <link href='/font/Syncopate/stylesheet.css' rel='stylesheet' type='text/css'>
     <link href='/font/News_Cycle/stylesheet.css' rel='stylesheet' type='text/css'>
 
@@ -50,8 +69,9 @@
                 <div class="row">
                                 <div id="header">
                 <p class="lead">
-                <h1 class="title">快捷参考&nbsp;&nbsp;
+                <h1 class="title">我的Git参考手册&nbsp;&nbsp;
                 <small>
+                                    FuqiangWang
                                 </small>
                 </h1>
                 </p>
@@ -62,17 +82,15 @@
 
                                 <div id="TOC">
                 <ul>
-                <li><a href="#jolokia"><span class="toc-section-number">1</span> Jolokia</a></li>
-                <li><a href="#mysql"><span class="toc-section-number">2</span> MySQL</a></li>
-                <li><a href="#git"><span class="toc-section-number">3</span> Git</a></li>
+                <li><a href="#舍弃所有本地变更-回滚到最后提交状态"><span class="toc-section-number">1</span> 舍弃所有本地变更， 回滚到最后提交状态</a></li>
                 </ul>
                 </div>
-                                <h1 id="jolokia"><span class="header-section-number">1</span> Jolokia</h1>
-<p><a href="shortcuts/jolokia.html">Jolokia Access Patterns</a></p>
-<h1 id="mysql"><span class="header-section-number">2</span> MySQL</h1>
-<p><a href="shortcuts/mysql-integer-types.html">MySQL整数型类型区别</a></p>
-<h1 id="git"><span class="header-section-number">3</span> Git</h1>
-<p><a href="shortcuts/git-manual.html">我的git参考手册</a></p>
+                                <h1 id="舍弃所有本地变更-回滚到最后提交状态"><span class="header-section-number">1</span> 舍弃所有本地变更， 回滚到最后提交状态</h1>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">git</span> commit -a -m <span class="st">&quot;Saving my work, just in case&quot;</span>
+<span class="kw">git</span> branch my-saved-work
+
+<span class="kw">git</span> fetch origin
+<span class="kw">git</span> reset --hard origin/master</code></pre>
                 
                 <!--百度分享按钮-->
                 <div class="pull-left bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a><a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a></div>
