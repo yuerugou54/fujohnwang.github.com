@@ -9,26 +9,7 @@
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link rel="shortcut icon" href="favicon.ico">
-            <style type="text/css">
-    table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
-      margin: 0; padding: 0; vertical-align: baseline; border: none; }
-    table.sourceCode { width: 100%; line-height: 100%; }
-    td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
-    td.sourceCode { padding-left: 5px; }
-    code > span.kw { color: #007020; font-weight: bold; }
-    code > span.dt { color: #902000; }
-    code > span.dv { color: #40a070; }
-    code > span.bn { color: #40a070; }
-    code > span.fl { color: #40a070; }
-    code > span.ch { color: #4070a0; }
-    code > span.st { color: #4070a0; }
-    code > span.co { color: #60a0b0; font-style: italic; }
-    code > span.ot { color: #007020; }
-    code > span.al { color: #ff0000; font-weight: bold; }
-    code > span.fu { color: #06287e; }
-    code > span.er { color: #ff0000; font-weight: bold; }
-    </style>
-                
+                    
     <link href='/font/Syncopate/stylesheet.css' rel='stylesheet' type='text/css'>
     <link href='/font/News_Cycle/stylesheet.css' rel='stylesheet' type='text/css'>
 
@@ -80,14 +61,49 @@
 
                 <hr>
 
-                                <p>簡単です，直接覆盖(Override)当前项目build文件中的fullResolvers就行了， 指向自己想要指向的repo地址， oh yeah！</p>
-<pre class="sourceCode scala"><code class="sourceCode scala">fullResolvers := Seq(
-  <span class="st">&quot;Local Maven Repository&quot;</span> at <span class="st">&quot;file://&quot;</span>+Path.<span class="fu">userHome</span>.<span class="fu">absolutePath</span>+<span class="st">&quot;/.m2/repository&quot;</span>,
-  <span class="st">&quot;SBT Plugins Release&quot;</span> at <span class="st">&quot;http://repo.scala-sbt.org/scalasbt/sbt-plugin-releases/&quot;</span>,
-  <span class="st">&quot;Typesafe Ivy Release&quot;</span> at <span class="st">&quot;http://repo.typesafe.com/typesafe/ivy-releases/&quot;</span>,
-  <span class="st">&quot;Typesafe Maven Release&quot;</span> at <span class="st">&quot;http://repo.typesafe.com/typesafe/maven-releases/&quot;</span>,
-  <span class="st">&quot;Central Maven Repository&quot;</span> at <span class="st">&quot;https://repo1.maven.org/maven2/&quot;</span>
-)</code></pre>
+                                <div id="TOC">
+                <ul>
+                <li><a href="#sbt启动参数配置"><span class="toc-section-number">1</span> sbt启动参数配置</a></li>
+                <li><a href="#查看项目resolver状态"><span class="toc-section-number">2</span> 查看项目resolver状态</a></li>
+                <li><a href="#参考资料"><span class="toc-section-number">3</span> 参考资料</a></li>
+                </ul>
+                </div>
+                                <h1 id="sbt启动参数配置"><span class="header-section-number">1</span> sbt启动参数配置</h1>
+<p>通过homebrew安装的sbt， 建议通过配置文件<strong>/usr/local/etc/sbtopts</strong>进行配置， 添加：</p>
+<pre>
+-Dsbt.override.build.repos=true
+</pre>
+<p>这将让sbt launcher使用<strong>~/.sbt/repositories</strong>中配置的repositories来替换sbt-launcher.jar中默认打包的配置， 所以，相应的我们要在~/.sbt/目录下新建一个repositories文件，然后添加自己想用的repositories配置：</p>
+<pre>
+[repositories]
+  local
+  maven-local: file://~/.m2/repository
+  typesafe-ivy-releases: https://repo.typesafe.com/typesafe/ivy-releases/, [organization]/[module]/[revision]/[type]s/[artifact](-[classifier]).[ext], bootOnly
+  community-plugins-ivy-releases: https://dl.bintray.com/sbt/sbt-plugin-releases/, [organization]/[module]/[revision]/[type]s/[artifact](-[classifier]).[ext]
+  maven-repo-caimi: http://repo.caimi-inc.com/nexus/content/groups/public/
+</pre>
+<p>这个相当于maven的~/.m2/settings.xml, ;-)</p>
+<blockquote>
+<p>原<a href="http://repo.scala-sbt.org/scalasbt/sbt-plugin-releases/&gt;现在直接跳转到&lt;https://dl.bintray.com/sbt/sbt-plugin-releases/" class="uri">http://repo.scala-sbt.org/scalasbt/sbt-plugin-releases/&gt;现在直接跳转到&lt;https://dl.bintray.com/sbt/sbt-plugin-releases/</a></p>
+</blockquote>
+<h1 id="查看项目resolver状态"><span class="header-section-number">2</span> 查看项目resolver状态</h1>
+<pre>
+> show full-resolvers
+[info] List(Local Maven Repository: file:///Users/yunshi/.m2/repository, WaCai Internal Repository: http://repo.caimi-inc.com/nexus/content/groups/public/, Central Maven Repository: https://repo1.maven.org/maven2/, Typesafe Maven Release: http://repo.typesafe.com/typesafe/maven-releases/, SBT Plugins Release: http://repo.scala-sbt.org/scalasbt/sbt-plugin-releases/, Typesafe Ivy Release: http://repo.typesafe.com/typesafe/ivy-releases/)
+[success] Total time: 0 s, completed Dec 3, 2014 5:30:30 PM
+
+> show boot-resolvers
+[info] Some(ArrayBuffer(FileRepository(local,FileConfiguration(true,None),Patterns(ivyPatterns=List(${ivy.home}/local/[organisation]/[module]/(scala_[scalaVersion]/)(sbt_[sbtVersion]/)[revision]/[type]s/[artifact](-[classifier]).[ext]), artifactPatterns=List(${ivy.home}/local/[organisation]/[module]/(scala_[scalaVersion]/)(sbt_[sbtVersion]/)[revision]/[type]s/[artifact](-[classifier]).[ext]), isMavenCompatible=false, descriptorOptional=false, skipConsistencyCheck=false)), URLRepository(typesafe-ivy-releases,Patterns(ivyPatterns=List(https://repo.typesafe.com/typesafe/ivy-releases/[organization]/[module]/[revision]/[type]s/[artifact](-[classifier]).[ext]), artifactPatterns=List(https://repo.typesafe.com/typesafe/ivy-releases/[organization]/[module]/[revision]/[type]s/[artifact](-[classifier]).[ext]), isMavenCompatible=false, descriptorOptional=false, skipConsistencyCheck=false)), public: https://repo1.maven.org/maven2/))
+[success] Total time: 0 s, completed Dec 3, 2014 5:32:48 PM
+
+> show override-build-resolvers
+[info] false
+</pre>
+<h1 id="参考资料"><span class="header-section-number">3</span> 参考资料</h1>
+<ol style="list-style-type: decimal">
+<li><a href="http://www.scala-sbt.org/release/docs/Proxy-Repositories.html">Proxy Repositories</a></li>
+<li><a href="http://stackoverflow.com/questions/10773319/sbt-doesnt-find-file-in-local-maven-repository-although-its-there" class="uri">http://stackoverflow.com/questions/10773319/sbt-doesnt-find-file-in-local-maven-repository-although-its-there</a></li>
+</ol>
                 
                 <!--百度分享按钮-->
                 <div class="pull-left bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a><a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a></div>
