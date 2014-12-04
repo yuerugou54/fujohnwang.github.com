@@ -7,12 +7,55 @@
 resolvers += "Local Maven Repository" at "file://"+Path.userHome.absolutePath+"/.m2/repository"
 
 resolvers += "Internal Maven Repository" at "http://[internal-host]/nexus/content/groups/public/"
+
+externalResolvers := Resolver.withDefaultResolvers(resolvers.value, mavenCentral = false)
 </pre>
 
+resolvers保存我们自己添加的Resolver， 上面属于我们自己添加的有两个， 即本地maven库和公司内部库；
+
+externalResolvers保存两部分来源的Resolver， 一个就是resolvers中的，另一个就是默认的Resolvers(ivy local和mavenCentral)， 我们希望依赖管理走本地maven库和公司内部库，所以， 通过覆盖原来的externalResolver的值来达到目的， 即上面配置中`mavenCentral = false`对应行。
+
+没有加任何相关配置之前：
+
+<pre>
+> show external-resolvers
+[info] ArrayBuffer(FileRepository(local,FileConfiguration(true,None),Patterns(ivyPatterns=List(${ivy.home}/local/[organisation]/[module]/(scala_[scalaVersion]/)(sbt_[sbtVersion]/)[revision]/[type]s/[artifact](-[classifier]).[ext]), artifactPatterns=List(${ivy.home}/local/[organisation]/[module]/(scala_[scalaVersion]/)(sbt_[sbtVersion]/)[revision]/[type]s/[artifact](-[classifier]).[ext]), isMavenCompatible=false, descriptorOptional=false, skipConsistencyCheck=false)), public: https://repo1.maven.org/maven2/)
+
+> show resolvers
+[info] List()
+</pre>
+
+加了以上配置之后：
+
+<pre>
+> show resolvers
+[info] List(Local Maven Repository: file:///Users/yunshi/.m2/repository, Internal Maven Repository: http://repo.caimi-inc.com/nexus/content/groups/public/)
+> show external-resolvers
+[info] List(FileRepository(local,FileConfiguration(true,None),Patterns(ivyPatterns=List(${ivy.home}/local/[organisation]/[module]/(scala_[scalaVersion]/)(sbt_[sbtVersion]/)[revision]/[type]s/[artifact](-[classifier]).[ext]), artifactPatterns=List(${ivy.home}/local/[organisation]/[module]/(scala_[scalaVersion]/)(sbt_[sbtVersion]/)[revision]/[type]s/[artifact](-[classifier]).[ext]), isMavenCompatible=false, descriptorOptional=false, skipConsistencyCheck=false)), Local Maven Repository: file:///Users/yunshi/.m2/repository, Internal Maven Repository: http://.../nexus/content/groups/public/)
+</pre>
+
+没有覆盖externalResolver的情况：
+
+<pre>
+> show external-resolvers
+[info] ArrayBuffer(FileRepository(local,FileConfiguration(true,None),Patterns(ivyPatterns=List(${ivy.home}/local/[organisation]/[module]/(scala_[scalaVersion]/)(sbt_[sbtVersion]/)[revision]/[type]s/[artifact](-[classifier]).[ext]), artifactPatterns=List(${ivy.home}/local/[organisation]/[module]/(scala_[scalaVersion]/)(sbt_[sbtVersion]/)[revision]/[type]s/[artifact](-[classifier]).[ext]), isMavenCompatible=false, descriptorOptional=false, skipConsistencyCheck=false)), public: https://repo1.maven.org/maven2/, Local Maven Repository: file:///Users/yunshi/.m2/repository, Internal Maven Repository: http://.../nexus/content/groups/public/)
+</pre>
+
+注意多了**public: https://repo1.maven.org/maven2/**
+
+另外， externalResolvers + inter-project resolver形成fullResovers:
+<pre>
+> show full-resolvers
+[info] List(Raw(ProjectResolver(inter-project, mapped: )), FileRepository(local,FileConfiguration(true,None),Patterns(ivyPatterns=List(${ivy.home}/local/[organisation]/[module]/(scala_[scalaVersion]/)(sbt_[sbtVersion]/)[revision]/[type]s/[artifact](-[classifier]).[ext]), artifactPatterns=List(${ivy.home}/local/[organisation]/[module]/(scala_[scalaVersion]/)(sbt_[sbtVersion]/)[revision]/[type]s/[artifact](-[classifier]).[ext]), isMavenCompatible=false, descriptorOptional=false, skipConsistencyCheck=false)), Local Maven Repository: file:///Users/yunshi/.m2/repository, Internal Maven Repository: http://repo.caimi-inc.com/nexus/content/groups/public/)
+</pre>
+
+boot-resolvers如果不做下面的操作，原则上保持不变，默认是local(ivy) + typesafe-ivy-releases + maven central
+
+到此为止。
 
 ----------------------------------------------
 
-**以下方案的内容仅作参考， patterns部分无法满足全部需求， 慎用！！！**
+**以下方案的内容仅作参考， patterns部分无法满足全部需求， 建议不用！！！**
 
 ----------------------------------------------
 
