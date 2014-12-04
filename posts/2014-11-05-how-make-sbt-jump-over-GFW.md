@@ -1,6 +1,22 @@
 % SBT免翻墙手册
 % FuqiangWang
 
+> 罢了， 从根儿上调整实在坑儿太难趟， 还是build.sbt里加一下resolvers吧！
+
+<pre>
+resolvers += "Local Maven Repository" at "file://"+Path.userHome.absolutePath+"/.m2/repository"
+
+resolvers += "Internal Maven Repository" at "http://[internal-host]/nexus/content/groups/public/"
+</pre>
+
+
+----------------------------------------------
+
+**以下方案的内容仅作参考， patterns部分无法满足全部需求， 慎用！！！**
+
+----------------------------------------------
+
+
 
 # 初次查看项目resolver状态
 

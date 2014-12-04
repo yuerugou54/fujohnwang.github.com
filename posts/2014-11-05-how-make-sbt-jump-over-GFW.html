@@ -69,7 +69,18 @@
                 <li><a href="#参考资料"><span class="toc-section-number">4</span> 参考资料</a></li>
                 </ul>
                 </div>
-                                <h1 id="初次查看项目resolver状态"><span class="header-section-number">1</span> 初次查看项目resolver状态</h1>
+                                <blockquote>
+<p>罢了， 从根儿上调整实在坑儿太难趟， 还是build.sbt里加一下resolvers吧！</p>
+</blockquote>
+<pre>
+resolvers += "Local Maven Repository" at "file://"+Path.userHome.absolutePath+"/.m2/repository"
+
+resolvers += "Internal Maven Repository" at "http://[internal-host]/nexus/content/groups/public/"
+</pre>
+<hr />
+<p><strong>以下方案的内容仅作参考， patterns部分无法满足全部需求， 慎用！！！</strong></p>
+<hr />
+<h1 id="初次查看项目resolver状态"><span class="header-section-number">1</span> 初次查看项目resolver状态</h1>
 <pre>
 > show override-build-resolvers
 [info] false
