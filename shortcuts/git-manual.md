@@ -13,3 +13,19 @@ git fetch origin
 git reset --hard origin/master
 ~~~~~~~
 
+
+
+# 打包指定版本的文件
+
+~~~~~~~ {.bash}
+git archive -o docs.zip v2.2.0 'Documentation/*.html'
+~~~~~~~
+
+git版本2.2.0
+
+
+
+
+
+
+
