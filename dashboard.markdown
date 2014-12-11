@@ -11,6 +11,7 @@
 
 1. <http://finance.qq.com/stock/>
 2. <http://quote.hexun.com/>
+3. [东方财富网行情中心](http://quote.eastmoney.com/center/)
 
 ### OTC
 
