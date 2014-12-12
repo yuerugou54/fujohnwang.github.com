@@ -5,6 +5,13 @@
     <link>http://afoo.me</link>
     <description>一个架构士的思考与实践点滴记录</description>
     <item>
+      <title>Nexus Maven Repository Manager管理手册</title>
+      <link>http://afoo.me/posts/2014-12-12-nexus-admin-lite-manual.html</link>
+      <pubDate>Thu, 11 Dec 2014 16:00:00 GMT</pubDate>
+      <guid>http://afoo.me/posts/2014-12-12-nexus-admin-lite-manual.html</guid>
+      <dc:date>2014-12-11T16:00:00Z</dc:date>
+    </item>
+    <item>
       <title>什么是保理业务？</title>
       <link>http://afoo.me/posts/2014-11-17-whats-factoring-business.html</link>
       <pubDate>Sun, 16 Nov 2014 16:00:00 GMT</pubDate>
@@ -45,13 +52,6 @@
       <pubDate>Thu, 23 Oct 2014 16:00:00 GMT</pubDate>
       <guid>http://afoo.me/posts/2014-10-24-how-to-shutdown-java-service-gracefully.html</guid>
       <dc:date>2014-10-23T16:00:00Z</dc:date>
-    </item>
-    <item>
-      <title>让Lombok跟Maven和IntelliJ完美的工作在一起</title>
-      <link>http://afoo.me/posts/2014-10-22-lombok-maven-and-intellij.html</link>
-      <pubDate>Tue, 21 Oct 2014 16:00:00 GMT</pubDate>
-      <guid>http://afoo.me/posts/2014-10-22-lombok-maven-and-intellij.html</guid>
-      <dc:date>2014-10-21T16:00:00Z</dc:date>
     </item>
   </channel>
 </rss>
