@@ -5,6 +5,13 @@
     <link>http://afoo.me</link>
     <description>一个架构士的思考与实践点滴记录</description>
     <item>
+      <title>了解LaunchDaemons</title>
+      <link>http://afoo.me/posts/2014-12-12-understanding-launch-daemons-of-macosx.html</link>
+      <pubDate>Thu, 11 Dec 2014 16:00:00 GMT</pubDate>
+      <guid>http://afoo.me/posts/2014-12-12-understanding-launch-daemons-of-macosx.html</guid>
+      <dc:date>2014-12-11T16:00:00Z</dc:date>
+    </item>
+    <item>
       <title>Nexus Maven Repository Manager管理手册</title>
       <link>http://afoo.me/posts/2014-12-12-nexus-admin-lite-manual.html</link>
       <pubDate>Thu, 11 Dec 2014 16:00:00 GMT</pubDate>
@@ -45,13 +52,6 @@
       <pubDate>Sun, 26 Oct 2014 16:00:00 GMT</pubDate>
       <guid>http://afoo.me/posts/2014-10-27-digest-of-a-PD-s-talk.html</guid>
       <dc:date>2014-10-26T16:00:00Z</dc:date>
-    </item>
-    <item>
-      <title>How To Shutdown Java Service Gracefully [Tutorial]</title>
-      <link>http://afoo.me/posts/2014-10-24-how-to-shutdown-java-service-gracefully.html</link>
-      <pubDate>Thu, 23 Oct 2014 16:00:00 GMT</pubDate>
-      <guid>http://afoo.me/posts/2014-10-24-how-to-shutdown-java-service-gracefully.html</guid>
-      <dc:date>2014-10-23T16:00:00Z</dc:date>
     </item>
   </channel>
 </rss>
