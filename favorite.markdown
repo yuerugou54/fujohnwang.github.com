@@ -172,7 +172,7 @@ with MapReduce](http://lintool.github.com/MapReduceAlgorithms/index.html) ^^^
 * [Real World Haskell 中文版](https://rwh.readthedocs.org/en/latest/index.html)
 * [Introduction to Haskell](http://shuklan.com/haskell/)
 	- University of Virginia  CS 1501 Lectures  Spring 2013
-
+* [CS240h lecture notes](http://www.scs.stanford.edu/11au-cs240h/notes/)
 
 ## SEO
 1. [Google Keyword Tool](https://adwords.google.com/o/Targeting/Explorer?__c=1000000000&__u=1000000000&ideaRequestType=KEYWORD_IDEAS)
