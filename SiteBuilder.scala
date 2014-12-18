@@ -16,7 +16,7 @@ object SiteBuilder {
 
   val encoding = "UTF-8"
 
-  val pageSize: Int = 7
+  val pageSize: Int = 11
   val paginationDirectory = new File("pages")
 
 

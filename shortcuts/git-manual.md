@@ -24,7 +24,9 @@ git archive -o docs.zip v2.2.0 'Documentation/*.html'
 git版本2.2.0
 
 
+# Remote Branch
 
+<http://git-scm.com/book/en/v2/Git-Branching-Remote-Branches>
 
 
 

@@ -2,7 +2,9 @@ name := "site-builder"
 
 version := "1.0"
 
-scalaVersion := "2.11.2"
+scalaVersion := "2.11.4"
+
+scalacOptions ++= Seq("-feature")
 
 libraryDependencies += "org.slf4j" % "slf4j-api" % "1.7.7"
 

@@ -53,6 +53,34 @@
       <guid>http://afoo.me/posts/2014-10-27-digest-of-a-PD-s-talk.html</guid>
       <dc:date>2014-10-26T16:00:00Z</dc:date>
     </item>
+    <item>
+      <title>How To Shutdown Java Service Gracefully [Tutorial]</title>
+      <link>http://afoo.me/posts/2014-10-24-how-to-shutdown-java-service-gracefully.html</link>
+      <pubDate>Thu, 23 Oct 2014 16:00:00 GMT</pubDate>
+      <guid>http://afoo.me/posts/2014-10-24-how-to-shutdown-java-service-gracefully.html</guid>
+      <dc:date>2014-10-23T16:00:00Z</dc:date>
+    </item>
+    <item>
+      <title>让Lombok跟Maven和IntelliJ完美的工作在一起</title>
+      <link>http://afoo.me/posts/2014-10-22-lombok-maven-and-intellij.html</link>
+      <pubDate>Tue, 21 Oct 2014 16:00:00 GMT</pubDate>
+      <guid>http://afoo.me/posts/2014-10-22-lombok-maven-and-intellij.html</guid>
+      <dc:date>2014-10-21T16:00:00Z</dc:date>
+    </item>
+    <item>
+      <title>了解tmux</title>
+      <link>http://afoo.me/posts/2014-09-01-get-to-know-tmux.html</link>
+      <pubDate>Sun, 31 Aug 2014 16:00:00 GMT</pubDate>
+      <guid>http://afoo.me/posts/2014-09-01-get-to-know-tmux.html</guid>
+      <dc:date>2014-08-31T16:00:00Z</dc:date>
+    </item>
+    <item>
+      <title>借记卡-准贷记卡与贷记卡的区别[转]</title>
+      <link>http://afoo.me/posts/2014-08-06-cards-intro.html</link>
+      <pubDate>Tue, 05 Aug 2014 16:00:00 GMT</pubDate>
+      <guid>http://afoo.me/posts/2014-08-06-cards-intro.html</guid>
+      <dc:date>2014-08-05T16:00:00Z</dc:date>
+    </item>
   </channel>
 </rss>
 
