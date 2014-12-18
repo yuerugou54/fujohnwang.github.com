@@ -83,6 +83,8 @@
                                 <div id="TOC">
                 <ul>
                 <li><a href="#舍弃所有本地变更-回滚到最后提交状态"><span class="toc-section-number">1</span> 舍弃所有本地变更， 回滚到最后提交状态</a></li>
+                <li><a href="#打包指定版本的文件"><span class="toc-section-number">2</span> 打包指定版本的文件</a></li>
+                <li><a href="#remote-branch"><span class="toc-section-number">3</span> Remote Branch</a></li>
                 </ul>
                 </div>
                                 <h1 id="舍弃所有本地变更-回滚到最后提交状态"><span class="header-section-number">1</span> 舍弃所有本地变更， 回滚到最后提交状态</h1>
@@ -91,6 +93,11 @@
 
 <span class="kw">git</span> fetch origin
 <span class="kw">git</span> reset --hard origin/master</code></pre>
+<h1 id="打包指定版本的文件"><span class="header-section-number">2</span> 打包指定版本的文件</h1>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">git</span> archive -o docs.zip v2.2.0 <span class="st">&#39;Documentation/*.html&#39;</span></code></pre>
+<p>git版本2.2.0</p>
+<h1 id="remote-branch"><span class="header-section-number">3</span> Remote Branch</h1>
+<p><a href="http://git-scm.com/book/en/v2/Git-Branching-Remote-Branches">http://git-scm.com/book/en/v2/Git-Branching-Remote-Branches</a></p>
                 
                 <!--百度分享按钮-->
                 <div class="pull-left bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a><a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a></div>
@@ -130,7 +137,6 @@
             <div class="row">
                 <div class="col-md-12 footer">
                   <hr>
-                  <p>©FuqiangWang@<a href="http://keevol.com">keevol.com</a></p>
                   <p>Powered by <a href="http://johnmacfarlane.net/pandoc/">pandoc</a>, <a href="http://rometools.github.io/rome/index.html">ROME</a> and <a href="http://pages.github.com/">github pages</a></p>
                 </div>
             </div>
