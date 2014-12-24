@@ -50,6 +50,7 @@
       <div class="row">
         <div class="col-md-3 sidebar">
             <a href="/">
+				<div align="center"><img src="/images/wfq0.png"/></div>
                 <h2 class="text-center">AFOO.ME</h2>
             </a>
             <p class="text-center lead slogan"><a href="/slogan.html">lollapalooza &amp; positioning</a></p>
@@ -221,6 +222,7 @@ future.<span class="fu">result</span>.<span class="fu">asInstanceOf</span>[Optio
    - Starting up Dispatchers$globalExecutorBasedEventDrivenDispatcher$[akka:event-driven:dispatcher:global]
  with throughput [5]
  </pre>
+ 
 <p>但很多时候， 所有的Actor使用同一个Dispatcher是远远不够的。</p>
 <p>要定制相应Actor的运行调度， 可以为其设置特定的Dispatcher实现， 常见的Dispatcher实现在akka.dispatch包下， 如:</p>
 <ul>

@@ -50,6 +50,7 @@
       <div class="row">
         <div class="col-md-3 sidebar">
             <a href="/">
+				<div align="center"><img src="/images/wfq0.png"/></div>
                 <h2 class="text-center">AFOO.ME</h2>
             </a>
             <p class="text-center lead slogan"><a href="/slogan.html">lollapalooza &amp; positioning</a></p>
@@ -94,10 +95,12 @@
 <pre>
 java -Xmx512M -jar `dirname $0`/sbt-launch-0.7.4.jar "$@"
 </pre>
+
 <p>I make a directory under workspace, call &quot;scalafun&quot;, then &quot;cd scalafun&quot; and run sbt. Since it's the first time I use sbt, it ask me whether to create a project, I choose Y of course, then it ask for some information on the project I create before the project creation is done. The information contains the project name, organize name, sbt version or scala version, just type in your answer or use the default choices.</p>
 <blockquote>
 when create project structure with sbt, it may loss the &quot;project/build&quot; directory where you should put your build file there, so usually after running sbt to setup the default project structure, you may have to create the &quot;project/build&quot; directory and corresponding build defintion files manully.
 </blockquote>
+
 <p>After the project setup is done, firstly, we have to define our build file in sbt, this is done by creating a scala file under &quot;project/build&quot;, the content may be:</p>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">import</span> sbt.<span class="fu">_</span>
 
@@ -116,6 +119,7 @@ when create project structure with sbt, it may loss the &quot;project/build&quot
 <blockquote>
 Although we have add dependencies in the build file, they are not available before we run &quot;sbt update&quot; or just &quot;update&quot; in sbt console, even we have maven2 local repository there. So when some compilation errors complain some classes are missing, most of the time, they are asking you to run &quot;update&quot; to fetch the dependencies.^_^
 </blockquote>
+
 <p>OK, until now, I think most of the things work for us, but how SBT makes all of the things run smoothly?</p>
 <h1 id="how-sbt-works"><span class="header-section-number">2</span> How SBT works</h1>
 <p>The most interested thing about SBT is that it conforms to Scala everywhere, If you used maven before or still using it, you know the build defintion in maven is defined in xml(pom.xml) or groovy after maven3, although maven are mostly used with java projects. But since SBT is mainly for scala projects, its build files are written in scala too.</p>
@@ -140,10 +144,12 @@ Although we have add dependencies in the build file, they are not available befo
 <pre>
 super.unmanagedClasspath +++ "your extension classpath"
 </pre>
+
 exception may raise which looks like:
 <pre>
 java.lang.IllegalArgumentException: requirement failed: Path component 'your path' must not have forward slashes in it
 </pre>
+
 <p>If you dive into the code of &quot;Path.scala&quot;, you may find the reason, to save your ass, just do as I did in above code snippet.</p>
 <p>We can find more methods that we can customize to our own needs in SBT documentations(http://code.google.com/p/simple-build-tool/wiki/DocumentationHome), more advance features can be found in the documenation too, like modules, cross-building, web application project types, etc. I will not elaborate on these here, you have to find them out yourself.</p>
 <p>Enjoy SBT.</p>

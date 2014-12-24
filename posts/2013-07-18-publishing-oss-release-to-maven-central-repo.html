@@ -49,6 +49,7 @@
       <div class="row">
         <div class="col-md-3 sidebar">
             <a href="/">
+				<div align="center"><img src="/images/wfq0.png"/></div>
                 <h2 class="text-center">AFOO.ME</h2>
             </a>
             <p class="text-center lead slogan"><a href="/slogan.html">lollapalooza &amp; positioning</a></p>
@@ -207,7 +208,7 @@
   ...
 &lt;/settings&gt;</code></pre>
 <p>用户名和密码在一开始已经申请过了，填上即可。</p>
-<p>更详细步骤参看<a href="https://docs.sonatype.org/display/Repository/How+To+Generate+PGP+Signatures+With+Maven" class="uri">https://docs.sonatype.org/display/Repository/How+To+Generate+PGP+Signatures+With+Maven</a></p>
+<p>更详细步骤参看<a href="https://docs.sonatype.org/display/Repository/How+To+Generate+PGP+Signatures+With+Maven">https://docs.sonatype.org/display/Repository/How+To+Generate+PGP+Signatures+With+Maven</a></p>
 <h1 id="发布snapshot版本"><span class="header-section-number">5</span> 发布SNAPSHOT版本</h1>
 <pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">mvn</span> clean deploy</code></pre>
 <h1 id="发布staging版本"><span class="header-section-number">6</span> 发布Staging版本</h1>
@@ -219,17 +220,18 @@ $ <span class="kw">mvn</span> release:perform</code></pre>
 <pre>
  [ERROR] Failed to execute goal org.apache.maven.plugins:maven-deploy-plugin:2.5:deploy (default-deploy) on project cobar-client: Failed to deploy artifacts: Could not transfer artifact com.alibaba.cobar:cobar-client:jar:1.0.5 from/to sonatype-nexus-staging (https://oss.sonatype.org/service/local/staging/deploy/maven2/): Access denied to: https://oss.sonatype.org/service/local/staging/deploy/maven2/com/alibaba/cobar/cobar-client/1.0.5/cobar-client-1.0.5.jar -> [Help 1]
 </pre>
+
 <p>没办法，等吧～</p>
 <h1 id="正式发布"><span class="header-section-number">7</span> 正式发布</h1>
-<p>访问web地址：<a href="https://oss.sonatype.org/" class="uri">https://oss.sonatype.org/</a></p>
+<p>访问web地址：<a href="https://oss.sonatype.org/">https://oss.sonatype.org/</a></p>
 <p>登陆， 选择左边栏里的&quot;Staging Repositories&quot;, 然后点Close按钮，sonatype会做响应的validation，通过的话，就可以点Release发布啦，如果不通过，或者人工检查有问题，就先Drop，并重新做Staging发布， 知道搞定之后，再行发布。 没Release之前随便搞， Release之后就板上钉钉了。</p>
 <h1 id="总结"><span class="header-section-number">8</span> 总结</h1>
 <p>第一次搞需要拢的东西比较多，而且很久没搞Maven了(俺现在搞SBT比较多，u know的)， 所以，搞的期间偶尔出点儿小问题刺挠刺挠我，都是小事儿，总体上来讲， 官方文档还是比较靠谱的。</p>
 <h1 id="参考资料"><span class="header-section-number">9</span> 参考资料</h1>
 <ol style="list-style-type: decimal">
 <li><a href="https://docs.sonatype.org/display/Repository/Sonatype+OSS+Maven+Repository+Usage+Guide">官方文档</a></li>
-<li><a href="http://datumedge.blogspot.com/2012/05/publishing-from-github-to-maven-central.html" class="uri">http://datumedge.blogspot.com/2012/05/publishing-from-github-to-maven-central.html</a></li>
-<li><a href="https://docs.sonatype.org/display/Repository/How+To+Generate+PGP+Signatures+With+Maven" class="uri">https://docs.sonatype.org/display/Repository/How+To+Generate+PGP+Signatures+With+Maven</a></li>
+<li><a href="http://datumedge.blogspot.com/2012/05/publishing-from-github-to-maven-central.html">http://datumedge.blogspot.com/2012/05/publishing-from-github-to-maven-central.html</a></li>
+<li><a href="https://docs.sonatype.org/display/Repository/How+To+Generate+PGP+Signatures+With+Maven">https://docs.sonatype.org/display/Repository/How+To+Generate+PGP+Signatures+With+Maven</a></li>
 </ol>
                 
                 <!--百度分享按钮-->

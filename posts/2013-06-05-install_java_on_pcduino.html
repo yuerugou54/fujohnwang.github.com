@@ -49,6 +49,7 @@
       <div class="row">
         <div class="col-md-3 sidebar">
             <a href="/">
+				<div align="center"><img src="/images/wfq0.png"/></div>
                 <h2 class="text-center">AFOO.ME</h2>
             </a>
             <p class="text-center lead slogan"><a href="/slogan.html">lollapalooza &amp; positioning</a></p>
@@ -94,6 +95,7 @@
 <p>$ sudo apt-get install -y libc6-armel libsfgcc1</p>
 这一步不知道是否必须，反正我是运行了
 </blockquote>
+
 <p>之后，<strong>重启</strong>！！！</p>
 <p>成果展示:</p>
 <pre>
@@ -102,20 +104,23 @@ java version "1.7.0_21"
 Java(TM) SE Embedded Runtime Environment (build 1.7.0_21-b11, headless)
 Java HotSpot(TM) Embedded Server VM (build 23.21-b01, mixed mode)
 </pre>
+
 <p>当然了，也可以将安装路径添加到bash的配置文件里：</p>
 <pre>
 ubuntu@ubuntu:~$ cat .bash_profile
 export JAVA_HOME=~/java/ejre1.7.0_21
 export PATH=$JAVA_HOME/bin:$PATH
 </pre>
+
 <p>至此，基本搞定， 后面可以开始玩动态DNS绑定，并部署个Play应用玩玩了...</p>
 <blockquote>
 BTW. 如果闲麻烦，可以直接运行apt-get install arduino最简单，只可惜安装的是openjdk6, :)
 </blockquote>
+
 <h1 id="references"><span class="header-section-number">2</span> References</h1>
 <ol style="list-style-type: decimal">
-<li><a href="https://github.com/cjdaly/napkin/wiki/Server-on-pcduino" class="uri">https://github.com/cjdaly/napkin/wiki/Server-on-pcduino</a></li>
-<li><a href="http://bradsmc.blogspot.com/2013/04/installing-java-runtime-environment-on.html" class="uri">http://bradsmc.blogspot.com/2013/04/installing-java-runtime-environment-on.html</a></li>
+<li><a href="https://github.com/cjdaly/napkin/wiki/Server-on-pcduino">https://github.com/cjdaly/napkin/wiki/Server-on-pcduino</a></li>
+<li><a href="http://bradsmc.blogspot.com/2013/04/installing-java-runtime-environment-on.html">http://bradsmc.blogspot.com/2013/04/installing-java-runtime-environment-on.html</a></li>
 </ol>
                 
                 <!--百度分享按钮-->

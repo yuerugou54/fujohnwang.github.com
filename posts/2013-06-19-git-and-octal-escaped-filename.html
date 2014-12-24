@@ -30,6 +30,7 @@
       <div class="row">
         <div class="col-md-3 sidebar">
             <a href="/">
+				<div align="center"><img src="/images/wfq0.png"/></div>
                 <h2 class="text-center">AFOO.ME</h2>
             </a>
             <p class="text-center lead slogan"><a href="/slogan.html">lollapalooza &amp; positioning</a></p>
@@ -72,6 +73,7 @@ Wangs-MacBook-Pro:docworks fujohnwang$ git st
 #   modified:   worksheets/daily_todo.md
 #   new file:   "worksheets/\345\205\263\351\224\256\350\257\215\345\272\223\345\273\272\350\256\276\350\257\264\346\230\216.md"
 </pre>
+
 <p>之前对这种现象一直熟视无睹，今天“良心发现”，就抠了一下， 反正Google了一堆文档，简单总结下来是这样的： git会对Non-ASCII的文件名进行编码(如果本地编码是utf8, 那就用utf8进行编码)， 编码之后，将编码转变为octal escape形式显示，从而，就变成了上面所看到的那个样子。</p>
 引用一下别人的说法，或许信息量更大一些:
 <pre>
@@ -93,6 +95,7 @@ So, to sum this up:
 --name-status` shows octal-escaped names for instance).
 2) The repository is non-portable.
 </pre>
+
 关于Octal Escape形式的Literal, Java里的定义是这样的：
 <pre>
 OctalEscape:
@@ -112,9 +115,9 @@ ZeroToThree: one of
 <p><strong>参考链接</strong></p>
 <ol style="list-style-type: decimal">
 <li><a href="https://code.google.com/p/msysgit/issues/detail?id=230">msysgit: Issue 230: Question: How I can add files in national character</a></li>
-<li><a href="http://stackoverflow.com/questions/9543026/why-do-java-octal-escapes-only-go-up-to-255" class="uri">http://stackoverflow.com/questions/9543026/why-do-java-octal-escapes-only-go-up-to-255</a></li>
-<li><a href="http://stackoverflow.com/questions/5581857/git-and-the-umlaut-problem-on-mac-os-x" class="uri">http://stackoverflow.com/questions/5581857/git-and-the-umlaut-problem-on-mac-os-x</a></li>
-<li><a href="http://stackoverflow.com/questions/4144417/how-to-handle-asian-characters-in-file-names-in-git-on-os-x" class="uri">http://stackoverflow.com/questions/4144417/how-to-handle-asian-characters-in-file-names-in-git-on-os-x</a></li>
+<li><a href="http://stackoverflow.com/questions/9543026/why-do-java-octal-escapes-only-go-up-to-255">http://stackoverflow.com/questions/9543026/why-do-java-octal-escapes-only-go-up-to-255</a></li>
+<li><a href="http://stackoverflow.com/questions/5581857/git-and-the-umlaut-problem-on-mac-os-x">http://stackoverflow.com/questions/5581857/git-and-the-umlaut-problem-on-mac-os-x</a></li>
+<li><a href="http://stackoverflow.com/questions/4144417/how-to-handle-asian-characters-in-file-names-in-git-on-os-x">http://stackoverflow.com/questions/4144417/how-to-handle-asian-characters-in-file-names-in-git-on-os-x</a></li>
 </ol>
                 
                 <!--百度分享按钮-->

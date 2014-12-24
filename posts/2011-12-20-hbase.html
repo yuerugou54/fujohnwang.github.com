@@ -31,6 +31,7 @@
       <div class="row">
         <div class="col-md-3 sidebar">
             <a href="/">
+				<div align="center"><img src="/images/wfq0.png"/></div>
                 <h2 class="text-center">AFOO.ME</h2>
             </a>
             <p class="text-center lead slogan"><a href="/slogan.html">lollapalooza &amp; positioning</a></p>
@@ -110,17 +111,17 @@
 <pre><code>8.6.4. Write Ahead Log (WAL)
     The WAL is in HDFS in /hbase/.logs/ with subdirectories per region.</code></pre>
 <p><strong>应该需要了解region server在zk里的ephemeral node，以便在region server failover之后，eromanga也可以转到新的region server上从新的hlog开始抓取变更。</strong></p>
-<p>API - <a href="http://hbase.apache.org/apidocs/org/apache/hadoop/hbase/replication/package-summary.html#requirements" class="uri">http://hbase.apache.org/apidocs/org/apache/hadoop/hbase/replication/package-summary.html#requirements</a></p>
+<p>API - <a href="http://hbase.apache.org/apidocs/org/apache/hadoop/hbase/replication/package-summary.html#requirements">http://hbase.apache.org/apidocs/org/apache/hadoop/hbase/replication/package-summary.html#requirements</a></p>
 <p>Once a HRegionServer starts and is opening the regions it hosts it checks if there are some left over log files and applies those all the way down in Store.doReconstructionLog(). Replaying a log is simply done by reading the log and adding the contained edits to the current MemStore. At the end an explicit flush of the MemStore (note, this is not the flush of the log!) helps writing those changes out to disk.</p>
 <p>|----HLog Replay</p>
 <h2 id="hbase-replication-ref"><span class="header-section-number">3.1</span> HBase Replication Ref</h2>
 <ol style="list-style-type: decimal">
-<li><a href="http://hbase.apache.org/replication.html" class="uri">http://hbase.apache.org/replication.html</a></li>
-<li><a href="http://hbase.apache.org/apidocs/org/apache/hadoop/hbase/regionserver/wal/HLog.html" class="uri">http://hbase.apache.org/apidocs/org/apache/hadoop/hbase/regionserver/wal/HLog.html</a></li>
-<li><a href="http://blog.sematext.com/2011/03/11/hbase-backup-options/" class="uri">http://blog.sematext.com/2011/03/11/hbase-backup-options/</a> - HBase Backup Options &gt; You might want to check out at MapR’s distro for Apache Hadoop (www.mapr.com). It has consistent point-in-time snapshots, as well the ability to mirror the snapshots to another data-center for disaster-recovery.</li>
-<li><a href="https://github.com/mozilla-metrics/akela/blob/master/src/main/java/com/mozilla/hadoop/Backup.java" class="uri">https://github.com/mozilla-metrics/akela/blob/master/src/main/java/com/mozilla/hadoop/Backup.java</a> | <a href="http://blog.mozilla.com/data/2011/02/04/migrating-hbase-in-the-trenches/" class="uri">http://blog.mozilla.com/data/2011/02/04/migrating-hbase-in-the-trenches/</a> - Mozilla Backup tool</li>
-<li><a href="http://javamaster.wordpress.com/2010/03/19/replication-architecture-in-cassandra-and-hbase/" class="uri">http://javamaster.wordpress.com/2010/03/19/replication-architecture-in-cassandra-and-hbase/</a> <img src="http://javamaster.files.wordpress.com/2010/03/hbasereplication.png?w=460&amp;h=359" /></li>
-<li><a href="http://koven2049.iteye.com/blog/983633" class="uri">http://koven2049.iteye.com/blog/983633</a></li>
+<li><a href="http://hbase.apache.org/replication.html">http://hbase.apache.org/replication.html</a></li>
+<li><a href="http://hbase.apache.org/apidocs/org/apache/hadoop/hbase/regionserver/wal/HLog.html">http://hbase.apache.org/apidocs/org/apache/hadoop/hbase/regionserver/wal/HLog.html</a></li>
+<li><a href="http://blog.sematext.com/2011/03/11/hbase-backup-options/">http://blog.sematext.com/2011/03/11/hbase-backup-options/</a> - HBase Backup Options &gt; You might want to check out at MapR’s distro for Apache Hadoop (www.mapr.com). It has consistent point-in-time snapshots, as well the ability to mirror the snapshots to another data-center for disaster-recovery.</li>
+<li><a href="https://github.com/mozilla-metrics/akela/blob/master/src/main/java/com/mozilla/hadoop/Backup.java">https://github.com/mozilla-metrics/akela/blob/master/src/main/java/com/mozilla/hadoop/Backup.java</a> | <a href="http://blog.mozilla.com/data/2011/02/04/migrating-hbase-in-the-trenches/">http://blog.mozilla.com/data/2011/02/04/migrating-hbase-in-the-trenches/</a> - Mozilla Backup tool</li>
+<li><a href="http://javamaster.wordpress.com/2010/03/19/replication-architecture-in-cassandra-and-hbase/">http://javamaster.wordpress.com/2010/03/19/replication-architecture-in-cassandra-and-hbase/</a> <img src="http://javamaster.files.wordpress.com/2010/03/hbasereplication.png?w=460&amp;h=359" /></li>
+<li><a href="http://koven2049.iteye.com/blog/983633">http://koven2049.iteye.com/blog/983633</a></li>
 <li><a href="http://highscalability.com/blog/2009/8/24/how-google-serves-data-from-multiple-datacenters.html">How Google Serves Data From Multiple Datacenters</a></li>
 <li><a href="http://punishzhou.iteye.com/blog/1286230">Hbase的log管理(一)</a></li>
 <li><a href="http://punishzhou.iteye.com/blog/1288175">Hbase的log管理(二)</a></li>
@@ -139,7 +140,7 @@
 <p>in general its best to avoid using a timestamp or a sequence (e.g. 1, 2, 3) as the row-key.</p>
 </blockquote>
 <blockquote>
-<p><a href="http://ikaisays.com/2011/01/25/app-engine-datastore-tip-monotonically-increasing-values-are-bad/" class="uri">http://ikaisays.com/2011/01/25/app-engine-datastore-tip-monotonically-increasing-values-are-bad/</a></p>
+<p><a href="http://ikaisays.com/2011/01/25/app-engine-datastore-tip-monotonically-increasing-values-are-bad/">http://ikaisays.com/2011/01/25/app-engine-datastore-tip-monotonically-increasing-values-are-bad/</a></p>
 </blockquote>
 <h1 id="distributions"><span class="header-section-number">5</span> Distributions</h1>
 <ol style="list-style-type: decimal">
@@ -154,7 +155,7 @@
 </ol>
 <h1 id="references"><span class="header-section-number">7</span> References</h1>
 <ol style="list-style-type: decimal">
-<li><a href="http://www.pigi-project.org/" class="uri">http://www.pigi-project.org/</a> - Powerful, Invincible, Great Indexing for HBase</li>
+<li><a href="http://www.pigi-project.org/">http://www.pigi-project.org/</a> - Powerful, Invincible, Great Indexing for HBase</li>
 <li>** <a href="https://db.usenix.org//events/osdi06/tech/chang/chang_html/">Bigtable: A Distributed Storage System for Structured Data</a> **</li>
 <li><a href="http://java.dzone.com/videos/hbase-schema-design-things-you">HBase Schema Design - Things you need to know</a></li>
 <li><a href="http://www.larsgeorge.com/2009/10/hbase-architecture-101-storage.html">HBase Architecture 101 - Storage</a></li>
@@ -163,7 +164,7 @@
 <li><a href="http://www.spnguru.com/tag/hbase/">http://www.spnguru.com/tag/hbase/ - 趋势科技中国研发中心SPN研发团队hbase tag</a></li>
 <li><a href="https://issues.apache.org/jira/browse/HBASE-1512">Coprocessors: Support aggregate functions</a></li>
 <li><a href="http://blog.nosqlfan.com/html/3694.html">HBase在淘宝的应用和优化小结</a></li>
-<li><a href="http://www.meetup.com/hbaseusergroup/files/" class="uri">http://www.meetup.com/hbaseusergroup/files/</a></li>
+<li><a href="http://www.meetup.com/hbaseusergroup/files/">http://www.meetup.com/hbaseusergroup/files/</a></li>
 </ol>
                 
                 <!--百度分享按钮-->

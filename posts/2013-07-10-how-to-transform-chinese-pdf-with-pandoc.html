@@ -49,6 +49,7 @@
       <div class="row">
         <div class="col-md-3 sidebar">
             <a href="/">
+				<div align="center"><img src="/images/wfq0.png"/></div>
                 <h2 class="text-center">AFOO.ME</h2>
             </a>
             <p class="text-center lead slogan"><a href="/slogan.html">lollapalooza &amp; positioning</a></p>
@@ -82,7 +83,7 @@
 
                                 <p>按照pandoc官方网站说明，下载<a href="http://www.tug.org/mactex/morepackages.html">BasicTex</a>以及MacTeX-Additions， 不管三七二十一，一并装了，才占用几百M，在这个年月，&quot;洒洒水&quot;啦~</p>
 <p>装完后，运行<code>pandoc --latex-engine=xelatex -V mainfont=Hei 统一投放平台规划与设想.md -o tek.pdf</code>, 发现tnd不给换行，太长的行直接截断，好啦，第一个症状出现了...</p>
-<p>遂Google之， 发现了这篇<a href="https://groups.google.com/forum/#!topic/pandoc-discuss/GIy4crum8II" class="uri">https://groups.google.com/forum/#!topic/pandoc-discuss/GIy4crum8II</a>, 但貌似还是没有答案，也不知道纠结了多久，在pandoc官网导航栏里，点了[<a href="https://github.com/jgm/pandoc/wiki/Pandoc-Extras">Extras</a>], 寻摸， 突然发现接近页尾的地方有中文翻译的pandoc文档项目，有转换时用的命令行说明以及其他几个文档，点进<a href="https://github.com/tzengyuxio/pages/blob/gh-pages/pandoc/convert.sh" class="uri">https://github.com/tzengyuxio/pages/blob/gh-pages/pandoc/convert.sh</a>,发现如下命令赫然在目:</p>
+<p>遂Google之， 发现了这篇<a href="https://groups.google.com/forum/#!topic/pandoc-discuss/GIy4crum8II">https://groups.google.com/forum/#!topic/pandoc-discuss/GIy4crum8II</a>, 但貌似还是没有答案，也不知道纠结了多久，在pandoc官网导航栏里，点了[<a href="https://github.com/jgm/pandoc/wiki/Pandoc-Extras">Extras</a>], 寻摸， 突然发现接近页尾的地方有中文翻译的pandoc文档项目，有转换时用的命令行说明以及其他几个文档，点进<a href="https://github.com/tzengyuxio/pages/blob/gh-pages/pandoc/convert.sh">https://github.com/tzengyuxio/pages/blob/gh-pages/pandoc/convert.sh</a>,发现如下命令赫然在目:</p>
 <pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">pandoc</span> pandoc.markdown -o pandoc-zhtw.pdf --toc --smart --template=pm-template --latex-engine=xelatex -V mainfont=<span class="st">&#39;LiHei Pro&#39;</span></code></pre>
 <p>哈哈， 太爽了， 马上<code>git clone</code>这个项目到本地，查看输出的pdf，发现格式完全没有问题，我直接把模板拿过来用不就搞定了嘛，so:</p>
 <pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">pandoc</span> --latex-engine=xelatex -V mainfont=<span class="st">&#39;LiHei Pro&#39;</span> --template=pm-template 统一投放平台规划与设想.md -o tek.pdf</code></pre>
@@ -100,6 +101,7 @@ Enter file name:
 
 l.65 \setlength
 </pre>
+
 <p>没关系， 继续google， 嗯，貌似是某个Latex包没有， 发现CTAN有这么个包下载，可下下来也不会安装啊，应该有现成的包管理器吧？！ 搜来搜去，果然有，嘿嘿:</p>
 <pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">sudo</span> tlmgr install titling</code></pre>
 <p>继续运行， 发现还缺“lastpage.sty”， 同理安装， 再运行， No news is good news, 命令运行成功， 马上查看运行结果，NND，内容是生成了，咋许多汉字变成了方框啊！！！</p>
@@ -120,6 +122,8 @@ l.65 \setlength
 sudo mkdir -p texmf/tex/latex/local/
 sudo cp Downloads/CJKfntef.sty ~/Library/texmf/tex/latex/local
 </pre>
+
+
 <blockquote>
 <p>MMD， pandoc的markdown中如果插入图片的话，经常报错， 这个时候，检查一下图片是否是gif格式，如果是，那么将其转成png格式， 这真是一个大坑，老子耗费了差不多一天的时间来解决这个问题， 因为报错信息基本没参考价值， 就各种google， 各种装依赖尝试， 各种改模板，总之各种折腾， 最后是通过先转成latex中间格式，然后再使用xelatex从latex格式转pdf的log中才瞅出些许端倪，然后将gif改成png格式之后， 哇啦， 顺利通关！</p>
 </blockquote>

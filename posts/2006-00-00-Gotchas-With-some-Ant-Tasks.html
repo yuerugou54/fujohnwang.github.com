@@ -49,6 +49,7 @@
       <div class="row">
         <div class="col-md-3 sidebar">
             <a href="/">
+				<div align="center"><img src="/images/wfq0.png"/></div>
                 <h2 class="text-center">AFOO.ME</h2>
             </a>
             <p class="text-center lead slogan"><a href="/slogan.html">lollapalooza &amp; positioning</a></p>
@@ -102,6 +103,7 @@
 BUILD FAILED
 ...\build.xml:11: com.jcraft.jsch.JSchException: reject HostKey: yourServerIp
 </pre>
+
 <p>不信，你看看ant的manual,他是不是告诉你这么用的？！</p>
 <p>所以你现在也不得不信了吧？！还是听我的，在scp task的attribute里面添加一个trust=&quot;true&quot;试一试吧！</p>
 <p>类似的sshexec task也有这个问题，同样的解决方式。</p>

@@ -31,6 +31,7 @@
       <div class="row">
         <div class="col-md-3 sidebar">
             <a href="/">
+				<div align="center"><img src="/images/wfq0.png"/></div>
                 <h2 class="text-center">AFOO.ME</h2>
             </a>
             <p class="text-center lead slogan"><a href="/slogan.html">lollapalooza &amp; positioning</a></p>
@@ -182,17 +183,18 @@ reset {
 
 scheduler.selectAndNotify
 </pre>
+
 <hr />
 <h1 id="值得参考的项目"><span class="header-section-number">7</span> 值得参考的项目</h1>
 <ol style="list-style-type: decimal">
 <li>Swarm
 <ul>
-<li><a href="http://vimeo.com/6614042" class="uri">http://vimeo.com/6614042</a></li>
-<li><a href="http://www.earldouglas.com/actor-based-continuations-with-akka-and-swarm/" class="uri">http://www.earldouglas.com/actor-based-continuations-with-akka-and-swarm/</a></li>
+<li><a href="http://vimeo.com/6614042">http://vimeo.com/6614042</a></li>
+<li><a href="http://www.earldouglas.com/actor-based-continuations-with-akka-and-swarm/">http://www.earldouglas.com/actor-based-continuations-with-akka-and-swarm/</a></li>
 </ul></li>
 <li>Akka's DataFlow and NIO actor implementations</li>
 <li>Jim McBeath的blog posts和github项目(Scoroutine &amp; NIOServer)</li>
-<li>Loft - <a href="https://github.com/rschildmeijer/loft" class="uri">https://github.com/rschildmeijer/loft</a></li>
+<li>Loft - <a href="https://github.com/rschildmeijer/loft">https://github.com/rschildmeijer/loft</a></li>
 </ol>
 <hr />
 <h1 id="一些模式与规则"><span class="header-section-number">8</span> 一些模式与规则</h1>
@@ -201,8 +203,7 @@ scheduler.selectAndNotify
 <li>reset的返回值类型跟shift的返回值类型相同？！ - &quot;the value of the evaluated reset block is the value of the last expression in the shift block that gets executed within that reset block&quot;</li>
 <li>&quot;<strong>The gist of CPS is that we don't use return</strong>. Rather than calling a subroutine and having it return to us, as is the case in the normal Direct Style, we pass a continuation to the subroutine for it to execute when it is done.&quot;</li>
 <li>&quot;In every method where we call a subroutine using CPS, that call is always the very last thing in the method.&quot;</li>
-<li>“Any method that includes shift must be marked as CPS, and any method that calls a CPS method must be marked as CPS, until you reach the enclosing reset call.”</li>
-<li></li>
+<li>“Any method that includes shift must be marked as CPS, and any method that calls a CPS method must be marked as CPS, until you reach the enclosing reset call.” 6.</li>
 </ol>
 <hr />
 <h1 id="limitations"><span class="header-section-number">9</span> Limitations</h1>
@@ -216,18 +217,18 @@ scheduler.selectAndNotify
 <hr />
 <h1 id="read-more..."><span class="header-section-number">10</span> Read More...</h1>
 <ol style="list-style-type: decimal">
-<li>My Question On Quora - <a href="http://www.quora.com/How-does-Scala-continuation-work-and-has-there-been-some-successful-system-built-on-it" class="uri">http://www.quora.com/How-does-Scala-continuation-work-and-has-there-been-some-successful-system-built-on-it</a></li>
-<li><strong>highly recommended</strong> - <a href="http://jim-mcbeath.blogspot.com/2010/08/delimited-continuations.html" class="uri">http://jim-mcbeath.blogspot.com/2010/08/delimited-continuations.html</a></li>
-<li><a href="http://ebruchez.blogspot.com/2011/09/continuations-in-scala.html" class="uri">http://ebruchez.blogspot.com/2011/09/continuations-in-scala.html</a></li>
-<li>Scala continuations and NIO meet JVM coroutines - <a href="http://skillsmatter.com/podcast/scala/scala-continuations" class="uri">http://skillsmatter.com/podcast/scala/scala-continuations</a></li>
-<li>Swarm Discussion On Lambda the Ultimate - <a href="http://lambda-the-ultimate.org/node/3626" class="uri">http://lambda-the-ultimate.org/node/3626</a></li>
-<li><a href="http://www.slideshare.net/openbala/continuations" class="uri">http://www.slideshare.net/openbala/continuations</a></li>
-<li><a href="http://biosimilarity.blogspot.com/2011/01/rabbitmq-monadically.html" class="uri">http://biosimilarity.blogspot.com/2011/01/rabbitmq-monadically.html</a></li>
-<li><a href="http://suereth.blogspot.com/2010/03/how-you-should-think-about-delimited.html" class="uri">http://suereth.blogspot.com/2010/03/how-you-should-think-about-delimited.html</a></li>
-<li><a href="http://www.earldouglas.com/asynchronous-network-io-with-scala-continuations/" class="uri">http://www.earldouglas.com/asynchronous-network-io-with-scala-continuations/</a></li>
-<li><a href="http://www.infoq.com/articles/deft-loft" class="uri">http://www.infoq.com/articles/deft-loft</a></li>
-<li><a href="http://lampsvn.epfl.ch/trac/scala/browser/compiler-plugins/continuations/trunk/doc/examples/continuations/Test17Webserver.scala" class="uri">http://lampsvn.epfl.ch/trac/scala/browser/compiler-plugins/continuations/trunk/doc/examples/continuations/Test17Webserver.scala</a></li>
-<li><a href="http://lampsvn.epfl.ch/trac/scala/browser/compiler-plugins/continuations/trunk/doc/examples/continuations" class="uri">http://lampsvn.epfl.ch/trac/scala/browser/compiler-plugins/continuations/trunk/doc/examples/continuations</a></li>
+<li>My Question On Quora - <a href="http://www.quora.com/How-does-Scala-continuation-work-and-has-there-been-some-successful-system-built-on-it">http://www.quora.com/How-does-Scala-continuation-work-and-has-there-been-some-successful-system-built-on-it</a></li>
+<li><strong>highly recommended</strong> - <a href="http://jim-mcbeath.blogspot.com/2010/08/delimited-continuations.html">http://jim-mcbeath.blogspot.com/2010/08/delimited-continuations.html</a></li>
+<li><a href="http://ebruchez.blogspot.com/2011/09/continuations-in-scala.html">http://ebruchez.blogspot.com/2011/09/continuations-in-scala.html</a></li>
+<li>Scala continuations and NIO meet JVM coroutines - <a href="http://skillsmatter.com/podcast/scala/scala-continuations">http://skillsmatter.com/podcast/scala/scala-continuations</a></li>
+<li>Swarm Discussion On Lambda the Ultimate - <a href="http://lambda-the-ultimate.org/node/3626">http://lambda-the-ultimate.org/node/3626</a></li>
+<li><a href="http://www.slideshare.net/openbala/continuations">http://www.slideshare.net/openbala/continuations</a></li>
+<li><a href="http://biosimilarity.blogspot.com/2011/01/rabbitmq-monadically.html">http://biosimilarity.blogspot.com/2011/01/rabbitmq-monadically.html</a></li>
+<li><a href="http://suereth.blogspot.com/2010/03/how-you-should-think-about-delimited.html">http://suereth.blogspot.com/2010/03/how-you-should-think-about-delimited.html</a></li>
+<li><a href="http://www.earldouglas.com/asynchronous-network-io-with-scala-continuations/">http://www.earldouglas.com/asynchronous-network-io-with-scala-continuations/</a></li>
+<li><a href="http://www.infoq.com/articles/deft-loft">http://www.infoq.com/articles/deft-loft</a></li>
+<li><a href="http://lampsvn.epfl.ch/trac/scala/browser/compiler-plugins/continuations/trunk/doc/examples/continuations/Test17Webserver.scala">http://lampsvn.epfl.ch/trac/scala/browser/compiler-plugins/continuations/trunk/doc/examples/continuations/Test17Webserver.scala</a></li>
+<li><a href="http://lampsvn.epfl.ch/trac/scala/browser/compiler-plugins/continuations/trunk/doc/examples/continuations">http://lampsvn.epfl.ch/trac/scala/browser/compiler-plugins/continuations/trunk/doc/examples/continuations</a></li>
 </ol>
                 
                 <!--百度分享按钮-->

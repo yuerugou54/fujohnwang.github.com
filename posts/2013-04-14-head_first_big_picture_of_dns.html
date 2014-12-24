@@ -30,6 +30,7 @@
       <div class="row">
         <div class="col-md-3 sidebar">
             <a href="/">
+				<div align="center"><img src="/images/wfq0.png"/></div>
                 <h2 class="text-center">AFOO.ME</h2>
             </a>
             <p class="text-center lead slogan"><a href="/slogan.html">lollapalooza &amp; positioning</a></p>
@@ -84,6 +85,7 @@
 <pre>
 www.howstuffworks.com
 </pre>
+
 <ul>
 <li>com: 一级域名或者称为顶级域名(top-level domain/first-class domain)部分</li>
 <li>howstuffworks: 二级域名部分</li>
@@ -108,6 +110,7 @@ www.howstuffworks.com
 <p>NOTE</p>
 在Linux或者Unix下， 使用的DNS Server地址可以在resolv.conf中找到，但resolv.conf的内容是自动生成的，一般认为更改无效，要手动变更自己想用的DNS Server是哪个，可以编辑/etc/hosts进行域名/主机名到IP地址的映射关系的添加。
 </blockquote>
+
 <p>在知道了要查询的DNS Server是哪个之后， DNS请求就根据相应的协议发送给了DNS Server，DNS Server将首先检查本地缓存中是否存在当前查询的域名与其IP地址的对应关系，如果有则直接返回，如果没有，则查询Root DNS Server，因为每一个DNS Server都会知道至少一个Root DNS Server, Root DNS Server将根据查询域名的一级域名是什么，告诉发起查询的DNS Server哪些其它的DNS Server可能包含相应的二级域名与其IP地址的映射关系信息，之后当前发起查询的DNS Server再向这些DNS Server进行查询，如果在这些返回的DNS Server处查询到相应的映射信息，则缓存到本地然后返回，否则，报给客户端查找不到的错误信息<a href="#fn2" class="footnoteRef" id="fnref2"><sup>2</sup></a>。</p>
 <p>我们实际上可以通过nslookup命令(适用于linux或者unix系统)来检查某些域名相关信息，包括它对应的IP地址是什么:</p>
 <pre>
@@ -118,7 +121,8 @@ $ nslookup 209.132.183.181  OR $ host -a IP/DomainName // Reverse DNS lookup,
 $ nslookup redhat.com ns1.redhat.com // Using Specific DNS server(here, ns1.redhat.com)
 $ nslookup -debug redhat.com  // Enabling debug mode using -debug
 </pre>
-<p>我们可以通过type参数指定要查询的域名相关信息，见上例， 其中，如果不指定type则默认返回A记录(A Record)对应的信息， 简单来讲就是域名与IP地址的对应信息。关于nslookup使用的更多信息可以参考<a href="http://www.thegeekstuff.com/2012/07/nslookup-examples/" class="uri">http://www.thegeekstuff.com/2012/07/nslookup-examples/</a></p>
+
+<p>我们可以通过type参数指定要查询的域名相关信息，见上例， 其中，如果不指定type则默认返回A记录(A Record)对应的信息， 简单来讲就是域名与IP地址的对应信息。关于nslookup使用的更多信息可以参考<a href="http://www.thegeekstuff.com/2012/07/nslookup-examples/">http://www.thegeekstuff.com/2012/07/nslookup-examples/</a></p>
 <p>如果是在MacOS X系统下， 除了使用命令行形式的nslookup命令，也可以使用/Application/Utilities/Network Utility图形化工具来达成相同的目的。</p>
 <h2 id="域名注册商与dns-server"><span class="header-section-number">3.1</span> 域名注册商与DNS Server</h2>
 <p>如果我们在某个域名注册商处注册了一个域名， 一般情况下， 域名注册商会有相应的DNS服务让我们来指定注册成功后的域名应该绑定到哪个IP地址上， 即域名注册商会有相应的DNS Server对外提供服务，该DNS Server被认为是authoritive的，原则上，它是应该在Root DNS Server是有在册记录的^_^， 只有这样，当查询应用程序访问和查询我们注册的域名的时候， 才能通过Root DNS Server的查询结果告知发起查询的DNS Server到注册商的DNS Server上来查询到对应的结果。</p>
@@ -127,6 +131,7 @@ $ nslookup -debug redhat.com  // Enabling debug mode using -debug
 <p>NOTE</p>
 DNS Server一般运行BIND软件对外提供服务。
 </blockquote>
+
 <p>那A记录， CNAME之类到底有哪些，又都代表什么意思那？</p>
 <h2 id="域名的记录类型record-types-of-domain-names"><span class="header-section-number">3.2</span> 域名的记录类型(record types of domain names)</h2>
 <ol style="list-style-type: decimal">
@@ -164,6 +169,7 @@ DNS Server一般运行BIND软件对外提供服务。
 <p>一台服务器上的多个服务一般跑在不同的端口上， 在访问的时候，在域名后指定端口即可，不需要在DNS配置中指定。</p>
 当然，像在DNSPod中，也可以IP和端口一起指定， 参考https://support.dnspod.cn/Kb/showarticle/tsid/35/。
 </blockquote>
+
 <h2 id="多个域名对应多个ip"><span class="header-section-number">4.3</span> 多个域名对应多个IP</h2>
 <p>有了上面几个故事，这里还需要再细说嘛？</p>
 <h1 id="dynamic-dns"><span class="header-section-number">5</span> Dynamic DNS</h1>
@@ -177,8 +183,8 @@ DNS Server一般运行BIND软件对外提供服务。
 <ol style="list-style-type: decimal">
 <li>《用TCP/IP进行网际互连 - 第一卷》</li>
 <li><a href="http://computer.howstuffworks.com/dns.htm">How Domain Name Servers Work</a></li>
-<li><a href="http://www.iana.org/" class="uri">http://www.iana.org/</a></li>
-<li><a href="http://dnslookup.me/dynamic-dns/" class="uri">http://dnslookup.me/dynamic-dns/</a></li>
+<li><a href="http://www.iana.org/">http://www.iana.org/</a></li>
+<li><a href="http://dnslookup.me/dynamic-dns/">http://dnslookup.me/dynamic-dns/</a></li>
 <li><a href="https://support.dnspod.cn/Kb/showarticle/tsid/32/">CNAME记录</a></li>
 <li><a href="https://support.dnspod.cn/Kb/showarticle/tsid/30/">A记录</a></li>
 <li><a href="https://support.dnspod.cn/Kb/guide">DNSPod问题向导</a></li>

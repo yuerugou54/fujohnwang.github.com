@@ -50,6 +50,7 @@
       <div class="row">
         <div class="col-md-3 sidebar">
             <a href="/">
+				<div align="center"><img src="/images/wfq0.png"/></div>
                 <h2 class="text-center">AFOO.ME</h2>
             </a>
             <p class="text-center lead slogan"><a href="/slogan.html">lollapalooza &amp; positioning</a></p>
@@ -100,9 +101,9 @@
 <p>SBT0.12.0之后提供了构建tab-completion可交互命令行程序的支持(从SBT一贯的发展来看，该功能只能算是一种锦上添花，不过，也进一步验证了SBT在架构设计上优秀的一致性和可扩展性)，这篇文字将简单回顾和汇总使用SBT构建可交互命令行程序相关细节，以期有所参考(好脑瓜子也不如烂笔头嘛！)。</p>
 <h1 id="quick-start"><span class="header-section-number">2</span> Quick Start</h1>
 <ol style="list-style-type: decimal">
-<li>安装giter8 (<a href="https://github.com/n8han/giter8" class="uri">https://github.com/n8han/giter8</a>)， 如何安装参考该项目的README，有详细的介绍，这里不做赘述；</li>
+<li>安装giter8 (<a href="https://github.com/n8han/giter8">https://github.com/n8han/giter8</a>)， 如何安装参考该项目的README，有详细的介绍，这里不做赘述；</li>
 <li>执行<code>g8 harrah/command-line-app</code>命令，构建scaffold工程，该giter8模板功能是sbt作者harrah构建的，所有命令行应用可以使用这个模板工程作为起点；</li>
-<li>如果本地没有安装sbt(<a href="https://github.com/harrah/xsbt" class="uri">https://github.com/harrah/xsbt</a>)，首先安装sbt， 在mac下，直接<code>brew install sbt</code>就可以搞定，其他环境参考sbt wiki说明<https://github.com/harrah/xsbt/wiki/Getting-Started-Setup>；</li>
+<li>如果本地没有安装sbt(<a href="https://github.com/harrah/xsbt">https://github.com/harrah/xsbt</a>)，首先安装sbt， 在mac下，直接<code>brew install sbt</code>就可以搞定，其他环境参考sbt wiki说明<https://github.com/harrah/xsbt/wiki/Getting-Started-Setup>；</li>
 <li><code>cd $command-line-app$</code>, 因为项目的group id和artifact id等可以定制，这里使用__<span class="math"><em>c</em><em>o</em><em>m</em><em>m</em><em>a</em><em>n</em><em>d</em> − <em>l</em><em>i</em><em>n</em><em>e</em> − <em>a</em><em>p</em><em>p</em></span>__作为本地scaffold项目目录;</li>
 <li><code>sbt publish-local</code>, 发布该项目到本地repo；</li>
 <li><code>sbt @$command-line-app$/src/main/conscript/command-line-application/launchconfig</code></li>
@@ -119,6 +120,7 @@
 [error]      ^
 > 
 </pre>
+
 <p>从以上运行结果可以看到，通过tab可以获取命令行程序可接受的命令以及参数形式，如果输入错误命令或者命令执行条件不满足，sbt将告知用户相应错误提示信息， cool， ha？！</p>
 <h1 id="how-it-works"><span class="header-section-number">3</span> How it works?!</h1>
 <p>这里牵扯sbt两个主要的internal功能， 第一个就是我们这次主要关注的tab-completion功能，另一个则是sbt的launcher功能。</p>
@@ -138,6 +140,7 @@
   maven-central
   typesafe-ivy-releases: http://repo.typesafe.com/typesafe/ivy-releases/, [organization]/[module]/[revision]/[type]s/[artifact](-[classifier]).[ext]
 </pre>
+
 <p>像启动时要使用的scala version， 启动哪个artifact(org + name + version)， 使用哪个main函数(class)， 从哪些repo中去加载指定的artifact，在这个launch speficiation的配置中都有罗列。sbt launcher程序只需要根据这些信息来工作就足够了。</p>
 <p>launch specification中配置的class需要符合一定的规则，简单来讲，就是指定的类需要实现<code>xsbti.AppMain</code> trait:</p>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">package</span> org.<span class="fu">example</span>
@@ -248,7 +251,7 @@
 <ul>
 <li><a href="https://github.com/harrah/xsbt/wiki/Command-Line-Applications">Creating Command Line Applications Using sbt</a></li>
 <li><a href="https://github.com/harrah/xsbt/wiki/Launcher">Launcher Specification</a></li>
-<li><a href="http://skillsmatter.com/podcast/scala/tab-completion-parser-combinators" class="uri">http://skillsmatter.com/podcast/scala/tab-completion-parser-combinators</a> ****推荐观看</li>
+<li><a href="http://skillsmatter.com/podcast/scala/tab-completion-parser-combinators">http://skillsmatter.com/podcast/scala/tab-completion-parser-combinators</a> ****推荐观看</li>
 </ul>
                 
                 <!--百度分享按钮-->

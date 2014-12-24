@@ -49,6 +49,7 @@
       <div class="row">
         <div class="col-md-3 sidebar">
             <a href="/">
+				<div align="center"><img src="/images/wfq0.png"/></div>
                 <h2 class="text-center">AFOO.ME</h2>
             </a>
             <p class="text-center lead slogan"><a href="/slogan.html">lollapalooza &amp; positioning</a></p>
@@ -92,7 +93,7 @@
                 <li><a href="#添加自定义随同发布文件和目录"><span class="toc-section-number">5</span> 添加自定义随同发布文件和目录</a></li>
                 </ul>
                 </div>
-                                <p>插件项目地址: <a href="http://www.scala-sbt.org/sbt-native-packager" class="uri">http://www.scala-sbt.org/sbt-native-packager</a></p>
+                                <p>插件项目地址: <a href="http://www.scala-sbt.org/sbt-native-packager">http://www.scala-sbt.org/sbt-native-packager</a></p>
 <h1 id="安装"><span class="header-section-number">1</span> 安装</h1>
 <p><code>project/plugins.sbt</code>中添加：</p>
 <blockquote>
@@ -107,6 +108,7 @@ import NativePackagerKeys._
 
 packageArchetype.java_application
 </pre>
+
 <blockquote>
 <p>java_application - Defines packaging of your project with a start script and automatic PATH additions java_server - Defines packaging of your project with automatic service start scripts (supports System V + init.d).</p>
 </blockquote>
@@ -144,7 +146,7 @@ packageArchetype.java_application
 </blockquote>
 <p>当然了，假设我们不通过命令行参数使用这些配置文件，那么我们完全可以通过相对路径来加载指定目录conf下的配置文件。</p>
 <h1 id="覆盖默认脚本"><span class="header-section-number">4</span> 覆盖默认脚本</h1>
-<p>如果自动打包的启动脚本有bug或者其它原因， 可以覆盖之， 参考<a href="http://www.scala-sbt.org/sbt-native-packager/GettingStartedApplications/OverridingTemplates.html" class="uri">http://www.scala-sbt.org/sbt-native-packager/GettingStartedApplications/OverridingTemplates.html</a>, 不过一般情况下不建议完全覆盖和替换。</p>
+<p>如果自动打包的启动脚本有bug或者其它原因， 可以覆盖之， 参考<a href="http://www.scala-sbt.org/sbt-native-packager/GettingStartedApplications/OverridingTemplates.html">http://www.scala-sbt.org/sbt-native-packager/GettingStartedApplications/OverridingTemplates.html</a>, 不过一般情况下不建议完全覆盖和替换。</p>
 <h1 id="添加自定义随同发布文件和目录"><span class="header-section-number">5</span> 添加自定义随同发布文件和目录</h1>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">import</span> com.<span class="fu">typesafe</span>.<span class="fu">sbt</span>.<span class="fu">SbtNativePackager</span>.<span class="fu">_</span>
 <span class="kw">import</span> NativePackagerKeys.<span class="fu">_</span>

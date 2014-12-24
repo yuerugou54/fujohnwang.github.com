@@ -30,6 +30,7 @@
       <div class="row">
         <div class="col-md-3 sidebar">
             <a href="/">
+				<div align="center"><img src="/images/wfq0.png"/></div>
                 <h2 class="text-center">AFOO.ME</h2>
             </a>
             <p class="text-center lead slogan"><a href="/slogan.html">lollapalooza &amp; positioning</a></p>
@@ -79,11 +80,14 @@
 <pre>
 猫 -> 路由器(router) -> (pc, laptop, card computer, ipad, smartphone...)
 </pre>
+
 <p>那么，不出意外的话，我们的卡片电脑会被分配一个私有IP(遵循RFC1918)， 这个私有IP的边界被限定在路由器后面，从而外部网络实际上是无法访问到我们的卡片电脑的， 我们遇到第一个障碍 ：（</p>
 <blockquote>
 <p>外延</p>
 本地家庭网络内各个设备的本地私有IP实际上是路由器根据DHCP自动分配的， 通常是动态的IP， 我们也可以手动配置静态IP。
 </blockquote>
+
+
 <h1 id="public-ip的巧取豪夺"><span class="header-section-number">2</span> Public IP的巧取豪夺</h1>
 <p>既然我们的卡片电脑获得的私有IP无法被外部访问并对外进行服务，那么我们能不能给它搞一个Public IP那？ 实际上，ISP本来就分配了一个Public IP给我们，只是在我们的本地网络拓扑中，被路由器(router)使用了，如果我们不用路由器，直接让卡片电脑通过猫猫来联网的话，外部就可以通过ISP分配给我们的Public IP访问我们的卡片电脑了，所以，问题解决了。</p>
 <h1 id="命名服务让生活更美好"><span class="header-section-number">3</span> 命名服务让生活更美好</h1>
@@ -100,6 +104,7 @@
 <blockquote>
 当然啦， 域名记录的更新间隔，以及域名记录的分发时间，都会多少影响服务访问的可用性，这显然不是啥大问题，俺们又不是在搞啥商业高可用网站，是吧？
 </blockquote>
+
 <h1 id="路由器我们不能失去你"><span class="header-section-number">5</span> 路由器，我们不能失去你～</h1>
 <p>卡片电脑直接通过猫猫联网倒是解决了自己的生存出路，可是，其他设备咋活啊？ 人家的pc啦， laptop啦， ipad啦，也都需要上网啊，总得给人家条活路不是？ 群众的呼声是不能忽视的，我们还得把路由器接回来！</p>
 <p>将路由器接回来之后， 路由器就持有了ISP分配给我们的Public IP， 而为我们的所有本地设备分配了相应的Private IP，出路的问题解决了，我们需要继续解决卡片电脑的访客通道问题， 这个时候，就该让NAT (<a href="https://en.wikipedia.org/wiki/Network_address_translation">Network Address Translation</a>)出场了！</p>

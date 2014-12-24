@@ -31,6 +31,7 @@
       <div class="row">
         <div class="col-md-3 sidebar">
             <a href="/">
+				<div align="center"><img src="/images/wfq0.png"/></div>
                 <h2 class="text-center">AFOO.ME</h2>
             </a>
             <p class="text-center lead slogan"><a href="/slogan.html">lollapalooza &amp; positioning</a></p>
@@ -96,6 +97,7 @@ create table dw(
  id int(10) unsigned auto_increment not null, 
  value varchar(25), primary key(id)) engine=InnoDB;
  </pre>
+ 
 Then, here is what we may do next:
 <pre>
 Example 1. 
@@ -110,6 +112,7 @@ P 0 test dw PRIMARY value
 0 = 1 0 1 0 D
 0 1 1
 </pre>
+
 <p>Just for hint, the delimeter between value columns above is tab(0x09), not space, just as the protocol states. But in your first time, you may ignore this and cause unsuccessful interaction with HS.</p>
 <h2 id="the-insert-columns-have-nothing-to-do-with-the-openindex-columns"><span class="header-section-number">2.3</span> The Insert columns have nothing to do with the OpenIndex columns;</h2>
 <p>Let's say, we have a table which has 2 columns (id int unsigned PRIMARY KEY auth_increment, value VARCHAR(25)), since we define id as auto_increment, when insert records into this table, we may only care about the value column, so we may do:</p>
@@ -120,12 +123,14 @@ P 0 test my_table PRIMARY value
 0 + 1 stringvalue
 // 1 1
 </pre>
+
 <p>what? the error code is 1, not 0, it means there is something wrong. yes, Not like Update operations, the insert operation will ALWAYS insert columns from the 1st column to the last column of the table, even we only Open index with value column. In the above sample, the operation in fact try to insert stringvalue as int value which indeed will cause error.</p>
 <blockquote>
 In fact, sometimes stringvalue will be converted to 0 instead of raising error. But the gotcha with insert is the key point here.
 </blockquote>
+
 <h2 id="auto_increment-indeed-is-the-problem-here-with-hs."><span class="header-section-number">2.4</span> auto_increment indeed is the problem here with HS.</h2>
-<p>why? see item above. ^_^ Of course, most of the times, it's not a big deal as per HS's typical usage scenarios. In distributed environments, auth_increment is not prefered.</p>
+<p>why? see item above. ^<em>^ Of course, most of the times, it's not a big deal as per HS's typical usage scenarios. In distributed environments, auth</em>increment is not prefered.</p>
 <p>(<strong>Update: auto_increment works now</strong>)</p>
 <h2 id="handlersocket-doesnt-support-transaction"><span class="header-section-number">2.5</span> HandlerSocket doesn't support transaction</h2>
 <p>But the data changes are durable. Use HandlerSocket properly and visely in suitable scenarios.</p>
