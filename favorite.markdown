@@ -259,7 +259,7 @@ with MapReduce](http://lintool.github.com/MapReduceAlgorithms/index.html) ^^^
 6. [飘花资源网](http://www.piaohua.com/)
 7. [BT天堂](http://www.bttiantang.cc/)
 8. [人人影视海外版](http://yzys.tv/)
-
+9. [伪射手网](http://sub.makedie.me/)
 
 ## BT Search
 1. <http://btdigg.org/>
