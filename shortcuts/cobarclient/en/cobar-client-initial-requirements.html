@@ -1,0 +1,29 @@
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+   <title>Chapter&nbsp;1.&nbsp;Initial Requirements of CobarClient</title><link rel="stylesheet" type="text/css" href="css/cc.css"><meta name="generator" content="DocBook XSL Stylesheets V1.78.1"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="chapter"><div class="titlepage"><div><div><h2 class="title"><a name="roma_application_redirect"></a>Chapter&nbsp;1.&nbsp;Initial Requirements of CobarClient</h2></div></div></div><p>
+		CobarClient must support following functionalities:
+		</p><div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><p>
+					data access support with horizontal or vertical partitions.
+				</p></li><li class="listitem"><p>
+					support 2-master active HA deployment infrustructure, of
+					course, the applications still can choose other HA solutions, like
+					the ones specific to destination databases(e.g. RAC of Oracle).
+				</p></li><li class="listitem"><p>
+					Data aggregation support, currently only simple data merge
+					functionality is
+					available.
+				</p></li><li class="listitem"><p>
+					Local database transaction support(Currently, such requirement is
+					fulfilled by using
+					<span class="quote">&#8220;<span class="quote">Best Efforts 1PC Pattern</span>&#8221;</span>
+					).
+				</p></li><li class="listitem"><p>
+					SQL auditing, analysis, etc.
+					<a href="#ftn.d726e25" class="footnote" name="d726e25"><sup class="footnote">[1]</sup></a>
+				</p></li></ol></div><p>
+	</p><div class="footnotes"><br><hr style="width:100; text-align:left;margin-left: 0"><div id="ftn.d726e25" class="footnote"><p><a href="#d726e25" class="para"><sup class="para">[1] </sup></a>
+							ICBU Internal can use their old
+							<span class="quote">&#8220;<span class="quote">Ark</span>&#8221;</span>
+							solution to do such works, but CobarClient still provides
+							extension point for this.
+						</p></div></div></div></body></html>

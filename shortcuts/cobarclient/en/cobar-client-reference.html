@@ -1,0 +1,1265 @@
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+   <title>Chapter&nbsp;1.&nbsp;Cobar Client Reference Documentation</title><link rel="stylesheet" type="text/css" href="css/cc.css"><meta name="generator" content="DocBook XSL Stylesheets V1.78.1"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="chapter"><div class="titlepage"><div><div><h2 class="title"><a name="roma_application_redirect"></a>Chapter&nbsp;1.&nbsp;Cobar Client Reference Documentation</h2></div></div></div><div class="toc"><dl class="toc"><dt><span class="sect1"><a href="#d581e4">1.1. The Big Picture Of Cobar Client Architecture</a></span></dt><dt><span class="sect1"><a href="#d581e47">1.2. CobarSqlMapClientTemplate Explained In Details</a></span></dt><dd><dl><dt><span class="sect2"><a href="#mds explained">1.2.1. Multiple DataSources Management</a></span></dt><dt><span class="sect2"><a href="#d581e236">1.2.2. Data Access Requests Routing In CobarSqlMapClientTemplate
+			</a></span></dt><dt><span class="sect2"><a href="#d581e562">1.2.3. SqlAuditing</a></span></dt><dt><span class="sect2"><a href="#d581e607">1.2.4. Other Configuration or Features Explained</a></span></dt></dl></dd><dt><span class="sect1"><a href="#d581e696">1.3. MultipleDataSourcesTransactionManager Explained</a></span></dt><dd><dl><dt><span class="sect2"><a href="#d581e721">1.3.1. 
+				Multiple Data Sources Management in
+				MultipleDataSourcesTransactionManager 
+			</a></span></dt></dl></dd></dl></div><div class="sect1"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="d581e4"></a>1.1.&nbsp;The Big Picture Of Cobar Client Architecture</h2></div></div></div><p>
+			The architecture of CobarClient looks like:
+			</p><div class="mediaobject"><img src="images/cobarClientArch.png"></div><p>
+			This architecture will take care of two main concerns:
+			</p><div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><p><b>Routing of Data Access Requests.&nbsp;</b>
+							By extending spring's SqlMapClientTemplate, we provide our
+							own
+							CobarSqlMapClientTemplate. CobarSqlMapClientTemplate will work
+							with some
+							<span class="quote">&#8220;<span class="quote">Router</span>&#8221;</span>
+							to support data access routing.
+							It keeps compatible with current
+							applications, the migration is simplified to just replace and
+							inject SqlMapClientTemplate
+							instances to your application.
+						</p></li><li class="listitem"><p><b>Transaction Management on Multiple DataSources.&nbsp;</b>
+							Since 2PC(2Phase Commit) will cause performance penalty,
+							it's not
+							proper to use 2PC distributed transaction management
+							strategy for
+							web applications. But since transaction management
+							is still
+							needed, so we turn to use
+							<span class="quote">&#8220;<span class="quote">Best Efforts 1PC Pattern</span>&#8221;</span>
+							transaction management.
+							<span class="emphasis"><em>MultipleDataSourcesTransactionManager</em></span>
+							is the transaction manager that's implemented with
+							<span class="quote">&#8220;<span class="quote">Best Efforts 1PC Pattern</span>&#8221;</span>
+							,
+							it extends AbstractPlatformTransactionManager of spring
+							framework,
+							so by just replacing your original transaction manager
+							implementations with
+							<span class="emphasis"><em>MultipleDataSourcesTransactionManager</em></span>
+							to use it.
+							<span class="emphasis"><em>MultipleDataSourcesTransactionManager</em></span>
+							has a good balance between the performance and data integration.
+						</p></li></ol></div><p>
+			Furthermore, we also add HA support between data sources by using
+			AOP, and enable lazy-loading database connections to use resources
+			efficiently. All of these functionalities can be found in above
+			architecture picture.
+		</p><p>
+			We will start to introduce each aspects of CobarClient, since
+			the 2 main concerns are the most important things, we will start from
+			them. So here we go...
+		</p></div><div class="sect1"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="d581e47"></a>1.2.&nbsp;CobarSqlMapClientTemplate Explained In Details</h2></div></div></div><p>
+			CobarSqlMapClientTemplate is an extension of standard
+			SqlMapClientTemplate of spring framework, it adds routing support for
+			data access requests so that the applications can access multiple
+			database partitions/shards transparently. Besides,
+			CobarSqlMapClientTemplate also provides several additional
+			functionalities to ease application development and monitoring.
+			Now we
+			will elaborate on functionalities of CobarSqlMapClientTemplate in the
+			following sections.
+		</p><div class="sect2"><div class="titlepage"><div><div><h3 class="title"><a name="mds explained"></a>1.2.1.&nbsp;Multiple DataSources Management</h3></div></div></div><p>
+				Before database partitioning, the applications only need to provide
+				a single data source dependency for SqlMapClientTemplate of spring
+				framework, it seems like the following:
+				</p><pre class="programlisting">
+&lt;bean id="sqlMapClient" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean"&gt;
+	&lt;property name="dataSource" ref="dataSource" /&gt;
+	...
+&lt;/bean&gt;
+				</pre><p>
+				After database partitioning, the data access requests might access
+				multiple data partitions, that's, we now need a dependency of
+				multiple data sources. We also need to find a way to manage these
+				multiple data sources dependency, and inject these multiple data
+				sources dependency to CobarSqlMapClientTemplate for use.
+				In
+				CobarClient, the
+				<span class="quote">&#8220;<span class="quote">ICobarDataSourceService</span>&#8221;</span>
+				abstraction will help to manage these multiple data sources
+				dependency, the
+				<span class="quote">&#8220;<span class="quote">ICobarDataSourceService</span>&#8221;</span>
+				is defined as:
+				</p><pre class="programlisting">
+public interface ICobarDataSourceService {
+	Map&lt;String, DataSource&gt; getDataSources();
+	Set&lt;CobarDataSourceDescriptor&gt; getDataSourceDescriptors();
+}
+				</pre><p>
+				The
+				<span class="quote">&#8220;<span class="quote">ICobarDataSourceService</span>&#8221;</span>
+				will be responsible for providing a group of data sources as
+				dependency of CobarSqlMapClientTemplate, even more,
+				it can also
+				provide meta information of each data source.
+				<span class="quote">&#8220;<span class="quote">ICobarDataSourceService</span>&#8221;</span>
+				has a default implementation, that's,
+				com.alibaba.cobar.client.datasources.DefaultCobarDataSourceService.
+				With DefaultCobarDataSourceService, we can manage the data sources
+				in a central way, and inject them into CobarSqlMapClientTemplate for
+				use.
+				A general configuration with CobarSqlMapClientTemplate and its
+				<span class="quote">&#8220;<span class="quote">ICobarDataSourceService</span>&#8221;</span>
+				dependency looks like:
+				</p><pre class="programlisting">
+&lt;bean id="sqlMapClientTemplate" class="com.alibaba.cobar.client.CobarSqlMapClientTemplate"&gt;
+	&lt;property name="sqlMapClient" ref="sqlMapClient" /&gt;
+	&lt;property name="cobarDataSourceService" ref="dataSources" /&gt;
+	...
+&lt;/bean&gt;
+
+&lt;bean id="dataSources" class="com.alibaba.cobar.client.datasources.DefaultCobarDataSourceService"&gt;
+	&lt;property name="dataSourceDescriptors"&gt;
+		&lt;set&gt;
+			&lt;bean class="com.alibaba.cobar.client.datasources.CobarDataSourceDescriptor"&gt;
+				&lt;property name="identity" value="partition1"/&gt;
+				&lt;property name="targetDataSource" ref="partition1_main"/&gt;
+				&lt;property name="targetDetectorDataSource" ref="partition1_main"/&gt;
+				&lt;property name="standbyDataSource" ref="partition1_standby"/&gt;
+				&lt;property name="standbyDetectorDataSource" ref="partition1_standby"/&gt;
+				&lt;property name="poolSize" value="10"/&gt;
+			&lt;/bean&gt;
+			&lt;bean class="com.alibaba.cobar.client.datasources.CobarDataSourceDescriptor"&gt;
+				&lt;property name="identity" value="partition2"/&gt;
+				&lt;property name="targetDataSource" ref="partition2_main"/&gt;
+				&lt;property name="targetDetectorDataSource" ref="partition2_main"/&gt;
+				&lt;property name="standbyDataSource" ref="partition2_standby"/&gt;
+				&lt;property name="standbyDetectorDataSource" ref="partition2_standby"/&gt;
+			&lt;/bean&gt;
+		&lt;/set&gt;
+	&lt;/property&gt;
+	&lt;property name="haDataSourceCreator"&gt;
+		&lt;bean class="com.alibaba.cobar.client.datasources.ha.FailoverHotSwapDataSourceCreator"&gt;
+			&lt;property name="detectingSql" value="update cobarha set timeflag=CURRENT_TIMESTAMP()"/&gt;
+		&lt;/bean&gt;
+	&lt;/property&gt;
+&lt;/bean&gt;
+
+&lt;bean id="partition1_main" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close"&gt;
+	...
+&lt;/bean&gt;
+&lt;bean id="partition1_standby" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close"&gt;
+	...
+&lt;/bean&gt;
+&lt;bean id="partition2_main" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close"&gt;
+	...
+&lt;/bean&gt;
+&lt;bean id="partition2_standby" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close"&gt;
+	...
+&lt;/bean&gt;
+				</pre><p>
+				Note that, CobarSqlMapClientTemplate still needs a SqlMapClient of
+				iBatis as dependency, because
+				<span class="quote">&#8220;<span class="quote">CobarSqlMapClientTemplate is still a SqlMapClientTemplate
+				</span>&#8221;</span>
+				(If SqlMapClientTemplate needs it, CobarSqlMapClientTemplate should
+				need it too.).
+				Attention should be paid to the configuration of
+				<span class="quote">&#8220;<span class="quote">com.alibaba.cobar.client.datasources.DefaultCobarDataSourceService
+				</span>&#8221;</span>
+				, here we inject a group of
+				com.alibaba.cobar.client.datasources.CobarDataSourceDescriptor via
+				<span class="quote">&#8220;<span class="quote">dataSourceDescriptors</span>&#8221;</span>
+				attribute, while CobarDataSourceDescriptor is mainly responsible for
+				providing descriptions of each data source, which contains the
+				following
+				configuraiton items:
+				</p><div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p><b>identity.&nbsp;</b>
+								the identity of data partition, it can't collide with other
+								partitions' identity value. When defining routing rules, it will
+								be part of the rules.
+							</p></li><li class="listitem"><p><b>targetDataSource.&nbsp;</b>
+								the main target data source, in genernal, this data source
+								should be active when the application is gonna startup.
+							</p></li><li class="listitem"><p><b>targetDetectorDataSource.&nbsp;</b>
+								the paired data source of
+								<span class="quote">&#8220;<span class="quote">targetDataSource</span>&#8221;</span>
+								which will be used to detect the healthy status of the target
+								database. Both
+								<span class="quote">&#8220;<span class="quote">targetDataSource</span>&#8221;</span>
+								and
+								<span class="quote">&#8220;<span class="quote">targetDetectorDataSource</span>&#8221;</span>
+								should be pointed to a same database. But they should be
+								configured independently so that they won't interfere with each
+								other.(The above confiugration use same data source reference,
+								this is only for demo, but in production environment, 2
+								independent datasources should be configured.)
+							</p></li><li class="listitem"><p><b>standbyDataSource.&nbsp;</b>
+								The standby data source for
+								<span class="quote">&#8220;<span class="quote">targetDataSource</span>&#8221;</span>
+								, when
+								<span class="quote">&#8220;<span class="quote">targetDataSource</span>&#8221;</span>
+								is down, Cobarclient will automatically failover to this data
+								source. (The prerequisite is the HA functionality is enabled in
+								CobarClient.)
+							</p></li><li class="listitem"><p><b>standbyDetectorDataSource.&nbsp;</b>
+								the paired data source of
+								<span class="quote">&#8220;<span class="quote">standbyDataSource</span>&#8221;</span>
+								which will be used to detect the healthy status of the target
+								database. Refer to explanation of
+								<span class="quote">&#8220;<span class="quote">targetDetectorDataSource</span>&#8221;</span>
+								for more information.
+							</p></li><li class="listitem"><p><b>poolSize.&nbsp;</b>
+								CobarSqlMapClientTemplate will use the value of
+								<span class="quote">&#8220;<span class="quote">poolSize</span>&#8221;</span>
+								as a hit to create corresponding thread pools. Since creating
+								too many threads will cause performance penalty, usually we will
+								create a thread pool for each data source executor with thread
+								count that equals to
+								<span class="quote">&#8220;<span class="quote">poolSize</span>&#8221;</span>
+								, if
+								<span class="quote">&#8220;<span class="quote">poolSize</span>&#8221;</span>
+								is not given, a default value will be used, that's,
+								<span class="quote">&#8220;<span class="quote">CPU numbers
+									* 5</span>&#8221;</span>
+								;
+							</p></li></ul></div><p>
+				</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title">Note</h3><p>
+						Currently, our internal applications all depend on data
+						sources bound to JNDI, and CobarClient can't get enough
+						information on data sources, and further can't create independent
+						data source dependencies as per only one copy of data source
+						configuration information. That's why we need to configure a
+						paired data source to be used as detetion purpose. Of course, only
+						HA functionality is enabled, otherwise, those paired data sources
+						are optional.
+					</p><p>
+						In our configuration sample above, we use C3P0 data source
+						implementation, but it's not the only option for CobarClient,
+						CobarClient only depends on standard JDBC
+						<span class="quote">&#8220;<span class="quote">DataSource</span>&#8221;</span>
+						interface,
+						So no matter what kind of data source implementations or
+						where the data sources come from, CobarClient can do.
+					</p></div><p>
+
+				CobarDataSourceDescriptor currently only contains necessary
+				information that specific to our internal database deployment
+				structure, that's,
+				it only tries to describe a horizontal scaled with
+				2-master-active
+				nodes structure, but this structure may change, so
+				CobarDataSourceDescriptor will chagne too as per speicific
+				situations.
+				</p><div class="tip" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title">Tip</h3><p>
+						If HA functionality is not needed, then you can point both
+						<span class="quote">&#8220;<span class="quote">standby(.*)DataSource</span>&#8221;</span>
+						to their specific
+						<span class="quote">&#8220;<span class="quote">target(.*)DataSource</span>&#8221;</span>
+						, or just don't assign a value to the
+						<span class="quote">&#8220;<span class="quote">haDataSourceCreator</span>&#8221;</span>
+						attribute of DefaultCobarDataSourceService, then
+						standbyDataSource,standbyDetectorDataSource and
+						targetDetectorDataSource are not necessary to configure.
+					</p><p>
+						The data source references of CobarDataSourceDescriptor can
+						be from
+						JNDI, or from internal IoC Container(just as we do in the
+						tests, we
+						use C3P0 in spring container), even other types of data
+						sources, as
+						long as they conform to standard JDBC
+						<span class="quote">&#8220;<span class="quote">DataSource</span>&#8221;</span>
+						interface.
+					</p></div><p>
+				</p><p>
+					DefaultCobarDataSourceService not only depends on a group of
+					CobarDataSourceDescriptor, but also depends on an
+					<span class="quote">&#8220;<span class="quote">IHADataSourceCreator</span>&#8221;</span>
+					to support HA of databases. If no
+					<span class="quote">&#8220;<span class="quote">IHADataSourceCreator</span>&#8221;</span>
+					is given, DefaultCobarDataSourceService will create a
+					<span class="quote">&#8220;<span class="quote">NonHADataSourceCreator</span>&#8221;</span>
+					to use as default, that's, don't create HA-enabled data sources.
+					Of
+					course, CobarClient also provides a default HA-enabled facility,
+					that's,
+					<span class="quote">&#8220;<span class="quote">FailoverHotSwapDataSourceCreator</span>&#8221;</span>
+					, you can decide which one to use or provide the ones you implement
+					by youself to meet your needs.
+				</p><p>
+			</p><div class="sect3"><div class="titlepage"><div><div><h4 class="title"><a name="d581e203"></a>1.2.1.1.&nbsp;HA Support In Cobar Client</h4></div></div></div><p>
+					CobarClient supports failover between 2 active nodes, the failover
+					functionality is abstracted and hidden under interface definition
+					of IHADataSourceCreator:
+					</p><pre class="programlisting">
+public interface IHADataSourceCreator {
+	DataSource createHADataSource(CobarDataSourceDescriptor descriptor) throws Exception;
+}
+					</pre><p>
+					As we said before, DefaultCobarDataSourceService will depend on an
+					<span class="quote">&#8220;<span class="quote">IHADataSourceCreator</span>&#8221;</span>
+					to create data source instances that support hot-swap between 2
+					active nodes.
+					com.alibaba.cobar.client.datasources.ha.NonHADataSourceCreator&#21644;com.alibaba.cobar.client.datasources.ha.FailoverHotSwapDataSourceCreator
+					are the mostly used
+					<span class="quote">&#8220;<span class="quote">IHADataSourceCreator</span>&#8221;</span>
+					implementations, but NonHADataSourceCreator is mainly for tests
+					scenarios or scenarios that don't need HA support(if database
+					servers can handle HA concerns, then it's not necessary to enable
+					HA support in CobarClient) and FailoverHotSwapDataSourceCreator is
+					the one that we will use most of the time to enable HA support of
+					CobarClient.
+				</p><p>
+					FailoverHotSwapDataSourceCreator can support two types of HA
+					abilities: active detection HA and passive detection HA.
+					They can be
+					controlled by
+					<span class="quote">&#8220;<span class="quote">passiveFailoverEnable</span>&#8221;</span>
+					and
+					<span class="quote">&#8220;<span class="quote">positiveFailoverEnable</span>&#8221;</span>
+					attributes, at default, active detection HA is enabled, but passive
+					detection HA is disabled, because as per the experiences from
+					<span class="quote">&#8220;<span class="quote">Cobar(Server Edition)</span>&#8221;</span>
+					, checking connection status frequently will cause performance
+					penalty.
+				</p><p>
+					The active detection HA functionality follows the idea used in
+					Cobar(Server Edition), it needs a table in target databases to use
+					as update target, and the detector will send out update sql to the
+					detection table periodically. Suppose we create a detection table
+					named
+					<span class="quote">&#8220;<span class="quote">cobarha</span>&#8221;</span>
+					, then we can configure our FailoverHotSwapDataSourceCreator as
+					follows:
+					</p><pre class="programlisting">
+&lt;bean id="haDataSourceCreator" class="com.alibaba.cobar.client.datasources.ha.FailoverHotSwapDataSourceCreator"&gt;
+	&lt;property name="detectingSql" value="update cobarha set timeflag=CURRENT_TIMESTAMP()"/&gt;
+&lt;/bean&gt;
+					</pre><p>
+					FailoverHotSwapDataSourceCreator will send this SQL to target
+					database periodically to detect the healthy status of it. If the
+					timeout exceeds or exceptions are raised, and after specified retry
+					times, then FailoverHotSwapDataSourceCreator will switch current
+					target database to standby target database. The detection interval,
+					timout, and retry times can be set via corresponding properties of
+					FailoverHotSwapDataSourceCreator. Refer to the javadoc of
+					FailoverHotSwapDataSourceCreator for more inforamtion.
+				</p></div></div><div class="sect2"><div class="titlepage"><div><div><h3 class="title"><a name="d581e236"></a>1.2.2.&nbsp;Data Access Requests Routing In CobarSqlMapClientTemplate
+			</h3></div></div></div><p>
+				Besides the dependency on some
+				<span class="quote">&#8220;<span class="quote">ICobarDataSourceService</span>&#8221;</span>
+				to manage multiple data sources, another important dependency of
+				CobarSqlMapClientTemplate is an
+				<span class="quote">&#8220;<span class="quote">ICobarRouter</span>&#8221;</span>
+				which will be responsible for routing data access requests to their
+				target data partitions/shards.
+			</p><div class="sect3"><div class="titlepage"><div><div><h4 class="title"><a name="d581e247"></a>1.2.2.1.&nbsp;Router Design</h4></div></div></div><p>
+					Here is the interface definition of ICobarRouter:
+					</p><pre class="programlisting">
+public interface ICobarRouter&lt;T&gt; {
+	RoutingResult doRoute(T routingFact) throws RoutingException;
+}
+					</pre><p>
+					As the inferface states, it can return a RoutingResult as per the
+					context information passed in via routingFact argument.
+				</p><p>
+					Different implementations of
+					<span class="quote">&#8220;<span class="quote">ICobarRouter</span>&#8221;</span>
+					can be provided, for example, Cobar Client provides
+					<span class="quote">&#8220;<span class="quote">com.alibaba.cobar.client.router.CobarClientInternalRouter
+					</span>&#8221;</span>
+					and
+					<span class="quote">&#8220;<span class="quote">com.alibaba.cobar.client.router.DefaultCobarClientInternalRouter
+					</span>&#8221;</span>
+					as default ones, if too many routing rules available, to enhance
+					the performance of routing rules search, some implementation can be
+					done with Rete algorithm too. If no special requirements,
+					usually we
+					will use
+					<span class="quote">&#8220;<span class="quote">CobarClientInternalRouter</span>&#8221;</span>
+					as the default Router implementation used by
+					CobarSqlMapClientTemplate,
+					or use
+					<span class="quote">&#8220;<span class="quote">DefaultCobarClientInternalRouter</span>&#8221;</span>
+					as an alternative, which does some optimization on routing rule
+					matching with groups, this trades complexity of configuration for
+					simplicity and high performance at runtime. If there are too many
+					routing rules, consider to use DefaultCobarClientInternalRouter for
+					good.
+					</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title">Note</h3><p>
+							The configuration of DefaultCobarClientInternalRouter can be
+							done
+							with 2 FactoryBean helper:
+							<span class="quote">&#8220;<span class="quote">com.alibaba.cobar.client.router.config.DefaultCobarClientInternalRouterXmlFactoryBean
+							</span>&#8221;</span>
+							and
+							<span class="quote">&#8220;<span class="quote">com.alibaba.cobar.client.router.config.StaticCobarClientInternalRouterFactoryBean
+							</span>&#8221;</span>
+							, the former allows to define and load routing rules in xml
+							configuration files, and the latter allows to define routing
+							rules as bean definitions in spring ioc container directly.
+							You
+							can decide which one to use as per your scenarios. More
+							information can be found in javadoc and further explanation on
+							<span class="quote">&#8220;<span class="quote">CobarClientInternalRouter</span>&#8221;</span>
+							in next content.
+						</p></div><p>
+				</p><p>
+					Since CobarSqlMapClientTemplate is mainly for iBatis, the routing
+					fact type of CobarClientInternalRouter is called
+					<span class="quote">&#8220;<span class="quote">IBatisRoutingFact</span>&#8221;</span>
+					which is listed below:
+					</p><pre class="programlisting">
+public class IBatisRoutingFact {
+	// SQL identity
+	private String action;
+	// the argument of SQL action
+	private Object argument;
+	
+	// ...
+}
+					</pre><p>
+					It says, CobarClientInternalRouter will route as per 2 parts of
+					information, one is the sqlmap id in ibatis's sqlmap, the other is
+					the argument object of data access method.
+					CobarClientInternalRouter will evaluate the passed-in
+					IBatisRoutingFact context object against one or more groups of
+					routing rules, and return the matched result. After that,
+					CobarClientInternalRouter will know where or which node(s) to route
+					the data access
+					requests.
+				</p><div class="sect4"><div class="titlepage"><div><div><h5 class="title"><a name="d581e293"></a>1.2.2.1.1.&nbsp;Configuration of CobarClientInternalRouter</h5></div></div></div><p>
+						In general, CobarClientInternalRouter can accept 4 types of
+						routing rules, but it's usually not necessary for general users to
+						know exactly what these types are. In order to prevent these users
+						from involving too much with the implementation details of
+						CobarClientInternalRouter, we provide a FactoryBean helper to
+						simplify the configuration of CobarClientInternalRouter, this
+						FactoryBean is
+						<span class="quote">&#8220;<span class="quote">com.alibaba.cobar.client.router.config.CobarInteralRouterXmlFactoryBean
+						</span>&#8221;</span>
+						, here is a simple sample on how to use it:
+						</p><pre class="programlisting">
+&lt;bean id="internalRouter"
+	class="com.alibaba.cobar.client.router.config.CobarInteralRouterXmlFactoryBean"&gt;
+	&lt;property name="configLocation" value="classpath:META-INF/rules.xml" /&gt;
+&lt;/bean&gt;
+						</pre><p>
+						CobarInteralRouterXmlFactoryBean will read xml-format
+						configuration file and assemble different types of routing rules
+						as per the read content, then inject the assembled routing rules
+						into CobarClientInternalRouter instance.
+						CobarInteralRouterXmlFactoryBean will hide trivial things like
+						read configuration, parse configuration , assemble different types
+						of rule instances,etc. All of these trivial things are transparent
+						to the final users. But, no matter how hard we try to hide these
+						things, the final users still need to provide essential things,
+						for example, the content of the configuration. Only when users
+						provide correctly configured routing rules as per applications'
+						scenarios, CobarClientInternalRouter can work correctly. So in the
+						next section, we will explain more details on how to define
+						routing rules.
+					</p><div class="tip" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title">Tip</h3><p>
+							You can give a single configuration location by
+							<span class="quote">&#8220;<span class="quote">configLocation</span>&#8221;</span>
+							property, you can also give a group of configuration file
+							locations via
+							<span class="quote">&#8220;<span class="quote">configLocations</span>&#8221;</span>
+							, the latter way helps on modular parallel development.
+						</p></div><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title">Note</h3><p>
+							Although we recommand to use
+							CobarInteralRouterXmlFactoryBean to configure the
+							CobarClientInternalRouter instance but if needed, we can also
+							give out other types of FactoryBean helpers, like the ones use
+							DSL, or based on Excel. As long as we indeed need them, they can
+							be done by extending the basc facilities.
+						</p></div></div></div><div class="sect3"><div class="titlepage"><div><div><h4 class="title"><a name="d581e316"></a>1.2.2.2.&nbsp;Routing Rules Explained</h4></div></div></div><div class="sect4"><div class="titlepage"><div><div><h5 class="title"><a name="d581e319"></a>1.2.2.2.1.&nbsp;Rule Format Definitions</h5></div></div></div><p>
+						A simple sample configuration file for routing rules looks like:
+						</p><pre class="programlisting">
+&lt;rules&gt;
+  &lt;rule&gt;
+    &lt;namespace&gt;&lt;/namespace&gt; 
+    &lt;sqlmap&gt;&lt;/sqlmap&gt;
+    &lt;shardingExpression&gt;&lt;/shardingExpression&gt;
+    &lt;shards&gt;&lt;/shards&gt;
+  &lt;/rule&gt;
+&lt;/rules&gt;
+						</pre><p>
+						&lt;rules&gt; element has more &lt;rule&gt; elements, while
+						&lt;rule&gt; element has 4 more sub-elements:
+						</p><div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p><b>namespace or sqlmap.&nbsp;</b>
+										The only difference between them is the granularity on
+										definiting routing rules. That's,
+										<span class="quote">&#8220;<span class="quote">sqlmap</span>&#8221;</span>
+										represents the statement id in some iBatis SqlMap
+										configuration file; while
+										<span class="quote">&#8220;<span class="quote">namespace</span>&#8221;</span>
+										is mapped to the namespace of some iBatis SqlMap configuraiton
+										file. The 2 elements are excluded with each other, when
+										defining routing rules, only one element of them can be
+										chosen
+										to be defined under
+										<span class="quote">&#8220;<span class="quote">&lt;rule&gt;</span>&#8221;</span>
+										element, otherwise, CobarInteralRouterXmlFactoryBean will
+										throw
+										configuraton exception at startup.
+									</p></li><li class="listitem"><p><b>shardingExpression.&nbsp;</b>
+										The value of this element is expressions of MVEL format,
+										it will be evalued against dynamic context information,
+										usually the argument of data access methods. 
+									</p></li><li class="listitem"><p><b>shards.&nbsp;</b>
+										partition/shards ids which is deemed as routing result, they
+										should be the
+										<span class="quote">&#8220;<span class="quote">identity</span>&#8221;</span>
+										values of
+										<span class="quote">&#8220;<span class="quote">CobarDataSourceDescriptor</span>&#8221;</span>
+										s. If more partition/shards involves when routing rules match,
+										one or more partition/shard ids can be given here.
+									</p></li></ul></div><p>
+						The definition of rule can be simplified into format of
+						<span class="quote">&#8220;<span class="quote">condition-&gt;action</span>&#8221;</span>
+						, that's,
+						<span class="quote">&#8220;<span class="quote">(namespace | sqlamp) +
+							shardingExpression -&gt; shards</span>&#8221;</span>
+						.
+					</p><p>
+						As we see the rule definition is so simple, so it's not mandatory
+						to use DTD or XML schema to validate against the xml configuration
+						files, but if you would like to, the following DTD definition can
+						be used:
+						</p><pre class="programlisting">
+&lt;?xml version="1.0"?  encoding="UTF-8"?&gt;
+
+&lt;!ELEMENT rules (rule)+&gt;
+
+&lt;!ELEMENT rule ((namespace|sqlmap),shardingExpression,shards)&gt;
+
+&lt;!ELEMENT namespace (#PCDATA)&gt;
+
+&lt;!ELEMENT sqlmap (#PCDATA)&gt;
+
+&lt;!ELEMENT shardingExpression (#PCDATA)&gt;
+
+&lt;!ELEMENT shards (#PCDATA)&gt;
+						</pre><p>
+						With above theory of routing rules, in the next section, we will
+						explain how to define routing rules as per the scenarios of
+						the
+						applications.
+					</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title">Note</h3><p>
+							CobarClient use MVEL to evaluate against
+							<span class="quote">&#8220;<span class="quote">shardingExpression</span>&#8221;</span>
+							's value, so the users have to make sure the value of
+							<span class="quote">&#8220;<span class="quote">shardingExpression</span>&#8221;</span>
+							should conform to MVEL syntax. You can find docuement on MVEL
+							<a class="ulink" href="" target="_top">here</a>
+							.
+						</p></div></div><div class="sect4"><div class="titlepage"><div><div><h5 class="title"><a name="d581e385"></a>1.2.2.2.2.&nbsp;Rule Types Explained</h5></div></div></div><p>
+						The routing rules seem simple, but before explaining more
+						details about them,
+						maybe you can figure out how to define them,
+						how to use them, even why they should be defined in this way.
+						So
+						now we will explain the details of routing rules for you.
+					</p><p>
+						To do data access with iBatis, we need to define a SqlMap
+						configuration file, like this:
+						</p><pre class="programlisting">
+&lt;?xml version="1.0" encoding="GB2312"?&gt;
+&lt;!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd"&gt;
+&lt;sqlMap namespace="com.alibaba.cobar.client.entities.Offer"&gt;
+
+	&lt;typeAlias alias="offer" type="com.alibaba.cobar.client.entities.Offer" /&gt;
+
+	&lt;resultMap id="offer" class="offer"&gt;
+		&lt;result property="id"     column="id" /&gt;
+		&lt;result property="memberId"   column="memberId" /&gt;
+		&lt;result property="subject"   column="subject" /&gt;
+		&lt;result property="gmtUpdated"   column="gmtUpdated" /&gt;
+	&lt;/resultMap&gt;
+
+	&lt;insert id="create"&gt;
+		INSERT INTO offers(memberId, subject, gmtUpdated) VALUES(#memberId#, #subject#, #gmtUpdated#)
+		&lt;selectKey keyProperty="id" resultClass="long"&gt;
+			SELECT LAST_INSERT_ID();
+        &lt;/selectKey&gt;
+	&lt;/insert&gt;
+	...
+&lt;/sqlMap&gt;
+						</pre><p>
+						As we see, each SqlMap has a
+						<span class="quote">&#8220;<span class="quote">namespace</span>&#8221;</span>
+						, and under each namespace, you can define more sql statements,
+						each sql statement has an
+						<span class="quote">&#8220;<span class="quote">id</span>&#8221;</span>
+						as its identity. The
+						<span class="quote">&#8220;<span class="quote">namespace</span>&#8221;</span>
+						plus
+						<span class="quote">&#8220;<span class="quote">id</span>&#8221;</span>
+						of statement can identify each sql statement in global scope. With
+						this prerequisite, let's see how to define the routing rules as
+						per ibatis SqlMap configuration.
+					</p><p>
+						Let's start from special scenarios to general ones.
+					</p><p>
+						Take the
+						<span class="quote">&#8220;<span class="quote">create</span>&#8221;</span>
+						statement as example, Suppose we have an
+						<span class="quote">&#8220;<span class="quote">offer</span>&#8221;</span>
+						table and its data is splitted into 2 databases. The partition
+						strategy is: The records with odd memberId will be stored on
+						partition1, while the records with even memberId will be stored on
+						partition2. To route the data access requests on
+						<span class="quote">&#8220;<span class="quote">offer</span>&#8221;</span>
+						table, the simple way is to check which sql statement the data
+						access request uses and whether the memberId of the record is odd
+						or not. So 2 routing rules can be defined as:
+						</p><pre class="programlisting">
+&lt;rules&gt;
+  &lt;rule&gt;
+    &lt;sqlmap&gt;com.alibaba.cobar.client.entities.Offer.create&lt;/sqlmap&gt;
+    &lt;shardingExpression&gt;memberId % 2 == 1&lt;/shardingExpression&gt;
+    &lt;shards&gt;partition1&lt;/shards&gt;
+  &lt;/rule&gt;
+  &lt;rule&gt;
+    &lt;sqlmap&gt;com.alibaba.cobar.client.entities.Offer.create&lt;/sqlmap&gt;
+    &lt;shardingExpression&gt;memberId % 2 == 0&lt;/shardingExpression&gt;
+    &lt;shards&gt;partition2&lt;/shards&gt;
+  &lt;/rule&gt;
+&lt;/rules&gt;
+						</pre><p>
+						&lt;sqlmap&gt; element is equal to the sql statement identity,
+						usually the fully qualified name with both
+						<span class="quote">&#8220;<span class="quote">namespace</span>&#8221;</span>
+						and
+						<span class="quote">&#8220;<span class="quote">sql statement id</span>&#8221;</span>
+						involved.
+						&lt;shardingExpression&gt; defines the sharding
+						expression as per our original partition strategy.
+						At last,
+						&lt;shards&gt; return the final routing result.
+						Until now, I think
+						you should have basic knowledge on how to define the routing rules
+						in CobarClient.
+					</p><p>
+						With above basic knowledge, let's change our scenario. We still
+						perform
+						<span class="quote">&#8220;<span class="quote">create</span>&#8221;</span>
+						operation, but this time we use vertial parition strategy instead
+						of horizontal partition strategy. That's, all of the
+						<span class="quote">&#8220;<span class="quote">offer</span>&#8221;</span>
+						table records will be stored on a same database, now we change our
+						routing rule definitions as below:
+						</p><pre class="programlisting">
+&lt;rules&gt;
+  &lt;rule&gt;
+    &lt;sqlmap&gt;com.alibaba.cobar.client.entities.Offer.create&lt;/sqlmap&gt;
+    &lt;shardingExpression&gt;memberId % 2 == 1&lt;/shardingExpression&gt;
+    &lt;shards&gt;partition1&lt;/shards&gt;
+  &lt;/rule&gt;
+  &lt;rule&gt;
+    &lt;sqlmap&gt;com.alibaba.cobar.client.entities.Offer.create&lt;/sqlmap&gt;
+    &lt;shardingExpression&gt;memberId % 2 == 0&lt;/shardingExpression&gt;
+    &lt;shards&gt;partition1&lt;/shards&gt;
+  &lt;/rule&gt;
+&lt;/rules&gt;
+						</pre><p>
+						As the rule definitions state, no matter the memberId is odd or
+						even, the records will all be stored on
+						<span class="quote">&#8220;<span class="quote">partition1</span>&#8221;</span>
+						. But it's stupid to have duplication things here.
+						We can simplify
+						the routing rule definition as below:
+						</p><pre class="programlisting">
+&lt;rules&gt;
+  &lt;rule&gt;
+    &lt;sqlmap&gt;com.alibaba.cobar.client.entities.Offer.create&lt;/sqlmap&gt;
+    &lt;shards&gt;partition1&lt;/shards&gt;
+  &lt;/rule&gt;
+&lt;/rules&gt;
+						</pre><p>
+						That's, only a single &lt;sqlmap&gt; element can do here, no
+						shardingExpression element is needed.
+						The rule reads in this way -
+						<span class="quote">&#8220;<span class="quote">As long as I find the sqlmap value is
+							com.alibaba.cobar.client.entities.Offer.create, I will route data
+							access requests to partition1, no matter the memberId of the
+							record is odd or even.</span>&#8221;</span>
+					</p><p>
+						We call the first style of routing rule as
+						<span class="emphasis"><em>SqlActionShardingRule</em></span>
+						, while call the 2nd style of routing rule as
+						<span class="emphasis"><em>SqlAction(Only)Rule</em></span>
+						, They are routing rules to be used under horizontal partition
+						strategy and vertial partition strategy.
+					</p><p>
+						Let's further extend the scenarios, obviously, we need to provde
+						update or delete operations for offer table, besides create
+						opertion.
+						So we add more sql statements into SqlMap configuration
+						file as below:
+						</p><pre class="programlisting">
+&lt;?xml version="1.0" encoding="GB2312"?&gt;
+&lt;!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd"&gt;
+&lt;sqlMap namespace="com.alibaba.cobar.client.entities.Offer"&gt;
+
+	&lt;typeAlias alias="offer" type="com.alibaba.cobar.client.entities.Offer" /&gt;
+
+	&lt;resultMap id="offer" class="offer"&gt;
+		&lt;result property="id"     column="id" /&gt;
+		&lt;result property="memberId"   column="memberId" /&gt;
+		&lt;result property="subject"   column="subject" /&gt;
+		&lt;result property="gmtUpdated"   column="gmtUpdated" /&gt;
+	&lt;/resultMap&gt;
+
+	&lt;insert id="create"&gt;
+		INSERT INTO offers(memberId, subject, gmtUpdated) VALUES(#memberId#, #subject#, #gmtUpdated#)
+		&lt;selectKey keyProperty="id" resultClass="long"&gt;
+			SELECT LAST_INSERT_ID();
+        &lt;/selectKey&gt;
+	&lt;/insert&gt;
+	
+	&lt;update id="update"&gt;
+		UPDATE offers SET subject=#subject#, gmtUpdated=#gmtUpdated# WHERE id=#id#
+	&lt;/update&gt;
+	
+	&lt;delete id="delete"&gt;
+		delete from offers where id=#id#
+	&lt;/delete&gt;
+	...
+&lt;/sqlMap&gt;
+						</pre><p>
+						With only supports of
+						<span class="emphasis"><em>SqlActionShardingRule</em></span>
+						and
+						<span class="emphasis"><em>SqlAction(Only)Rule</em></span>
+						, to make the update and delete operations to be routed to correct
+						target databases, we have to add more and more routing rules in
+						our rule configuration files, the problems with this are:
+						</p><div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><p>
+									Whenever adding a new SqlMap configuration file, a
+									collection of routing rules have to be defined for a series of
+									CRUD operations, that will be too much ado.</p></li><li class="listitem"><p>
+									In vertical partition scenarios, usually on matter what
+									kinds of data access methods we use,
+									the data access requests to
+									a same table will be routed to a same data
+									partition/shard,that's, one routing rule can suffice for all of
+									the data access requests onto one
+									table.
+								</p></li></ol></div><p>
+						So to improve or fix these problems mentioned above, we introduce
+						two new routing rule types:
+						<span class="quote">&#8220;<span class="quote">NamespaceShardingRule</span>&#8221;</span>
+						and
+						<span class="quote">&#8220;<span class="quote">Namespace(Only)Rule</span>&#8221;</span>
+						.
+					</p><p>
+						NamespaceShardingRule allows us to define routing rules as per
+						namespace in a SqlMap and horizontal sharding strategy. Still take
+						original partition scenario as an example, that's, records with
+						odd memberId will be stored on partition1, and records with even
+						memberId will be stored on partition2. With NamespaceShardingRule,
+						no matter what kinds of opertations are used(update or create), as
+						long as the sql statements are defined under a same namespace(the
+						namespace is com.alibaba.cobar.client.entities.Offer for our
+						scenario), and the context object conforms to the sharding
+						strategy, we can define one single routing rule of kind of
+						NamespaceShardingRule to route the data access requests corretly,
+						a sample such routing rules definition is listed below:
+						</p><pre class="programlisting">
+&lt;rules&gt;
+  &lt;rule&gt;
+    &lt;namespace&gt;com.alibaba.cobar.client.entities.Offer&lt;/namespace&gt;
+    &lt;shardingExpression&gt;memberId % 2 == 1&lt;/shardingExpression&gt;
+    &lt;shards&gt;partition1&lt;/shards&gt;
+  &lt;/rule&gt;
+  &lt;rule&gt;
+    &lt;namespace&gt;com.alibaba.cobar.client.entities.Offer&lt;/namespace&gt;
+    &lt;shardingExpression&gt;memberId % 2 == 0&lt;/shardingExpression&gt;
+    &lt;shards&gt;partition2&lt;/shards&gt;
+  &lt;/rule&gt;
+&lt;/rules&gt;
+						</pre><p>
+						With NamespaceShardingRule, we don't need to define every routing
+						rules as per each data access sql statements. It helps save lot of
+						repeated works on defining almost same routing rules.
+						Further, if
+						all of the data of a table is stored in a same partition(vertical
+						partition scenarios), then we can use a Namespace(Only)Rule to
+						save more configuraton works, a sample Namespace(Only)Rule
+						defintion is listed below:
+						</p><pre class="programlisting">
+&lt;rules&gt;
+  &lt;rule&gt;
+    &lt;namespace&gt;com.alibaba.cobar.client.entities.Offer&lt;/namespace&gt;
+    &lt;shards&gt;partition1&lt;/shards&gt;
+  &lt;/rule&gt;
+&lt;/rules&gt;
+						</pre><p>
+						With only this rule, all of the sql statements under namespace
+						<span class="quote">&#8220;<span class="quote">com.alibaba.cobar.client.entities.Offer</span>&#8221;</span>
+						will be routed to partition1.
+						.
+					</p><p>
+						In conclusion, from SqlActionShardingRule,
+						SqlAction(Only)Rule to NamespaceShardingRule and
+						Namespace(Only)Rule, the routing rule defintions will cover the
+						routing scope from specific to generic ones. If some sql statement
+						needs a special routing requirement, then we can add a
+						SqlActionShardingRule or SqlAction(Only)Rule to meet the need;
+						while if multiple sql statments have similar or same routing
+						requirements, then we can add some NamespaceShardingRule or
+						Namespace(Only)Rule to complete the requests. Anyway,
+						you can use
+						all of the four routing rule types by composition or using them
+						independently to achieve all of the data access routing
+						requirements with iBatis.
+					</p><div class="tip" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title">Tip</h3><p>
+							When defining the routing rules, we can start from generic
+							scenarios with NamespaceShardingRule or Namespace(Only)Rule,
+							then
+							add SqlActionShardingRule or SqlAction(Only)Rule for special
+							scenarios. CobarClientInternalRouter internally will choose to
+							use special scenarios' routing rules firstly, if no such routing
+							rules are found, it will choose to use generic scenarios' routing
+							rules as fallback.		
+						</p></div></div><div class="sect4"><div class="titlepage"><div><div><h5 class="title"><a name="d581e498"></a>1.2.2.2.3.&nbsp;Custom Functions In Routing Rule Definitions</h5></div></div></div><p>
+						Common horizontal partition strategies/algorithm may be:
+						</p><div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>
+									Range-based partition, e.g.
+									<span class="quote">&#8220;<span class="quote">memberId &gt; 10000 and
+										memberId
+										&lt; 20000</span>&#8221;</span>
+								</p></li><li class="listitem"><p>
+									Mod-based partition(or round-robin partition), e.g.
+									<span class="quote">&#8220;<span class="quote">memberId%128==1</span>&#8221;</span>
+									or
+									<span class="quote">&#8220;<span class="quote">&gt;memberId%128==2</span>&#8221;</span>
+									or ...
+								</p></li><li class="listitem"><p>
+									Hash-based partition, for example,
+									<span class="quote">&#8220;<span class="quote">hashing(memberId)==someValue</span>&#8221;</span>
+									.
+								</p></li></ul></div><p>
+						There are also other partition strategies, like
+						<span class="quote">&#8220;<span class="quote">predicate-based partition</span>&#8221;</span>
+						,etc. In order to meet the needs of different partition
+						strategies, we CobarClient allows to define custom functions in
+						the
+						<span class="quote">&#8220;<span class="quote">shardingExpression</span>&#8221;</span>
+						when defining routing rules.
+					</p><p>
+						Here follows a simple sample about how to define custom
+						routing functions in CobarClient.
+					</p><p>
+						Suppose we will apply some hashing algorithm on memberId, and
+						route the records as per the hashing result of their memberId.
+						Firstly, we need to define a function class which will return a
+						hashing result as per the memberId argument we pass in, we define
+						the
+						function class as below:
+						</p><pre class="programlisting">
+public class Hashing{
+	...
+	int apply(Long memberId){
+		// perform real logic here.
+	}
+}
+						</pre><p>
+						In order to use this function in
+						<span class="quote">&#8220;<span class="quote">shardingExpression</span>&#8221;</span>
+						, we need to register it first. We register custom functions via
+						<span class="quote">&#8220;<span class="quote">functionsMap</span>&#8221;</span>
+						property of CobarInteralRouterXmlFactoryBean:
+						</p><pre class="programlisting">
+&lt;bean id="internalRouter"
+	class="com.alibaba.cobar.client.router.config.CobarInteralRouterXmlFactoryBean"&gt;
+	&lt;property name="functionsMap"&gt;
+		&lt;map&gt;
+			&lt;entry key="hash"&gt;
+				&lt;bean class="..Hashing"&gt;
+				&lt;/bean&gt;
+			&lt;/entry&gt;
+		&lt;/map&gt;
+	&lt;/property&gt;
+	&lt;property name="configLocations"&gt;
+		&lt;list&gt;
+			&lt;value&gt;classpath:META-INF/routing/offer-sql-action-rules.xml&lt;/value&gt;
+			&lt;value&gt;classpath:META-INF/routing/offer-sharding-rules-on-namespace.xml&lt;/value&gt;
+		&lt;/list&gt;
+	&lt;/property&gt;
+&lt;/bean&gt;
+						</pre><p>
+						Pay attention to the key value of our custom function, here it is
+						<span class="quote">&#8220;<span class="quote">hash</span>&#8221;</span>
+						.
+					</p><p>
+						With all of the above things done, we now can use our custom
+						function in
+						<span class="quote">&#8220;<span class="quote">shardingExpression</span>&#8221;</span>
+						, just as the sample below:
+						</p><pre class="programlisting">
+&lt;rules&gt;
+  &lt;rule&gt;
+    &lt;namespace&gt;com.alibaba.cobar.client.entities.Offer&lt;/namespace&gt;
+    &lt;shardingExpression&gt;hash.apply(memberId) == someValue&lt;/shardingExpression&gt;
+    &lt;shards&gt;partition1&lt;/shards&gt;
+  &lt;/rule&gt;
+  &lt;rule&gt;
+    &lt;namespace&gt;com.alibaba.cobar.client.entities.Offer&lt;/namespace&gt;
+    &lt;shardingExpression&gt;hash.apply(memberId) == anotherValue&lt;/shardingExpression&gt;
+    &lt;shards&gt;partition2&lt;/shards&gt;
+  &lt;/rule&gt;
+&lt;/rules&gt;
+						</pre><p>
+						As we can see, the custom function is invoked by the reference of
+						former registered key value,
+						<span class="quote">&#8220;<span class="quote">hash</span>&#8221;</span>
+						, you can apply any function methods to the partition context
+						object as long as you have defined those function methods. Easy to
+						understand, right?
+					</p></div></div></div><div class="sect2"><div class="titlepage"><div><div><h3 class="title"><a name="d581e562"></a>1.2.3.&nbsp;SqlAuditing</h3></div></div></div><p>
+				CobarSqlMapClientTemplate provides an extension point on
+				auditing and
+				analyzing SQL, but no available implementations are
+				given, since ICBU
+				of Alibaba has something of their own to do the
+				same thing. But if
+				you do need such a feature/functionality, you can gain it by
+				injecting an
+				<span class="quote">&#8220;<span class="quote">ISqlAuditor</span>&#8221;</span>
+				implementation to CobarSqlMapClientTemplate.
+			</p><p>
+				The interface definition of ISqlAuditor is simple:
+				</p><pre class="programlisting">
+public interface ISqlAuditor {
+	void audit(String id, String sql, Object sqlContext);
+}
+				</pre><p>
+				you can get anything necessary to do SQL auditing by method
+				arguments. The
+				<span class="quote">&#8220;<span class="quote">id</span>&#8221;</span>
+				is the value of sqlmap statement's id in iBatis; Argument
+				<span class="quote">&#8220;<span class="quote">sql</span>&#8221;</span>
+				is the sql statement you want to audit, but if current ibatis
+				statement is a DynamicSQL, the value of this argument will be null;
+				Last, the Argument
+				<span class="quote">&#8220;<span class="quote">sqlContext</span>&#8221;</span>
+				will be the argument object of data access methods.
+				Your applications
+				can decide how to implement and use your own
+				<span class="quote">&#8220;<span class="quote">ISqlAuditor</span>&#8221;</span>
+				implementations.
+				In order to prevent performance penalty when doing
+				sql auditing, the implementations of your own
+				<span class="quote">&#8220;<span class="quote">ISqlAuditor</span>&#8221;</span>
+				should make it run in asynchronous way so that it will not block
+				other data access requests execution. Of course, we have further
+				checks this point.
+			</p><p>
+				When you inject an
+				<span class="quote">&#8220;<span class="quote">ISqlAuditor</span>&#8221;</span>
+				for CobarSqlMapClientTemplate, it will check whether you have
+				injected a paired ExecutorSerivce for your
+				<span class="quote">&#8220;<span class="quote">ISqlAuditor</span>&#8221;</span>
+				, If no such ExecutorSerivce is provided with your
+				<span class="quote">&#8220;<span class="quote">ISqlAuditor</span>&#8221;</span>
+				, CobarSqlMapClientTemplate will create one, with only 1 worker
+				thread. But if you do want to get dirty with this, you can provide
+				your own ExecutorSerivce by injecting via
+				<span class="emphasis"><em>sqlAuditorExecutor</em></span>
+				property of CobarSqlMapClientTemplate. If so, you also should
+				remember to clean up your own ExecutorService too.
+				This trick is
+				mainly for bad
+				<span class="quote">&#8220;<span class="quote">ISqlAuditor</span>&#8221;</span>
+				implementations in case they slow down the whole execution process.
+			</p></div><div class="sect2"><div class="titlepage"><div><div><h3 class="title"><a name="d581e607"></a>1.2.4.&nbsp;Other Configuration or Features Explained</h3></div></div></div><div class="sect3"><div class="titlepage"><div><div><h4 class="title"><a name="d581e610"></a>1.2.4.1.&nbsp;logging long-run SQLs</h4></div></div></div><p>
+					For application monitoring, we provide a long-run-sql-logging
+					functionality for CobarSqlMapClientTemplate, this functionality is
+					not enabled automatically, if you want to enable it, set
+					<span class="emphasis"><em>profileLongTimeRunningSql</em></span>
+					property's value to true, furthermore,
+					you need to set a time
+					threshold via
+					<span class="emphasis"><em>longTimeRunningSqlIntervalThreshold</em></span>
+					property, if the value of it is less or equal to zero,
+					exception
+					will be thrown to prevent to initialize a wrong-state
+					CobarSqlMapClientTemplate
+					instance.
+				</p><p>
+					Here is a configuration sample snippet:
+					</p><pre class="programlisting">
+&lt;bean id="sqlMapClientTemplate" class="com.alibaba.cobar.client.CobarSqlMapClientTemplate"&gt;
+	...
+	&lt;property name="profileLongTimeRunningSql" value="true" /&gt;
+	&lt;property name="longTimeRunningSqlIntervalThreshold" value="3600000" /&gt;
+&lt;/bean&gt;
+					</pre><p>
+				</p></div><div class="sect3"><div class="titlepage"><div><div><h4 class="title"><a name="d581e626"></a>1.2.4.2.&nbsp;Bulk Insert Support</h4></div></div></div><p>
+					If you applications depend on MySQL as data storage, then probably
+					you will use bulk insert to insert a batch of data with sql like
+					<span class="quote">&#8220;<span class="quote">INSERT INTO tab(..) VALUES(..), (..), (..), (..)...</span>&#8221;</span>
+					. To support this, you can submit a BatchInsertTask to
+					CobarSqlMapClientTemplate, CobarSqlMapClientTemplate will check the
+					type of method arugment, if it finds the type is of
+					BatchInsertTask, it will resort and classify the collection of
+					data
+					as per the routing rules, then submit to execution queues of each
+					target data sources and execute them in parallel.
+				</p><p>
+					This functionality can save the applications to resort and
+					classify the data by themselves, meantime, the routing rules can be
+					used too to route the data flow to their target data sources.
+				</p><p>
+					Now, suppose we have a data object below:
+					</p><pre class="programlisting">
+public class Offer {
+    private Long   id;
+    private Long memberId;
+    private String subject;
+    private Date   gmtUpdated = new Date();
+    
+    // setters and getters and other method definitions
+}
+					</pre><p>
+					and we have the following routing rules defined:
+					</p><pre class="programlisting">
+&lt;rules&gt;
+  &lt;rule&gt;
+    &lt;namespace&gt;com.alibaba.cobar.client.entities.Offer&lt;/namespace&gt;
+    &lt;shardingExpression&gt;memberId &lt; 10000&lt;/shardingExpression&gt;
+    &lt;shards&gt;partition1&lt;/shards&gt;
+  &lt;/rule&gt;
+  &lt;rule&gt;
+    &lt;namespace&gt;com.alibaba.cobar.client.entities.Offer&lt;/namespace&gt;
+    &lt;shardingExpression&gt;memberId &gt; 10000 and memberId &lt; 20000&lt;/shardingExpression&gt;
+    &lt;shards&gt;partition2&lt;/shards&gt;
+  &lt;/rule&gt;
+&lt;/rules&gt;
+					</pre><p>
+					When we submit a batch of Offer records to
+					CobarSqlMapClientTemplate by BatchInsertTask, the records will be
+					classified as per the routing rules, and bulk insert into the
+					target data sources.
+				</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title">Note</h3><p>
+						we can even make the routing rules more specific by changing
+						to use SqlActionShardingRules instead of NamespaceShardingRules we
+						used above.
+					</p></div></div><div class="sect3"><div class="titlepage"><div><div><h4 class="title"><a name="d581e647"></a>1.2.4.3.&nbsp;About Query Result Mergence</h4></div></div></div><p>
+					The ability of query result mergence in CobarClient is weak(so is
+					Cobar server edition)), the mergence behavior is only adding result
+					records to a List and return, that means, the applications have to
+					decide how to retrieve the result object as per their usage
+					scenarios.
+					For example, if we execute such a SQL below:
+					</p><pre class="programlisting">
+select count(*), companyId from offer group by companyId
+					</pre><p>
+					If the routing rule for this SQL returns multiple target data
+					sources, then this SQL will be executed on these data sources and
+					the results will be returned independently. If we add all of the
+					results into a List, then the List will contain multiple tuples of
+					<span class="quote">&#8220;<span class="quote">(Count, companyId)</span>&#8221;</span>
+					, a same companyId will contain in multiple records,
+					the
+					applications may need to sum up all of the result records by
+					themselves.
+				</p><p>
+					Currently, CobarClient apply the same strategy to all of the
+					query results, so the applications should pay attention to the
+					impact this strategy bring to them. In the future, CobarClient will
+					improve the data mergence strategy and allows the applications to
+					control the mergence behavior by providing their own mergence
+					strategies.
+				</p><div class="sect4"><div class="titlepage"><div><div><h5 class="title"><a name="d581e660"></a>1.2.4.3.1.&nbsp;Data Mergence Support for OrderBy Queries</h5></div></div></div><p>
+						If you execute a query SQL with orderby condition with the
+						queryForList() method of CobarSqlMapClientTemplate,
+						the results
+						returned may be not the one you expect, since the default mergence
+						strategy may not help, the order of query result is not
+						guaranteed. But if we want to reuse these ordered result sets
+						and
+						return a final sorted result object,
+						CobarSqlMapClientTemplate does
+						can help on this scenario. The idea is similar to the merge-sort
+						algorithm, that's, the databases help on the latter sort part, and
+						we CobarClient does the former
+						<span class="quote">&#8220;<span class="quote">merge</span>&#8221;</span>
+						part.
+					</p><p>
+						To use custom mergence strategies, we have to set a group of the
+						mappings between SqlMapActionId and custom mergence strategy
+						implementation via the
+						<span class="quote">&#8220;<span class="quote">mergers</span>&#8221;</span>
+						property of CobarSqlMapClientTemplate, here is an example:
+						</p><pre class="programlisting">
+&lt;bean id="sqlMapClientTemplateWithMerger" class="com.alibaba.cobar.client.CobarSqlMapClientTemplate"&gt;
+	&lt;property name="sqlMapClient" ref="sqlMapClient" /&gt;
+	&lt;property name="cobarDataSourceService" ref="dataSources" /&gt;
+	&lt;property name="router" ref="internalRouter" /&gt;
+	&lt;property name="sqlAuditor"&gt;
+		&lt;bean class="com.alibaba.cobar.client.audit.SimpleSqlAuditor" /&gt;
+	&lt;/property&gt;
+	&lt;property name="profileLongTimeRunningSql" value="true" /&gt;
+	&lt;property name="longTimeRunningSqlIntervalThreshold" value="3600000" /&gt;
+	&lt;property name="mergers"&gt;
+		&lt;map&gt;
+			&lt;entry
+				key="com.alibaba.cobar.client.entities.Offer.findAllWithOrderByOnSubject"
+				value-ref="merger" /&gt;
+		&lt;/map&gt;
+	&lt;/property&gt;
+&lt;/bean&gt;
+
+&lt;bean id="merger" class="com.alibaba.cobar.client.merger.ConcurrentSortMerger"&gt;
+	&lt;property name="comparator" ref="comparator"&gt;
+	&lt;/property&gt;
+&lt;/bean&gt;
+
+&lt;bean id="comparator" class="com.alibaba.cobar.client.support.OfferComparator"&gt;
+&lt;/bean&gt;
+						</pre><p>
+						As the configuration says, all of the query results returned from
+						the execution of
+						<span class="quote">&#8220;<span class="quote">com.alibaba.cobar.client.entities.Offer.findAllWithOrderByOnSubject
+						</span>&#8221;</span>
+						will be merged by using
+						the
+						<span class="quote">&#8220;<span class="quote">merger</span>&#8221;</span>
+						we defined. The
+						<span class="quote">&#8220;<span class="quote">merger</span>&#8221;</span>
+						we use is an implementation of interface
+						<span class="quote">&#8220;<span class="quote">IMerger</span>&#8221;</span>
+						, that's, com.alibaba.cobar.client.merger.ConcurrentSortMerger.
+						Most of the times, ConcurrentSortMerger can suffice our needs,
+						What we need to do
+						is providing a Comparator for it as per the
+						attributes of query
+						results.
+						But if it can do,
+						we can define our own
+						<span class="quote">&#8220;<span class="quote">IMerger</span>&#8221;</span>
+						implementations.
+					</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title">Note</h3><p>
+							In fact, this may look messy, because the order-by
+							information can be analyzed the SQL of SqlMapActionId, but
+							currently we would like to just provide the simple mergence
+							functionality instead of introducing more complexity.
+							Furthermore, if it's a DynamicSql, we can't get the definite SQL
+							from the application layer, then it also means the latter
+							solution can't help everything from the application layer.
+						</p><p>
+							If needed, the later versions of CobarClient can provide
+							result set mergence ability by analyzing SQL.
+						</p></div></div></div></div></div><div class="sect1"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="d581e696"></a>1.3.&nbsp;MultipleDataSourcesTransactionManager Explained</h2></div></div></div><p>
+			As per requirements from ICBU internal, CobarClient needs to
+			guarantee local transactions of multiple databases, and distributed
+			transaction is not acceptable, because the latter will involve
+			unnecessary performance problems.
+			With such a prerequisite, we choose
+			to implement Cobarclient's
+			transaction support by using
+			<span class="quote">&#8220;<span class="quote">Best Efforts 1PC Pattern</span>&#8221;</span>
+			<a href="#ftn.d581e704" class="footnote" name="d581e704"><sup class="footnote">[1]</sup></a>
+			.
+		</p><p>
+			CobarClient provides a custom TransactionManager -
+			MultipleDataSourcesTransactionManager to support
+			<span class="quote">&#8220;<span class="quote">Best Efforts 1PC Pattern</span>&#8221;</span>
+			transaction management. MultipleDataSourcesTransactionManager accepts
+			a group of data sources as target transaction resources, when the
+			transaction is started, all of the local transactions on these data
+			sources will be started too; when the transaction is committed or
+			rolled back, then all of the local transactions will be committed or
+			rolled back. When starting local transactions on all of the data
+			sources, a physical connection will be occupied, this may cause
+			performance problems, so we intercept all of the data sources and
+			wrap them with LazyConnectionDataSourceProxy,
+			this proxy will
+			guarantee that only when at least one data access operation occur,
+			the physical connection should be fetched.
+			MultipleDataSourcesTransactionManager and
+			LazyConnectionDataSourceProxy facilities are marked in previous
+			architecture graphic as (1) and (2).
+		</p><p>
+			In fact, to prevent from occupying too many physical
+			connections, we
+			have another way.
+			We can explicitly define which data
+			sources should
+			join the transaction by Annotation in service layer or
+			external
+			configuration, then unnecessary connections will not be
+			fetched. But
+			someone deems this strategy intrude too much on service
+			layer, so for
+			the time being, we just use
+			MultipleDataSourcesTransactionManager plus
+			LazyConnectionDataSourceProxy to complete transaction management with
+			<span class="quote">&#8220;<span class="quote">Best Efforts 1 PC Pattern</span>&#8221;</span>
+			.
+		</p><div class="sect2"><div class="titlepage"><div><div><h3 class="title"><a name="d581e721"></a>1.3.1.&nbsp;
+				Multiple Data Sources Management in
+				MultipleDataSourcesTransactionManager 
+			</h3></div></div></div><p>
+				To make sure the transaction are targeted upon a same group of data
+				sources, we need to inject MultipleDataSourcesTransactionManager the
+				same group of data sources as CobarSqlMapClientTemplate has.
+				This is
+				done by still using
+				<span class="quote">&#8220;<span class="quote">ICobarDataSourceService</span>&#8221;</span>
+				abstraction:
+				</p><pre class="programlisting">
+&lt;bean id="transactionManager"
+	class="com.alibaba.cobar.client.transaction.MultipleDataSourcesTransactionManager"&gt;
+	&lt;property name="cobarDataSourceService" ref="dataSources" /&gt;
+&lt;/bean&gt;
+
+&lt;bean id="sqlMapClientTemplate" class="com.alibaba.cobar.client.CobarSqlMapClientTemplate"&gt;
+	&lt;property name="sqlMapClient" ref="sqlMapClient" /&gt;
+	&lt;property name="cobarDataSourceService" ref="dataSources" /&gt;
+	...
+&lt;/bean&gt;
+
+&lt;bean id="dataSources" class="com.alibaba.cobar.client.datasources.DefaultCobarDataSourceService"&gt;
+	&lt;property name="dataSourceDescriptors"&gt;
+		&lt;set&gt;
+			&lt;bean class="com.alibaba.cobar.client.datasources.CobarDataSourceDescriptor"&gt;
+				&lt;property name="identity" value="partition1"/&gt;
+				&lt;property name="targetDataSource" ref="partition1_main"/&gt;
+				&lt;property name="targetDetectorDataSource" ref="partition1_main"/&gt;
+				&lt;property name="standbyDataSource" ref="partition1_standby"/&gt;
+				&lt;property name="standbyDetectorDataSource" ref="partition1_standby"/&gt;
+			&lt;/bean&gt;
+			&lt;bean class="com.alibaba.cobar.client.datasources.CobarDataSourceDescriptor"&gt;
+				&lt;property name="identity" value="partition2"/&gt;
+				&lt;property name="targetDataSource" ref="partition2_main"/&gt;
+				&lt;property name="targetDetectorDataSource" ref="partition2_main"/&gt;
+				&lt;property name="standbyDataSource" ref="partition2_standby"/&gt;
+				&lt;property name="standbyDetectorDataSource" ref="partition2_standby"/&gt;
+			&lt;/bean&gt;
+		&lt;/set&gt;
+	&lt;/property&gt;
+	&lt;property name="haDataSourceCreator"&gt;
+		&lt;bean class="com.alibaba.cobar.client.datasources.ha.FailoverHotSwapDataSourceCreator"&gt;
+			&lt;property name="detectingSql" value="update cobarha set timeflag=CURRENT_TIMESTAMP()"/&gt;
+		&lt;/bean&gt;
+	&lt;/property&gt;
+&lt;/bean&gt;
+
+...
+				</pre><p>
+				So that's it, easy as pie to use
+				MultipleDataSourcesTransactionManager, right?
+				</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title">Note</h3><p>
+						Refer to
+						section
+						<span class="quote">&#8220;<span class="quote">Multiple DataSources Management</span>&#8221;</span>
+						for more information on
+						com.alibaba.cobar.client.datasources.DefaultCobarDataSourceService.
+						More configuration details about
+						MultipleDataSourcesTransactionManager can be found in the javadoc
+						of it or the javadoc of AbstractPlatformTransactionManager in
+						spring framework.
+					</p></div><p>
+			</p></div></div><div class="footnotes"><br><hr style="width:100; text-align:left;margin-left: 0"><div id="ftn.d581e704" class="footnote"><p><a href="#d581e704" class="para"><sup class="para">[1] </sup></a>
+					you can find more information on this pattern
+					<a class="link" href="http://www.javaworld.com/javaworld/jw-01-2009/jw-01-spring-transactions.html?page=5" target="_top">here</a>
+					.
+				</p></div></div></div></body></html>
