@@ -1,0 +1,79 @@
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+   <title>Chapter&nbsp;1.&nbsp; Possible Strategies for CobarClient Design and Development</title><link rel="stylesheet" type="text/css" href="css/cc.css"><meta name="generator" content="DocBook XSL Stylesheets V1.78.1"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="chapter"><div class="titlepage"><div><div><h2 class="title"><a name="roma_application_redirect"></a>Chapter&nbsp;1.&nbsp;
+		Possible Strategies for CobarClient Design and Development
+	</h2></div></div></div><div class="toc"><dl class="toc"><dt><span class="sect1"><a href="#jdbc solution">1.1. JDBC API Layer Solution</a></span></dt><dt><span class="sect1"><a href="#dal solution">1.2. DAL(Data Access Layer) Solution</a></span></dt><dt><span class="sect1"><a href="#d558e49">1.3. The Solution That's Specific To ICBU Applications</a></span></dt></dl></div><p>
+		The Design and Development of CobarClient can be done from
+		different aspects, but we choose three solutions for it for the time
+		being.
+	</p><div class="sect1"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="jdbc solution"></a>1.1.&nbsp;JDBC API Layer Solution</h2></div></div></div><p>
+			The available
+			<span class="quote">&#8220;<span class="quote">Cobar</span>&#8221;</span>
+			project do data access routings by parsing and analyzing SQL, so most
+			of us will think it's easy to do almost same things by wrapping the
+			JDBC drivers. Of course, it should work, but it takes time, long
+			time.
+		</p><p>
+			To do things in this way, we can't just wrap or intercept
+			several JDBC interfaces to make it run, we need to implement the
+			whole JDBC specification, and it will take too much time on
+			development and testing. 
+		</p><p>
+			At first, we just try to intercept serveral methods of
+			<span class="quote">&#8220;<span class="quote">Connection</span>&#8221;</span>
+			and
+			<span class="quote">&#8220;<span class="quote">Statement</span>&#8221;</span>
+			to get the SQL and then parse it to do left works, but several
+			headaches come to bother. You will find that several methods'
+			lifecycle and invocation logic will mismatch with each other, you
+			will find you have to trace the method invocation sequences, you will
+			also find you have to take care of all of the database metadata
+			things.
+		</p><p>
+			You see, we do can implement a whole JDBC driver to do works like
+			current
+			<span class="quote">&#8220;<span class="quote">Cobar</span>&#8221;</span>
+			does, but it's not an easy thing with limit time frame.
+		</p></div><div class="sect1"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="dal solution"></a>1.2.&nbsp;DAL(Data Access Layer) Solution</h2></div></div></div><p>
+			We can do the same thing on DAL. Many benefits are avaialble,
+			including that:
+			</p><div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>we can make a standard development process;</p></li><li class="listitem"><p>we can simplify the implementation of data access routing;
+					</p></li><li class="listitem"><p>furthermore, if more shards or other storage services(e.g. KV
+						store) are required, the applications won't need any changes,
+						'cause the DAL has hidden these changes for them.</p></li></ul></div><p>
+		</p><p>
+			If we do use such solution on DAL, we can externalize the
+			sharding strategies and rules, the routing rules can be configured in
+			a consistent way(Annotation, or external XML configuration files),
+			and the rules can be defined only as per the type of DO(Data Object)
+			and their attributes. It's so simple and flexible, the complexity
+			of
+			SQL parsing is involved.
+		</p><p>
+			But such solution impacts too much to the current applications,
+			so althought it's a good go, we can't make it run for the time being.
+		</p></div><div class="sect1"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="d558e49"></a>1.3.&nbsp;The Solution That's Specific To ICBU Applications</h2></div></div></div><p>
+			After thinking on multiple factors like the time frame limitation,
+			the compatibility to available applications, etc, we give out a
+			solution that stands between
+			<a class="xref" href="#jdbc solution" title="1.1.&nbsp;JDBC API Layer Solution">JDBC API Layer Solution</a>
+			and
+			<a class="xref" href="#dal solution" title="1.2.&nbsp;DAL(Data Access Layer) Solution">DAL(Data Access Layer) Solution</a>
+			.
+		</p><p>
+			We internally use iBatis to do data access, in order to
+			accelerate the development process, we use SqlMapClientTemplate of
+			spring framework, too. To make less impacts on current applications,
+			we have to extend the SqlMapClientTemplate class, because all of the
+			data access requests will be sent out by this class, and
+			if we add
+			routing support in it, then it can route different data
+			access
+			requests to their specific data shards as per the routing
+			rules we
+			provide.
+			</p><p>
+			In fact, this is indeed the solution we choose to use in the 1st
+			version
+			of CobarClient.
+		</p></div></div></body></html>

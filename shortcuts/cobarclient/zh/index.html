@@ -1,0 +1,1132 @@
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+   <title>Cobar Client &#25991;&#26723;&#20840;&#38598;</title><link rel="stylesheet" type="text/css" href="css/cc.css"><meta name="generator" content="DocBook XSL Stylesheets V1.78.1"><meta name="description" content="&#35813;&#25991;&#26723;&#25551;&#36848;&#20102;CobarClient&#20135;&#21697;&#30340;&#26041;&#26041;&#38754;&#38754;..."><meta name="keywords" content="Cobar Client, &#20998;&#24067;&#24335;&#25968;&#25454;&#35775;&#38382;&#23618;, Spring, IBatis"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="book"><div class="titlepage"><div><div><h1 class="title"><a name="roma-step-by-step"></a>Cobar Client &#25991;&#26723;&#20840;&#38598;</h1></div><div><div class="authorgroup"><div class="author"><h3 class="author">&#29579;&#31119;&#24378;(darren.wangfq@alibaba-inc.com)</h3></div></div></div><div><div class="abstract"><p class="title"><b>Abstract</b></p><p>
+				&#35813;&#25991;&#26723;&#25551;&#36848;&#20102;CobarClient&#20135;&#21697;&#30340;&#26041;&#26041;&#38754;&#38754;...
+			</p></div></div></div><hr></div><div class="toc"><p><b>Table of Contents</b></p><dl class="toc"><dt><span class="part"><a href="#d0e19">I. &#21521;Cobar Client&#36801;&#31227;</a></span></dt><dd><dl><dt><span class="chapter"><a href="#roma_application_redirect">1. Cobar Client&#20351;&#29992;&#36801;&#31227;&#25163;&#20876;(Cobar Client Migration Guide)</a></span></dt><dd><dl><dt><span class="sect1"><a href="#d0e37">1.1. 
+			&#25968;&#25454;&#20998;&#21306;&#22810;&#25968;&#25454;&#28304;&#30340;&#20381;&#36182;&#31649;&#29702;&#35828;&#26126;
+		</a></span></dt><dt><span class="sect1"><a href="#d0e100">1.2. CobarSqlMapClientTemplate&#20854;&#23427;&#30456;&#20851;&#37197;&#32622;&#35828;&#26126;</a></span></dt><dd><dl><dt><span class="sect2"><a href="#d0e105">1.2.1. &#25968;&#25454;&#35775;&#38382;&#36335;&#30001;&#30456;&#20851;&#37197;&#32622;</a></span></dt><dt><span class="sect2"><a href="#d0e125">1.2.2. What's Next?</a></span></dt></dl></dd></dl></dd></dl></dd><dt><span class="part"><a href="#d0e130">II. Cobar Client&#30334;&#31185;&#22823;&#20840;</a></span></dt><dd><dl><dt><span class="chapter"><a href="#roma_application_redirect">2. CobarClient&#21457;&#36215;&#30340;&#32972;&#26223;</a></span></dt><dt><span class="chapter"><a href="#roma_application_redirect">3. CobarClient&#26368;&#21021;&#38656;&#27714;</a></span></dt><dt><span class="chapter"><a href="#roma_application_redirect">4. CobarClient&#26041;&#26696;&#20043;&#38388;&#30340;&#26435;&#34913;</a></span></dt><dd><dl><dt><span class="sect1"><a href="#jdbc solution">4.1. JDBC API&#23618;&#27425;&#30340;&#35299;&#20915;&#26041;&#26696;</a></span></dt><dt><span class="sect1"><a href="#dal solution">4.2. DAL&#23618;&#27425;&#30340;&#35299;&#20915;&#26041;&#26696;</a></span></dt><dt><span class="sect1"><a href="#d0e193">4.3. &#29305;&#23450;&#22269;&#38469;&#31449;&#22330;&#26223;&#30340;&#35299;&#20915;&#26041;&#26696;</a></span></dt></dl></dd><dt><span class="chapter"><a href="#roma_application_redirect">5. Cobar Client&#21442;&#32771;&#25991;&#26723;(Cobar Client Reference Documentation)</a></span></dt><dd><dl><dt><span class="sect1"><a href="#d0e209">5.1. &#40479;&#30640;Cobar Client&#29616;&#26377;&#26550;&#26500;&#23454;&#29616;</a></span></dt><dt><span class="sect1"><a href="#d0e234">5.2. CobarSqlMapClientTemplate&#35814;&#35299;</a></span></dt><dd><dl><dt><span class="sect2"><a href="#mds explained">5.2.1. &#22810;&#25968;&#25454;&#28304;&#20381;&#36182;&#31649;&#29702;(Multiple DataSources Management)</a></span></dt><dt><span class="sect2"><a href="#d0e330">5.2.2. &#25968;&#25454;&#35775;&#38382;&#35831;&#27714;&#36335;&#30001;(Routing In CobarSqlMapClientTemplate)</a></span></dt><dt><span class="sect2"><a href="#d0e506">5.2.3. SqlAuditing</a></span></dt><dt><span class="sect2"><a href="#d0e524">5.2.4. &#20854;&#23427;&#37197;&#32622;&#19982;&#29305;&#24615;&#35299;&#37322;(Other Configuration or Features Explained)</a></span></dt></dl></dd><dt><span class="sect1"><a href="#d0e604">5.3. MultipleDataSourcesTransactionManager&#35814;&#35299;</a></span></dt><dd><dl><dt><span class="sect2"><a href="#d0e613">5.3.1. 
+				MultipleDataSourcesTransactionManager&#20381;&#36182;&#30340;&#22810;&#25968;&#25454;&#28304;&#31649;&#29702;
+			</a></span></dt></dl></dd></dl></dd><dt><span class="chapter"><a href="#roma_application_redirect">6. CobarClient&#23637;&#26395;</a></span></dt></dl></dd></dl></div><div class="part"><div class="titlepage"><div><div><h1 class="title"><a name="d0e19"></a>Part&nbsp;I.&nbsp;&#21521;Cobar Client&#36801;&#31227;</h1></div></div></div><div class="chapter"><div class="titlepage"><div><div><h2 class="title"><a name="roma_application_redirect"></a>Chapter&nbsp;1.&nbsp;Cobar Client&#20351;&#29992;&#36801;&#31227;&#25163;&#20876;(Cobar Client Migration Guide)</h2></div></div></div><div class="toc"><dl class="toc"><dt><span class="sect1"><a href="#d0e37">1.1. 
+			&#25968;&#25454;&#20998;&#21306;&#22810;&#25968;&#25454;&#28304;&#30340;&#20381;&#36182;&#31649;&#29702;&#35828;&#26126;
+		</a></span></dt><dt><span class="sect1"><a href="#d0e100">1.2. CobarSqlMapClientTemplate&#20854;&#23427;&#30456;&#20851;&#37197;&#32622;&#35828;&#26126;</a></span></dt><dd><dl><dt><span class="sect2"><a href="#d0e105">1.2.1. &#25968;&#25454;&#35775;&#38382;&#36335;&#30001;&#30456;&#20851;&#37197;&#32622;</a></span></dt><dt><span class="sect2"><a href="#d0e125">1.2.2. What's Next?</a></span></dt></dl></dd></dl></div><p>
+		CobarClient&#20027;&#35201;&#38024;&#23545;&#29616;&#26377;&#32593;&#31449;&#24212;&#29992;&#20013;&#20351;&#29992;iBatis&#20570;&#25968;&#25454;&#35775;&#38382;&#23618;&#36825;&#19968;&#24773;&#20917;&#32780;&#35774;&#35745;&#24320;&#21457;,&#22914;&#26524;&#20320;&#30340;&#24212;&#29992;&#31243;&#24207;&#26368;&#21021;&#20351;&#29992;&#20102;Spring&#25552;&#20379;&#30340;SqlMapClientTemplate&#30340;&#35805;, 
+		&#37027;&#36801;&#31227;&#21040;CobarClient&#23454;&#38469;&#19978;&#20165;&#20165;&#26159;&#31245;&#24494;&#25913;&#19968;&#19979;&#24212;&#29992;&#31243;&#24207;&#30340;&#37197;&#32622;&#32780;&#24050;.
+	</p><p>
+		&#20551;&#35774;&#21407;&#26377;&#30340;&#24212;&#29992;&#31243;&#24207;&#20381;&#36182;&#20110;Spring&#30340;SqlMapClientTemplate&#36827;&#34892;&#25968;&#25454;&#35775;&#38382;, &#37027;&#20040;, &#20351;&#29992;Cobar Client&#20043;&#21518;, &#21482;&#35201;&#20462;&#25913;&#37197;&#32622;, &#35753;&#24212;&#29992;&#31243;&#24207;&#20381;&#36182;&#20110;CobarClient&#30340;CobarSqlMapClientTemplate&#21363;&#21487;. 
+		&#21516;&#26102;, &#19982;&#25968;&#25454;&#35775;&#38382;&#30456;&#20851;&#30340;&#20107;&#21153;&#31649;&#29702;&#20063;&#38656;&#35201;&#20174;&#20351;&#29992;Spring&#21407;&#29983;&#30340;DataSourceTransactionManager, &#25442;&#20026;CobarClient&#25552;&#20379;&#30340;MultipleDataSourcesTransactionManager, &#25972;&#20010;&#36801;&#31227;&#30340;&#27010;&#20917;&#31867;&#20284;&#20110;:
+		</p><pre class="programlisting">
+&#20351;&#29992;CobarClient&#20043;&#21069;:
+
+&lt;bean id="sqlMapClientTemplate" class="org.springframework.orm.ibatis.SqlMapClientTemplate"&gt;
+	&lt;property name="sqlMapClient" ref="sqlMapClient"/&gt;
+	...
+&lt;/bean&gt;
+
+&lt;bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager"&gt;
+	&lt;property name="dataSource" ref="dataSource"/&gt;
+	...
+&lt;/bean&gt;
+
+&lt;bean id="sqlMapClient" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean"&gt;
+	&lt;property name="dataSource" ref="dataSource" /&gt;
+	&lt;property name="configLocation" value="classpath:META-INF/ibatis/sqlmap-config.xml" /&gt;
+&lt;/bean&gt;
+
+&lt;bean id="dataSource" ...&gt;
+	...
+&lt;/bean&gt;
+		</pre><p>
+		</p><pre class="programlisting">
+&#20351;&#29992;CobarClient&#20043;&#21518;:
+
+&lt;bean id="sqlMapClientTemplate" class="com.alibaba.cobar.client.CobarSqlMapClientTemplate"&gt;
+	&lt;property name="sqlMapClient" ref="sqlMapClient"/&gt;
+	...
+&lt;/bean&gt;
+
+&lt;bean id="transactionManager" class="com.alibaba.cobar.client.transaction.MultipleDataSourcesTransactionManager"&gt;
+	...
+&lt;/bean&gt;
+
+&lt;bean id="sqlMapClient" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean"&gt;
+	&lt;property name="dataSource" ref="dataSource" /&gt;
+	&lt;property name="configLocation" value="classpath:META-INF/ibatis/sqlmap-config.xml" /&gt;
+&lt;/bean&gt;
+
+&lt;bean id="dataSource" ...&gt;
+	...
+&lt;/bean&gt;
+		</pre><p>
+		&#21487;&#35265;, &#22522;&#26412;&#19978;&#21482;&#38656;&#35201;&#26367;&#25442;&#20004;&#22788;&#37197;&#32622;&#21363;&#21487;&#23436;&#25104;&#36801;&#31227;&#24037;&#20316;.
+	</p><p>
+		&#19981;&#36807;, &#20197;&#19978;&#21482;&#26159;&#31616;&#21270;&#21518;&#30340;&#36801;&#31227;&#22330;&#26223;, &#23454;&#38469;&#19978;, &#36824;&#26377;&#19968;&#20123;&#32454;&#33410;&#38656;&#35201;&#25105;&#20204;&#23436;&#21892;&#20043;&#21518;, &#25165;&#33021;&#23436;&#20840;&#30340;&#23436;&#25104;&#25972;&#20010;&#30340;&#36801;&#31227;&#24037;&#20316;.
+	</p><div class="sect1"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="d0e37"></a>1.1.&nbsp;
+			&#25968;&#25454;&#20998;&#21306;&#22810;&#25968;&#25454;&#28304;&#30340;&#20381;&#36182;&#31649;&#29702;&#35828;&#26126;
+		</h2></div></div></div><p>
+		&#22312;&#21333;&#25968;&#25454;&#28304;&#30340;&#24773;&#20917;&#19979;, SqlMapClientTemplate(&#25110;&#32773;&#35828;&#23427;&#20381;&#36182;&#30340;SqlMapClient)&#20197;&#21450;&#23545;&#24212;&#36827;&#34892;&#20107;&#21153;&#31649;&#29702;&#30340;DataSourceTransactionManager&#37117;&#20250;&#24341;&#29992;&#21516;&#19968;&#20010;&#25968;&#25454;&#28304;;
+		&#32780;&#24403;&#24212;&#29992;&#36827;&#34892;&#25968;&#25454;&#25286;&#20998;&#20043;&#21518;, &#29289;&#29702;&#19978;&#23558;&#23545;&#24212;&#22810;&#20010;&#25968;&#25454;&#28304;, &#35201;&#36827;&#34892;&#25968;&#25454;&#35775;&#38382;&#21644;&#20107;&#21153;&#31649;&#29702;, &#25105;&#20204;&#29616;&#22312;&#24517;&#39035;&#38024;&#23545;&#25968;&#25454;&#25286;&#20998;&#20043;&#21518;&#23545;&#24212;&#30340;&#22810;&#20010;&#25968;&#25454;&#28304;&#36827;&#34892;.&#20026;&#20102;&#21516;&#19968;&#30340;&#31649;&#29702;&#36825;&#31181;&#20381;&#36182;, CobarClient&#25552;&#20379;&#20102;ICobarDataSourceService&#36825;&#19968;&#25277;&#35937;&#25509;&#21475;&#29992;&#20110;&#24402;&#31867;&#31649;&#29702;&#25968;&#25454;&#25286;&#20998;&#21518;&#23545;&#24212;&#30340;&#22810;&#20010;&#25968;&#25454;&#28304;, 
+		com.alibaba.cobar.client.CobarSqlMapClientTemplate&#21644;com.alibaba.cobar.client.transaction.MultipleDataSourcesTransactionManager&#29616;&#22312;&#23558;&#37117;&#20381;&#36182;&#20110;&#26576;&#20010;ICobarDataSourceService&#30340;&#23454;&#29616;&#26469;&#25552;&#20379;&#23545;&#26576;&#20123;&#25968;&#25454;&#28304;&#30340;&#20381;&#36182;, &#36825;&#26679;, 
+		&#26368;&#21021;&#30340;&#37197;&#32622;&#23558;&#28436;&#21270;&#20026;&#22914;&#19979;&#30340;&#24418;&#24335;:
+		</p><pre class="programlisting">
+&lt;bean id="dataSources" class="&#26576;&#20010;ICobarDataSourceService&#23454;&#29616;&#31867;"&gt;
+	...
+&lt;/bean&gt;
+
+&lt;bean id="transactionManager"
+	class="com.alibaba.cobar.client.transaction.MultipleDataSourcesTransactionManager"&gt;
+	&lt;property name="cobarDataSourceService" ref="dataSources" /&gt;
+&lt;/bean&gt;
+
+&lt;bean id="sqlMapClientTemplate" class="com.alibaba.cobar.client.CobarSqlMapClientTemplate"&gt;
+	&lt;property name="sqlMapClient" ref="sqlMapClient" /&gt;
+	&lt;property name="cobarDataSourceService" ref="dataSources" /&gt;
+	...
+&lt;/bean&gt;
+
+&lt;bean id="sqlMapClient" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean"&gt;
+	&lt;property name="dataSource" ref="dataSource" /&gt;
+	&lt;property name="configLocation" value="classpath:META-INF/ibatis/sqlmap-config.xml" /&gt;
+&lt;/bean&gt;
+		</pre><p>
+		&#20063;&#23601;&#26159;&#35828;, &#29616;&#22312;MultipleDataSourcesTransactionManager&#21644;CobarSqlMapClientTemplate&#37117;&#26377;&#19968;&#20010;<span class="emphasis"><em>cobarDataSourceService</em></span>&#20381;&#36182;, &#35813;&#20381;&#36182;&#37117;&#23558;&#24341;&#29992;&#21516;&#19968;&#20010;bean&#23450;&#20041;<span class="emphasis"><em>dataSources</em></span>(&#27880;&#24847;&#36825;&#37324;&#30340;&#21517;&#31216;&#20026;&#22797;&#25968;).
+		&#35813;bean&#23450;&#20041;&#23558;&#23545;&#24212;&#26576;&#20010;ICobarDataSourceService&#23454;&#29616;&#31867;,
+		&#24403;&#21069;, &#25105;&#20204;&#25552;&#20379;&#20102;com.alibaba.cobar.client.datasources.DefaultCobarDataSourceService&#20316;&#20026;ICobarDataSourceService&#30340;&#40664;&#35748;&#23454;&#29616;, &#20854;&#24120;&#35265;&#37197;&#32622;&#22914;&#19979;:
+		</p><pre class="programlisting">
+&lt;bean id="dataSources" class="com.alibaba.cobar.client.datasources.DefaultCobarDataSourceService"&gt;
+	&lt;property name="dataSourceDescriptors"&gt;
+		&lt;set&gt;
+			&lt;bean class="com.alibaba.cobar.client.datasources.CobarDataSourceDescriptor"&gt;
+				&lt;property name="identity" value="partition1"/&gt;
+				&lt;property name="targetDataSource" ref="partition1_main"/&gt;
+				&lt;property name="targetDetectorDataSource" ref="partition1_main"/&gt;
+				&lt;property name="standbyDataSource" ref="partition1_standby"/&gt;
+				&lt;property name="standbyDetectorDataSource" ref="partition1_standby"/&gt;
+			&lt;/bean&gt;
+			&lt;bean class="com.alibaba.cobar.client.datasources.CobarDataSourceDescriptor"&gt;
+				&lt;property name="identity" value="partition2"/&gt;
+				&lt;property name="targetDataSource" ref="partition2_main"/&gt;
+				&lt;property name="targetDetectorDataSource" ref="partition2_main"/&gt;
+				&lt;property name="standbyDataSource" ref="partition2_standby"/&gt;
+				&lt;property name="standbyDetectorDataSource" ref="partition2_standby"/&gt;
+			&lt;/bean&gt;
+		&lt;/set&gt;
+	&lt;/property&gt;
+	&lt;property name="haDataSourceCreator"&gt;
+		&lt;bean class="com.alibaba.cobar.client.datasources.ha.FailoverHotSwapDataSourceCreator"&gt;
+			&lt;property name="detectingSql" value="update cobarha set timeflag=CURRENT_TIMESTAMP()"/&gt;
+		&lt;/bean&gt;
+	&lt;/property&gt;
+&lt;/bean&gt;
+
+&lt;bean id="partition1_main" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close"&gt;
+	&lt;property name="driverClass" value="org.h2.Driver" /&gt;
+	&lt;property name="jdbcUrl" value="jdbc:h2:mem:p1_main;DB_CLOSE_DELAY=-1;MODE=MySQL;LOCK_MODE=3" /&gt;
+	&lt;property name="user" value="" /&gt;
+	&lt;property name="password" value="" /&gt;
+	&lt;property name="minPoolSize" value="10" /&gt;
+	&lt;property name="maxPoolSize" value="20" /&gt;
+	&lt;property name="maxIdleTime" value="1800" /&gt;
+	&lt;property name="acquireIncrement" value="2" /&gt;
+	&lt;property name="maxStatements" value="0" /&gt;
+	&lt;property name="initialPoolSize" value="2" /&gt;
+	&lt;property name="idleConnectionTestPeriod" value="1800" /&gt;
+	&lt;property name="acquireRetryAttempts" value="30" /&gt;
+	&lt;property name="breakAfterAcquireFailure" value="true" /&gt;
+	&lt;property name="testConnectionOnCheckout" value="false" /&gt;
+&lt;/bean&gt;
+
+&lt;bean id="partition1_standby" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close"&gt;
+	&lt;property name="driverClass" value="org.h2.Driver" /&gt;
+	&lt;property name="jdbcUrl" value="jdbc:h2:mem:p1_standby;DB_CLOSE_DELAY=-1;MODE=MySQL;LOCK_MODE=3" /&gt;
+	&lt;property name="user" value="" /&gt;
+	&lt;property name="password" value="" /&gt;
+	&lt;property name="minPoolSize" value="10" /&gt;
+	&lt;property name="maxPoolSize" value="20" /&gt;
+	&lt;property name="maxIdleTime" value="1800" /&gt;
+	&lt;property name="acquireIncrement" value="2" /&gt;
+	&lt;property name="maxStatements" value="0" /&gt;
+	&lt;property name="initialPoolSize" value="2" /&gt;
+	&lt;property name="idleConnectionTestPeriod" value="1800" /&gt;
+	&lt;property name="acquireRetryAttempts" value="30" /&gt;
+	&lt;property name="breakAfterAcquireFailure" value="true" /&gt;
+	&lt;property name="testConnectionOnCheckout" value="false" /&gt;
+&lt;/bean&gt;
+
+&lt;bean id="partition2_main" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close"&gt;
+	&lt;property name="driverClass" value="org.h2.Driver" /&gt;
+	&lt;property name="jdbcUrl" value="jdbc:h2:mem:p2_main;DB_CLOSE_DELAY=-1;MODE=MySQL;LOCK_MODE=3" /&gt;
+	&lt;property name="user" value="" /&gt;
+	&lt;property name="password" value="" /&gt;
+	&lt;property name="minPoolSize" value="10" /&gt;
+	&lt;property name="maxPoolSize" value="20" /&gt;
+	&lt;property name="maxIdleTime" value="1800" /&gt;
+	&lt;property name="acquireIncrement" value="2" /&gt;
+	&lt;property name="maxStatements" value="0" /&gt;
+	&lt;property name="initialPoolSize" value="2" /&gt;
+	&lt;property name="idleConnectionTestPeriod" value="1800" /&gt;
+	&lt;property name="acquireRetryAttempts" value="30" /&gt;
+	&lt;property name="breakAfterAcquireFailure" value="true" /&gt;
+	&lt;property name="testConnectionOnCheckout" value="false" /&gt;
+&lt;/bean&gt;
+
+&lt;bean id="partition2_standby" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close"&gt;
+	&lt;property name="driverClass" value="org.h2.Driver" /&gt;
+	&lt;property name="jdbcUrl" value="jdbc:h2:mem:p2_standby;DB_CLOSE_DELAY=-1;MODE=MySQL;LOCK_MODE=3" /&gt;
+	&lt;property name="user" value="" /&gt;
+	&lt;property name="password" value="" /&gt;
+	&lt;property name="minPoolSize" value="10" /&gt;
+	&lt;property name="maxPoolSize" value="20" /&gt;
+	&lt;property name="maxIdleTime" value="1800" /&gt;
+	&lt;property name="acquireIncrement" value="2" /&gt;
+	&lt;property name="maxStatements" value="0" /&gt;
+	&lt;property name="initialPoolSize" value="2" /&gt;
+	&lt;property name="idleConnectionTestPeriod" value="1800" /&gt;
+	&lt;property name="acquireRetryAttempts" value="30" /&gt;
+	&lt;property name="breakAfterAcquireFailure" value="true" /&gt;
+	&lt;property name="testConnectionOnCheckout" value="false" /&gt;
+&lt;/bean&gt;
+		</pre><p>
+	DefaultCobarDataSourceService&#24341;&#29992;&#19968;&#32452;com.alibaba.cobar.client.datasources.CobarDataSourceDescriptor, &#27599;&#19968;&#20010;com.alibaba.cobar.client.datasources.CobarDataSourceDescriptor
+	&#25551;&#36848;&#20102;&#38024;&#23545;&#26576;&#19968;&#25968;&#25454;&#25286;&#20998;&#20998;&#21306;&#30340;&#24517;&#35201;&#20381;&#36182;, &#36825;&#21253;&#25324;:
+	</p><div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p><b>identity.&nbsp;</b>&#25968;&#25454;&#20998;&#21306;&#30340;&#21807;&#19968;&#26631;&#24535;, &#35813;&#26631;&#24535;&#19981;&#21487;&#19982;&#20854;&#23427;&#25968;&#25454;&#20998;&#21306;&#30340;&#26631;&#24535;&#20914;&#31361;, &#22312;&#23450;&#20041;&#36335;&#30001;&#35268;&#21017;&#30340;&#26102;&#20505;, &#25968;&#25454;&#20998;&#21306;&#26631;&#24535;&#23558;&#25104;&#20026;&#36335;&#30001;&#35268;&#21017;&#30340;&#19968;&#37096;&#20998;.</p></li><li class="listitem"><p><b>targetDataSource.&nbsp;</b>&#20027;&#35201;&#30446;&#26631;&#25968;&#25454;&#28304;&#30340;&#20381;&#36182;&#24341;&#29992;, &#36890;&#24120;&#24847;&#20041;&#19978;, &#24212;&#29992;&#21551;&#21160;&#30340;&#26102;&#20505;&#35813;&#25968;&#25454;&#28304;&#24517;&#39035;&#26159;Active&#30340;.</p></li><li class="listitem"><p><b>targetDetectorDataSource.&nbsp;</b>&#20027;&#35201;&#30446;&#26631;&#25968;&#25454;&#28304;&#20276;&#38543;&#30340;HA&#25506;&#27979;&#29992;&#25968;&#25454;&#28304;, &#20027;&#35201;&#29992;&#20110;&#26816;&#27979;&#20027;&#35201;&#30446;&#26631;&#25968;&#25454;&#28304;&#30340;&#29366;&#24577;, &#36890;&#24120;&#25351;&#21521;&#19982;&#20027;&#35201;&#30446;&#26631;&#25968;&#25454;&#28304;&#30456;&#21516;&#30340;&#30446;&#26631;&#25968;&#25454;&#24211;, &#20294;&#25968;&#25454;&#24211;&#36830;&#25509;&#27744;&#35201;&#21333;&#29420;&#37197;&#32622;, &#20197;&#38450;&#27490;&#30456;&#20114;&#24178;&#25200;.</p></li><li class="listitem"><p><b>standbyDataSource.&nbsp;</b>&#19982;&#20027;&#35201;&#30446;&#26631;&#25968;&#25454;&#28304;&#24182;&#21015;&#30340;&#22791;&#29992;&#25968;&#25454;&#28304;, &#24403;&#20027;&#35201;&#30446;&#26631;&#25968;&#25454;&#28304;&#20986;&#29616;&#38382;&#39064;&#20043;&#21518;, &#22914;&#26524;&#21551;&#29992;&#20102;CobarClient&#30340;HA&#21151;&#33021;&#25903;&#25345;, CobarClient&#23558;&#33258;&#21160;&#23558;&#25968;&#25454;&#35775;&#38382;&#20999;&#25442;&#21040;&#35813;&#22791;&#29992;&#25968;&#25454;&#28304;&#19978;.</p></li><li class="listitem"><p><b>standbyDetectorDataSource.&nbsp;</b>&#22791;&#29992;&#25968;&#25454;&#28304;&#23545;&#24212;&#30340;HA&#25506;&#27979;&#29992;&#25968;&#25454;&#28304;.</p></li></ul></div><p>
+	</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title">Note</h3><p>
+			&#22240;&#20026;&#24403;&#21069;&#32593;&#31449;&#30340;&#25968;&#25454;&#28304;&#37197;&#32622;&#37117;&#26159;&#36890;&#36807;JNDI&#36827;&#34892;, CobarClient&#26080;&#27861;&#32479;&#19968;&#21462;&#24471;&#25968;&#25454;&#24211;&#36830;&#25509;&#31561;&#30456;&#20851;&#20449;&#24687;, &#20063;&#23601;&#26080;&#27861;&#26681;&#25454;&#21516;&#19968;&#20221;&#37197;&#32622;&#20449;&#24687;&#33258;&#34892;&#21019;&#24314;&#30456;&#24212;&#30340;&#25968;&#25454;&#24211;&#36830;&#25509;&#27744;, 
+			&#25152;&#20197;, &#21482;&#22909;&#38656;&#35201;&#24212;&#29992;&#31243;&#24207;&#26041;&#38024;&#23545;&#27599;&#19968;&#20010;&#30446;&#26631;&#25968;&#25454;&#28304;&#20877;&#22810;&#37197;&#32622;&#19968;&#20010;&#29992;&#20110;HA&#29366;&#24577;&#25506;&#27979;&#29992;&#30340;&#25968;&#25454;&#28304;&#24341;&#29992;.
+		</p></div><p>
+	&#24403;&#21069;CobarDataSourceDescriptor&#20043;&#25152;&#20197;&#38656;&#35201;&#36825;&#20123;&#20449;&#24687;&#26159;&#22240;&#20026;&#29616;&#22312;&#32593;&#31449;&#26368;&#20027;&#35201;&#30340;&#25968;&#25454;&#24211;&#37096;&#32626;&#32467;&#26500;&#26159;HA&#21452;&#26426;&#28909;&#22791;&#30340;&#27700;&#24179;&#20999;&#20998;&#25968;&#25454;&#24211;&#38598;&#32676;, &#20294;&#21518;&#26399;&#22914;&#26524;&#26377;&#20854;&#23427;&#30340;&#25968;&#25454;&#24211;&#37096;&#32626;&#32467;&#26500;, CobarDataSourceDescriptor&#20063;&#21487;&#33021;&#38543;&#30528;&#25968;&#25454;&#24211;&#37096;&#32626;&#32467;&#26500;&#30340;&#35843;&#25972;&#32780;&#35843;&#25972;.
+	</p><div class="tip" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title">Tip</h3><p>
+			&#22914;&#26524;&#19981;&#38656;&#35201;HA&#21452;&#26426;&#28909;&#22791;&#25903;&#25345;, &#37027;&#20040;&#21487;&#20197;&#35753;standby(.*)DataSource&#25351;&#21521;target(.*)DataSource&#30456;&#21516;&#30340;&#25968;&#25454;&#28304;&#24212;&#29992;, &#25110;&#32773;&#22914;&#26524;DefaultCobarDataSourceService&#30340;haDataSourceCreator&#27809;&#26377;&#25351;&#23450;&#30340;&#35805;, 
+			standbyDataSource,standbyDetectorDataSource&#21644;targetDetectorDataSource&#21487;&#20197;&#23436;&#20840;&#19981;&#37197;&#32622;.
+		</p><p>
+			CobarDataSourceDescriptor&#24341;&#29992;&#30340;&#25968;&#25454;&#28304;&#21487;&#20197;&#26469;&#33258;JNDI&#32465;&#23450;&#30340;&#25968;&#25454;&#28304;, &#20063;&#21487;&#20197;&#26469;&#33258;&#23481;&#22120;&#20869;&#23450;&#20041;&#30340;&#25968;&#25454;&#28304;(&#22914;&#19978;&#37197;&#32622;&#25152;&#31034;, &#20026;&#20102;&#27979;&#35797;,&#25105;&#20204;&#20351;&#29992;&#20102;Spring&#23481;&#22120;&#20869;&#23450;&#20041;&#30340;C3P0&#25968;&#25454;&#28304;), 
+			&#29978;&#33267;&#20854;&#23427;&#24418;&#24335;&#25552;&#20379;&#30340;&#25968;&#25454;&#28304;, &#21482;&#35201;&#20026;&#20854;&#25552;&#20379;&#26631;&#20934;&#30340;JDBC API&#20013;&#30340;DataSource&#25509;&#21475;&#23454;&#29616;&#21363;&#21487;.
+		</p></div><p>
+	</p><p>
+		DefaultCobarDataSourceService&#38500;&#20102;&#20381;&#36182;&#19968;&#32452;CobarDataSourceDescriptor, &#23427;&#36824;&#20381;&#36182;&#20110;&#30456;&#24212;&#30340;IHADataSourceCreator&#26469;&#36827;&#34892;&#25968;&#25454;&#24211;&#30340;HA&#25903;&#25345;, &#22914;&#26524;&#27809;&#26377;&#25552;&#20379;&#30456;&#24212;&#30340;IHADataSourceCreator&#23454;&#29616;&#31867;, 
+		DefaultCobarDataSourceService&#40664;&#35748;&#20250;&#20351;&#29992;NonHADataSourceCreator, &#21363;&#19981;&#21019;&#24314;&#25903;&#25345;HA&#30340;&#25968;&#25454;&#28304;. CobarClient&#40664;&#35748;&#25552;&#20379;&#20102;FailoverHotSwapDataSourceCreator&#20197;&#25903;&#25345;HA, &#24212;&#29992;&#26041;&#21487;&#20197;&#26681;&#25454;&#24773;&#20917;&#25552;&#20379;&#33258;&#24049;&#30340;IHADataSourceCreator&#23454;&#29616;&#26469;&#28385;&#36275;&#29305;&#23450;&#22330;&#26223;&#38656;&#35201;.
+	</p><p>
+		&#26377;&#20851;&#25968;&#25454;&#20999;&#20998;&#20998;&#21306;&#22810;&#25968;&#25454;&#28304;&#31649;&#29702;&#30456;&#20851;&#30340;&#36801;&#31227;&#35828;&#26126;&#23601;&#35828;&#21040;&#36825;&#37324;, &#19979;&#38754;&#25105;&#20204;&#26469;&#36827;&#19968;&#27493;&#30475;&#19968;&#19979;&#20854;&#23427;&#30456;&#20851;&#37197;&#32622;&#32454;&#33410;.
+	</p></div><div class="sect1"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="d0e100"></a>1.2.&nbsp;CobarSqlMapClientTemplate&#20854;&#23427;&#30456;&#20851;&#37197;&#32622;&#35828;&#26126;</h2></div></div></div><p>
+			&#22240;&#20026;com.alibaba.cobar.client.transaction.MultipleDataSourcesTransactionManager&#23646;&#20110;&#26631;&#20934;&#30340;Spring&#30340;PlatformTransactionManager&#23454;&#29616;, &#38500;&#20102;&#21807;&#19968;&#29305;&#23450;&#20110;CobarClient&#30340;ICobarDataSourceService&#20381;&#36182;&#20043;&#22806;, 
+			&#20854;&#23427;&#37117;&#32487;&#25215;&#33258;Spring&#26631;&#20934;&#31867;AbstractPlatformTransactionManager, &#25925;&#27492;&#20854;&#37197;&#32622;&#22312;&#36825;&#37324;&#23601;&#19981;&#20570;&#26356;&#22810;&#35828;&#26126;&#20102;,&#24212;&#29992;&#26041;&#21487;&#20197;&#21442;&#38405;Spring&#30340;&#30456;&#20851;&#25991;&#26723;&#33719;&#21462;&#26356;&#22810;&#37197;&#32622;&#21644;&#20351;&#29992;&#20449;&#24687;. &#19979;&#38754;&#25105;&#20204;&#20027;&#35201;&#38024;&#23545;CobarSqlMapClientTemplate&#30340;&#30456;&#20851;&#20381;&#36182;&#36827;&#34892;&#36827;&#19968;&#27493;&#35828;&#26126;.
+
+		</p><div class="sect2"><div class="titlepage"><div><div><h3 class="title"><a name="d0e105"></a>1.2.1.&nbsp;&#25968;&#25454;&#35775;&#38382;&#36335;&#30001;&#30456;&#20851;&#37197;&#32622;</h3></div></div></div><p>
+				CobarSqlMapClientTemplate&#20381;&#36182;&#26576;&#20010;ICobarDataSourceService&#23454;&#29616;&#31867;&#26469;&#33719;&#21462;&#25968;&#25454;&#25286;&#20998;&#20998;&#21306;&#30456;&#20851;&#20449;&#24687;, &#20026;&#20102;&#23558;&#30456;&#24212;&#30340;&#25968;&#25454;&#35775;&#38382;&#35831;&#27714;&#36335;&#30001;&#21040;&#30456;&#24212;&#30340;&#25968;&#25454;&#20998;&#21306;, &#23427;&#20063;&#38656;&#35201;&#20381;&#36182;&#20110;&#19968;&#20010;ICobarRouter&#23454;&#29616;&#31867;&#20197;&#20915;&#23450;&#22914;&#20309;&#36827;&#34892;&#25968;&#25454;&#35775;&#38382;&#35831;&#27714;&#30340;&#36335;&#30001;.
+				&#25152;&#20197;, &#19968;&#20010;&#21151;&#33021;&#23436;&#22791;&#30340;CobarSqlMapClientTemplate&#37197;&#32622;&#24212;&#35813;&#22914;&#19979;&#25152;&#31034;:
+				</p><pre class="programlisting">
+&lt;bean id="sqlMapClientTemplate" class="com.alibaba.cobar.client.CobarSqlMapClientTemplate"&gt;
+	&lt;property name="sqlMapClient" ref="sqlMapClient" /&gt;
+	&lt;property name="cobarDataSourceService" ref="dataSources" /&gt;
+	&lt;property name="router" ref="internalRouter" /&gt;
+	&lt;property name="sqlAuditor"&gt;
+		&lt;bean class="com.alibaba.cobar.client.audit.SimpleSqlAuditor" /&gt;
+	&lt;/property&gt;
+	&lt;property name="profileLongTimeRunningSql" value="true" /&gt;
+	&lt;property name="longTimeRunningSqlIntervalThreshold" value="3600000" /&gt;
+&lt;/bean&gt;
+
+&lt;bean id="internalRouter"
+	class="com.alibaba.cobar.client.router.config.CobarInteralRouterXmlFactoryBean"&gt;
+	&lt;property name="functionsMap"&gt;
+		&lt;map&gt;
+			&lt;entry key="mod"&gt;
+				&lt;bean class="com.alibaba.cobar.client.router.rules.support.ModFunction"&gt;
+					&lt;constructor-arg&gt;&lt;value&gt;128&lt;/value&gt;&lt;/constructor-arg&gt;
+				&lt;/bean&gt;
+			&lt;/entry&gt;
+		&lt;/map&gt;
+	&lt;/property&gt;
+	&lt;property name="configLocations"&gt;
+		&lt;list&gt;
+			&lt;value&gt;classpath:META-INF/routing/offer-sql-action-rules.xml&lt;/value&gt;
+			&lt;value&gt;classpath:META-INF/routing/offer-sharding-rules-on-namespace.xml&lt;/value&gt;
+		&lt;/list&gt;
+	&lt;/property&gt;
+&lt;/bean&gt;
+				</pre><p>
+				</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title">Note</h3><p>&#20851;&#20110;sqlAuditor, profileLongTimeRunningSql, longTimeRunningSqlIntervalThreshold&#31561;&#37197;&#32622;&#39033;, &#21487;&#20197;&#21442;&#32771;CobarClient Reference&#25991;&#26723;, &#20182;&#20204;&#26159;&#21487;&#36873;&#30340;, &#25152;&#20197;&#36825;&#37324;&#19981;&#20570;&#26356;&#22810;&#35828;&#26126;.</p></div><p>
+				Cobar Client&#40664;&#35748;&#25552;&#20379;&#30340;ICobarRouter&#23454;&#29616;&#31867;&#26159;com.alibaba.cobar.client.router.CobarClientInternalRouter, &#20026;&#20102;&#31616;&#21270;&#37197;&#32622;, &#25105;&#20204;&#20026;&#20854;&#25552;&#20379;&#20102;&#19968;&#20010;FactoryBean&#29992;&#20110;&#31616;&#21270;&#37197;&#32622;, &#21363;com.alibaba.cobar.client.router.config.CobarInteralRouterXmlFactoryBean,
+				&#20854;&#20013;&#26368;&#20027;&#35201;&#30340;&#37197;&#32622;&#39033;&#20026;configLocations(&#25110;&#32773;configLocation, &#22914;&#26524;&#21482;&#38656;&#35201;&#25351;&#23450;&#19968;&#20010;&#36335;&#30001;&#35268;&#21017;&#35828;&#26126;&#25991;&#20214;&#30340;&#35805;), &#35813;&#37197;&#32622;&#39033;&#20027;&#35201;&#29992;&#20110;&#25351;&#23450;&#36335;&#30001;&#35268;&#21017;&#35828;&#26126;&#25991;&#20214;&#25152;&#22312;&#30340;&#20301;&#32622;, com.alibaba.cobar.client.router.CobarClientInternalRouter&#23558;&#26681;&#25454;&#36825;&#20123;&#36335;&#30001;&#35268;&#21017;&#35828;&#26126;&#25991;&#20214;&#20013;&#30340;&#36335;&#30001;&#35268;&#21017;&#36827;&#34892;&#25968;&#25454;&#35775;&#38382;&#35831;&#27714;&#30340;&#36335;&#30001;.
+				&#19979;&#38754;&#26159;&#19968;&#20010;&#20856;&#22411;&#30340;&#36335;&#30001;&#35268;&#21017;&#35828;&#26126;&#25991;&#20214;&#23454;&#20363;:
+				</p><pre class="programlisting">
+&lt;rules&gt;
+  &lt;rule&gt;
+    &lt;namespace&gt;com.alibaba.cobar.client.entities.Offer&lt;/namespace&gt;
+    &lt;shardingExpression&gt;mod.apply(memberId)==1&lt;/shardingExpression&gt;
+    &lt;shards&gt;partition1&lt;/shards&gt;
+  &lt;/rule&gt;
+  &lt;rule&gt;
+    &lt;namespace&gt;com.alibaba.cobar.client.entities.Offer&lt;/namespace&gt;
+    &lt;shardingExpression&gt;mod.apply(memberId)==2&lt;/shardingExpression&gt;
+    &lt;shards&gt;partition2&lt;/shards&gt;
+  &lt;/rule&gt;
+&lt;/rules&gt;
+				</pre><p>
+				&#22914;&#26524;&#25105;&#20204;&#27880;&#24847;&#21040;&#22312;&#37197;&#32622;com.alibaba.cobar.client.router.config.CobarInteralRouterXmlFactoryBean&#30340;&#26102;&#20505;,&#25105;&#20204;&#36890;&#36807;functionsMap&#23646;&#24615;&#25351;&#23450;&#20102;&#19968;&#20010;&#33258;&#23450;&#20041;&#20989;&#25968;Map&#30340;&#35805;, 
+				&#37027;&#20040;,&#22312;&#36335;&#30001;&#35268;&#21017;&#30340;shardingExpression&#20013;, &#23601;&#19981;&#38590;&#21457;&#29616;&#35813;&#33258;&#23450;&#20041;&#20989;&#25968;&#30340;&#36523;&#24433;&#20102;.
+			</p><p>
+				&#22240;&#20026;&#20197;&#19978;&#36335;&#30001;&#35268;&#21017;&#23450;&#20041;&#24456;&#31616;&#21333;,&#25152;&#20197;&#25105;&#20204;&#27809;&#26377;&#24378;&#21046;&#35201;&#27714;&#20351;&#29992;DTD&#25110;&#32773;XML Schema,&#20294;&#23454;&#38469;&#19978;, &#36335;&#30001;&#35268;&#21017;&#30340;DTD&#21487;&#20197;&#31616;&#21333;&#25551;&#36848;&#22914;&#19979;:
+				</p><pre class="programlisting">
+&lt;?xml version="1.0"?  encoding="UTF-8"?&gt;
+&lt;!ELEMENT rules (rule)+&gt;
+&lt;!ELEMENT rule ((namespace|sqlmap),shardingExpression,shards)&gt;
+&lt;!ELEMENT namespace (#PCDATA)&gt;
+&lt;!ELEMENT sqlmap (#PCDATA)&gt;
+&lt;!ELEMENT shardingExpression (#PCDATA)&gt;
+&lt;!ELEMENT shards (#PCDATA)&gt;
+				</pre><p>
+				&#36335;&#30001;&#35268;&#21017;&#22312;&#24403;&#21069;&#30340;CobarClient&#20013;&#20998;&#20026;&#22235;&#31181;&#31867;&#22411;, &#35814;&#24773;&#21442;&#35265;CobarClient Reference&#25991;&#26723;. &#24635;&#20043;, &#26377;&#20102;&#20197;&#19978;&#37197;&#32622;&#20043;&#21518;, &#20320;&#23601;&#21487;&#20197;&#24320;&#22987;&#20351;&#29992;Cobar Client&#36827;&#34892;&#25968;&#25454;&#20999;&#20998;&#38598;&#32676;&#19979;&#30340;&#25968;&#25454;&#35775;&#38382;&#20043;&#26053;&#20102;.
+			</p></div><div class="sect2"><div class="titlepage"><div><div><h3 class="title"><a name="d0e125"></a>1.2.2.&nbsp;What's Next?</h3></div></div></div><p>
+				&#36801;&#31227;&#25991;&#26723;&#21482;&#26159;&#31616;&#21333;&#35828;&#26126;&#20102;&#20351;&#29992;CobarClient&#38656;&#35201;&#20570;&#30340;&#26368;&#22522;&#26412;&#24037;&#20316;, &#20294;&#36807;&#22810;&#32454;&#33410;&#19981;&#20250;&#28041;&#21450;, &#27604;&#22914;&#36335;&#30001;&#35268;&#21017;&#30340;&#35814;&#32454;&#23450;&#20041;&#22914;&#20309;&#36827;&#34892;, HA&#22914;&#20309;&#37197;&#32622;&#31561;&#31561;, &#35201;&#20102;&#35299;&#36825;&#20123;&#26356;&#32454;&#33410;&#30340;&#20449;&#24687;, 
+				&#35831;&#36827;&#19968;&#27493;&#21442;&#32771;CobarClient&#21442;&#32771;&#25163;&#20876;.
+			</p></div></div></div></div><div class="part"><div class="titlepage"><div><div><h1 class="title"><a name="d0e130"></a>Part&nbsp;II.&nbsp;Cobar Client&#30334;&#31185;&#22823;&#20840;</h1></div></div></div><div class="chapter"><div class="titlepage"><div><div><h2 class="title"><a name="roma_application_redirect"></a>Chapter&nbsp;2.&nbsp;CobarClient&#21457;&#36215;&#30340;&#32972;&#26223;</h2></div></div></div><p>
+			&#29616;&#26377;&#30340;Cobar&#26041;&#26696;&#38656;&#35201;&#21333;&#29420;&#30340;&#26381;&#21153;&#22120;&#26469;&#36816;&#34892;, &#20026;&#20102;&#20445;&#35777;&#24615;&#33021;&#21644;&#21487;&#29992;&#24615;, &#36890;&#24120;&#26368;&#23569;&#38656;&#35201;&#20004;&#21488;&#29420;&#31435;&#26381;&#21153;&#22120;.&#22269;&#38469;&#31449;&#24212;&#29992;&#26041;&#20986;&#20110;&#25193;&#23637;&#21644;&#21487;&#29992;&#24615;&#31561;&#22240;&#32032;&#32771;&#34385;, 
+			&#24076;&#26395;&#19968;&#31181;&#19981;&#20381;&#36182;&#20110;&#29420;&#31435;&#26381;&#21153;&#22120;&#30340;Cobar&#35299;&#20915;&#26041;&#26696;, &#37492;&#20110;&#27492;, &#20915;&#23450;&#24320;&#21457;Cobar&#30340;Client&#29256;&#26412;, &#35813;&#29256;&#26412;&#20027;&#35201;&#38754;&#21521;&#23567;&#35268;&#27169;&#30340;&#25968;&#25454;&#24211;sharding&#38598;&#32676;&#35775;&#38382;, 
+			&#22240;&#29616;&#26377;&#30340;Cobar&#24050;&#32463;&#22312;&#20013;&#25991;&#31449;&#31561;&#22810;&#20010;&#39033;&#30446;&#20013;&#25104;&#21151;&#24212;&#29992;&#24182;&#23454;&#26045;, &#22914;&#26524;CobarClient&#26080;&#27861;&#28385;&#36275;&#36827;&#19968;&#27493;&#30340;&#38656;&#27714;,&#21487;&#20197;&#36716;&#32780;&#20351;&#29992;&#29616;&#26377;&#30340;Cobar&#26041;&#26696;.
+		</p><p>
+			&#25152;&#20197;, CobarClient&#30340;&#20351;&#29992;&#21407;&#21017;&#19978;&#21482;&#38480;&#23450;&#20110;&#26576;&#20123;&#29305;&#23450;&#22330;&#26223;.
+		</p></div><div class="chapter"><div class="titlepage"><div><div><h2 class="title"><a name="roma_application_redirect"></a>Chapter&nbsp;3.&nbsp;CobarClient&#26368;&#21021;&#38656;&#27714;</h2></div></div></div><p>
+			CobarClient&#38656;&#35201;&#28385;&#36275;&#20197;&#19979;&#38656;&#27714;:
+			</p><div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><p>
+						&#21487;&#20197;&#25903;&#25345;&#22402;&#30452;&#21644;&#27700;&#24179;&#25968;&#25454;&#20999;&#20998;&#25968;&#25454;&#24211;&#38598;&#32676;&#30340;&#35775;&#38382;;
+					</p></li><li class="listitem"><p>
+						&#25903;&#25345;&#21452;&#26426;&#28909;&#22791;&#30340;HA&#35299;&#20915;&#26041;&#26696;, &#24212;&#29992;&#26041;&#21487;&#20197;&#26681;&#25454;&#24773;&#20917;&#36873;&#29992;&#25968;&#25454;&#24211;&#29305;&#23450;&#30340;HA&#35299;&#20915;&#26041;&#26696;(&#27604;&#22914;Oracle&#30340;RAC),&#25110;&#32773;&#36873;&#29992;CobarClient&#25552;&#20379;&#30340;HA&#35299;&#20915;&#26041;&#26696;.
+					</p></li><li class="listitem"><p>
+						&#23567;&#25968;&#25454;&#37327;&#30340;&#25968;&#25454;&#38598;&#35745;(Aggregation), &#26242;&#26102;&#21482;&#25903;&#25345;&#31616;&#21333;&#30340;&#25968;&#25454;&#21512;&#24182;.
+					</p></li><li class="listitem"><p>
+						&#25968;&#25454;&#24211;&#26412;&#22320;&#20107;&#21153;&#30340;&#25903;&#25345;, &#30446;&#21069;&#37319;&#29992;Best Efforts 1PC&#27169;&#24335;&#30340;&#20107;&#21153;&#31649;&#29702;.
+					</p></li><li class="listitem"><p>
+						&#25968;&#25454;&#35775;&#38382;&#25805;&#20316;&#30456;&#20851;SQL&#30340;&#35760;&#24405;, &#20998;&#26512;&#31561;.(&#21487;&#20197;&#37319;&#29992;&#22269;&#38469;&#31449;&#29616;&#26377;Ark&#35299;&#20915;&#26041;&#26696;,&#20294;CobarClient&#25552;&#20379;&#25193;&#23637;&#30340;&#20999;&#20837;&#25509;&#21475;)
+					</p></li></ol></div><p>
+		</p></div><div class="chapter"><div class="titlepage"><div><div><h2 class="title"><a name="roma_application_redirect"></a>Chapter&nbsp;4.&nbsp;CobarClient&#26041;&#26696;&#20043;&#38388;&#30340;&#26435;&#34913;</h2></div></div></div><div class="toc"><dl class="toc"><dt><span class="sect1"><a href="#jdbc solution">4.1. JDBC API&#23618;&#27425;&#30340;&#35299;&#20915;&#26041;&#26696;</a></span></dt><dt><span class="sect1"><a href="#dal solution">4.2. DAL&#23618;&#27425;&#30340;&#35299;&#20915;&#26041;&#26696;</a></span></dt><dt><span class="sect1"><a href="#d0e193">4.3. &#29305;&#23450;&#22269;&#38469;&#31449;&#22330;&#26223;&#30340;&#35299;&#20915;&#26041;&#26696;</a></span></dt></dl></div><p>
+			CobarClient&#30340;&#23454;&#29616;&#26041;&#26696;&#21487;&#20197;&#20174;&#22810;&#20010;&#35282;&#24230;&#36827;&#34892;&#32771;&#34385;, &#25105;&#20204;&#26242;&#19988;&#36873;&#25321;&#19977;&#31181;&#26041;&#26696;&#36827;&#34892;&#25512;&#28436;.
+		</p><div class="sect1"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="jdbc solution"></a>4.1.&nbsp;JDBC API&#23618;&#27425;&#30340;&#35299;&#20915;&#26041;&#26696;</h2></div></div></div><p>
+				&#22240;&#20026;&#29616;&#26377;&#30340;Cobar&#35299;&#20915;&#26041;&#26696;&#36890;&#36807;SQL&#35299;&#26512;&#26469;&#23454;&#29616;&#20102;shards&#38388;&#30340;&#36335;&#30001;&#21151;&#33021;, &#25152;&#20197;, &#33258;&#28982;&#32780;&#28982;&#30340;, &#22823;&#23478;&#20250;&#39532;&#19978;&#32852;&#24819;&#21040;&#22312;JDBC Driver&#23618;&#27425;&#36827;&#34892;&#21516;&#26679;&#30340;&#23553;&#35013;,&#28982;&#21518;&#20063;&#26159;&#36890;&#36807;SQL&#35299;&#26512;&#30340;&#26041;&#24335;&#26469;&#23454;&#29616;&#36335;&#30001;&#21151;&#33021;. 
+				&#39318;&#20808;&#36825;&#31181;&#26041;&#26696;&#26159;&#21487;&#20197;&#23454;&#29616;&#30340;, &#20294;&#24037;&#26399;&#20063;&#32477;&#23545;&#19981;&#20250;&#20687;&#24819;&#35937;&#30340;&#37027;&#20040;&#30701;. 
+			</p><p>
+				&#35201;&#36208;&#36825;&#26465;&#36335;, &#25105;&#20204;&#19981;&#21487;&#33021;&#36890;&#36807;&#23553;&#35013;&#25110;&#32773;&#25318;&#25130;&#20960;&#20010;JDBC&#25509;&#21475;&#23601;&#24456;&#23481;&#26131;&#30340;&#25630;&#23450;, &#25105;&#20204;&#38656;&#35201;&#23454;&#29616;&#19968;&#25972;&#22871;&#30340;JDBC&#35268;&#33539;,&#36825;&#26080;&#35770;&#20174;&#24320;&#21457;&#36824;&#26159;&#27979;&#35797;&#26041;&#38754;&#32771;&#34385;,&#25237;&#20837;&#30340;&#26102;&#38388;&#37117;&#20250;&#24456;&#22810;.
+			</p><p>
+				&#26368;&#21021;&#25105;&#20204;&#23581;&#35797;&#21482;&#25318;&#25130;Connection, Statement&#30340;&#30456;&#20851;&#26041;&#27861;&#26469;&#33719;&#21462;SQL&#24182;&#36827;&#34892;&#35299;&#26512;&#31561;&#24037;&#20316;,&#20294;&#21457;&#29616;&#30456;&#20851;&#26041;&#27861;&#35843;&#29992;&#30340;lifecycle&#30340;&#19981;&#21305;&#37197;&#38382;&#39064;, &#26041;&#27861;&#35843;&#29992;&#30340;trace&#38382;&#39064;, &#25968;&#25454;&#24211;metadata&#31561;&#37117;&#20250;&#36896;&#25104;&#23454;&#29616;&#36807;&#31243;&#20013;&#30340;<span class="quote">&#8220;<span class="quote">&#23604;&#23596;</span>&#8221;</span>&#21644;&#38590;&#34892;.
+			</p><p>
+				&#20294;&#19981;&#31649;&#24590;&#20040;&#26679;, &#23436;&#20840;&#30340;&#23454;&#29616;&#19968;&#22871;JDBC&#35268;&#33539;&#30340;API,&#21407;&#21017;&#19978;&#26469;&#35828;&#21487;&#20197;&#23454;&#29616;&#31867;&#20284;&#20110;&#29616;&#26377;Cobar&#35299;&#20915;&#26041;&#26696;&#31867;&#20284;&#30340;&#26041;&#26696;.
+			</p></div><div class="sect1"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="dal solution"></a>4.2.&nbsp;DAL&#23618;&#27425;&#30340;&#35299;&#20915;&#26041;&#26696;</h2></div></div></div><p>
+				&#35201;&#23454;&#29616;&#25968;&#25454;&#26041;&#26696;&#30340;&#36335;&#30001;&#21151;&#33021;, &#25105;&#20204;&#20063;&#21487;&#20197;&#22312;&#25968;&#25454;&#35775;&#38382;&#23618;&#20570;&#25991;&#31456;. &#20174;DAL&#23618;&#20570;&#25991;&#31456;&#30340;&#22909;&#22788;&#22312;&#20110;, &#25105;&#20204;&#21487;&#20197;&#35268;&#33539;&#24320;&#21457;&#27969;&#31243;, &#31616;&#21270;&#36335;&#30001;&#21151;&#33021;&#30340;&#23454;&#29616;, &#32780;&#19988;, &#19981;&#31649;&#23558;&#26469;&#22686;&#21152;&#26356;&#22810;&#30340;shards&#25110;&#32773;&#20854;&#23427;&#24322;&#26500;&#30340;&#23384;&#20648;, &#27604;&#22914;KV store, 
+				DAL&#23618;&#37117;&#21487;&#20197;&#23631;&#34109;&#36825;&#20123;&#21464;&#21270;, &#20351;&#24471;&#24212;&#29992;&#31243;&#24207;&#19981;&#21463;&#20219;&#20309;&#24433;&#21709;.
+			</p><p>
+				&#22914;&#26524;&#37319;&#29992;DAL&#23618;&#30340;&#35299;&#20915;&#26041;&#26696;, &#25105;&#20204;&#21487;&#20197;&#23558;sharding&#31574;&#30053;&#21644;&#35268;&#21017;<span class="quote">&#8220;<span class="quote">&#22806;&#37096;&#21270;</span>&#8221;</span>, &#36890;&#36807;&#32479;&#19968;&#30340;&#37197;&#32622;(Annotation&#20063;&#22909;, &#22806;&#37096;XML&#20043;&#31867;&#37197;&#32622;&#25991;&#20214;&#20063;&#22909;)&#26469;&#23450;&#20041;&#36335;&#30001;&#35268;&#21017;, &#36335;&#30001;&#35268;&#21017;&#21487;&#20197;&#26681;&#25454;DO&#30340;&#31867;&#22411;&#20197;&#21450;&#30456;&#20851;&#23646;&#24615;&#36827;&#34892;&#23450;&#20041;, 
+				&#23450;&#20041;&#31616;&#21333;&#21448;&#19981;&#22833;&#28789;&#27963;&#24615;, &#23436;&#20840;&#19981;&#29992;&#24341;&#20837;SQL&#35299;&#26512;&#20043;&#31867;&#30340;&#22797;&#26434;&#24615;.
+			</p><p>
+				&#20294;&#22522;&#20110;DAL&#23618;&#27425;&#30340;&#35299;&#20915;&#26041;&#26696;&#23545;&#29616;&#26377;&#32593;&#31449;&#30340;&#24212;&#29992;&#26469;&#35828;, &#20914;&#20987;&#24615;&#22826;&#22823;,&#25152;&#20197;, &#36825;&#34429;&#28982;&#26159;&#20010;&#26041;&#21521;,&#20294;&#30701;&#26399;&#20869;&#26080;&#27861;&#26377;&#25928;&#26045;&#34892;.
+			</p></div><div class="sect1"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="d0e193"></a>4.3.&nbsp;&#29305;&#23450;&#22269;&#38469;&#31449;&#22330;&#26223;&#30340;&#35299;&#20915;&#26041;&#26696;</h2></div></div></div><p>
+				&#32771;&#34385;&#21040;&#24037;&#26399;&#20197;&#21450;&#20860;&#23481;&#24615;&#31561;&#22240;&#32032;, &#25105;&#20204;&#21487;&#20197;&#32771;&#34385;&#20171;&#20110;<a class="xref" href="#jdbc solution" title="4.1.&nbsp;JDBC API&#23618;&#27425;&#30340;&#35299;&#20915;&#26041;&#26696;">JDBC API&#23618;&#27425;&#30340;&#35299;&#20915;&#26041;&#26696;</a>&#21644;<a class="xref" href="#dal solution" title="4.2.&nbsp;DAL&#23618;&#27425;&#30340;&#35299;&#20915;&#26041;&#26696;">DAL&#23618;&#27425;&#30340;&#35299;&#20915;&#26041;&#26696;</a>&#20043;&#38388;&#30340;&#19968;&#31181;&#35299;&#20915;&#26041;&#26696;.
+			</p><p>
+				B2B&#20869;&#37096;&#25968;&#25454;&#35775;&#38382;&#20840;&#37096;&#37319;&#29992;iBatis&#36827;&#34892;, &#20026;&#20102;&#25552;&#39640;&#24320;&#21457;&#25928;&#29575;,&#33258;&#28982;&#20063;&#37319;&#29992;&#20102;Spring&#25552;&#20379;&#30340;SqlMapClientTemplate&#36827;&#34892;&#25968;&#25454;&#35775;&#38382;&#36923;&#36753;&#30340;&#24320;&#21457;. &#35201;&#36739;&#23569;&#30340;&#20405;&#20837;&#29616;&#26377;&#24212;&#29992;,
+				&#25105;&#20204;&#21487;&#20197;&#32771;&#34385;&#23545;SqlMapClientTemplate&#20570;&#25163;&#33050;, &#26082;&#28982;&#25152;&#26377;&#30340;&#25968;&#25454;&#35775;&#38382;&#37117;&#36890;&#36807;&#35813;&#31867;&#36208;,&#37027;&#20040;&#23601;&#22312;&#35813;&#31867;&#20013;&#25554;&#20837;&#36335;&#30001;&#36923;&#36753;, &#26681;&#25454;&#25968;&#25454;&#35775;&#38382;&#35831;&#27714;&#30340;&#23646;&#24615;&#25351;&#23450;&#36335;&#30001;&#35268;&#21017;, &#28982;&#21518;&#23558;&#31526;&#21512;&#36335;&#30001;&#35268;&#21017;&#30340;&#25968;&#25454;&#35775;&#38382;&#35831;&#27714;&#36335;&#30001;&#21040;&#30456;&#24212;&#30340;shard&#19978;&#21435;.
+			</p><p>
+				&#36825;&#23454;&#38469;&#19978;&#23601;&#26159;&#25105;&#20204;&#29616;&#22312;&#31532;&#19968;&#38454;&#27573;&#37319;&#29992;&#30340;&#35299;&#20915;&#26041;&#26696;.
+			</p></div></div><div class="chapter"><div class="titlepage"><div><div><h2 class="title"><a name="roma_application_redirect"></a>Chapter&nbsp;5.&nbsp;Cobar Client&#21442;&#32771;&#25991;&#26723;(Cobar Client Reference Documentation)</h2></div></div></div><div class="toc"><dl class="toc"><dt><span class="sect1"><a href="#d0e209">5.1. &#40479;&#30640;Cobar Client&#29616;&#26377;&#26550;&#26500;&#23454;&#29616;</a></span></dt><dt><span class="sect1"><a href="#d0e234">5.2. CobarSqlMapClientTemplate&#35814;&#35299;</a></span></dt><dd><dl><dt><span class="sect2"><a href="#mds explained">5.2.1. &#22810;&#25968;&#25454;&#28304;&#20381;&#36182;&#31649;&#29702;(Multiple DataSources Management)</a></span></dt><dt><span class="sect2"><a href="#d0e330">5.2.2. &#25968;&#25454;&#35775;&#38382;&#35831;&#27714;&#36335;&#30001;(Routing In CobarSqlMapClientTemplate)</a></span></dt><dt><span class="sect2"><a href="#d0e506">5.2.3. SqlAuditing</a></span></dt><dt><span class="sect2"><a href="#d0e524">5.2.4. &#20854;&#23427;&#37197;&#32622;&#19982;&#29305;&#24615;&#35299;&#37322;(Other Configuration or Features Explained)</a></span></dt></dl></dd><dt><span class="sect1"><a href="#d0e604">5.3. MultipleDataSourcesTransactionManager&#35814;&#35299;</a></span></dt><dd><dl><dt><span class="sect2"><a href="#d0e613">5.3.1. 
+				MultipleDataSourcesTransactionManager&#20381;&#36182;&#30340;&#22810;&#25968;&#25454;&#28304;&#31649;&#29702;
+			</a></span></dt></dl></dd></dl></div><div class="sect1"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="d0e209"></a>5.1.&nbsp;&#40479;&#30640;Cobar Client&#29616;&#26377;&#26550;&#26500;&#23454;&#29616;</h2></div></div></div><p>
+			CobarClient&#29616;&#26377;&#26041;&#26696;&#30340;&#26550;&#26500;&#22914;&#19979;&#22270;&#25152;&#31034;:
+			</p><div class="mediaobject"><img src="images/cobarClientArch.png"></div><p>
+			&#26550;&#26500;&#20013;&#20027;&#35201;&#20391;&#37325;&#35299;&#20915;&#20004;&#20010;&#26041;&#38754;&#30340;&#38382;&#39064;:
+			</p><div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><p><b>&#25968;&#25454;&#35775;&#38382;&#35831;&#27714;&#30340;&#36335;&#30001;.&nbsp;</b>
+							&#36890;&#36807;&#25193;&#23637;Spring&#25552;&#20379;&#30340;SqlMapClientTemplate&#26469;&#20999;&#20837;&#36827;&#34892;&#25193;&#23637;,
+							&#25105;&#20204;&#25552;&#20379;&#20102;&#33258;&#23450;&#20041;&#30340;CobarSqlMapClientTemplate, &#24182;&#32467;&#21512;&#30456;&#24212;&#30340;Router&#25903;&#25345;&#26469;&#23454;&#29616;&#25968;&#25454;&#35775;&#38382;&#35831;&#27714;&#30340;&#36335;&#30001;&#21151;&#33021;,
+							&#24182;&#19988;&#23613;&#37327;&#20445;&#25345;&#29616;&#26377;&#24212;&#29992;&#20195;&#30721;&#30340;&#20860;&#23481;. &#24212;&#29992;&#30340;&#36801;&#31227;&#24037;&#20316;&#22522;&#26412;&#19978;&#21482;&#35201;&#26367;&#25442;&#27880;&#20837;&#30340;SqlMapClientTemplate&#23454;&#29616;&#31867;&#21363;&#21487;.
+						</p></li><li class="listitem"><p><b>&#22810;&#25968;&#25454;&#28304;&#35775;&#38382;&#36807;&#31243;&#20013;&#30340;&#20107;&#21153;&#31649;&#29702;.&nbsp;</b>
+							&#22240;&#20026;&#20004;&#38454;&#27573;&#25552;&#20132;&#30340;&#20998;&#24067;&#24335;&#20107;&#21153;&#20250;&#20005;&#37325;&#24433;&#21709;&#24212;&#29992;&#30340;&#24615;&#33021;, &#25152;&#20197;, &#26681;&#25454;&#32593;&#31449;&#26041;&#38656;&#27714;,&#25105;&#20204;&#36864;&#32780;&#27714;&#20854;&#27425;, &#37319;&#29992;Best Effort
+							1PC Pattern&#30340;&#20107;&#21153;&#31574;&#30053;,
+							&#25552;&#20379;&#20102;&#22522;&#20110;&#35813;Pattern&#30340;&#19968;&#20010;&#20107;&#21153;&#31649;&#29702;&#22120;&#23454;&#29616;MultipleDataSourcesTransactionManager,
+							&#35813;&#20107;&#21153;&#31649;&#29702;&#22120;&#25193;&#23637;&#33258;Spring&#30340;AbstractPlatformTransactionManager,
+							&#24212;&#29992;&#31243;&#24207;&#36801;&#31227;&#30340;&#26102;&#20505;&#21482;&#38656;&#35201;&#26367;&#25442;&#20351;&#29992;&#30340;&#20107;&#21153;&#31649;&#29702;&#22120;&#23454;&#29616;&#31867;&#21363;&#21487;.&#35813;&#20107;&#21153;&#31649;&#29702;&#22120;&#23454;&#29616;&#26368;&#22823;&#31243;&#24230;&#19978;&#20445;&#35777;&#20107;&#21153;&#31649;&#29702;&#30340;&#24615;&#33021;&#25439;&#22833;&#19982;&#25968;&#25454;&#19968;&#33268;&#24615;&#20043;&#38388;&#30340;&#19968;&#20010;&#21512;&#29702;&#26435;&#34913;.
+						</p></li></ol></div><p>
+			&#21478;&#22806;, &#25105;&#20204;&#20063;&#36890;&#36807;AOP&#23454;&#29616;&#20102;&#25968;&#25454;&#28304;&#20043;&#38388;&#30340;HA,&#20197;&#21450;&#24310;&#36831;&#21152;&#36733;&#25968;&#25454;&#24211;&#36830;&#25509;&#20197;&#20445;&#35777;&#36164;&#28304;&#30340;&#26377;&#25928;&#20351;&#29992;&#31561;&#21151;&#33021;, &#36825;&#20123;&#22312;&#20197;&#19978;&#26550;&#26500;&#22270;&#20013;&#37117;&#26377;&#25152;&#20307;&#29616;.
+		</p><p>
+			&#37492;&#20110;CobarClient&#30340;&#20004;&#20010;&#20027;&#35201;&#20851;&#27880;&#28857;, &#25105;&#20204;&#23558;&#23545;&#36825;&#20004;&#20010;&#20851;&#27880;&#28857;&#23545;&#20110;&#30340;&#20027;&#35201;&#32452;&#20214;&#36827;&#34892;&#35814;&#32454;&#30340;&#35828;&#26126;, &#19979;&#38754;&#26159;&#35814;&#32454;&#20869;&#23481;,
+			&#21508;&#20301;&#30475;&#23448;&#19978;&#30524;&#20102;...
+		</p></div><div class="sect1"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="d0e234"></a>5.2.&nbsp;CobarSqlMapClientTemplate&#35814;&#35299;</h2></div></div></div><p>
+			CobarSqlMapClientTemplate&#25193;&#23637;&#20102;Spring&#30340;SqlMapClientTemplate,
+			&#20027;&#35201;&#22312;SqlMapClientTemplate&#30340;&#22522;&#30784;&#20043;&#19978;&#28155;&#21152;&#20102;&#25968;&#25454;&#35775;&#38382;&#35831;&#27714;&#30340;&#36335;&#30001;&#21151;&#33021;,
+			&#20197;&#20415;&#24212;&#29992;&#31243;&#24207;&#21487;&#20197;&#36879;&#26126;&#30340;&#35775;&#38382;&#25968;&#25454;&#24211;&#20999;&#20998;&#21518;&#30340;&#21508;&#20010;&#25968;&#25454;&#24211;&#33410;&#28857;. &#38500;&#27492;&#20043;&#22806;,
+			CobarSqlMapClientTemplate&#20063;&#25552;&#20379;&#20102;&#19968;&#20123;&#38468;&#21152;&#30340;&#21151;&#33021;, &#20197;&#26041;&#20415;&#24212;&#29992;&#30340;&#30417;&#25511;&#21644;&#20351;&#29992;.
+			&#19979;&#38754;&#25105;&#20204;&#20998;&#37096;&#20998;&#38416;&#36848;CobarSqlMapClientTemplate&#30340;&#30456;&#20851;&#21151;&#33021;.
+		</p><div class="sect2"><div class="titlepage"><div><div><h3 class="title"><a name="mds explained"></a>5.2.1.&nbsp;&#22810;&#25968;&#25454;&#28304;&#20381;&#36182;&#31649;&#29702;(Multiple DataSources Management)</h3></div></div></div><p>
+				&#22312;&#27809;&#26377;&#36827;&#34892;&#25968;&#25454;&#24211;&#20999;&#20998;&#20043;&#21069;,
+				&#24212;&#29992;&#31243;&#24207;&#20351;&#29992;Spring&#30340;SqlMapClientTemplate&#36827;&#34892;&#25968;&#25454;&#35775;&#38382;&#21482;&#38656;&#35201;&#20026;&#20854;&#25552;&#20379;&#21333;&#19968;&#30340;&#25968;&#25454;&#28304;&#24341;&#29992;, &#31867;&#20284;&#20110;:
+				</p><pre class="programlisting">
+&lt;bean id="sqlMapClient" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean"&gt;
+	&lt;property name="dataSource" ref="dataSource" /&gt;
+	...
+&lt;/bean&gt;
+				</pre><p>
+				&#36827;&#34892;&#25968;&#25454;&#20999;&#20998;&#20043;&#21518;, &#22240;&#20026;&#25968;&#25454;&#35775;&#38382;&#21487;&#33021;&#21152;&#35832;&#22312;&#19981;&#21516;&#30340;&#25968;&#25454;&#20999;&#20998;&#20998;&#21306;&#19978;, &#20063;&#23601;&#26159;&#35828;, &#38656;&#35201;&#21516;&#26102;&#24341;&#29992;&#22810;&#20010;&#25968;&#25454;&#28304;&#20381;&#36182;, &#25152;&#20197;,
+				&#25105;&#20204;&#38656;&#35201;&#36890;&#36807;&#26576;&#31181;&#26041;&#24335;&#26469;&#31649;&#29702;&#36825;&#22810;&#20010;&#25968;&#25454;&#28304;&#30340;&#20381;&#36182;, &#24182;&#23558;&#20854;&#27880;&#20837;&#32473;CobarSqlMapClientTemplate&#20351;&#29992;.
+				&#22312;Cobar
+				Client&#20013;, &#23436;&#25104;&#36825;&#19968;&#24037;&#20316;&#30340;&#26159;ICobarDataSourceService&#25277;&#35937;:
+				</p><pre class="programlisting">
+public interface ICobarDataSourceService {
+	Map&lt;String, DataSource&gt; getDataSources();
+	Set&lt;CobarDataSourceDescriptor&gt; getDataSourceDescriptors();
+}
+				</pre><p>
+				ICobarDataSourceService&#23558;&#36127;&#36131;&#20026;CobarSqlMapClientTemplate&#25552;&#20379;&#19968;&#32452;&#20381;&#36182;&#30340;&#25968;&#25454;&#28304;,
+				&#24182;&#19988;&#22312;&#24517;&#35201;&#30340;&#24773;&#20917;&#19979;, &#25552;&#20379;&#21508;&#20010;&#25968;&#25454;&#28304;&#30456;&#20851;&#30340;&#20803;&#25968;&#25454;&#20449;&#24687;.
+				ICobarDataSourceService&#26377;&#19968;&#40664;&#35748;&#23454;&#29616;&#31867;,&#21363;com.alibaba.cobar.client.datasources.DefaultCobarDataSourceService,
+				&#36890;&#36807;DefaultCobarDataSourceService, &#25105;&#20204;&#21487;&#20197;&#38598;&#20013;&#31649;&#29702;&#21508;&#20010;&#25968;&#25454;&#28304;,
+				&#24182;&#23558;&#20182;&#20204;&#27880;&#20837;&#32473;CobarSqlMapClientTemplate&#20351;&#29992;.
+				&#24120;&#35265;&#30340;CobarSqlMapClientTemplate&#21644;&#20854;ICobarDataSourceService&#20381;&#36182;&#30340;&#37197;&#32622;&#24773;&#20917;&#22914;&#19979;&#25152;&#31034;:
+				</p><pre class="programlisting">
+&lt;bean id="sqlMapClientTemplate" class="com.alibaba.cobar.client.CobarSqlMapClientTemplate"&gt;
+	&lt;property name="sqlMapClient" ref="sqlMapClient" /&gt;
+	&lt;property name="cobarDataSourceService" ref="dataSources" /&gt;
+	...
+&lt;/bean&gt;
+
+&lt;bean id="dataSources" class="com.alibaba.cobar.client.datasources.DefaultCobarDataSourceService"&gt;
+	&lt;property name="dataSourceDescriptors"&gt;
+		&lt;set&gt;
+			&lt;bean class="com.alibaba.cobar.client.datasources.CobarDataSourceDescriptor"&gt;
+				&lt;property name="identity" value="partition1"/&gt;
+				&lt;property name="targetDataSource" ref="partition1_main"/&gt;
+				&lt;property name="targetDetectorDataSource" ref="partition1_main"/&gt;
+				&lt;property name="standbyDataSource" ref="partition1_standby"/&gt;
+				&lt;property name="standbyDetectorDataSource" ref="partition1_standby"/&gt;
+				&lt;property name="poolSize" value="10"/&gt;
+			&lt;/bean&gt;
+			&lt;bean class="com.alibaba.cobar.client.datasources.CobarDataSourceDescriptor"&gt;
+				&lt;property name="identity" value="partition2"/&gt;
+				&lt;property name="targetDataSource" ref="partition2_main"/&gt;
+				&lt;property name="targetDetectorDataSource" ref="partition2_main"/&gt;
+				&lt;property name="standbyDataSource" ref="partition2_standby"/&gt;
+				&lt;property name="standbyDetectorDataSource" ref="partition2_standby"/&gt;
+			&lt;/bean&gt;
+		&lt;/set&gt;
+	&lt;/property&gt;
+	&lt;property name="haDataSourceCreator"&gt;
+		&lt;bean class="com.alibaba.cobar.client.datasources.ha.FailoverHotSwapDataSourceCreator"&gt;
+			&lt;property name="detectingSql" value="update cobarha set timeflag=CURRENT_TIMESTAMP()"/&gt;
+		&lt;/bean&gt;
+	&lt;/property&gt;
+&lt;/bean&gt;
+
+&lt;bean id="partition1_main" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close"&gt;
+	...
+&lt;/bean&gt;
+&lt;bean id="partition1_standby" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close"&gt;
+	...
+&lt;/bean&gt;
+&lt;bean id="partition2_main" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close"&gt;
+	...
+&lt;/bean&gt;
+&lt;bean id="partition2_standby" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close"&gt;
+	...
+&lt;/bean&gt;
+				</pre><p>
+				&#27880;&#24847;, CobarSqlMapClientTemplate&#20381;&#28982;&#38656;&#35201;&#19968;&#20010;iBatis&#30340;SqlMapClient&#30340;&#24341;&#29992;,
+				&#22240;&#20026;CobarSqlMapClientTemplate&#20381;&#28982;&#26159;&#19968;&#20010;SqlMapClientTemplate(&#34429;&#28982;&#21548;&#36215;&#26469;&#26377;&#20123;&#24223;&#35805;).
+				&#20197;&#19978;&#37197;&#32622;&#20013;&#37325;&#22836;&#25103;&#22312;&#20110;com.alibaba.cobar.client.datasources.DefaultCobarDataSourceService&#30340;&#37197;&#32622;,
+				&#25105;&#20204;&#38656;&#35201;&#36890;&#36807;
+				<span class="quote">&#8220;<span class="quote">dataSourceDescriptors</span>&#8221;</span>
+				&#23646;&#24615;,
+				&#20026;&#20854;&#27880;&#20837;&#19968;&#32452;com.alibaba.cobar.client.datasources.CobarDataSourceDescriptor,
+				CobarDataSourceDescriptor&#20027;&#35201;&#36127;&#36131;&#23545;&#30456;&#24212;&#30340;&#25968;&#25454;&#28304;&#36827;&#34892;&#25551;&#36848;, &#20854;&#20027;&#35201;&#37197;&#32622;&#20449;&#24687;&#21253;&#25324;:
+				</p><div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p><b>identity.&nbsp;</b>&#25968;&#25454;&#20998;&#21306;&#30340;&#21807;&#19968;&#26631;&#24535;, &#35813;&#26631;&#24535;&#19981;&#21487;&#19982;&#20854;&#23427;&#25968;&#25454;&#20998;&#21306;&#30340;&#26631;&#24535;&#20914;&#31361;, &#22312;&#23450;&#20041;&#36335;&#30001;&#35268;&#21017;&#30340;&#26102;&#20505;,
+								&#25968;&#25454;&#20998;&#21306;&#26631;&#24535;&#23558;&#25104;&#20026;&#36335;&#30001;&#35268;&#21017;&#30340;&#19968;&#37096;&#20998;.</p></li><li class="listitem"><p><b>targetDataSource.&nbsp;</b>&#20027;&#35201;&#30446;&#26631;&#25968;&#25454;&#28304;&#30340;&#20381;&#36182;&#24341;&#29992;, &#36890;&#24120;&#24847;&#20041;&#19978;, &#24212;&#29992;&#21551;&#21160;&#30340;&#26102;&#20505;&#35813;&#25968;&#25454;&#28304;&#24517;&#39035;&#26159;Active&#30340;.</p></li><li class="listitem"><p><b>targetDetectorDataSource.&nbsp;</b>&#20027;&#35201;&#30446;&#26631;&#25968;&#25454;&#28304;&#20276;&#38543;&#30340;HA&#25506;&#27979;&#29992;&#25968;&#25454;&#28304;, &#20027;&#35201;&#29992;&#20110;&#26816;&#27979;&#20027;&#35201;&#30446;&#26631;&#25968;&#25454;&#28304;&#30340;&#29366;&#24577;, &#36890;&#24120;&#25351;&#21521;&#19982;&#20027;&#35201;&#30446;&#26631;&#25968;&#25454;&#28304;&#30456;&#21516;&#30340;&#30446;&#26631;&#25968;&#25454;&#24211;,
+								&#20294;&#25968;&#25454;&#24211;&#36830;&#25509;&#27744;&#35201;&#21333;&#29420;&#37197;&#32622;, &#20197;&#38450;&#27490;&#30456;&#20114;&#24178;&#25200;.(&#20197;&#19978;&#37197;&#32622;&#20013;&#24341;&#29992;&#20102;&#21516;&#19968;&#20010;&#25968;&#25454;&#28304;&#24341;&#29992;, &#21482;&#26159;&#20026;&#20102;&#28436;&#31034;&#30340;&#26041;&#20415;)</p></li><li class="listitem"><p><b>standbyDataSource.&nbsp;</b>&#19982;&#20027;&#35201;&#30446;&#26631;&#25968;&#25454;&#28304;&#24182;&#21015;&#30340;&#22791;&#29992;&#25968;&#25454;&#28304;, &#24403;&#20027;&#35201;&#30446;&#26631;&#25968;&#25454;&#28304;&#20986;&#29616;&#38382;&#39064;&#20043;&#21518;, &#22914;&#26524;&#21551;&#29992;&#20102;CobarClient&#30340;HA&#21151;&#33021;&#25903;&#25345;,
+								CobarClient&#23558;&#33258;&#21160;&#23558;&#25968;&#25454;&#35775;&#38382;&#20999;&#25442;&#21040;&#35813;&#22791;&#29992;&#25968;&#25454;&#28304;&#19978;.</p></li><li class="listitem"><p><b>standbyDetectorDataSource.&nbsp;</b>&#22791;&#29992;&#25968;&#25454;&#28304;&#23545;&#24212;&#30340;HA&#25506;&#27979;&#29992;&#25968;&#25454;&#28304;, &#23384;&#22312;&#30340;&#30446;&#30340;&#21442;&#35265;targetDetectorDataSource&#30340;&#35828;&#26126;.
+							</p></li><li class="listitem"><p><b>poolSize.&nbsp;</b>CobarSqlMapClientTemplate&#38656;&#35201;&#26681;&#25454;&#27599;&#20010;&#30446;&#26631;&#25968;&#25454;&#28304;&#30340;&#25968;&#25454;&#24211;&#36830;&#25509;&#30340;&#25968;&#37327;&#26469;&#21019;&#24314;&#30456;&#24212;&#30340;&#32447;&#31243;&#27744;&#20197;&#20415;&#25552;&#39640;&#24182;&#21457;&#22788;&#29702;&#24615;&#33021;,
+								poolSize&#21487;&#20197;&#24110;&#21161;CobarSqlMapClientTemplate&#20915;&#23450;&#21019;&#24314;&#30340;&#32447;&#31243;&#27744;&#30340;&#22823;&#23567;,&#22914;&#26524;&#37197;&#32622;&#30340;&#26102;&#20505;&#35813;&#39033;&#19981;&#20570;&#37197;&#32622;&#30340;&#35805;,
+								&#40664;&#35748;&#24773;&#20917;&#19979;&#23558;&#20197;CPU&#20869;&#26680;&#30340;&#25968;&#37327;&#20056;&#20197;5&#20316;&#20026;&#40664;&#35748;&#22823;&#23567;.
+							</p></li></ul></div><p>
+				</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title">Note</h3><p>
+						&#22240;&#20026;&#24403;&#21069;&#32593;&#31449;&#30340;&#25968;&#25454;&#28304;&#37197;&#32622;&#37117;&#26159;&#36890;&#36807;JNDI&#36827;&#34892;, CobarClient&#26080;&#27861;&#32479;&#19968;&#21462;&#24471;&#25968;&#25454;&#24211;&#36830;&#25509;&#31561;&#30456;&#20851;&#20449;&#24687;,
+						&#20063;&#23601;&#26080;&#27861;&#26681;&#25454;&#21516;&#19968;&#20221;&#37197;&#32622;&#20449;&#24687;&#33258;&#34892;&#21019;&#24314;&#30456;&#24212;&#30340;&#25968;&#25454;&#24211;&#36830;&#25509;&#27744;,
+						&#25152;&#20197;,
+						&#21482;&#22909;&#38656;&#35201;&#24212;&#29992;&#31243;&#24207;&#26041;&#38024;&#23545;&#27599;&#19968;&#20010;&#30446;&#26631;&#25968;&#25454;&#28304;&#20877;&#22810;&#37197;&#32622;&#19968;&#20010;&#29992;&#20110;HA&#29366;&#24577;&#25506;&#27979;&#29992;&#30340;&#25968;&#25454;&#28304;&#24341;&#29992;.
+					</p><p>
+						&#37197;&#32622;&#23454;&#20363;&#20013;&#20351;&#29992;&#20102;C3P0&#20316;&#20026;&#23481;&#22120;&#20869;&#30340;&#25968;&#25454;&#28304;&#23450;&#20041;, &#20294;CobarClient&#21482;&#20381;&#36182;&#26631;&#20934;&#30340;DataSource&#25509;&#21475;,
+						&#25152;&#20197;&#24182;&#19981;&#27490;&#38480;&#20110;C3P0&#25968;&#25454;&#28304;&#31867;&#22411;, JNDI&#26597;&#25214;&#30340;&#25968;&#25454;&#28304;&#25110;&#32773;DBCP, &#29978;&#33267;&#33258;&#24049;&#23454;&#29616;&#30340;DataSource&#37117;&#26159;&#21487;&#20197;&#30340;.
+					</p></div><p>
+				&#24403;&#21069;CobarDataSourceDescriptor&#20043;&#25152;&#20197;&#38656;&#35201;&#36825;&#20123;&#20449;&#24687;&#26159;&#22240;&#20026;&#29616;&#22312;&#32593;&#31449;&#26368;&#20027;&#35201;&#30340;&#25968;&#25454;&#24211;&#37096;&#32626;&#32467;&#26500;&#26159;HA&#21452;&#26426;&#28909;&#22791;&#30340;&#27700;&#24179;&#20999;&#20998;&#25968;&#25454;&#24211;&#38598;&#32676;,
+				&#20294;&#21518;&#26399;&#22914;&#26524;&#26377;&#20854;&#23427;&#30340;&#25968;&#25454;&#24211;&#37096;&#32626;&#32467;&#26500;, CobarDataSourceDescriptor&#20063;&#21487;&#33021;&#38543;&#30528;&#25968;&#25454;&#24211;&#37096;&#32626;&#32467;&#26500;&#30340;&#35843;&#25972;&#32780;&#35843;&#25972;.
+				</p><div class="tip" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title">Tip</h3><p>
+						&#22914;&#26524;&#19981;&#38656;&#35201;HA&#21452;&#26426;&#28909;&#22791;&#25903;&#25345;,
+						&#37027;&#20040;&#21487;&#20197;&#35753;standby(.*)DataSource&#25351;&#21521;target(.*)DataSource&#30456;&#21516;&#30340;&#25968;&#25454;&#28304;&#24212;&#29992;,
+						&#25110;&#32773;&#22914;&#26524;DefaultCobarDataSourceService&#30340;haDataSourceCreator&#27809;&#26377;&#25351;&#23450;&#30340;&#35805;,
+						standbyDataSource,standbyDetectorDataSource&#21644;targetDetectorDataSource&#21487;&#20197;&#23436;&#20840;&#19981;&#37197;&#32622;.
+					</p><p>
+						CobarDataSourceDescriptor&#24341;&#29992;&#30340;&#25968;&#25454;&#28304;&#21487;&#20197;&#26469;&#33258;JNDI&#32465;&#23450;&#30340;&#25968;&#25454;&#28304;,
+						&#20063;&#21487;&#20197;&#26469;&#33258;&#23481;&#22120;&#20869;&#23450;&#20041;&#30340;&#25968;&#25454;&#28304;(&#22914;&#19978;&#37197;&#32622;&#25152;&#31034;, &#20026;&#20102;&#27979;&#35797;,&#25105;&#20204;&#20351;&#29992;&#20102;Spring&#23481;&#22120;&#20869;&#23450;&#20041;&#30340;C3P0&#25968;&#25454;&#28304;),
+						&#29978;&#33267;&#20854;&#23427;&#24418;&#24335;&#25552;&#20379;&#30340;&#25968;&#25454;&#28304;, &#21482;&#35201;&#20026;&#20854;&#25552;&#20379;&#26631;&#20934;&#30340;JDBC API&#20013;&#30340;DataSource&#25509;&#21475;&#23454;&#29616;&#21363;&#21487;.
+					</p></div><p>
+				</p><p>
+					DefaultCobarDataSourceService&#38500;&#20102;&#20381;&#36182;&#19968;&#32452;CobarDataSourceDescriptor,
+					&#23427;&#36824;&#20381;&#36182;&#20110;&#30456;&#24212;&#30340;IHADataSourceCreator&#26469;&#36827;&#34892;&#25968;&#25454;&#24211;&#30340;HA&#25903;&#25345;,
+					&#22914;&#26524;&#27809;&#26377;&#25552;&#20379;&#30456;&#24212;&#30340;IHADataSourceCreator&#23454;&#29616;&#31867;,
+					DefaultCobarDataSourceService&#40664;&#35748;&#20250;&#20351;&#29992;NonHADataSourceCreator,
+					&#21363;&#19981;&#21019;&#24314;&#25903;&#25345;HA&#30340;&#25968;&#25454;&#28304;.
+					CobarClient&#40664;&#35748;&#25552;&#20379;&#20102;FailoverHotSwapDataSourceCreator&#20197;&#25903;&#25345;HA,
+					&#24212;&#29992;&#26041;&#21487;&#20197;&#26681;&#25454;&#24773;&#20917;&#25552;&#20379;&#33258;&#24049;&#30340;IHADataSourceCreator&#23454;&#29616;&#26469;&#28385;&#36275;&#29305;&#23450;&#22330;&#26223;&#38656;&#35201;.
+				</p><p>
+			</p><div class="sect3"><div class="titlepage"><div><div><h4 class="title"><a name="d0e309"></a>5.2.1.1.&nbsp;Cobar Client&#20013;&#30340;HA&#25903;&#25345;(HA Support In Cobar Client)</h4></div></div></div><p>
+					CobarClient&#25903;&#25345;&#22522;&#20110;&#21452;&#26426;&#28909;&#22791;&#30340;Failover, &#35813;&#21151;&#33021;&#25903;&#25345;&#25277;&#35937;&#20026;IHADataSourceCreator&#23450;&#20041;:
+					</p><pre class="programlisting">
+public interface IHADataSourceCreator {
+	DataSource createHADataSource(CobarDataSourceDescriptor descriptor) throws Exception;
+}
+					</pre><p>
+					&#21069;&#38754;&#25105;&#20204;&#35828;&#36807;, DefaultCobarDataSourceService&#22312;&#26500;&#24314;&#26368;&#32456;&#20351;&#29992;&#30340;&#25968;&#25454;&#28304;&#30340;&#26102;&#20505;,
+					&#36890;&#36807;&#26576;&#20010;IHADataSourceCreator&#26469;&#26500;&#24314;&#25903;&#25345;&#28909;&#20999;&#25442;&#30340;&#25968;&#25454;&#28304;&#23454;&#20363;.
+					&#26368;&#24120;&#35265;&#30340;IHADataSourceCreator&#23454;&#29616;&#31867;&#26377;com.alibaba.cobar.client.datasources.ha.NonHADataSourceCreator&#21644;com.alibaba.cobar.client.datasources.ha.FailoverHotSwapDataSourceCreator,
+					&#20854;&#20013;,
+					NonHADataSourceCreator&#26356;&#22810;&#29992;&#20110;&#27979;&#35797;&#29615;&#22659;&#25110;&#32773;HA&#25903;&#25345;&#19981;&#38656;&#35201;CobarClient&#31471;&#25903;&#25345;&#30340;&#24773;&#20917;(&#27604;&#22914;,&#25968;&#25454;&#24211;&#37096;&#32626;&#23618;&#38754;&#25903;&#25345;HA&#20043;&#21518;,
+					CobarClient&#31471;&#30340;HA&#21487;&#20197;&#19981;&#38656;&#35201;),&#25152;&#20197;, &#22914;&#26524;&#20351;&#29992;CobarClient&#25552;&#20379;&#30340;HA&#25903;&#25345;,
+					&#26356;&#22810;&#30340;&#26159;&#25351;&#20381;&#36182;&#24341;&#29992;FailoverHotSwapDataSourceCreator.
+				</p><p>
+					FailoverHotSwapDataSourceCreator&#25903;&#25345;&#22522;&#20110;&#20027;&#21160;&#25506;&#27979;&#24418;&#24335;&#30340;HA&#20197;&#21450;&#22522;&#20110;&#34987;&#21160;&#26816;&#27979;&#24418;&#24335;&#30340;HA,
+					&#36825;&#20004;&#31181;&#34892;&#20026;&#21487;&#20197;&#36890;&#36807;&#23646;&#24615;
+					<span class="quote">&#8220;<span class="quote">passiveFailoverEnable</span>&#8221;</span>
+					&#21644;
+					<span class="quote">&#8220;<span class="quote">positiveFailoverEnable</span>&#8221;</span>
+					&#26469;&#31649;&#29702;&#21551;&#29992;&#25110;&#32773;&#31105;&#29992;,
+					&#20854;&#20013;, &#22522;&#20110;&#20027;&#21160;&#25506;&#27979;&#24418;&#24335;&#30340;HA&#40664;&#35748;&#24773;&#20917;&#19979;&#26159;&#24320;&#21551;&#30340;, &#32780;&#22522;&#20110;&#34987;&#21160;&#25506;&#27979;&#24418;&#24335;&#30340;HA&#26159;&#31105;&#29992;&#30340;,
+					&#22240;&#20026;&#22522;&#20110;&#21407;&#26469;&#30340;Cobar(Server&#29256;)&#30340;&#29616;&#26377;&#32463;&#39564;, &#27599;&#27425;&#21462;&#24471;&#25968;&#25454;&#24211;&#36830;&#25509;&#20043;&#21518;&#37117;&#36827;&#34892;&#29366;&#24577;&#26816;&#26597;&#20250;&#25439;&#32791;&#24615;&#33021;.
+				</p><p>
+					&#35201;&#21551;&#29992;&#22522;&#20110;&#20027;&#21160;&#25506;&#27979;&#24418;&#24335;&#30340;HA&#25903;&#25345;, Cobar Client&#23558;Cobar(Server&#29256;)&#30340;HA&#26041;&#24335;&#36866;&#37197;&#20511;&#29992;&#36807;&#26469;,
+					&#38656;&#35201;&#20320;&#22312;&#25968;&#25454;&#24211;&#20013;&#37197;&#32622;&#30456;&#24212;&#30340;&#25506;&#27979;&#34920;, &#24182;&#37197;&#32622;&#30456;&#24212;&#30340;&#25506;&#27979;&#29992;SQL. &#20363;&#22914;,
+					&#20551;&#35774;&#25968;&#25454;&#24211;&#20013;&#24314;&#31435;&#20102;&#21517;&#20026;cobarha&#30340;&#29366;&#24577;&#25506;&#27979;&#34920;,
+					&#37027;&#25105;&#20204;&#21487;&#20197;&#35774;&#32622;&#22914;&#19979;&#30340;&#25506;&#27979;&#29992;SQL:
+					</p><pre class="programlisting">
+&lt;bean id="haDataSourceCreator" class="com.alibaba.cobar.client.datasources.ha.FailoverHotSwapDataSourceCreator"&gt;
+	&lt;property name="detectingSql" value="update cobarha set timeflag=CURRENT_TIMESTAMP()"/&gt;
+&lt;/bean&gt;
+					</pre><p>
+					FailoverHotSwapDataSourceCreator&#23558;&#23450;&#26102;&#30340;&#21457;&#36865;&#35813;SQL&#21040;&#30446;&#26631;&#25968;&#25454;&#24211;, &#23545;&#30446;&#26631;&#25968;&#25454;&#24211;&#30340;&#29366;&#24577;&#36827;&#34892;&#25506;&#27979;,
+					&#22914;&#26524;&#36229;&#26102;&#25110;&#32773;&#25243;&#20986;&#24322;&#24120;, &#37027;&#20040;&#37325;&#35797;&#25351;&#23450;&#27425;&#25968;&#20043;&#21518;&#20381;&#28982;&#22914;&#27492;&#30340;&#35805;,
+					FailoverHotSwapDataSourceCreator&#20250;&#23558;&#30446;&#26631;&#25968;&#25454;&#24211;&#28909;&#20999;&#25442;&#21040;&#22791;&#29992;&#30446;&#26631;&#25968;&#25454;&#24211;&#19978;&#21435;. &#25506;&#27979;&#30340;&#26102;&#38388;&#38388;&#38548;,
+					&#25506;&#27979;&#30340;&#36229;&#24066;&#26102;&#38388;, &#25506;&#27979;&#30340;&#37325;&#35797;&#27425;&#25968;&#31561;, &#37117;&#21487;&#20197;&#36890;&#36807;&#30456;&#24212;&#30340;&#23646;&#24615;&#36827;&#34892;&#35774;&#32622;,
+					&#26356;&#22810;&#36825;&#26041;&#38754;&#30340;&#20449;&#24687;&#21487;&#20197;&#21442;&#32771;FailoverHotSwapDataSourceCreator&#30340;javadoc&#25991;&#26723;.
+				</p></div></div><div class="sect2"><div class="titlepage"><div><div><h3 class="title"><a name="d0e330"></a>5.2.2.&nbsp;&#25968;&#25454;&#35775;&#38382;&#35831;&#27714;&#36335;&#30001;(Routing In CobarSqlMapClientTemplate)</h3></div></div></div><p>
+				&#38500;&#20102;&#20381;&#36182;&#26576;&#20010;ICobarDataSourceService&#36827;&#34892;&#22810;&#25968;&#25454;&#28304;&#30340;&#31649;&#29702;,
+				CobarSqlMapClientTemplate&#30340;&#21478;&#19968;&#20010;&#20027;&#35201;&#20381;&#36182;&#23601;&#26159;ICobarRouter,
+				ICobarRouter&#36127;&#36131;&#23558;&#30456;&#24212;&#30340;&#25968;&#25454;&#35775;&#38382;&#35831;&#27714;&#36335;&#30001;&#21040;&#25351;&#23450;&#30340;&#25968;&#25454;&#28304;&#19978;&#21435;.
+			</p><div class="sect3"><div class="titlepage"><div><div><h4 class="title"><a name="d0e335"></a>5.2.2.1.&nbsp;Router Design</h4></div></div></div><p>
+					ICobarRouter&#25277;&#35937;&#25509;&#21475;&#23450;&#20041;&#22914;&#19979;:
+					</p><pre class="programlisting">
+public interface ICobarRouter&lt;T&gt; {
+	RoutingResult doRoute(T routingFact) throws RoutingException;
+}
+					</pre><p>
+					&#35813;&#25509;&#21475;&#23558;&#26681;&#25454;&#25351;&#23450;&#30340;&#36335;&#30001;&#19978;&#19979;&#25991;&#20449;&#24687;(routingFact)&#36820;&#22238;&#26368;&#32456;&#30340;&#36335;&#30001;&#32467;&#26524;.
+				</p><p>
+					&#25105;&#20204;&#21487;&#20197;&#26681;&#25454;&#24773;&#20917;&#25552;&#20379;&#19981;&#21516;&#30340;ICobarRouter&#23454;&#29616;&#31867;, &#27604;&#22914;Cobar
+					Client&#40664;&#35748;&#25552;&#20379;&#30340;com.alibaba.cobar.client.router.CobarClientInternalRouter&#21644;om.alibaba.cobar.client.router.DefaultCobarClientInternalRouter&#65292;
+					&#25110;&#32773;&#22914;&#26524;&#36335;&#30001;&#35268;&#21017;&#25968;&#37327;&#24456;&#22810;, &#20026;&#20102;&#20445;&#35777;&#24615;&#33021;, &#20063;&#21487;&#20197;&#23454;&#29616;&#22522;&#20110;Rete&#31561;&#31639;&#27861;&#30340;&#23454;&#29616;&#31867;&#31561;.
+					&#27809;&#26377;&#29305;&#27530;&#38656;&#27714;&#30340;&#24773;&#20917;&#19979;,&#25105;&#20204;&#40664;&#35748;&#37319;&#29992;CobarClientInternalRouter&#20316;&#20026;CobarSqlMapClientTemplate&#20351;&#29992;&#30340;&#40664;&#35748;Router&#23454;&#29616;.
+					&#20294;&#29992;&#25143;&#20063;&#21487;&#20197;&#26681;&#25454;&#24773;&#20917;&#36873;&#29992;DefaultCobarClientInternalRouter&#65292;
+					&#20108;&#32773;&#30340;&#20351;&#29992;&#26159;&#31867;&#20284;&#30340;&#12290;DefaultCobarClientInternalRouter&#22312;CobarClientInternalRouter&#30340;&#22522;&#30784;&#19978;&#65292;
+					&#23545;&#36335;&#30001;&#35268;&#21017;&#30340;&#21305;&#37197;&#36827;&#34892;&#20102;&#20998;&#32452;&#20248;&#21270;&#65292; &#36890;&#36807;&#37197;&#32622;&#26102;&#26399;&#30340;&#22797;&#26434;&#24230;&#25442;&#21462;&#36816;&#34892;&#26102;&#26399;&#30340;&#31616;&#21333;&#39640;&#25928;&#12290;
+					&#22914;&#26524;&#35268;&#21017;&#24456;&#22810;&#30340;&#35805;&#65292;&#21487;&#20197;&#32771;&#34385;&#20351;&#29992;DefaultCobarClientInternalRouter&#12290;
+					</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title">Note</h3><p>
+							DefaultCobarClientInternalRouter&#30340;&#37197;&#32622;&#21487;&#20197;&#36890;&#36807;&#20004;&#20010;&#19987;&#38376;&#30340;FactoryBean&#36827;&#34892;&#65292;
+							&#21363;com.alibaba.cobar.client.router.config.DefaultCobarClientInternalRouterXmlFactoryBean&#21644;com.alibaba.cobar.client.router.config.StaticCobarClientInternalRouterFactoryBean&#65292;
+							&#21069;&#32773;&#20801;&#35768;&#29992;&#25143;&#36890;&#36807;&#22806;&#37096;XML&#30340;&#37197;&#32622;&#25991;&#20214;&#24418;&#24335;&#26469;&#23450;&#20041;&#21644;&#21152;&#36733;&#36335;&#30001;&#35268;&#21017;&#65292;
+							&#21518;&#32773;&#36816;&#34892;&#29992;&#25143;&#30452;&#25509;&#22312;Spring&#30340;IoC&#23481;&#22120;&#20013;&#20197;bean&#23450;&#20041;&#30340;&#24418;&#24335;&#23450;&#20041;&#36335;&#30001;&#35268;&#21017;&#12290;
+							&#24212;&#29992;&#26041;&#21487;&#20197;&#26681;&#25454;&#24773;&#20917;&#36873;&#29992;&#12290;&#35814;&#32454;&#20351;&#29992;&#24773;&#20917;&#21487;&#20197;&#21442;&#32771;&#30456;&#24212;&#31867;&#30340;javadoc&#20197;&#21450;&#19979;&#38754;&#26377;&#20851;CobarClientInternalRouter&#30340;&#20351;&#29992;&#21644;&#37197;&#32622;&#20449;&#24687;&#12290;
+						</p></div><p>
+				</p><p>
+					&#22240;&#20026;CobarSqlMapClientTemplate&#20027;&#35201;&#38754;&#21521;iBatis, &#25152;&#20197;,
+					&#23427;&#20351;&#29992;&#30340;CobarClientInternalRouter&#25509;&#21463;&#30340;&#36335;&#30001;&#19978;&#19979;&#25991;&#20449;&#24687;(routingFact)&#31867;&#22411;&#20026;IBatisRoutingFact:
+					</p><pre class="programlisting">
+public class IBatisRoutingFact {
+	// SQL identity
+	private String action;
+	// the argument of SQL action
+	private Object argument;
+	
+	// ...
+}
+					</pre><p>
+					&#20063;&#23601;&#26159;&#35828;, CobarClientInternalRouter&#23558;&#26681;&#25454;&#20004;&#37096;&#20998;&#20449;&#24687;&#36827;&#34892;&#36335;&#30001;, &#19968;&#23601;&#26159;sqlmap&#20013;&#30340;sqlmap id,
+					&#21478;&#19968;&#20010;&#23601;&#26159;&#20256;&#20837;&#30340;&#25968;&#25454;&#35775;&#38382;&#26041;&#27861;&#21442;&#25968;.
+					CobarClientInternalRouter&#23558;&#26681;&#25454;&#19968;&#32452;&#25110;&#21017;&#22810;&#32452;&#36335;&#30001;&#35268;&#21017;&#23545;&#20256;&#20837;&#30340;IBatisRoutingFact&#31867;&#22411;&#30340;&#36335;&#30001;&#19978;&#19979;&#25991;&#20449;&#24687;&#36827;&#34892;&#21305;&#37197;,
+					&#23558;&#21305;&#37197;&#30340;&#32467;&#26524;&#36820;&#22238;, &#20043;&#21518;,
+					CobarClientInternalRouter&#23601;&#21487;&#20197;&#26681;&#25454;&#21305;&#37197;&#30340;&#32467;&#26524;&#26469;&#20915;&#23450;&#26368;&#32456;&#30340;&#25968;&#25454;&#35775;&#38382;&#25805;&#20316;&#23558;&#22312;&#21738;&#20123;&#25968;&#25454;&#28304;&#19978;&#25191;&#34892;&#20102;.
+				</p><div class="sect4"><div class="titlepage"><div><div><h5 class="title"><a name="d0e354"></a>5.2.2.1.1.&nbsp;CobarClientInternalRouter&#30340;&#37197;&#32622;(Configuration of
+						CobarClientInternalRouter)</h5></div></div></div><p>
+						&#40664;&#35748;&#24773;&#20917;&#19979;, CobarClientInternalRouter&#23558;&#25509;&#25910;4&#32452;&#19981;&#21516;&#31867;&#22411;&#30340;&#36335;&#30001;&#35268;&#21017;,
+						&#20294;&#36335;&#30001;&#35268;&#21017;&#30340;&#31867;&#22411;&#23545;&#20110;&#29992;&#25143;&#26469;&#35828;&#23454;&#38469;&#19978;&#26159;&#19981;&#24517;&#35201;&#30340;, &#25152;&#20197;,
+						&#20026;&#20102;&#36991;&#20813;&#29992;&#25143;&#36807;&#22810;&#30340;&#32416;&#32544;&#20110;CobarClientInternalRouter&#30340;&#23454;&#29616;&#32454;&#33410;,
+						&#25105;&#20204;&#32473;&#20986;&#20102;&#38024;&#23545;CobarClientInternalRouter&#37197;&#32622;&#30340;&#19968;&#20010;Spring&#30340;FactoryBean&#23454;&#29616;,
+						&#20197;&#24110;&#21161;&#31616;&#21270;CobarClientInternalRouter&#30340;&#37197;&#32622;,
+						&#35813;FactoryBean&#23454;&#29616;&#31867;&#20026;com.alibaba.cobar.client.router.config.CobarInteralRouterXmlFactoryBean,
+						&#20854;&#19968;&#33324;&#30340;&#37197;&#32622;&#26041;&#24335;&#22914;&#19979;:
+						</p><pre class="programlisting">
+&lt;bean id="internalRouter"
+	class="com.alibaba.cobar.client.router.config.CobarInteralRouterXmlFactoryBean"&gt;
+	&lt;property name="configLocation" value="classpath:META-INF/rules.xml" /&gt;
+&lt;/bean&gt;
+						</pre><p>
+						CobarInteralRouterXmlFactoryBean&#23558;&#26681;&#25454;&#25351;&#23450;&#30340;xml&#24418;&#24335;&#30340;&#37197;&#32622;&#25991;&#20214;&#20013;&#30340;&#20869;&#23481;,
+						&#33258;&#21160;&#26500;&#24314;&#19981;&#21516;&#31867;&#22411;&#30340;&#36335;&#30001;&#35268;&#21017;, &#28982;&#21518;&#27880;&#20837;&#21040;&#23427;&#23558;&#26368;&#32456;&#36820;&#22238;&#30340;CobarClientInternalRouter&#23454;&#20363;&#20043;&#19978;.
+						&#32780;&#35835;&#21462;,
+						&#35299;&#26512;&#37197;&#32622;&#20449;&#24687;, &#24182;&#26500;&#24314;&#19981;&#21516;&#31867;&#22411;&#36335;&#30001;&#35268;&#21017;&#31561;
+						<span class="quote">&#8220;<span class="quote">&#29712;&#20107;</span>&#8221;</span>
+						&#23558;&#23436;&#20840;&#23545;&#29992;&#25143;&#36879;&#26126;.&#19981;&#36807;, &#20877;&#24590;&#20040;&#23631;&#34109;, &#26377;&#24471;&#20107;&#24773;&#36824;&#26159;&#38656;&#35201;&#29992;&#25143;&#25552;&#20379;&#30340;, &#27604;&#22914;&#37197;&#32622;&#25991;&#20214;&#30340;&#20869;&#23481;,
+						&#29992;&#25143;&#24517;&#39035;&#25353;&#29031;&#24212;&#29992;&#31243;&#24207;&#30340;&#37096;&#32626;&#24773;&#20917;&#25552;&#20379;&#27491;&#30830;&#22320;&#36335;&#30001;&#35268;&#21017;&#23450;&#20041;, CobarClientInternalRouter&#25165;&#20250;&#27491;&#30830;&#30340;&#24037;&#20316;.&#25152;&#20197;,
+						&#19979;&#38754;&#25105;&#20204;&#23558;&#35814;&#32454;&#20171;&#32461;&#36335;&#30001;&#35268;&#21017;&#30340;&#30456;&#20851;&#20449;&#24687;.
+					</p><div class="tip" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title">Tip</h3><p>
+							&#38500;&#20102;&#21487;&#20197;&#36890;&#36807;configLocation&#23646;&#24615;&#25351;&#23450;&#21333;&#19968;&#30340;&#37197;&#32622;&#25991;&#20214;&#36335;&#24452;,
+							&#20063;&#21487;&#20197;&#36890;&#36807;configLocations&#25351;&#23450;&#22810;&#20010;&#37197;&#32622;&#25991;&#20214;&#36335;&#24452;,&#36825;&#36890;&#24120;&#26377;&#21161;&#20110;&#27169;&#22359;&#21270;&#24182;&#34892;&#24320;&#21457;.
+						</p></div><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title">Note</h3><p>
+							&#34429;&#28982;&#40664;&#35748;&#24773;&#20917;&#19979;&#25105;&#20204;&#25512;&#33616;&#20351;&#29992;CobarInteralRouterXmlFactoryBean&#36827;&#34892;CobarClientInternalRouter&#30340;&#37197;&#32622;,
+							&#20294;&#25105;&#20204;&#21516;&#26679;&#21487;&#20197;&#32473;&#20986;&#22522;&#20110;DSL&#29978;&#33267;Excel&#31561;&#24418;&#24335;&#36335;&#30001;&#35268;&#21017;&#23450;&#20041;&#23545;&#24212;&#30340;FactoryBean.&#21482;&#35201;&#24212;&#29992;&#38656;&#35201;,
+							&#36825;&#20123;&#37117;&#26159;&#21487;&#20197;&#22312;&#29616;&#26377;&#30340;&#22522;&#30784;&#19978;&#36827;&#34892;&#25193;&#23637;&#30340;. 
+						</p></div></div></div><div class="sect3"><div class="titlepage"><div><div><h4 class="title"><a name="d0e371"></a>5.2.2.2.&nbsp;&#36335;&#30001;&#35268;&#21017;&#35814;&#35299;(Rules In Details)</h4></div></div></div><div class="sect4"><div class="titlepage"><div><div><h5 class="title"><a name="d0e374"></a>5.2.2.2.1.&nbsp;&#36335;&#30001;&#35268;&#21017;&#23450;&#20041;&#26684;&#24335;(Rule Definitions)</h5></div></div></div><p>
+						&#19968;&#20010;&#26368;&#31616;&#21333;&#30340;&#36335;&#30001;&#35268;&#21017;&#23450;&#20041;&#25991;&#20214;&#20869;&#23481;&#21487;&#20197;&#22914;&#19979;&#25152;&#31034;:
+						</p><pre class="programlisting">
+&lt;rules&gt;
+  &lt;rule&gt;
+    &lt;namespace&gt;&lt;/namespace&gt; 
+    &lt;sqlmap&gt;&lt;/sqlmap&gt;
+    &lt;shardingExpression&gt;&lt;/shardingExpression&gt;
+    &lt;shards&gt;&lt;/shards&gt;
+  &lt;/rule&gt;
+&lt;/rules&gt;
+						</pre><p>
+						&lt;rules&gt;&#19979;&#21253;&#21547;&#22810;&#20010;&lt;rule&gt;&#20803;&#32032;, &#32780;&lt;rule&gt;&#19979;&#21448;&#21253;&#21547;4&#20010;&#23376;&#20803;&#32032;:
+						</p><div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p><b>namespace &#25110;&#32773; sqlmap.&nbsp;</b>&#23646;&#20110;&#36335;&#30001;&#35268;&#21017;&#26465;&#20214;&#30340;&#19968;&#37096;&#20998;, &#20108;&#32773;&#30340;&#21807;&#19968;&#21306;&#21035;&#22312;&#20110;&#25351;&#23450;&#30340;&#26465;&#20214;&#26126;&#30830;&#31243;&#24230;&#19981;&#21516;,
+										sqlmap&#30452;&#25509;&#23545;&#24212;&#27599;&#19968;&#20010;iBatis&#30340;SqlMap&#25991;&#20214;&#20013;&#26576;&#20010;statement&#30340;&#23450;&#20041;&#30340;id,&#32780;namespace&#21017;&#23545;&#24212;&#27599;&#19968;&#20010;iBatis&#30340;SqlMap&#25991;&#20214;&#20013;&#23450;&#20041;&#30340;namespace.
+										&#36825;&#20004;&#20010;&#20803;&#32032;&#22312;&lt;rule&gt;&#20803;&#32032;&#19979;&#21482;&#33021;&#21462;&#20854;&#19968;.&#21542;&#21017;&#22312;&#36890;&#36807;CobarInteralRouterXmlFactoryBean&#36827;&#34892;&#37197;&#32622;&#30340;&#26102;&#20505;,
+										&#23558;&#25243;&#20986;&#37197;&#32622;&#30456;&#20851;&#24322;&#24120;.
+									</p></li><li class="listitem"><p><b>shardingExpression.&nbsp;</b>&#36981;&#24490;MVEL&#24418;&#24335;&#30340;&#34920;&#36798;&#24335;&#23450;&#20041;, &#21516;&#26679;&#23646;&#20110;&#36335;&#30001;&#35268;&#21017;&#26465;&#20214;&#30340;&#19968;&#37096;&#20998;, &#20027;&#35201;&#23545;&#25968;&#25454;&#35775;&#38382;&#35831;&#27714;&#30340;&#21442;&#25968;&#36827;&#34892;&#21305;&#37197;, &#23646;&#20110;&#21160;&#24577;&#26465;&#20214;,
+										&#36890;&#24120;&#29992;&#20110;&#27178;&#21521;&#20999;&#20998;&#35268;&#21017;&#30340;&#23450;&#20041;.</p></li><li class="listitem"><p><b>shards.&nbsp;</b>&#36335;&#30001;&#35268;&#21017;&#32467;&#26524;&#37096;&#20998;, &#22914;&#26524;&#20197;&#19978;&#22810;&#20010;&#36335;&#30001;&#35268;&#21017;&#26465;&#20214;&#21305;&#37197;&#25104;&#21151;, &#21017;&#36820;&#22238;&#35813;&#20803;&#32032;&#30340;&#20540;&#20316;&#20026;&#36335;&#30001;&#32467;&#26524;.</p></li></ul></div><p>
+						&#20197;&#19978;rule&#23450;&#20041;&#31616;&#21333;&#26469;&#35828;&#34920;&#36798;&#20102;condition-&gt;action&#30340;&#35821;&#20041;, &#21363;&#20855;&#20307;&#21270;&#20026;(namespace | sqlamp) +
+						shardingExpression -&gt; shards.
+					</p><p>
+						&#20197;&#19978;&#35268;&#21017;&#23450;&#20041;&#20854;&#23454;&#24456;&#31616;&#21333;,&#25152;&#20197;&#24182;&#19981;&#24378;&#21046;&#20351;&#29992;DTD&#25110;&#32773;XML Schema&#31561;&#26469;&#39564;&#35777;&#25991;&#26723;&#30340;&#21512;&#27861;&#24615;, &#22914;&#26524;&#38656;&#35201;, &#21487;&#20197;&#21442;&#32771;&#22914;&#19979;&#30340;DTD&#23450;&#20041;:
+						</p><pre class="programlisting">
+&lt;?xml version="1.0"?  encoding="UTF-8"?&gt;
+
+&lt;!ELEMENT rules (rule)+&gt;
+
+&lt;!ELEMENT rule ((namespace|sqlmap),shardingExpression,shards)&gt;
+
+&lt;!ELEMENT namespace (#PCDATA)&gt;
+
+&lt;!ELEMENT sqlmap (#PCDATA)&gt;
+
+&lt;!ELEMENT shardingExpression (#PCDATA)&gt;
+
+&lt;!ELEMENT shards (#PCDATA)&gt;
+						</pre><p>
+						&#37027;&#20040;, &#20197;&#19978;&#20803;&#32032;&#21040;&#24213;&#24212;&#35813;&#22914;&#20309;&#26681;&#25454;&#24212;&#29992;&#31243;&#24207;&#30340;&#24773;&#20917;&#36827;&#34892;&#23450;&#20041;&#37027;? &#35753;&#25105;&#20204;&#25509;&#30528;&#26469;&#30475;&#19979;&#19968;&#33410;&#30340;
+						<span class="quote">&#8220;<span class="quote">&#36335;&#30001;&#35268;&#21017;&#31867;&#22411;&#35814;&#35299;</span>&#8221;</span>
+						&#21543;!
+					</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title">Note</h3><p>
+							CobarClient&#20351;&#29992;MVEL&#23545;shardingExpression&#36827;&#34892;&#27714;&#20540;&#65292; &#25152;&#20197;&#65292;
+							&#36215;&#33609;&#30340;shardingExpression&#21482;&#35201;&#31526;&#21512;MVEL&#30340;&#35821;&#27861;&#23601;&#21487;&#20197;&#12290;&#26377;&#20851;MVEL&#30340;&#35821;&#27861;&#65292; &#21487;&#20197;&#21442;&#32771;MVEL&#30340;
+							<a class="ulink" href="" target="_top">&#23448;&#26041;&#25991;&#26723;</a>
+							&#12290;
+						</p></div></div><div class="sect4"><div class="titlepage"><div><div><h5 class="title"><a name="d0e416"></a>5.2.2.2.2.&nbsp;&#36335;&#30001;&#35268;&#21017;&#31867;&#22411;&#35814;&#35299;(Rule Types Explained)</h5></div></div></div><p>
+						&#36335;&#30001;&#35268;&#21017;&#30340;&#23450;&#20041;&#21021;&#30475;&#36215;&#26469;&#31616;&#21333;, &#20294;&#21040;&#24213;&#24212;&#35813;&#22914;&#20309;&#23450;&#20041;, &#20197;&#21450;&#20026;&#20160;&#20040;&#35201;&#22914;&#27492;&#23450;&#20041;, &#22312;&#27809;&#26377;&#20026;&#20320;&#25581;&#24320;&#36825;&#20123;&#30097;&#38382;&#20043;&#21069;,&#25105;&#24819;,
+						&#20320;&#36824;&#26159;&#24456;&#38590;&#25630;&#28165;&#26970;&#36825;&#20123;&#36335;&#30001;&#35268;&#21017;&#23450;&#20041;&#21040;&#24213;&#26159;&#24590;&#20040;&#22238;&#20107;, &#19981;&#36807;&#27809;&#20851;&#31995;,
+						&#25105;&#20204;&#29616;&#22312;&#23601;&#20026;&#20320;&#25581;&#24320;&#36825;&#20123;&#30097;&#22242;.
+					</p><p>
+						&#22312;&#20351;&#29992;iBatis&#36827;&#34892;&#25968;&#25454;&#35775;&#38382;&#30340;&#26102;&#20505;,&#25105;&#20204;&#36890;&#24120;&#20250;&#23450;&#20041;&#30456;&#20851;&#30340;SqlMap&#25991;&#20214;, &#20363;&#22914;:
+						</p><pre class="programlisting">
+&lt;?xml version="1.0" encoding="GB2312"?&gt;
+&lt;!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd"&gt;
+&lt;sqlMap namespace="com.alibaba.cobar.client.entities.Offer"&gt;
+
+	&lt;typeAlias alias="offer" type="com.alibaba.cobar.client.entities.Offer" /&gt;
+
+	&lt;resultMap id="offer" class="offer"&gt;
+		&lt;result property="id"     column="id" /&gt;
+		&lt;result property="memberId"   column="memberId" /&gt;
+		&lt;result property="subject"   column="subject" /&gt;
+		&lt;result property="gmtUpdated"   column="gmtUpdated" /&gt;
+	&lt;/resultMap&gt;
+
+	&lt;insert id="create"&gt;
+		INSERT INTO offers(memberId, subject, gmtUpdated) VALUES(#memberId#, #subject#, #gmtUpdated#)
+		&lt;selectKey keyProperty="id" resultClass="long"&gt;
+			SELECT LAST_INSERT_ID();
+        &lt;/selectKey&gt;
+	&lt;/insert&gt;
+	...
+&lt;/sqlMap&gt;
+						</pre><p>
+						&#20854;&#20013;, &#27599;&#20010;SqlMap&#37117;&#20250;&#23545;&#24212;&#19968;&#20010;namesapce, &#22312;&#35813;namespace&#19979;, &#21487;&#20197;&#23450;&#20041;&#22810;&#20010;sql statement,
+						&#32780;&#27599;&#20010;statement&#21448;&#20250;&#26377;&#30456;&#24212;&#30340;id&#20316;&#20026;&#20854;&#26631;&#24535;,
+						&#20854;&#20013;, namespace + id&#21487;&#20197;&#21807;&#19968;&#26631;&#24535;&#19968;&#20010;&#20840;&#23616;&#30340;sql
+						statement, &#22312;&#36825;&#19968;&#21069;&#25552;&#19979;,
+						&#35753;&#25105;&#20204;&#26469;&#30475;&#22914;&#20309;&#26681;&#25454;&#29616;&#26377;iBatis&#30340;SqlMap&#30340;&#23450;&#20041;&#26469;&#36827;&#34892;&#25968;&#25454;&#35775;&#38382;&#30340;&#36335;&#30001;.
+					</p><p>
+						&#25105;&#20204;&#26412;&#30528;&#20174;&#29305;&#27530;&#21040;&#19968;&#33324;&#30340;&#24773;&#20917;&#36827;&#34892;&#25512;&#28436;.
+					</p><p>
+						&#20197;create&#25805;&#20316;&#20026;&#20363;, &#20551;&#35774;&#25105;&#20204;&#30340;offer&#25968;&#25454;&#29616;&#22312;&#20998;&#24067;&#22312;&#20004;&#21488;&#25968;&#25454;&#24211;&#19978;, &#32780;&#26681;&#25454;&#20999;&#20998;&#35268;&#21017;,
+						memberId&#20026;&#22855;&#25968;&#30340;&#25968;&#25454;&#20998;&#24067;&#22312;&#25968;&#25454;&#24211;1&#19978;, memberId&#20026;&#20598;&#25968;&#30340;&#25968;&#25454;&#20998;&#24067;&#22312;&#25968;&#25454;&#24211;2&#19978;,
+						&#22312;&#36825;&#19968;&#21069;&#25552;&#19979;,
+						&#35201;&#36335;&#30001;offer&#30340;&#21019;&#24314;&#30456;&#20851;&#30340;&#25968;&#25454;&#35831;&#27714;, &#26368;&#26126;&#20102;&#30340;&#26041;&#24335;&#23601;&#26159;, &#26816;&#26597;&#24403;&#21069;&#25968;&#25454;&#35775;&#38382;&#23545;&#24212;&#30340;sql statement&#26159;&#21738;&#20010;,
+						&#24182;&#21028;&#26029;&#20256;&#20837;&#30340;&#21442;&#25968;&#21253;&#21547;&#30340;memberId&#26159;&#22855;&#25968;&#36824;&#26159;&#20598;&#25968;,
+						&#36825;&#26679;, &#25105;&#20204;&#23601;&#26377;&#20102;&#20197;&#19979;2&#20010;&#36335;&#30001;&#35268;&#21017;&#23450;&#20041;:
+						</p><pre class="programlisting">
+&lt;rules&gt;
+  &lt;rule&gt;
+    &lt;sqlmap&gt;com.alibaba.cobar.client.entities.Offer.create&lt;/sqlmap&gt;
+    &lt;shardingExpression&gt;memberId % 2 == 1&lt;/shardingExpression&gt;
+    &lt;shards&gt;partition1&lt;/shards&gt;
+  &lt;/rule&gt;
+  &lt;rule&gt;
+    &lt;sqlmap&gt;com.alibaba.cobar.client.entities.Offer.create&lt;/sqlmap&gt;
+    &lt;shardingExpression&gt;memberId % 2 == 0&lt;/shardingExpression&gt;
+    &lt;shards&gt;partition2&lt;/shards&gt;
+  &lt;/rule&gt;
+&lt;/rules&gt;
+						</pre><p>
+						&lt;sqlmap&gt;&#20803;&#32032;&#23545;&#24212;&#21807;&#19968;&#30340;sql statement&#26631;&#24535;, &#21363;namespace + sql statement
+						id, &lt;shardingExpression&gt;&#23545;&#24212;&#20999;&#20998;&#35268;&#21017;&#30340;&#23450;&#20041;,
+						&#32780;&lt;shards&gt;&#21017;&#23545;&#24212;&#26368;&#32456;&#30340;&#36335;&#30001;&#32467;&#26524;.
+						&#29616;&#22312;, &#25105;&#24819;&#20320;&#24212;&#35813;&#23545;&#36335;&#30001;&#35268;&#21017;&#30340;&#22914;&#19978;&#23450;&#20041;&#26377;&#20102;&#21021;&#27493;&#30340;&#20102;&#35299;&#20102;&#21543;!
+					</p><p>
+						&#26377;&#20102;&#20197;&#19978;&#30340;&#22522;&#30784;, &#25105;&#20204;&#26469;&#21464;&#25442;&#20551;&#35774;&#22330;&#26223;, &#25105;&#20204;&#20381;&#28982;&#26159;create&#25805;&#20316;, &#20294;&#29616;&#22312;&#25105;&#20204;&#19981;&#26159;&#20570;&#30340;&#27700;&#24179;&#20999;&#20998;, &#32780;&#21482;&#26159;&#20570;&#22402;&#30452;&#20999;&#20998;, &#20063;&#23601;&#26159;&#35828;,
+						&#25152;&#26377;&#30340;offer&#25968;&#25454;&#29616;&#22312;&#20551;&#35774;&#37117;&#20250;&#33853;&#22312;&#21516;&#19968;&#21488;&#25968;&#25454;&#24211;&#19978;, &#37027;&#20040;,
+						&#20197;&#19978;&#30340;&#23450;&#20041;&#21487;&#20197;&#21464;&#26356;&#20026;:
+						</p><pre class="programlisting">
+&lt;rules&gt;
+  &lt;rule&gt;
+    &lt;sqlmap&gt;com.alibaba.cobar.client.entities.Offer.create&lt;/sqlmap&gt;
+    &lt;shardingExpression&gt;memberId % 2 == 1&lt;/shardingExpression&gt;
+    &lt;shards&gt;partition1&lt;/shards&gt;
+  &lt;/rule&gt;
+  &lt;rule&gt;
+    &lt;sqlmap&gt;com.alibaba.cobar.client.entities.Offer.create&lt;/sqlmap&gt;
+    &lt;shardingExpression&gt;memberId % 2 == 0&lt;/shardingExpression&gt;
+    &lt;shards&gt;partition1&lt;/shards&gt;
+  &lt;/rule&gt;
+&lt;/rules&gt;
+						</pre><p>
+						&#21363;&#19981;&#31649;&#20999;&#20998;&#35268;&#21017;&#22914;&#20309;, &#20182;&#20204;&#30340;&#21512;&#38598;&#37117;&#26159;&#33853;&#22312;partition1&#19978;, &#21487;&#26159;, &#22914;&#26524;&#30495;&#30340;&#36825;&#20040;&#23450;&#20041;&#30340;&#35805;, &#37027;&#30475;&#36215;&#26469;&#26159;&#19981;&#26159;&#26377;&#20123;stupid&#37027;?
+						&#31572;&#26696;&#32943;&#23450;&#26159;yes, &#25152;&#20197;, &#23545;&#24212;&#36825;&#31181;&#24773;&#20917;, &#25105;&#20204;&#30340;&#36335;&#30001;&#35268;&#21017;&#21487;&#20197;&#23450;&#20041;&#22914;&#19979;:
+						</p><pre class="programlisting">
+&lt;rules&gt;
+  &lt;rule&gt;
+    &lt;sqlmap&gt;com.alibaba.cobar.client.entities.Offer.create&lt;/sqlmap&gt;
+    &lt;shards&gt;partition1&lt;/shards&gt;
+  &lt;/rule&gt;
+&lt;/rules&gt;
+						</pre><p>
+						&#20063;&#23601;&#26159;&#35828;, &#25105;&#20204;&#29616;&#22312;&#21482;&#23450;&#20041;sqlmap&#20803;&#32032;, &#32780;&#24573;&#30053;shardingExpression&#20803;&#32032;&#30340;&#23450;&#20041;, &#20197;&#19978;rule&#23450;&#20041;&#23601;&#22909;&#20687;&#20877;&#35828;
+						<span class="quote">&#8220;<span class="quote">&#21482;&#35201;&#25105;&#21457;&#29616;sqlmap&#30340;&#20540;&#26159;com.alibaba.cobar.client.entities.Offer.create,
+							&#37027;&#23601;&#23558;&#21305;&#37197;&#30340;&#25968;&#25454;&#35775;&#38382;&#35831;&#27714;&#36335;&#30001;&#21040;partition1, &#32780;&#19981;&#31649;&#21442;&#25968;&#20013;&#30340;memberId&#25110;&#32773;&#20854;&#23427;&#25968;&#25454;&#20855;&#20307;&#26159;&#20160;&#20040;</span>&#8221;</span>
+						.
+					</p><p>
+						&#25105;&#20204;&#23558;&#31532;&#19968;&#31181;&#24418;&#24335;&#30340;&#36335;&#30001;&#35268;&#21017;&#25104;&#20026;SqlActionShardingRule,
+						&#32780;&#23558;&#31532;&#20108;&#31181;&#24418;&#24335;&#30340;&#36335;&#30001;&#35268;&#21017;&#31216;&#20026;SqlAction(Only)Rule, &#20998;&#21035;&#29992;&#20110;&#26126;&#30830;&#30340;&#25351;&#23450;&#22312;&#27700;&#24179;&#20999;&#20998;&#21644;&#22402;&#30452;&#20999;&#20998;&#24773;&#20917;&#19979;&#30340;&#36335;&#30001;&#35268;&#21017;&#23450;&#20041;.
+					</p><p>
+						&#29616;&#22312;&#35753;&#25105;&#20204;&#36827;&#19968;&#27493;&#25193;&#23637;&#22330;&#26223;, &#26174;&#28982;, &#38500;&#20102;&#35201;&#21019;&#24314;offer, &#25105;&#20204;&#36824;&#35201;&#25552;&#20379;&#26356;&#26032;&#25110;&#32773;&#21024;&#38500;&#31561;&#25968;&#25454;&#25805;&#20316;, &#37027;&#20040;,
+						&#33258;&#28982;&#32780;&#28982;&#30340;,&#25105;&#20204;&#23601;&#38656;&#35201;&#22312;SqlMap&#25991;&#20214;&#20013;&#23450;&#20041;&#26356;&#22810;&#30340;sql statement, &#22914;&#19979;&#25152;&#31034;:
+						</p><pre class="programlisting">
+&lt;?xml version="1.0" encoding="GB2312"?&gt;
+&lt;!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd"&gt;
+&lt;sqlMap namespace="com.alibaba.cobar.client.entities.Offer"&gt;
+
+	&lt;typeAlias alias="offer" type="com.alibaba.cobar.client.entities.Offer" /&gt;
+
+	&lt;resultMap id="offer" class="offer"&gt;
+		&lt;result property="id"     column="id" /&gt;
+		&lt;result property="memberId"   column="memberId" /&gt;
+		&lt;result property="subject"   column="subject" /&gt;
+		&lt;result property="gmtUpdated"   column="gmtUpdated" /&gt;
+	&lt;/resultMap&gt;
+
+	&lt;insert id="create"&gt;
+		INSERT INTO offers(memberId, subject, gmtUpdated) VALUES(#memberId#, #subject#, #gmtUpdated#)
+		&lt;selectKey keyProperty="id" resultClass="long"&gt;
+			SELECT LAST_INSERT_ID();
+        &lt;/selectKey&gt;
+	&lt;/insert&gt;
+	
+	&lt;update id="update"&gt;
+		UPDATE offers SET subject=#subject#, gmtUpdated=#gmtUpdated# WHERE id=#id#
+	&lt;/update&gt;
+	
+	&lt;delete id="delete"&gt;
+		delete from offers where id=#id#
+	&lt;/delete&gt;
+	...
+&lt;/sqlMap&gt;
+						</pre><p>
+						&#22914;&#26524;&#21482;&#26377;SqlActionShardingRule&#21644;SqlAction(Only)Rule&#30340;&#25903;&#25345;,
+						&#35201;&#20445;&#35777;&#26356;&#26032;&#21644;&#21024;&#38500;&#25805;&#20316;&#33021;&#22815;&#34987;&#27491;&#30830;&#30340;&#36335;&#30001;&#21040;&#25351;&#23450;&#30340;&#25968;&#25454;&#24211;, &#25105;&#20204;&#23601;&#24471;&#26681;&#25454;&#20999;&#20998;&#35268;&#21017;,
+						&#20877;&#36335;&#30001;&#35268;&#21017;&#23450;&#20041;&#25991;&#20214;&#20013;&#20877;&#20026;&#26356;&#26032;&#21644;&#21024;&#38500;&#25805;&#20316;&#28155;&#21152;&#30456;&#24212;&#30340;&#36335;&#30001;&#35268;&#21017;&#23450;&#20041;.
+						&#36825;&#26679;&#20570;&#30340;&#38382;&#39064;&#22312;&#20110;:
+						</p><div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><p>&#27809;&#28155;&#21152;&#19968;&#20010;&#38024;&#23545;&#26576;&#34920;&#30340;SqlMap&#25991;&#20214;, &#23601;&#38656;&#35201;&#22312;&#36335;&#30001;&#35268;&#21017;&#23450;&#20041;&#25991;&#20214;&#20013;&#28155;&#21152;&#19968;&#31995;&#21015;&#30340;CURD&#25805;&#20316;&#23545;&#24212;&#30340;&#36335;&#30001;&#23450;&#20041;,
+									&#20174;&#20351;&#29992;&#30340;&#35282;&#24230;&#26469;&#30475;, &#24456;&#32321;&#29712;;</p></li><li class="listitem"><p>&#36890;&#24120;&#38024;&#23545;&#26576;&#20010;&#34920;&#30340;&#25805;&#20316;, &#20999;&#20998;&#35268;&#21017;&#37117;&#26159;&#30456;&#21516;&#30340;, &#19981;&#31649;&#20855;&#20307;&#25968;&#25454;&#35775;&#38382;&#25805;&#20316;&#26159;&#20160;&#20040;, &#20063;&#23601;&#26159;&#35828;, &#36890;&#24120;&#23450;&#20041;&#19968;&#22871;&#36335;&#30001;&#35268;&#21017;,
+									&#21407;&#21017;&#19978;&#26469;&#35762;&#24212;&#35813;&#21487;&#20197;&#28385;&#36275;CURD&#22810;&#20010;&#25968;&#25454;&#25805;&#20316;&#30340;&#36335;&#30001;.</p></li></ol></div><p>
+						&#37492;&#20110;&#20197;&#19978;&#20004;&#28857;,&#25105;&#20204;&#21448;&#24341;&#20837;&#20102;NamespaceShardingRule&#21644;Namespace(Only)Rule&#30340;&#27010;&#24565;.
+					</p><p>
+						NamespaceShardingRule&#20801;&#35768;&#25105;&#20204;&#22522;&#20110;SqlMap&#20013;&#30340;namespace&#21644;&#27700;&#24179;&#20999;&#20998;&#35268;&#21017;&#36827;&#34892;&#36335;&#30001;&#35268;&#21017;&#30340;&#23450;&#20041;,
+						&#21516;&#26679;&#38024;&#23545;&#26368;&#21021;&#30340;&#20999;&#20998;&#35268;&#21017;, &#21363;memberId&#20026;&#22855;&#25968;&#30340;&#25968;&#25454;&#33853;&#22312;&#25968;&#25454;&#24211;1&#19978;, &#32780;memberId&#20026;&#20598;&#25968;&#30340;&#25968;&#25454;&#33853;&#22312;&#25968;&#25454;&#24211;2&#19978;,
+						&#37027;&#19981;&#31649;&#20854;&#25805;&#20316;&#26159;&#21019;&#24314;&#36824;&#26159;&#26356;&#26032;, &#21482;&#35201;&#25968;&#25454;&#35775;&#38382;&#23545;&#24212;&#30340;sql
+						statement&#33853;&#22312;&#25351;&#23450;&#30340;namespace&#19979;(&#23545;&#24212;&#25105;&#20204;&#30340;&#24773;&#20917;&#23601;&#26159;com.alibaba.cobar.client.entities.Offer&#21629;&#21517;&#31354;&#38388;),
+						&#24182;&#19988;&#25968;&#25454;&#35775;&#38382;&#21442;&#25968;&#31526;&#21512;&#25351;&#23450;&#30340;&#20999;&#20998;&#35268;&#21017;, &#25105;&#20204;&#23601;&#21487;&#20197;&#27491;&#30830;&#30340;&#36335;&#30001;&#25968;&#25454;&#35775;&#38382;&#35831;&#27714;,
+						&#26368;&#32456;&#25105;&#20204;&#21487;&#20197;&#32473;&#20986;&#22914;&#19979;&#30340;&#36335;&#30001;&#35268;&#21017;&#23450;&#20041;:
+						</p><pre class="programlisting">
+&lt;rules&gt;
+  &lt;rule&gt;
+    &lt;namespace&gt;com.alibaba.cobar.client.entities.Offer&lt;/namespace&gt;
+    &lt;shardingExpression&gt;memberId % 2 == 1&lt;/shardingExpression&gt;
+    &lt;shards&gt;partition1&lt;/shards&gt;
+  &lt;/rule&gt;
+  &lt;rule&gt;
+    &lt;namespace&gt;com.alibaba.cobar.client.entities.Offer&lt;/namespace&gt;
+    &lt;shardingExpression&gt;memberId % 2 == 0&lt;/shardingExpression&gt;
+    &lt;shards&gt;partition2&lt;/shards&gt;
+  &lt;/rule&gt;
+&lt;/rules&gt;
+						</pre><p>
+						&#36827;&#19968;&#27493;&#30340;,&#22914;&#26524;&#25152;&#26377;&#25968;&#25454;&#21482;&#26159;&#27700;&#24179;&#20999;&#20998;,
+						&#37027;&#36319;SqlActionShardingRule&#21644;SqlAction(Only)Rule&#30340;&#24046;&#21035;&#31867;&#20284;,
+						&#25105;&#20204;&#20063;&#21487;&#20197;&#21482;&#20351;&#29992;Namespace(Only)Rule:
+						</p><pre class="programlisting">
+&lt;rules&gt;
+  &lt;rule&gt;
+    &lt;namespace&gt;com.alibaba.cobar.client.entities.Offer&lt;/namespace&gt;
+    &lt;shards&gt;partition1&lt;/shards&gt;
+  &lt;/rule&gt;
+&lt;/rules&gt;
+						</pre><p>
+						&#29616;&#22312;, &#23450;&#20041;&#22312;com.alibaba.cobar.client.entities.Offer&#21629;&#21517;&#31354;&#38388;&#19979;&#30340;&#25152;&#26377;sql
+						statement, &#23558;&#20840;&#37096;&#34987;&#36335;&#30001;&#21040;partition1&#25968;&#25454;&#24211;&#25191;&#34892;.
+					</p><p>
+						&#21487;&#20197;&#30475;&#21040;, &#20174;SqlActionShardingRule&#21040;SqlAction(Only)Rule,
+						&#19968;&#30452;&#21040;NamespaceShardingRule&#21644;Namespace(Only)Rule,
+						&#36335;&#30001;&#35268;&#21017;&#28085;&#30422;&#30340;&#38754;&#26159;&#20174;&#29305;&#27530;&#21040;&#19968;&#33324;&#23618;&#38754;&#36880;&#27493;&#25918;&#24320;&#30340;,
+						&#22914;&#26524;&#38024;&#23545;&#26576;&#20010;sql statement&#26377;&#29305;&#27530;&#30340;&#36335;&#30001;&#38656;&#27714;,
+						&#37027;&#20040;&#21487;&#20197;&#26681;&#25454;&#24773;&#20917;&#28155;&#21152;&#30456;&#24212;&#30340;SqlActionShardingRule&#25110;&#32773;SqlAction(Only)Rule, &#32780;&#22914;&#26524;&#22810;&#20010;sql
+						statement&#25317;&#26377;&#30456;&#36817;&#25110;&#32773;&#30456;&#21516;&#30340;&#36335;&#30001;&#38656;&#27714;,
+						&#37027;&#20040;,
+						&#23601;&#21487;&#20197;&#26681;&#25454;&#24773;&#20917;&#24402;&#32435;&#24182;&#28155;&#21152;&#30456;&#24212;&#30340;NamespaceShardingRule&#25110;&#32773;Namespace(Only)Rule, &#24635;&#20043;,
+						&#36825;&#22235;&#31181;&#31867;&#22411;&#30340;Rule&#31867;&#22411;&#21487;&#20197;&#32452;&#21512;&#20351;&#29992;, &#20840;&#38754;&#30340;&#35206;&#30422;&#25972;&#20010;&#22522;&#20110;iBatis&#30340;&#25968;&#25454;&#35775;&#38382;&#35831;&#27714;&#30340;&#36335;&#30001;.
+					</p><div class="tip" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title">Tip</h3><p>
+							&#22312;&#23450;&#20041;&#36335;&#30001;&#35268;&#21017;&#30340;&#36807;&#31243;&#20013;,&#21487;&#20197;&#20174;&#19968;&#33324;&#24773;&#20917;&#19979;&#30340;NamespaceShardingRule&#25110;&#32773;Namespace(Only)Rule&#30528;&#25163;,
+							&#39318;&#20808;&#23450;&#20041;&#19968;&#33324;&#24773;&#20917;&#19979;&#30340;&#36335;&#30001;&#35268;&#21017;,
+							&#28982;&#21518;&#22312;&#26681;&#25454;&#26576;&#20123;&#29305;&#27530;&#25968;&#25454;&#35775;&#38382;&#35831;&#27714;,
+							&#36827;&#19968;&#27493;&#28155;&#21152;SqlActionShardingRule&#25110;&#32773;SqlAction(Only)Rule&#31867;&#22411;&#30340;&#36335;&#30001;&#35268;&#21017;.
+							CobarClientInternalRouter&#22312;&#36827;&#34892;&#36335;&#30001;&#30340;&#26102;&#20505;, &#23558;&#39318;&#20808;&#36827;&#34892;&#29305;&#27530;&#24773;&#20917;&#19979;&#30340;&#36335;&#30001;&#35268;&#21017;&#21305;&#37197;,
+							&#24403;&#25214;&#19981;&#21040;&#21305;&#37197;&#35268;&#21017;&#30340;&#26102;&#20505;, &#22312;&#36827;&#19968;&#27493;&#30340;&#20351;&#29992;&#19968;&#33324;&#30340;&#36335;&#30001;&#35268;&#21017;&#20316;&#20026;&#21518;&#22791;&#35268;&#21017;&#36827;&#34892;&#21305;&#37197;.			
+						</p></div></div><div class="sect4"><div class="titlepage"><div><div><h5 class="title"><a name="d0e472"></a>5.2.2.2.3.&nbsp;&#33258;&#23450;&#20041;&#36335;&#30001;&#35268;&#21017;&#20989;&#25968;(Custom Rule Functions)</h5></div></div></div><p>
+						&#24120;&#35265;&#30340;&#27700;&#24179;&#20999;&#20998;&#35268;&#21017;&#26377;:
+						</p><div class="itemizedlist"><ul class="itemizedlist" style="list-style-type: disc; "><li class="listitem"><p>&#22522;&#20110;&#33539;&#22260;&#30340;&#20999;&#20998;, &#27604;&#22914; memberId &gt; 10000 and memberId &lt; 20000
+								</p></li><li class="listitem"><p>&#22522;&#20110;&#27169;&#25968;&#30340;&#20999;&#20998;, &#27604;&#22914; memberId%128==1 &#25110;&#32773; memberId%128==2 &#25110;&#32773;...
+								</p></li><li class="listitem"><p>&#22522;&#20110;&#21704;&#24076;(hashing)&#30340;&#20999;&#20998;, &#27604;&#22914;hashing(memberId)==someValue&#31561;</p></li></ul></div><p>
+						&#21478;&#22806;, &#36824;&#26377;&#35832;&#22914;predicate-based partitioning&#31561;, &#20026;&#20102;&#28385;&#36275;&#19981;&#21516;&#20999;&#20998;&#35268;&#21017;&#23450;&#20041;&#30340;&#38656;&#35201;,
+						&#25105;&#20204;&#36816;&#34892;&#22312;&#36335;&#30001;&#35268;&#21017;&#23450;&#20041;&#30340;&#26102;&#20505;, &#22312;shardingExpression&#20013;&#20351;&#29992;&#33258;&#23450;&#20041;&#30340;&#36335;&#30001;&#35268;&#21017;&#20989;&#25968;.
+					</p><p>
+						&#19979;&#38754;&#25105;&#20204;&#20197;&#19968;&#20010;&#31616;&#21333;&#30340;&#23454;&#20363;&#26469;&#35828;&#26126;&#22312;Cobar Client&#20013;&#22914;&#20309;&#33258;&#23450;&#20041;&#20351;&#29992;&#36335;&#30001;&#35268;&#21017;&#20989;&#25968;.
+					</p><p>
+						&#20551;&#35774;&#25105;&#20204;&#35201;&#25353;&#29031;&#26576;&#31181;hashing&#31639;&#27861;&#23545;memberId&#36827;&#34892;&#25955;&#21015;, &#24182;&#26681;&#25454;&#25955;&#21015;&#30340;&#20540;&#36827;&#34892;&#36335;&#30001;, &#37027;&#20040;&#39318;&#20808;,&#25105;&#20204;&#38656;&#35201;&#23450;&#20041;&#19968;&#20010;&#20989;&#25968;&#31867;,
+						&#35813;&#31867;&#23558;&#26681;&#25454;&#20256;&#20837;&#30340;memberId&#36820;&#22238;&#30456;&#24212;&#30340;&#25955;&#21015;&#32467;&#26524;:
+						</p><pre class="programlisting">
+public class Hashing{
+	...
+	int apply(Long memberId){
+		// perform real logic here.
+	}
+}
+						</pre><p>
+						&#26377;&#20102;&#35813;&#20989;&#25968;&#23450;&#20041;,&#25105;&#20204;&#24076;&#26395;&#22312;shardingExpression&#20013;&#20351;&#29992;&#23427;, &#37027;&#39318;&#20808;&#25105;&#20204;&#38656;&#35201;&#27880;&#20876;&#35813;&#20989;&#25968;,
+						&#36825;&#36890;&#36807;CobarInteralRouterXmlFactoryBean&#30340;
+						<span class="quote">&#8220;<span class="quote">functionsMap</span>&#8221;</span>
+						&#23646;&#24615;&#36827;&#34892;:
+						</p><pre class="programlisting">
+&lt;bean id="internalRouter"
+	class="com.alibaba.cobar.client.router.config.CobarInteralRouterXmlFactoryBean"&gt;
+	&lt;property name="functionsMap"&gt;
+		&lt;map&gt;
+			&lt;entry key="hash"&gt;
+				&lt;bean class="..Hashing"&gt;
+				&lt;/bean&gt;
+			&lt;/entry&gt;
+		&lt;/map&gt;
+	&lt;/property&gt;
+	&lt;property name="configLocations"&gt;
+		&lt;list&gt;
+			&lt;value&gt;classpath:META-INF/routing/offer-sql-action-rules.xml&lt;/value&gt;
+			&lt;value&gt;classpath:META-INF/routing/offer-sharding-rules-on-namespace.xml&lt;/value&gt;
+		&lt;/list&gt;
+	&lt;/property&gt;
+&lt;/bean&gt;
+						</pre><p>
+						&#27880;&#24847;,&#25105;&#20204;&#20197;hash&#20316;&#20026;key&#23545;&#20197;&#19978;&#33258;&#23450;&#20041;&#20989;&#25968;&#36827;&#34892;&#20102;&#27880;&#20876;.
+					</p><p>
+						&#26377;&#20102;&#20197;&#19978;&#20934;&#22791;&#20043;&#21518;, &#25105;&#20204;&#23601;&#21487;&#20197;&#22312;shardingExpression&#20013;&#20351;&#29992;&#35813;&#33258;&#23450;&#20041;&#20989;&#25968;&#20102;:
+						</p><pre class="programlisting">
+&lt;rules&gt;
+  &lt;rule&gt;
+    &lt;namespace&gt;com.alibaba.cobar.client.entities.Offer&lt;/namespace&gt;
+    &lt;shardingExpression&gt;hash.apply(memberId) == someValue&lt;/shardingExpression&gt;
+    &lt;shards&gt;partition1&lt;/shards&gt;
+  &lt;/rule&gt;
+  &lt;rule&gt;
+    &lt;namespace&gt;com.alibaba.cobar.client.entities.Offer&lt;/namespace&gt;
+    &lt;shardingExpression&gt;hash.apply(memberId) == anotherValue&lt;/shardingExpression&gt;
+    &lt;shards&gt;partition2&lt;/shards&gt;
+  &lt;/rule&gt;
+&lt;/rules&gt;
+						</pre><p>
+						&#21487;&#35265;&#21482;&#35201;&#20351;&#29992;&#27880;&#20876;&#26102;&#29992;&#30340;key&#20316;&#20026;&#23545;&#35937;&#24212;&#29992;&#38024;&#23545;&#25351;&#23450;&#30340;&#34920;&#36798;&#24335;&#23383;&#27573;&#35843;&#29992;&#30456;&#24212;&#30340;&#26041;&#27861;&#23601;&#26159;&#20102;. &#31616;&#21333;, &#21364;&#19981;&#22833;&#24378;&#22823;.
+					</p></div></div></div><div class="sect2"><div class="titlepage"><div><div><h3 class="title"><a name="d0e506"></a>5.2.3.&nbsp;SqlAuditing</h3></div></div></div><p>
+				CobarSqlMapClientTemplate&#25552;&#20379;&#20102;&#38024;&#23545;SQL&#30340;&#20998;&#26512;&#21644;&#35760;&#24405;&#25193;&#23637;&#25509;&#21475;,&#20294;&#27809;&#26377;&#32473;&#20986;&#30456;&#24212;&#30340;&#23454;&#29616;,
+				&#22240;&#20026;&#22269;&#38469;&#31449;&#29616;&#22312;&#21487;&#20197;&#36890;&#36807;Ark&#39033;&#30446;&#26469;&#23436;&#25104;&#21516;&#26679;&#30340;&#30446;&#30340;,
+				&#20294;&#22914;&#26524;&#38656;&#35201;, &#21487;&#20197;&#32473;&#20986;&#19968;&#20010;ISqlAuditor&#25509;&#21475;&#23454;&#29616;,
+				&#28982;&#21518;&#27880;&#20837;&#32473;CobarSqlMapClientTemplate. 
+			</p><p>
+				ISqlAuditor&#25509;&#21475;&#23450;&#20041;&#24456;&#31616;&#21333;:
+				</p><pre class="programlisting">
+public interface ISqlAuditor {
+	void audit(String id, String sql, Object sqlContext);
+}
+				</pre><p>
+				&#20854;&#20013;, &#21442;&#25968;"id"&#26631;&#24535;&#25191;&#34892;&#30340;iBatis&#30340;sqlmap&#30340;id; &#21442;&#25968;
+				<span class="quote">&#8220;<span class="quote">sql</span>&#8221;</span>
+				&#34920;&#31034;id&#23545;&#24212;&#30340;SQL, &#22914;&#26524;id&#23545;&#24212;&#30340;SQL&#26159;DynamicSql&#30340;&#35805;, &#35813;&#21442;&#25968;&#20026;null;
+				&#26368;&#21518;&#21442;&#25968;sqlContext&#23545;&#24212;&#20855;&#20307;&#20256;&#20837;&#30340;&#21442;&#25968;&#23545;&#35937;.
+				&#24212;&#29992;&#31243;&#24207;&#21487;&#20197;&#26681;&#25454;&#20855;&#20307;&#22330;&#26223;&#26469;&#20915;&#23450;&#22914;&#20309;&#23454;&#29616;&#26576;&#20010;ISqlAuditor&#20197;&#21450;&#22914;&#20309;&#20351;&#29992;&#36825;&#20123;&#21442;&#25968;.&#20026;&#20102;&#19981;&#24433;&#21709;&#24615;&#33021;,
+				&#25552;&#20379;&#30340;ISqlAuditor&#23613;&#37327;&#37319;&#29992;&#24322;&#27493;&#30340;&#26041;&#24335;&#36827;&#34892;&#22788;&#29702;, &#19981;&#35201;&#21516;&#27493;&#38459;&#22622;&#21518;&#32493;&#30340;&#25968;&#25454;&#35775;&#38382;&#35831;&#27714;&#30340;&#22788;&#29702;.
+			</p><p>
+				&#22914;&#26524;&#20026;CobarSqlMapClientTemplate&#27880;&#20837;&#26576;&#20010;ISqlAuditor&#30340;&#23454;&#29616;,
+				&#37027;&#20040;&#40664;&#35748;&#24773;&#20917;&#19979;CobarSqlMapClientTemplate&#20250;&#26816;&#26597;&#29992;&#25143;&#26159;&#21542;&#21516;&#26102;&#27880;&#20837;&#20102;&#19968;&#20010;&#20276;&#38543;&#30340;ExecutorSerivce,
+				&#35813;&#20276;&#38543;&#30340;ExecutorService&#20027;&#35201;&#26159;&#20026;&#20102;&#36991;&#20813;&#29992;&#25143;&#25552;&#20379;&#30340;ISqlAuditor&#27809;&#26377;&#36827;&#34892;&#21512;&#36866;&#30340;&#24322;&#27493;&#22788;&#29702;&#31574;&#30053;&#20174;&#32780;&#25302;&#32047;CobarSqlMapClientTemplate&#30340;&#24773;&#20917;&#21457;&#29983;,
+				&#22914;&#26524;&#29992;&#25143;&#27809;&#26377;&#25552;&#20379;&#36825;&#26679;&#19968;&#20010;ExecutorService,
+				&#37027;CobarSqlMapClientTemplate&#20250;&#40664;&#35748;&#21021;&#22987;&#21270;&#19968;&#20010;&#25317;&#26377;&#19968;&#20010;worker thread&#30340;ExecutorService.
+				&#21407;&#21017;&#19978;&#29992;&#25143;&#19981;&#38656;&#35201;&#24178;&#39044;&#35813;ExecutorService,
+				&#20294;&#22914;&#26524;&#35843;&#25972;&#35813;&#21442;&#25968;&#23545;CobarSqlMapClientTemplate&#30340;&#24615;&#33021;&#26377;&#24110;&#21161;&#30340;&#35805;,&#37027;&#21487;&#20197;&#36890;&#36807;
+				<span class="emphasis"><em>sqlAuditorExecutor</em></span>
+				&#23646;&#24615;&#26469;&#27880;&#20837;&#19968;&#20010;&#22806;&#37096;&#30340;ExecutorService.
+			</p></div><div class="sect2"><div class="titlepage"><div><div><h3 class="title"><a name="d0e524"></a>5.2.4.&nbsp;&#20854;&#23427;&#37197;&#32622;&#19982;&#29305;&#24615;&#35299;&#37322;(Other Configuration or Features Explained)</h3></div></div></div><div class="sect3"><div class="titlepage"><div><div><h4 class="title"><a name="d0e527"></a>5.2.4.1.&nbsp;&#35760;&#24405;&#38271;&#26102;&#38388;&#36816;&#34892;&#30340;SQL&#21151;&#33021;</h4></div></div></div><p>
+					&#24212;&#30417;&#25511;&#38656;&#27714;, &#25105;&#20204;&#22312;CobarSqlMapClientTemplate&#20013;&#21152;&#20837;&#20102;&#35760;&#24405;&#38271;&#26102;&#38388;&#36816;&#34892;&#30340;SQL&#21151;&#33021;,
+					&#35813;&#21151;&#33021;&#40664;&#35748;&#24773;&#20917;&#19979;&#20026;&#19981;&#24320;&#21551;,&#22914;&#26524;&#35201;&#24320;&#21551;&#35813;&#21151;&#33021;, &#21487;&#20197;&#36890;&#36807;&#35774;&#32622;
+					<span class="emphasis"><em>profileLongTimeRunningSql</em></span>
+					&#23646;&#24615;&#26469;&#23436;&#25104;.
+					&#35774;&#32622;
+					<span class="emphasis"><em>profileLongTimeRunningSql</em></span>
+					&#30340;&#21516;&#26102;, &#25105;&#20204;&#21516;&#26102;&#35201;&#27714;&#25552;&#20379;&#30417;&#25511;&#30340;SQL&#36816;&#34892;&#26102;&#38388;&#30340;&#38480;&#23450;&#26631;&#20934;, &#21363;
+					<span class="emphasis"><em>longTimeRunningSqlIntervalThreshold</em></span>
+					,
+					&#22914;&#26524;&#29992;&#25143;&#25552;&#20379;&#30340;longTimeRunningSqlIntervalThreshold&#23567;&#20110;&#25110;&#32773;&#31561;&#20110;&#38646;,
+					&#22312;CobarSqlMapClientTemplate&#21021;&#22987;&#21270;&#30340;&#26102;&#20505;&#23558;&#25243;&#20986;&#24322;&#24120;,
+					&#20197;&#38459;&#27490;&#29992;&#25143;&#20351;&#29992;&#38750;&#29366;&#24577;&#23436;&#22791;&#30340;CobarSqlMapClientTemplate&#23454;&#20363;.
+				</p><p>
+					&#37197;&#32622;&#35813;&#21151;&#33021;&#30340;&#31616;&#21333;&#23454;&#20363;&#22914;&#19979;:
+					</p><pre class="programlisting">
+&lt;bean id="sqlMapClientTemplate" class="com.alibaba.cobar.client.CobarSqlMapClientTemplate"&gt;
+	...
+	&lt;property name="profileLongTimeRunningSql" value="true" /&gt;
+	&lt;property name="longTimeRunningSqlIntervalThreshold" value="3600000" /&gt;
+&lt;/bean&gt;
+					</pre><p>
+				</p></div><div class="sect3"><div class="titlepage"><div><div><h4 class="title"><a name="d0e546"></a>5.2.4.2.&nbsp;&#25209;&#37327;&#25554;&#20837;&#21151;&#33021;</h4></div></div></div><p>
+					&#26576;&#20123;&#24773;&#20917;&#19979;, &#24212;&#29992;&#31243;&#24207;&#21487;&#33021;&#20250;&#36890;&#36807;
+					<span class="quote">&#8220;<span class="quote">INSERT INTO tab(..) VALUES(..), (..), (..), (..)...</span>&#8221;</span>
+					&#24418;&#24335;&#30340;SQL&#36827;&#34892;&#25209;&#37327;&#30340;&#25968;&#25454;&#25554;&#20837;,
+					&#20026;&#20102;&#25903;&#25345;&#36825;&#31181;&#24773;&#20917;,
+					CobarSqlMapClientTemplate&#20801;&#35768;&#36890;&#36807;BatchInsertTask&#26469;&#25552;&#20132;&#25209;&#37327;&#30340;&#25554;&#20837;&#25968;&#25454;,
+					&#24403;CobarSqlMapClientTemplate&#21457;&#29616;&#22312;insert(..)&#30340;&#26102;&#20505;&#29992;&#25143;&#20256;&#20837;&#30340;&#26159;BatchInsertTask&#31867;&#22411;&#30340;&#21442;&#25968;&#30340;&#35805;,
+					&#23427;&#39318;&#20808;&#20250;&#26681;&#25454;&#36335;&#30001;&#35268;&#21017;&#23545;&#25552;&#20132;&#30340;&#25209;&#37327;&#25968;&#25454;&#36827;&#34892;&#37325;&#26032;&#24402;&#31867;, &#23558;&#21457;&#36865;&#21040;&#19981;&#21516;DataSource&#30340;&#25968;&#25454;&#24402;&#31867;&#21040;&#19981;&#21516;&#30340;&#38431;&#21015;&#20013;, &#24402;&#31867;&#23436;&#25104;&#20043;&#21518;,
+					&#20877;&#24182;&#34892;&#30340;&#25552;&#20132;&#32473;&#19981;&#21516;&#30340;DataSource&#25191;&#34892;.
+				</p><p>
+					&#35813;&#21151;&#33021;&#21487;&#20197;&#36991;&#20813;&#24212;&#29992;&#31243;&#24207;&#31471;&#33258;&#34892;&#36827;&#34892;&#25968;&#25454;&#24402;&#31867;&#25552;&#20132;&#31561;&#25805;&#20316;, &#21516;&#26102;&#21448;&#21487;&#20197;&#26377;&#25928;&#30340;&#21033;&#29992;&#29616;&#26377;&#30340;&#36335;&#30001;&#35268;&#21017;,
+					&#25968;&#25454;&#30340;&#26368;&#32456;&#27969;&#21521;&#21487;&#20197;&#23545;&#24212;&#29992;&#31243;&#24207;&#36879;&#26126;.
+				</p><p>
+					&#20551;&#35774;&#25105;&#20204;&#26377;&#25968;&#25454;&#23545;&#35937;&#22914;&#19979;:
+					</p><pre class="programlisting">
+public class Offer {
+    private Long   id;
+    private Long memberId;
+    private String subject;
+    private Date   gmtUpdated = new Date();
+    
+    // setters and getters and other method definitions
+}
+					</pre><p>
+					&#32780;&#19988;&#25105;&#20204;&#26377;&#22914;&#19979;&#30340;&#36335;&#30001;&#35268;&#21017;&#23450;&#20041;:
+					</p><pre class="programlisting">
+&lt;rules&gt;
+  &lt;rule&gt;
+    &lt;namespace&gt;com.alibaba.cobar.client.entities.Offer&lt;/namespace&gt;
+    &lt;shardingExpression&gt;memberId &lt; 10000&lt;/shardingExpression&gt;
+    &lt;shards&gt;partition1&lt;/shards&gt;
+  &lt;/rule&gt;
+  &lt;rule&gt;
+    &lt;namespace&gt;com.alibaba.cobar.client.entities.Offer&lt;/namespace&gt;
+    &lt;shardingExpression&gt;memberId &gt; 10000 and memberId &lt; 20000&lt;/shardingExpression&gt;
+    &lt;shards&gt;partition2&lt;/shards&gt;
+  &lt;/rule&gt;
+&lt;/rules&gt;
+					</pre><p>
+					&#24403;&#25105;&#20204;&#36890;&#36807;BatchInsertTask&#25552;&#20132;&#19968;&#25209;Offer&#25968;&#25454;&#24182;&#25552;&#20132;CobarSqlMapClientTemplate&#25191;&#34892;&#20043;&#21518;,
+					&#25552;&#20132;&#30340;&#36825;&#25209;Offer&#25968;&#25454;&#23558;&#25353;&#29031;&#36335;&#30001;&#35268;&#21017;&#20998;&#31867;&#20043;&#21518;, &#25209;&#37327;&#25554;&#20837;&#25968;&#25454;&#24211;.
+				</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title">Note</h3><p>
+						&#20026;&#20102;&#26356;&#26126;&#30830;&#35813;&#25209;&#37327;&#25554;&#20837;&#34892;&#20026;, &#25105;&#20204;&#20063;&#21487;&#20197;&#23450;&#20041;&#26356;&#30830;&#20999;&#30340;&#36335;&#30001;&#35268;&#21017;,
+						&#27604;&#22914;&#30452;&#25509;&#25552;&#21319;&#36335;&#30001;&#35268;&#21017;&#20026;&#22522;&#20110;SqlAction&#30340;Sharding&#35268;&#21017;,
+						&#36825;&#26679;,
+						&#35813;&#35268;&#21017;&#23601;&#21487;&#20197;&#26356;&#30830;&#20999;&#30340;&#24212;&#29992;&#21040;&#38024;&#23545;&#26576;&#19968;SqlAction&#30340;&#25209;&#37327;&#25554;&#20837;&#25805;&#20316;&#19978;.
+					</p></div></div><div class="sect3"><div class="titlepage"><div><div><h4 class="title"><a name="d0e567"></a>5.2.4.3.&nbsp;&#20851;&#20110;&#25968;&#25454;&#32467;&#26524;&#30340;Merge</h4></div></div></div><p>
+					&#22312;CobarClient&#20013;&#65292; &#25968;&#25454;&#30340;merge&#21151;&#33021;&#36824;&#27604;&#36739;&#24369;&#65292;
+					&#36825;&#36319;Cobar&#65288;Server&#29256;&#65289;&#26159;&#31867;&#20284;&#30340;&#65292;&#22522;&#26412;&#19978;&#26159;&#36981;&#24490;Cobar&#65288;Server&#29256;&#65289;&#30340;&#29616;&#26377;&#29366;&#20917;&#65292;
+					&#21363;&#21482;&#23558;&#27599;&#20010;&#25968;&#25454;&#28304;&#36820;&#22238;&#30340;&#25968;&#25454;&#32467;&#26524;&#28155;&#21152;&#21040;List&#24418;&#24335;&#30340;&#32467;&#26524;&#23545;&#35937;&#20013;&#36820;&#22238;&#12290;
+					&#36825;&#26102;&#20505;&#65292;
+					&#21487;&#33021;&#23601;&#38656;&#35201;&#24212;&#29992;&#31243;&#24207;&#22312;&#20351;&#29992;&#30340;&#26102;&#20505;&#26681;&#25454;&#24773;&#20917;&#33258;&#34892;&#25552;&#21462;&#24182;&#22788;&#29702;&#26368;&#32456;&#36820;&#22238;&#30340;&#32467;&#26524;&#23545;&#35937;&#12290;
+					&#27604;&#22914;&#65292; &#22914;&#19979;&#30340;SQL&#25191;&#34892;&#65306;
+					</p><pre class="programlisting">
+select count(*), companyId from offer group by companyId
+					</pre><p>
+					&#24403;&#20854;&#23545;&#24212;&#30340;&#36335;&#30001;&#35268;&#21017;&#23545;&#24212;&#22810;&#20010;&#25968;&#25454;&#28304;&#30340;&#26102;&#20505;&#65292; &#35813;&#26465;&#35821;&#21477;&#23558;&#20250;&#22312;&#36825;&#22810;&#20010;&#25968;&#25454;&#28304;&#19978;&#25191;&#34892;&#65292;
+					&#24182;&#36820;&#22238;&#21508;&#33258;&#30340;&#32467;&#26524;&#65292;&#36825;&#20123;&#21508;&#33258;&#36820;&#22238;&#30340;&#32467;&#26524;&#23558;&#34987;&#28155;&#21152;&#21040;&#19968;&#20010;List&#24403;&#20013;&#36820;&#22238;&#65292;
+					&#37027;&#20040;&#65292; &#35813;List&#20013;&#23558;&#21253;&#21547;&#22810;&#20010;&#65288;Count&#65292;
+					companyId)&#30340;&#32452;&#21512;&#65292; &#21516;&#19968;companyId&#20250;&#23384;&#22312;&#22810;&#20010;&#32426;&#24405;&#65292;
+					&#24212;&#29992;&#31243;&#24207;&#21487;&#33021;&#38656;&#35201;&#23558;List&#20013;&#30340;&#36825;&#20123;&#32426;&#24459;&#21152;&#24635;&#21518;&#20351;&#29992;&#12290;
+				</p><p>
+					&#29616;&#22312;&#30340;CobarClient&#23545;&#25152;&#26377;&#30340;&#26597;&#35810;&#32467;&#26524;&#36827;&#34892;merge&#37117;&#26159;&#25353;&#29031;&#36825;&#31181;&#26041;&#24335;&#36827;&#34892;&#30340;&#65292; &#25152;&#20197;&#65292;
+					&#24212;&#29992;&#31243;&#24207;&#22312;&#20351;&#29992;&#36807;&#31243;&#20013;&#24212;&#35813;&#27880;&#24847;&#36825;&#31181;&#24773;&#20917;&#23545;&#24212;&#29992;&#21487;&#33021;&#36896;&#25104;&#30340;&#24433;&#21709;&#12290; CobarClient&#21518;&#26399;&#23558;&#36880;&#27493;&#23436;&#21892;&#25968;&#25454;&#30340;merge&#31574;&#30053;&#65292;
+					&#27604;&#22914;&#21487;&#20197;&#20801;&#35768;&#24212;&#29992;&#31243;&#24207;&#25351;&#23450;&#33258;&#23450;&#20041;&#30340;merge&#31574;&#30053;&#12290;
+				</p><div class="sect4"><div class="titlepage"><div><div><h5 class="title"><a name="d0e577"></a>5.2.4.3.1.&nbsp;&#23545;OrderBy&#26597;&#35810;&#30340;&#31616;&#21333;&#25968;&#25454;merge&#25903;&#25345;</h5></div></div></div><p>
+						&#22914;&#26524;&#36890;&#36807;CobarSqlMapClientTemplate&#30340;queryForList()&#26041;&#27861;&#36827;&#34892;&#25968;&#25454;&#26597;&#35810;&#65292;
+						&#24182;&#19988;&#26597;&#35810;&#35821;&#21477;&#20013;&#23384;&#22312;order by&#30340;&#24773;&#20917;&#65292; &#25353;&#29031;CobarSqlMapClientTemplate&#30340;&#40664;&#35748;merge&#31574;&#30053;&#65292;
+						&#26368;&#32456;&#24635;&#20307;&#30340;&#26597;&#35810;&#32467;&#26524;&#30340;&#39034;&#24207;&#26159;&#19981;&#20445;&#35777;&#30340;&#65292; &#20294;&#22914;&#26524;&#29992;&#25143;&#24076;&#26395;&#33021;&#22815;&#22312;&#29616;&#26377;&#27599;&#20010;&#21333;&#29420;&#32467;&#26524;&#38598;&#21512;&#24050;&#32463;&#25490;&#24207;&#30340;&#24773;&#20917;&#19979;&#23545;&#26368;&#32456;&#32467;&#26524;&#36827;&#34892;&#25972;&#20307;&#30340;&#25490;&#24207;&#65292;
+						CobarSqlMapClientTemplate&#20801;&#35768;&#36825;&#31181;&#24773;&#20917;&#19979;&#29992;&#25143;&#25351;&#23450;&#20351;&#29992;&#33258;&#23450;&#20041;&#30340;merge&#31574;&#30053;&#12290;
+						&#36825;&#23454;&#38469;&#19978;&#31867;&#20284;&#20110;&#22312;merge
+						sort&#31639;&#27861;&#20013;&#65292; &#25968;&#25454;&#24211;&#24110;&#25105;&#20204;&#20570;&#20102;&#21069;&#21322;&#37096;&#20998;&#24037;&#20316;&#65292; &#32780;&#21518;&#21322;&#37096;&#20998;&#21017;&#30001;&#25105;&#20204;&#33258;&#24049;&#26469;&#25191;&#34892;&#12290;
+					</p><p>
+						&#35201;&#20351;&#29992;&#33258;&#23450;&#20041;&#30340;merge&#31574;&#30053;&#65292;&#29992;&#25143;&#21487;&#20197;&#36890;&#36807; CobarSqlMapClientTemplate&#30340;
+						<span class="quote">&#8220;<span class="quote">mergers</span>&#8221;</span>
+						&#23646;&#24615;&#25351;&#23450;&#19968;&#32452;SqlMapActionId&#21040;&#20855;&#20307;&#33258;&#23450;&#20041;merge&#31574;&#30053;&#23454;&#29616;&#31867;&#20043;&#38388;&#30340;&#26144;&#23556;&#20851;&#31995;&#12290;
+						&#20363;&#22914;&#65306;
+						</p><pre class="programlisting">
+&lt;bean id="sqlMapClientTemplateWithMerger" class="com.alibaba.cobar.client.CobarSqlMapClientTemplate"&gt;
+	&lt;property name="sqlMapClient" ref="sqlMapClient" /&gt;
+	&lt;property name="cobarDataSourceService" ref="dataSources" /&gt;
+	&lt;property name="router" ref="internalRouter" /&gt;
+	&lt;property name="sqlAuditor"&gt;
+		&lt;bean class="com.alibaba.cobar.client.audit.SimpleSqlAuditor" /&gt;
+	&lt;/property&gt;
+	&lt;property name="profileLongTimeRunningSql" value="true" /&gt;
+	&lt;property name="longTimeRunningSqlIntervalThreshold" value="3600000" /&gt;
+	&lt;property name="mergers"&gt;
+		&lt;map&gt;
+			&lt;entry
+				key="com.alibaba.cobar.client.entities.Offer.findAllWithOrderByOnSubject"
+				value-ref="merger" /&gt;
+		&lt;/map&gt;
+	&lt;/property&gt;
+&lt;/bean&gt;
+
+&lt;bean id="merger" class="com.alibaba.cobar.client.merger.ConcurrentSortMerger"&gt;
+	&lt;property name="comparator" ref="comparator"&gt;
+	&lt;/property&gt;
+&lt;/bean&gt;
+
+&lt;bean id="comparator" class="com.alibaba.cobar.client.support.OfferComparator"&gt;
+&lt;/bean&gt;
+						</pre><p>
+						&#20197;&#19978;&#20195;&#30721;&#23454;&#20363;&#20013;&#65292; &#25105;&#20204;&#25351;&#23450;&#38024;&#23545;&#20351;&#29992;
+						<span class="quote">&#8220;<span class="quote">com.alibaba.cobar.client.entities.Offer.findAllWithOrderByOnSubject
+						</span>&#8221;</span>
+						&#30340;&#26597;&#35810;&#25805;&#20316;&#65292; &#20854;&#26368;&#32456;&#32467;&#26524;&#38656;&#35201;&#20351;&#29992;
+						<span class="quote">&#8220;<span class="quote">merger</span>&#8221;</span>
+						&#36827;&#34892;&#21512;&#24182;&#65292;
+						&#32780;
+						<span class="quote">&#8220;<span class="quote">merger</span>&#8221;</span>
+						&#36890;&#24120;&#26159;&#29992;&#25143;&#26681;&#25454;&#26368;&#32456;&#26597;&#35810;&#32467;&#26524;&#38598;&#21512;&#30340;&#23646;&#24615;&#25552;&#20379;&#30340;&#33258;&#23450;&#20041;IMerger&#23454;&#29616;&#65292; &#22312;&#36825;&#37324;&#65292;
+						&#25105;&#20204;&#20351;&#29992;&#20102;com.alibaba.cobar.client.merger.ConcurrentSortMerger&#65292;
+						&#22823;&#37096;&#20998;&#24773;&#20917;&#19979;&#65292; &#35813;&#23454;&#29616;&#31867;&#21487;&#20197;&#28385;&#36275;&#24212;&#29992;&#30340;&#38656;&#27714;&#65292;&#29992;&#25143;&#21482;&#38656;&#35201;&#26681;&#25454;&#24773;&#20917;&#25552;&#20379;&#19981;&#21516;&#30340;Comparator&#21363;&#21487;&#12290;
+					</p><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title">Note</h3><p>
+							&#23454;&#38469;&#19978;&#65292; &#36825;&#31181;&#22788;&#29702;&#26041;&#24335;&#21487;&#33021;&#30475;&#36215;&#26469;&#20250;&#27604;&#36739;&#32321;&#29712;&#65292;
+							&#22240;&#20026;&#25490;&#24207;&#30340;&#20449;&#24687;&#21487;&#20197;&#36890;&#36807;&#20998;&#26512;SqlMapActionId&#23545;&#24212;&#30340;SQL&#25512;&#23548;&#20986;&#26469;&#65292;
+							&#20294;&#30446;&#21069;&#21482;&#26159;&#20026;&#20102;&#25552;&#20379;&#31616;&#21333;&#30340;merge&#21151;&#33021;&#25903;&#25345;&#65292; &#19981;&#24819;&#24341;&#20837;&#36807;&#22810;&#30340;&#22797;&#26434;&#24615;&#12290;&#32780;&#19988;&#65292; &#23545;&#20110;DynamicSql&#26469;&#35828;&#65292; &#20855;&#20307;&#30340;SQL&#22312;&#24212;&#29992;&#23618;&#26159;&#21462;&#19981;&#21040;&#30340;&#65292;
+							&#22240;&#20026;&#21363;&#20351;&#26159;&#36890;&#36807;&#20998;&#26512;SQL&#20063;&#19981;&#21487;&#33021;&#20445;&#35777;&#20219;&#20309;&#24773;&#20917;&#19979;&#30340;&#25512;&#23548;&#20449;&#24687;&#21487;&#20197;&#33719;&#24471;&#12290;
+						</p><p>
+							&#22914;&#26524;&#38656;&#35201;&#65292; &#21518;&#32487;&#29256;&#26412;&#20013;&#21487;&#20197;&#25512;&#20986;&#22522;&#20110;SQL&#35299;&#26512;&#26469;&#25512;&#23548;&#25968;&#25454;merge&#36923;&#36753;&#30340;&#25903;&#25345;&#12290;
+						</p></div></div></div></div></div><div class="sect1"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="d0e604"></a>5.3.&nbsp;MultipleDataSourcesTransactionManager&#35814;&#35299;</h2></div></div></div><p>
+			&#26681;&#25454;&#22269;&#38469;&#31449;&#38656;&#27714;, CobarClient&#38656;&#35201;&#20445;&#35777;&#22810;&#20010;&#25968;&#25454;&#24211;&#20043;&#38388;&#30340;&#26412;&#22320;&#20107;&#21153;,
+			&#20294;&#19981;&#25509;&#21463;&#20998;&#24067;&#24335;&#20107;&#21153;,&#22240;&#20026;&#20998;&#24067;&#24335;&#20107;&#21153;&#21487;&#33021;&#24341;&#20837;&#19981;&#24517;&#35201;&#30340;&#24615;&#33021;&#38382;&#39064;.
+			&#22312;&#36825;&#31181;&#21069;&#25552;&#26465;&#20214;&#19979;,&#25105;&#20204;&#26368;&#32456;&#25970;&#23450;&#20351;&#29992;Best Efforts 1PC
+			Pattern&#26469;&#23454;&#29616;CobarClient&#30340;&#20107;&#21153;&#31649;&#29702;. 
+			</p><p>
+			CobarClient&#25552;&#20379;&#20102;&#33258;&#23450;&#20041;&#30340;&#20107;&#21153;&#31649;&#29702;&#22120;MultipleDataSourcesTransactionManager&#26469;&#25903;&#25345;&#22522;&#20110;Best
+			Efforts 1PC Pattern&#30340;&#20107;&#21153;&#31649;&#29702;,
+			MultipleDataSourcesTransactionManager&#25509;&#21463;&#19968;&#32452;&#25968;&#25454;&#28304;&#20316;&#20026;&#20107;&#21153;&#30340;&#30446;&#26631;&#36164;&#28304;,&#24403;&#20107;&#21153;&#24320;&#22987;&#30340;&#26102;&#20505;,
+			&#24320;&#21551;&#25152;&#26377;&#25968;&#25454;&#28304;&#30456;&#20851;&#30340;&#26412;&#22320;&#20107;&#21153;, &#20107;&#21153;&#25552;&#20132;&#25110;&#32773;&#22238;&#28378;&#30340;&#26102;&#20505;,
+			&#21017;&#21516;&#26102;&#25552;&#20132;&#25110;&#32773;&#22238;&#28378;&#25152;&#26377;&#30340;&#26412;&#22320;&#20107;&#21153;.
+			&#21516;&#26102;&#24320;&#22987;&#25152;&#26377;&#25968;&#25454;&#28304;&#19978;&#30340;&#26412;&#22320;&#20107;&#21153;,&#40664;&#35748;&#24773;&#20917;&#19979;,&#33258;&#28982;&#20250;&#21344;&#29992;&#27599;&#19968;&#20010;&#25968;&#25454;&#28304;&#30340;&#19968;&#20010;&#29289;&#29702;&#36830;&#25509;, &#36827;&#32780;&#21487;&#33021;&#36896;&#25104;&#24615;&#33021;&#38382;&#39064;,
+			&#25152;&#20197;,
+			&#25105;&#20204;&#23545;&#20381;&#36182;&#30340;&#25968;&#25454;&#28304;&#36827;&#34892;&#20102;&#25318;&#25130;, &#21152;&#20837;&#20102;&#19968;&#23618;LazyConnectionDataSourceProxy,
+			&#35813;LazyConnectionDataSourceProxy&#23558;&#20445;&#35777;&#21482;&#26377;&#23384;&#22312;&#30830;&#20999;&#30340;&#25968;&#25454;&#35775;&#38382;&#25805;&#20316;&#30340;&#26102;&#20505;,
+			&#25165;&#20250;&#30495;&#27491;&#30340;&#20174;&#30446;&#26631;&#25968;&#25454;&#28304;&#20013;&#33719;&#21462;&#30495;&#27491;&#30340;&#29289;&#29702;&#36830;&#25509;,&#20063;&#27491;&#22914;&#26550;&#26500;&#22270;&#20013;(1)&#21644;(2)&#25152;&#26631;&#27880;&#30340;&#37027;&#26679;.
+			</p><p>
+			&#23454;&#38469;&#19978;, &#20026;&#20102;&#36991;&#20813;&#19981;&#24517;&#35201;&#30340;&#29289;&#29702;&#36830;&#25509;&#30340;&#21344;&#29992;, &#25105;&#20204;&#20063;&#21487;&#20197;&#22312;&#20107;&#21153;&#23450;&#20041;&#20013;&#21152;&#20837;&#30456;&#24212;&#30340;&#26631;&#24535;&#25968;&#25454;&#26469;&#34920;&#26126;&#35201;&#22312;&#21738;&#20123;&#36164;&#28304;&#20043;&#19978;&#24320;&#21551;&#26412;&#22320;&#20107;&#21153;,
+			&#36825;&#21487;&#20197;&#36890;&#36807;&#22312;Service&#23618;&#27425;&#26631;&#27880;Annotation&#25110;&#32773;&#38468;&#24102;&#22806;&#37096;&#37197;&#32622;&#25991;&#20214;&#30340;&#24418;&#24335;&#23454;&#29616;.
+			&#19981;&#36807;,
+			&#21487;&#33021;&#26377;&#20154;&#20250;&#35748;&#20026;&#36825;&#20250;&#19968;&#23450;&#31243;&#24230;&#30340;&#20405;&#20837;service&#23618;,&#25152;&#20197;,
+			&#26242;&#26102;&#36824;&#26159;&#37319;&#29992;MultipleDataSourcesTransactionManager&#21152;&#19978;LazyConnectionDataSourceProxy&#30340;&#32452;&#21512;&#26469;&#23436;&#25104;&#22522;&#20110;Best
+			Efforts 1PC Pattern&#30340;&#20107;&#21153;&#31649;&#29702;.
+		</p><div class="sect2"><div class="titlepage"><div><div><h3 class="title"><a name="d0e613"></a>5.3.1.&nbsp;
+				MultipleDataSourcesTransactionManager&#20381;&#36182;&#30340;&#22810;&#25968;&#25454;&#28304;&#31649;&#29702;
+			</h3></div></div></div><p>
+				&#35201;&#20445;&#35777;&#20107;&#21153;&#21152;&#35832;&#20110;&#30456;&#21516;&#30340;&#19968;&#32452;&#25968;&#25454;&#28304;&#20043;&#19978;,
+				&#25105;&#20204;&#38656;&#35201;&#20026;MultipleDataSourcesTransactionManager&#27880;&#20837;&#19982;CobarSqlMapClientTemplate&#30456;&#21516;&#30340;&#19968;&#32452;&#25968;&#25454;&#28304;&#20381;&#36182;,
+				&#36825;&#21516;&#26679;&#26159;&#36890;&#36807;ICobarDataSourceService&#31867;&#20445;&#35777;&#30340;:
+				</p><pre class="programlisting">
+&lt;bean id="transactionManager"
+	class="com.alibaba.cobar.client.transaction.MultipleDataSourcesTransactionManager"&gt;
+	&lt;property name="cobarDataSourceService" ref="dataSources" /&gt;
+&lt;/bean&gt;
+
+&lt;bean id="sqlMapClientTemplate" class="com.alibaba.cobar.client.CobarSqlMapClientTemplate"&gt;
+	&lt;property name="sqlMapClient" ref="sqlMapClient" /&gt;
+	&lt;property name="cobarDataSourceService" ref="dataSources" /&gt;
+	...
+&lt;/bean&gt;
+
+&lt;bean id="dataSources" class="com.alibaba.cobar.client.datasources.DefaultCobarDataSourceService"&gt;
+	&lt;property name="dataSourceDescriptors"&gt;
+		&lt;set&gt;
+			&lt;bean class="com.alibaba.cobar.client.datasources.CobarDataSourceDescriptor"&gt;
+				&lt;property name="identity" value="partition1"/&gt;
+				&lt;property name="targetDataSource" ref="partition1_main"/&gt;
+				&lt;property name="targetDetectorDataSource" ref="partition1_main"/&gt;
+				&lt;property name="standbyDataSource" ref="partition1_standby"/&gt;
+				&lt;property name="standbyDetectorDataSource" ref="partition1_standby"/&gt;
+			&lt;/bean&gt;
+			&lt;bean class="com.alibaba.cobar.client.datasources.CobarDataSourceDescriptor"&gt;
+				&lt;property name="identity" value="partition2"/&gt;
+				&lt;property name="targetDataSource" ref="partition2_main"/&gt;
+				&lt;property name="targetDetectorDataSource" ref="partition2_main"/&gt;
+				&lt;property name="standbyDataSource" ref="partition2_standby"/&gt;
+				&lt;property name="standbyDetectorDataSource" ref="partition2_standby"/&gt;
+			&lt;/bean&gt;
+		&lt;/set&gt;
+	&lt;/property&gt;
+	&lt;property name="haDataSourceCreator"&gt;
+		&lt;bean class="com.alibaba.cobar.client.datasources.ha.FailoverHotSwapDataSourceCreator"&gt;
+			&lt;property name="detectingSql" value="update cobarha set timeflag=CURRENT_TIMESTAMP()"/&gt;
+		&lt;/bean&gt;
+	&lt;/property&gt;
+&lt;/bean&gt;
+
+...
+				</pre><p>
+				&#24635;&#30340;&#26469;&#35828;,
+				MultipleDataSourcesTransactionManager&#30340;&#20351;&#29992;&#20854;&#23454;&#23601;&#36825;&#20040;&#31616;&#21333;(&#26377;&#20851;com.alibaba.cobar.client.datasources.DefaultCobarDataSourceService&#30340;&#26356;&#22810;&#20449;&#24687;,
+				&#35831;&#21442;&#32771;
+				???
+				&#30456;&#20851;&#20869;&#23481;.). &#22914;&#26524;&#35201;&#20102;&#35299;&#26356;&#22810;&#37197;&#32622;&#32454;&#33410;,
+				&#21487;&#20197;&#21442;&#32771;Spring&#30340;AbstractPlatformTransactionManager&#25110;&#32773;MultipleDataSourcesTransactionManager&#30340;javadoc.
+			</p></div></div></div><div class="chapter"><div class="titlepage"><div><div><h2 class="title"><a name="roma_application_redirect"></a>Chapter&nbsp;6.&nbsp;CobarClient&#23637;&#26395;</h2></div></div></div><p>
+			&#24076;&#26395;CobarClient&#20174;&#26356;&#25277;&#35937;&#30340;&#23618;&#27425;&#26469;&#23631;&#34109;&#20998;&#24067;&#24335;&#25968;&#25454;&#20197;&#21450;&#19981;&#21516;&#25968;&#25454;&#23384;&#20648;&#26381;&#21153;&#20043;&#38388;&#30340;&#24046;&#24322;&#24615;, &#25152;&#20197;, &#25105;&#20204;&#24076;&#26395;&#25552;&#20379;&#19968;&#20010;&#32479;&#19968;&#30340;&#25968;&#25454;&#35775;&#38382;&#23618;(DAL), &#30001;&#35813;DAL&#26469;&#35268;&#33539;&#21644;&#32479;&#19968;&#25968;&#25454;&#35775;&#38382;&#34892;&#20026;,&#21516;&#26102;&#23631;&#34109;&#20998;&#24067;&#24335;&#22330;&#26223;&#19979;&#30340;&#25968;&#25454;&#35775;&#38382;&#30340;&#22797;&#26434;&#24230;.
+			&#21478;&#22806;, &#38543;&#30528;&#38656;&#27714;&#30340;&#21464;&#26356;&#20197;&#21450;&#26550;&#26500;&#30340;&#28436;&#21270;,&#21487;&#20197;&#23558;&#25968;&#25454;&#30340;&#22797;&#21046;&#21644;&#21516;&#27493;, &#32531;&#23384;&#30340;&#25509;&#20837;, &#23454;&#26102;&#30340;&#32034;&#24341;&#26500;&#24314;&#31561;&#31561;, &#37117;&#21487;&#20197;&#36890;&#36807;&#25105;&#20204;&#30340;DAL&#23618;&#36827;&#34892;, &#23545;&#20110;&#24212;&#29992;&#26041;&#26469;&#35828;, &#20182;&#20204;&#21482;&#38656;&#35201;&#20851;&#27880;&#24212;&#29992;&#31471;&#30340;&#20851;&#27880;&#28857;, &#32780;&#19981;&#38656;&#35201;&#20851;&#27880;DAL&#20043;&#21518;&#21457;&#29983;&#20102;&#20160;&#20040;,&#21464;&#26356;&#20102;&#20160;&#20040;,&#22686;&#21152;&#21644;&#20943;&#23569;&#20102;&#20160;&#20040;...
+		</p></div></div></div></body></html>

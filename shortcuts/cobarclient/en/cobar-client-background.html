@@ -1,0 +1,24 @@
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+   <title>Chapter&nbsp;1.&nbsp;The Background of Why CobarClient Was Launched</title><link rel="stylesheet" type="text/css" href="css/cc.css"><meta name="generator" content="DocBook XSL Stylesheets V1.78.1"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="chapter"><div class="titlepage"><div><div><h2 class="title"><a name="roma_application_redirect"></a>Chapter&nbsp;1.&nbsp;The Background of Why CobarClient Was Launched</h2></div></div></div><p>
+		We alibaba have a
+		<span class="quote">&#8220;<span class="quote">Cobar</span>&#8221;</span>
+		project already which does help on distributed data access, but in
+		order to meet the HA and performance requirements,
+		two or more servers
+		are needed to make it run. Usually it's not a good choice for small
+		applications which still need distributed data access abilities. Since
+		the technology department of ICBU(Alibaba) requires a lightweight but
+		still powerful solution on distributed data access requirement,
+		CobarClient(Version) comes into the play.
+	</p><p>
+		CobarClient is mainly for specific usage scenarios, that's,
+		distributed data access on small or modest scale database
+		shardings/partitions.
+		So before you decide whether to use CobarClient,
+		leverage your application scenario first.
+		(For Alibaba Internal, if
+		CobarClient can't meet
+		your needs, you can turn
+		to Cobar instead.)
+	</p></div></body></html>
