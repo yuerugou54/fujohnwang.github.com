@@ -68,6 +68,8 @@
 1. [Java Memory Model Pragmatics (transcript)](http://shipilev.net/blog/2014/jmm-pragmatics/)
 
 ## Scala
+
+* <http://docs.scala-lang.org/tutorials/>
 * <http://docs.scala-lang.org/>
 * <http://www.scala-sbt.org/>
 * [Another tour of Scala](http://naildrivin5.com/scalatour)
