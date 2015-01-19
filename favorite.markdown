@@ -96,6 +96,8 @@
 * [Introduction to Functional Patterns](http://jsuereth.com/intro-to-fp/print.html)
 * [Scala’s Types of Types](http://ktoso.github.io/scala-types-of-types/)
 * [Scala Compiler Phases Wiki](https://wiki.scala-lang.org/display/SIW/Overview+of+Compiler+Phases)
+* [underscore.io提供的培训课程](http://underscore.io/training/) 
+
 
 ## FP
 * [Tutorial Papers in Functional Programming](http://www.cse.chalmers.se/~rjmh/tutorials.html)
