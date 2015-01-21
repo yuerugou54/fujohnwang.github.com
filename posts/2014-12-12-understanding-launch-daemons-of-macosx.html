@@ -2,9 +2,9 @@
 <html lang="zh">
 
   <head>
-	  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-	  <title>了解LaunchDaemons</title>
-	  <meta name="author" content="FuqiangWang">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>了解LaunchDaemons - 一个架构士的思考与沉淀@afoo.me</title>
+    <meta name="author" content="FuqiangWang">
     <meta charset='utf-8'>
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -140,7 +140,6 @@
 -       0   com.apple.sbd
 ...
 </pre>
-
 <p>第一列表示进程号，如果有在结果中罗列，但没有数字而只是一个横线，标志虽然已经loaded， 但没有运行；</p>
 <p>第二列是上次退出的状态号(the last exit code), 0表示成功，正数表示错误退出， 负数表示收到信号后退出。</p>
 <h2 id="加载或者卸载load-unload"><span class="header-section-number">2.2</span> 加载或者卸载(load / unload)</h2>

@@ -2,9 +2,9 @@
 <html lang="zh">
 
   <head>
-	  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-	  <title>SBT免翻墙手册</title>
-	  <meta name="author" content="FuqiangWang">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>SBT免翻墙手册 - 一个架构士的思考与沉淀@afoo.me</title>
+    <meta name="author" content="FuqiangWang">
     <meta charset='utf-8'>
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -80,7 +80,6 @@ resolvers += "Internal Maven Repository" at "http://[internal-host]/nexus/conten
 
 externalResolvers := Resolver.withDefaultResolvers(resolvers.value, mavenCentral = false)
 </pre>
-
 <p>resolvers保存我们自己添加的Resolver， 上面属于我们自己添加的有两个， 即本地maven库和公司内部库；</p>
 <p>externalResolvers保存两部分来源的Resolver， 一个就是resolvers中的，另一个就是默认的Resolvers(ivy local和mavenCentral)， 我们希望依赖管理走本地maven库和公司内部库，所以， 通过覆盖原来的externalResolver的值来达到目的， 即上面配置中<code>mavenCentral = false</code>对应行。</p>
 <p>没有加任何相关配置之前：</p>
@@ -91,7 +90,6 @@ externalResolvers := Resolver.withDefaultResolvers(resolvers.value, mavenCentral
 > show resolvers
 [info] List()
 </pre>
-
 <p>加了以上配置之后：</p>
 <pre>
 > show resolvers
@@ -99,20 +97,17 @@ externalResolvers := Resolver.withDefaultResolvers(resolvers.value, mavenCentral
 > show external-resolvers
 [info] List(FileRepository(local,FileConfiguration(true,None),Patterns(ivyPatterns=List(${ivy.home}/local/[organisation]/[module]/(scala_[scalaVersion]/)(sbt_[sbtVersion]/)[revision]/[type]s/[artifact](-[classifier]).[ext]), artifactPatterns=List(${ivy.home}/local/[organisation]/[module]/(scala_[scalaVersion]/)(sbt_[sbtVersion]/)[revision]/[type]s/[artifact](-[classifier]).[ext]), isMavenCompatible=false, descriptorOptional=false, skipConsistencyCheck=false)), Local Maven Repository: file:///Users/yunshi/.m2/repository, Internal Maven Repository: http://.../nexus/content/groups/public/)
 </pre>
-
 <p>没有覆盖externalResolver的情况：</p>
 <pre>
 > show external-resolvers
 [info] ArrayBuffer(FileRepository(local,FileConfiguration(true,None),Patterns(ivyPatterns=List(${ivy.home}/local/[organisation]/[module]/(scala_[scalaVersion]/)(sbt_[sbtVersion]/)[revision]/[type]s/[artifact](-[classifier]).[ext]), artifactPatterns=List(${ivy.home}/local/[organisation]/[module]/(scala_[scalaVersion]/)(sbt_[sbtVersion]/)[revision]/[type]s/[artifact](-[classifier]).[ext]), isMavenCompatible=false, descriptorOptional=false, skipConsistencyCheck=false)), public: https://repo1.maven.org/maven2/, Local Maven Repository: file:///Users/yunshi/.m2/repository, Internal Maven Repository: http://.../nexus/content/groups/public/)
 </pre>
-
 <p>注意多了<strong>public: https://repo1.maven.org/maven2/</strong></p>
 另外， externalResolvers + inter-project resolver形成fullResovers:
 <pre>
 > show full-resolvers
 [info] List(Raw(ProjectResolver(inter-project, mapped: )), FileRepository(local,FileConfiguration(true,None),Patterns(ivyPatterns=List(${ivy.home}/local/[organisation]/[module]/(scala_[scalaVersion]/)(sbt_[sbtVersion]/)[revision]/[type]s/[artifact](-[classifier]).[ext]), artifactPatterns=List(${ivy.home}/local/[organisation]/[module]/(scala_[scalaVersion]/)(sbt_[sbtVersion]/)[revision]/[type]s/[artifact](-[classifier]).[ext]), isMavenCompatible=false, descriptorOptional=false, skipConsistencyCheck=false)), Local Maven Repository: file:///Users/yunshi/.m2/repository, Internal Maven Repository: http://repo.caimi-inc.com/nexus/content/groups/public/)
 </pre>
-
 <p>boot-resolvers如果不做下面的操作，原则上保持不变，默认是local(ivy) + typesafe-ivy-releases + maven central</p>
 <p>到此为止。</p>
 <hr />
@@ -127,14 +122,11 @@ externalResolvers := Resolver.withDefaultResolvers(resolvers.value, mavenCentral
 [info] Some(ArrayBuffer(FileRepository(local,FileConfiguration(true,None),Patterns(ivyPatterns=List(${ivy.home}/local/[organisation]/[module]/(scala_[scalaVersion]/)(sbt_[sbtVersion]/)[revision]/[type]s/[artifact](-[classifier]).[ext]), artifactPatterns=List(${ivy.home}/local/[organisation]/[module]/(scala_[scalaVersion]/)(sbt_[sbtVersion]/)[revision]/[type]s/[artifact](-[classifier]).[ext]), isMavenCompatible=false, descriptorOptional=false, skipConsistencyCheck=false)), URLRepository(typesafe-ivy-releases,Patterns(ivyPatterns=List(https://repo.typesafe.com/typesafe/ivy-releases/[organization]/[module]/[revision]/[type]s/[artifact](-[classifier]).[ext]), artifactPatterns=List(https://repo.typesafe.com/typesafe/ivy-releases/[organization]/[module]/[revision]/[type]s/[artifact](-[classifier]).[ext]), isMavenCompatible=false, descriptorOptional=false, skipConsistencyCheck=false)), public: https://repo1.maven.org/maven2/))
 [success] Total time: 0 s, completed Dec 3, 2014 5:32:48 PM
 </pre>
-
-
 <h1 id="sbt启动参数配置"><span class="header-section-number">2</span> sbt启动参数配置</h1>
 <p>通过homebrew安装的sbt， 建议通过配置文件<strong>/usr/local/etc/sbtopts</strong>进行配置， 添加：</p>
 <pre>
 -Dsbt.override.build.repos=true
 </pre>
-
 <p>这将让sbt launcher使用<strong>~/.sbt/repositories</strong>中配置的repositories来替换sbt-launcher.jar中默认打包的配置， 所以，相应的我们要在~/.sbt/目录下新建一个repositories文件，然后添加自己想用的repositories配置：</p>
 <pre>
 [repositories]
@@ -144,10 +136,9 @@ externalResolvers := Resolver.withDefaultResolvers(resolvers.value, mavenCentral
   community-plugins-ivy-releases: https://dl.bintray.com/sbt/sbt-plugin-releases/, [organization]/[module]/[revision]/[type]s/[artifact](-[classifier]).[ext]
   maven-repo-caimi: http://repo.caimi-inc.com/nexus/content/groups/public/
 </pre>
-
 <p>这个相当于maven的~/.m2/settings.xml, ;-)</p>
 <blockquote>
-<p>原<a href="http://repo.scala-sbt.org/scalasbt/sbt-plugin-releases/&gt;现在直接跳转到&lt;https://dl.bintray.com/sbt/sbt-plugin-releases/">http://repo.scala-sbt.org/scalasbt/sbt-plugin-releases/&gt;现在直接跳转到&lt;https://dl.bintray.com/sbt/sbt-plugin-releases/</a></p>
+<p>原<a href="http://repo.scala-sbt.org/scalasbt/sbt-plugin-releases/" class="uri">http://repo.scala-sbt.org/scalasbt/sbt-plugin-releases/</a>现在直接跳转到<a href="https://dl.bintray.com/sbt/sbt-plugin-releases/" class="uri">https://dl.bintray.com/sbt/sbt-plugin-releases/</a></p>
 <p>sonatype nexus不支持ivy风格的repository proxying， 所以， 只好将typesafe和第三方sbt插件的ivy repository单独罗列，否则，直接放到一个proxy后面，只配置一个proxy的地址就够了。 原则上，maven2的repository尽量放到nexus上进行proxying。</p>
 </blockquote>
 <h1 id="再次查看项目resolver状态"><span class="header-section-number">3</span> 再次查看项目resolver状态</h1>
@@ -158,13 +149,10 @@ externalResolvers := Resolver.withDefaultResolvers(resolvers.value, mavenCentral
 > show boot-resolvers
 [info] Some(ArrayBuffer(FileRepository(local,FileConfiguration(true,None),Patterns(ivyPatterns=List(${ivy.home}/local/[organisation]/[module]/(scala_[scalaVersion]/)(sbt_[sbtVersion]/)[revision]/[type]s/[artifact](-[classifier]).[ext]), artifactPatterns=List(${ivy.home}/local/[organisation]/[module]/(scala_[scalaVersion]/)(sbt_[sbtVersion]/)[revision]/[type]s/[artifact](-[classifier]).[ext]), isMavenCompatible=false, descriptorOptional=false, skipConsistencyCheck=false)), maven-local: file://~/.m2/repository, URLRepository(typesafe-ivy-releases,Patterns(ivyPatterns=List(https://repo.typesafe.com/typesafe/ivy-releases/[organization]/[module]/[revision]/[type]s/[artifact](-[classifier]).[ext]), artifactPatterns=List(https://repo.typesafe.com/typesafe/ivy-releases/[organization]/[module]/[revision]/[type]s/[artifact](-[classifier]).[ext]), isMavenCompatible=false, descriptorOptional=false, skipConsistencyCheck=false)), URLRepository(community-plugins-ivy-releases,Patterns(ivyPatterns=List(https://dl.bintray.com/sbt/sbt-plugin-releases/[organization]/[module]/[revision]/[type]s/[artifact](-[classifier]).[ext]), artifactPatterns=List(https://dl.bintray.com/sbt/sbt-plugin-releases/[organization]/[module]/[revision]/[type]s/[artifact](-[classifier]).[ext]), isMavenCompatible=false, descriptorOptional=false, skipConsistencyCheck=false)), maven-repo-caimi: http://repo.caimi-inc.com/nexus/content/groups/public/))
 </pre>
-
-
-
 <h1 id="参考资料"><span class="header-section-number">4</span> 参考资料</h1>
 <ol style="list-style-type: decimal">
 <li><a href="http://www.scala-sbt.org/release/docs/Proxy-Repositories.html">Proxy Repositories</a></li>
-<li><a href="http://stackoverflow.com/questions/10773319/sbt-doesnt-find-file-in-local-maven-repository-although-its-there">http://stackoverflow.com/questions/10773319/sbt-doesnt-find-file-in-local-maven-repository-although-its-there</a></li>
+<li><a href="http://stackoverflow.com/questions/10773319/sbt-doesnt-find-file-in-local-maven-repository-although-its-there" class="uri">http://stackoverflow.com/questions/10773319/sbt-doesnt-find-file-in-local-maven-repository-although-its-there</a></li>
 </ol>
                 
                 <!--百度分享按钮-->

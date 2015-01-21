@@ -2,9 +2,9 @@
 <html lang="zh">
 
   <head>
-	  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-	  <title>《Scala For The Impatient》琐碎记录</title>
-	  <meta name="author" content="FuqiangWang">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>《Scala For The Impatient》琐碎记录 - 一个架构士的思考与沉淀@afoo.me</title>
+    <meta name="author" content="FuqiangWang">
     <meta charset='utf-8'>
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -120,7 +120,6 @@
 <blockquote>
 age_=方法编译为字节码后，名称是age_$eq(...), 因为Java里=不能包含在方法名声明中。
 </blockquote>
-
 <p>第二种，使用@BeanProperty这个annnotation来标注我们想为其生成setters和getters方法的变量，不过，这种方式生成的setters和getters方法则跟JavaBean中的setters和getters是一样的命名风格咯，即setAge(age:Int)和getAge()这样的形式，跟传统Java框架，比如Spring来编码的时候，通常使用这种方式更多一些。</p>
 <h1 id="private与privatethis"><span class="header-section-number">5</span> private与private[this]</h1>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">class</span> Counter{

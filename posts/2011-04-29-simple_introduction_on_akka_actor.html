@@ -2,9 +2,9 @@
 <html lang="zh">
 
   <head>
-	  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-	  <title>Simple Introduction On Akka Actor</title>
-	  <meta name="author" content="FuqiangWang">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>Simple Introduction On Akka Actor - 一个架构士的思考与沉淀@afoo.me</title>
+    <meta name="author" content="FuqiangWang">
     <meta charset='utf-8'>
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -222,7 +222,6 @@ future.<span class="fu">result</span>.<span class="fu">asInstanceOf</span>[Optio
    - Starting up Dispatchers$globalExecutorBasedEventDrivenDispatcher$[akka:event-driven:dispatcher:global]
  with throughput [5]
  </pre>
- 
 <p>但很多时候， 所有的Actor使用同一个Dispatcher是远远不够的。</p>
 <p>要定制相应Actor的运行调度， 可以为其设置特定的Dispatcher实现， 常见的Dispatcher实现在akka.dispatch包下， 如:</p>
 <ul>

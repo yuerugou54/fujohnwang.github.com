@@ -2,9 +2,9 @@
 <html lang="zh">
 
   <head>
-	  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-	  <title>反射及FunctionJ的应用（Apply Java Reflection and FunctionJ）</title>
-	  <meta name="author" content="FuqiangWang">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>反射及FunctionJ的应用（Apply Java Reflection and FunctionJ） - 一个架构士的思考与沉淀@afoo.me</title>
+    <meta name="author" content="FuqiangWang">
     <meta charset='utf-8'>
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -107,7 +107,6 @@ if(paymethod == 2)
 }
 // ...etc.
 </pre>
-
 <p>我想这个是最一般的实现了，但是，最一般的实现通常也是最有改进余地的实现，所以，让我们来看一下如何对这个进行改进吧！ 我们的目的是去除代码中的条件判断，而实现这个目的，我这里给出2个实现途径：</p>
 <ol style="list-style-type: decimal">
 <li>使用反射（java reflection）支持</li>
@@ -119,7 +118,6 @@ if(paymethod == 2)
 2=templateLocation4PayMethod2,renderReport4PayMethod2
 ...
 </pre>
-
 <p>其中，等号前面是以payMethod的值作为key，出于其他情况考虑，你也可以使用其他的作为key，只要保证唯一性就可以；等号后面第一项为对应的模板的位置，第二项为对应的报表render方法，这个方法通常在实现类里实现。</p>
 <p>（注：以上配置也可以通过Jakarta commons Configuration来实现或者自己写一个实现也可以）</p>
 <p>东风有了之后，我们开始行船啦。</p>

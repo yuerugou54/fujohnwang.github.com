@@ -2,9 +2,9 @@
 <html lang="zh">
 
   <head>
-	  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-	  <title>ROMA框架潜在改进点思考</title>
-	  <meta name="author" content="FuqiangWang">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>ROMA框架潜在改进点思考 - 一个架构士的思考与沉淀@afoo.me</title>
+    <meta name="author" content="FuqiangWang">
     <meta charset='utf-8'>
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -111,7 +111,6 @@ Java代码
                 controller/  
                     *.vm          
  </pre>
- 
 <p>这样的组织结构考虑到了namespace下view和widget的紧密关系， 但忽视了ROMA核心理念中COC倡导的namespace/controller/action这样的层进结构在视图组织中的一致性。 也就是说， 现在的视图目录组织结构只是考虑了并列的横向问题， 但忽视了直线序列上的竖向问题。</p>
 <p>鉴于现在的目录组织结构namespace下混杂view，widget以及controller path等因素的现状， 我建议将view, widget, layout的概念并列化，而将namspace/controller/action的概念序列化，内敛入并列化之后的view, widget和layout的概念中， 从而有了如下的目录结构组织方式：</p>
 <pre>
@@ -121,7 +120,6 @@ Java代码
     widgets/  
     layouts/  
 </pre>
- 
 <p>其中， views, widgets和layouts目录下，按照namespace/controller/action的顺序持有相同的目录结构序列，从而在更高层次上保持了namespace下view, widget和layout的并列关系， 例如：</p>
 <pre>
 Java代码  
@@ -138,8 +136,7 @@ Java代码
         namespace1/  
             controller1/  
                 *.vm  
-</pre> 
-
+</pre>
 <p>这样的好处在于， 对于大部分时间都只关注views的开发着来说，现在的namespace下直接找controller对应的目录也比较直观，不再有那种中间有一个“ view ”目录的隔阂感。 而且，可以通过相应工具提供的某种视图形式来merge这种目录结构的显示，比如， 展示成原来那种namespace下紧密的view, widget, layout形式。</p>
 <h1 id="关于现有roma框架中声明式数据验证的思考"><span class="header-section-number">3</span> 关于现有ROMA框架中声明式数据验证的思考</h1>
 <p>实际上， 现有的声明式数据验证数据文件的格式问题， 在框架的设计者和许多开发人员当中早就不是什么秘密了。只不过考虑到兼容性问题，所以这个问题一托再托。 不过，既然问题存在，那就有必要分析一下，以期改进也好， 接受教训也好。</p>
@@ -159,7 +156,6 @@ Xml代码
      &lt;/ group >   
 &lt;/ form >   
 </pre>
- 
 <p>最初的考虑可能是为了能够把对象的继承和嵌套结构映射到这种基于group的定义规则中，因为可以想象， 每一个表单数据提交后，通常在服务器端都会有相应的数据对象与之对应。 初衷是好的， 出发点也是对的，但在操作的过程中，走错一步，然后就让后面“ 满盘皆罗嗦 ”了。</p>
 实际上， 要完成这一设想， 对应的数据验证文件格式大体可以罗列为如下形式：
 <pre>
@@ -176,7 +172,7 @@ Xml代码
          &lt;/ group >   
      &lt;/ group >   
 &lt;/ forms >   
-</pre> 
+</pre>
 <p>也就是说，第一层对应类似spring中commandBean概念的，应该是一个form，如果对应form的commandBean有进一步的属性定 义，并且是复杂对象类型，这时候才使用内嵌的group元素来定义进一步的验证规则，如果简单属性，则直接在form元素下声明field即可。 而原来将本质上为form的元素声明为group， 不但犯了本质上的错误， 更使得后期的演化越加举步维艰。而“ 增加顶层group支持 ”的需求，实际上就是为了解决group＋group无法区分或者无法很好的表达form+group这一的逻辑结构的问题。 这就是为什么在实现“ 增加顶层group支持 ”的需求的时候，我暂时为group元素添加了一个asForm属性，用于合理区分作为form的元素和作为group的元素。</p>
 <p>以上问题现暂时告段落，下面谈一下操作和使用层面的些许个人看法。</p>
 <p>在ROMA中，使用现有的数据验证支持，你需要维护三个位置的信息：</p>
@@ -210,7 +206,6 @@ Xml代码
     ...  
 &lt;/ uri-config >   
 </pre>
- 
 <p>当路径需要变更的时候， 只修改uri.xml文件一个地方，所以使用$uribroker生成链接地址的视图模板都会得到统一的更新。</p>
 <p>可是对照一下使用<span class="math"><em>u</em><em>r</em><em>i</em><em>b</em><em>r</em><em>o</em><em>k</em><em>e</em><em>r</em><em>表</em><em>述</em><em>的</em><em>路</em><em>径</em>，<em>和</em><em>u</em><em>r</em><em>i</em>.<em>x</em><em>m</em><em>l</em><em>中</em><em>表</em><em>述</em><em>的</em><em>内</em><em>容</em>，<em>很</em><em>容</em><em>易</em><em>发</em><em>现</em>，<em>许</em><em>多</em><em>信</em><em>息</em><em>都</em><em>是</em><em>重</em><em>复</em><em>出</em><em>现</em><em>的</em>，<em>如</em><em>果</em><em>按</em><em>照</em><em>C</em><em>O</em><em>C</em><em>的</em><em>理</em><em>念</em>，<em>这</em><em>些</em><em>相</em><em>同</em><em>的</em><em>信</em><em>息</em><em>完</em><em>全</em><em>可</em><em>以</em><em>推</em><em>导</em><em>出</em><em>来</em>，<em>而</em><em>不</em><em>用</em><em>明</em><em>确</em><em>再</em><em>去</em><em>配</em><em>置</em><em>一</em><em>遍</em>，<em>理</em><em>想</em><em>的</em><em>情</em><em>况</em><em>是</em>，<em>只</em><em>有</em><em>路</em><em>径</em><em>信</em><em>息</em><em>和</em></span>uribroker所表述的路径不一致的时候，明确在uri.xml中配置这种路径信息才是合理而有效的。</p>
 <p>那么， 是不是可以这样那？！ 当<span class="math"><em>u</em><em>r</em><em>i</em><em>b</em><em>r</em><em>o</em><em>k</em><em>e</em><em>r</em><em>生</em><em>成</em><em>路</em><em>径</em><em>信</em><em>息</em><em>的</em><em>时</em><em>候</em>，<em>首</em><em>先</em><em>去</em><em>检</em><em>查</em><em>u</em><em>r</em><em>i</em>.<em>x</em><em>m</em><em>l</em><em>中</em><em>有</em><em>没</em><em>有</em><em>对</em><em>应</em><em>当</em><em>前</em><em>路</em><em>径</em><em>的</em><em>配</em><em>置</em><em>项</em>，<em>如</em><em>果</em><em>有</em>，<em>则</em><em>使</em><em>用</em><em>之</em>，<em>如</em><em>果</em><em>没</em><em>有</em>，<em>则</em><em>把</em></span>uribroker中指定的路径作为最终输出。 这样，就可以极大减少配置量，降低开发人员的负担。实现过程中是否有困难，这里不做考虑，从为开发人员考虑，和提高生产率的角度来说，个人认为，这样的需求是合理的。</p>

@@ -2,9 +2,9 @@
 <html lang="zh">
 
   <head>
-	  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-	  <title>Logging Framework Explained (afoo.me)</title>
-	  <meta name="author" content="FuqiangWang">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>Logging Framework Explained (afoo.me) - 一个架构士的思考与沉淀@afoo.me</title>
+    <meta name="author" content="FuqiangWang">
     <meta charset='utf-8'>
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -113,17 +113,16 @@ logback  slf4j-log4j  slf4j-jdk   (binding)
 
 PS. logback is an implemenation with binder inside
 </pre>
-
 <p>SLF4J提供了一堆jar包，初来乍到的一看到估计就晕了，别啊， 其实挺简单的 - 所有xxx-over-slf4j命名的jar包和slf4j-api包其实都可以划归到logging facade/api这个类别里，这些jar包的目的就是为程序提供logging接口， 只不过， 每个人口味不同，有得喜欢用jcl，有得喜欢用log4j的api，为了弥合这种差异(其实就是保持兼容并让遗留系统可以平滑迁移)， SLF4J就提供了这些桥接或者适配器，你愿意用哪种logging facade/logging api 用就好了，最终我都给你导到slf4j api上去！</p>
 <p>好啦， 既然所有的都导到slf4j api，那下一步就该决定用哪种logging implementation了，毕竟slf4j-api也是个logging facade/api嘛，人家不干底层的脏活儿累活儿。 要选择谁来干活儿， 需要为slf4j指定用哪个binder， 比如用log4j，就要指定一个用于log4j的binder； 用java.util.logging，就要指定一个用于jul的binder； 好在这些都有现成的，slf4j都提供了，其实就是下面那一堆命名形式类似于slf4j-XXX的jar包， 比如选择log4j作为最终的logging implementation,那么我们就将slf4j-log4j.jar包放入classpath，这样，它就会把log4j和slf4j-api关联起来， slf4j-api就知道，噢， 我要用log4j输出和管理日志（当然， 这个时候log4j也要在classpath里咯，binder和implemenation要成对儿出现）。</p>
 <p>logback是个特例，原则上来讲它是个logging implementation，不过， 它自己提供了slf4j的binder实现，而且，它还就直接用slf4j-api作为它的logging facade/api,所以，一看这小子就是个集成度比较高的主儿，不过，通过放大镜看看，其实，它还是分成了2层，一层是logging api, 一层是logging implementation!</p>
 <h1 id="参考"><span class="header-section-number">3</span> 参考</h1>
 <ol style="list-style-type: decimal">
-<li><a href="http://stackoverflow.com/questions/3222895/why-is-commons-logging-believed-to-be-unpopular">http://stackoverflow.com/questions/3222895/why-is-commons-logging-believed-to-be-unpopular</a></li>
+<li><a href="http://stackoverflow.com/questions/3222895/why-is-commons-logging-believed-to-be-unpopular" class="uri">http://stackoverflow.com/questions/3222895/why-is-commons-logging-believed-to-be-unpopular</a></li>
 <li><a href="http://articles.qos.ch/classloader.html">Taxonomy of class loader problems encountered when using Jakarta Commons Logging</a></li>
 <li><a href="http://articles.qos.ch/thinkAgain.html">Think again before adopting the commons-logging API</a></li>
 <li><a href="http://radio-weblogs.com/0122027/2003/08/15.html">Commons Logging was my fault</a></li>
-<li><a href="http://commons.apache.org/proper/commons-logging/guide.html#Configuration">http://commons.apache.org/proper/commons-logging/guide.html#Configuration</a></li>
+<li><a href="http://commons.apache.org/proper/commons-logging/guide.html#Configuration" class="uri">http://commons.apache.org/proper/commons-logging/guide.html#Configuration</a></li>
 <li><a href="http://v4forums.wordpress.com/2008/12/27/slf4j-vs-jcl-dynamic-binding-vs-static-binding/">SLF4J Vs JCL / Dynamic Binding Vs Static Binding</a></li>
 <li><a href="http://geekexplains.blogspot.com/2008/06/dynamic-binding-vs-static-binding-in.html">Dynamic Binding or Late Binding</a></li>
 <li><a href="http://wrschneider.blogspot.com/2005/06/commons-logging-classloader-pain_18.html">commons-logging classloader pain</a></li>

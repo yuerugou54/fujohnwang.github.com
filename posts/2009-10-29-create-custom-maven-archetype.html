@@ -2,9 +2,9 @@
 <html lang="zh">
 
   <head>
-	  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-	  <title>自定义Maven archetype的创建</title>
-	  <meta name="author" content="FuqiangWang">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>自定义Maven archetype的创建 - 一个架构士的思考与沉淀@afoo.me</title>
+    <meta name="author" content="FuqiangWang">
     <meta charset='utf-8'>
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -116,18 +116,15 @@
 <pre>
 $ mvn archetype:create-from-project 
 </pre>
-
 <p>之后， 创建好的archetype就跑到了当前目录下的次一级目录target/generated-sources/archetype/ ，所以，我们接着敲键盘：</p>
 <pre>
 $ cd target/generated-sources/archetype/  
 $ mvn install
 </pre>
-
 <p>将该创建好的archetype安装到本地的repository之后， 我们就可以使用它了：</p>
 <pre>
 $ mvn archetype:generate -DarchetypeCatalog=local  
 </pre>
-
 <p>如果使用m2eclipse，那在创建项目的时候，选择使用Default Local的Catalog，应该也可以看到并选择新安装到这个archetype。 安装到本地的repository只能自己用，所以，如果是比较通用的archetype，可以deploy到组织内部架设的maven repository服务上去。</p>
 <h1 id="可能遇到的一些问题"><span class="header-section-number">2</span> 可能遇到的一些问题</h1>
 <p>直接使用archetype:create-from-project 比起手工去打造一个archetype要便捷的多，但， 有时候偷懒会有些不靠谱，archetype:create-from-project 的某些行为可能会与我们最初的设想有出入，这个时候就需要我们在最终发布新创建的archetype之前，做有些后继处理，比如：</p>

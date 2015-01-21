@@ -2,9 +2,9 @@
 <html lang="zh">
 
   <head>
-	  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-	  <title>Ant Tasks Supplied With Tomcat5</title>
-	  <meta name="author" content="FuqiangWang">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>Ant Tasks Supplied With Tomcat5 - 一个架构士的思考与沉淀@afoo.me</title>
+    <meta name="author" content="FuqiangWang">
     <meta charset='utf-8'>
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -98,7 +98,6 @@ deploy=org.apache.catalina.ant.DeployTask
  stop=org.apache.catalina.ant.StopTask
  list=org.apache.catalina.ant.ListTask
 </pre>
-
 <blockquote>
 <p>注：【taskName=Task的实现class】是ant的taskdef规定的格式，当然，1和2完全可以按照每个task都对应自己的taskdef。</p>
 </blockquote>
@@ -162,7 +161,6 @@ tomcat.manager.url=http://localhost:8080/manager
 tomcat.manager.username=admin(对应你自己的username)
 tomcat.manager.password=admin(对应你自己的password)
 </pre>
-
 <p>之后，在build.xml的开始部分，定义<property file="build.properties"/>将这些properties引入。</p>
 <p>OK，以上就是使用tomcat5提供的ant任务对其进行管理的Overview，仅供Reference。</p>
                 

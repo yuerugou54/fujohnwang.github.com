@@ -2,9 +2,9 @@
 <html lang="zh">
 
   <head>
-	  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-	  <title>了解tmux</title>
-	  <meta name="author" content="FuqiangWang">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>了解tmux - 一个架构士的思考与沉淀@afoo.me</title>
+    <meta name="author" content="FuqiangWang">
     <meta charset='utf-8'>
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -110,7 +110,6 @@ unbind C-b
 set -g prefix C-a
 bind-key C-a send-prefix
 </pre>
-
 <p>Prefix快捷键的使用是， 首先按Prefix快捷键组合，然后松开，再紧跟着按相应命令的快捷键， 比如， 新建窗口的话，我们先按Control + a, 然后再按c，则完成在当前session下创建窗口的工作， 其它窗口(Window)操作包括：</p>
 <pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">Ctrl</span> + a, c   // 创建窗口
 $ <span class="kw">Ctrl</span> + a, [0 - 9] // 输入0到9任何一个数字选择相应的窗口， 相当于命令tmux select-window 

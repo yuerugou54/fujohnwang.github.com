@@ -2,9 +2,9 @@
 <html lang="zh">
 
   <head>
-	  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-	  <title>How to write a SBT 0.10+ plugin?</title>
-	  <meta name="author" content="FuqiangWang">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>How to write a SBT 0.10+ plugin? - 一个架构士的思考与沉淀@afoo.me</title>
+    <meta name="author" content="FuqiangWang">
     <meta charset='utf-8'>
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -115,9 +115,6 @@ resolvers += "Typesafe Repo" at "http://repo.typesafe.com/typesafe/releases/"
 
 libraryDependencies ++= Seq("org.aspectj" % "aspectjtools" % "1.6.11.RELEASE", "org.aspectj" % "aspectjrt" % "1.6.11.RELEASE","org.aspectj" % "aspectjweaver" % "1.6.11.RELEASE")
 </pre>
- 
-
-
 <h1 id="the-definition-file-of-the-plugin-samplesrcmainscala.scala"><span class="header-section-number">2</span> the definition file of the plugin sample(src/main/scala/*.scala)</h1>
 <pre class="sourceCode scala"><code class="sourceCode scala">
 <span class="kw">import</span> sbt.<span class="fu">_</span>
@@ -157,7 +154,6 @@ libraryDependencies ++= Seq("org.aspectj" % "aspectjtools" % "1.6.11.RELEASE", "
 
  addSbtPlugin("name.fujohnwang" % "aspectj_sbt_plugin" % "0.0.1")   // declare to use your plugin
 </pre>
-
 <p>2- build.sbt under the root path of your project(light configuration) or project/Build.scala(full configuration)</p>
 <p>usually, you can customize the settings of the plugin or add necessary dependencies in your build file(s), this is variable as per your usage scenarios. If default values are ok for you, nothing about plugin is needed to add to your build file.</p>
 <h1 id="what-u-can-learn-from-the-experience-of-writing-a-plugin"><span class="header-section-number">4</span> What U can learn from the experience of writing a plugin?</h1>
@@ -166,9 +162,9 @@ libraryDependencies ++= Seq("org.aspectj" % "aspectjtools" % "1.6.11.RELEASE", "
 <p>3- each Keys(Setting or Task) can be initialized or implemented by &lt;&lt;= with other Key(s)</p>
 <h1 id="references"><span class="header-section-number">5</span> References:</h1>
 <ol style="list-style-type: decimal">
-<li><a href="https://github.com/harrah/xsbt/wiki/Plugins-Best-Practices">https://github.com/harrah/xsbt/wiki/Plugins-Best-Practices</a></li>
-<li><a href="https://github.com/harrah/xsbt/wiki/sbt-0.10-plugins-list">https://github.com/harrah/xsbt/wiki/sbt-0.10-plugins-list</a></li>
-<li><a href="http://eed3si9n.com/sbt-010-guide">http://eed3si9n.com/sbt-010-guide</a></li>
+<li><a href="https://github.com/harrah/xsbt/wiki/Plugins-Best-Practices" class="uri">https://github.com/harrah/xsbt/wiki/Plugins-Best-Practices</a></li>
+<li><a href="https://github.com/harrah/xsbt/wiki/sbt-0.10-plugins-list" class="uri">https://github.com/harrah/xsbt/wiki/sbt-0.10-plugins-list</a></li>
+<li><a href="http://eed3si9n.com/sbt-010-guide" class="uri">http://eed3si9n.com/sbt-010-guide</a></li>
 <li>The AspectJ compiler API</li>
 <li>typesafehub-sbt-aspectj plugin</li>
 </ol>

@@ -2,9 +2,9 @@
 <html lang="zh">
 
   <head>
-	  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-	  <title>检车大厅所见所闻对软件架构设计的联想</title>
-	  <meta name="author" content="FuqiangWang">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>检车大厅所见所闻对软件架构设计的联想 - 一个架构士的思考与沉淀@afoo.me</title>
+    <meta name="author" content="FuqiangWang">
     <meta charset='utf-8'>
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -72,7 +72,8 @@
 <p>可是（这个可是是我臆想的，正常情况下，其它窗口的工作人员应该也可以暂时帮助处理离开工作人员负责的窗口业务）， 假如我们让每一个窗口的工作人员都能够负责处理整个的流程，那么，每个窗口负责的工作就全都相同，业务流程的处理也变成了多条并行的流水线， 在系统架构中，基本上就是scale out easily了。 如果把每个工作人员都比作一个个的硬件结点，在原来的流水线规划中，他们或许负荷不高，硬件资源利用有限，一旦转换为每个硬件结点负责整体流水线业务，则可以充分利用每一硬件资源。 而且，系统的可用性也可以更上一个档次，不会因为一个结点的缺失，导致整体流程的断裂。</p>
 <p>整个类比到系统的架构层次，如下图：</p>
 <div class="figure">
-<img src="../images/vertical_stack_in_one.png" alt="vertical_stack" /><p class="caption">vertical_stack</p>
+<img src="../images/vertical_stack_in_one.png" alt="vertical_stack" />
+<p class="caption">vertical_stack</p>
 </div>
 <blockquote>
 <p>当然， 并非说之前的流水线规划不能达到很好的可用性，只要在加几倍的人，开辟多个流水线，也是可以保证整体服务的可用，只不过，这或许要以多倍的成本提高和系统复杂度为代价。</p>

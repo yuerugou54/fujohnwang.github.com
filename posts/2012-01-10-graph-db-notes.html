@@ -2,9 +2,9 @@
 <html lang="zh">
 
   <head>
-	  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-	  <title>&quot;Notes Of GraphDBs&quot;</title>
-	  <meta name="author" content="FuqiangWang">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>&quot;Notes Of GraphDBs&quot; - 一个架构士的思考与沉淀@afoo.me</title>
+    <meta name="author" content="FuqiangWang">
     <meta charset='utf-8'>
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -139,7 +139,8 @@
 </ul></li>
 </ol>
 <div class="figure">
-<img src="http://www.parallellabs.com/wp-content/uploads/2011/12/%E7%A8%80%E7%96%8F%E5%9B%BE%E5%92%8C%E7%A8%A0%E5%AF%86%E5%9B%BE%E7%9A%84%E9%82%BB%E6%8E%A5%E8%A1%A8%E4%B8%8E%E9%82%BB%E6%8E%A5%E7%9F%A9%E9%98%B5%E5%BD%A2%E5%BC%8F.bmp" alt="邻接矩阵OR邻接表" /><p class="caption">邻接矩阵OR邻接表</p>
+<img src="http://www.parallellabs.com/wp-content/uploads/2011/12/%E7%A8%80%E7%96%8F%E5%9B%BE%E5%92%8C%E7%A8%A0%E5%AF%86%E5%9B%BE%E7%9A%84%E9%82%BB%E6%8E%A5%E8%A1%A8%E4%B8%8E%E9%82%BB%E6%8E%A5%E7%9F%A9%E9%98%B5%E5%BD%A2%E5%BC%8F.bmp" alt="邻接矩阵OR邻接表" />
+<p class="caption">邻接矩阵OR邻接表</p>
 </div>
 <h2 id="图论应用场景"><span class="header-section-number">1.4</span> 图论应用场景</h2>
 <ul>
@@ -155,7 +156,7 @@
 <li>Network flow – Traffic analysis and optimization – Delivery optimization</li>
 <li>Optimization of tasks</li>
 </ul>
-<p>更多参考<a href="http://www.slideshare.net/purbon/graph-t-6162024?from=ss_embed">http://www.slideshare.net/purbon/graph-t-6162024?from=ss_embed</a></p>
+<p>更多参考<a href="http://www.slideshare.net/purbon/graph-t-6162024?from=ss_embed" class="uri">http://www.slideshare.net/purbon/graph-t-6162024?from=ss_embed</a></p>
 <h1 id="typical-products"><span class="header-section-number">2</span> Typical Products</h1>
 <h2 id="neo4j"><span class="header-section-number">2.1</span> <a href="http://neo4j.org/">Neo4J</a></h2>
 <p>Graph DB, AGPL3 license(<em>Sucks, I think</em>), java made, ACID, HA, M-S Caching Shards, Domain-specific, embeddable, REST, etc.</p>
@@ -166,22 +167,23 @@
 <li><a href="http://www.slideshare.net/peterneubauer/gdm-2011-neo4j-and-real-world-apps?from=ss_embed">Neo4j and real world apps</a></li>
 </ol>
 <h2 id="orientdb"><span class="header-section-number">2.2</span> <a href="http://www.orientechnologies.com/orient-db.htm">OrientDB</a></h2>
-<p><a href="http://www.orientechnologies.com/orient-graphdb.htm">http://www.orientechnologies.com/orient-graphdb.htm</a></p>
+<p><a href="http://www.orientechnologies.com/orient-graphdb.htm" class="uri">http://www.orientechnologies.com/orient-graphdb.htm</a></p>
 <p>Document-Graph DB, Apache2 License, Java Made, ACID Support, HA via replication, embeddable, REST&amp;SQL-like access.</p>
 <p>OrientDB实际上不是一个纯的GraphDB， 它是构建在DocumentDB的模型之上。 除了GraphDB， OrientDB还在基础的DocumentDB基础模型之上构建了KV, OO等类型的DB。</p>
 <p><strong>References Of OrientDB</strong>:</p>
 <ol style="list-style-type: decimal">
 <li><a href="http://www.slideshare.net/lvca/orientdb-nosqlday?from=ss_embed">OrientDB for real &amp; Web App development</a></li>
 <li><a href="http://www.snoopal.com/documents/xO8QatV3gPyTAkWNXO1X57/OrientDB-the-database-for-the-Web">OrientDB the database for the Web</a></li>
-<li><a href="http://code.google.com/p/orient/wiki/GraphDatabase">http://code.google.com/p/orient/wiki/GraphDatabase</a></li>
-<li><a href="http://code.google.com/p/orient/wiki/GraphEdTutorial">http://code.google.com/p/orient/wiki/GraphEdTutorial</a></li>
+<li><a href="http://code.google.com/p/orient/wiki/GraphDatabase" class="uri">http://code.google.com/p/orient/wiki/GraphDatabase</a></li>
+<li><a href="http://code.google.com/p/orient/wiki/GraphEdTutorial" class="uri">http://code.google.com/p/orient/wiki/GraphEdTutorial</a></li>
 </ol>
 <h2 id="flockdb"><span class="header-section-number">2.3</span> <a href="https://github.com/twitter/flockdb">FlockDB</a></h2>
 <p>twitter特定场景下的graphed产品， 并非力图实现所有的features，而只关注twitter自身或者网站常见的一些问题， 比如在twitter内部只用flockdb存储用户关系图以及二级索引等信息。</p>
 <p>flocked存储采用node+edge一起存储的策略，而且针对一个edge，会按照forward和backward分别存储2条， 这种策略内聚性不错，但是否耦合性太紧，不便于扩展那？！（<strong>更深层次的edge关联不好管理，尤其是引入分布式存储结构之后！</strong>）</p>
 <p>flockdb底层使用mysql作为存储， 使用twitter的gizzard分布式数据访问层来管理mysql分区集群， 在这之上， 才是实现的重头戏， 成为flapps服务集群， flapps是stateless的， 所以可以很容易的横向扩展，而m底层的mysql存储层在gizzard的帮助下也可以横向扩展，所以总的来说， flockdb的横向扩展能力是没啥问题的。</p>
 <div class="figure">
-<img src="https://github.com/twitter/flockdb/raw/master/doc/flockdb-layout.png" alt="https://github.com/twitter/flockdb/raw/master/doc/flockdb-layout.png" /><p class="caption">https://github.com/twitter/flockdb/raw/master/doc/flockdb-layout.png</p>
+<img src="https://github.com/twitter/flockdb/raw/master/doc/flockdb-layout.png" alt="https://github.com/twitter/flockdb/raw/master/doc/flockdb-layout.png" />
+<p class="caption">https://github.com/twitter/flockdb/raw/master/doc/flockdb-layout.png</p>
 </div>
 <p>从使用场景上来看， flockdb更适合浅层次的遍历和查询(少于2个层次？！)， 而深层次的遍历估计会因为同时牵扯index的查询和数据的查询而性能急剧下降。（个人猜测）从这个角度来看， flockdb还真是一个twitter特定的产品，跟一般意义上的graphdb有很大的差异，即traversal能力的强弱。</p>
 <p>flockdb使用thrift暴露远程服务，所以， 客户端可以使用多种语言实现，包括ruby， java， c/c++等， twitter内部应该用的是gizzmo（ruby客户端）。</p>
@@ -234,7 +236,7 @@
 </ol>
 <p><strong>References</strong></p>
 <ol style="list-style-type: decimal">
-<li><a href="http://www.sparsity-technologies.com/downloads/dex_brochure.pdf">http://www.sparsity-technologies.com/downloads/dex_brochure.pdf</a></li>
+<li><a href="http://www.sparsity-technologies.com/downloads/dex_brochure.pdf" class="uri">http://www.sparsity-technologies.com/downloads/dex_brochure.pdf</a></li>
 <li><a href="http://sparsity-technologies.com/blog/?p=97">DEX 3.0 features: Graph algorithms</a></li>
 <li><a href="http://www.slideshare.net/SparsityTechnologies/dex-introduction?from=ss_embed">Dex: Introduction</a></li>
 <li><a href="http://www.slideshare.net/SparsityTechnologies/dex-seminar-tutorial?from=ss_embed">DEX: Seminar Tutorial</a></li>
@@ -303,10 +305,10 @@
 <p>pending ### 不适合的场景 pending</p>
 <h1 id="references"><span class="header-section-number">5</span> References</h1>
 <ol style="list-style-type: decimal">
-<li><a href="http://en.wikipedia.org/wiki/Graph_database">http://en.wikipedia.org/wiki/Graph_database</a></li>
-<li><a href="http://en.wikipedia.org/wiki/Graph_(data_structure)">http://en.wikipedia.org/wiki/Graph_(data_structure)</a></li>
-<li><a href="http://en.wikipedia.org/wiki/Graph_theory">http://en.wikipedia.org/wiki/Graph_theory</a></li>
-<li><strong><a href="http://www.graph-database.org/">http://www.graph-database.org/</a></strong></li>
+<li><a href="http://en.wikipedia.org/wiki/Graph_database" class="uri">http://en.wikipedia.org/wiki/Graph_database</a></li>
+<li><a href="http://en.wikipedia.org/wiki/Graph_(data_structure)" class="uri">http://en.wikipedia.org/wiki/Graph_(data_structure)</a></li>
+<li><a href="http://en.wikipedia.org/wiki/Graph_theory" class="uri">http://en.wikipedia.org/wiki/Graph_theory</a></li>
+<li><strong><a href="http://www.graph-database.org/" class="uri">http://www.graph-database.org/</a></strong></li>
 <li><a href="http://blog.directededge.com/2009/02/27/on-building-a-stupidly-fast-graph-database/">On Building a Stupidly Fast Graph Database</a></li>
 <li><a href="http://blog.neo4j.org/2009/09/social-networks-in-database-using-graph.html">Social networks in the database: using a graph database</a></li>
 <li><a href="http://techportal.ibuildings.com/2009/09/07/graphs-in-the-database-sql-meets-social-networks/">Graphs in the database: SQL meets social networks</a> *****</li>

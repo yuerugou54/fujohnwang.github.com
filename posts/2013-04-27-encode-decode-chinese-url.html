@@ -2,9 +2,9 @@
 <html lang="zh">
 
   <head>
-	  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-	  <title>关于SEO友好的中文URL编码解码的调研</title>
-	  <meta name="author" content="FuqiangWang">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>关于SEO友好的中文URL编码解码的调研 - 一个架构士的思考与沉淀@afoo.me</title>
+    <meta name="author" content="FuqiangWang">
     <meta charset='utf-8'>
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -101,12 +101,10 @@
 encoded url = http%3A%2F%2Fafoo.me%2F%E6%8A%97%E9%9C%87%E8%AE%BE%E8%AE%A1.html
 decodedUrl=http://afoo.me/抗震设计.html
 </pre>
-
 初看起来没问题， 但是，编码结果实际上是错误的，正确的编码结果是：
 <pre>
 http://afoo.me/抗震设计.html => http://afoo.me/%E6%8A%97%E9%9C%87%E8%AE%BE%E8%AE%A1.html
 </pre>
-
 <p>java.net.URLEncoder并没有遵循rfc1738中的规定， 将URL中不同部分不该编码的字符也进行了编码。</p>
 <h1 id="正确做法"><span class="header-section-number">2</span> 正确做法</h1>
 <p>实际上，我们应该将URL分区域(part)进行编码和解码！</p>
@@ -116,14 +114,12 @@ http://afoo.me/抗震设计.html => http://afoo.me/%E6%8A%97%E9%9C%87%E8%AE%BE%E
 <pre>
 %E7%A9%BA%E6%A0%BC+plus%2B
 </pre>
-
 <p>但实际上， 空格和加号在path部分和在query部分的编码方式是不同的！</p>
 引用参考资料连接中的一句话：
 <blockquote>
 <p>For HTTP URLs, a space in a path fragment part has to be encoded to &quot;%20&quot; (not, absolutely not &quot;+&quot;), while the &quot;+&quot; character in the path fragment part can be left unencoded.</p>
 Now in the query part, spaces may be encoded to either &quot;+&quot; (for backwards compatibility: do not try to search for it in the URI standard) or &quot;%20&quot; while the &quot;+&quot; character (as a result of this ambiguity) has to be escaped to &quot;%2B&quot;.
 </blockquote>
-
 <p>根据java.net.URLEncoder的javadoc，这个类只能用来编码URL中query部分。</p>
 <p>本来想自己写了，google了下，发现可以用URI类， 小实验了一把：</p>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> uri = <span class="kw">new</span> URI(<span class="st">&quot;http&quot;</span>, <span class="st">&quot;afoo.me&quot;</span>, <span class="st">&quot;/抗震 +设计.html&quot;</span>, <span class="kw">null</span>, <span class="kw">null</span>)
@@ -139,7 +135,6 @@ http://afoo.me/抗震%20+设计.html
 /%E6%8A%97%E9%9C%87%20+%E8%AE%BE%E8%AE%A1.html
 /抗震 +设计.html
 </pre>
-
 <p>好吧，简单看来，对于我们只关注path部分能够编码解码正确的需求来讲，看来是可以用的。</p>
 <h1 id="references"><span class="header-section-number">3</span> References</h1>
 <ol style="list-style-type: decimal">
@@ -150,8 +145,8 @@ http://afoo.me/抗震%20+设计.html
 <ul>
 <li>A Java Web Filter for any compliant web application servers (such as Tomcat, JBoss, Jetty or Resin), which allows you to rewrite URLs before they get to your code. It is a very powerful tool just like Apache's mod_rewrite.</li>
 </ul></li>
-<li><a href="https://github.com/dispatch/reboot/issues/23">https://github.com/dispatch/reboot/issues/23</a></li>
-<li><a href="http://stackoverflow.com/questions/4571346/how-to-encode-url-to-avoid-special-characters-in-java">http://stackoverflow.com/questions/4571346/how-to-encode-url-to-avoid-special-characters-in-java</a></li>
+<li><a href="https://github.com/dispatch/reboot/issues/23" class="uri">https://github.com/dispatch/reboot/issues/23</a></li>
+<li><a href="http://stackoverflow.com/questions/4571346/how-to-encode-url-to-avoid-special-characters-in-java" class="uri">http://stackoverflow.com/questions/4571346/how-to-encode-url-to-avoid-special-characters-in-java</a></li>
 </ol>
                 
                 <!--百度分享按钮-->

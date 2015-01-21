@@ -2,9 +2,9 @@
 <html lang="zh">
 
   <head>
-	  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-	  <title>Publish SBT project to Maven repo(Nexus?)</title>
-	  <meta name="author" content="FuqiangWang">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>Publish SBT project to Maven repo(Nexus?) - 一个架构士的思考与沉淀@afoo.me</title>
+    <meta name="author" content="FuqiangWang">
     <meta charset='utf-8'>
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -87,7 +87,6 @@ publishTo := {
 
 credentials += Credentials("${realm}", "${host}", "${username}", "${password}")
 </pre>
-
 <p>对于Nexus来说，默认的realm是“Sonatype Nexus Repository Manager”，如果不确定的话， 可以通过命令<code>curl -X POST http://${port}:${port}/nexus/content/repositories/releases -v</code>来获得，或者直接不写username和password，待报错的时候获得相应信息，因为sbt使用WWW-AUthenticate这个header来确定basic auth的realm。</p>
 <p>host参数只写IP或者域名，不需要添加port！</p>
 <h1 id="本地测试"><span class="header-section-number">2</span> 本地测试</h1>
@@ -100,7 +99,6 @@ credentials += Credentials("${realm}", "${host}", "${username}", "${password}")
       credentials += Credentials(Path.userHome / ".ivy2" / ".credentials_busymachines_snapshots"),
       credentials += Credentials(Path.userHome / ".ivy2" / ".credentials_busymachines_releases")      
 </pre>
-
 <p>然后在相应的credentials文件中在存放相应的credential信息：</p>
 <pre>
 realm=Repository Archiva Managed snapshots Repository
@@ -108,7 +106,6 @@ host=archiva.busymachines.com
 user=myuser
 password=mypass
 </pre>
-
 <h1 id="其它参考"><span class="header-section-number">5</span> 其它参考</h1>
 <ol style="list-style-type: decimal">
 <li><a href="http://www.cakesolutions.net/teamblogs/publishing-artefacts-to-oss-sonatype-nexus-using-sbt-and-travis-ci-here...">Publishing artefacts to OSS Sonatype Nexus using SBT and Travis CI Here...</a></li>

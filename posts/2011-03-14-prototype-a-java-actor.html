@@ -2,9 +2,9 @@
 <html lang="zh">
 
   <head>
-	  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-	  <title>Prototyping An Actor In Java</title>
-	  <meta name="author" content="FuqiangWang">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>Prototyping An Actor In Java - 一个架构士的思考与沉淀@afoo.me</title>
+    <meta name="author" content="FuqiangWang">
     <meta charset='utf-8'>
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -97,7 +97,6 @@
     * We mainly focus on "fire-and-get" pattern, the "fire-and-forget" pattern is much easier to implement.
     * To simply the prototyping process, I will left any generic type design behind, hope u can polish it so that it can be your own tools.
 </pre>
-
 <p>Before start, we need to make something clear. In Java, the concurrency is modeled in Task-Based Concurrency, We run different logic which is modeled as tasks to run in parallel. But The actor is different, it belongs to the category of Data-Based Concurrency, to bridge the differences between this two concurrency models, I will declare an interface to confine the process logic into it:</p>
 <pre class="sourceCode java"><code class="sourceCode java"><span class="kw">public</span> <span class="kw">interface</span> ActorClosure&lt;T&gt; <span class="kw">extends</span> Runnable {
      <span class="dt">void</span> <span class="fu">sinkEvent</span>(T event);

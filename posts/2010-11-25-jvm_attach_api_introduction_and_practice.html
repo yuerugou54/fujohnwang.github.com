@@ -2,9 +2,9 @@
 <html lang="zh">
 
   <head>
-	  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-	  <title>JVM Attach API Introducation And Practice</title>
-	  <meta name="author" content="FuqiangWang">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>JVM Attach API Introducation And Practice - 一个架构士的思考与沉淀@afoo.me</title>
+    <meta name="author" content="FuqiangWang">
     <meta charset='utf-8'>
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -86,33 +86,27 @@
 <pre>
 Premain-Class: xx.xx.AgentDefinitionClass
 </pre>
-
 <p>If you want to implement a java agent which will be executed after the VM has started, add such similar entry:</p>
 <pre>
 Agent-Class: xx.xx.AgentDefinitionClass
 </pre>
-
 <p>That's all? No...</p>
 <p>The entry methods defined in java agent have no common “public static void main(String args[])” method sinature, there is a little difference. If your agent definition is only aimed for running before the main method of your application, you can just define a “premain” method as the execution entry:</p>
 <pre>
 public static void premain(String agentArgs, Instrumentation inst)
 </pre>
-   
 <p>you can leave out the second argument also:</p>
 <pre>
 public static void premain(String agentArgs)
 </pre>
-   
 <p>If your agent is aimed to be run after the target application has been started, you should add a “agentmain” method into your agent defintion class:</p>
 <pre>
 public static void agentmain(String agentArgs, Instrumentation inst)
 </pre>
-
 <p>or if you don't need the second argument:</p>
 <pre>
 public static void agentmain(String agentArgs)
 </pre>
-
 <p>At last, If you want your agent to be run in both timing, you of course can define both “premain” and “agentmain” together inside too.</p>
 <p>That's all for java agent, more or less, if you still don't get it, read the package description of java.lang.instrument for further information.(U do should read it to know what you can do in both “premain” and“agentmain” methods, or how they are loaded into the JVM, etc.)</p>
 <h1 id="attach-api-family-hierarchy"><span class="header-section-number">3</span> Attach API Family Hierarchy</h1>
@@ -128,7 +122,6 @@ WindowsAttachProvider  |   LinuxAttachProvider                         LinuxVirt
               MacosxAttachProvider                                                  MacosxVirtualMachine
 
 </pre>
-   
 <p>With This picture in mind, let's go further to find out what the two abstractions can do.</p>
 <p>“VirtualMachine” is the one class will interactive with when we use the AttachAPI, with “VirtualMachine” , we can attach our application to another target java application, and we can load agent into the target java application after attached to it. A conventional usage pattern looks like this:</p>
 <pre>
@@ -140,7 +133,6 @@ try {
     vm.detach();
 }
 </pre>
-   
 <p>Usually, we attach to the target application by the process id (here our application's pid is 18244), as the first line of the code states. If no exceptions are thrown after attaching, we can load our agent by“loadAgent(..)” method. At last, remember to detach from the target vm when things are done.</p>
 <p>So until now, if “VirtualMachine” can do everything for us in such scenarios, what “AttachProvider” does? In fact, when we call attach method of “VirtualMachine” , underneath “AttachProvider” will be the real worker. A prototype code may seem like:</p>
 <pre>
@@ -158,8 +150,7 @@ for (AttachProvider provider : providers) {
     }
 }
 
-</pre>   
-   
+</pre>
 <p>Just a lookup to find out which provider is qualified and return a corresponding “VirtualMachine” instance.</p>
 <p>Now, I think you should have know something about JVM Attach API, but all of the above is theory, let's get our hands dirty to write some code.</p>
 <h1 id="code-speaks---a-simple-usage-demo"><span class="header-section-number">4</span> Code Speaks - A Simple Usage Demo</h1>
@@ -175,8 +166,7 @@ for (Resource handle : resources) {
     monitor.setSomeAttrbutes(..);
     defaultMBeanServer.registerMBean(monitor, oname);
 }
-</pre>   
-
+</pre>
 <p>After the target application is started, these Mbeans will be there for us. To connect to MBean Server locally, we resort Attach API to get the local JMX address first, then operate the MBeans with standard JMX API, here is the code:</p>
 <pre>
 public class App
@@ -246,7 +236,6 @@ public class App
   }
 }
 </pre>
-   
 <p>we try “ConnectorAddressLink.importFrom” first to get the local JMX address , if failed, we turn to use Attach API. That's, we attach to the target application by pid, and then check agent property<code>com.sun.management.jmxremote.localConnectorAddress</code> to see if it exists, if not, load management agent from JDK's lib folder and then get agent property<code>com.sun.management.jmxremote.localConnectorAddress</code> again, If no errors, this time we will get the local JMX address of the target application. Whe local JMX address is fetched, we use standard JMX API to pull necessray information we want.</p>
 <p>That's the whole thing, read the code again and again to let you know this well if you cann't figure out what's going on here,^_^</p>
 <h1 id="further-thoughts-on-usage-scenarios"><span class="header-section-number">5</span> Further Thoughts On Usage Scenarios</h1>
@@ -258,10 +247,10 @@ public class App
 <p>I think you can find more useful usage scenarios for Attach API and for yourself. Good luck and have fun with Attach API.</p>
 <h1 id="参考文档"><span class="header-section-number">6</span> 参考文档</h1>
 <ol style="list-style-type: decimal">
-<li>The Attach API. <a href="http://blogs.sun.com/CoreJavaTechTips/entry/the_attach_api">http://blogs.sun.com/CoreJavaTechTips/entry/the_attach_api</a></li>
-<li>Javadoc of Attach API. <a href="http://download.oracle.com/javase/6/docs/jdk/api/attach/spec/index.html">http://download.oracle.com/javase/6/docs/jdk/api/attach/spec/index.html</a></li>
-<li>Using Mustang's Attach API. <a href="http://blogs.sun.com/sundararajan/entry/using_mustang_s_attach_api">http://blogs.sun.com/sundararajan/entry/using_mustang_s_attach_api</a></li>
-<li>Sun JVM Attach API. <a href="http://ayufox.javaeye.com/blog/655761">http://ayufox.javaeye.com/blog/655761</a></li>
+<li>The Attach API. <a href="http://blogs.sun.com/CoreJavaTechTips/entry/the_attach_api" class="uri">http://blogs.sun.com/CoreJavaTechTips/entry/the_attach_api</a></li>
+<li>Javadoc of Attach API. <a href="http://download.oracle.com/javase/6/docs/jdk/api/attach/spec/index.html" class="uri">http://download.oracle.com/javase/6/docs/jdk/api/attach/spec/index.html</a></li>
+<li>Using Mustang's Attach API. <a href="http://blogs.sun.com/sundararajan/entry/using_mustang_s_attach_api" class="uri">http://blogs.sun.com/sundararajan/entry/using_mustang_s_attach_api</a></li>
+<li>Sun JVM Attach API. <a href="http://ayufox.javaeye.com/blog/655761" class="uri">http://ayufox.javaeye.com/blog/655761</a></li>
 </ol>
 <hr />
 <p>[1] 除了JavaAgent， 还有JVMTI等相关技术</p>

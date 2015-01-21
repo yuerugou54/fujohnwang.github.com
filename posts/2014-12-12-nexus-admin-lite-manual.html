@@ -2,9 +2,9 @@
 <html lang="zh">
 
   <head>
-	  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-	  <title>Nexus Maven Repository Manager管理手册</title>
-	  <meta name="author" content="FuqiangWang">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>Nexus Maven Repository Manager管理手册 - 一个架构士的思考与沉淀@afoo.me</title>
+    <meta name="author" content="FuqiangWang">
     <meta charset='utf-8'>
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -120,7 +120,6 @@ wrapper.java.additional.4.stripquotes=TRUE
 wrapper.java.additional.5=-Xms16G
 wrapper.java.additional.6=-Xmx16G
 </pre>
-
 <blockquote>
 <p>NOTE</p>
 <p>我们使用wrapper.java.additional配置项来设置JVM的heap size， 切记把原来的<em>wrapper.java.initmemory</em>和<em>wrapper.java.maxmemory</em>注释掉！！！</p>
@@ -131,12 +130,10 @@ wrapper.java.additional.6=-Xmx16G
 <pre>
 wrapper.app.parameter.3=./conf/jetty-jmx.xml
 </pre>
-
 <p>第二步， 在${NEXUS_HOME}/conf/nexus.properties中添加:</p>
 <pre>
 jmx-host=192.168.3.190jmx-port=1099
 </pre>
-
 <p>监控端口开放之后，通过jvisualvm或者jconsole直接连接监控即可。</p>
 <h1 id="启动"><span class="header-section-number">2</span> 启动</h1>
 <p>The startup script <strong>nexus</strong> supports the common service commands start, stop, restart, status, console and dump.</p>
@@ -145,19 +142,15 @@ jmx-host=192.168.3.190jmx-port=1099
 <h2 id="访问maven-metadata.xml慢"><span class="header-section-number">3.1</span> 访问maven-metadata.xml慢</h2>
 <h3 id="原因描述"><span class="header-section-number">3.1.1</span> 原因描述</h3>
 <ol style="list-style-type: decimal">
-<li><a href="http://maven.40175.n5.nabble.com/Getting-maven-metadata-xml-for-a-group-very-slow-td5768650.html">http://maven.40175.n5.nabble.com/Getting-maven-metadata-xml-for-a-group-very-slow-td5768650.html</a></li>
-<li><a href="https://support.sonatype.com/entries/25884097-Troubleshooting-slow-maven-metadata-xml-download-speeds">https://support.sonatype.com/entries/25884097-Troubleshooting-slow-maven-metadata-xml-download-speeds</a></li>
+<li><a href="http://maven.40175.n5.nabble.com/Getting-maven-metadata-xml-for-a-group-very-slow-td5768650.html" class="uri">http://maven.40175.n5.nabble.com/Getting-maven-metadata-xml-for-a-group-very-slow-td5768650.html</a></li>
+<li><a href="https://support.sonatype.com/entries/25884097-Troubleshooting-slow-maven-metadata-xml-download-speeds" class="uri">https://support.sonatype.com/entries/25884097-Troubleshooting-slow-maven-metadata-xml-download-speeds</a></li>
 </ol>
 <h3 id="解决方案"><span class="header-section-number">3.1.2</span> 解决方案</h3>
-<p>通过设置routing可以缓解<a href="http://books.sonatype.com/nexus-book/reference/confignx-sect-managing-routes.html">http://books.sonatype.com/nexus-book/reference/confignx-sect-managing-routes.html</a></p>
+<p>通过设置routing可以缓解<a href="http://books.sonatype.com/nexus-book/reference/confignx-sect-managing-routes.html" class="uri">http://books.sonatype.com/nexus-book/reference/confignx-sect-managing-routes.html</a></p>
 <p>即指定哪些group或者artifact的元信息要指向哪个remote repo，这样nexus可以更快的找到这些元信息，而不用都扫一遍，都扫一遍的代价就是，遇到慢的remote repo，整体反应就是僵死。 默认nexus没有添加详细的routing信息。</p>
 <pre>
 .*/org/apache/maven/.*     -> Central
 </pre>
-
-
-
-
 <h1 id="httpcentral是怎么回事"><span class="header-section-number">4</span> http://central是怎么回事？</h1>
 <pre class="sourceCode xml"><code class="sourceCode xml"><span class="kw">&lt;settings&gt;</span>
   <span class="kw">&lt;mirrors&gt;</span>

@@ -2,9 +2,9 @@
 <html lang="zh">
 
   <head>
-	  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-	  <title>&quot;初探列存储数据库&quot;</title>
-	  <meta name="author" content="FuqiangWang">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>&quot;初探列存储数据库&quot; - 一个架构士的思考与沉淀@afoo.me</title>
+    <meta name="author" content="FuqiangWang">
     <meta charset='utf-8'>
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -84,7 +84,8 @@
 </ul>
 <p>当然， 无论无论是逻辑视角还是物理视角， 它们都是不冲突的， 比如我们可以将逻辑上的RDBMS和物理上的Row Based Storage DBMS相结合， 那就成为我们平常使用最多的一种数据库产品类型，比如Mysql， Oracle等产品都属于这个范畴， 而如果我们将逻辑上的RDBMS和物理上的Column Based Storage DBMS相结合， 那就成为我们今天要探索的一类数据库产品，即基于列存储的关系型数据库。</p>
 <div class="figure">
-<img src="../../../images/col_store/R_A_C.png" alt="RowBasedStore_ColumnBasedStore" /><p class="caption">RowBasedStore_ColumnBasedStore</p>
+<img src="../../../images/col_store/R_A_C.png" alt="RowBasedStore_ColumnBasedStore" />
+<p class="caption">RowBasedStore_ColumnBasedStore</p>
 </div>
 <p>上图是摘录自infobright的一份文档， 该图形象的描述了物理上两种不同的存储方式与关系型表之间的关系。可以看到，在通常的基于行存储的RDBMS中， 数据是按照行数据为基础单元进行存储的， 而在基于列存储的DBMS中， 数据则是按照一列一列的数据为单元进行存储， 那么，</p>
 <ol style="list-style-type: decimal">
@@ -98,7 +99,8 @@
 <h1 id="基于列存储的rdbms行为分析"><span class="header-section-number">2</span> - 基于列存储的RDBMS行为分析</h1>
 <p>在基于列存储的RDBMS中， 数据现在是按照一列一列为单元进行存储的，那么要进行一行一行的数据写入的时候， 可能就需要“跳跃式”的将每一行每一列的值写入到不同的区块，显然，对于磁盘结构来说，这中存储方式对数据的写入是不够友好的，性能指定好不到哪儿去（当然，是与基于行存储的DBMS相比）。但是，反过来看， 对数据写入的支持或许不好，那对数据的读取那？很简单就可以看出来，如果我每次都对一列，一列的数据感兴趣，我完全可以快速的读取每一列的所有值，那么， 这种特性对读取的列上所有的值进行统计分析就比较赞了。至于说“基于列存储的RDBMS则更适合OLAP类型的应用场景”， 我们不妨以数据仓库这种特定场景为基础进行一简单的“分析”（CRM之类也可以）。</p>
 <div class="figure">
-<img src="../../../images/col_store/DatawarehouseBigPicture.png" alt="RowBasedStore_ColumnBasedStore" /><p class="caption">RowBasedStore_ColumnBasedStore</p>
+<img src="../../../images/col_store/DatawarehouseBigPicture.png" alt="RowBasedStore_ColumnBasedStore" />
+<p class="caption">RowBasedStore_ColumnBasedStore</p>
 </div>
 <p>对于数据仓库来讲， 大部分情况下，它会从各个数据源汇总数据，然后进行分析和反馈， 所谓数据挖掘，商业智能（BI），决策支持之类，大都是数据仓库的职责范围吧！很显然， 要完成这些， 在数据仓库所从事的数据处理操作基本上就是数据的读取占大头儿啦，只有读取之后才能进行分析和统计嘛， 而统计大多也是针对同一指标的数据进行，哎呀， 想到没， 基于列的存储好像很适合哦！ Bingo，I Think u got it. 基于列存储的数据库很适合海量的数据查询和统计，也很显然比较适合DW这种部门和相应的应用来使用。</p>
 <blockquote>
@@ -138,7 +140,7 @@
 <li>Infobright
 <ul>
 <li>基于mysql存储的列数据库产品，有开源的社区版和商业的企业版两个版本</li>
-<li><a href="http://www.infobright.org/">http://www.infobright.org/</a> | <a href="http://www.infobright.com/">http://www.infobright.com/</a></li>
+<li><a href="http://www.infobright.org/" class="uri">http://www.infobright.org/</a> | <a href="http://www.infobright.com/" class="uri">http://www.infobright.com/</a></li>
 </ul></li>
 <li>C-Store
 <ul>
@@ -148,9 +150,9 @@
 </ol>
 <h1 id="参考资料"><span class="header-section-number">5</span> - 参考资料</h1>
 <ol style="list-style-type: decimal">
-<li><a href="http://en.wikipedia.org/wiki/Column-oriented_DBMS">http://en.wikipedia.org/wiki/Column-oriented_DBMS</a></li>
-<li><a href="http://en.wikipedia.org/wiki/B-tree">http://en.wikipedia.org/wiki/B-tree</a> for Row-Based DB, B+tree index适合差异性很大的一组值</li>
-<li><a href="http://en.wikipedia.org/wiki/Bitmap_index">http://en.wikipedia.org/wiki/Bitmap_index</a> for Col-Based DB, bitmap index适合差异性不大的一组值</li>
+<li><a href="http://en.wikipedia.org/wiki/Column-oriented_DBMS" class="uri">http://en.wikipedia.org/wiki/Column-oriented_DBMS</a></li>
+<li><a href="http://en.wikipedia.org/wiki/B-tree" class="uri">http://en.wikipedia.org/wiki/B-tree</a> for Row-Based DB, B+tree index适合差异性很大的一组值</li>
+<li><a href="http://en.wikipedia.org/wiki/Bitmap_index" class="uri">http://en.wikipedia.org/wiki/Bitmap_index</a> for Col-Based DB, bitmap index适合差异性不大的一组值</li>
 </ol>
                 
                 <!--百度分享按钮-->

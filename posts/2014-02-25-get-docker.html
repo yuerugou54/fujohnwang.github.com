@@ -2,9 +2,9 @@
 <html lang="zh">
 
   <head>
-	  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-	  <title>了解docker</title>
-	  <meta name="author" content="FuqiangWang">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>了解docker - 一个架构士的思考与沉淀@afoo.me</title>
+    <meta name="author" content="FuqiangWang">
     <meta charset='utf-8'>
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -120,11 +120,11 @@
 <h2 id="ubuntu13.10下安装说明"><span class="header-section-number">2.1</span> ubuntu13.10下安装说明</h2>
 <p>ubuntu : 13.10</p>
 <p>docker : 0.9.0</p>
-<p>官方安装说明文档见<a href="http://docs.docker.io/en/latest/installation/ubuntulinux/">http://docs.docker.io/en/latest/installation/ubuntulinux/</a></p>
+<p>官方安装说明文档见<a href="http://docs.docker.io/en/latest/installation/ubuntulinux/" class="uri">http://docs.docker.io/en/latest/installation/ubuntulinux/</a></p>
 <h3 id="local-dns-resovle的问题"><span class="header-section-number">2.1.1</span> local dns resovle的问题</h3>
 <p>参照官方安装说明文档中&quot;Docker and local DNS server warnings&quot;部分的说明， 将<code>/etc/default/docker</code>配置文件中<code>DOCKER_OPTS=&quot;-dns 8.8.8.8&quot;</code>配置注释打开，并重启docker即可(如果没有，则添加此行)。</p>
 <h3 id="error-client.go2315-error-getting-size-bad-file-descriptor问题"><span class="header-section-number">2.1.2</span> [error] client.go:2315 Error getting size: bad file descriptor问题</h3>
-<p>ubuntu13.10, 按照官方文档进行(<a href="http://docs.docker.io/en/latest/installation/ubuntulinux/">http://docs.docker.io/en/latest/installation/ubuntulinux/</a>)0.9安装之后，如果运行<code>sudo docker run -i -t ubuntu /bin/bash</code>, 会出现&quot;[error] client.go:2315 Error getting size: bad file descriptor&quot;这样的信息，只要使用<https://raw.github.com/dotcloud/docker/master/contrib/init/upstart/docker.conf>的配置文件替换<code>/etc/init/docker.conf</code>, 重新启动docker即可(<code>sudo service docker restart</code>).</p>
+<p>ubuntu13.10, 按照官方文档进行(<a href="http://docs.docker.io/en/latest/installation/ubuntulinux/" class="uri">http://docs.docker.io/en/latest/installation/ubuntulinux/</a>)0.9安装之后，如果运行<code>sudo docker run -i -t ubuntu /bin/bash</code>, 会出现&quot;[error] client.go:2315 Error getting size: bad file descriptor&quot;这样的信息，只要使用<a href="https://raw.github.com/dotcloud/docker/master/contrib/init/upstart/docker.conf" class="uri">https://raw.github.com/dotcloud/docker/master/contrib/init/upstart/docker.conf</a>的配置文件替换<code>/etc/init/docker.conf</code>, 重新启动docker即可(<code>sudo service docker restart</code>).</p>
 <h3 id="warning-no-swap-limit-support"><span class="header-section-number">2.1.3</span> WARNING: No swap limit support</h3>
 <p>安装完成后，通过<code>docker info</code>查看信息的时候，会报类似&quot;WARNING: No swap limit support&quot;的警告，参考官方文档中memory swap accounting部分：</p>
 <ol style="list-style-type: decimal">
@@ -137,13 +137,11 @@ $ sudo groupadd docker
 $ sudo gpasswd -a ${USER} docker  # 当前用户添加到docker group
 $ sudo reboot  # 切记，是reboot，而不是像官方文档那样restart， 否则，用户即使在第二步添加成功，但使用`groups`命令查看用户会显示还是没有被添加
 </pre>
-
 <h2 id="升级"><span class="header-section-number">2.3</span> 升级</h2>
 <pre>
 $ sudo apt-get update
 $ sudo apt-get install lxc-docker
 </pre>
-
 <hr />
 <h1 id="使用"><span class="header-section-number">3</span> 使用</h1>
 <h2 id="docker-daemon"><span class="header-section-number">3.1</span> docker daemon</h2>
@@ -169,7 +167,6 @@ echo hello world | nc 127.0.0.1 $PORT                                  // Connec
 
 echo "Daemon received: $(sudo docker logs $JOB)"                       // Verify that the network connection worked
 </pre>
-
 又或者:
 <pre>
 // Bind to a dynamically allocated port
@@ -179,8 +176,6 @@ $ docker run -p 127.0.0.1::8080 --name dyn-bound <image> <cmd>
 $ docker port dyn-bound 8080
 // 127.0.0.1:49160
 </pre>
-
-
 <h3 id="以deamon形式运行"><span class="header-section-number">3.2.3</span> 以deamon形式运行</h3>
 <p>使用-d参数：</p>
 <p><code>$&gt; docker run –d –p 127.0.0.1::8080 &lt;image&gt;</code></p>
@@ -194,8 +189,6 @@ CONTAINER_ID=$(sudo docker run -d ubuntu /bin/sh -c "while true; do echo hello w
 sudo docker logs $CONTAINER_ID                           // “docker logs” This will return the logs for a container
 sudo docker attach -sig-proxy=false $CONTAINER_ID        // “-sig-proxy=false” Do not forward signals to the container; allows us to exit the attachment using Control-C without stopping the container.
 </pre>
-
-
 <h1 id="private-registry"><span class="header-section-number">4</span> Private Registry</h1>
 <p>fast way to install/setup a private registry:</p>
 <pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">docker</span> run –p 5000 samalba/docker-registry</code></pre>
@@ -213,7 +206,6 @@ Note that images are just diffs from the parent image. The parent ID is stored w
 
 When you docker run an image. AUFS will 'merge' all layers into one usable file system.
 </pre>
-
 <p>默认路径是<code>/var/lib/docker</code>， 如果要定制， 则修改&quot;/etc/default/docker&quot;配置文件， 增加如下配置项内容: <code>DOCKER_OPTS=&quot;-g /path/to/docker/data&quot;</code>, 即&quot;use the -g option when starting the docker daemon to specify where you want /var/lib/docker to live&quot;</p>
 <h2 id="使用data-volumes"><span class="header-section-number">5.2</span> 使用Data Volumes</h2>
 <p>不想将应用数据存放和docker的各种元数据/系统数据混在一起？ “快使用Data Volume， 哼哼哈嘿”</p>
@@ -225,7 +217,6 @@ FROM          busybox
 VOLUME        ["/var/volume1", "/var/volume2"]
 CMD           ["/bin/true"]
 </pre>
-
 <p>我们可以使用“--volumes-from”来指定新的container可以使用之前container指定的data volumes: <code>$ docker run -t -i -rm -volumes-from DATA -name client1 ubuntu bash</code> （-rm - remove the container when it exits）</p>
 <p>只要有container还在引用data volumes，即使rm了相应的container， data volumes将持续保存直到没有任何一个container再引用它。</p>
 <h1 id="参考"><span class="header-section-number">6</span> 参考</h1>

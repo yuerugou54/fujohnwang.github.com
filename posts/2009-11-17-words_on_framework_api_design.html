@@ -2,9 +2,9 @@
 <html lang="zh">
 
   <head>
-	  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-	  <title>框架API设计相关的碎言</title>
-	  <meta name="author" content="FuqiangWang">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>框架API设计相关的碎言 - 一个架构士的思考与沉淀@afoo.me</title>
+    <meta name="author" content="FuqiangWang">
     <meta charset='utf-8'>
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -73,12 +73,10 @@
 <pre>
 public void actionMethod(ServletRequest requet, ServletResponse response);
 </pre>
- 
 <p>然后，在这的基础上，再提供细粒度并且有效提炼的API支持：</p>
 <pre>
 public void actionMethod(Type1 argument1, Type2 argument2, ...);
 </pre>
- 
 <p>当框架提供的细粒度的API支持无法满足用户需求的时候，用户依然可以转而求助于最初的粗粒度的API，而不是眼巴巴的干等。</p>
 <p>框架设计者提供细粒度的，精炼后的API当然是最初的目的，并且也是为了简化使用者的工作，但难免有考虑不周之处，所以，采取循序渐进， 留条后路的做法，很多情况下，对使用者来说，对框架设计来说，都会是受益的。使用者不用心急火燎的等待， 框架的设计和开发者也不用火烧屁股般紧急发布bugfix版本， good balance， isn't it？</p>
                 
