@@ -26,6 +26,7 @@
 * [中国量化投资学会](http://kan.weibo.com/kan/3515306971365898)
 * [Wireshark Display Filter Reference - Financial Information eXchange Protocol](http://www.wireshark.org/docs/dfref/f/fix.html)
 * [MBA智库百科](http://wiki.mbalib.com/wiki/%E9%A6%96%E9%A1%B5)
+* [中国人名银行统计数据](http://www.pbc.gov.cn/publish/diaochatongjisi/133/index.html)
 
 ### 美股投资
 1. [三维预测](http://www.3dfn.com/)
