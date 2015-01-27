@@ -1,5 +1,8 @@
 # 自己做操盘手 ;-)
 
+## 总体参考数据
+
+* [中国人名银行统计数据](http://www.pbc.gov.cn/publish/diaochatongjisi/133/index.html)
 
 ## Forex(外汇)
 
