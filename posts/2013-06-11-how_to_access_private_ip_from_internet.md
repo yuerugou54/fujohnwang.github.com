@@ -78,7 +78,10 @@ NAT配置好之后，就剩下一个问题了，即Public IP的获取。 我们�
 
 其实参考了很多资料，也咨询了些人(比如李晓波同学)， 但过去了这么长时间，才想起这个东西该落实到文字记录一下，所以，之前参考了哪些资料不可考了，这里就不罗列了，不过，要是想简单了解一下NAT和路由器，可以参考这篇[What Is A NAT Router?](http://networking.nitecruzr.net/2005/05/what-is-nat-router.html)
 
+# 相关项目
 
+1. [xip.io](http://xip.io/)
+2. [ngrok](https://ngrok.com/)
 
 
 
