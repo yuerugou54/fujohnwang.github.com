@@ -7,7 +7,7 @@
 
 `project/plugins.sbt`中添加：
 
-> addSbtPlugin("com.typesafe.sbt" % "sbt-native-packager" % "0.7.1")
+> addSbtPlugin("com.typesafe.sbt" % "sbt-native-packager" % "0.7.4")
 
 build.sbt文件中添加:
 <pre>

@@ -98,6 +98,10 @@
 <p>sbt-plugin的版本随play的发布改为最新的或者自己合适的版本即可。</p>
 <h1 id="明确指定项目使用的sbt版本"><span class="header-section-number">2</span> 明确指定项目使用的SBT版本</h1>
 <p>在<code>project/build.properties</code>中配置, 比如: <code>sbt.version=0.13.5</code></p>
+<blockquote>
+<p>注意</p>
+<p>sbt-plugin 2.3.7等都严格依赖sbt0.13.5，所以， 版本一定要对应上</p>
+</blockquote>
 <h1 id="在build文件中启用play插件"><span class="header-section-number">3</span> 在build文件中启用Play插件</h1>
 <p>在build.sbt中</p>
 <pre class="sourceCode scala"><code class="sourceCode scala">name := <span class="st">&quot;my-first-app&quot;</span>
@@ -126,6 +130,7 @@ resolvers += <span class="st">&quot;sbt-idea-repo&quot;</span> at <span class="s
 <p>而在build.sbt中：</p>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">import</span> com.<span class="fu">typesafe</span>.<span class="fu">sbt</span>.<span class="fu">SbtNativePackager</span>.<span class="fu">_</span>
 <span class="kw">import</span> NativePackagerKeys.<span class="fu">_</span>
+<span class="kw">import</span> com.<span class="fu">typesafe</span>.<span class="fu">sbt</span>.<span class="fu">packager</span>.<span class="fu">MappingsHelper</span>.<span class="fu">_</span>
 
 organization := <span class="st">&quot;com.github.fujohnwang&quot;</span>
 
@@ -157,7 +162,13 @@ libraryDependencies ++= Seq(
   <span class="st">&quot;redis.clients&quot;</span> % <span class="st">&quot;jedis&quot;</span> % <span class="st">&quot;2.5.2&quot;</span>
 )
 
-mappings in Universal += <span class="fu">file</span>(<span class="st">&quot;ReleaseNote.md&quot;</span>) -&gt; <span class="st">&quot;ReleaseNote.md&quot;</span></code></pre>
+mappings in Universal += <span class="fu">file</span>(<span class="st">&quot;ReleaseNote.md&quot;</span>) -&gt; <span class="st">&quot;ReleaseNote.md&quot;</span>
+
+mappings in Universal ++= <span class="fu">directory</span>(<span class="st">&quot;agents&quot;</span>)</code></pre>
+<blockquote>
+<p>注意</p>
+<p>play的sbt-plugin的依赖的sbt native packager是0.7.4!</p>
+</blockquote>
                 
                 <!--百度分享按钮-->
                 <div class="pull-left bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a><a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a></div>

@@ -20,6 +20,10 @@ sbt-plugin的版本随play的发布改为最新的或者自己合适的版本即
 
 在`project/build.properties`中配置, 比如: `sbt.version=0.13.5`
 
+> 注意
+> 
+> sbt-plugin 2.3.7等都严格依赖sbt0.13.5，所以， 版本一定要对应上
+
 # 在build文件中启用Play插件
 
 在build.sbt中
@@ -64,6 +68,7 @@ addSbtPlugin("de.johoop" % "sbt-testng-plugin" % "3.0.2")
 ~~~~~~~ {.scala}
 import com.typesafe.sbt.SbtNativePackager._
 import NativePackagerKeys._
+import com.typesafe.sbt.packager.MappingsHelper._
 
 organization := "com.github.fujohnwang"
 
@@ -96,7 +101,11 @@ libraryDependencies ++= Seq(
 )
 
 mappings in Universal += file("ReleaseNote.md") -> "ReleaseNote.md"
+
+mappings in Universal ++= directory("agents")
 ~~~~~~~
 
-
+> 注意
+> 
+> play的sbt-plugin的依赖的sbt native packager是0.7.4!
 
