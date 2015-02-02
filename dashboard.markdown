@@ -31,6 +31,12 @@
 
 [集思录](http://www.jisilu.cn/data/bond/)
 
+### 可转债(Convertible Bond)
+
+<http://data.eastmoney.com/kzz/default.html>
+
+<http://www.jisilu.cn/data/cbnew/#tlink_3>
+
 ### P2P
 
 满标交割
