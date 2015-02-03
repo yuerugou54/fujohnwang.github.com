@@ -33,9 +33,20 @@
 
 ### 可转债(Convertible Bond)
 
-<http://data.eastmoney.com/kzz/default.html>
+[集思录-可转债列表](http://www.jisilu.cn/data/cbnew/#tlink_3)
 
-<http://www.jisilu.cn/data/cbnew/#tlink_3>
+1. 我国目前交易的可转债面值为100元，交易单位为“手”，十张可转债为“一手”，1000元起就可交易。
+2. T+0回转交易
+3. 可转债价格不存在涨跌停板限制
+4. 收益([集思录债券/可转债收益率的计算方法](http://www.jisilu.cn/question/2192))
+	- 利息收益(债权属性)
+		- 持有到期
+	- 交易收益(期权收益)
+		- **卖掉债权**，获取差价收益
+		- **转股**， 获取股票上涨收益
+
+
+
 
 ### P2P
 
