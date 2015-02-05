@@ -5,77 +5,77 @@
     <link>http://afoo.me</link>
     <description>一个架构士的思考与实践点滴记录</description>
     <item>
-      <title>我为什么不喜欢子项目或者子模块的概念 - 一个架构士的思考与沉淀@afoo.me</title>
+      <title>我为什么不喜欢子项目或者子模块的概念</title>
       <link>http://afoo.me/posts/2015-02-04-why-sub-modules-or-sub-projects-sucks.html</link>
       <pubDate>Tue, 03 Feb 2015 16:00:00 GMT</pubDate>
       <guid>http://afoo.me/posts/2015-02-04-why-sub-modules-or-sub-projects-sucks.html</guid>
       <dc:date>2015-02-03T16:00:00Z</dc:date>
     </item>
     <item>
-      <title>yEd把我的配置都放哪儿去了？ - 一个架构士的思考与沉淀@afoo.me</title>
+      <title>yEd把我的配置都放哪儿去了？</title>
       <link>http://afoo.me/posts/2015-01-14-where-yed-store-ur-preference-data.html</link>
       <pubDate>Tue, 13 Jan 2015 16:00:00 GMT</pubDate>
       <guid>http://afoo.me/posts/2015-01-14-where-yed-store-ur-preference-data.html</guid>
       <dc:date>2015-01-13T16:00:00Z</dc:date>
     </item>
     <item>
-      <title>了解LaunchDaemons - 一个架构士的思考与沉淀@afoo.me</title>
+      <title>了解LaunchDaemons</title>
       <link>http://afoo.me/posts/2014-12-12-understanding-launch-daemons-of-macosx.html</link>
       <pubDate>Thu, 11 Dec 2014 16:00:00 GMT</pubDate>
       <guid>http://afoo.me/posts/2014-12-12-understanding-launch-daemons-of-macosx.html</guid>
       <dc:date>2014-12-11T16:00:00Z</dc:date>
     </item>
     <item>
-      <title>Nexus Maven Repository Manager管理手册 - 一个架构士的思考与沉淀@afoo.me</title>
+      <title>Nexus Maven Repository Manager管理手册</title>
       <link>http://afoo.me/posts/2014-12-12-nexus-admin-lite-manual.html</link>
       <pubDate>Thu, 11 Dec 2014 16:00:00 GMT</pubDate>
       <guid>http://afoo.me/posts/2014-12-12-nexus-admin-lite-manual.html</guid>
       <dc:date>2014-12-11T16:00:00Z</dc:date>
     </item>
     <item>
-      <title>什么是保理业务？ - 一个架构士的思考与沉淀@afoo.me</title>
+      <title>什么是保理业务？</title>
       <link>http://afoo.me/posts/2014-11-17-whats-factoring-business.html</link>
       <pubDate>Sun, 16 Nov 2014 16:00:00 GMT</pubDate>
       <guid>http://afoo.me/posts/2014-11-17-whats-factoring-business.html</guid>
       <dc:date>2014-11-16T16:00:00Z</dc:date>
     </item>
     <item>
-      <title>投资人怎么把一家公司研究透[摘要] - 一个架构士的思考与沉淀@afoo.me</title>
+      <title>投资人怎么把一家公司研究透[摘要]</title>
       <link>http://afoo.me/posts/2014-11-12-how-to-research-a-enterprise-before-investing.html</link>
       <pubDate>Tue, 11 Nov 2014 16:00:00 GMT</pubDate>
       <guid>http://afoo.me/posts/2014-11-12-how-to-research-a-enterprise-before-investing.html</guid>
       <dc:date>2014-11-11T16:00:00Z</dc:date>
     </item>
     <item>
-      <title>SBT免翻墙手册 - 一个架构士的思考与沉淀@afoo.me</title>
+      <title>SBT免翻墙手册</title>
       <link>http://afoo.me/posts/2014-11-05-how-make-sbt-jump-over-GFW.html</link>
       <pubDate>Tue, 04 Nov 2014 16:00:00 GMT</pubDate>
       <guid>http://afoo.me/posts/2014-11-05-how-make-sbt-jump-over-GFW.html</guid>
       <dc:date>2014-11-04T16:00:00Z</dc:date>
     </item>
     <item>
-      <title>创建纯基于SBT的Play工程 - 一个架构士的思考与沉淀@afoo.me</title>
+      <title>创建纯基于SBT的Play工程</title>
       <link>http://afoo.me/posts/2014-10-28-create-play-project-with-bare-sbt.html</link>
       <pubDate>Mon, 27 Oct 2014 16:00:00 GMT</pubDate>
       <guid>http://afoo.me/posts/2014-10-28-create-play-project-with-bare-sbt.html</guid>
       <dc:date>2014-10-27T16:00:00Z</dc:date>
     </item>
     <item>
-      <title>《少谈些主义， 多做些需求》摘录 - 一个架构士的思考与沉淀@afoo.me</title>
+      <title>《少谈些主义， 多做些需求》摘录</title>
       <link>http://afoo.me/posts/2014-10-27-digest-of-a-PD-s-talk.html</link>
       <pubDate>Sun, 26 Oct 2014 16:00:00 GMT</pubDate>
       <guid>http://afoo.me/posts/2014-10-27-digest-of-a-PD-s-talk.html</guid>
       <dc:date>2014-10-26T16:00:00Z</dc:date>
     </item>
     <item>
-      <title>How To Shutdown Java Service Gracefully [Tutorial] - 一个架构士的思考与沉淀@afoo.me</title>
+      <title>How To Shutdown Java Service Gracefully [Tutorial]</title>
       <link>http://afoo.me/posts/2014-10-24-how-to-shutdown-java-service-gracefully.html</link>
       <pubDate>Thu, 23 Oct 2014 16:00:00 GMT</pubDate>
       <guid>http://afoo.me/posts/2014-10-24-how-to-shutdown-java-service-gracefully.html</guid>
       <dc:date>2014-10-23T16:00:00Z</dc:date>
     </item>
     <item>
-      <title>让Lombok跟Maven和IntelliJ完美的工作在一起 - 一个架构士的思考与沉淀@afoo.me</title>
+      <title>让Lombok跟Maven和IntelliJ完美的工作在一起</title>
       <link>http://afoo.me/posts/2014-10-22-lombok-maven-and-intellij.html</link>
       <pubDate>Tue, 21 Oct 2014 16:00:00 GMT</pubDate>
       <guid>http://afoo.me/posts/2014-10-22-lombok-maven-and-intellij.html</guid>
