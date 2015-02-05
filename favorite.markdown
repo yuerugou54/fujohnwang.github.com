@@ -221,6 +221,7 @@ with MapReduce](http://lintool.github.com/MapReduceAlgorithms/index.html) ^^^
 5. [http://tool.17mon.cn/](http://tool.17mon.cn/)
 6. [http://www.springfrog.com/converter/ascii-text-art/](http://www.springfrog.com/converter/ascii-text-art/)
 7. [JS Nice](http://www.jsnice.org/) - 在线格式化js代码的工具
+8. [favicon.ico Generator](www.favicon.cc/)
 
 
 ## Mac OS X
