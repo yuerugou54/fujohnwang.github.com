@@ -12,8 +12,6 @@ URL encoding replaces unsafe ASCII characters with a "%" followed by two hexadec
 URLs cannot contain spaces. URL encoding normally replaces a space with a plus (+) sign or with %20.
 </pre>
 
-<tr>
-  <td class="frame" align="right">
   <table class="data">
    <tbody><tr>
     <th class="data">
@@ -212,5 +210,3 @@ URLs cannot contain spaces. URL encoding normally replaces a space with a plus (
     </td>
    </tr>
   </tbody></table>
-    </td>
-   </tr>
