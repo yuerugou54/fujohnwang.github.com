@@ -1,5 +1,5 @@
 % 初创公司checklist [Zero 2 One摘录]
-% [陨石 - yunshi@wacai.com](mailto:yunshi@wacai.com)
+% 王福强
 % 2015.02.21
 
 1. 工程问题

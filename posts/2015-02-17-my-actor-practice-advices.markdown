@@ -1,5 +1,5 @@
 % Practice Advices On Design and Impl. with Actor Model
-% [陨石 - yunshi@wacai.com](mailto:yunshi@wacai.com)
+% 王福强
 % 2015.02.17
 
 # Understand The Single-Direction-Message-Flow Essential Of Actor Model
