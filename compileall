@@ -4,3 +4,24 @@ for f in `ls posts/*.m*`
 do
 	./compile $f
 done
+
+for f in `ls columns/**/*.m*` 
+do
+	./compile $f
+done
+
+for f in `ls digests/*.m*` 
+do
+	./compile $f
+done
+
+
+for f in `ls shortcuts/*.m*` 
+do
+	./compile $f
+done
+
+for f in `ls snippets/**/*.m*` 
+do
+	./compile $f
+done
