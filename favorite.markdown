@@ -232,6 +232,7 @@ with MapReduce](http://lintool.github.com/MapReduceAlgorithms/index.html) ^^^
 ## 安全
 1. [Harden Your Web App - A developer oriented repository of attacks and defenses.](http://webapp-hardening.heroku.com/)
 2. [Fofacli 全网漏洞扫描器](http://fofa.so/fofacli)
+3. [社工库](http://www.weigongkai.com/)
 
 ## Shell
 1. [http://explainshell.com/](http://explainshell.com/)
