@@ -6,5 +6,6 @@
 ./compile slogan.md
 ./compile whoami.md
 ./compile shortcuts.md
+./compile interlinks.md
 
 sbt run
