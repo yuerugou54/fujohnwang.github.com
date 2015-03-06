@@ -5,7 +5,7 @@
 ./compile free-programming-books.md
 ./compile slogan.md
 ./compile whoami.md
-./compile shortcuts.md
+./compile references.md
 ./compile interlinks.md
 
 sbt run
