@@ -3,13 +3,32 @@
 
   <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-    <title>Tweets第一卷 - 一个架构士的思考与沉淀@afoo.me</title>
+    <title>我的Git参考手册 - 一个架构士的思考与沉淀@afoo.me</title>
     <meta name="author" content="FuqiangWang">
     <meta charset='utf-8'>
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link rel="icon" href="/favicon.ico">
-                    
+            <style type="text/css">
+    table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+      margin: 0; padding: 0; vertical-align: baseline; border: none; }
+    table.sourceCode { width: 100%; line-height: 100%; }
+    td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+    td.sourceCode { padding-left: 5px; }
+    code > span.kw { color: #007020; font-weight: bold; }
+    code > span.dt { color: #902000; }
+    code > span.dv { color: #40a070; }
+    code > span.bn { color: #40a070; }
+    code > span.fl { color: #40a070; }
+    code > span.ch { color: #4070a0; }
+    code > span.st { color: #4070a0; }
+    code > span.co { color: #60a0b0; font-style: italic; }
+    code > span.ot { color: #007020; }
+    code > span.al { color: #ff0000; font-weight: bold; }
+    code > span.fu { color: #06287e; }
+    code > span.er { color: #ff0000; font-weight: bold; }
+    </style>
+                
     <link href='/font/Syncopate/stylesheet.css' rel='stylesheet' type='text/css'>
     <link href='/font/News_Cycle/stylesheet.css' rel='stylesheet' type='text/css'>
 
@@ -53,9 +72,9 @@
                 <div class="row">
                                 <div id="header">
                 <p class="lead">
-                <h1 class="title">Tweets第一卷&nbsp;&nbsp;
+                <h1 class="title">我的Git参考手册&nbsp;&nbsp;
                 <small>
-                                    王福强
+                                    FuqiangWang
                                 </small>
                 </h1>
                 </p>
@@ -64,15 +83,24 @@
 
                 <hr>
 
-                                <ul>
-<li><p>积善之家，必有余庆； 积不善之家， 必有余殃。</p></li>
-<li><p>造命在天， 立命在人！</p></li>
-<li><p>富贵不还乡，如锦衣夜行。</p></li>
-<li><p>最好的风水在<strong>人心(你自己的心)</strong>！</p></li>
-<li><p>声望和拥戴， 总是与妖魔化和污名化相伴！ （阳光下枝叶越茂盛， 黑暗中根扎的也越深！）</p></li>
-<li><p>“<strong>只有到了惨淡的年景， 你才知道谁是你真正的朋友！</strong>”</p></li>
-<li><p>“别把欲望当理想，莫把世故当成熟。别把麻木当深沉，莫把幼稚当激情。别把油滑当智慧，莫把诱惑当机会。”</p></li>
-</ul>
+                                <div id="TOC">
+                <ul>
+                <li><a href="#舍弃所有本地变更-回滚到最后提交状态"><span class="toc-section-number">1</span> 舍弃所有本地变更， 回滚到最后提交状态</a></li>
+                <li><a href="#打包指定版本的文件"><span class="toc-section-number">2</span> 打包指定版本的文件</a></li>
+                <li><a href="#remote-branch"><span class="toc-section-number">3</span> Remote Branch</a></li>
+                </ul>
+                </div>
+                                <h1 id="舍弃所有本地变更-回滚到最后提交状态"><span class="header-section-number">1</span> 舍弃所有本地变更， 回滚到最后提交状态</h1>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">git</span> commit -a -m <span class="st">&quot;Saving my work, just in case&quot;</span>
+<span class="kw">git</span> branch my-saved-work
+
+<span class="kw">git</span> fetch origin
+<span class="kw">git</span> reset --hard origin/master</code></pre>
+<h1 id="打包指定版本的文件"><span class="header-section-number">2</span> 打包指定版本的文件</h1>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">git</span> archive -o docs.zip v2.2.0 <span class="st">&#39;Documentation/*.html&#39;</span></code></pre>
+<p>git版本2.2.0</p>
+<h1 id="remote-branch"><span class="header-section-number">3</span> Remote Branch</h1>
+<p><a href="http://git-scm.com/book/en/v2/Git-Branching-Remote-Branches" class="uri">http://git-scm.com/book/en/v2/Git-Branching-Remote-Branches</a></p>
                 
                 <!--百度分享按钮-->
                 <div class="pull-left bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a><a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a></div>

@@ -3,13 +3,12 @@
 
   <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-    <title>URL Encoding And Escaping - 一个架构士的思考与沉淀@afoo.me</title>
+    <title>SBT释疑 - 一个架构士的思考与沉淀@afoo.me</title>
     <meta name="author" content="FuqiangWang">
     <meta charset='utf-8'>
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link rel="icon" href="/favicon.ico">
-        <meta name="date" content="2015-02-04" />
                     
     <link href='/font/Syncopate/stylesheet.css' rel='stylesheet' type='text/css'>
     <link href='/font/News_Cycle/stylesheet.css' rel='stylesheet' type='text/css'>
@@ -40,7 +39,7 @@
               <li><a href="/favorite.html" class="text-center"><i class="icon-star-empty"></i> 我的收藏</a></li>
               <li><a href="/dashboard.html" class="text-center"><i class="icon-fullscreen"></i> 金融看板</a></li>
               <li><a href="/columns/columns-index.html" class="text-center"><i class="icon-folder-close-alt"></i> 专栏</a></li>
-              <li><a href="/shortcuts.html" class="text-center"><i class="icon-folder-close-alt"></i> 快捷参考</a></li>
+              <li><a href="/references.html" class="text-center"><i class="icon-folder-close-alt"></i> 快捷参考</a></li>
               <li><a href="/whoami.html" class="text-center"><i class="icon-user-md"></i> 我是谁</a></li>
               <li><a href="/interlinks.html" class="text-center"><i class="icon-user-md"></i> 友情链接</a></li>
               <li><a href="/feeds.xml" class="text-center"><i class="icon-folder-close-alt"></i> RSS</a></li>
@@ -54,14 +53,9 @@
                 <div class="row">
                                 <div id="header">
                 <p class="lead">
-                <h1 class="title">URL Encoding And Escaping&nbsp;&nbsp;
+                <h1 class="title">SBT释疑&nbsp;&nbsp;
                 <small>
-                                    <script type="text/javascript">
-                    <!--
-                    h='&#x77;&#x61;&#x63;&#x61;&#x69;&#46;&#x63;&#x6f;&#x6d;';a='&#64;';n='&#x79;&#x75;&#110;&#x73;&#104;&#x69;';e=n+a+h;
-                    document.write('<a h'+'ref'+'="ma'+'ilto'+':'+e+'" clas'+'s="em' + 'ail">'+'陨石 - yunshi@wacai.com'+'<\/'+'a'+'>');
-                    // -->
-                    </script><noscript>&#38504;&#x77f3;&#32;&#x2d;&#32;&#x79;&#x75;&#110;&#x73;&#104;&#x69;&#64;&#x77;&#x61;&#x63;&#x61;&#x69;&#46;&#x63;&#x6f;&#x6d;&#32;&#40;&#x79;&#x75;&#110;&#x73;&#104;&#x69;&#32;&#x61;&#116;&#32;&#x77;&#x61;&#x63;&#x61;&#x69;&#32;&#100;&#x6f;&#116;&#32;&#x63;&#x6f;&#x6d;&#x29;</noscript>
+                                    王福强
                                 </small>
                 </h1>
                 </p>
@@ -70,23 +64,18 @@
 
                 <hr>
 
-                                <pre>
-URLs can only be sent over the Internet using the ASCII character-set.
-
-Since URLs often contain characters outside the ASCII set, the URL has to be converted into a valid ASCII format.
-
-URL encoding replaces unsafe ASCII characters with a "%" followed by two hexadecimal digits.
-
-URLs cannot contain spaces. URL encoding normally replaces a space with a plus (+) sign or with %20.
-</pre>
-<div class="figure">
-<img src="images/uri-escape-characters-1.png" />
-
-</div>
-<div class="figure">
-<img src="images/uri-escape-characters-1.png" />
-
-</div>
+                                <div id="TOC">
+                <ul>
+                <li><a href="#project子目录与当前项目目录的关系"><span class="toc-section-number">1</span> project子目录与当前项目目录的关系</a></li>
+                </ul>
+                </div>
+                                <h1 id="project子目录与当前项目目录的关系"><span class="header-section-number">1</span> project子目录与当前项目目录的关系</h1>
+<blockquote>
+<p>In sbt, any .scala file in the project/ directory can be used as a library in your build.</p>
+</blockquote>
+<p>可以简单认为当前项目目录下的project目录是一个lib目录，这个project目录下任何*.scala文件定义的东西，都是当前项目的build.sbt中可以依赖使用的。</p>
+<p>即build.sbt ---dependsOn---&gt; project/*.scala，所以， 很多build.sbt中如果定义之后感觉混乱的东西，可以抽取到这些文件中定义然后引用。</p>
+<p>project目录内可以再嵌套project， 相当于俄罗斯娃娃那样， 每一个都是合法的sbt项目。</p>
                 
                 <!--百度分享按钮-->
                 <div class="pull-left bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a><a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a></div>

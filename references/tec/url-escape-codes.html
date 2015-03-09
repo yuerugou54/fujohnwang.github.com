@@ -3,12 +3,13 @@
 
   <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-    <title>JMX MBeans Via Jolokia Over HTTP - 一个架构士的思考与沉淀@afoo.me</title>
+    <title>URL Encoding And Escaping - 一个架构士的思考与沉淀@afoo.me</title>
     <meta name="author" content="FuqiangWang">
     <meta charset='utf-8'>
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link rel="icon" href="/favicon.ico">
+        <meta name="date" content="2015-02-04" />
                     
     <link href='/font/Syncopate/stylesheet.css' rel='stylesheet' type='text/css'>
     <link href='/font/News_Cycle/stylesheet.css' rel='stylesheet' type='text/css'>
@@ -39,7 +40,7 @@
               <li><a href="/favorite.html" class="text-center"><i class="icon-star-empty"></i> 我的收藏</a></li>
               <li><a href="/dashboard.html" class="text-center"><i class="icon-fullscreen"></i> 金融看板</a></li>
               <li><a href="/columns/columns-index.html" class="text-center"><i class="icon-folder-close-alt"></i> 专栏</a></li>
-              <li><a href="/shortcuts.html" class="text-center"><i class="icon-folder-close-alt"></i> 快捷参考</a></li>
+              <li><a href="/references.html" class="text-center"><i class="icon-folder-close-alt"></i> 快捷参考</a></li>
               <li><a href="/whoami.html" class="text-center"><i class="icon-user-md"></i> 我是谁</a></li>
               <li><a href="/interlinks.html" class="text-center"><i class="icon-user-md"></i> 友情链接</a></li>
               <li><a href="/feeds.xml" class="text-center"><i class="icon-folder-close-alt"></i> RSS</a></li>
@@ -53,9 +54,14 @@
                 <div class="row">
                                 <div id="header">
                 <p class="lead">
-                <h1 class="title">JMX MBeans Via Jolokia Over HTTP&nbsp;&nbsp;
+                <h1 class="title">URL Encoding And Escaping&nbsp;&nbsp;
                 <small>
-                                    FuqiangWang
+                                    <script type="text/javascript">
+                    <!--
+                    h='&#x77;&#x61;&#x63;&#x61;&#x69;&#46;&#x63;&#x6f;&#x6d;';a='&#64;';n='&#x79;&#x75;&#110;&#x73;&#104;&#x69;';e=n+a+h;
+                    document.write('<a h'+'ref'+'="ma'+'ilto'+':'+e+'" clas'+'s="em' + 'ail">'+'陨石 - yunshi@wacai.com'+'<\/'+'a'+'>');
+                    // -->
+                    </script><noscript>&#38504;&#x77f3;&#32;&#x2d;&#32;&#x79;&#x75;&#110;&#x73;&#104;&#x69;&#64;&#x77;&#x61;&#x63;&#x61;&#x69;&#46;&#x63;&#x6f;&#x6d;&#32;&#40;&#x79;&#x75;&#110;&#x73;&#104;&#x69;&#32;&#x61;&#116;&#32;&#x77;&#x61;&#x63;&#x61;&#x69;&#32;&#100;&#x6f;&#116;&#32;&#x63;&#x6f;&#x6d;&#x29;</noscript>
                                 </small>
                 </h1>
                 </p>
@@ -64,15 +70,23 @@
 
                 <hr>
 
-                                <hr />
-<p>http://localhost:8778/jolokia/exec/com.sun.management:type=DiagnosticCommand/vmCommandLine</p>
-<p>http://localhost:8778/jolokia/exec/com.sun.management:type=DiagnosticCommand/vmSystemProperties</p>
-<p>http://localhost:8778/jolokia/read/java.lang:type=Memory/HeapMemoryUsage</p>
-<p>http://localhost:8778/jolokia/read/java.lang:type=OperatingSystem/*</p>
-<p>http://localhost:8778/jolokia/read/java.lang:type=Runtime/*</p>
-<p>http://localhost:8778/jolokia/read/java.lang:type=GarbageCollector,name=PS%20MarkSweep/* --- (Old GC)</p>
-<p>http://localhost:8778/jolokia/read/java.lang:type=GarbageCollector,name=PS%20Scavenge/* --- (Young GC)</p>
-<hr />
+                                <pre>
+URLs can only be sent over the Internet using the ASCII character-set.
+
+Since URLs often contain characters outside the ASCII set, the URL has to be converted into a valid ASCII format.
+
+URL encoding replaces unsafe ASCII characters with a "%" followed by two hexadecimal digits.
+
+URLs cannot contain spaces. URL encoding normally replaces a space with a plus (+) sign or with %20.
+</pre>
+<div class="figure">
+<img src="images/uri-escape-characters-1.png" />
+
+</div>
+<div class="figure">
+<img src="images/uri-escape-characters-1.png" />
+
+</div>
                 
                 <!--百度分享按钮-->
                 <div class="pull-left bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a><a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a></div>
