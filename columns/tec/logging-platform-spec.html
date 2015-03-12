@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>构建挖财自己的日志采集和分析体系 - 一个架构士的思考与沉淀@afoo.me</title>
+    <meta name="author" content="FuqiangWang">
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="icon" href="/favicon.ico">
+        <meta name="date" content="2015-03-12" />
+                    
+    <link href='/font/Syncopate/stylesheet.css' rel='stylesheet' type='text/css'>
+    <link href='/font/News_Cycle/stylesheet.css' rel='stylesheet' type='text/css'>
+
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/bootstrap-theme.min.css" rel="stylesheet">
+    <link href="/css/afoo.me.css" rel="stylesheet">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-3 sidebar">
+            <a href="/">
+				<div align="center"><img src="/images/wfq0.png"/></div>
+                <h2 class="text-center">扶墙老师</h2>
+            </a>
+            <p class="text-center lead slogan"><a href="/slogan.html">lollapalooza &amp; positioning</a></p>
+			<p class="text-center lead slogan">瞎子摸象的践行者</p>
+            <ul class="nav nav-pills nav-stacked">
+              <li><a href="/favorite.html" class="text-center"><i class="icon-star-empty"></i> 我的收藏</a></li>
+              <li><a href="/dashboard.html" class="text-center"><i class="icon-fullscreen"></i> 金融看板</a></li>
+              <li><a href="/columns/columns-index.html" class="text-center"><i class="icon-folder-close-alt"></i> 专栏</a></li>
+              <li><a href="/references.html" class="text-center"><i class="icon-folder-close-alt"></i> 快捷参考</a></li>
+              <li><a href="/whoami.html" class="text-center"><i class="icon-user-md"></i> 我是谁</a></li>
+              <li><a href="/interlinks.html" class="text-center"><i class="icon-user-md"></i> 友情链接</a></li>
+              <li><a href="/feeds.xml" class="text-center"><i class="icon-folder-close-alt"></i> RSS</a></li>
+            </ul>
+
+        </div>
+        <div class="col-md-9 col-md-offset-3 main">
+            <div class="row">
+              <div class="container-fluid">
+                
+                <div class="row">
+                                <div id="header">
+                <p class="lead">
+                <h1 class="title">构建挖财自己的日志采集和分析体系&nbsp;&nbsp;
+                <small>
+                                    <script type="text/javascript">
+                    <!--
+                    h='&#x77;&#x61;&#x63;&#x61;&#x69;&#46;&#x63;&#x6f;&#x6d;';a='&#64;';n='&#x79;&#x75;&#110;&#x73;&#104;&#x69;';e=n+a+h;
+                    document.write('<a h'+'ref'+'="ma'+'ilto'+':'+e+'" clas'+'s="em' + 'ail">'+'陨石 - yunshi@wacai.com'+'<\/'+'a'+'>');
+                    // -->
+                    </script><noscript>&#38504;&#x77f3;&#32;&#x2d;&#32;&#x79;&#x75;&#110;&#x73;&#104;&#x69;&#64;&#x77;&#x61;&#x63;&#x61;&#x69;&#46;&#x63;&#x6f;&#x6d;&#32;&#40;&#x79;&#x75;&#110;&#x73;&#104;&#x69;&#32;&#x61;&#116;&#32;&#x77;&#x61;&#x63;&#x61;&#x69;&#32;&#100;&#x6f;&#116;&#32;&#x63;&#x6f;&#x6d;&#x29;</noscript>
+                                </small>
+                </h1>
+                </p>
+                </div>
+                                <div>
+
+                <hr>
+
+                                <div id="TOC">
+                <ul>
+                <li><a href="#为什么要做日志采集"><span class="toc-section-number">1</span> 为什么要做日志采集？</a></li>
+                <li><a href="#挖财自己的日志采集和分析体系应该怎么建"><span class="toc-section-number">2</span> 挖财自己的日志采集和分析体系应该怎么建？</a><ul>
+                <li><a href="#日志的采集"><span class="toc-section-number">2.1</span> 日志的采集</a></li>
+                <li><a href="#日志的汇总与过滤"><span class="toc-section-number">2.2</span> 日志的汇总与过滤</a></li>
+                <li><a href="#日志的存储"><span class="toc-section-number">2.3</span> 日志的存储</a></li>
+                <li><a href="#日志的分析与查询"><span class="toc-section-number">2.4</span> 日志的分析与查询</a></li>
+                </ul></li>
+                <li><a href="#需要解决哪些技术问题"><span class="toc-section-number">3</span> 需要解决哪些技术问题？</a><ul>
+                <li><a href="#logstash与kafka的对接"><span class="toc-section-number">3.1</span> logstash与kafka的对接</a></li>
+                <li><a href="#kafka到elastic-search的数据链路对接"><span class="toc-section-number">3.2</span> kafka到elastic search的数据链路对接</a><ul>
+                <li><a href="#参考"><span class="toc-section-number">3.2.1</span> 参考</a></li>
+                </ul></li>
+                <li><a href="#日志报警功能与zabbix的集成"><span class="toc-section-number">3.3</span> 日志报警功能与zabbix的集成</a></li>
+                </ul></li>
+                <li><a href="#补充和小结"><span class="toc-section-number">4</span> 补充和小结</a></li>
+                </ul>
+                </div>
+                                <h1 id="为什么要做日志采集"><span class="header-section-number">1</span> 为什么要做日志采集？</h1>
+<p>日志， 对于不同团队来说会有不同的使用目的：</p>
+<ol style="list-style-type: decimal">
+<li>对于数据仓库团队来说， 日志是他们要分析的信息数据来源之一；</li>
+<li>对于安全团队来说， 日志是他们构建安全防御与漏洞挖掘的一种特征来源和触发信号源；</li>
+<li>对于应用团队来说， 日志是他们了解自己的系统运行状态与排除错误的一种手段；</li>
+<li>etc.</li>
+</ol>
+<p>在服务结点不多的情况下， 各个团队怎么使用这些日志或许可以百花齐放，但在中大规模服务部署的情况下， 日志类别 * 技术方案 * 对接的系统等等这些因素的组合将极大加重系统研发和维护的负担，所以， 我们需要一套分布式环境下集中采集，分析和管理日志的技术体系。</p>
+<blockquote>
+<p>最原始的登录服务器查看日志等操作，对于信息安全要求需要逐步加强的互联网金融企业来讲， 最终一定是要杜绝的，权限收缩并规范化管理我们将逐渐执行落地， 届时， 所有的日志查看，分析等工作将只能通过我们的日志平台进行。</p>
+</blockquote>
+<h1 id="挖财自己的日志采集和分析体系应该怎么建"><span class="header-section-number">2</span> 挖财自己的日志采集和分析体系应该怎么建？</h1>
+<p>一套日志的管理体系通常需要处理以下几个阶段的工作：</p>
+<ol style="list-style-type: decimal">
+<li>日志的采集</li>
+<li>日志的汇总与过滤</li>
+<li>日志的存储</li>
+<li>日志的分析与查询</li>
+</ol>
+<p>ELK技术栈(即Logstash + ElasticSearch + Kibana)属于业界已经应用比较广泛且成熟的开源方案，这套一站式解决方案基本上可以满足大部分企业对日志管理体系的需求，但对于我们挖财来讲， 需要更多的灵活性以处理遗留系统以及现有技术基础设施的复用， 故此， 我们自己的日志管理技术体系我希望是如下的样子：</p>
+<div class="figure">
+<img src="images/logging-platform.png" />
+
+</div>
+<h2 id="日志的采集"><span class="header-section-number">2.1</span> 日志的采集</h2>
+<p>灵活性是我们选择日志采集方案更看重的因素，所以logstash属于首先方案， 它可以兼顾多种不同系统和应用类型等因素的差异，从源头上进行一些初步的日志预处理。</p>
+<blockquote>
+<p>logstash唯一的小缺憾是它的不轻便， 因为它是使用jruby开发并跑在java虚拟机上的agent， 当然啦，同时也是优点，即各种平台上都可以用。</p>
+</blockquote>
+<h2 id="日志的汇总与过滤"><span class="header-section-number">2.2</span> 日志的汇总与过滤</h2>
+<p>kafka在我们挖财已经属于核心的中间件服务， 所以， 日志的汇总自然而然会倾向于使用kafka。</p>
+<p>日志的过滤和处理因为需求的多样性，可以直接对接订阅kafka， 然后根据各自的需求进行日志的定制处理， 比如过滤和监控应用日志的异常，即使通过zabbix进行预警； 或者数据仓库方面在原始日志的基础上进行清洗和转换，然后加载到新的数据源中；</p>
+<h2 id="日志的存储"><span class="header-section-number">2.3</span> 日志的存储</h2>
+<p>原始的日志存储我们采用ElasticSearch， 即ELK技术栈中E的原本用途，遵循ELK技术栈中各个方案之间的通用规范， 比如日志如索引采用logstash与kibana之间约定的index pattern。</p>
+<p>日志的衍生数据则日志使用各方根据需求自行选择。</p>
+<h2 id="日志的分析与查询"><span class="header-section-number">2.4</span> 日志的分析与查询</h2>
+<p>ELK技术栈中的Kibana已经可以很好的满足这一需求，这里我们不折腾。</p>
+<h1 id="需要解决哪些技术问题"><span class="header-section-number">3</span> 需要解决哪些技术问题？</h1>
+<p>因为我们在ELK技术栈的处理链路上插入了一些扩展点，所以，有些问题需要解决和澄清...</p>
+<h2 id="logstash与kafka的对接"><span class="header-section-number">3.1</span> logstash与kafka的对接</h2>
+<p>ELK技术栈中， Logstash和Elastic Search是通过logstash的elasticsearch或者elasticsearch_http这几个output直接对接的， 为了让logstash转而对接kafka，我们有几种选择：</p>
+<ol style="list-style-type: decimal">
+<li><a href="https://github.com/joekiller/logstash-kafka">logstash-kafka</a></li>
+<li><a href="https://github.com/logstash-plugins/logstash-output-kafka">logstash-output-kafka</a></li>
+<li>logstash的<code>http</code>output</li>
+</ol>
+<p>第一种和第二种方案都需要编译打包相应的依赖到logstash，然后随同logstash一起部署到服务结点， 虽然可以work， 但依赖重， 资源消耗多， 通用性不强；</p>
+<p>个人更倾向于第三种方案，即使用logstash默认提供的http这个output， 因为http比较通用， 而且本身我们的kafka前面就有为了多系统对接而提供的<a href="http://git.caimi-inc.com/money/csw-kafka-frontier">http proxy</a>方案部署。另外，依赖的管理和升级都在服务端维护，对每个服务结点是透明的。 当然， 唯一的弱点是效率可能不如基于长连接的消息传递高，只是暂时不是问题，即使将来成为瓶颈，也可以通过sharding的形式进行扩展。</p>
+<h2 id="kafka到elastic-search的数据链路对接"><span class="header-section-number">3.2</span> kafka到elastic search的数据链路对接</h2>
+<p>kafka和es之间我们要加入一套日志过滤与处理系统， 这套系统是我们发挥整个体系最大威力的地方。 在整个系统的处理pipeline中，我们可以根据需求添加任意需要的Filter/Processor, 比如服务于应用报警的Filter/Processor，服务于数据仓库ETL的Filter/Processor等等。 但不管前面做了多少事情， 日志最终是要接入到ES进行存储的。</p>
+<p>因为ELK技术栈中三者的对接遵循一些规范或者说规则， 而我们又需要继续复用这个技术栈中的服务提供的特定功能， 所以，即使是我们在整个处理链路中插入了扩展点，但数据的存储依然需要遵循ELK原来的规范和规则， 以便Kibana可以从ES中捞日志出来分析和展示的时候不需要任何改动。</p>
+<p>logstash存入ES的日志，一般遵循如下的index pattern：</p>
+<pre class=".pre-scrollable">
+logstash-%{+YYYY.MM.dd}
+</pre>
+<p>使用日期进行索引（index）界定的好处是， 可以按照日期范围定期进行清理。</p>
+<blockquote>
+<p>更多信息:</p>
+<p>Each log line from the input file is associated with a logstash event. Each logstash event has fields associated with it. By default, &quot;message&quot;, &quot;<span class="citation">@timestamp</span>&quot;, &quot;<span class="citation">@version</span>&quot;, &quot;host&quot;, &quot;path&quot; are created. The &quot;message&quot; field, referenced in the conditional statement, contains all the original text of the log line.</p>
+</blockquote>
+<p>日志处理系统可以使用ES的java客户端或者直接通过ES的HTTP服务进行采集到的日志索引操作。</p>
+<h3 id="参考"><span class="header-section-number">3.2.1</span> 参考</h3>
+<ol style="list-style-type: decimal">
+<li><a href="http://www.rsyslog.com/output-to-elasticsearch-in-logstash-format-kibana-friendly/" class="uri">http://www.rsyslog.com/output-to-elasticsearch-in-logstash-format-kibana-friendly/</a></li>
+<li><a href="https://sematext.atlassian.net/wiki/display/PUBLOGSENE/Index+Events+via+Elasticsearch+API" class="uri">https://sematext.atlassian.net/wiki/display/PUBLOGSENE/Index+Events+via+Elasticsearch+API</a></li>
+<li><a href="http://stackoverflow.com/questions/27127326/is-logstash-a-mandatory-prefix-of-indices-in-kibana" class="uri">http://stackoverflow.com/questions/27127326/is-logstash-a-mandatory-prefix-of-indices-in-kibana</a></li>
+</ol>
+<h2 id="日志报警功能与zabbix的集成"><span class="header-section-number">3.3</span> 日志报警功能与zabbix的集成</h2>
+<p>我们的监控平台选择了使用zabbix， 所以各个系统如果有监控需求，最好都对接zabbix， 避免维护多套不必要的运维系统。</p>
+<p>在应用日志处理过程中， 我们希望可以识别错误或者异常信号， 然后通过zabbix报警和通知相应devops人员， 为了达到这一目的，我们可以复用zabbix中的action/user/usergroup等实体配置， 并且配置相应的虚拟host/item/trigger等实体，然后由日志处理系统在需要的时候，直接通过active的方式上报数据， 具体操作方式为：</p>
+<ol style="list-style-type: decimal">
+<li>在日志处理系统中， 通过zabbix_sender或者根据zabbix_sender的通信协议，在合适的时机发送状态数据；</li>
+<li>在zabbix中， 配置相应的host/item/trigger， item为zabbix trapper类型，key与zabbix_sender发送的key相对应；</li>
+<li>其它配置根据需要配套即可（找zabbix管理者提需求即可 - <span class="citation">@多宝</span>）。</li>
+</ol>
+<blockquote>
+<p>TIPS</p>
+<p>zabbix_sender协议参考<a href="https://www.zabbix.org/wiki/Docs/protocols/zabbix_sender/2.0" class="uri">https://www.zabbix.org/wiki/Docs/protocols/zabbix_sender/2.0</a></p>
+</blockquote>
+<h1 id="补充和小结"><span class="header-section-number">4</span> 补充和小结</h1>
+<p>虽然我在架构图中从具体的服务器结点通过虚线的形式引入了一条直接到ElasticSearch和Kibana的链路，但并不推荐这种方案， 原因可能是（但不限于）:</p>
+<ol style="list-style-type: decimal">
+<li>本身我们的日志管理体系中对日志的处理/过滤需求是不可避免的， 所以， 日志的存储入库可以通过一条链路直接完成， 只维护一套规范即可；</li>
+<li>在每个结点开两个口子， 本身会对网络IO造成双倍压力；</li>
+</ol>
+<p>所以， 以上架构规范中所有推荐的做法是综合考虑后最完善的方案。</p>
+                
+                <!--百度分享按钮-->
+                <div class="pull-left bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a><a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a></div>
+                <script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"1","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+
+                <!--二维码分享-->
+                <div id="wx_qr"></div>
+                <script type="text/javascript">
+                  var baseUrl = "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data="
+                  var qrUrl = baseUrl.concat(document.URL)
+                  var img = document.createElement("img")
+                  img.setAttribute("src", qrUrl)
+
+                  document.getElementById("wx_qr").appendChild(img)
+                </script>
+
+
+                <div id="disqus_thread"></div>
+                <script type="text/javascript">
+                    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+                    var disqus_shortname = 'afoo'; // required: replace example with your forum shortname
+
+                    /* * * DON'T EDIT BELOW THIS LINE * * */
+                    (function() {
+                        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                    })();
+                </script>
+                <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+                <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+              </div>
+              </div>
+              </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 footer">
+                  <hr>
+                  <p>Powered by <a href="http://johnmacfarlane.net/pandoc/">pandoc</a>, <a href="http://rometools.github.io/rome/index.html">ROME</a> and <a href="http://pages.github.com/">github pages</a></p>
+                </div>
+            </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="/js/jquery-2.1.1.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+  </body>
+
+</html>

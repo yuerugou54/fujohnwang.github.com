@@ -7,5 +7,6 @@
 ./compile whoami.md
 ./compile references.md
 ./compile interlinks.md
+./compile columns/columns-index.md
 
 sbt run
