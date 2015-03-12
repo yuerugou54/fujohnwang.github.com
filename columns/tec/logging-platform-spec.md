@@ -80,6 +80,10 @@ logstash-%{+YYYY.MM.dd}
 
 使用日期进行索引（index）界定的好处是， 可以按照日期范围定期进行清理。
 
+> NOTE
+> 
+> 进一步深入说明一下， **针对不同的日志类别， index pattern也最好分类对应**。
+
 > 更多信息: 
 > 
 > Each log line from the input file is associated with a logstash event. Each logstash event has fields associated with it. By default, "message", "@timestamp", "@version", "host", "path" are created. The "message" field, referenced in the conditional statement, contains all the original text of the log line.
