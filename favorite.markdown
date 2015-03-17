@@ -255,8 +255,8 @@ with MapReduce](http://lintool.github.com/MapReduceAlgorithms/index.html) ^^^
 
 ## ebooks
 1. <https://www.mlook.mobi/>
-2. 
-
+2. <http://book.zi5.me/>
+3. [IT类电子书@itpub.net](http://www.itpub.net/forum-61-1.html)
 
 ## Movies(电影)
 1. [天天美剧](http://www.ttmeiju.com/)
