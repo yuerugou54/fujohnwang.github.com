@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>API Design And Documentation - 一个架构士的思考与沉淀@afoo.me</title>
+    <meta name="author" content="FuqiangWang">
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="icon" href="/favicon.ico">
+        <meta name="date" content="2015-03-17" />
+                    
+    <link href='/font/Syncopate/stylesheet.css' rel='stylesheet' type='text/css'>
+    <link href='/font/News_Cycle/stylesheet.css' rel='stylesheet' type='text/css'>
+
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/bootstrap-theme.min.css" rel="stylesheet">
+    <link href="/css/afoo.me.css" rel="stylesheet">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-3 sidebar">
+            <a href="/">
+				<div align="center"><img src="/images/wfq0.png"/></div>
+                <h2 class="text-center">扶墙老师</h2>
+            </a>
+            <p class="text-center lead slogan"><a href="/slogan.html">lollapalooza &amp; positioning</a></p>
+			<p class="text-center lead slogan">瞎子摸象的践行者</p>
+            <ul class="nav nav-pills nav-stacked">
+              <li><a href="/favorite.html" class="text-center"><i class="icon-star-empty"></i> 我的收藏</a></li>
+              <li><a href="/dashboard.html" class="text-center"><i class="icon-fullscreen"></i> 金融看板</a></li>
+              <li><a href="/columns/columns-index.html" class="text-center"><i class="icon-folder-close-alt"></i> 专栏</a></li>
+              <li><a href="/references.html" class="text-center"><i class="icon-folder-close-alt"></i> 快捷参考</a></li>
+              <li><a href="/whoami.html" class="text-center"><i class="icon-user-md"></i> 我是谁</a></li>
+              <li><a href="/interlinks.html" class="text-center"><i class="icon-user-md"></i> 友情链接</a></li>
+              <li><a href="/feeds.xml" class="text-center"><i class="icon-folder-close-alt"></i> RSS</a></li>
+            </ul>
+
+        </div>
+        <div class="col-md-9 col-md-offset-3 main">
+            <div class="row">
+              <div class="container-fluid">
+                
+                <div class="row">
+                                <div id="header">
+                <p class="lead">
+                <h1 class="title">API Design And Documentation&nbsp;&nbsp;
+                <small>
+                                    <script type="text/javascript">
+                    <!--
+                    h='&#x77;&#x61;&#x63;&#x61;&#x69;&#46;&#x63;&#x6f;&#x6d;';a='&#64;';n='&#x79;&#x75;&#110;&#x73;&#104;&#x69;';e=n+a+h;
+                    document.write('<a h'+'ref'+'="ma'+'ilto'+':'+e+'" clas'+'s="em' + 'ail">'+'陨石 - yunshi@wacai.com'+'<\/'+'a'+'>');
+                    // -->
+                    </script><noscript>&#38504;&#x77f3;&#32;&#x2d;&#32;&#x79;&#x75;&#110;&#x73;&#104;&#x69;&#64;&#x77;&#x61;&#x63;&#x61;&#x69;&#46;&#x63;&#x6f;&#x6d;&#32;&#40;&#x79;&#x75;&#110;&#x73;&#104;&#x69;&#32;&#x61;&#116;&#32;&#x77;&#x61;&#x63;&#x61;&#x69;&#32;&#100;&#x6f;&#116;&#32;&#x63;&#x6f;&#x6d;&#x29;</noscript>
+                                </small>
+                </h1>
+                </p>
+                </div>
+                                <div>
+
+                <hr>
+
+                                <div id="TOC">
+                <ul>
+                <li><a href="#why-we-need-api-design-and-documentation"><span class="toc-section-number">1</span> Why we need API design and documentation</a></li>
+                <li><a href="#how-api-design-and-documentation-work"><span class="toc-section-number">2</span> How API design and documentation work</a></li>
+                <li><a href="#available-solutions"><span class="toc-section-number">3</span> Available Solutions</a></li>
+                <li><a href="#minor-cons"><span class="toc-section-number">4</span> Minor Cons</a></li>
+                <li><a href="#小结"><span class="toc-section-number">5</span> 小结</a></li>
+                <li><a href="#references"><span class="toc-section-number">6</span> References</a></li>
+                </ul>
+                </div>
+                                <h1 id="why-we-need-api-design-and-documentation"><span class="header-section-number">1</span> Why we need API design and documentation</h1>
+<p>HTTP API <a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a> can't be typesafe as per the http protocol's essential， so we need to find a way so that the api providers and consumers can come to the same rendzvous point with proper constraits and clarity.</p>
+<p>HTTP协议的特性决定了基于HTTP的API属于松散类型（与强类型或者说类型安全的API相对应）， 为了能够让API的提供者和消费者可以一种双方都可以明晰且明确的方式达成共识， 我们需要找到一种方式来描述API，以便对双方进行一定的约束，从而形成一种双方都可以遵守的契约式的协议， 在某些层面增加少许工作量的同时，为双方提供便利和参考。</p>
+<div class="figure">
+<img src="images/why-api-doc.png" />
+
+</div>
+<h1 id="how-api-design-and-documentation-work"><span class="header-section-number">2</span> How API design and documentation work</h1>
+<p>API设计的一般的思路是，API提供者根据某种语法规范，表达和编写相应的API， 然后使用对应这种语法规范的工具解析并生成指定格式的API文档， 当然， 更进一步， API的实现代码也可以一并生成。</p>
+<p>生成的文档以及代码可以发布到版本控制系统以及相应的web站点， 然后API的使用者或者说消费者根据发布的API文档作为参考， 使用指定的API规范访问开放的API服务。</p>
+<div class="figure">
+<img src="images/api-design-flow.png" />
+
+</div>
+<p>或者引用一下apiary的流程：</p>
+<div class="figure">
+<img src="images/design-use-implement-flow.png" />
+
+</div>
+<p>思路上稍微存在一些差异（即是否生成代码），但先从API设计入手，然后迭代，最终发布这样的大体流程是类似的。</p>
+<p>当然， 围绕着这个典型的流程， 很多解决方案可以进一步提供一些周边的工具支持， 比如便于测试的工具， 便于版本化管理的支持， 图形化的API编辑工具， 对应的客户端API服务调用代码的生成工具， 等等。</p>
+<h1 id="available-solutions"><span class="header-section-number">3</span> Available Solutions</h1>
+<p>只挑几种，但不限于：</p>
+<ol style="list-style-type: decimal">
+<li><a href="http://swagger.io/">Swagger</a>
+<ul>
+<li>使用json风格的API描述，支持比较全面， 名声相对来说更响一些</li>
+</ul></li>
+<li><a href="http://apiary.io/how-it-works">apiary</a>
+<ul>
+<li>使用markdown风格的API描述, 遵循<code>API Blueprint</code>规范</li>
+</ul></li>
+<li><a href="http://www.getpostman.com/">postman</a>
+<ul>
+<li>支持测试的客户端工具貌似很不错</li>
+</ul></li>
+</ol>
+<h1 id="minor-cons"><span class="header-section-number">4</span> Minor Cons</h1>
+<p>将API设计描述放在实现类注释(comment)中，然后通过工具解析抽取并生成文档是保持文档和代码同步的最便捷方式，也更容易集中于一点进行维护，但灵活度会收到原有语言语法的限制。</p>
+<p>前者对于强类型语言的实现方案比较合适，而使用结构化的文本来描述API设计，则更灵活，唯一的不足可能文档的更新同步某些时候会不够及时，当然， 如果完全遵循API design and documentation的思路和流程，则可以尽可能的规避这一不足。</p>
+<h1 id="小结"><span class="header-section-number">5</span> 小结</h1>
+<p>个人是markdown粉儿，但萝卜白菜各有所爱， 看官喜欢什么口味选择什么口味就好了， 以上方案大体上都可以满足基本的需求。</p>
+<h1 id="references"><span class="header-section-number">6</span> References</h1>
+<ol style="list-style-type: decimal">
+<li><a href="https://github.com/for-GET/know-your-http-well/blob/master/status-codes.md">KNOW YOUR HTTP status codes WELL</a></li>
+<li><a href="http://apievangelist.com/2014/03/08/hello-world-product-api-with-blueprint-raml-and-swagger/">Hello World Product API With Blueprint, RAML And Swagger</a> - 这篇贵在提供了三种API design方案的对比
+<ul>
+<li><a href="http://apievangelist.com/2014/02/25/api-design-tooling-from-swagger/">API Design Tooling From <strong>Swagger</strong></a></li>
+<li><a href="http://apievangelist.com/2014/03/01/api-design-tooling-from-raml/">API Design Tooling From <strong>RAML</strong></a></li>
+<li><a href="http://apievangelist.com/2014/02/27/api-design-tooling-from-api-blueprint/">API Design Tooling From <strong>API Blueprint</strong></a>
+<ul>
+<li><a href="https://bitbucket.org/outofcoffee/api-blueprint-mockserver">API Blueprint Mock Server - Java based API Blueprint mock server, with J2SE and Android* support.</a></li>
+</ul></li>
+</ul></li>
+<li><a href="http://www.programmableweb.com/news/automated-documentation-rest-apis/2012/03/28">AUTOMATED DOCUMENTATION FOR REST APIS</a></li>
+<li><a href="https://developer.github.com/v3/">GitHub API v3</a></li>
+<li><a href="http://www.infoq.com/research/api-documentation">How do you document your APIs?</a>
+<ul>
+<li>除了常见的几种方案，这篇还提供了其它方案的信息链接</li>
+</ul></li>
+</ol>
+<div class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p>现在很多地方都使用REST API这个术语， 不过注意这里使用的是HTTP API，至于为什么， 嘿嘿，自己意会吧 ;-)<a href="#fnref1">↩</a></p></li>
+</ol>
+</div>
+                
+                <!--百度分享按钮-->
+                <div class="pull-left bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a><a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a></div>
+                <script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"1","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+
+                <!--二维码分享-->
+                <div id="wx_qr"></div>
+                <script type="text/javascript">
+                  var baseUrl = "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data="
+                  var qrUrl = baseUrl.concat(document.URL)
+                  var img = document.createElement("img")
+                  img.setAttribute("src", qrUrl)
+
+                  document.getElementById("wx_qr").appendChild(img)
+                </script>
+
+
+                <div id="disqus_thread"></div>
+                <script type="text/javascript">
+                    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+                    var disqus_shortname = 'afoo'; // required: replace example with your forum shortname
+
+                    /* * * DON'T EDIT BELOW THIS LINE * * */
+                    (function() {
+                        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                    })();
+                </script>
+                <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+                <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+              </div>
+              </div>
+              </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 footer">
+                  <hr>
+                  <p>Powered by <a href="http://johnmacfarlane.net/pandoc/">pandoc</a>, <a href="http://rometools.github.io/rome/index.html">ROME</a> and <a href="http://pages.github.com/">github pages</a></p>
+                </div>
+            </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="/js/jquery-2.1.1.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+  </body>
+
+</html>

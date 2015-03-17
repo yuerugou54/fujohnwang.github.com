@@ -5,6 +5,13 @@
     <link>http://afoo.me</link>
     <description>一个架构士的思考与实践点滴记录</description>
     <item>
+      <title>API Design And Documentation</title>
+      <link>http://afoo.me/posts/2015-03-17-api-design-and-documentation.html</link>
+      <pubDate>Mon, 16 Mar 2015 16:00:00 GMT</pubDate>
+      <guid>http://afoo.me/posts/2015-03-17-api-design-and-documentation.html</guid>
+      <dc:date>2015-03-16T16:00:00Z</dc:date>
+    </item>
+    <item>
       <title>ngrok简明手册</title>
       <link>http://afoo.me/posts/2015-03-11-ngrok-simple-manual.html</link>
       <pubDate>Tue, 10 Mar 2015 16:00:00 GMT</pubDate>
@@ -72,13 +79,6 @@
       <link>http://afoo.me/posts/2014-11-05-how-make-sbt-jump-over-GFW.html</link>
       <pubDate>Tue, 04 Nov 2014 16:00:00 GMT</pubDate>
       <guid>http://afoo.me/posts/2014-11-05-how-make-sbt-jump-over-GFW.html</guid>
-      <dc:date>2014-11-04T16:00:00Z</dc:date>
-    </item>
-    <item>
-      <title>大数据使用场景案例[摘录]</title>
-      <link>http://afoo.me/posts/2014-11-05-bigdata-scenarios.html</link>
-      <pubDate>Tue, 04 Nov 2014 16:00:00 GMT</pubDate>
-      <guid>http://afoo.me/posts/2014-11-05-bigdata-scenarios.html</guid>
       <dc:date>2014-11-04T16:00:00Z</dc:date>
     </item>
   </channel>
