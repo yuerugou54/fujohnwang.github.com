@@ -1,11 +1,7 @@
 # 收藏夹
 
 ## Uncategories
-* [阅读FM](http://yuedu.fm/)
-* [http://qingting.fm/](http://qingting.fm/)
-* [电影FM](http://dianying.fm/)
-* [保利电影院线](http://bjdxg.polycinemas.com/)
-* [Sonatype Maven Repo](https://oss.sonatype.org/index.html#view-repositories)
+
 * [书法](http://sufa.cnodejs.net/create)
 * [https://browserling.com/](https://browserling.com/)
 * <http://research.microsoft.com/en-us/um/people/lamport/pubs/pubs.html>
@@ -257,6 +253,11 @@ with MapReduce](http://lintool.github.com/MapReduceAlgorithms/index.html) ^^^
 2. [Google Web Fundamentals](https://developers.google.com/web/fundamentals/)
 3. [Webfont Generator](http://www.fontsquirrel.com/tools/webfont-generator)
 
+## ebooks
+1. <https://www.mlook.mobi/>
+2. 
+
+
 ## Movies(电影)
 1. [天天美剧](http://www.ttmeiju.com/)
 2. [ed2000电影](http://www.ed2000.com/FileList.asp?FileCategory=%E7%94%B5%E5%BD%B1)
@@ -269,6 +270,7 @@ with MapReduce](http://lintool.github.com/MapReduceAlgorithms/index.html) ^^^
 9. [伪射手网](http://sub.makedie.me/)
 
 ## BT Search
+0. <http://www.btbook.net/>
 1. <http://btdigg.org/>
 2. <http://www.torrentkitty.org/>
 3. <http://torrentz.eu/>
