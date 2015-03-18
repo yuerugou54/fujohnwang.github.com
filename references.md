@@ -30,6 +30,9 @@
 ## 狭义/广义货币
 ![狭义/广义货币](references/fin/images/M0-M1-M2.png)
 
+## 收益与风险基础概念
+
+[风险与收益产品基础框架](references/fin/风险与收益产品基础框架.html)
 
 # 生活类
 
