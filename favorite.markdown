@@ -35,7 +35,7 @@
 * [HTML&CSS基础教程](http://haoqicat.com/happypeter/htmlcss-ji-chu-jiao-cheng)
 * [Explore and Master Chrome DevTools](http://discover-devtools.codeschool.com/)
 * [Past, Present, and Future Courses](http://regal.csep.umflint.edu/~swturner/classes.html)
-
+* [http://libraries.io/ - Open Source Libraries](http://libraries.io/)
 
 ## Learn Something By Video
 1. [中国为什么不找美国人还钱？](http://v.zhiyin.cn/watch/7655.html)  
