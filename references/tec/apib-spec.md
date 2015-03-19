@@ -8,16 +8,19 @@
 # I. API Blueprint Language
 
 <a name="def-introduction"></a>
+
 ## 1. Introduction
 This documents is full specification of the API Blueprint format. For a less formal introduction to API Blueprint visit the [API Blueprint Tutorial](Tutorial.md) or check some of the [examples](examples).
 
 <a name="def-api-blueprint"></a>
+
 ## 2. API Blueprint
 API Blueprint is documentation-oriented web API description language. The API Blueprint is essentially a set of semantic assumptions laid on top of the Markdown syntax used to describe a web API.
 
 In addition to the regular [Markdown syntax][] API Blueprint conforms to the [GitHub Flavored Markdown syntax][].
 
 <a name="def-api-blueprint-document"></a>
+
 ## 3. API Blueprint document
 An API Blueprint document – a blueprint is a plain text Markdown document describing a Web API or its part. The document is structured into logical **sections**. Each section has its distinctive meaning, content and position in the document. 
 
@@ -53,6 +56,7 @@ All of the blueprint sections are optional. However, when present, a section **m
 > **NOTE:** Refer to [Sections Reference](#def-sections-reference) for  description of a specific section type.
 
 <a name="def-blueprint-section"></a>
+
 ## 4. Blueprint section
 Section represents a logical unit of API Blueprint. For example an API overview, a group of resources or a resource definition. 
 
@@ -108,12 +112,14 @@ A section definition **may** also contain additional variable components such as
 >     ...
 
 <a name="def-section-types"></a>
+
 ### 4.1 Section types
 There are several types of API Blueprint sections. You can find the complete listing of the section types in the [Section Reference](#def-sections-reference).
 
 **The Blueprint section chapter discusses the section syntax in general. A specific section type may conform only to some parts of this general syntax.** Always refer for respective section reference for details on its syntax.
 
 <a name="def-section-structure"></a>
+
 ### 4.2 Section structure
 A general structure of an API Blueprint section defined by a **keyword** includes an **identifier** (name), section **description** and **nested sections** or a specifically formatted content.
 
@@ -138,6 +144,7 @@ A general structure of an API Blueprint section defined by a **keyword** include
         <nested sections>
 
 <a name="def-keywords"></a>
+
 ### 4.3 Keywords
 Following reserved keywords are used in section definitions:
 
@@ -162,6 +169,7 @@ Following reserved keywords are used in section definitions:
 > **NOTE:** With the exception of HTTP methods keywords the section keywords are case insensitive.
 
 <a name="def-identifier"></a>
+
 ### 4.4 Identifier
 A section definition **may** or **must** include an identifier of the section. An **identifier is any non-empty combination of any character except `[`, `]`, `(`, `)` and newline characters**.
 
@@ -179,6 +187,7 @@ my-awesome-message_2
 
 
 <a name="def-description"></a>
+
 ### 4.5 Description
 A section description is any arbitrary Markdown-formatted content following the section definition.
 
@@ -187,6 +196,7 @@ It is possible to use any Markdown header or list item in a section description 
 > **NOTE:** It is considered good practice to keep the header level nested under the actual section.
 
 <a name="def-nested-sections"></a>
+
 ### 4.6 Nested sections
 A section **may** contain another nested section(s). 
 
@@ -221,10 +231,12 @@ What sections can be nested and where depends upon the section in case, as descr
 ---
 
 <a name="def-sections-reference"></a>
+
 # II. Sections Reference
 > **NOTE:** Sections marked as "Abstract" serve as a base for other sections and as such they **cannot** be used directly.
 
 <a name="def-named-section"></a>
+
 ## 1. Named section
 - **Abstract**
 - **Parent sections:** vary, see descendants
@@ -260,6 +272,7 @@ Named section is the base section for most of the API Blueprint sections. It con
 ---
 
 <a name="def-asset-section"></a>
+
 ## 2. Asset section
 - **Abstract**
 - **Parent sections:** vary, see descendants
@@ -296,6 +309,7 @@ Asset section is the base section for atomic data in API Blueprint. The content 
 ---
 
 <a name="def-payload-section"></a>
+
 ## 3. Payload section
 - **Abstract**
 - **Parent sections:** vary, see descendants
@@ -357,6 +371,7 @@ Instead of providing a payload section content a [model payload section](#def-mo
 ---
 
 <a name="def-headers-section"></a>
+
 ## 4. Headers section
 - **Parent sections:** [Payload section](#def-payload-section)
 - **Nested sections:** none
@@ -386,6 +401,7 @@ One HTTP header per line.
 ---
 
 <a name="def-body-section"></a>
+
 ## 5. Body section
 - **Parent sections:** [Payload section](#def-payload-section)
 - **Nested sections:** none
@@ -411,6 +427,7 @@ Specifies the HTTP message-body of a payload section.
 ---
 
 <a name="def-schema-section"></a>
+
 ## 6. Schema section
 - **Parent sections:** [Payload section](#def-payload-section)
 - **Nested sections:** none
@@ -428,6 +445,7 @@ Specifies a validation schema for the HTTP message-body of parent payload sectio
 ---
 
 <a name="def-metadata-section"></a>
+
 ## 7. Metadata section
 - **Parent sections:** none
 - **Nested sections:** none
@@ -449,6 +467,7 @@ Metadata keys and its values are tool-specific. Refer to relevant tool documenta
 ---
 
 <a name="def-api-name-section"></a>
+
 ## 8. API name & overview section
 - **Parent sections:** none
 - **Nested sections:** none
@@ -469,6 +488,7 @@ Name and description of the API
 ---
 
 <a name="def-resourcegroup-section"></a>
+
 ## 9. Resource group section
 - **Parent sections:** none
 - **Nested sections:** [`0+` Resource section](#def-resource-section)
@@ -501,6 +521,7 @@ This sections represents a group of resources (Resource Sections). **May** inclu
 ---
 
 <a name="def-resource-section"></a>
+
 ## 10. Resource section
 - **Parent sections:** none, [Resource group section](#def-resourcegroup-section)
 - **Nested sections:** [`0-1` Parameters section](#def-uriparameters-section), [`0-1` Model section](#def-model-section), [`1+` Action section](#def-action-section)
@@ -558,6 +579,7 @@ Resource representing **ACME Blog** posts.
 ---
 
 <a name="def-model-section"></a>
+
 ## 11. Resource model section
 - **Parent sections:** [Resource section](#def-resource-section)
 - **Nested sections:** [Refer to payload section](#def-payload-section)
@@ -591,6 +613,7 @@ The payload defined in this section **may** be referenced in any response or req
 ---
 
 <a name="def-uriparameters-section"></a>
+
 ## 12. URI parameters section
 - **Parent Sections:** [Resource section](#def-resource-section) | [Action section](#def-action-section)
 - **Nested Sections:** none
@@ -672,6 +695,7 @@ Where:
 ---
 
 <a name="def-action-section"></a>
+
 ## 13. Action section
 - **Parent sections:** [Resource section](#def-resource-section)
 - **Nested sections:** [`0-1` URI parameters section](#def-uriparameters-section), [`0+` Request section](#def-request-section), [`1+` Response section](#def-response-section)
@@ -770,6 +794,7 @@ Multiple Request and Response nested sections within one transaction example **s
 ---
 
 <a name="def-request-section"></a>
+
 ## 14. Request section
 - **Parent sections:** [Action section](#def-action-section)
 - **Nested sections:** [Refer to payload section](#def-payload-section)
@@ -793,6 +818,7 @@ One HTTP request-message example – payload.
 ---
 
 <a name="def-response-section"></a>
+
 ## 15. Response section
 - **Abstract**
 - **Parent sections:** [Action section](#def-action-section)
@@ -819,9 +845,11 @@ One HTTP response-message example – payload.
 <br>
 
 <a name="def-appendix"></a>
+
 # III. Appendix
 
 <a name="def-uri-templates"></a>
+
 ## 1. URI Templates
 
 The API Blueprint uses a subset of [RFC6570][rfc6570] to define a resource URI Template.
