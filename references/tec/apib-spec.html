@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>API Blueprint Language Reference - 一个架构士的思考与沉淀@afoo.me</title>
+    <meta name="author" content="FuqiangWang">
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="icon" href="/favicon.ico">
+                    
+    <link href='/font/Syncopate/stylesheet.css' rel='stylesheet' type='text/css'>
+    <link href='/font/News_Cycle/stylesheet.css' rel='stylesheet' type='text/css'>
+
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/bootstrap-theme.min.css" rel="stylesheet">
+    <link href="/css/afoo.me.css" rel="stylesheet">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-3 sidebar">
+            <a href="/">
+				<div align="center"><img src="/images/wfq0.png"/></div>
+                <h2 class="text-center">扶墙老师</h2>
+            </a>
+            <p class="text-center lead slogan"><a href="/slogan.html">lollapalooza &amp; positioning</a></p>
+			<p class="text-center lead slogan">瞎子摸象的践行者</p>
+            <ul class="nav nav-pills nav-stacked">
+              <li><a href="/favorite.html" class="text-center"><i class="icon-star-empty"></i> 我的收藏</a></li>
+              <li><a href="/dashboard.html" class="text-center"><i class="icon-fullscreen"></i> 金融看板</a></li>
+              <li><a href="/columns/columns-index.html" class="text-center"><i class="icon-folder-close-alt"></i> 专栏</a></li>
+              <li><a href="/references.html" class="text-center"><i class="icon-folder-close-alt"></i> 快捷参考</a></li>
+              <li><a href="/whoami.html" class="text-center"><i class="icon-user-md"></i> 我是谁</a></li>
+              <li><a href="/interlinks.html" class="text-center"><i class="icon-user-md"></i> 友情链接</a></li>
+              <li><a href="/feeds.xml" class="text-center"><i class="icon-folder-close-alt"></i> RSS</a></li>
+            </ul>
+
+        </div>
+        <div class="col-md-9 col-md-offset-3 main">
+            <div class="row">
+              <div class="container-fluid">
+                
+                <div class="row">
+                                <div id="header">
+                <p class="lead">
+                <h1 class="title">API Blueprint Language Reference&nbsp;&nbsp;
+                <small>
+                                    Author: z@apiary.io
+                                </small>
+                </h1>
+                </p>
+                </div>
+                                <div>
+
+                <hr>
+
+                                <div id="TOC">
+                <ul>
+                <li><a href="#i.-api-blueprint-language"><span class="toc-section-number">1</span> I. API Blueprint Language</a><ul>
+                <li><a href="#blueprint-document-structure"><span class="toc-section-number">1.0.1</span> Blueprint document structure</a></li>
+                <li><a href="#uri-path-segment"><span class="toc-section-number">1.0.2</span> URI Path Segment</a></li>
+                <li><a href="#uri-template-variable"><span class="toc-section-number">1.0.3</span> URI Template Variable</a></li>
+                <li><a href="#path-segment-variable"><span class="toc-section-number">1.0.4</span> Path Segment Variable</a></li>
+                <li><a href="#fragment-identifier-variable"><span class="toc-section-number">1.0.5</span> Fragment Identifier Variable</a></li>
+                <li><a href="#variable-with-reserved-characters-values"><span class="toc-section-number">1.0.6</span> Variable with Reserved Characters Values</a></li>
+                <li><a href="#form-style-query-variable"><span class="toc-section-number">1.0.7</span> Form-style Query Variable</a></li>
+                </ul></li>
+                </ul>
+                </div>
+                                <blockquote>
+<p>Format 1A revision 7</p>
+</blockquote>
+<h1 id="i.-api-blueprint-language"><span class="header-section-number">1</span> I. API Blueprint Language</h1>
+<p><a name="def-introduction"></a> ## 1. Introduction This documents is full specification of the API Blueprint format. For a less formal introduction to API Blueprint visit the <a href="Tutorial.md">API Blueprint Tutorial</a> or check some of the <a href="examples" class="uri">examples</a>.</p>
+<p><a name="def-api-blueprint"></a> ## 2. API Blueprint API Blueprint is documentation-oriented web API description language. The API Blueprint is essentially a set of semantic assumptions laid on top of the Markdown syntax used to describe a web API.</p>
+<p>In addition to the regular <a href="http://daringfireball.net/projects/markdown">Markdown syntax</a> API Blueprint conforms to the <a href="https://help.github.com/articles/github-flavored-markdown">GitHub Flavored Markdown syntax</a>.</p>
+<p><a name="def-api-blueprint-document"></a> ## 3. API Blueprint document An API Blueprint document – a blueprint is a plain text Markdown document describing a Web API or its part. The document is structured into logical <strong>sections</strong>. Each section has its distinctive meaning, content and position in the document.</p>
+<p>General section definition and structure is discussed in detail later in the <a href="#document-sections">Blueprint section</a> chapter.</p>
+<p>All of the blueprint sections are optional. However, when present, a section <strong>must</strong> follow the API Blueprint <strong>document structure</strong>.</p>
+<h3 id="blueprint-document-structure"><span class="header-section-number">1.0.1</span> Blueprint document structure</h3>
+<ul>
+<li><a href="#def-metadata-section"><code>0-1</code> <strong>Metadata</strong> section</a></li>
+<li><a href="#def-api-name-section"><code>0-1</code> <strong>API Name &amp; overview</strong> section</a></li>
+<li><a href="#def-resource-section"><code>0+</code> <strong>Resource</strong> sections</a>
+<ul>
+<li><a href="#def-uriparameters-section"><code>0-1</code> <strong>URI Parameters</strong> section</a></li>
+<li><a href="#def-model-section"><code>0-1</code> <strong>Model</strong> section</a>
+<ul>
+<li><a href="#def-headers-section"><code>0-1</code> <strong>Headers</strong> section</a></li>
+<li><a href="#def-body-section"><code>0-1</code> <strong>Body</strong> section</a></li>
+<li><a href="#def-schema-section"><code>0-1</code> <strong>Schema</strong> section</a><br /></li>
+</ul></li>
+<li><a href="#def-action-section"><code>1+</code> <strong>Action</strong> sections</a>
+<ul>
+<li><a href="#def-uriparameters-section"><code>0-1</code> <strong>URI Parameters</strong> section</a></li>
+<li><a href="#def-request-section"><code>0+</code> <strong>Request</strong> sections</a>
+<ul>
+<li><a href="#def-headers-section"><code>0-1</code> <strong>Headers</strong> section</a></li>
+<li><a href="#def-body-section"><code>0-1</code> <strong>Body</strong> section</a></li>
+<li><a href="#def-schema-section"><code>0-1</code> <strong>Schema</strong> section</a></li>
+</ul></li>
+<li><a href="#def-response-section"><code>1+</code> <strong>Response</strong> sections</a>
+<ul>
+<li><a href="#def-headers-section"><code>0-1</code> <strong>Headers</strong> section</a></li>
+<li><a href="#def-body-section"><code>0-1</code> <strong>Body</strong> section</a></li>
+<li><a href="#def-schema-section"><code>0-1</code> <strong>Schema</strong> section</a></li>
+</ul></li>
+</ul></li>
+</ul></li>
+<li><a href="#def-resourcegroup-section"><code>0+</code> <strong>Resource Group</strong> sections</a>
+<ul>
+<li><a href="#def-resource-section"><code>0+</code> <strong>Resource</strong> sections</a> (see above)</li>
+</ul></li>
+</ul>
+<blockquote>
+<p><strong>NOTE:</strong> The number prior to a section name denotes the allowed number of the section occurrences.</p>
+</blockquote>
+<blockquote>
+<p><strong>NOTE:</strong> Refer to <a href="#def-sections-reference">Sections Reference</a> for description of a specific section type.</p>
+</blockquote>
+<p><a name="def-blueprint-section"></a> ## 4. Blueprint section Section represents a logical unit of API Blueprint. For example an API overview, a group of resources or a resource definition.</p>
+<p>In general a section is <strong>defined</strong> using a <strong>keyword</strong> in a Markdown entity. Depending on the type of section the keyword is written either as a Markdown header entity or in a list item entity.</p>
+<p>A section definition <strong>may</strong> also contain additional variable components such as its <strong>identifier</strong> and additional modifiers.</p>
+<blockquote>
+<p><strong>NOTE</strong>: There are two special sections that are recognized by their position in the document instead of a keyword: The <a href="">Metadata section</a> and the <a href="">API Name &amp; Overview section</a>. Refer to the respective section entry for details on its definition.</p>
+</blockquote>
+<h4 id="example-header-defined-sections"><span class="header-section-number">1.0.1.1</span> Example: Header-defined sections</h4>
+<pre><code># &lt;keyword&gt; 
+
+ ...
+
+# &lt;keyword&gt; 
+
+ ...</code></pre>
+<blockquote>
+<p><strong>NOTE:</strong> While this specification uses &quot;atx&quot; -style headers (using <code>#</code>s) you can also use &quot;Setext&quot; <a href="https://daringfireball.net/projects/markdown/syntax#header">header syntax</a> interchangeably:</p>
+<pre><code>&lt;keyword&gt;
+=========
+
+...
+
+&lt;keyword&gt;
+=========
+
+...</code></pre>
+</blockquote>
+<h4 id="example-list-defined-sections"><span class="header-section-number">1.0.1.2</span> Example: List-defined sections</h4>
+<pre><code>+ &lt;keyword&gt;
+
+ ...
+
++ &lt;keyword&gt;
+
+ ...</code></pre>
+<blockquote>
+<p><strong>NOTE:</strong> While this specification uses pluses (<code>+</code>) as list markers you can use any Markdown <a href="https://daringfireball.net/projects/markdown/syntax#list">list syntax</a> using asterisks (<code>*</code>), pluses (<code>+</code>) and hyphens (<code>-</code>) interchangeably:</p>
+<pre><code>* &lt;keyword&gt;
+
+...
+
+- &lt;keyword&gt;
+
+...</code></pre>
+</blockquote>
+<p><a name="def-section-types"></a> ### 4.1 Section types There are several types of API Blueprint sections. You can find the complete listing of the section types in the <a href="#def-sections-reference">Section Reference</a>.</p>
+<p><strong>The Blueprint section chapter discusses the section syntax in general. A specific section type may conform only to some parts of this general syntax.</strong> Always refer for respective section reference for details on its syntax.</p>
+<p><a name="def-section-structure"></a> ### 4.2 Section structure A general structure of an API Blueprint section defined by a <strong>keyword</strong> includes an <strong>identifier</strong> (name), section <strong>description</strong> and <strong>nested sections</strong> or a specifically formatted content.</p>
+<h4 id="example-header-defined-section-structure"><span class="header-section-number">1.0.1.3</span> Example: Header-defined section structure</h4>
+<pre><code># &lt;keyword&gt; &lt;identifier&gt;
+
+&lt;description&gt;
+
+&lt;specific content&gt;
+
+&lt;nested sections&gt;</code></pre>
+<h4 id="example-list-defined-section-structure"><span class="header-section-number">1.0.1.4</span> Example: List-defined section structure</h4>
+<pre><code>+ &lt;keyword&gt; &lt;identifier&gt;
+
+    &lt;description&gt;
+
+    &lt;specific content&gt;
+
+    &lt;nested sections&gt;</code></pre>
+<p><a name="def-keywords"></a> ### 4.3 Keywords Following reserved keywords are used in section definitions:</p>
+<h4 id="header-keywords"><span class="header-section-number">1.0.1.5</span> Header keywords</h4>
+<ul>
+<li><code>Group</code></li>
+<li><a href="https://github.com/for-GET/know-your-http-well/blob/master/methods.md#know-your-http-methods-well">HTTP methods</a> (e.g. <code>GET, POST, PUT, DELETE</code>...)</li>
+<li><a href="#def-uri-templates">URI templates</a> (e.g. <code>/resource/{id}</code>)</li>
+<li>Combinations of an HTTP method and URI Template (e.g. <code>GET /resource/{id}</code>)</li>
+</ul>
+<h4 id="list-keywords"><span class="header-section-number">1.0.1.6</span> List keywords</h4>
+<ul>
+<li><code>Request</code></li>
+<li><code>Response</code></li>
+<li><code>Body</code></li>
+<li><code>Schema</code></li>
+<li><code>Model</code></li>
+<li><code>Header</code> &amp; <code>Headers</code></li>
+<li><code>Parameter</code> &amp; <code>Parameters</code></li>
+<li><code>Values</code></li>
+</ul>
+<blockquote>
+<p><strong>NOTE: Avoid using these keywords in other Markdown headers or lists</strong></p>
+</blockquote>
+<blockquote>
+<p><strong>NOTE:</strong> With the exception of HTTP methods keywords the section keywords are case insensitive.</p>
+</blockquote>
+<p><a name="def-identifier"></a> ### 4.4 Identifier A section definition <strong>may</strong> or <strong>must</strong> include an identifier of the section. An <strong>identifier is any non-empty combination of any character except <code>[</code>, <code>]</code>, <code>(</code>, <code>)</code> and newline characters</strong>.</p>
+<p>An identifier <strong>must not</strong> contain any of the <a href="#def-keywords">keywords</a>.</p>
+<h4 id="example"><span class="header-section-number">1.0.1.7</span> Example</h4>
+<pre><code>Adam&#39;s Message 42</code></pre>
+<pre><code>my-awesome-message_2</code></pre>
+<p><a name="def-description"></a> ### 4.5 Description A section description is any arbitrary Markdown-formatted content following the section definition.</p>
+<p>It is possible to use any Markdown header or list item in a section description as long as it does not clash with any of the <a href="#def-keywords">reserved keywords</a>.</p>
+<blockquote>
+<p><strong>NOTE:</strong> It is considered good practice to keep the header level nested under the actual section.</p>
+</blockquote>
+<p><a name="def-nested-sections"></a> ### 4.6 Nested sections A section <strong>may</strong> contain another nested section(s).</p>
+<p>Depending on the nested section type, to nest a section simply increase its header level or its list item indentation. Anything between the section start and the start of following section at the same level is considered to be part of the section.</p>
+<p>What sections can be nested and where depends upon the section in case, as described in the relevant section's entry.</p>
+<h4 id="example-nested-header-defined-section"><span class="header-section-number">1.0.1.8</span> Example: Nested header-defined section</h4>
+<pre><code># &lt;section definition&gt; 
+
+ ... 
+
+## &lt;nested section definition&gt;
+
+ ...</code></pre>
+<h4 id="example-nested-list-defined-section"><span class="header-section-number">1.0.1.9</span> Example: Nested list-defined section</h4>
+<pre><code>+ &lt;section definition&gt;
+
+     ... 
+
+    + &lt;nested section definition&gt;
+
+     ...</code></pre>
+<blockquote>
+<p><strong>NOTE:</strong> While not necessary it is a good habit to increase the level of a nested section markdown-header.</p>
+</blockquote>
+<blockquote>
+<p><strong>NOTE:</strong> A markdown-list section is always considered to be nested under the preceding markdown-header section.</p>
+</blockquote>
+<hr />
+<p><a name="def-sections-reference"></a> # II. Sections Reference &gt; <strong>NOTE:</strong> Sections marked as &quot;Abstract&quot; serve as a base for other sections and as such they <strong>cannot</strong> be used directly.</p>
+<p><a name="def-named-section"></a> ## 1. Named section - <strong>Abstract</strong> - <strong>Parent sections:</strong> vary, see descendants - <strong>Nested sections:</strong> vary, see descendants - <strong>Markdown entity:</strong> header, list - <strong>Inherits from</strong>: none</p>
+<h4 id="definition"><span class="header-section-number">1.0.1.10</span> Definition</h4>
+<p>Defined by a <a href="#def-keywords">keyword</a> followed by an optional section name - <a href="#def-identifier">identifier</a> in a Markdown header or list entity.</p>
+<pre><code># &lt;keyword&gt; &lt;identifier&gt;</code></pre>
+<pre><code>+ &lt;keyword&gt; &lt;identifier&gt;</code></pre>
+<h4 id="description"><span class="header-section-number">1.0.1.11</span> Description</h4>
+<p>Named section is the base section for most of the API Blueprint sections. It conforms to the <a href="#def-section-structure">general section</a> and as such it composes of a section name (identifier), description and nested sections or specific formatted content (see descendants descriptions).</p>
+<h4 id="example-1"><span class="header-section-number">1.0.1.12</span> Example</h4>
+<pre><code># &lt;keyword&gt; Section Name
+This the `Section Name` description.
+
+- one
+- **two**
+- three
+
+&lt;nested sections&gt; |  &lt;formatted content&gt;</code></pre>
+<hr />
+<p><a name="def-asset-section"></a> ## 2. Asset section - <strong>Abstract</strong> - <strong>Parent sections:</strong> vary, see descendants - <strong>Nested sections:</strong> none - <strong>Markdown entity:</strong> list - <strong>Inherits from</strong>: none</p>
+<h4 id="definition-1"><span class="header-section-number">1.0.1.13</span> Definition</h4>
+<p>Defined by a <a href="#def-keywords">keyword</a> in Markdown list entity.</p>
+<pre><code>+ &lt;keyword&gt;</code></pre>
+<h4 id="description-1"><span class="header-section-number">1.0.1.14</span> Description</h4>
+<p>Asset section is the base section for atomic data in API Blueprint. The content this section is expected to be a <a href="http://daringfireball.net/projects/markdown/syntax#precode">pre-formatted code block</a>.</p>
+<h4 id="example-2"><span class="header-section-number">1.0.1.15</span> Example</h4>
+<pre><code>+ &lt;keyword&gt;
+
+        {
+            &quot;message&quot;: &quot;Hello&quot;
+        }</code></pre>
+<h4 id="example-fenced-code-blocks"><span class="header-section-number">1.0.1.16</span> Example: Fenced code blocks</h4>
+<pre><code>+ &lt;keyword&gt;
+
+    ```
+    {
+        &quot;message&quot;: &quot;Hello&quot;
+    }
+    ```</code></pre>
+<hr />
+<p><a name="def-payload-section"></a> ## 3. Payload section - <strong>Abstract</strong> - <strong>Parent sections:</strong> vary, see descendants - <strong>Nested sections:</strong> <a href="#def-headers-section"><code>0-1</code> Headers section</a>, <a href="#def-body-section"><code>0-1</code> Body section</a>, <a href="#def-schema-section"><code>0-1</code> Schema section</a> - <strong>Markdown entity:</strong> list - <strong>Inherits from</strong>: <a href="#def-named-section">Named section</a></p>
+<h4 id="definition-2"><span class="header-section-number">1.0.1.17</span> Definition</h4>
+<p>Defined by a <a href="#def-keywords">keyword</a> in Markdown list entity. The keyword <strong>may</strong> be followed by identifier. The definition <strong>may</strong> include payload's media-type enclosed in braces.</p>
+<pre><code>+ &lt;keyword&gt; &lt;identifier&gt; (&lt;media type&gt;)</code></pre>
+<blockquote>
+<p><strong>NOTE:</strong> Refer to descendant for the particular section type definition.</p>
+</blockquote>
+<h4 id="description-2"><span class="header-section-number">1.0.1.18</span> Description</h4>
+<p>Payload sections represent the information transferred as a payload of an HTTP request or response messages. A Payload consists of optional meta information in the form of HTTP headers and optional content in the form HTTP body.</p>
+<p>Furthermore, in API Blueprint context, a payload include a description and a validation schema.</p>
+<p>A payload section <strong>may</strong> have its media type associated. A payload's media type represents the metadata received or sent in the form of a HTTP <code>Content-Type</code> header. When specified a payload <strong>should</strong> include nested <a href="#def-body-section">Body section</a>.</p>
+<p>This section <strong>should</strong> include at least one following nested sections:</p>
+<ul>
+<li><a href="#def-headers-section"><code>0-1</code> Headers section</a></li>
+<li><a href="#def-body-section"><code>0-1</code> Body section</a></li>
+<li><a href="#def-schema-section"><code>0-1</code> Schema section</a></li>
+</ul>
+<p>If there is no nested section the content of the payload section is considered as content of the <a href="#def-body-section">Body section</a>.</p>
+<h4 id="referencing"><span class="header-section-number">1.0.1.19</span> Referencing</h4>
+<p>Instead of providing a payload section content a <a href="#def-model-section">model payload section</a> can be referenced using the Markdown implicit <a href="http://daringfireball.net/projects/markdown/syntax#link">reference syntax</a>:</p>
+<pre><code>[&lt;identifier&gt;][]</code></pre>
+<h4 id="example-3"><span class="header-section-number">1.0.1.20</span> Example</h4>
+<pre><code>+ &lt;keyword&gt; Payload Name (application/json)
+
+    This the `Payload Name` description.
+
+    + Headers
+    
+     ...
+
+    + Body
+        
+     ...
+
+    + Schema
+    
+    ...</code></pre>
+<h4 id="example-referencing-model-payload"><span class="header-section-number">1.0.1.21</span> Example: Referencing model payload</h4>
+<pre><code>+ &lt;keyword&gt; Payload Name
+
+    [Resource model identifier][]</code></pre>
+<hr />
+<p><a name="def-headers-section"></a> ## 4. Headers section - <strong>Parent sections:</strong> <a href="#def-payload-section">Payload section</a> - <strong>Nested sections:</strong> none - <strong>Markdown entity:</strong> list - <strong>Inherits from</strong>: none</p>
+<h4 id="definition-3"><span class="header-section-number">1.0.1.22</span> Definition</h4>
+<p>Defined by the <code>Headers</code> keyword in Markdown list entity.</p>
+<pre><code>+ Headers</code></pre>
+<h4 id="description-3"><span class="header-section-number">1.0.1.23</span> Description</h4>
+<p>Specifies the HTTP message-headers of the parent payload section. The content this section is expected to be a <a href="http://daringfireball.net/projects/markdown/syntax#precode">pre-formatted code block</a> with the following syntax:</p>
+<pre><code>&lt;HTTP header name&gt;: &lt;value&gt;</code></pre>
+<p>One HTTP header per line.</p>
+<h4 id="example-4"><span class="header-section-number">1.0.1.24</span> Example</h4>
+<pre><code>+ Headers
+
+        Accept-Charset: utf-8
+        Connection: keep-alive
+        Content-Type: multipart/form-data, boundary=AaB03x</code></pre>
+<hr />
+<p><a name="def-body-section"></a> ## 5. Body section - <strong>Parent sections:</strong> <a href="#def-payload-section">Payload section</a> - <strong>Nested sections:</strong> none - <strong>Markdown entity:</strong> list - <strong>Inherits from</strong>: <a href="#def-asset-section">Asset section</a></p>
+<h4 id="definition-4"><span class="header-section-number">1.0.1.25</span> Definition</h4>
+<p>Defined by the <code>Body</code> keyword in Markdown list entity.</p>
+<pre><code>+ Body</code></pre>
+<h4 id="description-4"><span class="header-section-number">1.0.1.26</span> Description</h4>
+<p>Specifies the HTTP message-body of a payload section.</p>
+<h4 id="example-5"><span class="header-section-number">1.0.1.27</span> Example</h4>
+<pre><code>+ Body
+
+        {
+            &quot;message&quot;: &quot;Hello&quot;
+        }</code></pre>
+<hr />
+<p><a name="def-schema-section"></a> ## 6. Schema section - <strong>Parent sections:</strong> <a href="#def-payload-section">Payload section</a> - <strong>Nested sections:</strong> none - <strong>Markdown entity:</strong> list - <strong>Inherits from</strong>: <a href="#def-asset-section">Asset section</a></p>
+<h4 id="definition-5"><span class="header-section-number">1.0.1.28</span> Definition</h4>
+<p>Defined by the <code>Schema</code> keyword in Markdown list entity.</p>
+<pre><code>+ Schema</code></pre>
+<h4 id="description-5"><span class="header-section-number">1.0.1.29</span> Description</h4>
+<p>Specifies a validation schema for the HTTP message-body of parent payload section.</p>
+<hr />
+<p><a name="def-metadata-section"></a> ## 7. Metadata section - <strong>Parent sections:</strong> none - <strong>Nested sections:</strong> none - <strong>Markdown entity:</strong> special - <strong>Inherits from</strong>: none</p>
+<h4 id="definition-6"><span class="header-section-number">1.0.1.30</span> Definition</h4>
+<p>Key value pairs. Key separated from its value by colon (<code>:</code>). One pair per line. Starts at the beginning of the document and ends with the first Markdown element that is not recognized as a key value pair.</p>
+<h4 id="description-6"><span class="header-section-number">1.0.1.31</span> Description</h4>
+<p>Metadata keys and its values are tool-specific. Refer to relevant tool documentation for the list of supported keys.</p>
+<h4 id="example-6"><span class="header-section-number">1.0.1.32</span> Example</h4>
+<pre><code>FORMAT: 1A
+HOST: http://blog.acme.com</code></pre>
+<hr />
+<p><a name="def-api-name-section"></a> ## 8. API name &amp; overview section - <strong>Parent sections:</strong> none - <strong>Nested sections:</strong> none - <strong>Markdown entity:</strong> special, header - <strong>Inherits from</strong>: <a href="#def-named-section">Named section</a></p>
+<h4 id="definition-7"><span class="header-section-number">1.0.1.33</span> Definition</h4>
+<p>Defined by the <strong>first</strong> Markdown header in the blueprint document unless it represents another section definition.</p>
+<h4 id="description-7"><span class="header-section-number">1.0.1.34</span> Description</h4>
+<p>Name and description of the API</p>
+<h4 id="example-7"><span class="header-section-number">1.0.1.35</span> Example</h4>
+<pre><code># Basic ACME Blog API
+Welcome to the **ACME Blog** API. This API provides access to the **ACME Blog** service.</code></pre>
+<hr />
+<p><a name="def-resourcegroup-section"></a> ## 9. Resource group section - <strong>Parent sections:</strong> none - <strong>Nested sections:</strong> <a href="#def-resource-section"><code>0+</code> Resource section</a> - <strong>Markdown entity:</strong> header - <strong>Inherits from</strong>: <a href="#def-named-section">Named section</a></p>
+<h4 id="definition-8"><span class="header-section-number">1.0.1.36</span> Definition</h4>
+<p>Defined by the <code>Group</code> keyword followed by group <a href="#def-identifier">name (identifier)</a>:</p>
+<pre><code># Group &lt;identifier&gt;</code></pre>
+<h4 id="description-8"><span class="header-section-number">1.0.1.37</span> Description</h4>
+<p>This sections represents a group of resources (Resource Sections). <strong>May</strong> include one or more nested <a href="#def-resource-section">Resource Sections</a>.</p>
+<h4 id="example-8"><span class="header-section-number">1.0.1.38</span> Example</h4>
+<pre><code># Group Blog Posts
+
+## Resource 1 [/resource1]
+
+ ...
+
+# Group Authors
+Resources in this groups are related to **ACME Blog** authors.    
+
+## Resource 2 [/resource2]
+
+ ...</code></pre>
+<hr />
+<p><a name="def-resource-section"></a> ## 10. Resource section - <strong>Parent sections:</strong> none, <a href="#def-resourcegroup-section">Resource group section</a> - <strong>Nested sections:</strong> <a href="#def-uriparameters-section"><code>0-1</code> Parameters section</a>, <a href="#def-model-section"><code>0-1</code> Model section</a>, <a href="#def-action-section"><code>1+</code> Action section</a> - <strong>Markdown entity:</strong> header - <strong>Inherits from</strong>: <a href="#def-named-section">Named section</a></p>
+<h4 id="definition-9"><span class="header-section-number">1.0.1.39</span> Definition</h4>
+<p>Defined by an <a href="#def-uri-templates">URI template</a>:</p>
+<pre><code># &lt;URI template&gt;</code></pre>
+<p><strong>-- or --</strong></p>
+<p>Defined by a resource <a href="#def-identifier">name (identifier)</a> followed by an URI template enclosed in square brackets <code>[]</code>.</p>
+<pre><code># &lt;identifier&gt; [&lt;URI template&gt;]</code></pre>
+<p><strong>-- or --</strong></p>
+<p>Defined by an <a href="https://github.com/for-GET/know-your-http-well/blob/master/methods.md#know-your-http-methods-well">HTTP request method</a> followed by URI template:</p>
+<pre><code># &lt;HTTP request method&gt; &lt;URI template&gt;</code></pre>
+<blockquote>
+<p><strong>NOTE:</strong> In this case the rest of this section represents the <a href="#def-action-section">Action section</a> including its description and nested sections and <strong>follows the rules of Action section instead</strong>.</p>
+</blockquote>
+<h4 id="description-9"><span class="header-section-number">1.0.1.40</span> Description</h4>
+<p>An API <a href="http://www.w3.org/TR/di-gloss/#def-resource">resource</a> as specified by its <em>URI</em> or a set of resources (a resource template) matching its <em>URI template</em>.</p>
+<p>This section <strong>should</strong> include at least one nested <a href="#def-action-section">Action section</a> and <strong>may</strong> include following nested sections:</p>
+<ul>
+<li><a href="#def-model-section"><code>0-1</code> Model section</a></li>
+<li><p><a href="#def-uriparameters-section"><code>0-1</code> URI parameters section</a></p>
+<p>URI parameters discussed in the scope of a Resource section apply to <em>any and all</em> nested Action sections.</p></li>
+<li><p>Additional <a href="#def-action-section">Action sections</a></p></li>
+</ul>
+<blockquote>
+<p><strong>NOTE:</strong> A blueprint document may contain multiple sections for the same resource (or resource set), as long as their HTTP methods differ. However it is considered good practice to group multiple HTTP methods under one resource (resource set).</p>
+</blockquote>
+<h4 id="example-9"><span class="header-section-number">1.0.1.41</span> Example</h4>
+<pre><code># Blog Posts [/posts/{id}]
+Resource representing **ACME Blog** posts.</code></pre>
+<pre><code># /posts/{id}</code></pre>
+<pre><code># GET /posts/{id}</code></pre>
+<hr />
+<p><a name="def-model-section"></a> ## 11. Resource model section - <strong>Parent sections:</strong> <a href="#def-resource-section">Resource section</a> - <strong>Nested sections:</strong> <a href="#def-payload-section">Refer to payload section</a> - <strong>Markdown entity:</strong> list - <strong>Inherits from</strong>: <a href="#def-payload-section">Payload section</a></p>
+<h4 id="definition-10"><span class="header-section-number">1.0.1.42</span> Definition</h4>
+<p>Defined by the <code>Model</code> keyword followed by an optional media type:</p>
+<pre><code>+ Model (&lt;media type&gt;)</code></pre>
+<h4 id="description-10"><span class="header-section-number">1.0.1.43</span> Description</h4>
+<p>A <a href="http://www.w3.org/TR/di-gloss/#def-resource-manifestation">resource manifestation</a> - one exemplar representation of the resource in the form of a <a href="#def-payload-section">payload</a>.</p>
+<h4 id="referencing-1"><span class="header-section-number">1.0.1.44</span> Referencing</h4>
+<p>The payload defined in this section <strong>may</strong> be referenced in any response or request section in the document using parent section's identifier. You can refer to this payload in any of the following <a href="#def-request-section">Request</a> or <a href="#def-response-section">Response</a> payload sections using the Markdown implicit <a href="http://daringfireball.net/projects/markdown/syntax#link">reference syntax</a>.</p>
+<h4 id="example-10"><span class="header-section-number">1.0.1.45</span> Example</h4>
+<pre><code># My Resource [/resource]
++ Model (text/plain)
+    
+        Hello World
+        
+## Retrieve My Resource [GET]
++ Response 200
+    
+    [My Resource][]</code></pre>
+<hr />
+<p><a name="def-uriparameters-section"></a> ## 12. URI parameters section - <strong>Parent Sections:</strong> <a href="#def-resource-section">Resource section</a> | <a href="#def-action-section">Action section</a> - <strong>Nested Sections:</strong> none - <strong>Markdown entity:</strong> list - <strong>Inherits from</strong>: none, special</p>
+<h4 id="definition-11"><span class="header-section-number">1.0.1.46</span> Definition</h4>
+<p>Defined by the <code>Parameters</code> keyword written in a Markdown list item:</p>
+<pre><code>+ Parameters</code></pre>
+<h4 id="description-11"><span class="header-section-number">1.0.1.47</span> Description</h4>
+<p>Discussion of URI parameters in the <em>scope of the parent section</em>.</p>
+<p>This section <strong>must</strong> be composed of nested list items only. This section <strong>must not</strong> contain any other elements. One list item per URI parameter. The nested list items subsections inherit from the <a href="#def-named-section">Named section</a> and are subject to additional formatting as follows:</p>
+<pre><code>+ &lt;parameter name&gt; = `&lt;default value&gt;` (required | optional , &lt;type&gt;, `&lt;example value&gt;`) ... &lt;description&gt;
+
+    &lt;additional description&gt;
+    
+    + Values
+        + `&lt;enumeration element 1&gt;` 
+        + `&lt;enumeration element 2&gt;`
+        ...
+        + `&lt;enumeration element N&gt;`</code></pre>
+<p>Where:</p>
+<ul>
+<li><code>&lt;parameter name&gt;</code> is the parameter name as written in <a href="#ResourceSection">Resource Section</a>'s URI (e.g. &quot;id&quot;).</li>
+<li><code>&lt;description&gt;</code> is any <strong>optional</strong> Markdown-formatted description of the parameter.</li>
+<li><code>&lt;additional description&gt;</code> is any additional <strong>optional</strong> Markdown-formatted <a href="#SectionDescription">description</a> of the parameter.</li>
+<li><code>&lt;default value&gt;</code> is an <strong>optional</strong> default value of the parameter – a value that is used when no value is explicitly set (optional parameters only).</li>
+<li><code>&lt;example value&gt;</code> is an <strong>optional</strong> example value of the parameter (e.g. <code>1234</code>).</li>
+<li><code>&lt;type&gt;</code> is the <strong>optional</strong> parameter type as expected by the API (e.g. &quot;number&quot;).</li>
+<li><code>Values</code> is the <strong>optional</strong> enumeration of possible values</li>
+<li>and <code>&lt;enumeration element n&gt;</code> represents an element of enumeration type.</li>
+<li><code>required</code> is the <strong>optional</strong> specifier of a required parameter (this is the <strong>default</strong>)</li>
+<li><code>optional</code> is the <strong>optional</strong> specifier of an optional parameter.</li>
+</ul>
+<blockquote>
+<p><strong>NOTE:</strong> This section <strong>should only</strong> contain parameters that are specified in the parents' URI template, and does not have to list every URI parameter.</p>
+</blockquote>
+<h4 id="example-11"><span class="header-section-number">1.0.1.48</span> Example</h4>
+<pre><code># GET /posts/{id}</code></pre>
+<pre><code>+ Parameters
+    + id ... Id of a post.</code></pre>
+<pre><code>+ Parameters
+    + id (number) ... Id of a post.</code></pre>
+<pre><code>+ Parameters
+    + id (required, number, `1001`) ... Id of a post.</code></pre>
+<pre><code>+ Parameters
+    + id = `20` (optional, number, `1001`) ... Id of a post.</code></pre>
+<pre><code>+ Parameters
+    + id (string)
+
+        Id of a Post
+
+        + Values
+            + `A`
+            + `B`
+            + `C`</code></pre>
+<hr />
+<p><a name="def-action-section"></a> ## 13. Action section - <strong>Parent sections:</strong> <a href="#def-resource-section">Resource section</a> - <strong>Nested sections:</strong> <a href="#def-uriparameters-section"><code>0-1</code> URI parameters section</a>, <a href="#def-request-section"><code>0+</code> Request section</a>, <a href="#def-response-section"><code>1+</code> Response section</a> - <strong>Markdown entity:</strong> header - <strong>Inherits from</strong>: <a href="#def-named-section">Named section</a></p>
+<h4 id="definition-12"><span class="header-section-number">1.0.1.49</span> Definition</h4>
+<p>Defined by an <a href="https://github.com/for-GET/know-your-http-well/blob/master/methods.md#know-your-http-methods-well">HTTP request method</a>:</p>
+<pre><code>## &lt;HTTP request method&gt;</code></pre>
+<p><strong>-- or --</strong></p>
+<p>Defined by an action <a href="#def-identifier">name (identifier)</a> followed by an <a href="https://github.com/for-GET/know-your-http-well/blob/master/methods.md#know-your-http-methods-well">HTTP request method</a> enclosed in square brackets <code>[]</code>.</p>
+<pre><code># &lt;identifier&gt; [&lt;HTTP request method&gt;]</code></pre>
+<h4 id="description-12"><span class="header-section-number">1.0.1.50</span> Description</h4>
+<p>Definition of at least one complete HTTP transaction as performed with the parent resource section. An action section <strong>may</strong> consists of multiple HTTP transaction examples for the given HTTP request method.</p>
+<p>This section <strong>may</strong> include one nested <a href="#def-uriparameters-section">URI parameters section</a> describing any URI parameters <em>specific</em> to the action – URI parameters discussed in the scope of an Action section apply to the respective Action section ONLY.</p>
+<p>It <strong>should</strong> include at least one nested <a href="#def-response-section">Response section</a> and <strong>may</strong> include additional nested <a href="#def-request-section">Request</a> and <a href="#def-response-section">Response</a> sections.</p>
+<p>Nested Request and Response sections <strong>may</strong> be ordered into groups where each groups represent one transaction example. First transaction example group starts with the first nested Request or Response section. Subsequent groups start with the first nested Request section following a Response section.</p>
+<p>Multiple Request and Response nested sections within one transaction example <strong>should</strong> have different identifiers.</p>
+<h4 id="example-12"><span class="header-section-number">1.0.1.51</span> Example</h4>
+<pre><code># Blog Posts [/posts{?limit}]
+ ...    
+
+## Retrieve Blog Posts [GET]
+Retrieves the list of **ACME Blog** posts.
+
++ Parameters
+    + limit (optional, number) ... Maximum number of posts to retrieve
+
++ Response 200
+
+        ...
+
+### Create a Post [POST]
++ Request
+
+        ...
+
++ Response 201
+
+        ...</code></pre>
+<h4 id="example-multiple-transaction-examples"><span class="header-section-number">1.0.1.52</span> Example Multiple Transaction Examples</h4>
+<pre><code># Resource [/resource]
+## Create Resource [POST]
+
++ request A
+    
+        ...
+
++ response 200
+    
+        ...
+
++ request B
+    
+        ...
+
++ response 200    
+        
+        ...
+
++ response 500
+    
+        ...
+
++ request C
+    
+        ...
+
++ request D
+    
+        ...
+
++ response 200
+    
+        ...</code></pre>
+<blockquote>
+<p><strong>NOTE:</strong> The &quot;Multiple Transaction Examples&quot; example demonstrates three transaction examples for one given action:</p>
+<ol style="list-style-type: decimal">
+<li>1st example: request <code>A</code>, response <code>200</code></li>
+<li>2nd example: request <code>B</code>, responses <code>200</code> and <code>500</code></li>
+<li>3rd example: requests <code>C</code> and <code>D</code>, response <code>200</code></li>
+</ol>
+</blockquote>
+<hr />
+<p><a name="def-request-section"></a> ## 14. Request section - <strong>Parent sections:</strong> <a href="#def-action-section">Action section</a> - <strong>Nested sections:</strong> <a href="#def-payload-section">Refer to payload section</a> - <strong>Markdown entity:</strong> list - <strong>Inherits from</strong>: <a href="#def-payload-section">Payload section</a></p>
+<h4 id="definition-13"><span class="header-section-number">1.0.1.53</span> Definition</h4>
+<p>Defined by the <code>Request</code> keyword followed by an optional <a href="#def-identifier">identifier</a>:</p>
+<pre><code>+ Request &lt;identifier&gt; (&lt;Media Type&gt;)</code></pre>
+<h4 id="description-13"><span class="header-section-number">1.0.1.54</span> Description</h4>
+<p>One HTTP request-message example – payload.</p>
+<h4 id="example-13"><span class="header-section-number">1.0.1.55</span> Example</h4>
+<pre><code>+ Request Create Blog Post (application/json)
+    
+        { &quot;message&quot; : &quot;Hello World.&quot; }</code></pre>
+<hr />
+<p><a name="def-response-section"></a> ## 15. Response section - <strong>Abstract</strong> - <strong>Parent sections:</strong> <a href="#def-action-section">Action section</a> - <strong>Nested sections:</strong> <a href="#def-payload-section">Refer to payload section</a> - <strong>Markdown entity:</strong> list - <strong>Inherits from</strong>: <a href="#def-payload-section">Payload section</a></p>
+<h4 id="definition-14"><span class="header-section-number">1.0.1.56</span> Definition</h4>
+<p>Defined by the <code>Response</code> keyword. The response section definition <strong>should</strong> include an <a href="https://github.com/for-GET/know-your-http-well/blob/master/status-codes.md">HTTP status code</a> as its identifier.</p>
+<pre><code>+ Response &lt;HTTP status code&gt; (&lt;Media Type&gt;)</code></pre>
+<h4 id="description-14"><span class="header-section-number">1.0.1.57</span> Description</h4>
+<p>One HTTP response-message example – payload.</p>
+<h4 id="example-14"><span class="header-section-number">1.0.1.58</span> Example</h4>
+<pre><code>+ Response 201 (application/json)
+    
+            { &quot;message&quot; : &quot;created&quot; }</code></pre>
+<hr />
+<p><br></p>
+<p><a name="def-appendix"></a> # III. Appendix</p>
+<p><a name="def-uri-templates"></a> ## 1. URI Templates</p>
+<p>The API Blueprint uses a subset of <a href="http://tools.ietf.org/html/rfc6570">RFC6570</a> to define a resource URI Template.</p>
+<h3 id="uri-path-segment"><span class="header-section-number">1.0.2</span> URI Path Segment</h3>
+<p>At its simplest form – without any variables – a path segment of an URI Template is identical to an URI path segment:</p>
+<pre><code>/path/to/resources/42</code></pre>
+<h3 id="uri-template-variable"><span class="header-section-number">1.0.3</span> URI Template Variable</h3>
+<p>Variable names are case-sensitive. The variable name may consists of following characters <strong>only</strong>:</p>
+<ul>
+<li>ASCII alpha numeric characters (<code>a-z</code>, <code>A-Z</code>)</li>
+<li>Decimal digits (<code>0-9</code>)</li>
+<li><code>_</code></li>
+<li><a href="http://en.wikipedia.org/wiki/Percent-encoding">Percent-encoded</a> characters</li>
+<li><code>.</code></li>
+</ul>
+<p>Multiple variables are separated by the comma <strong>without</strong> any leading or trailing spaces. A variable(s) <strong>must</strong> be enclosed in braces – <code>{}</code> <strong>without</strong> any additional leading or trailing whitespace.</p>
+<h4 id="operators"><span class="header-section-number">1.0.3.1</span> Operators</h4>
+<p>The first variable in the braces <strong>might</strong> be preceded by an operator. API Blueprint currently supports following operators:</p>
+<ul>
+<li><code>#</code> – <em>fragment identifier</em> operator</li>
+<li><code>+</code> – <em>reserved value</em> operator</li>
+<li><code>?</code> – <em>form-style query</em> operator</li>
+<li><code>&amp;</code> – <em>form-style query continuation</em> operator</li>
+</ul>
+<h4 id="examples"><span class="header-section-number">1.0.3.2</span> Examples</h4>
+<pre><code>{var}
+{var1,var2,var3}
+{#var}
+{+var}
+{?var}
+{?var1,var2}
+{?%24var}
+{&amp;var}</code></pre>
+<blockquote>
+<p><strong>NOTE:</strong> The <a href="http://tools.ietf.org/html/rfc6570#section-2.4.2">explode variable modifier</a> is also supported. Refer to RFC6570 for its description.</p>
+</blockquote>
+<h4 id="variable-reserved-values"><span class="header-section-number">1.0.3.3</span> Variable Reserved Values</h4>
+<p>Following characters are <strong>reserved</strong> in variable <em>values</em>:</p>
+<p><code>:</code> / <code>/</code> / <code>?</code> / <code>#</code> / <code>[</code> / <code>]</code> / <code>@</code> / <code>!</code> / <code>$</code> / <code>&amp;</code> / <code>'</code> / <code>(</code> / <code>)</code> / <code>*</code> / <code>+</code> / <code>,</code> / <code>;</code> / <code>=</code></p>
+<h3 id="path-segment-variable"><span class="header-section-number">1.0.4</span> Path Segment Variable</h3>
+<p>Simple path segment component variable is defined without any operator:</p>
+<pre><code>/path/to/resources/{var}</code></pre>
+<p>With <code>var := 42</code> the expansion is <code>/path/to/resources/42</code>.</p>
+<blockquote>
+<p><strong>NOTE:</strong> RFC6570 – Level 1</p>
+</blockquote>
+<h3 id="fragment-identifier-variable"><span class="header-section-number">1.0.5</span> Fragment Identifier Variable</h3>
+<p>URI Template variables for fragment identifiers are defined using the crosshatch (<code>#</code>) operator:</p>
+<pre><code>/path/to/resources/42{#var}</code></pre>
+<p>With <code>var := my_id</code> the expansion is <code>/path/to/resources/42#my_id</code>.</p>
+<blockquote>
+<p><strong>NOTE:</strong> RFC6570 – Level 2</p>
+</blockquote>
+<h3 id="variable-with-reserved-characters-values"><span class="header-section-number">1.0.6</span> Variable with Reserved Characters Values</h3>
+<p>To define URI Template variables with reserved URI characters use the plus (<code>+</code>) operator:</p>
+<pre><code>/path/{+var}/42</code></pre>
+<p>With <code>var := to/resources</code> the expansion is <code>/path/to/resources/42</code>.</p>
+<blockquote>
+<p><strong>NOTE:</strong> RFC6570 – Level 2</p>
+</blockquote>
+<h3 id="form-style-query-variable"><span class="header-section-number">1.0.7</span> Form-style Query Variable</h3>
+<p>To define variables for a form-style query use the question mark (<code>?</code>) operator</p>
+<pre><code>/path/to/resources/{varone}{?vartwo}</code></pre>
+<p>With <code>varone := 42</code> and <code>vartwo = hello</code> the expansion is <code>/path/to/resources/42?vartwo=hello</code>.</p>
+<p>To continue a form-style query use the ampersand (<code>&amp;</code>) operator:</p>
+<pre><code>/path/to/resources/{varone}?path=test{&amp;vartwo,varthree}</code></pre>
+<p>With <code>varone := 42</code>, <code>vartwo = hello</code>, <code>varthree = 1024</code> the expansion is <code>/path/to/resources/42?path=test&amp;vartwo=hello&amp;varthree=1024</code>.</p>
+<blockquote>
+<p><strong>NOTE:</strong> RFC6570 – Part of Level 3</p>
+</blockquote>
+<hr />
+                
+                <!--百度分享按钮-->
+                <div class="pull-left bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a><a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a></div>
+                <script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"1","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+
+                <!--二维码分享-->
+                <div id="wx_qr"></div>
+                <script type="text/javascript">
+                  var baseUrl = "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data="
+                  var qrUrl = baseUrl.concat(document.URL)
+                  var img = document.createElement("img")
+                  img.setAttribute("src", qrUrl)
+
+                  document.getElementById("wx_qr").appendChild(img)
+                </script>
+
+
+                <div id="disqus_thread"></div>
+                <script type="text/javascript">
+                    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+                    var disqus_shortname = 'afoo'; // required: replace example with your forum shortname
+
+                    /* * * DON'T EDIT BELOW THIS LINE * * */
+                    (function() {
+                        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                    })();
+                </script>
+                <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+                <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+              </div>
+              </div>
+              </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 footer">
+                  <hr>
+                  <p>Powered by <a href="http://johnmacfarlane.net/pandoc/">pandoc</a>, <a href="http://rometools.github.io/rome/index.html">ROME</a> and <a href="http://pages.github.com/">github pages</a></p>
+                </div>
+            </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="/js/jquery-2.1.1.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+  </body>
+
+</html>

@@ -22,6 +22,10 @@
 
 ![](references/tec/images/zabbix.topology.png)
 
+## API Blueprint
+
+[API Blueprint规范的定义文档](references/tec/apib-spec.html) 
+
 # 经济类
 
 ## CAMEL评级制度
