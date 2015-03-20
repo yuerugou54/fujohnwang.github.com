@@ -199,6 +199,7 @@ with MapReduce](http://lintool.github.com/MapReduceAlgorithms/index.html) ^^^
 ### Docker
 1. [Docker 中文社区](https://www.dockboard.org/)
 2. <https://hub.docker.com/>
+3. [Docker入门实战(在线阅读)](http://yuedu.baidu.com/ebook/d817967416fc700abb68fca1?pn=1&rf=http%3A%2F%2Fdockerone.com%2Farticle%2F233)
 
 
 ## Blade
