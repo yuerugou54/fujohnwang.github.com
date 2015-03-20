@@ -26,6 +26,10 @@
 
 [API Blueprint规范的定义文档](references/tec/apib-spec.html) 
 
+## 技术招聘
+
+[The Anatomy of the Perfect Technical Interview from a Former Amazon VP](references/tec/tec-interview-suggestions.html)
+
 # 经济类
 
 ## CAMEL评级制度
