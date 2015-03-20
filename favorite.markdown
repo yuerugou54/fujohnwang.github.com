@@ -15,6 +15,7 @@
 * [工信部网站备案查询](http://www.miitbeian.gov.cn/publish/query/indexFirst.action)
 * [專案管理生活思維](http://www.projectup.net/blog/)
 * [http://www.cheatography.com/](http://www.cheatography.com/)  - cheatsheet search
+* [http://www.emoji-cheat-sheet.com/](http://www.emoji-cheat-sheet.com/)  - github friendly Emoji 
 
 ## Finance
 * [中国银行外汇当日牌价](http://www.boc.cn/sourcedb/whpj/)

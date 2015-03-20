@@ -20,7 +20,7 @@
 
 ## Zabbix
 
-![](references/tec/images/zabbix.topology.png)
+[Zabbix基础介绍](references/tec/zabbix-intro.html)
 
 ## API Blueprint
 
@@ -36,7 +36,8 @@
 [CAMEL评级制度](references/fin/camel-rating.html)
 
 ## 狭义/广义货币
-![狭义/广义货币](references/fin/images/M0-M1-M2.png)
+
+[狭义/广义货币关系对比](references/fin/m0-m1-m2.html)
 
 ## 收益与风险基础概念
 
@@ -46,6 +47,9 @@
 
 1. [万一手机丢了，立刻做六件事！](references/lifestyle/six-things-you-must-do-after-phone-lost.html)
 
+# 写作类
+
+[http://www.emoji-cheat-sheet.com/](http://www.emoji-cheat-sheet.com/)
 
 
 
