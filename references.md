@@ -46,6 +46,7 @@
 # 生活类
 
 1. [万一手机丢了，立刻做六件事！](references/lifestyle/six-things-you-must-do-after-phone-lost.html)
+2. [如何选择感冒药？](references/lifestyle/how-to-choose-medicine-for-catching-cold.html)
 
 # 写作类
 
