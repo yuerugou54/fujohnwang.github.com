@@ -5,6 +5,13 @@
     <link>http://afoo.me</link>
     <description>一个架构士的思考与实践点滴记录</description>
     <item>
+      <title>Java/Scala项目设立原则</title>
+      <link>http://afoo.me/posts/2015-03-24-java-scala-project-type-choice-principle.html</link>
+      <pubDate>Mon, 23 Mar 2015 16:00:00 GMT</pubDate>
+      <guid>http://afoo.me/posts/2015-03-24-java-scala-project-type-choice-principle.html</guid>
+      <dc:date>2015-03-23T16:00:00Z</dc:date>
+    </item>
+    <item>
       <title>API Design And Documentation</title>
       <link>http://afoo.me/posts/2015-03-17-api-design-and-documentation.html</link>
       <pubDate>Mon, 16 Mar 2015 16:00:00 GMT</pubDate>
@@ -73,13 +80,6 @@
       <pubDate>Tue, 11 Nov 2014 16:00:00 GMT</pubDate>
       <guid>http://afoo.me/posts/2014-11-12-how-to-research-a-enterprise-before-investing.html</guid>
       <dc:date>2014-11-11T16:00:00Z</dc:date>
-    </item>
-    <item>
-      <title>SBT免翻墙手册</title>
-      <link>http://afoo.me/posts/2014-11-05-how-make-sbt-jump-over-GFW.html</link>
-      <pubDate>Tue, 04 Nov 2014 16:00:00 GMT</pubDate>
-      <guid>http://afoo.me/posts/2014-11-05-how-make-sbt-jump-over-GFW.html</guid>
-      <dc:date>2014-11-04T16:00:00Z</dc:date>
     </item>
   </channel>
 </rss>
