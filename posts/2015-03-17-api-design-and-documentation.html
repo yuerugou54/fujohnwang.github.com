@@ -120,6 +120,9 @@
 <h1 id="minor-cons"><span class="header-section-number">4</span> Minor Cons</h1>
 <p>将API设计描述放在实现类注释(comment)中，然后通过工具解析抽取并生成文档是保持文档和代码同步的最便捷方式，也更容易集中于一点进行维护，但灵活度会收到原有语言语法的限制。</p>
 <p>前者对于强类型语言的实现方案比较合适，而使用结构化的文本来描述API设计，则更灵活，唯一的不足可能文档的更新同步某些时候会不够及时，当然， 如果完全遵循API design and documentation的思路和流程，则可以尽可能的规避这一不足。</p>
+<blockquote>
+<p>对于实现和API规范同步的问题， 一种思路是根据API规范生成测试集， 然后“打到”最终实现，如果不通过，则要求要么更新API规范，要么更新代码实现。 这样， 可以基本可以保证二者的同步。当然，这样的做法其实更像是先实现，后出API规范文档， 与API设计和文档化驱动的做法还是有些差异的。</p>
+</blockquote>
 <h1 id="小结"><span class="header-section-number">5</span> 小结</h1>
 <p>个人是markdown粉儿，但萝卜白菜各有所爱， 看官喜欢什么口味选择什么口味就好了， 以上方案大体上都可以满足基本的需求。</p>
 <h1 id="references"><span class="header-section-number">6</span> References</h1>
