@@ -2,6 +2,13 @@
 % 王福强
 % 2015.03.01
 
+# System Property VS. Environment Variables
+
+> getenv gets an environment variable. getProperty gets a Java property. Environment variables are specified at the OS level. Java properties are specified by passing the -D option to the JVM (and can be set programmatically).
+
+> Environment variables are specific to the operating system. Properties are JVM only.
+> 
+> System.getenv() is for Operating System environment variables, whereas System.getProperty() is for JVM arguments which are passed as -DpropName=value to Java application launcher (java).
 
 　　　
 # Initialization On-Demand Holder Idiom Demonstration

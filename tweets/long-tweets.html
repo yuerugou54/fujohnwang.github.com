@@ -85,16 +85,25 @@
 
                                 <div id="TOC">
                 <ul>
-                <li><a href="#通过java.awt.robot的createscreencapture截屏"><span class="toc-section-number">1</span> 通过java.awt.Robot的createScreenCapture截屏</a></li>
-                <li><a href="#英雄无敌iii中玩随机地图和元素族的方法"><span class="toc-section-number">2</span> 英雄无敌III中玩随机地图和元素族的方法</a></li>
-                <li><a href="#linux-负载查询和uptime命令解释"><span class="toc-section-number">3</span> Linux 负载查询和uptime命令解释</a></li>
-                <li><a href="#what-usually-a-web-framework-will-offer"><span class="toc-section-number">4</span> What usually a web framework will offer?</a></li>
-                <li><a href="#the-elements-of-programming-style摘录"><span class="toc-section-number">5</span> The Elements of Programming Style摘录</a></li>
-                <li><a href="#如何理解hyerthread"><span class="toc-section-number">6</span> 如何理解HyerThread?</a></li>
-                <li><a href="#系统监控的目标"><span class="toc-section-number">7</span> 系统监控的目标</a></li>
+                <li><a href="#system-property-vs.-environment-variables"><span class="toc-section-number">1</span> System Property VS. Environment Variables</a></li>
+                <li><a href="#通过java.awt.robot的createscreencapture截屏"><span class="toc-section-number">2</span> 通过java.awt.Robot的createScreenCapture截屏</a></li>
+                <li><a href="#英雄无敌iii中玩随机地图和元素族的方法"><span class="toc-section-number">3</span> 英雄无敌III中玩随机地图和元素族的方法</a></li>
+                <li><a href="#linux-负载查询和uptime命令解释"><span class="toc-section-number">4</span> Linux 负载查询和uptime命令解释</a></li>
+                <li><a href="#what-usually-a-web-framework-will-offer"><span class="toc-section-number">5</span> What usually a web framework will offer?</a></li>
+                <li><a href="#the-elements-of-programming-style摘录"><span class="toc-section-number">6</span> The Elements of Programming Style摘录</a></li>
+                <li><a href="#如何理解hyerthread"><span class="toc-section-number">7</span> 如何理解HyerThread?</a></li>
+                <li><a href="#系统监控的目标"><span class="toc-section-number">8</span> 系统监控的目标</a></li>
                 </ul>
                 </div>
-                                <p>　　　 # Initialization On-Demand Holder Idiom Demonstration</p>
+                                <h1 id="system-property-vs.-environment-variables"><span class="header-section-number">1</span> System Property VS. Environment Variables</h1>
+<blockquote>
+<p>getenv gets an environment variable. getProperty gets a Java property. Environment variables are specified at the OS level. Java properties are specified by passing the -D option to the JVM (and can be set programmatically).</p>
+</blockquote>
+<blockquote>
+<p>Environment variables are specific to the operating system. Properties are JVM only.</p>
+<p>System.getenv() is for Operating System environment variables, whereas System.getProperty() is for JVM arguments which are passed as -DpropName=value to Java application launcher (java).</p>
+</blockquote>
+<p>　　　 # Initialization On-Demand Holder Idiom Demonstration</p>
 <pre class="sourceCode java"><code class="sourceCode java"><span class="kw">public</span> <span class="kw">class</span> Singleton {     
     <span class="kw">private</span> <span class="fu">Singleton</span>() {         
         <span class="co">// initialize this class</span>
@@ -106,7 +115,7 @@
         <span class="kw">return</span> SingletonHolder.<span class="fu">instance</span>;
         }
 }</code></pre>
-<h1 id="通过java.awt.robot的createscreencapture截屏"><span class="header-section-number">1</span> 通过java.awt.Robot的createScreenCapture截屏</h1>
+<h1 id="通过java.awt.robot的createscreencapture截屏"><span class="header-section-number">2</span> 通过java.awt.Robot的createScreenCapture截屏</h1>
 <pre class="sourceCode java"><code class="sourceCode java"><span class="kw">public</span> <span class="dt">static</span> <span class="dt">void</span> <span class="fu">captureScreen</span>(String fileName) <span class="kw">throws</span> Exception {
     Dimension screenSize = Toolkit.<span class="fu">getDefaultToolkit</span>().<span class="fu">getScreenSize</span>();
     Rectangle screenRectangle = <span class="kw">new</span> Rectangle(screenSize);
@@ -114,9 +123,9 @@
     BufferedImage image = robot.<span class="fu">createScreenCapture</span>(screenRectangle);
     ImageIO.<span class="fu">write</span>(image, <span class="st">&quot;png&quot;</span>, <span class="kw">new</span> File(fileName));
 }</code></pre>
-<h1 id="英雄无敌iii中玩随机地图和元素族的方法"><span class="header-section-number">2</span> 英雄无敌III中玩随机地图和元素族的方法</h1>
+<h1 id="英雄无敌iii中玩随机地图和元素族的方法"><span class="header-section-number">3</span> 英雄无敌III中玩随机地图和元素族的方法</h1>
 <p>在游戏所在的文件夹中建立一个名为 H3BLADE.EXE 的空文件， 然后再在 Data 子文件夹中建立H3AB_BMP.LOD、H3AB_SPR.LOD、H3AB_AHD.SND、H3AB_AHD.VID 这几个空文件，这样就可以玩到随机地图了， 而且还能在没有安装末日之刃的情况下使用元素族。 建立空文件的方法有很多，最简单的是利用windows自带的记事本（notepad），什么内容也不用输，直接使用“另存为”命令， 文件类型定为“所有文件（*.*）”，文件名要完整输入（如 3BLADE.EXE ），保存就行了。 然后复制该空文件，修改文件名生成新文件（事先要将“设置--&gt;文件夹选项--&gt;察看--&gt;隐藏已知文件类型的扩展名”的勾去掉，才能修改后缀名）。</p>
-<h1 id="linux-负载查询和uptime命令解释"><span class="header-section-number">3</span> Linux 负载查询和uptime命令解释</h1>
+<h1 id="linux-负载查询和uptime命令解释"><span class="header-section-number">4</span> Linux 负载查询和uptime命令解释</h1>
 <p>在Linux系统中，uptime、w、top等命令都会有系统平均负载load average的输出，那么什么是系统平均负载呢？ 系统平均负载被定义为在特定时间间隔内运行队列中的平均进程数。如果一个进程满足以下条件则其就会位于运行队列中：</p>
 <ol style="list-style-type: decimal">
 <li>它没有在等待I/O操作的结果</li>
@@ -126,7 +135,7 @@
 <p>例如：</p>
 <p>[root@www2 init.d]# uptime &gt; 7:51pm up 2 days, 5:43, 2 users, load average: 8.13, 5.90, 4.94</p>
 <p>命令输出的最后内容表示在过去的1、5、15分钟内运行队列中的平均进程数量。 一般来说只要每个CPU的当前活动进程数不大于3那么系统的性能就是良好的，如果每个CPU的任务数大于5，那么就表示这台机器的性能有严重问题。对于上面的例子来说，假设系统有两个CPU，那么其每个CPU的当前任务数为：8.13/2=4.065。这表示该系统的性能是可以接受的。</p>
-<h1 id="what-usually-a-web-framework-will-offer"><span class="header-section-number">4</span> What usually a web framework will offer?</h1>
+<h1 id="what-usually-a-web-framework-will-offer"><span class="header-section-number">5</span> What usually a web framework will offer?</h1>
 <ul>
 <li>AJAX</li>
 <li>Authentication</li>
@@ -138,7 +147,7 @@
 <li>URL mapping or rewriting</li>
 </ul>
 <p>[from] <a href="http://net.tutsplus.com/tutorials/other/15-most-important-considerations-when-choosing-a-web-development-framework/" class="uri">http://net.tutsplus.com/tutorials/other/15-most-important-considerations-when-choosing-a-web-development-framework/</a></p>
-<h1 id="the-elements-of-programming-style摘录"><span class="header-section-number">5</span> The Elements of Programming Style摘录</h1>
+<h1 id="the-elements-of-programming-style摘录"><span class="header-section-number">6</span> The Elements of Programming Style摘录</h1>
 <ul>
 <li>把代码写清楚，别耍小聪明。</li>
 <li>想干什么，讲的简单点、直接点。</li>
@@ -202,12 +211,12 @@
 <li>为你的数据布局写一个文档。</li>
 <li><p>不要过分注释。</p></li>
 </ul>
-<h1 id="如何理解hyerthread"><span class="header-section-number">6</span> 如何理解HyerThread?</h1>
+<h1 id="如何理解hyerthread"><span class="header-section-number">7</span> 如何理解HyerThread?</h1>
 <p>As AMD quotes it: &gt; So – cores are like bikes, threads are the riders. Running more threads increases throughput for applications as long as you have available cores. If you have threads waiting to be scheduled and no available cores – you have a bottleneck.</p>
 <blockquote>
 <p>Think of SMT and HT as a tandem bike. Yes it can move two riders, but not as quickly or efficiently as two separate bikes.</p>
 </blockquote>
-<h1 id="系统监控的目标"><span class="header-section-number">7</span> 系统监控的目标</h1>
+<h1 id="系统监控的目标"><span class="header-section-number">8</span> 系统监控的目标</h1>
 <ul>
 <li>Disk Throughput</li>
 <li>Disk Storage</li>
