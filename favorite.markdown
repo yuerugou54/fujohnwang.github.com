@@ -61,6 +61,10 @@
 3. [http://thesecretlivesofdata.com/raft/](http://thesecretlivesofdata.com/raft/)
 	- raft协议动态演示
 	
+	
+## OS
+1. [http://dpdk.org/ - userspace networking](http://dpdk.org/)
+
 ## JVM
 1. [Java Memory Model Pragmatics (transcript)](http://shipilev.net/blog/2014/jmm-pragmatics/)
 
