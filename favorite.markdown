@@ -183,6 +183,9 @@ with MapReduce](http://lintool.github.com/MapReduceAlgorithms/index.html) ^^^
 	- University of Virginia  CS 1501 Lectures  Spring 2013
 * [CS240h lecture notes](http://www.scs.stanford.edu/11au-cs240h/notes/)
 
+## Python
+*  <https://python.zeef.com/alan.richmond>
+
 ## SEO
 1. [Google Keyword Tool](https://adwords.google.com/o/Targeting/Explorer?__c=1000000000&__u=1000000000&ideaRequestType=KEYWORD_IDEAS)
 2. [百度站长工具](http://zhanzhang.baidu.com/dashboard/index) ****
