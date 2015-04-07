@@ -62,7 +62,8 @@ API设计的一般的思路是，API提供者根据某种语法规范，表达�
 4. [GitHub API v3](https://developer.github.com/v3/)
 5. [How do you document your APIs?](http://www.infoq.com/research/api-documentation)
 	- 除了常见的几种方案，这篇还提供了其它方案的信息链接
-
+6. <https://github.com/danielgtaylor/aglio>  - 还不错的一个根据API Blueprint生成文档的工具
+	- An API Blueprint renderer with theme support that outputs static HTML
 
 
 
