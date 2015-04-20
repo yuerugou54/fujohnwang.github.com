@@ -270,6 +270,7 @@ with MapReduce](http://lintool.github.com/MapReduceAlgorithms/index.html) ^^^
 3. [IT类电子书@itpub.net](http://www.itpub.net/forum-61-1.html)
 
 ## Movies(电影)
+0. [一站搜(美剧)](http://videos.yizhansou.com/)
 1. [天天美剧](http://www.ttmeiju.com/)
 2. [ed2000电影](http://www.ed2000.com/FileList.asp?FileCategory=%E7%94%B5%E5%BD%B1)
 3. [阳光电影](http://www.ygdy8.com/)
