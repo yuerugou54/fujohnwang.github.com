@@ -9,4 +9,25 @@
 ./compile interlinks.md
 ./compile columns/columns-index.md
 
+for f in `ls columns/**/*.m*`
+do
+	./compile $f
+done
+
+for f in `ls digests/*.m*`
+do
+	./compile $f
+done
+
+
+for f in `ls references/**/*.m*`
+do
+	./compile $f
+done
+
+for f in `ls tweets/*.m*`
+do
+	./compile $f
+done
+
 sbt run
