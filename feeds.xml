@@ -5,6 +5,13 @@
     <link>http://afoo.me</link>
     <description>一个架构士的思考与实践点滴记录</description>
     <item>
+      <title>运维支撑平台高级开发工程师招聘JD</title>
+      <link>http://afoo.me/posts/2015-04-22-ops-platform-recruit-jd.html</link>
+      <pubDate>Tue, 21 Apr 2015 16:00:00 GMT</pubDate>
+      <guid>http://afoo.me/posts/2015-04-22-ops-platform-recruit-jd.html</guid>
+      <dc:date>2015-04-21T16:00:00Z</dc:date>
+    </item>
+    <item>
       <title>论羽翼思维模式</title>
       <link>http://afoo.me/posts/2015-04-08-copy-to-death.html</link>
       <pubDate>Tue, 07 Apr 2015 16:00:00 GMT</pubDate>
@@ -73,13 +80,6 @@
       <pubDate>Thu, 11 Dec 2014 16:00:00 GMT</pubDate>
       <guid>http://afoo.me/posts/2014-12-12-nexus-admin-lite-manual.html</guid>
       <dc:date>2014-12-11T16:00:00Z</dc:date>
-    </item>
-    <item>
-      <title>什么是保理业务？</title>
-      <link>http://afoo.me/posts/2014-11-17-whats-factoring-business.html</link>
-      <pubDate>Sun, 16 Nov 2014 16:00:00 GMT</pubDate>
-      <guid>http://afoo.me/posts/2014-11-17-whats-factoring-business.html</guid>
-      <dc:date>2014-11-16T16:00:00Z</dc:date>
     </item>
   </channel>
 </rss>
