@@ -47,9 +47,13 @@ object SiteBuilder {
 
       val pageFile = new File(paginationDirectory, s"p${pageNumber}.html")
       val pagination = paginate(pageNumber, pageCount)
-      //      logger.info("pagination : {}", pagination)
+      val thanks =
+        """
+          |<hr>
+          |<p>Powered by <a href="http://johnmacfarlane.net/pandoc/">pandoc</a>, <a href="http://rometools.github.io/rome/index.html">ROME</a> and <a href="http://pages.github.com/">github pages</a></p>
+        """.stripMargin
 
-      val pageTemplate = StringUtils.replace(FileUtils.readFileToString(new File("templates/index.html"), encoding), "%s", pageContent + pagination)
+      val pageTemplate = StringUtils.replace(FileUtils.readFileToString(new File("templates/index.html"), encoding), "%s", pageContent + pagination + thanks)
       FileUtils.writeStringToFile(pageFile, pageTemplate, encoding)
 
       if (pageNumber == 1) {
@@ -88,11 +92,8 @@ object SiteBuilder {
     val nextLink = if (currentPageNumber + 1 <= pageCount) s"/pages/p${currentPageNumber + 1}.html" else "#"
 
     s"""
-      |<hr>
-      |<ul class="pager">
-      |  <li><a href="$previousLink">Previous</a></li>
-      |  <li><a href="$nextLink">Next</a></li>
-      |</ul>
+      |  <li><a href="$previousLink"><span class="glyphicon glyphicon-backward" aria-hidden="true"></span></a></li>
+      |  <li><a href="$nextLink"><span class="glyphicon glyphicon-forward" aria-hidden="true"></span></a></li>
     """.stripMargin
   }
 
