@@ -3,12 +3,13 @@
 
   <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-    <title>Tweets第一卷 - 一个架构士的思考与沉淀@afoo.me</title>
+    <title>Docker with boot2Docker on Mac - 一个架构士的思考与沉淀@afoo.me</title>
     <meta name="author" content="FuqiangWang">
     <meta charset='utf-8'>
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link rel="icon" href="/favicon.ico">
+        <meta name="date" content="2015-04-23" />
                     
     <link href='/font/Syncopate/stylesheet.css' rel='stylesheet' type='text/css'>
     <link href='/font/News_Cycle/stylesheet.css' rel='stylesheet' type='text/css'>
@@ -53,9 +54,9 @@
                 <div class="row">
                                 <div id="header">
                 <p class="lead">
-                <h1 class="title">Tweets第一卷&nbsp;&nbsp;
+                <h1 class="title">Docker with boot2Docker on Mac&nbsp;&nbsp;
                 <small>
-                                    王福强
+                                    陨石 - yunshi AT wacai DOTA com
                                 </small>
                 </h1>
                 </p>
@@ -64,30 +65,54 @@
 
                 <hr>
 
-                                <ul>
-<li><p><strong>Scenario-Driven Learning</strong></p></li>
-<li><p>积善之家，必有余庆； 积不善之家， 必有余殃。</p></li>
-<li><p>造命在天， 立命在人！</p></li>
-<li><p>富贵不还乡，如锦衣夜行。</p></li>
-<li><p>最好的风水在<strong>人心(你自己的心)</strong>！</p></li>
-<li><p>声望和拥戴， 总是与妖魔化和污名化相伴！ （阳光下枝叶越茂盛， 黑暗中根扎的也越深！）</p></li>
-<li><p>“<strong>只有到了惨淡的年景， 你才知道谁是你真正的朋友！</strong>”</p></li>
-<li><p>“别把欲望当理想，莫把世故当成熟。别把麻木当深沉，莫把幼稚当激情。别把油滑当智慧，莫把诱惑当机会。”</p></li>
-<li><p>人， 不图小利， 必有大谋。</p></li>
-<li><p><strong>羽翼思维模式</strong>，即觉得只要帮上翅膀就会像鸟一样能飞，形容照搬模式，僵化的思路。</p></li>
-<li><p>心灵枯燥了， 物欲就会强烈； 心灵丰盈了， 物欲就没有那么饥渴了。</p></li>
-<li><p>幸福的目的不是为了被人看见，被人羡慕，幸福只跟你的内心感受有关。很多时候我们觉得不快乐，是因为我们追求的不是“幸福”，而是“比别人幸福”。</p></li>
-<li><blockquote>
-<p>&quot;永远不要期望你的员工能“以做老板的心态打工”，除非你真的让他成为“老板”，之一。有这种觉悟的员工不能在你这里成为“老板”，磨练完一定会去别的地方成为老板。这世界是公平的，“以做老板的心态打工”，是管理者的自我麻醉剂。&quot;</p>
-</blockquote></li>
-<li><blockquote>
-<p>我理解，一个企业只有两种东西可以出售，一个是你的现在，一个就是你的未来，出售你的现在的东西，我们叫做销售，出售你未来的东西呢，叫融资。___张维迎</p>
-</blockquote></li>
-<li><blockquote>
-<p>经营一份事业，不是为了要赚多少钱，而是为了让自己的人生变得独立精彩。 人都在追求物质财富，而一部分人却在追求自我成长。 走过一段路后才发现，当一个人内心强大修养足够时，赚钱只是顺带的事，成功也只是优秀的副产品…… 做一个值钱的人比做一个有钱的人更重要！</p>
-</blockquote></li>
-<li><p>你不会后悔你做了什么，只是会后悔没做什么</p></li>
-</ul>
+                                <div id="TOC">
+                <ul>
+                <li><a href="#准备与运行"><span class="toc-section-number">1</span> 准备与运行</a></li>
+                <li><a href="#常用命令说明"><span class="toc-section-number">2</span> 常用命令说明</a><ul>
+                <li><a href="#升级boot2docker"><span class="toc-section-number">2.1</span> 升级boot2docker</a></li>
+                <li><a href="#升级docker"><span class="toc-section-number">2.2</span> 升级docker</a></li>
+                <li><a href="#下载最新的boot2docker-iso"><span class="toc-section-number">2.3</span> 下载最新的boot2docker iso</a></li>
+                <li><a href="#删除虚拟机景象"><span class="toc-section-number">2.4</span> 删除虚拟机景象</a></li>
+                </ul></li>
+                <li><a href="#gotchas"><span class="toc-section-number">3</span> Gotchas</a></li>
+                <li><a href="#references"><span class="toc-section-number">4</span> References</a></li>
+                </ul>
+                </div>
+                                <h1 id="准备与运行"><span class="header-section-number">1</span> 准备与运行</h1>
+<ol start="0" style="list-style-type: decimal">
+<li>先装<a href="https://www.virtualbox.org/wiki/Downloads">virtualbox</a>, boot2docker需要它！</li>
+<li><a href="https://github.com/boot2docker/osx-installer/releases">download</a> and install
+<ul>
+<li>更简单的做法：<code>brew update</code> &amp; <code>brew install boot2docker</code></li>
+</ul></li>
+<li><p><code>boot2docker init</code> to download vm iso and create it in virtual box;</p>
+<pre><code>➜  ~  boot2docker init
+Latest release for boot2docker/boot2docker is v1.6.0
+Downloading boot2docker ISO image...</code></pre></li>
+<li><code>boot2docker start</code>
+<ul>
+<li>返回信息中会提示你设置环境变量，不用手动设置， 直接执行第4步的命令即可。</li>
+</ul></li>
+<li><code>boot2docker shellinit</code> - 设置相关环境变量</li>
+<li></li>
+</ol>
+<h1 id="常用命令说明"><span class="header-section-number">2</span> 常用命令说明</h1>
+<h2 id="升级boot2docker"><span class="header-section-number">2.1</span> 升级boot2docker</h2>
+<p>下载最新的boot2docker安装包并安装即可。</p>
+<h2 id="升级docker"><span class="header-section-number">2.2</span> 升级docker</h2>
+<p>运行<code>boot2docker download</code></p>
+<h2 id="下载最新的boot2docker-iso"><span class="header-section-number">2.3</span> 下载最新的boot2docker iso</h2>
+<p><code>boot2docker download</code></p>
+<h2 id="删除虚拟机景象"><span class="header-section-number">2.4</span> 删除虚拟机景象</h2>
+<p><code>boot2docker delete</code></p>
+<h1 id="gotchas"><span class="header-section-number">3</span> Gotchas</h1>
+<p>哥黑苹果， BIOS有的项目禁止了， 所以up不起来，fuck~</p>
+<h1 id="references"><span class="header-section-number">4</span> References</h1>
+<ol style="list-style-type: decimal">
+<li><a href="http://docs.docker.com/installation/mac/" class="uri">http://docs.docker.com/installation/mac/</a></li>
+<li><a href="https://www.gitbook.com/book/yeasy/docker_practice/details">Docker —— 从入门到实践</a></li>
+<li><a href="http://www.luiselizondo.net/a-production-ready-docker-workflow/">A production ready Docker workflow</a></li>
+</ol>
                 
                 <!--百度分享按钮-->
                 <div class="pull-left bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a><a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a></div>
