@@ -55,8 +55,10 @@ object SiteBuilder {
 
         val postLine =
           s"""
+             | <div class="col-lg-3 col-sm-3">
              |    <h3 class="panel-title"><a href="/posts/${tuple._2}">${tuple._1}</a></h3>
              |    <p class="list-group-item-text">BY 扶墙老师 AT ${tuple._3}</p>
+             | </div>
            """.stripMargin
 
         index  ++ postLine
