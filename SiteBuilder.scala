@@ -41,7 +41,7 @@ object SiteBuilder {
         (title, fileName, postDate)
       })
 
-      val pageContent = tuples.foldLeft("""<div class="list-group">""")((index, tuple) => {
+      val pageContent = tuples.foldLeft("")((index, tuple) => {
 //        val postLine = s"""
 //          |<div class="panel panel-default">
 //          |  <div class="panel-heading">
@@ -55,14 +55,9 @@ object SiteBuilder {
 
         val postLine =
           s"""
-             |
-             |  <a href="#" class="list-group-item">
              |    <h3 class="panel-title"><a href="/posts/${tuple._2}">${tuple._1}</a></h3>
              |    <p class="list-group-item-text">BY 扶墙老师 AT ${tuple._3}</p>
-             |  </a>
-             |
-             |
-           """.stripMargin ++ "</div>"
+           """.stripMargin
 
         index  ++ postLine
       })
