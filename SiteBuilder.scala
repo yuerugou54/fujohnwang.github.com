@@ -42,26 +42,7 @@ object SiteBuilder {
       })
 
       val pageContent = tuples.foldLeft("")((index, tuple) => {
-//        val postLine = s"""
-//          |<div class="panel panel-default">
-//          |  <div class="panel-heading">
-//          |
-//          |  </div>
-//          |  <div class="panel-body">
-//          |   <h3 class="panel-title"><a href="/posts/${tuple._2}">${tuple._1}</a></h3> BY 扶墙老师 AT ${tuple._3}
-//          |  </div>
-//          |</div>
-//        """.stripMargin
-
-        val postLine =
-          s"""
-             | <div class="col-lg-3 col-sm-3">
-             |    <h3 class="panel-title"><a href="/posts/${tuple._2}">${tuple._1}</a></h3>
-             |    <p class="list-group-item-text">BY 扶墙老师 AT ${tuple._3}</p>
-             | </div>
-           """.stripMargin
-
-        index  ++ postLine
+        index ++ s"""<h3><a href="/posts/${tuple._2}">${tuple._1}</a></h3><p>by 扶墙老师 at ${tuple._3}</p>"""
       })
 
       val pageFile = new File(paginationDirectory, s"p${pageNumber}.html")
