@@ -34,7 +34,7 @@
 
 * 你不会后悔你做了什么，只是会后悔没做什么
 
-
+* > “In the beginner’s mind there are many possibilities, in the expert's mind there are few.”  - Shunryu Suzuki()
 
 
 

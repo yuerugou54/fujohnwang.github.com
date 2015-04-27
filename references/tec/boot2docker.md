@@ -47,6 +47,7 @@ Downloading boot2docker ISO image...
 # References
 1.  <http://docs.docker.com/installation/mac/>
 2. [Docker —— 从入门到实践](https://www.gitbook.com/book/yeasy/docker_practice/details)
+	- <http://yeasy.gitbooks.io/docker_practice/content/dockerfile/basic_structure.html> - Dockerfile基础结构
 3. [A production ready Docker workflow](http://www.luiselizondo.net/a-production-ready-docker-workflow/)
 
 
