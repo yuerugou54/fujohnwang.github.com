@@ -17,6 +17,9 @@
 1. <http://finance.qq.com/stock/>
 2. <http://quote.hexun.com/>
 3. [东方财富网行情中心](http://quote.eastmoney.com/center/)
+4. [巨潮资讯](http://www.cninfo.com.cn/)
+5. [上海证券交易所](http://www.sse.com.cn/)
+6. [深圳证券交易所](http://www.szse.cn/)
 
 ### OTC
 
