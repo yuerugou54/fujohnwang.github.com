@@ -152,6 +152,7 @@ with MapReduce](http://lintool.github.com/MapReduceAlgorithms/index.html) ^^^
 * [Learning Advanced JavaScript](http://ejohn.org/apps/learn/)
 * <http://programming-motherfucker.com/become.html> - 一堆书和资料的汇总
 * <http://hackr.io/> - Share and discover the best programming tutorials and courses online.
+* [Automate the Boring Stuff with Python](http://automatetheboringstuff.com/)
 
 ## MySQL
 * [MySQL Internals Manual](http://dev.mysql.com/doc/internals/en/index.html) ****
