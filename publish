@@ -7,7 +7,7 @@
 ./compile whoami.md
 ./compile references.md
 ./compile interlinks.md
-./compile columns/columns-index.md
+./compile columns.md
 
 for f in `ls columns/**/*.m*`
 do
