@@ -23,8 +23,8 @@
 
 ### OTC
 
-[上海股权托管交易中心](http://www.china-see.com/index.do)
-
+1. [上海股权托管交易中心](http://www.china-see.com/index.do)
+2. [聚募](http://www.dreammove.cn/index/index.html)
 
 ## Gold(贵金属)
 
