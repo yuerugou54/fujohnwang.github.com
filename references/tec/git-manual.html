@@ -10,6 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link rel="icon" href="/favicon.ico">
             <style type="text/css">
+    div.sourceCode { overflow-x: auto; }
     table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
       margin: 0; padding: 0; vertical-align: baseline; border: none; }
     table.sourceCode { width: 100%; line-height: 100%; }
@@ -91,13 +92,13 @@
                 </ul>
                 </div>
                                 <h1 id="舍弃所有本地变更-回滚到最后提交状态"><span class="header-section-number">1</span> 舍弃所有本地变更， 回滚到最后提交状态</h1>
-<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">git</span> commit -a -m <span class="st">&quot;Saving my work, just in case&quot;</span>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">git</span> commit -a -m <span class="st">&quot;Saving my work, just in case&quot;</span>
 <span class="kw">git</span> branch my-saved-work
 
 <span class="kw">git</span> fetch origin
-<span class="kw">git</span> reset --hard origin/master</code></pre>
+<span class="kw">git</span> reset --hard origin/master</code></pre></div>
 <h1 id="打包指定版本的文件"><span class="header-section-number">2</span> 打包指定版本的文件</h1>
-<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">git</span> archive -o docs.zip v2.2.0 <span class="st">&#39;Documentation/*.html&#39;</span></code></pre>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">git</span> archive -o docs.zip v2.2.0 <span class="st">&#39;Documentation/*.html&#39;</span></code></pre></div>
 <p>git版本2.2.0</p>
 <h1 id="remote-branch"><span class="header-section-number">3</span> Remote Branch</h1>
 <p><a href="http://git-scm.com/book/en/v2/Git-Branching-Remote-Branches" class="uri">http://git-scm.com/book/en/v2/Git-Branching-Remote-Branches</a></p>

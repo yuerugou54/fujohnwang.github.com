@@ -10,6 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link rel="icon" href="/favicon.ico">
             <style type="text/css">
+    div.sourceCode { overflow-x: auto; }
     table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
       margin: 0; padding: 0; vertical-align: baseline; border: none; }
     table.sourceCode { width: 100%; line-height: 100%; }
@@ -104,7 +105,7 @@
 <p>System.getenv() is for Operating System environment variables, whereas System.getProperty() is for JVM arguments which are passed as -DpropName=value to Java application launcher (java).</p>
 </blockquote>
 <p>　　　 # Initialization On-Demand Holder Idiom Demonstration</p>
-<pre class="sourceCode java"><code class="sourceCode java"><span class="kw">public</span> <span class="kw">class</span> Singleton {     
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="kw">public</span> <span class="kw">class</span> Singleton {     
     <span class="kw">private</span> <span class="fu">Singleton</span>() {         
         <span class="co">// initialize this class</span>
     }
@@ -114,15 +115,15 @@
         <span class="kw">public</span> <span class="dt">static</span> Singleton <span class="fu">getInstance</span>() {         
         <span class="kw">return</span> SingletonHolder.<span class="fu">instance</span>;
         }
-}</code></pre>
+}</code></pre></div>
 <h1 id="通过java.awt.robot的createscreencapture截屏"><span class="header-section-number">2</span> 通过java.awt.Robot的createScreenCapture截屏</h1>
-<pre class="sourceCode java"><code class="sourceCode java"><span class="kw">public</span> <span class="dt">static</span> <span class="dt">void</span> <span class="fu">captureScreen</span>(String fileName) <span class="kw">throws</span> Exception {
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="kw">public</span> <span class="dt">static</span> <span class="dt">void</span> <span class="fu">captureScreen</span>(String fileName) <span class="kw">throws</span> Exception {
     Dimension screenSize = Toolkit.<span class="fu">getDefaultToolkit</span>().<span class="fu">getScreenSize</span>();
     Rectangle screenRectangle = <span class="kw">new</span> Rectangle(screenSize);
     Robot robot = <span class="kw">new</span> Robot();
     BufferedImage image = robot.<span class="fu">createScreenCapture</span>(screenRectangle);
     ImageIO.<span class="fu">write</span>(image, <span class="st">&quot;png&quot;</span>, <span class="kw">new</span> File(fileName));
-}</code></pre>
+}</code></pre></div>
 <h1 id="英雄无敌iii中玩随机地图和元素族的方法"><span class="header-section-number">3</span> 英雄无敌III中玩随机地图和元素族的方法</h1>
 <p>在游戏所在的文件夹中建立一个名为 H3BLADE.EXE 的空文件， 然后再在 Data 子文件夹中建立H3AB_BMP.LOD、H3AB_SPR.LOD、H3AB_AHD.SND、H3AB_AHD.VID 这几个空文件，这样就可以玩到随机地图了， 而且还能在没有安装末日之刃的情况下使用元素族。 建立空文件的方法有很多，最简单的是利用windows自带的记事本（notepad），什么内容也不用输，直接使用“另存为”命令， 文件类型定为“所有文件（*.*）”，文件名要完整输入（如 3BLADE.EXE ），保存就行了。 然后复制该空文件，修改文件名生成新文件（事先要将“设置--&gt;文件夹选项--&gt;察看--&gt;隐藏已知文件类型的扩展名”的勾去掉，才能修改后缀名）。</p>
 <h1 id="linux-负载查询和uptime命令解释"><span class="header-section-number">4</span> Linux 负载查询和uptime命令解释</h1>

@@ -36,6 +36,11 @@
 
 * > “In the beginner’s mind there are many possibilities, in the expert's mind there are few.”  - Shunryu Suzuki()
 
+* “It's all about finding the right balance!”
+
+* > "You're Not Paid To Write Code, You're Paid To Deliver A Product"
+
+* > 一个人的成熟，并不表现在获得了多少成就上，而是面对那些厌恶的人和事，不迎合也不抵触，只淡然一笑对之。
 
 
 

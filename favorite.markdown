@@ -205,7 +205,11 @@ with MapReduce](http://lintool.github.com/MapReduceAlgorithms/index.html) ^^^
 1. <http://www.thegeekstuff.com/>
 2. <http://www.commandlinefu.com/commands/browse>
 	- many commands demonstrated for misc. senarios
-	
+3. <https://sysadmincasts.com/>
+    - Sysadmin Casts - bite-sized sysadmin screencasts (released weekly)
+
+
+
 ### Docker
 1. [Docker 中文社区](https://www.dockboard.org/)
 2. <https://hub.docker.com/>
@@ -250,7 +254,7 @@ with MapReduce](http://lintool.github.com/MapReduceAlgorithms/index.html) ^^^
 
 ## Bootstrap
 1. [http://startbootstrap.com/](http://startbootstrap.com/)
-
+2. <https://bootswatch.com/> - Free themes for Bootstrap
 
 
 ## Android

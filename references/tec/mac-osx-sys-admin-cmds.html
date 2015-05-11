@@ -10,6 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link rel="icon" href="/favicon.ico">
             <style type="text/css">
+    div.sourceCode { overflow-x: auto; }
     table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
       margin: 0; padding: 0; vertical-align: baseline; border: none; }
     table.sourceCode { width: 100%; line-height: 100%; }
@@ -90,9 +91,9 @@
                 </div>
                                 <h1 id="hardlink"><span class="header-section-number">1</span> hardlink</h1>
 <p>苹果的ln跟Linux/Unix下的ln分道扬镳了，不支持hard link， 要使用hard link，可以：</p>
-<pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">brew</span> install hardlink-osx
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">brew</span> install hardlink-osx
 $ <span class="kw">hln</span> .task ~/FuqiangWorks/task-warrior-storage-mirror  // hln source destination, 这里我们把task warrior的数据目录映射到备份目录
-$ <span class="kw">hln</span> -u destination   // unlink</code></pre>
+$ <span class="kw">hln</span> -u destination   // unlink</code></pre></div>
 <p>Ref: <a href="https://github.com/selkhateeb/hardlink" class="uri">https://github.com/selkhateeb/hardlink</a></p>
                 
                 <!--百度分享按钮-->
