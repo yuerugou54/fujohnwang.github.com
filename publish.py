@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from subprocess import call
+from subprocess import *
 from sys import *
 
 def generate_index_page(body):
