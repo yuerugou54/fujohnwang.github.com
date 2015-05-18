@@ -236,6 +236,7 @@ with MapReduce](http://lintool.github.com/MapReduceAlgorithms/index.html) ^^^
 8. [favicon.ico Generator](http://www.favicon.cc/)
 9. [https://infogr.am/](https://infogr.am/) - 在线图表制作工具，比如制作报告
 10. [http://asciiflow.com/](http://asciiflow.com/)  - 在线画ASCII arts， 比如搞个有个性的代码中的注释
+11. <http://schemaspy.sourceforge.net/> - 基于Java的图形化工具，用于分析数据库schema的关系
 
 
 ## Mac OS X
@@ -246,6 +247,7 @@ with MapReduce](http://lintool.github.com/MapReduceAlgorithms/index.html) ^^^
 1. [Harden Your Web App - A developer oriented repository of attacks and defenses.](http://webapp-hardening.heroku.com/)
 2. [Fofacli 全网漏洞扫描器](http://fofa.so/fofacli)
 3. [社工库](http://www.weigongkai.com/)
+4. <http://www.273tech.com/>
 
 ## Shell
 1. [http://explainshell.com/](http://explainshell.com/)
