@@ -12,6 +12,9 @@ align service/functionality, person, team, organization, even bigger entities...
 
 > Build if it's **unique** to what you do.
 
+> we can make a change to a single service and deploy it independently of the rest.
+
+
 
 
 # Orchestration VS. Choreography
@@ -69,7 +72,47 @@ With choreography, we inform each part of the system of its job, and let it work
 本质上， 还是Orchestration和Choreography两种思路的体现， 非互斥关系， 完全可以根据具体场景组合使用。
 
 
+# Deployment Artifacts
 
+制作self-contained deployable microservices as artifacts
+
+## Platform-Specific Artifacts
+aka. technology-specific artifacts, like gem, jar, npm, etc..
+
+## Operating System Artifacts
+
+> One way to avoid the problems associated with technology-specific artifacts is to create artifacts that are native to the underlying operating system.
+
+say, rpm for redhat/centos, deb for debian/ubuntu, msi for windows
+
+减少支持的操作系统类型的数量以避免无必要的资源投入。
+
+制作自定义的Image景象，减少不必要的provisioning过程和重复（One approach to reducing this spin-up time is to create a virtual machine image that bakes in some of the common dependencies we use）。
+
+在组织层次不足以支撑和cover新技术栈的情况下，不建议使用docker之类的容器Image技术，虽然属于发布的artifact的形式之一，但牵扯到周边系统的工作也会需要变更，包括人员，工作流程等。 "先进的，往往也是落后的"！
+
+# Service-to-Host Mapping
+
+单节点部署多服务的情况，主要需要考虑资源隔离的问题。
+
+单节点部署单一服务的情况，主要需要解决资源利用率的问题。
+
+关注那句老话：`threads don't scale, processes do.`
+
+
+
+
+
+
+
+
+
+
+
+
+# 工具参考
+1. [fpm - Effing Package Management](https://github.com/jordansissel/fpm/wiki)
+2. [Packer is a tool for creating identical machine images for multiple platforms from a single source configuration.](https://www.packer.io/)
 
 
 
@@ -79,6 +122,7 @@ With choreography, we inform each part of the system of its job, and let it work
 1. inhibit,  [ɪn'hɪbɪt] , v., 抑制；阻止；使不能
     - e.g. Distributed Transaction cand inhibit scaling.
     - 区别于inhabit, v.居住于；占据；栖息
+    - 可以引申联想到prohibitive
 2. 
 
 

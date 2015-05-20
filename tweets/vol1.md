@@ -42,7 +42,7 @@
 
 * > 一个人的成熟，并不表现在获得了多少成就上，而是面对那些厌恶的人和事，不迎合也不抵触，只淡然一笑对之。
 
-
+* > any decent answer to an interesting question begins with, "it depends..."
 
 
 
