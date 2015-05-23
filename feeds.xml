@@ -5,6 +5,13 @@
     <link>http://afoo.me</link>
     <description>一个架构士的思考与实践点滴记录</description>
     <item>
+      <title>BuildingMicroservices读书笔记与感悟</title>
+      <link>http://afoo.me/posts/2015-05-13-building-microservices-note-and-digest.html</link>
+      <pubDate>Tue, 12 May 2015 16:00:00 GMT</pubDate>
+      <guid>http://afoo.me/posts/2015-05-13-building-microservices-note-and-digest.html</guid>
+      <dc:date>2015-05-12T16:00:00Z</dc:date>
+    </item>
+    <item>
       <title>运维支撑平台高级开发工程师招聘JD</title>
       <link>http://afoo.me/posts/2015-04-22-ops-platform-recruit-jd.html</link>
       <pubDate>Tue, 21 Apr 2015 16:00:00 GMT</pubDate>
@@ -72,13 +79,6 @@
       <link>http://afoo.me/posts/2014-12-12-understanding-launch-daemons-of-macosx.html</link>
       <pubDate>Thu, 11 Dec 2014 16:00:00 GMT</pubDate>
       <guid>http://afoo.me/posts/2014-12-12-understanding-launch-daemons-of-macosx.html</guid>
-      <dc:date>2014-12-11T16:00:00Z</dc:date>
-    </item>
-    <item>
-      <title>Nexus Maven Repository Manager管理手册</title>
-      <link>http://afoo.me/posts/2014-12-12-nexus-admin-lite-manual.html</link>
-      <pubDate>Thu, 11 Dec 2014 16:00:00 GMT</pubDate>
-      <guid>http://afoo.me/posts/2014-12-12-nexus-admin-lite-manual.html</guid>
       <dc:date>2014-12-11T16:00:00Z</dc:date>
     </item>
   </channel>
