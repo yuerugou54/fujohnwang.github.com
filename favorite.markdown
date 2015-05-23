@@ -248,6 +248,7 @@ with MapReduce](http://lintool.github.com/MapReduceAlgorithms/index.html) ^^^
 2. [Fofacli 全网漏洞扫描器](http://fofa.so/fofacli)
 3. [社工库](http://www.weigongkai.com/)
 4. <http://www.273tech.com/>
+5. <https://veracrypt.codeplex.com/> - Veracrpyt, enhanced truecrypt
 
 ## Shell
 1. [http://explainshell.com/](http://explainshell.com/)

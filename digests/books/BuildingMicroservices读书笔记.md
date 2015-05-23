@@ -2,17 +2,21 @@
 % 王福强
 % 2015-05-13
 
-loose coupling(interexchange) and high cohesion(autonomy).
-
-bounded context  -> atomic unit boundary -> compositional boundaries
+loose coupling(interexchange) and high cohesion(autonomy), the most simple but long-lived rule for software development stand!!!
 
 align service/functionality, person, team, organization, even bigger entities...
 
-> trade short-term gain for long-term pain
 
-> Build if it's **unique** to what you do.
+~~~
+bounded context  -> atomic unit boundary -> compositional boundaries
+~~~
 
-> we can make a change to a single service and deploy it independently of the rest.
+
+> == Words That Make Sense In This Book ==
+> 
+> * trade short-term gain for long-term pain
+> * Build if it's **unique** to what you do.
+> * we can make a change to a single service and deploy it independently of the rest.
 
 
 
@@ -29,11 +33,9 @@ With choreography, we inform each part of the system of its job, and let it work
 
 # Versioning
 
-~~个人看法是， 在URI上不要明确使用version作为URI的一部分， 而采用通用的资源标志URI， 但允许通过参数来明确version， 如果不指定，则默认访问已经部署的最高版本的服务或者资源。~~
+刚开始个人看法是， 在URI上不要明确使用version作为URI的一部分， 而采用通用的资源标志URI， 但允许通过参数来明确version， 如果不指定，则默认访问已经部署的最高版本的服务或者资源。这相当于COC的思想体现。
 
-~~这相当于COC的思想体现。~~
-
-这样做（指采用默认访问latest版本服务的方式）其实存在问题， 如果客户端都采用默认不加版本的访问方式，一旦服务端升级造成不兼容， 那么客户端很大面积上会受影响。原则上，服务发布不应该影响面这么大！
+但后来想想，这样做（指采用默认访问latest版本服务的方式）其实存在问题， 如果客户端都采用默认不加版本的访问方式，一旦服务端升级造成不兼容， 那么客户端很大面积上会受影响。原则上，服务发布不应该影响面这么大！
 
 所以， URI中明确version可能是更合适的方式， 由客户端或者服务访问端自己决定是否升级。
 
@@ -99,9 +101,49 @@ say, rpm for redhat/centos, deb for debian/ubuntu, msi for windows
 
 关注那句老话：`threads don't scale, processes do.`
 
+## Virtualization
+
+> * Type 1 virtualization refers to technology where the VMs run directly on hardware, not on top of another operating system.
+> * Type 2 virtualization, AWS, VMWare, VSphere, Xen, and KVM...
+
+> if you don’t trust the code you are running, don’t expect that you can run it in a container and be safe. If you need that sort of isolation, you’ll need to consider using virtual machines instead.
 
 
+"After many years of working in this space, I am convinced that the most sensible way to trigger any deployment is via a single, parameterizable command-line call.", 实际上， 命令行只是一种表现形式， 你当然可以把核心功能用shell脚本来写，但核心功能只要集中管理之后， 命令行也好， 操作页面也罢，都只是核心功能的一种延伸形式罢了。
 
+# Test
+
+as long as you understand that test design and performing help you to design and implement your services/systems better, you will find the way to do the test properly.
+
+So, I skip this section.
+
+# Monitoring
+
+我坚持"No News Is The Good News"原则！ 
+
+1. Alert是后继流程的起点，and **Identity** Matters here! 
+    - Including `Correlation ID`s
+    - artifactId is not enough, mix everything about environment together like host, IDC, etc.
+2. Interconnections smooth the process!  
+3. Convention and Consistency saves your ass too!
+4. 跳出单机思维， 构建平台生态圈！ 
+    - > monitor the small things, and use aggregation to see the bigger picture. 
+    - > away from systems specialized to do just one thing, and toward generic event processing systems that allow you to look at your system in a more holistic way.
+    - logs(kibana), system metrics(dashboard which can help drill things down, like [Graphite](http://graphite.wikidot.com/) or zabbix)， application metrics(JMX, [dropwizard/metrics](https://github.com/dropwizard/metrics))
+
+实行‘计划经济’， 去他妈的‘市场经济’，这里根本不需要后者！
+
+## 监控的内与外
+
+大部分情况下我们会关注身体内部的情况(各种agents，各种logs, 各种metrics，诸如此类)，但实际上，我们最好同时也对别人怎么看我们有一个起码基础的认识， 比如使用synthetic monitoring之类的手段来模拟用户访问，看看我们的提供是否正常。
+
+# Security
+
+## Authentication & Authorization
+
+跟哥整合挖财内网帐号体系和系统的思路相似， 偶的基本思路就是， “确定Identity， 让遵循Identity规范的系统在基本前提下根据各自情况flurish(especially, fine-grained authorization)”
+
+> tradeoffs between Shiro and Spring Security with authorization framework.
 
 
 
@@ -117,14 +159,17 @@ say, rpm for redhat/centos, deb for debian/ubuntu, msi for windows
 
 
 
-# 单词与词组
+# 单词与词组学习/复习
 
 1. inhibit,  [ɪn'hɪbɪt] , v., 抑制；阻止；使不能
     - e.g. Distributed Transaction cand inhibit scaling.
     - 区别于inhabit, v.居住于；占据；栖息
     - 可以引申联想到prohibitive
-2. 
-
+2. perilous, ['perələs], adj.危险的；冒险的
+    - The snow and the blackout combined to make motoring perilous - 大雪加上灯火管制使得车辆行驶成了危险的事。
+3. lull, [lʌl], v.使安静；使入睡；哄骗；平息, n.暂停；间歇
+    - The mother lulled the baby to sleep.
+    - They lulled me into a false sense of security.
 
 
 
