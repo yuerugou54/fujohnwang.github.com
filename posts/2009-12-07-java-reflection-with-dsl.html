@@ -10,6 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link rel="icon" href="/favicon.ico">
             <style type="text/css">
+    div.sourceCode { overflow-x: auto; }
     table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
       margin: 0; padding: 0; vertical-align: baseline; border: none; }
     table.sourceCode { width: 100%; line-height: 100%; }
@@ -49,7 +50,7 @@
       <div class="row">
         <div class="col-md-3 sidebar">
             <a href="/">
-				<div align="center"><img src="/images/wfq0.png"/></div>
+				<!-- <div align="center"><img src="/images/wfq0.png"/></div> -->
                 <h2 class="text-center">扶墙老师</h2>
             </a>
             <p class="text-center lead slogan"><a href="/slogan.html">lollapalooza &amp; positioning</a></p>
@@ -83,10 +84,10 @@
                 <hr>
 
                                 <p>I know someone must have heard or known about a library named FEST-Reflect, and maybe you are just using it. It's an interesting library that let you write code of java reflection in a DSL-like style. For example:</p>
-<pre class="sourceCode java"><code class="sourceCode java">String name = <span class="fu">method</span>(<span class="st">&quot;get&quot;</span>).<span class="fu">withReturnType</span>(String.<span class="fu">class</span>)  
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java">String name = <span class="fu">method</span>(<span class="st">&quot;get&quot;</span>).<span class="fu">withReturnType</span>(String.<span class="fu">class</span>)  
                            .<span class="fu">withParameterTypes</span>(<span class="dt">int</span>.<span class="fu">class</span>)  
                            .<span class="fu">in</span>(names)  
-                           .<span class="fu">invoke</span>(<span class="dv">8</span>);  </code></pre>
+                           .<span class="fu">invoke</span>(<span class="dv">8</span>);  </code></pre></div>
 <p>It's just another way to express same logic, but it give you another way to write your code which make your code more readable. If you want to write your code this way, of course, you can use FEST-reflect directly, but that's not why wrote words below, what I try to tell you is, you can implement such things yourself with little effort. I will draft a prototype to implement such a DSL-like style Java Reflection usage API, If you are interested, read on...</p>
 <p>To enable the users to use our API in a DSL-like style like code sample above, it's easy to figure out 2 things:</p>
 <ol style="list-style-type: decimal">
@@ -95,7 +96,7 @@
 </ol>
 <p>So first, we have to find out which operations or methods can be used.</p>
 <p>We focus on only java reflection usage on Instance Method, since it's not a difficult thing to find out what we can do with Method, An abstraction can be given below:</p>
-<pre class="sourceCode java"><code class="sourceCode java"><span class="co">/** </span>
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="co">/** </span>
 <span class="co"> * method(&quot;name&quot;).on(targetobject).withArgumentTypes(...).invoke(...); </span>
 <span class="co"> *  </span>
 <span class="co"> * </span><span class="kw">@author </span><span class="co">fujohnwang </span>
@@ -110,10 +111,10 @@
     IMethodDSL <span class="fu">makeAccessible</span>(<span class="dt">boolean</span> flag);  
       
     &lt;T&gt; T <span class="fu">invoke</span>(Object<span class="kw">... </span>args) <span class="kw">throws</span> InvocationTargetException;  
-}  </code></pre>
+}  </code></pre></div>
 <p>We express the abstraction in an Java interface, except for the last “invoke ” method, other operations have a return type of the same interface, that's, IMethodDSL itself. That's the way we implement a method chaining behavior.</p>
 <p>Since we have had the key abstraction, we can give it an implementation now, it looks like below:</p>
-<pre class="sourceCode java"><code class="sourceCode java"><span class="co">/** </span>
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="co">/** </span>
 <span class="er"> * Default IMethodDSL implementation.&lt;br&gt; </span>
 <span class="co"> *  </span>
 <span class="co"> * </span><span class="kw">@author </span><span class="co">fujohnwang </span>
@@ -213,25 +214,25 @@
         <span class="kw">return</span> <span class="kw">this</span>;  
     }  
   
-}  </code></pre>
+}  </code></pre></div>
 <p>The intermediate operations just accept the parameter value and “return this; ” to achieve method chaining, the key point is the last operation, that's, the “invoke ” method, this is where all of the real stuff take effect. We check the preconditions before invoking Java Reflection API, and then find proper Method with attribute the API user have passed in as chaining-method's parameter. At last, cast the invocation result to the type the users expect to get. That's all, very simple , isn't it?</p>
 <p>To make API users to use this more DSL-likely, we need to offer a Factory-method for our MethodDSL, it looks like:</p>
-<pre class="sourceCode java"><code class="sourceCode java"><span class="kw">public</span> <span class="kw">abstract</span> <span class="kw">class</span> ReflectDSL {  
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="kw">public</span> <span class="kw">abstract</span> <span class="kw">class</span> ReflectDSL {  
       
     <span class="kw">public</span> <span class="dt">static</span> IMethodDSL <span class="fu">method</span>(String methodName)  
     {  
         <span class="kw">return</span> <span class="kw">new</span> <span class="fu">MethodDSL</span>(methodName);  
     }  
     <span class="kw">...  </span>
-}  </code></pre>
+}  </code></pre></div>
 <p>With this, we can use our DSL-like Java Reflection API this way:</p>
-<pre class="sourceCode java"><code class="sourceCode java"><span class="kw">import static ..ReflectionDSL.*;</span>  
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="kw">import static ..ReflectionDSL.*;</span>  
   
 <span class="fu">method</span>(<span class="st">&quot;methodName&quot;</span>)  
         .<span class="fu">on</span>(targetObject)  
         .<span class="fu">withArgumentTypes</span>(...)  
         .<span class="fu">makeAccessable</span>(<span class="kw">true</span>)  
-        .<span class="fu">invoke</span>(...); </code></pre>
+        .<span class="fu">invoke</span>(...); </code></pre></div>
 <p>Of course, some parameters are optional, like the makeAccessable() if it's a public method.</p>
 <p>Until now, we have implement a simple DSL-like style java reflection AP for method, you can move on to provide such similar APIs for Field and Constructor and Static Method and so on.</p>
 <p>The way we used to implement such DSL-like style API have some limitations or defects, for example, we bind intermediate method late and the final effect takes at last, that means, if users use our API in an improper way, they will not get warnings or errors until runtime. To fix this, we can use intermediate type for chaining methods, how? try it yourself and have fun ;-)</p>

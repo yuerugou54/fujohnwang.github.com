@@ -11,6 +11,7 @@
     <link rel="icon" href="/favicon.ico">
         <meta name="date" content="2011-11-20" />
             <style type="text/css">
+    div.sourceCode { overflow-x: auto; }
     table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
       margin: 0; padding: 0; vertical-align: baseline; border: none; }
     table.sourceCode { width: 100%; line-height: 100%; }
@@ -50,7 +51,7 @@
       <div class="row">
         <div class="col-md-3 sidebar">
             <a href="/">
-				<div align="center"><img src="/images/wfq0.png"/></div>
+				<!-- <div align="center"><img src="/images/wfq0.png"/></div> -->
                 <h2 class="text-center">扶墙老师</h2>
             </a>
             <p class="text-center lead slogan"><a href="/slogan.html">lollapalooza &amp; positioning</a></p>
@@ -84,12 +85,12 @@
 
                 <hr>
 
-                                <pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">object</span> Bad <span class="kw">extends</span> Build { 
+                                <div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">object</span> Bad <span class="kw">extends</span> Build { 
     libraryDependencies += <span class="st">&quot;junit&quot;</span> % <span class="st">&quot;junit&quot;</span> % <span class="st">&quot;4.8&quot;</span> % <span class="st">&quot;test&quot;</span>
-}</code></pre>
-<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">object</span> Good <span class="kw">extends</span> Build{ 
+}</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">object</span> Good <span class="kw">extends</span> Build{ 
     <span class="kw">lazy</span> <span class="kw">val</span> root = <span class="fu">Project</span>(<span class="st">&quot;root&quot;</span>, <span class="fu">file</span>(<span class="st">&quot;.&quot;</span>)) <span class="fu">settings</span>( libraryDependencies += <span class="st">&quot;junit&quot;</span> % <span class="st">&quot;junit&quot;</span> % <span class="st">&quot;4.8&quot;</span> % <span class="st">&quot;test&quot;</span> )
-}</code></pre>
+}</code></pre></div>
                 
                 <!--百度分享按钮-->
                 <div class="pull-left bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a><a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a></div>

@@ -10,6 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link rel="icon" href="/favicon.ico">
             <style type="text/css">
+    div.sourceCode { overflow-x: auto; }
     table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
       margin: 0; padding: 0; vertical-align: baseline; border: none; }
     table.sourceCode { width: 100%; line-height: 100%; }
@@ -49,7 +50,7 @@
       <div class="row">
         <div class="col-md-3 sidebar">
             <a href="/">
-				<div align="center"><img src="/images/wfq0.png"/></div>
+				<!-- <div align="center"><img src="/images/wfq0.png"/></div> -->
                 <h2 class="text-center">扶墙老师</h2>
             </a>
             <p class="text-center lead slogan"><a href="/slogan.html">lollapalooza &amp; positioning</a></p>
@@ -84,7 +85,7 @@
 
                                 <p>Maybe you have known it before, or maybe not, no matter what, It’s a funny topic.</p>
 <p>The Code below seems simple, so let’s see what happens with it:</p>
-<pre class="sourceCode java"><code class="sourceCode java"><span class="kw">public</span> <span class="kw">class</span> MyTest <span class="kw">extends</span> TestCase {  
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="kw">public</span> <span class="kw">class</span> MyTest <span class="kw">extends</span> TestCase {  
     <span class="kw">private</span> <span class="dt">int</span> count = <span class="dv">0</span>;  
     <span class="kw">public</span> <span class="dt">void</span> <span class="fu">test1</span>() {  
         count++;  
@@ -94,7 +95,7 @@
         count++;  
         <span class="fu">assertEquals</span>(<span class="dv">1</span>, count);  
     }  
-}  </code></pre>
+}  </code></pre></div>
 <p>If you run this unit test, will it pass or not?</p>
 <p>I seldom wrote too many unit tests before unless I feel it’s necessary, so I didn’t notice the problem of JUnit’s execution model, even you have written many unit tests, but don’t write enough functional tests or integration tests, I don’t think you can find the same problem either.</p>
 <p>Although JUnit’s designer have their reasons or philosophy, but I do think the unit test and their execution model should be separated and are different things. The execution model should not influence the unit test definition. But many JUnit’s best practice are advocated with implicit precondition of its execution model. I know someone(usually don’t know what they are doing) prefer to use static fields or methods, but most of the times, it’s a smell, bad smell of the code. Have u thought why you have to use too many static fields or methods, even static blocks? It’s because JUnit’s execution model mandate u to do it. It works, but it doesn’t mean it’s natural , rational or the best.</p>

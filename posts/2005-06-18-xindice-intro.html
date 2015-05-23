@@ -10,6 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link rel="icon" href="/favicon.ico">
             <style type="text/css">
+    div.sourceCode { overflow-x: auto; }
     table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
       margin: 0; padding: 0; vertical-align: baseline; border: none; }
     table.sourceCode { width: 100%; line-height: 100%; }
@@ -49,7 +50,7 @@
       <div class="row">
         <div class="col-md-3 sidebar">
             <a href="/">
-				<div align="center"><img src="/images/wfq0.png"/></div>
+				<!-- <div align="center"><img src="/images/wfq0.png"/></div> -->
                 <h2 class="text-center">扶墙老师</h2>
             </a>
             <p class="text-center lead slogan"><a href="/slogan.html">lollapalooza &amp; positioning</a></p>
@@ -107,7 +108,7 @@ xupdate:processing-instruction Creates a processing instruction node in the docu
 xupdate:comment Creates a new comment node in the document
 </pre>
 <p>下面是xindice提供的文档中给出的一个简单的XUpdate命令实例：</p>
-<pre class="sourceCode xml"><code class="sourceCode xml">Basic XUpdate Insert Command
+<div class="sourceCode"><pre class="sourceCode xml"><code class="sourceCode xml">Basic XUpdate Insert Command
 
 <span class="kw">&lt;xupdate:modifications</span><span class="ot"> version=</span><span class="st">&quot;1.0&quot;</span>
 <span class="ot">        xmlns:xupdate=</span><span class="st">&quot;http://www.xmldb.org/xupdate&quot;</span><span class="kw">&gt;</span>
@@ -120,24 +121,24 @@ xupdate:comment Creates a new comment node in the document
          <span class="kw">&lt;country&gt;</span>Germany<span class="kw">&lt;/country&gt;</span>
      <span class="kw">&lt;/xupdate:element&gt;</span>
    <span class="kw">&lt;/xupdate:insert-after&gt;</span>
-<span class="kw">&lt;/xupdate:modifications&gt;</span></code></pre>
+<span class="kw">&lt;/xupdate:modifications&gt;</span></code></pre></div>
 <p>在程序中，可以通过以下类似代码调用该XUpdate命令对文档进行更新：</p>
-<pre class="sourceCode java"><code class="sourceCode java">String xupdate = 刚才的XUpdate命令内容；
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java">String xupdate = 刚才的XUpdate命令内容；
 XUpdateQueryService service =(XUpdateQueryService) col.<span class="fu">getService</span>(<span class="st">&quot;XUpdateQueryService&quot;</span>, <span class="st">&quot;1.0&quot;</span>);
 service.<span class="fu">update</span>(xupdate);
 ...
-<span class="co">//其他操作，比如释放资源</span></code></pre>
+<span class="co">//其他操作，比如释放资源</span></code></pre></div>
 <p>因为更新命令中包括了insert，delete和update等功能，所以，其他的管理可以以上面类似的形式实现，通过为XUpdateQueryService提供相应的XUpdate命令就可以了。 至于查询操作，步骤类似，只要从Collection中取得XPathQueryService服务，然后为其指定查询用的Xpath表达式，最后对结果（Resource）进行处理。</p>
 <p>Xindice发布包中附带有一个AddressBook应用，以用来掩饰基于Xindice的web应用实现模型，但其提供的Ant编译脚本有问题，没有指定编译时候的classpath，所以，在现在的机器上不能编译成功，最后，通过为该脚本添加了以下内容才使编译通过：</p>
 <p>即在build.xml文件开始添加</p>
-<pre class="sourceCode xml"><code class="sourceCode xml"><span class="kw">&lt;path</span><span class="ot">  id=</span><span class="st">&quot;project.classpath&quot;</span><span class="kw">&gt;</span>
+<div class="sourceCode"><pre class="sourceCode xml"><code class="sourceCode xml"><span class="kw">&lt;path</span><span class="ot">  id=</span><span class="st">&quot;project.classpath&quot;</span><span class="kw">&gt;</span>
    <span class="kw">&lt;fileset</span><span class="ot"> dir=</span><span class="st">&quot;E:\APIs&quot;</span><span class="kw">&gt;</span>
      <span class="kw">&lt;include</span><span class="ot"> name=</span><span class="st">&quot;**/*.jar&quot;</span><span class="kw">/&gt;</span>
    <span class="kw">&lt;/fileset&gt;</span>  
    <span class="kw">&lt;fileset</span><span class="ot"> dir=</span><span class="st">&quot;E:\xindice\java\lib&quot;</span><span class="kw">&gt;</span>
      <span class="kw">&lt;include</span><span class="ot"> name=</span><span class="st">&quot;**/*.jar&quot;</span><span class="kw">/&gt;</span>
    <span class="kw">&lt;/fileset&gt;</span>   
- <span class="kw">&lt;/path&gt;</span></code></pre>
+ <span class="kw">&lt;/path&gt;</span></code></pre></div>
 <p>然后在compile目标的javac任务中为其指定classpathref为project.classpath即可，编译完成后生成Addressbook.war文件，可以部署到App Server（我部署在resin2.1.1 App服务器上）。 稍后会考虑使用struts对该Webapp进行重构，因为相对于现在基于Command模式实现的实例，struts能更清晰的表达控制流程。</p>
                 
                 <!--百度分享按钮-->

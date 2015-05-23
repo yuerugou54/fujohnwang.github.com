@@ -10,6 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link rel="icon" href="/favicon.ico">
             <style type="text/css">
+    div.sourceCode { overflow-x: auto; }
     table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
       margin: 0; padding: 0; vertical-align: baseline; border: none; }
     table.sourceCode { width: 100%; line-height: 100%; }
@@ -49,7 +50,7 @@
       <div class="row">
         <div class="col-md-3 sidebar">
             <a href="/">
-				<div align="center"><img src="/images/wfq0.png"/></div>
+				<!-- <div align="center"><img src="/images/wfq0.png"/></div> -->
                 <h2 class="text-center">扶墙老师</h2>
             </a>
             <p class="text-center lead slogan"><a href="/slogan.html">lollapalooza &amp; positioning</a></p>
@@ -87,7 +88,7 @@
 <p>2014年从msn space存档中重新恢复出来！</p>
 </blockquote>
 <p>以前使用spring发信的时候，只是简单的为MailSender设置host,username和password属性就OK，但是今天却遇到了发信失败异常的一个553ReturnCode，而且日志中主要的信息也都是tmd的问号，搞得我很郁闷，不知道问题出在什么地方。后来问过系统部是否在MailServer上加了什么限制，系统部说只是添加了一个smtp认证，原来如此啊！所以，在MailSender的配置属性中加入了一个properties属性搞定。</p>
-<pre class="sourceCode xml"><code class="sourceCode xml"><span class="kw">&lt;bean</span><span class="ot"> id=</span><span class="st">&quot;mailSender&quot;</span><span class="ot"> class=</span><span class="st">&quot;org.springframework.mail.javamail.JavaMailSenderImpl&quot;</span><span class="kw">&gt;</span>
+<div class="sourceCode"><pre class="sourceCode xml"><code class="sourceCode xml"><span class="kw">&lt;bean</span><span class="ot"> id=</span><span class="st">&quot;mailSender&quot;</span><span class="ot"> class=</span><span class="st">&quot;org.springframework.mail.javamail.JavaMailSenderImpl&quot;</span><span class="kw">&gt;</span>
 <span class="kw">&lt;property</span><span class="ot"> name=</span><span class="st">&quot;host&quot;</span><span class="kw">&gt;</span>
 <span class="kw">&lt;value&gt;</span>mail.livedoor.cn<span class="kw">&lt;/value&gt;</span>
 <span class="kw">&lt;/property&gt;</span>
@@ -105,7 +106,7 @@
 <span class="kw">&lt;prop</span><span class="ot"> key=</span><span class="st">&quot;mail.smtp.auth&quot;</span><span class="kw">&gt;</span>true<span class="kw">&lt;/prop&gt;</span>
 <span class="kw">&lt;/props&gt;</span>
 <span class="kw">&lt;/property&gt;</span>
-<span class="kw">&lt;/bean&gt;</span></code></pre>
+<span class="kw">&lt;/bean&gt;</span></code></pre></div>
                 
                 <!--百度分享按钮-->
                 <div class="pull-left bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a><a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a></div>

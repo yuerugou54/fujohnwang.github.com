@@ -10,6 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link rel="icon" href="/favicon.ico">
             <style type="text/css">
+    div.sourceCode { overflow-x: auto; }
     table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
       margin: 0; padding: 0; vertical-align: baseline; border: none; }
     table.sourceCode { width: 100%; line-height: 100%; }
@@ -49,7 +50,7 @@
       <div class="row">
         <div class="col-md-3 sidebar">
             <a href="/">
-				<div align="center"><img src="/images/wfq0.png"/></div>
+				<!-- <div align="center"><img src="/images/wfq0.png"/></div> -->
                 <h2 class="text-center">扶墙老师</h2>
             </a>
             <p class="text-center lead slogan"><a href="/slogan.html">lollapalooza &amp; positioning</a></p>
@@ -88,7 +89,7 @@
 </blockquote>
 <p>在Java程序中直接对指定的excel文件进行打印，而不是打开excel后手动的进行打印，不知道有没有人遇到此种窘境？！首先Java1.4的JPS连PDF的打印好像都不太可能，其次，好像搜遍整个net也没有找到个好用的lib(以上观点或许有所偏颇，因为不经没有太多时间进行更深入的翻阅相关资料)，这就是促使偶继续求助于jacob的原因了，因为偶发现有人给出过用VB写exe，Java调用的类似解决思路。</p>
 <p>其实以前就因为excel的问题求助于Samir有关Jacob的问题，而且也给出了一个圆满的解决。现在偶实在不好意思再次劳烦，所以，自己在以前的代码之上拼凑出了以下代码，呵呵，it works!</p>
-<pre class="sourceCode java"><code class="sourceCode java"><span class="kw">public</span> <span class="kw">class</span> JacobExcelPrinter {
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="kw">public</span> <span class="kw">class</span> JacobExcelPrinter {
 
     <span class="kw">private</span> ActiveXComponent excel;
     <span class="co">// excel workbooks </span>
@@ -138,7 +139,7 @@
     }
 
 }
-</code></pre>
+</code></pre></div>
 <p>通过上面的ｕｔｉｌ类就可以直接发送某个文件到打印机打印了，应该不是唯一的解决方法，但是我的，呵呵，如果哪位有更好的解决方法，还望在网上与大家分享！！！</p>
 <p>by Darren.Wang (2005-07-12)</p>
                 

@@ -11,6 +11,7 @@
     <link rel="icon" href="/favicon.ico">
         <meta name="date" content="2012-03-28" />
             <style type="text/css">
+    div.sourceCode { overflow-x: auto; }
     table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
       margin: 0; padding: 0; vertical-align: baseline; border: none; }
     table.sourceCode { width: 100%; line-height: 100%; }
@@ -50,7 +51,7 @@
       <div class="row">
         <div class="col-md-3 sidebar">
             <a href="/">
-				<div align="center"><img src="/images/wfq0.png"/></div>
+				<!-- <div align="center"><img src="/images/wfq0.png"/></div> -->
                 <h2 class="text-center">扶墙老师</h2>
             </a>
             <p class="text-center lead slogan"><a href="/slogan.html">lollapalooza &amp; positioning</a></p>
@@ -85,22 +86,22 @@
                 <hr>
 
                                 <p>You define a scala trait:</p>
-<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> ServerConfig <span class="kw">extends</span> (() =&gt; Server) {
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> ServerConfig <span class="kw">extends</span> (() =&gt; Server) {
   <span class="kw">var</span> port: Int = <span class="dv">9999</span>
   <span class="kw">var</span> timeout: Option[Duration] = None
 
   <span class="kw">def</span> <span class="fu">apply</span>(): Server = <span class="kw">new</span> <span class="fu">Server</span>(port, timeout, ...)
-}</code></pre>
+}</code></pre></div>
 <p>You define a new implementation for the trait in a scala source code file which will be used as configuration file:</p>
-<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">new</span> ServerConfig {
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">new</span> ServerConfig {
   port = <span class="dv">12345</span>
   timeout = <span class="fl">250.</span>milliseconds
-}</code></pre>
+}</code></pre></div>
 <p>Then you can use Eval to bind your configuration and bootstrap together:</p>
-<pre class="sourceCode scala"><code class="sourceCode scala">  <span class="kw">val</span> eval = <span class="kw">new</span> <span class="fu">Eval</span>()
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala">  <span class="kw">val</span> eval = <span class="kw">new</span> <span class="fu">Eval</span>()
   <span class="kw">val</span> config: ServerConfig = eval[ServerConfig](<span class="kw">new</span> File(<span class="st">&quot;...&quot;</span>))
   <span class="kw">val</span> server: Server = <span class="fu">config</span>()
-  server.<span class="fu">start</span>()</code></pre>
+  server.<span class="fu">start</span>()</code></pre></div>
 <p>Now it's done!</p>
 <p>Neat and cool, typesafe-proof configuration with scala as configuration DSL! Don't you like it?! ^_^</p>
 <p><strong>References</strong></p>

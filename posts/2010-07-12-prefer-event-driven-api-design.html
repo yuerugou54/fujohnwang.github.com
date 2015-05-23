@@ -10,6 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link rel="icon" href="/favicon.ico">
             <style type="text/css">
+    div.sourceCode { overflow-x: auto; }
     table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
       margin: 0; padding: 0; vertical-align: baseline; border: none; }
     table.sourceCode { width: 100%; line-height: 100%; }
@@ -49,7 +50,7 @@
       <div class="row">
         <div class="col-md-3 sidebar">
             <a href="/">
-				<div align="center"><img src="/images/wfq0.png"/></div>
+				<!-- <div align="center"><img src="/images/wfq0.png"/></div> -->
                 <h2 class="text-center">扶墙老师</h2>
             </a>
             <p class="text-center lead slogan"><a href="/slogan.html">lollapalooza &amp; positioning</a></p>
@@ -98,11 +99,11 @@
 <p>To find out the story on this, let's start from the beginning.</p>
 <h1 id="the-original-event-driven-style-api-design-demonstration"><span class="header-section-number">2</span> The original event-driven style API design demonstration</h1>
 <p>We have several layers in our design, a networking layer, a data processing layer and other layers. In the network layer, we receive data packets from event source, and then dispatch the events to the data processing layer which will process the event data as per different situations. With such a prerequisite, we can easily declare an interface as the abstraction to the behavior of processing event data, let's call it IEventProcessor:</p>
-<pre class="sourceCode java"><code class="sourceCode java"><span class="kw">public</span> <span class="kw">interface</span> IEventProcessor {  
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="kw">public</span> <span class="kw">interface</span> IEventProcessor {  
        <span class="co">// TODO  </span>
-}</code></pre>
+}</code></pre></div>
 <p>So what u will do with such an interface declaration to abstract proper behaviors as per the above scenario? I don't know what u will do(although I have known what someone had done), but I do design this interface this way:</p>
-<pre class="sourceCode java"><code class="sourceCode java"><span class="kw">public</span> <span class="kw">interface</span> IEventProcessor&lt;E&gt; {  
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="kw">public</span> <span class="kw">interface</span> IEventProcessor&lt;E&gt; {  
   
     <span class="dt">void</span> <span class="fu">onBeginEvent</span>(E event) <span class="kw">throws</span> Exception;  
   
@@ -113,7 +114,7 @@
     <span class="dt">void</span> <span class="fu">onSomeEventWeDontCare</span>(E event) <span class="kw">throws</span> Exception;  
       
     <span class="dt">void</span> <span class="fu">onOtherEventThatPossible</span>(E event) <span class="kw">throws</span> Exception;  
-}</code></pre>
+}</code></pre></div>
 <p>It's not a big deal u may say, but such design is a proper one as per situation we have above. Why?</p>
 <ol style="list-style-type: decimal">
 <li><p>The event consumers(I mean different implementations of IEventProcessor) can only care about the events they are interested, and don't bother with other concerns;</p></li>
@@ -124,11 +125,11 @@
 <p>Of course, I think we can find more benefits from such a style of API design. And I also think this is a clear and clean API design for our system, but someone does not.</p>
 <h1 id="current-procedure-style-api-design-demonstration"><span class="header-section-number">3</span> current procedure style API design demonstration</h1>
 <p>After code review of some team member's code, I found he not only break the top implementation class, but also break the original IEventProcessor abstraction. The IEventProcessor interface had been changed to:</p>
-<pre class="sourceCode java"><code class="sourceCode java"><span class="kw">public</span> <span class="kw">interface</span> IEventProcessor{  
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="kw">public</span> <span class="kw">interface</span> IEventProcessor{  
     <span class="dt">void</span> <span class="fu">onEvent</span>(<span class="dt">byte</span>[] eventData, <span class="dt">byte</span> eventType) <span class="kw">throws</span> Exception;  
-}  </code></pre>
+}  </code></pre></div>
 <p>and of course , an implementation is also given:</p>
-<pre class="sourceCode java"><code class="sourceCode java"><span class="kw">public</span> <span class="kw">class</span> EventProcessor <span class="kw">implements</span> IEventProcessor&lt;<span class="dt">byte</span>[]&gt; {  
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="kw">public</span> <span class="kw">class</span> EventProcessor <span class="kw">implements</span> IEventProcessor&lt;<span class="dt">byte</span>[]&gt; {  
     <span class="co">// fields declarations  </span>
       
     <span class="kw">public</span> <span class="dt">void</span> <span class="fu">onEvent</span>(<span class="dt">byte</span>[] eventData, <span class="dt">byte</span> eventType) <span class="kw">throws</span> Exception {  
@@ -181,7 +182,7 @@
         <span class="co">// TODO Auto-generated method stub  </span>
   
     }  
-} </code></pre>
+} </code></pre></div>
 <p>It may seem OKey to u, but believe me, you still have more to do with.</p>
 <p>Here are some opinions of mine for this:</p>
 <ol style="list-style-type: decimal">

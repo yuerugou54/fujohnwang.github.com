@@ -10,6 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link rel="icon" href="/favicon.ico">
             <style type="text/css">
+    div.sourceCode { overflow-x: auto; }
     table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
       margin: 0; padding: 0; vertical-align: baseline; border: none; }
     table.sourceCode { width: 100%; line-height: 100%; }
@@ -49,7 +50,7 @@
       <div class="row">
         <div class="col-md-3 sidebar">
             <a href="/">
-				<div align="center"><img src="/images/wfq0.png"/></div>
+				<!-- <div align="center"><img src="/images/wfq0.png"/></div> -->
                 <h2 class="text-center">扶墙老师</h2>
             </a>
             <p class="text-center lead slogan"><a href="/slogan.html">lollapalooza &amp; positioning</a></p>
@@ -92,7 +93,7 @@
                                 <p>之前pcDuino刚拿到手的时候装过，经历了很多的曲折，昨天重新装了Kernal和ubuntu的系统更新，真tmd顺，这还不是最爽的，最爽的是，装Java运行环境也tmd很顺，人品真好，哈哈</p>
 <h1 id="how-to..."><span class="header-section-number">1</span> How to...</h1>
 <p>新的ubuntu更新之后默认安装了OpenJDK，而且是6，不爽，所以，决定重新安装Oracle的， 因为是卡片电脑，所以需要装<a href="http://www.oracle.com/technetwork/java/embedded/index.html">Java Embedded</a>版本的jre，遂下载ejre-7u21-fcs-b11-linux-arm-vfp-server_headless-04_apr_2013.gz， 随便找个目录解压：</p>
-<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">tar</span> xvf ejre-7u21-fcs-b11-linux-arm-vfp-server_headless-04_apr_2013.gz</code></pre>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">tar</span> xvf ejre-7u21-fcs-b11-linux-arm-vfp-server_headless-04_apr_2013.gz</code></pre></div>
 <blockquote>
 <p>$ sudo apt-get install -y libc6-armel libsfgcc1</p>
 这一步不知道是否必须，反正我是运行了

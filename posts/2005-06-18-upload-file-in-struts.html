@@ -11,6 +11,7 @@
     <link rel="icon" href="/favicon.ico">
         <meta name="date" content="2005-06-18" />
             <style type="text/css">
+    div.sourceCode { overflow-x: auto; }
     table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
       margin: 0; padding: 0; vertical-align: baseline; border: none; }
     table.sourceCode { width: 100%; line-height: 100%; }
@@ -50,7 +51,7 @@
       <div class="row">
         <div class="col-md-3 sidebar">
             <a href="/">
-				<div align="center"><img src="/images/wfq0.png"/></div>
+				<!-- <div align="center"><img src="/images/wfq0.png"/></div> -->
                 <h2 class="text-center">扶墙老师</h2>
             </a>
             <p class="text-center lead slogan"><a href="/slogan.html">lollapalooza &amp; positioning</a></p>
@@ -118,7 +119,7 @@
 <li>拷贝压缩包中lib目录下的所有jar压缩包到欲使用Struts进行开发的web应用的-INF。同样拷贝压缩包中lib目录下的*.tld文件到web应用的-INF目录下面，这些是标签库的索引文件。如果使用IDE，比如Jbuilder等，其实只要在新建Web Application的时候选择使用Struts架构进行开发的话，这些东西都会自动添加到该web应用的相应目录下方。</li>
 <li>在web.xml部署描述符中添加一下内容：</li>
 </ol>
-<pre class="sourceCode xml"><code class="sourceCode xml"><span class="kw">&lt;servlet&gt;</span>
+<div class="sourceCode"><pre class="sourceCode xml"><code class="sourceCode xml"><span class="kw">&lt;servlet&gt;</span>
     <span class="kw">&lt;servlet-name&gt;</span>action<span class="kw">&lt;/servlet-name&gt;</span>
     <span class="kw">&lt;servlet-class&gt;</span>org.apache.struts.action.ActionServlet<span class="kw">&lt;/servlet-class&gt;</span>
     <span class="kw">&lt;init-param&gt;</span>
@@ -156,7 +157,7 @@
     <span class="kw">&lt;taglib-uri&gt;</span>/tags/struts-tiles<span class="kw">&lt;/taglib-uri&gt;</span>
     <span class="kw">&lt;taglib-location&gt;</span>/WEB-INF/struts-tiles.tld<span class="kw">&lt;/taglib-location&gt;</span>
   <span class="kw">&lt;/taglib&gt;</span>
-//-------------以上注册Struts标签库------------------------</code></pre>
+//-------------以上注册Struts标签库------------------------</code></pre></div>
 <ol start="4" style="list-style-type: decimal">
 <li>最后，在WEB-INF目录下面构建Struts-config.xml文件，将开发中所需要注册的资源添加进去就可以了。</li>
 </ol>
@@ -167,18 +168,18 @@
 <p>以上就是struts中进行文件上传的基本流程。</p>
 <h1 id="简单实例实现"><span class="header-section-number">5</span> 简单实例实现</h1>
 <p>我们实现一个简单的文件上传流程，在Upload.jsp页面中定义一个文件上传表单，定义一个文本域，一个文件输入域，分别代表上传者姓名和所上传的文件。Upload.jsp页面的主体实现代码如下：</p>
-<pre class="sourceCode xml"><code class="sourceCode xml"><span class="kw">&lt;html:form</span><span class="ot"> action=</span><span class="st">&quot;uploadAction.do&quot;</span><span class="ot"> method=</span><span class="st">&quot;post&quot;</span><span class="ot"> enctype=</span><span class="st">&quot;multipart/form-data&quot;</span><span class="kw">&gt;</span>
+<div class="sourceCode"><pre class="sourceCode xml"><code class="sourceCode xml"><span class="kw">&lt;html:form</span><span class="ot"> action=</span><span class="st">&quot;uploadAction.do&quot;</span><span class="ot"> method=</span><span class="st">&quot;post&quot;</span><span class="ot"> enctype=</span><span class="st">&quot;multipart/form-data&quot;</span><span class="kw">&gt;</span>
 To choose the File to be Uploaded:
 <span class="kw">&lt;br&gt;&lt;html:text</span><span class="ot"> property=</span><span class="er">”uploader”/&gt;</span>
 <span class="er">&lt;br&gt;&lt;html:file</span> <span class="er">property=</span><span class="st">&quot;fileOne&quot;</span><span class="kw">/&gt;&lt;br&gt;</span>
 <span class="kw">&lt;html:submit/&gt;&lt;html:reset/&gt;</span>
-<span class="kw">&lt;/html:form&gt;</span></code></pre>
+<span class="kw">&lt;/html:form&gt;</span></code></pre></div>
 <p>页面完成后，需要定义与之对于的ActionForm，在应用中新建一个ActionForm，命名为UploadForm，定义uploader属性为String型，fileOne属性为FormFile型。与各个属性相对应的setter和getter方法以规范实现，这里不作赘述。代码可以参考附带文件。</p>
 <p>ActionForm开发完成后，将其添加到struts-config.xml配置文件中以便于Action调用。在struts-config.xml文件中的&lt; form-beans &gt;元素下面添加以下内容：</p>
-<pre class="sourceCode xml"><code class="sourceCode xml"><span class="kw">&lt;form-bean</span><span class="ot"> name=</span><span class="st">&quot;uploadForm&quot;</span>
-<span class="ot">             type=</span><span class="st">&quot;com.darrenstudio.guestbook.forms.UploadForm&quot;</span><span class="kw">/&gt;</span></code></pre>
+<div class="sourceCode"><pre class="sourceCode xml"><code class="sourceCode xml"><span class="kw">&lt;form-bean</span><span class="ot"> name=</span><span class="st">&quot;uploadForm&quot;</span>
+<span class="ot">             type=</span><span class="st">&quot;com.darrenstudio.guestbook.forms.UploadForm&quot;</span><span class="kw">/&gt;</span></code></pre></div>
 <p>以上完成后，就可以开始进行处理上传请求的Action的开发了。我们定义Action类为UploadAction，扩展自org.apache.struts.action.Action类。在该Action中，我们通过取得ActionForm，然后判断，如果是UploadForm则进行逻辑操作，从UploadForm实例中取得上传者姓名以及上传的FormFile实例。然后，通过FormFile提供的处理方法，将FormFile实例所代表的文件另存为服务器上的一个同名文件中。最后，处理完成后将页面forward到UploadResult.jsp页面，显示上传信息，如果出错，则forward到error处理页面。UploadAction的部分代码实现如下，完整代码可参照附带源码文件：</p>
-<pre class="sourceCode java"><code class="sourceCode java"><span class="kw">if</span> (form <span class="kw">instanceof</span> UploadForm) {
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="kw">if</span> (form <span class="kw">instanceof</span> UploadForm) {
 UploadForm theForm = (UploadForm) form;
 String uploader = theForm.<span class="fu">getUploader</span>();
 FormFile file = theForm.<span class="fu">getFileOne</span>();
@@ -207,9 +208,9 @@ file.<span class="fu">destroy</span>();
      <span class="kw">return</span> actionMapping.<span class="fu">findForward</span>(<span class="st">&quot;failure&quot;</span>);
 }
 <span class="kw">return</span> actionMapping.<span class="fu">findForward</span>(<span class="st">&quot;success&quot;</span>);
-}<span class="kw">return</span> <span class="kw">null</span>;   <span class="co">// will never happen in this sample</span></code></pre>
+}<span class="kw">return</span> <span class="kw">null</span>;   <span class="co">// will never happen in this sample</span></code></pre></div>
 <p>代码完成之后，将该Action类，即UploadAction，添加到struts-config.xml文件中，在struts-config.xml文件中添加以下内容：</p>
-<pre class="sourceCode xml"><code class="sourceCode xml"><span class="kw">&lt;action</span><span class="ot"> name=</span><span class="st">&quot;uploadForm&quot;</span>
+<div class="sourceCode"><pre class="sourceCode xml"><code class="sourceCode xml"><span class="kw">&lt;action</span><span class="ot"> name=</span><span class="st">&quot;uploadForm&quot;</span>
 <span class="ot">          type=</span><span class="st">&quot;com.darrenstudio.guestbook.actions.UploadAction&quot;</span>
 <span class="ot">          validate=</span><span class="st">&quot;false&quot;</span>
 <span class="ot">          input=</span><span class="st">&quot;/upload.jsp&quot;</span>
@@ -221,21 +222,21 @@ file.<span class="fu">destroy</span>();
    <span class="kw">&lt;forward</span><span class="ot"> name=</span><span class="st">&quot;failure&quot;</span>
 <span class="ot">            path=</span><span class="st">&quot;/ErrorPage.jsp&quot;</span>
 <span class="ot">            redirect=</span><span class="st">&quot;false&quot;</span><span class="kw">/&gt;</span>
-<span class="kw">&lt;/action&gt;</span></code></pre>
+<span class="kw">&lt;/action&gt;</span></code></pre></div>
 <p>需要注意的是：action的name属性应该与上面定义的FormBean的name属性的值一样，在这里都是“uploadFrom”。这里，还为这个action定义了两个Forward，即success和failure，当处理顺利完成后，forward走success；否则，走failure报错。</p>
 <p>处理如果顺利完成，则页面跳转到UploadResult.jsp,在这里显示上传后的定制显示信息。而且，为了用户重新上传，还在这个页面中添加了一个重新到upload.jsp的link。该页面部分代码如下所示：</p>
-<pre class="sourceCode xml"><code class="sourceCode xml"><span class="kw">&lt;pre&gt;</span>  
+<div class="sourceCode"><pre class="sourceCode xml"><code class="sourceCode xml"><span class="kw">&lt;pre&gt;</span>  
  <span class="kw">&lt;font</span><span class="ot"> color=</span><span class="st">&quot;red&quot;</span><span class="kw">&gt;</span>Files Uploaded Successfully!<span class="kw">&lt;/font&gt;</span>
  Uploader : <span class="er">&lt;</span>%=uploader%&gt;
  FileName : <span class="er">&lt;</span>%=FileName%&gt;
  FileLocationOnServer:<span class="er">&lt;</span>%=FilePath%&gt;
 <span class="kw">&lt;/pre&gt;</span>
 <span class="kw">&lt;br&gt;</span>
-<span class="kw">&lt;html:link</span><span class="ot"> href=</span><span class="st">&quot;return2Upload.do&quot;</span><span class="kw">&gt;</span>返回上传页面<span class="kw">&lt;/html:link&gt;</span></code></pre>
+<span class="kw">&lt;html:link</span><span class="ot"> href=</span><span class="st">&quot;return2Upload.do&quot;</span><span class="kw">&gt;</span>返回上传页面<span class="kw">&lt;/html:link&gt;</span></code></pre></div>
 <p>为了将连接归入struts架构下，为其在Struts-config.xml文件中添加一个action，内容如下：</p>
-<pre class="sourceCode xml"><code class="sourceCode xml"><span class="kw">&lt;action</span><span class="ot"> path=</span><span class="st">&quot;/return2Upload&quot;</span>
+<div class="sourceCode"><pre class="sourceCode xml"><code class="sourceCode xml"><span class="kw">&lt;action</span><span class="ot"> path=</span><span class="st">&quot;/return2Upload&quot;</span>
 <span class="ot">          parameter=</span><span class="st">&quot;/upload.jsp&quot;</span>
-<span class="ot">          type=</span><span class="st">&quot;org.apache.struts.actions.ForwardAction&quot;</span><span class="kw">/&gt;</span></code></pre>
+<span class="ot">          type=</span><span class="st">&quot;org.apache.struts.actions.ForwardAction&quot;</span><span class="kw">/&gt;</span></code></pre></div>
 <p>关于ForwardAction的使用，在以前的《》一文中已经提到过。</p>
 <p>至此，整个上传流程的开发完成，只要将该Web应用部署到相应的应用服务器上的规定目录下面就可以运行了。</p>
 <h1 id="深入阐述"><span class="header-section-number">6</span> 深入阐述</h1>
@@ -252,7 +253,7 @@ file.<span class="fu">destroy</span>();
 <ol style="list-style-type: decimal">
 <li>向struts-config.xml文件中添加以下内容即可完成Controller对象的注册工作：</li>
 </ol>
-<pre class="sourceCode xml"><code class="sourceCode xml"><span class="kw">&lt;controller</span><span class="ot"> maxFileSize=</span><span class="st">&quot;2M&quot;</span> <span class="kw">/&gt;</span></code></pre>
+<div class="sourceCode"><pre class="sourceCode xml"><code class="sourceCode xml"><span class="kw">&lt;controller</span><span class="ot"> maxFileSize=</span><span class="st">&quot;2M&quot;</span> <span class="kw">/&gt;</span></code></pre></div>
 <pre>
 注意，controller元素的父元素是<struts-config>,你可以在<struts-config>下面注册多个controller分别处理不同逻辑。
 <controller>元素有多个属性，其中针对文件上传进行控制的属性只有bufferSize，maxFileSize，multipartClass和tempDir。
@@ -264,19 +265,19 @@ file.<span class="fu">destroy</span>();
 <ol start="2" style="list-style-type: decimal">
 <li>在ActionForm的validate（）方法中进行文件大小是否超出规定大小进行检查，那么如何知道文件是否超出规定大小那？具体实现是这样的：</li>
 </ol>
-<pre class="sourceCode java"><code class="sourceCode java">ActionErrors errors = <span class="kw">null</span>;
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java">ActionErrors errors = <span class="kw">null</span>;
 Boolean maxLengthExceeded = (Boolean)            request.<span class="fu">getAttribute</span>(MultipartRequestHandler.<span class="fu">ATTRIBUTE_MAX_LENGTH_EXCEEDED</span>);
 <span class="kw">if</span> ((maxLengthExceeded != <span class="kw">null</span>) &amp;&amp; (maxLengthExceeded.<span class="fu">booleanValue</span>()))
 {
     errors = <span class="kw">new</span> <span class="fu">ActionErrors</span>();
     errors.<span class="fu">add</span>(“FileSizeExceeded”, <span class="kw">new</span> <span class="fu">ActionError</span>(<span class="st">&quot;maxLengthExceeded&quot;</span>));
 }
-<span class="kw">return</span> errors;</code></pre>
+<span class="kw">return</span> errors;</code></pre></div>
 <p>在该章开始我们就提到过，我们是通过MultipartRequestHandler类的ATTRIBUTE_MAX_LENGTH_EXCEEDED域进行文件大小限制的。当读入一个multipart类型的request并且上传的文件最大长度超出实现规定的话，ServletRequest的这个属性将会被设置，否则，如果文件长度没有超出规定，则这个属性就不会被设置，该属性返回类型为Boolean型。所以，从上面的代码中我们可以看出，我们可以通过取得request的这个属性，然后判断其是否为空，并且其返回的对于boolean值是否为true来判断文件是否超出规定长度。如果，判断得到超出规定长度，则向ActionErrors对象中加入文件长度超出限制的ActionError；否则，直接就是返回null的ActionErrors对象。可以看出，文件长度比较等逻辑实现复杂度在struts中都已经隐藏了。</p>
 <ol start="3" style="list-style-type: decimal">
 <li>如果文件超出规定长度，需要在原来的上传初始页面中提示错误信息，下面是struts的sample中提供的代码实现，但不是唯一的：</li>
 </ol>
-<pre class="sourceCode xml"><code class="sourceCode xml"><span class="kw">&lt;logic:present</span><span class="ot"> name=</span><span class="st">&quot;</span><span class="er">&lt;</span><span class="st">%= Action.ERROR_KEY %&gt;&quot;</span><span class="ot"> scope=</span><span class="st">&quot;request&quot;</span><span class="kw">&gt;</span>
+<div class="sourceCode"><pre class="sourceCode xml"><code class="sourceCode xml"><span class="kw">&lt;logic:present</span><span class="ot"> name=</span><span class="st">&quot;</span><span class="er">&lt;</span><span class="st">%= Action.ERROR_KEY %&gt;&quot;</span><span class="ot"> scope=</span><span class="st">&quot;request&quot;</span><span class="kw">&gt;</span>
     <span class="er">&lt;</span>%
         ActionErrors errors = (ActionErrors) request.getAttribute(Action.ERROR_KEY);
         //note that this error is created in the validate() method of UploadForm
@@ -293,7 +294,7 @@ Boolean maxLengthExceeded = (Boolean)            request.<span class="fu">getAtt
 <span class="kw">&lt;logic:notPresent</span><span class="ot"> name=</span><span class="st">&quot;maxlength.error&quot;</span><span class="ot"> scope=</span><span class="st">&quot;request&quot;</span><span class="kw">&gt;</span>
     Note that the maximum allowed size of an uploaded file for this application is two megabytes.
     See the /WEB-INF/struts-config.xml file for this application to change it.
-<span class="kw">&lt;/logic:notPresent&gt;</span></code></pre>
+<span class="kw">&lt;/logic:notPresent&gt;</span></code></pre></div>
 <p>至此，对于上传文件大小进行限制的实现就可以完成了。</p>
 <p>对于org.apache.struts.upload包中的其他类，如果读者感兴趣，可以参考Struts官方网站所提供的API参考。</p>
 <h1 id="可能遇到的问题"><span class="header-section-number">7</span> 可能遇到的问题</h1>

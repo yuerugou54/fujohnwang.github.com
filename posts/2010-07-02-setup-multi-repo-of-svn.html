@@ -10,6 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link rel="icon" href="/favicon.ico">
             <style type="text/css">
+    div.sourceCode { overflow-x: auto; }
     table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
       margin: 0; padding: 0; vertical-align: baseline; border: none; }
     table.sourceCode { width: 100%; line-height: 100%; }
@@ -49,7 +50,7 @@
       <div class="row">
         <div class="col-md-3 sidebar">
             <a href="/">
-				<div align="center"><img src="/images/wfq0.png"/></div>
+				<!-- <div align="center"><img src="/images/wfq0.png"/></div> -->
                 <h2 class="text-center">扶墙老师</h2>
             </a>
             <p class="text-center lead slogan"><a href="/slogan.html">lollapalooza &amp; positioning</a></p>
@@ -88,10 +89,10 @@
 <p>It's easy, easy, easy until after u know how to do it, :0)</p>
 <p>In fact, Mac has installed subversion for us， so when I know this after I had tried to install subversion by myself, I felt how stupid I am, hehe, Ok, let's go straight to our topic.</p>
 <p>Firstly, we have to setup multiple repository directories, for example :</p>
-<pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">mkdir</span> repositories
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">mkdir</span> repositories
 $ <span class="kw">cd</span> repositories
 $ <span class="kw">svnadmin</span> create red_bear
-$ <span class="kw">svnadmin</span> create blue_goat</code></pre>
+$ <span class="kw">svnadmin</span> create blue_goat</code></pre></div>
 <p>After these commands' run, we should get a directory structure similar to:</p>
 <pre>
 +---repositories
@@ -112,8 +113,8 @@ $ <span class="kw">svnadmin</span> create blue_goat</code></pre>
 <p>or</p>
 <p><code>$ svnserve -d -r /home/svn/repositories/red_bear</code></p>
 <p>BUT, u can't start both of them simultaneously, except that we give svnserve another option parameter:</p>
-<pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">svnserve</span> -d -r /home/svn/repositories/blue_goat (--listen-port 9110)
-$ <span class="kw">svnserve</span> -d -r /home/svn/repositories/red_bear --listen-port 91101</code></pre>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">svnserve</span> -d -r /home/svn/repositories/blue_goat (--listen-port 9110)
+$ <span class="kw">svnserve</span> -d -r /home/svn/repositories/red_bear --listen-port 91101</code></pre></div>
 <p>With <code>--listen-port</code> option, we can start multiple repository deamon services simultaneously.</p>
 <p>So, It's easy, right? (Yeah, I Know u know, I just make a note here)</p>
                 

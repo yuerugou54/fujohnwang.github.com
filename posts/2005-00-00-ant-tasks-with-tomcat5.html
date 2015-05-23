@@ -10,6 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link rel="icon" href="/favicon.ico">
             <style type="text/css">
+    div.sourceCode { overflow-x: auto; }
     table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
       margin: 0; padding: 0; vertical-align: baseline; border: none; }
     table.sourceCode { width: 100%; line-height: 100%; }
@@ -49,7 +50,7 @@
       <div class="row">
         <div class="col-md-3 sidebar">
             <a href="/">
-				<div align="center"><img src="/images/wfq0.png"/></div>
+				<!-- <div align="center"><img src="/images/wfq0.png"/></div> -->
                 <h2 class="text-center">扶墙老师</h2>
             </a>
             <p class="text-center lead slogan"><a href="/slogan.html">lollapalooza &amp; positioning</a></p>
@@ -106,15 +107,15 @@ deploy=org.apache.catalina.ant.DeployTask
 <ol start="2" style="list-style-type: decimal">
 <li>在ant的构建脚本build.xml中定义tomcat管理所用的Tasks</li>
 </ol>
-<pre class="sourceCode xml"><code class="sourceCode xml"><span class="kw">&lt;taskdef</span><span class="ot"> file=</span><span class="st">&quot;tomcatTasks.properties&quot;</span><span class="kw">&gt;</span>
+<div class="sourceCode"><pre class="sourceCode xml"><code class="sourceCode xml"><span class="kw">&lt;taskdef</span><span class="ot"> file=</span><span class="st">&quot;tomcatTasks.properties&quot;</span><span class="kw">&gt;</span>
   <span class="kw">&lt;classpath&gt;</span>
    <span class="kw">&lt;pathelement</span><span class="ot"> path=</span><span class="st">&quot;${tomcat.home}/server/lib/catalina-ant.jar&quot;</span><span class="kw">/&gt;</span>
   <span class="kw">&lt;/classpath&gt;</span>
- <span class="kw">&lt;/taskdef&gt;</span></code></pre>
+ <span class="kw">&lt;/taskdef&gt;</span></code></pre></div>
 <ol start="3" style="list-style-type: decimal">
 <li>Tasks定义完成后，就可以定义tomcat管理的target来对tomcat进行管理了：</li>
 </ol>
-<pre class="sourceCode xml"><code class="sourceCode xml">    <span class="kw">&lt;target</span><span class="ot"> name=</span><span class="st">&quot;install&quot;</span><span class="ot"> description=</span><span class="st">&quot;Install application in Tomcat&quot;</span><span class="ot"> depends=</span><span class="st">&quot;war&quot;</span><span class="kw">&gt;</span>
+<div class="sourceCode"><pre class="sourceCode xml"><code class="sourceCode xml">    <span class="kw">&lt;target</span><span class="ot"> name=</span><span class="st">&quot;install&quot;</span><span class="ot"> description=</span><span class="st">&quot;Install application in Tomcat&quot;</span><span class="ot"> depends=</span><span class="st">&quot;war&quot;</span><span class="kw">&gt;</span>
         <span class="kw">&lt;deploy</span><span class="ot"> url=</span><span class="st">&quot;${tomcat.manager.url}&quot;</span>
 <span class="ot">            username=</span><span class="st">&quot;${tomcat.manager.username}&quot;</span>
 <span class="ot">            password=</span><span class="st">&quot;${tomcat.manager.password}&quot;</span>
@@ -154,7 +155,7 @@ deploy=org.apache.catalina.ant.DeployTask
         <span class="kw">&lt;list</span><span class="ot"> url=</span><span class="st">&quot;${tomcat.manager.url}&quot;</span>
 <span class="ot">            username=</span><span class="st">&quot;${tomcat.manager.username}&quot;</span>
 <span class="ot">            password=</span><span class="st">&quot;${tomcat.manager.password}&quot;</span><span class="kw">/&gt;</span>
-    <span class="kw">&lt;/target&gt;</span></code></pre>
+    <span class="kw">&lt;/target&gt;</span></code></pre></div>
 <ol start="4" style="list-style-type: decimal">
 <li>另外，上面的task中时间上用到了与tomcat相关的一些property，所以，我们在build.properties中定义他们，当然也可以在其他地方定义他们，但总之，在用之前，需要定义这些properties。</li>
 </ol>

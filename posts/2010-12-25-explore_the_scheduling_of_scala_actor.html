@@ -11,6 +11,7 @@
     <link rel="icon" href="/favicon.ico">
         <meta name="date" content="2010-12-25" />
             <style type="text/css">
+    div.sourceCode { overflow-x: auto; }
     table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
       margin: 0; padding: 0; vertical-align: baseline; border: none; }
     table.sourceCode { width: 100%; line-height: 100%; }
@@ -50,7 +51,7 @@
       <div class="row">
         <div class="col-md-3 sidebar">
             <a href="/">
-				<div align="center"><img src="/images/wfq0.png"/></div>
+				<!-- <div align="center"><img src="/images/wfq0.png"/></div> -->
                 <h2 class="text-center">扶墙老师</h2>
             </a>
             <p class="text-center lead slogan"><a href="/slogan.html">lollapalooza &amp; positioning</a></p>
@@ -99,11 +100,11 @@
 <p>But to know only these differences between “Thread Based Actors” and “Event Based Actors” won't help too much. If we want to gain more peformance improvements from Scala Actors, we have to dive into the scheduling of scala actors to find more...</p>
 <h1 id="default-scheduler-of-scala-actor"><span class="header-section-number">1</span> Default Scheduler of Scala Actor</h1>
 <p>Usually, when we create actors as most of the code demonstrated:</p>
-<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">import</span> scala.<span class="fu">actors</span>.<span class="fu">_</span>, Actor.<span class="fu">_</span>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">import</span> scala.<span class="fu">actors</span>.<span class="fu">_</span>, Actor.<span class="fu">_</span>
 
 <span class="kw">val</span> myActor = actor{
  ...
-}</code></pre>
+}</code></pre></div>
 <p>A ForkJoinScheduler with 4 threads will working behind to support the running of our actors created this way. I do think if you are not writing toy code, the 4 threads can't suffice. So if you find your applications sucks after switching to Scala actors, don't worry, it should be if you don't tuning any thing about Scala Actor.</p>
 <p>Let's move on to find out how to tuning the scheduling of scala actors so that they can meet our needs.</p>
 <h1 id="customize-the-schedulers-of-scala-actors"><span class="header-section-number">2</span> Customize The Schedulers of Scala Actors</h1>
@@ -119,7 +120,7 @@
 <h2 id="tuning-specific-schedulers"><span class="header-section-number">2.2</span> Tuning Specific Schedulers</h2>
 <p>I hope your application is simple, so that one default scheduler will suffice, but most of the time, it's not true, for example, If I want to implement an SEDA style application with different actors stand in different staages, use only the default scheduler will not help too much. Simply put, you can't tuning each stage specifically in the point of theading pool. In such situations, we have to customize the schedulers of each scala actors specifically.</p>
 <p>We can't implement different Actors for different uses with different schedulers by override the “scheduler” method of them, here is an example:</p>
-<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">class</span> MyActor <span class="kw">extends</span> Actor {
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">class</span> MyActor <span class="kw">extends</span> Actor {
   <span class="kw">import</span> scala.<span class="fu">actors</span>.<span class="fu">scheduler</span>.<span class="fu">_</span>
 
   <span class="kw">def</span> <span class="fu">act</span>() {
@@ -127,7 +128,7 @@
   }
 
   <span class="kw">override</span> <span class="kw">def</span> <span class="fu">scheduler</span>(): IScheduler = <span class="kw">new</span> <span class="fu">ForkJoinScheduler</span>(Runtime.<span class="fu">getRuntime</span>.<span class="fu">availableProcessors</span>, Runtime.<span class="fu">getRuntime</span>.<span class="fu">availableProcessors</span> * <span class="dv">2</span>, <span class="kw">false</span>, <span class="kw">true</span>)
-}</code></pre>
+}</code></pre></div>
 <p>As long as you know how to estimate how many threads should be used in each stages, you know how to override the “scheduler” method to provide proper IScheduler instances.</p>
 <h1 id="conclusion"><span class="header-section-number">3</span> Conclusion</h1>
 <p>After Scala 2.8, Scala Actors are much easier to extend, but it's still not perfect, that's why other actor implemenations on scala platform exist, like Akka Actor and Lift Actor. One of the key point of a successful Actor library is that how they schedule the running of their actors, Erlang Actors are running in their own VM, so they can be scheduled in their way, but Scala Actors are running in JVM, so they have to be scheduled in threading model. Although this is a limitation, but improvements still can be done.</p>

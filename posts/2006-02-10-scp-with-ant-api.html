@@ -10,6 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link rel="icon" href="/favicon.ico">
             <style type="text/css">
+    div.sourceCode { overflow-x: auto; }
     table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
       margin: 0; padding: 0; vertical-align: baseline; border: none; }
     table.sourceCode { width: 100%; line-height: 100%; }
@@ -49,7 +50,7 @@
       <div class="row">
         <div class="col-md-3 sidebar">
             <a href="/">
-				<div align="center"><img src="/images/wfq0.png"/></div>
+				<!-- <div align="center"><img src="/images/wfq0.png"/></div> -->
                 <h2 class="text-center">扶墙老师</h2>
             </a>
             <p class="text-center lead slogan"><a href="/slogan.html">lollapalooza &amp; positioning</a></p>
@@ -100,7 +101,7 @@
 <li>调用scp.execute()执行；</li>
 </ol>
 <p>这样我们可以得到下面类似的代码：</p>
-<pre class="sourceCode java"><code class="sourceCode java">    <span class="kw">public</span> <span class="dt">void</span> <span class="fu">scp</span>(File file) 
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java">    <span class="kw">public</span> <span class="dt">void</span> <span class="fu">scp</span>(File file) 
     { 
         Scp scp = <span class="fu">getScpClient</span>(); 
         <span class="fu">setAuthProperties</span>(scp); 
@@ -129,7 +130,7 @@
         scp.<span class="fu">setTaskName</span>(<span class="st">&quot;scp&quot;</span>); 
         scp.<span class="fu">setTaskType</span>(<span class="st">&quot;scp&quot;</span>); 
         <span class="kw">return</span> scp; 
-    }</code></pre>
+    }</code></pre></div>
 <p>当然为了让以上代码可用，你还需要将必须的jar包含到你的classpath中，这些jar包括ant.jar以及ant－jsch.jar，还有最终的jsch（suffix）.jar，因为ant的scp也是使用了JSch的API实现的。</p>
 <p>有了这些，你可以随便从哪台机器scp文件到另一台机器了。</p>
 <p><strong>REFERENCE</strong></p>

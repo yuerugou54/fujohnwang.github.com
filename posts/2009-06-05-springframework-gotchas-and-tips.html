@@ -10,6 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link rel="icon" href="/favicon.ico">
             <style type="text/css">
+    div.sourceCode { overflow-x: auto; }
     table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
       margin: 0; padding: 0; vertical-align: baseline; border: none; }
     table.sourceCode { width: 100%; line-height: 100%; }
@@ -49,7 +50,7 @@
       <div class="row">
         <div class="col-md-3 sidebar">
             <a href="/">
-				<div align="center"><img src="/images/wfq0.png"/></div>
+				<!-- <div align="center"><img src="/images/wfq0.png"/></div> -->
                 <h2 class="text-center">扶墙老师</h2>
             </a>
             <p class="text-center lead slogan"><a href="/slogan.html">lollapalooza &amp; positioning</a></p>
@@ -136,7 +137,7 @@ javax.jms.JMSException: Duplicate durable subcription detected
 <h2 id="结论"><span class="header-section-number">1.2</span> 结论</h2>
 <p>生活在Spring容器中的对象， 他们的生命周期是由容器来管理的， 但是， 仅仅通过实现DisposableBean接口或者通过destroy-method配置项， 甚至通过JSR250的@PreDestroy标注， 容器并不会在程序退出的时候，自动调用这些对象销毁的回调，我们必须在程序的主入口类或者其它合适的位置明确告知Spring容器， “哥们， 我要下班了，你把那些家伙都收拾了吧！”， 之后， 你通过以上所有方式指定的对象销毁逻辑才会被调用，否则， 哼哼...</p>
 <p>用行话来说就是， 如果你使用的是BeanFactory类型的IoC容器，那么，你最好在容器构造完成后， 保险起见，顺便加上以下这样的代码片断:</p>
-<pre class="sourceCode java"><code class="sourceCode java">Runtime.<span class="fu">getRuntime</span>().<span class="fu">addShutdownHook</span>(<span class="kw">new</span> Thread(){
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java">Runtime.<span class="fu">getRuntime</span>().<span class="fu">addShutdownHook</span>(<span class="kw">new</span> Thread(){
         <span class="fu">@Override</span>
         <span class="kw">public</span> <span class="dt">void</span> <span class="fu">run</span>() {
             <span class="kw">if</span>(beanFactory != <span class="kw">null</span>){
@@ -144,10 +145,10 @@ javax.jms.JMSException: Duplicate durable subcription detected
             }
         }
     });
-    </code></pre>
+    </code></pre></div>
 <p>如果你使用的是ApplicationContext类型的IoC容器，那么， 与上面类似</p>
-<pre class="sourceCode java"><code class="sourceCode java">ApplicationContext ctx = ...;
-((AbstractApplicationContext)ctx).<span class="fu">registerShutdownHook</span>();</code></pre>
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java">ApplicationContext ctx = ...;
+((AbstractApplicationContext)ctx).<span class="fu">registerShutdownHook</span>();</code></pre></div>
 <p>当然了， 道理实际上跟上面BeanFactory对应的处理差不多。</p>
 <p>这样的处理虽然不能保证100%的安全，不过，只要你不是太粗鲁的对待你的应用程序，比如kill -9或者直接System.halt()之类， 这道安全网还是必要的。</p>
 <blockquote>
@@ -160,25 +161,25 @@ javax.jms.JMSException: Duplicate durable subcription detected
 <p>收到旨意之后， 你得赶快行动啊， 不然，下个release拿不到trades信息可就是你自己的问题了， 还好啦， 现在的Subscriber已经提供了这样的支持， 直接设置相应的username和pasword就行了。 不过那，如果你是通过JmsTemplate或者MessageListenerContainer来发送或者接受消息的话， 你该怎么做哪？！ 也只是通过为JmsTemplate或者MessageListenerContainer提供连接的用户名和密码设置就行了？呵呵，倒是找找看， 你是否能找到相应的setter方法吧。</p>
 <h2 id="结论-1"><span class="header-section-number">2.2</span> 结论</h2>
 <p>摘录一段别人的代码如下:</p>
-<pre class="sourceCode java"><code class="sourceCode java"><span class="kw">if</span>(String.<span class="fu">valueOf</span>(userName).<span class="fu">trim</span>().<span class="fu">length</span>()&gt;<span class="dv">0</span>) {
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="kw">if</span>(String.<span class="fu">valueOf</span>(userName).<span class="fu">trim</span>().<span class="fu">length</span>()&gt;<span class="dv">0</span>) {
     topicConn = connFactory.<span class="fu">createTopicConnection</span>(userName,password);
 } <span class="kw">else</span> {
     topicConn = connFactory.<span class="fu">createTopicConnection</span>();
-}</code></pre>
+}</code></pre></div>
 <p>如果你觉得JmsTemplate或者MessageListenerContainer在实现的时候也是这样处理的，那么， 在上面的那个场景中，你将浪费某些精力和时间去寻找这个方向上的答案， 但即使你去查代码，估计你也不会有啥收获。实际上，针对这个问题， Spring框架已经提供了对应的解决方案， 但是， 解决问题的角度不同而已。</p>
 <p>Spring提供了一个UserCredentialsConnectionFactoryAdapter， 通过它，对你提供给JmsTemplate或者MessageListenerContainer使用的ConnectionFactory稍微“打扮”一下就行了， 例如：</p>
-<pre class="sourceCode java"><code class="sourceCode java">ConnectionFactory cf = (ConnectionFactory) ctx.<span class="fu">lookup</span>(connectionFactoryJndiName);
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java">ConnectionFactory cf = (ConnectionFactory) ctx.<span class="fu">lookup</span>(connectionFactoryJndiName);
 
 UserCredentialsConnectionFactoryAdapter connectionFactoryAdaptor = <span class="kw">new</span> <span class="fu">UserCredentialsConnectionFactoryAdapter</span>();
 connectionFactoryAdaptor.<span class="fu">setTargetConnectionFactory</span>(cf);
 connectionFactoryAdaptor.<span class="fu">setUsername</span>(<span class="st">&quot;ddi_admin&quot;</span>);
 connectionFactoryAdaptor.<span class="fu">setPassword</span>(<span class="st">&quot;ddi_admin&quot;</span>);
 <span class="kw">... </span><span class="co">// ***</span>
-JmsTemplate jmsTemplate = <span class="kw">new</span> <span class="fu">JmsTemplate</span>(connectionFactoryAdaptor);</code></pre>
+JmsTemplate jmsTemplate = <span class="kw">new</span> <span class="fu">JmsTemplate</span>(connectionFactoryAdaptor);</code></pre></div>
 <p>现在， 验证信息可以生效了。 说白了， 还是包装，包装，再包装，最终都是为了“偷梁换柱”！</p>
 <h2 id="caution"><span class="header-section-number">2.3</span> CAUTION</h2>
 <p>如果是使用JmsTemplate来发送消息，为了避免JmsTemplate内部不断创建新的连接， 保险起见， 可以使用SingleConnectionFactory对ConnectionFactory再包装一层（当然了，如果拿到的ConnectionFactory早已配置了连接池来控制资源的使用，也可以不用这么做），例如：</p>
-<pre class="sourceCode java"><code class="sourceCode java">ConnectionFactory cf = (ConnectionFactory) ctx.<span class="fu">lookup</span>(connectionFactoryJndiName);
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java">ConnectionFactory cf = (ConnectionFactory) ctx.<span class="fu">lookup</span>(connectionFactoryJndiName);
 
 UserCredentialsConnectionFactoryAdapter connectionFactoryAdaptor = <span class="kw">new</span> <span class="fu">UserCredentialsConnectionFactoryAdapter</span>();
 connectionFactoryAdaptor.<span class="fu">setTargetConnectionFactory</span>(cf);
@@ -199,7 +200,7 @@ connectionFactoryAdaptor.<span class="fu">setPassword</span>(<span class="st">&q
         }
     });
     
-JmsTemplate jmsTemplate = <span class="kw">new</span> <span class="fu">JmsTemplate</span>(singleCf);</code></pre>
+JmsTemplate jmsTemplate = <span class="kw">new</span> <span class="fu">JmsTemplate</span>(singleCf);</code></pre></div>
 <p>安全第一， 安全第一...</p>
 <p>Get to Know Spring And Have Fun With Spring.</p>
                 

@@ -10,6 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link rel="icon" href="/favicon.ico">
             <style type="text/css">
+    div.sourceCode { overflow-x: auto; }
     table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
       margin: 0; padding: 0; vertical-align: baseline; border: none; }
     table.sourceCode { width: 100%; line-height: 100%; }
@@ -49,7 +50,7 @@
       <div class="row">
         <div class="col-md-3 sidebar">
             <a href="/">
-				<div align="center"><img src="/images/wfq0.png"/></div>
+				<!-- <div align="center"><img src="/images/wfq0.png"/></div> -->
                 <h2 class="text-center">扶墙老师</h2>
             </a>
             <p class="text-center lead slogan"><a href="/slogan.html">lollapalooza &amp; positioning</a></p>
@@ -101,10 +102,10 @@
 <p>如果要在RCP中打开相应的View，你需要通过类似一下代码：</p>
 <p><code>window.getActivePage().showView(viewId, IWorkbenchPage.VIEW_ACTIVATE);</code></p>
 <p>不过，如果不在Perspective先行指定要打开的view所在位置的话，RCP应该不会知道你想让他帮你把该View放到什么位置，所以，我们还需要在Perspective中指定View的位置：</p>
-<pre class="sourceCode java"><code class="sourceCode java">layout.<span class="fu">createPlaceholderFolder</span>(<span class="st">&quot;panelFolder&quot;</span>,IPageLayout.<span class="fu">TOP</span>,IPageLayout.<span class="fu">NULL_RATIO</span>,layout.<span class="fu">getEditorArea</span>()).<span class="fu">addPlaceholder</span>(AdministrationView.<span class="fu">ID</span>); 
-(Perspective.<span class="fu">java</span>)</code></pre>
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java">layout.<span class="fu">createPlaceholderFolder</span>(<span class="st">&quot;panelFolder&quot;</span>,IPageLayout.<span class="fu">TOP</span>,IPageLayout.<span class="fu">NULL_RATIO</span>,layout.<span class="fu">getEditorArea</span>()).<span class="fu">addPlaceholder</span>(AdministrationView.<span class="fu">ID</span>); 
+(Perspective.<span class="fu">java</span>)</code></pre></div>
 <h1 id="how-to-add-widget-onto-table-cell"><span class="header-section-number">2</span> How to Add Widget onto Table Cell</h1>
-<pre class="sourceCode java"><code class="sourceCode java">Table table = <span class="kw">new</span> <span class="fu">Table</span>(top, SWT.<span class="fu">NONE</span>);
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java">Table table = <span class="kw">new</span> <span class="fu">Table</span>(top, SWT.<span class="fu">NONE</span>);
 table.<span class="fu">setHeaderVisible</span>(<span class="kw">true</span>);
 table.<span class="fu">setLinesVisible</span>(<span class="kw">true</span>);
 table.<span class="fu">setBounds</span>(<span class="kw">new</span> org.<span class="fu">eclipse</span>.<span class="fu">swt</span>.<span class="fu">graphics</span>.<span class="fu">Rectangle</span>(<span class="dv">47</span>,<span class="dv">67</span>,<span class="dv">190</span>,<span class="dv">70</span>));
@@ -132,14 +133,14 @@ combo.<span class="fu">pack</span>();
 
 editor.<span class="fu">minimumWidth</span> = combo.<span class="fu">getSize</span> ().<span class="fu">x</span>;
 editor.<span class="fu">horizontalAlignment</span> = SWT.<span class="fu">CENTER</span>;
-editor.<span class="fu">setEditor</span>(combo, tableItem, <span class="dv">1</span>);</code></pre>
+editor.<span class="fu">setEditor</span>(combo, tableItem, <span class="dv">1</span>);</code></pre></div>
 <h1 id="how-to-get-the-shell-reference-from-viewpart"><span class="header-section-number">3</span> How to get the Shell reference from ViewPart?!</h1>
 <p><code>viewPart.getViewSite().getShell()</code></p>
 <h1 id="how-to-restart-eclipse-rcp-application-in-program"><span class="header-section-number">4</span> how to restart eclipse RCP application in program?!</h1>
 <p><code>PlatformUI.getWorkbench().restart();</code></p>
 <h1 id="view和editor的title圆润风格如何显示"><span class="header-section-number">5</span> View和Editor的title圆润风格如何显示?</h1>
 <p>在RCP的product配置文件中(注意preferenceCustomization属性):</p>
-<pre class="sourceCode xml"><code class="sourceCode xml"><span class="kw">&lt;extension</span>
+<div class="sourceCode"><pre class="sourceCode xml"><code class="sourceCode xml"><span class="kw">&lt;extension</span>
 <span class="ot">         id=</span><span class="st">&quot;product&quot;</span>
 <span class="ot">         point=</span><span class="st">&quot;org.eclipse.core.runtime.products&quot;</span><span class="kw">&gt;</span>
       <span class="kw">&lt;product</span>
@@ -152,7 +153,7 @@ editor.<span class="fu">setEditor</span>(combo, tableItem, <span class="dv">1</s
 <span class="ot">               name=</span><span class="st">&quot;preferenceCustomization&quot;</span>
 <span class="ot">               value=</span><span class="st">&quot;plugin_customization.ini&quot;</span><span class="kw">/&gt;</span>
       <span class="kw">&lt;/product&gt;</span>
-   <span class="kw">&lt;/extension&gt;</span></code></pre>
+   <span class="kw">&lt;/extension&gt;</span></code></pre></div>
 其中，plugin_customization.ini文件的内容类似于（注意SHOW_TRADITIONAL_STYLE_TABS属性）：
 <pre>
 org.eclipse.ui/DOCK_PERSPECTIVE_BAR=topRight

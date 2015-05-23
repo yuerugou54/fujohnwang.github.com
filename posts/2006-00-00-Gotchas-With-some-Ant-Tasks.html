@@ -10,6 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link rel="icon" href="/favicon.ico">
             <style type="text/css">
+    div.sourceCode { overflow-x: auto; }
     table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
       margin: 0; padding: 0; vertical-align: baseline; border: none; }
     table.sourceCode { width: 100%; line-height: 100%; }
@@ -49,7 +50,7 @@
       <div class="row">
         <div class="col-md-3 sidebar">
             <a href="/">
-				<div align="center"><img src="/images/wfq0.png"/></div>
+				<!-- <div align="center"><img src="/images/wfq0.png"/></div> -->
                 <h2 class="text-center">扶墙老师</h2>
             </a>
             <p class="text-center lead slogan"><a href="/slogan.html">lollapalooza &amp; positioning</a></p>
@@ -90,16 +91,16 @@
 <p>大部分的Ant Tasks在发行版附带的manual里面都会提供相应的sample build script，但是，如果你以葫芦画瓢的把这些build script片段copy到你的build文件的话，往往会导致你的build失败。</p>
 <p>你会说了，靠，官方文档提供的还会有错？！唬人吧你？！</p>
 <p>不信？！上眼瞧啦~</p>
-<pre class="sourceCode xml"><code class="sourceCode xml"><span class="kw">&lt;exec</span><span class="ot"> dir=</span><span class="st">&quot;D:\InstallAnywhere 5.5 Standard\&quot;</span><span class="ot"> executable=</span><span class="st">&quot;build.exe&quot;</span><span class="ot"> output=</span><span class="st">&quot;buildresult.txt&quot;</span><span class="ot"> error=</span><span class="st">&quot;builderror.txt&quot;</span><span class="kw">&gt;</span>
+<div class="sourceCode"><pre class="sourceCode xml"><code class="sourceCode xml"><span class="kw">&lt;exec</span><span class="ot"> dir=</span><span class="st">&quot;D:\InstallAnywhere 5.5 Standard\&quot;</span><span class="ot"> executable=</span><span class="st">&quot;build.exe&quot;</span><span class="ot"> output=</span><span class="st">&quot;buildresult.txt&quot;</span><span class="ot"> error=</span><span class="st">&quot;builderror.txt&quot;</span><span class="kw">&gt;</span>
     <span class="kw">&lt;arg</span><span class="ot"> value=</span><span class="st">&quot;＄{installAnywhere.credit.buildfile}&quot;</span><span class="kw">/&gt;</span>
-<span class="kw">&lt;/exec&gt;</span></code></pre>
+<span class="kw">&lt;/exec&gt;</span></code></pre></div>
 <p>你说这段build script会不会成功那？！没有问题吧？！不过那，虽然理论上应该build Successfully，但，事实并非如此，不管你以这种方式运行什么命令，都会抛出该死的“...IOException:(.*),error=2”错误信息，不信你就试试，除非你采用如下方式来使用exec task：</p>
-<pre class="sourceCode xml"><code class="sourceCode xml"><span class="kw">&lt;exec</span><span class="ot"> executable=</span><span class="st">&quot;D:\InstallAnywhere 5.5 Standard\build.exe&quot;</span><span class="ot"> output=</span><span class="st">&quot;buildresult.txt&quot;</span><span class="ot"> error=</span><span class="st">&quot;builderror.txt&quot;</span><span class="kw">&gt;</span>
+<div class="sourceCode"><pre class="sourceCode xml"><code class="sourceCode xml"><span class="kw">&lt;exec</span><span class="ot"> executable=</span><span class="st">&quot;D:\InstallAnywhere 5.5 Standard\build.exe&quot;</span><span class="ot"> output=</span><span class="st">&quot;buildresult.txt&quot;</span><span class="ot"> error=</span><span class="st">&quot;builderror.txt&quot;</span><span class="kw">&gt;</span>
     <span class="kw">&lt;arg</span><span class="ot"> value=</span><span class="st">&quot;＄{installAnywhere.credit.buildfile}&quot;</span><span class="kw">/&gt;</span>
-<span class="kw">&lt;/exec&gt;</span></code></pre>
+<span class="kw">&lt;/exec&gt;</span></code></pre></div>
 <p>看出差别没？！你指定命令所在的dir根本没有用，需要通过绝对路径指定executable！不要问我为什么，反正只有这样才能正确调用,I don't know why either.</p>
 <p>平常工作中经常有scp操作吧？！那你看下面这个简单的task能否build成功那？！</p>
-<pre class="sourceCode xml"><code class="sourceCode xml"><span class="kw">&lt;scp</span><span class="ot"> file=</span><span class="st">&quot;file location to scp&quot;</span><span class="ot"> todir=</span><span class="st">&quot;user:password@server:/home/user&quot;</span><span class="kw">&gt;&lt;/scp&gt;</span></code></pre>
+<div class="sourceCode"><pre class="sourceCode xml"><code class="sourceCode xml"><span class="kw">&lt;scp</span><span class="ot"> file=</span><span class="st">&quot;file location to scp&quot;</span><span class="ot"> todir=</span><span class="st">&quot;user:password@server:/home/user&quot;</span><span class="kw">&gt;&lt;/scp&gt;</span></code></pre></div>
 铁定的，类似这样的build 失败信息你是吃定了：
 <pre>
 BUILD FAILED

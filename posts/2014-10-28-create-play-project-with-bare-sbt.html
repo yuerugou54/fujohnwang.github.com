@@ -10,6 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link rel="icon" href="/favicon.ico">
             <style type="text/css">
+    div.sourceCode { overflow-x: auto; }
     table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
       margin: 0; padding: 0; vertical-align: baseline; border: none; }
     table.sourceCode { width: 100%; line-height: 100%; }
@@ -49,7 +50,7 @@
       <div class="row">
         <div class="col-md-3 sidebar">
             <a href="/">
-				<div align="center"><img src="/images/wfq0.png"/></div>
+				<!-- <div align="center"><img src="/images/wfq0.png"/></div> -->
                 <h2 class="text-center">扶墙老师</h2>
             </a>
             <p class="text-center lead slogan"><a href="/slogan.html">lollapalooza &amp; positioning</a></p>
@@ -94,9 +95,9 @@
 <p>因为Play使用SBT编译，所以，Play工程本身也就是一个标准的SBT工程，做多加上Play插件，所以，我等可以从头干净的自己创建一个Play工程...</p>
 <h1 id="为sbt工程添加play插件"><span class="header-section-number">1</span> 为SBT工程添加Play插件</h1>
 <p>在<code>project/plugins.sbt</code>配置中添加:</p>
-<pre class="sourceCode scala"><code class="sourceCode scala">resolvers += <span class="st">&quot;Typesafe repository&quot;</span> at <span class="st">&quot;http://repo.typesafe.com/typesafe/releases/&quot;</span>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala">resolvers += <span class="st">&quot;Typesafe repository&quot;</span> at <span class="st">&quot;http://repo.typesafe.com/typesafe/releases/&quot;</span>
 
-<span class="fu">addSbtPlugin</span>(<span class="st">&quot;com.typesafe.play&quot;</span> % <span class="st">&quot;sbt-plugin&quot;</span> % <span class="st">&quot;2.3.6&quot;</span>)</code></pre>
+<span class="fu">addSbtPlugin</span>(<span class="st">&quot;com.typesafe.play&quot;</span> % <span class="st">&quot;sbt-plugin&quot;</span> % <span class="st">&quot;2.3.6&quot;</span>)</code></pre></div>
 <p>sbt-plugin的版本随play的发布改为最新的或者自己合适的版本即可。</p>
 <h1 id="明确指定项目使用的sbt版本"><span class="header-section-number">2</span> 明确指定项目使用的SBT版本</h1>
 <p>在<code>project/build.properties</code>中配置, 比如: <code>sbt.version=0.13.5</code></p>
@@ -106,15 +107,15 @@
 </blockquote>
 <h1 id="在build文件中启用play插件"><span class="header-section-number">3</span> 在build文件中启用Play插件</h1>
 <p>在build.sbt中</p>
-<pre class="sourceCode scala"><code class="sourceCode scala">name := <span class="st">&quot;my-first-app&quot;</span>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala">name := <span class="st">&quot;my-first-app&quot;</span>
 
 version := <span class="st">&quot;1.0.0-SNAPSHOT&quot;</span>
 
-<span class="kw">lazy</span> <span class="kw">val</span> root = (project in <span class="fu">file</span>(<span class="st">&quot;.&quot;</span>)).<span class="fu">enablePlugins</span>(PlayScala)</code></pre>
+<span class="kw">lazy</span> <span class="kw">val</span> root = (project in <span class="fu">file</span>(<span class="st">&quot;.&quot;</span>)).<span class="fu">enablePlugins</span>(PlayScala)</code></pre></div>
 <p>OK, 按照一般的SBT项目来编译即可。</p>
 <h1 id="补充"><span class="header-section-number">4</span> 补充</h1>
 <p>以上只是基本配置， 实际上，我们还会添加更多配置项，比如， 在<code>project/plugins.sbt</code>中，我们可能会配置更多插件:</p>
-<pre class="sourceCode scala"><code class="sourceCode scala">resolvers += <span class="st">&quot;Typesafe repository&quot;</span> at <span class="st">&quot;http://repo.typesafe.com/typesafe/releases/&quot;</span>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala">resolvers += <span class="st">&quot;Typesafe repository&quot;</span> at <span class="st">&quot;http://repo.typesafe.com/typesafe/releases/&quot;</span>
 
 resolvers += Resolver.<span class="fu">url</span>(<span class="st">&quot;git://github.com/jrudolph/sbt-dependency-graph.git&quot;</span>)
 
@@ -128,9 +129,9 @@ resolvers += <span class="st">&quot;sbt-idea-repo&quot;</span> at <span class="s
 
 <span class="fu">addSbtPlugin</span>(<span class="st">&quot;com.typesafe.sbt&quot;</span> % <span class="st">&quot;sbt-native-packager&quot;</span> % <span class="st">&quot;0.7.1&quot;</span>)
 
-<span class="fu">addSbtPlugin</span>(<span class="st">&quot;de.johoop&quot;</span> % <span class="st">&quot;sbt-testng-plugin&quot;</span> % <span class="st">&quot;3.0.2&quot;</span>)</code></pre>
+<span class="fu">addSbtPlugin</span>(<span class="st">&quot;de.johoop&quot;</span> % <span class="st">&quot;sbt-testng-plugin&quot;</span> % <span class="st">&quot;3.0.2&quot;</span>)</code></pre></div>
 <p>而在build.sbt中：</p>
-<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">import</span> com.<span class="fu">typesafe</span>.<span class="fu">sbt</span>.<span class="fu">SbtNativePackager</span>.<span class="fu">_</span>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">import</span> com.<span class="fu">typesafe</span>.<span class="fu">sbt</span>.<span class="fu">SbtNativePackager</span>.<span class="fu">_</span>
 <span class="kw">import</span> NativePackagerKeys.<span class="fu">_</span>
 <span class="kw">import</span> com.<span class="fu">typesafe</span>.<span class="fu">sbt</span>.<span class="fu">packager</span>.<span class="fu">MappingsHelper</span>.<span class="fu">_</span>
 
@@ -166,7 +167,7 @@ libraryDependencies ++= Seq(
 
 mappings in Universal += <span class="fu">file</span>(<span class="st">&quot;ReleaseNote.md&quot;</span>) -&gt; <span class="st">&quot;ReleaseNote.md&quot;</span>
 
-mappings in Universal ++= <span class="fu">directory</span>(<span class="st">&quot;agents&quot;</span>)</code></pre>
+mappings in Universal ++= <span class="fu">directory</span>(<span class="st">&quot;agents&quot;</span>)</code></pre></div>
 <blockquote>
 <p>注意</p>
 <p>play的sbt-plugin的依赖的sbt native packager是0.7.4!</p>

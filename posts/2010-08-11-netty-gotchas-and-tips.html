@@ -10,6 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link rel="icon" href="/favicon.ico">
             <style type="text/css">
+    div.sourceCode { overflow-x: auto; }
     table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
       margin: 0; padding: 0; vertical-align: baseline; border: none; }
     table.sourceCode { width: 100%; line-height: 100%; }
@@ -49,7 +50,7 @@
       <div class="row">
         <div class="col-md-3 sidebar">
             <a href="/">
-				<div align="center"><img src="/images/wfq0.png"/></div>
+				<!-- <div align="center"><img src="/images/wfq0.png"/></div> -->
                 <h2 class="text-center">扶墙老师</h2>
             </a>
             <p class="text-center lead slogan"><a href="/slogan.html">lollapalooza &amp; positioning</a></p>
@@ -101,7 +102,7 @@
 </ul></li>
 <li>You have to invoke channel.close() in another thread other than the IOWorker thread.</li>
 </ol>
-<pre class="sourceCode java"><code class="sourceCode java"><span class="kw">public</span> <span class="dt">void</span> <span class="fu">exceptionCaught</span>(<span class="dt">final</span> ChannelHandlerContext ctx, ExceptionEvent e) <span class="kw">throws</span> Exception {  
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="kw">public</span> <span class="dt">void</span> <span class="fu">exceptionCaught</span>(<span class="dt">final</span> ChannelHandlerContext ctx, ExceptionEvent e) <span class="kw">throws</span> Exception {  
             <span class="kw">new</span> Thread(){  
                 <span class="kw">public</span> <span class="dt">void</span> <span class="fu">run</span>(){  
                     ctx.<span class="fu">getChannel</span>().<span class="fu">close</span>().<span class="fu">addListener</span>(<span class="kw">new</span> <span class="fu">ChannelFutureListener</span>() {  
@@ -113,7 +114,7 @@
                     });  
                 }  
             }.<span class="fu">start</span>();  
-    }  </code></pre>
+    }  </code></pre></div>
 <ol start="7" style="list-style-type: decimal">
 <li>use IdleStateHandler and IdleStateAwareChannelHandler together to achieve some functionalities like connection status checking, long-push server mocks, etc.
 <ul>

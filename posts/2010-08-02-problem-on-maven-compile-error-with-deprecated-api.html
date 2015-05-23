@@ -10,6 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link rel="icon" href="/favicon.ico">
             <style type="text/css">
+    div.sourceCode { overflow-x: auto; }
     table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
       margin: 0; padding: 0; vertical-align: baseline; border: none; }
     table.sourceCode { width: 100%; line-height: 100%; }
@@ -49,7 +50,7 @@
       <div class="row">
         <div class="col-md-3 sidebar">
             <a href="/">
-				<div align="center"><img src="/images/wfq0.png"/></div>
+				<!-- <div align="center"><img src="/images/wfq0.png"/></div> -->
                 <h2 class="text-center">扶墙老师</h2>
             </a>
             <p class="text-center lead slogan"><a href="/slogan.html">lollapalooza &amp; positioning</a></p>
@@ -83,7 +84,7 @@
                 <hr>
 
                                 <p>在项目代码里用了sun.misc.Signal和sun.misc.SignalHandler， 自己的Mac下编译没问题， 在别人的Windows下编译报&quot;警告：sun.misc.Signal 是 Sun 的专用 API，可能会在未来版本中删除&quot;， 警告也就算了， 还tmd编译失败， <code>maven -e</code>打出来的异常是：</p>
-<pre class="sourceCode java"><code class="sourceCode java">[INFO] Trace  
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java">[INFO] Trace  
 org.<span class="fu">apache</span>.<span class="fu">maven</span>.<span class="fu">BuildFailureException</span>: Compilation failure  
         at org.<span class="fu">apache</span>.<span class="fu">maven</span>.<span class="fu">lifecycle</span>.<span class="fu">DefaultLifecycleExecutor</span>.<span class="fu">executeGoals</span>(DefaultLifecycleExecutor.<span class="fu">java</span>:<span class="dv">715</span>)  
         at org.<span class="fu">apache</span>.<span class="fu">maven</span>.<span class="fu">lifecycle</span>.<span class="fu">DefaultLifecycleExecutor</span>.<span class="fu">executeGoalWithLifecycle</span>(DefaultLifecycleExecutor.<span class="fu">java</span>:<span class="dv">556</span>)  
@@ -108,11 +109,11 @@ Caused by: org.<span class="fu">apache</span>.<span class="fu">maven</span>.<spa
         at org.<span class="fu">apache</span>.<span class="fu">maven</span>.<span class="fu">plugin</span>.<span class="fu">CompilerMojo</span>.<span class="fu">execute</span>(CompilerMojo.<span class="fu">java</span>:<span class="dv">114</span>)  
         at org.<span class="fu">apache</span>.<span class="fu">maven</span>.<span class="fu">plugin</span>.<span class="fu">DefaultPluginManager</span>.<span class="fu">executeMojo</span>(DefaultPluginManager.<span class="fu">java</span>:<span class="dv">490</span>)  
         at org.<span class="fu">apache</span>.<span class="fu">maven</span>.<span class="fu">lifecycle</span>.<span class="fu">DefaultLifecycleExecutor</span>.<span class="fu">executeGoals</span>(DefaultLifecycleExecutor.<span class="fu">java</span>:<span class="dv">694</span>)  
-        <span class="kw">... </span><span class="dv">17</span> more </code></pre>
+        <span class="kw">... </span><span class="dv">17</span> more </code></pre></div>
 <p>看到这个我估计就是maven的问题了， 搜了一下， 居然发现“钱总”在部门的team blog里发了篇有关这个问题的blog ，真tmd悲剧，早知道也不用费那么些周折搜来搜去了。</p>
 <p>恍然记得平台另一个框架里也用了sun.misc包里的东西，就问了下他们怎么编译过的， 最后的答案是直接把类拷贝出来了 ：-（ 这也行...</p>
 <p>这里是钱总那里讨过来的解决方法：</p>
-<pre class="sourceCode xml"><code class="sourceCode xml"><span class="kw">&lt;plugin&gt;</span>   
+<div class="sourceCode"><pre class="sourceCode xml"><code class="sourceCode xml"><span class="kw">&lt;plugin&gt;</span>   
     <span class="kw">&lt;groupId&gt;</span>org.apache.maven.plugins<span class="kw">&lt;/groupId&gt;</span>   
     <span class="kw">&lt;artifactId&gt;</span>maven-compiler-plugin<span class="kw">&lt;/artifactId&gt;</span>   
     <span class="kw">&lt;version&gt;</span>2.3.1<span class="kw">&lt;/version&gt;</span>   
@@ -126,7 +127,7 @@ Caused by: org.<span class="fu">apache</span>.<span class="fu">maven</span>.<spa
         <span class="kw">&lt;version&gt;</span>1.8.1-patch<span class="kw">&lt;/version&gt;</span>   
             <span class="kw">&lt;/dependency&gt;</span>   
     <span class="kw">&lt;/dependencies&gt;</span>   
-<span class="kw">&lt;/plugin&gt;</span></code></pre>
+<span class="kw">&lt;/plugin&gt;</span></code></pre></div>
 <p>其实最简单的方法就是别用中文的locale，哈哈</p>
                 
                 <!--百度分享按钮-->

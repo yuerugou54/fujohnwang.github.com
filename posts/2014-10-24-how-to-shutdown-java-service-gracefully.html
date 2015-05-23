@@ -10,6 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link rel="icon" href="/favicon.ico">
             <style type="text/css">
+    div.sourceCode { overflow-x: auto; }
     table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
       margin: 0; padding: 0; vertical-align: baseline; border: none; }
     table.sourceCode { width: 100%; line-height: 100%; }
@@ -49,7 +50,7 @@
       <div class="row">
         <div class="col-md-3 sidebar">
             <a href="/">
-				<div align="center"><img src="/images/wfq0.png"/></div>
+				<!-- <div align="center"><img src="/images/wfq0.png"/></div> -->
                 <h2 class="text-center">扶墙老师</h2>
             </a>
             <p class="text-center lead slogan"><a href="/slogan.html">lollapalooza &amp; positioning</a></p>
@@ -86,7 +87,7 @@
                                 <p>I will just talk about in my way, I don't care your tricky ways like <code>kill</code> something.</p>
 <p>First of all, Let's define <code>Service</code>, U can refer to google guava's one, but Let's make it simple, A Service can be started and stopped, sometimes, we would like to see the status of a service, so a <code>running</code> status will be exposed too.</p>
 <p>So A simple service looks like:</p>
-<pre class="sourceCode java"><code class="sourceCode java"><span class="kw">class</span> MyService{
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="kw">class</span> MyService{
     <span class="kw">private</span> <span class="kw">volatile</span> <span class="dt">boolean</span> running = <span class="kw">false</span>;
     <span class="kw">public</span> <span class="dt">void</span> <span class="fu">start</span>(){
         ....
@@ -101,9 +102,9 @@
     <span class="kw">public</span> <span class="dt">void</span> <span class="fu">shutdown</span>(){
         running = <span class="kw">false</span>;
     }
-}</code></pre>
+}</code></pre></div>
 <p>If we run this service in main thread, we don't have a chance to call shutdown(), so we expose this Service via jmx, say , with springframework:</p>
-<pre class="sourceCode java"><code class="sourceCode java"><span class="fu">@ManagedResource</span>(...)
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="fu">@ManagedResource</span>(...)
 <span class="kw">class</span> MyService{
     ...
     
@@ -111,9 +112,9 @@
     <span class="kw">public</span> <span class="dt">void</span> <span class="fu">shutdown</span>(){
         running = <span class="kw">false</span>;
     }
-}</code></pre>
+}</code></pre></div>
 <p>and configure spring to expose it:</p>
-<pre class="sourceCode xml"><code class="sourceCode xml"><span class="kw">&lt;?xml</span> version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;<span class="kw">?&gt;</span>
+<div class="sourceCode"><pre class="sourceCode xml"><code class="sourceCode xml"><span class="kw">&lt;?xml</span> version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;<span class="kw">?&gt;</span>
 <span class="kw">&lt;beans</span><span class="ot"> xmlns=</span><span class="st">&quot;http://www.springframework.org/schema/beans&quot;</span>
 <span class="ot">       xmlns:xsi=</span><span class="st">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span>
 <span class="ot">       xmlns:context=</span><span class="st">&quot;http://www.springframework.org/schema/context&quot;</span>
@@ -124,10 +125,10 @@
 
     <span class="kw">&lt;context:mbean-export/&gt;</span>
 
-<span class="kw">&lt;/beans&gt;</span></code></pre>
+<span class="kw">&lt;/beans&gt;</span></code></pre></div>
 <p>then, when we would like to shut it down, we call the shutdown() method via jmx.</p>
 <p>To make things simple, we usually will give a stop.sh under bin directory for ops, such a stop.sh can call this shutdown() method via jmx with the help of attach API and management-agent.jar, as long as we wrap these functions into a helper main class:</p>
-<pre class="sourceCode java"><code class="sourceCode java"><span class="kw">import com.sun.tools.attach.AgentInitializationException;</span>
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="kw">import com.sun.tools.attach.AgentInitializationException;</span>
 <span class="kw">import com.sun.tools.attach.AgentLoadException;</span>
 <span class="kw">import com.sun.tools.attach.AttachNotSupportedException;</span>
 <span class="kw">import com.sun.tools.attach.VirtualMachine;</span>
@@ -237,11 +238,11 @@
         shutdown.<span class="fu">setMbeanMethodName</span>(args[<span class="dv">2</span>]);
         shutdown.<span class="fu">execute</span>();
     }
-}</code></pre>
+}</code></pre></div>
 <p>then in the stop.sh, you can simple write:</p>
-<pre class="sourceCode bash"><code class="sourceCode bash"><span class="co">#! /usr/bin/env bash</span>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="co">#! /usr/bin/env bash</span>
 
-<span class="kw">java</span> -cp tools.jar:... com.wacai.csw.scheduler.controls.Shutdown [pid] [service mbean name] [shutdown method]</code></pre>
+<span class="kw">java</span> -cp tools.jar:... com.wacai.csw.scheduler.controls.Shutdown [pid] [service mbean name] [shutdown method]</code></pre></div>
 <p>since the tools.jar is platform dependent, just point it to the location under your platform in the shell.</p>
 <p>OK, now everything works perfectly and seamlessly.</p>
                 

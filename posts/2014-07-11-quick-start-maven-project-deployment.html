@@ -10,6 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link rel="icon" href="/favicon.ico">
             <style type="text/css">
+    div.sourceCode { overflow-x: auto; }
     table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
       margin: 0; padding: 0; vertical-align: baseline; border: none; }
     table.sourceCode { width: 100%; line-height: 100%; }
@@ -49,7 +50,7 @@
       <div class="row">
         <div class="col-md-3 sidebar">
             <a href="/">
-				<div align="center"><img src="/images/wfq0.png"/></div>
+				<!-- <div align="center"><img src="/images/wfq0.png"/></div> -->
                 <h2 class="text-center">扶墙老师</h2>
             </a>
             <p class="text-center lead slogan"><a href="/slogan.html">lollapalooza &amp; positioning</a></p>
@@ -95,7 +96,7 @@
                                 <h1 id="配置结构关系"><span class="header-section-number">1</span> 配置结构关系</h1>
 <h2 id="项目pom.xml配置"><span class="header-section-number">1.1</span> 项目pom.xml配置</h2>
 <p>第一， 先配置发布到哪个repository相关信息:</p>
-<pre class="sourceCode xml"><code class="sourceCode xml">    <span class="kw">&lt;distributionManagement&gt;</span>
+<div class="sourceCode"><pre class="sourceCode xml"><code class="sourceCode xml">    <span class="kw">&lt;distributionManagement&gt;</span>
         <span class="kw">&lt;repository&gt;</span>
             <span class="kw">&lt;id&gt;</span>deployment<span class="kw">&lt;/id&gt;</span>
             <span class="kw">&lt;name&gt;</span>internal repository for releases<span class="kw">&lt;/name&gt;</span>
@@ -106,15 +107,15 @@
             <span class="kw">&lt;name&gt;</span>internal repository for snapshots<span class="kw">&lt;/name&gt;</span>
             <span class="kw">&lt;url&gt;</span>http://192.168.1.248:9111/nexus/content/repositories/snapshots<span class="kw">&lt;/url&gt;</span>
         <span class="kw">&lt;/snapshotRepository&gt;</span>
-    <span class="kw">&lt;/distributionManagement&gt;</span></code></pre>
+    <span class="kw">&lt;/distributionManagement&gt;</span></code></pre></div>
 <p>第二， 配置deploy插件：</p>
-<pre class="sourceCode xml"><code class="sourceCode xml">        <span class="kw">&lt;plugins&gt;</span>
+<div class="sourceCode"><pre class="sourceCode xml"><code class="sourceCode xml">        <span class="kw">&lt;plugins&gt;</span>
             <span class="kw">&lt;plugin&gt;</span>
                 <span class="kw">&lt;artifactId&gt;</span>maven-deploy-plugin<span class="kw">&lt;/artifactId&gt;</span>
             <span class="kw">&lt;/plugin&gt;</span>
-        <span class="kw">&lt;/plugins&gt;</span></code></pre>
+        <span class="kw">&lt;/plugins&gt;</span></code></pre></div>
 <p>顺便把这些plugin一起配置，这样可以jar， source jar， javadoc jar一起发布：</p>
-<pre class="sourceCode xml"><code class="sourceCode xml">            <span class="kw">&lt;plugin&gt;</span>
+<div class="sourceCode"><pre class="sourceCode xml"><code class="sourceCode xml">            <span class="kw">&lt;plugin&gt;</span>
                 <span class="kw">&lt;groupId&gt;</span>org.apache.maven.plugins<span class="kw">&lt;/groupId&gt;</span>
                 <span class="kw">&lt;artifactId&gt;</span>maven-compiler-plugin<span class="kw">&lt;/artifactId&gt;</span>
                 <span class="kw">&lt;configuration&gt;</span>
@@ -150,16 +151,16 @@
                         <span class="kw">&lt;/goals&gt;</span>
                     <span class="kw">&lt;/execution&gt;</span>
                 <span class="kw">&lt;/executions&gt;</span>
-            <span class="kw">&lt;/plugin&gt;</span></code></pre>
+            <span class="kw">&lt;/plugin&gt;</span></code></pre></div>
 <h2 id="settings.xml配置"><span class="header-section-number">1.2</span> settings.xml配置</h2>
 <p>Nexus通常会设置认证， 只允许指定的credentials可以发布artifacts到nexus， 而这些认证信息就配置在settings.xml中：</p>
-<pre class="sourceCode xml"><code class="sourceCode xml">    <span class="kw">&lt;servers&gt;</span>
+<div class="sourceCode"><pre class="sourceCode xml"><code class="sourceCode xml">    <span class="kw">&lt;servers&gt;</span>
         <span class="kw">&lt;server&gt;</span>
             <span class="kw">&lt;id&gt;</span>deployment<span class="kw">&lt;/id&gt;</span>
             <span class="kw">&lt;username&gt;</span>deployment<span class="kw">&lt;/username&gt;</span>
             <span class="kw">&lt;password&gt;</span>${password}<span class="kw">&lt;/password&gt;</span>
         <span class="kw">&lt;/server&gt;</span>
-    <span class="kw">&lt;/servers&gt;</span></code></pre>
+    <span class="kw">&lt;/servers&gt;</span></code></pre></div>
 <blockquote>
 <p>注意： server的id值需要跟pom.xml中每一个repository的id值相对应！！！ （因为我们是为这些distributionManagement的repository提供认证信息）</p>
 </blockquote>

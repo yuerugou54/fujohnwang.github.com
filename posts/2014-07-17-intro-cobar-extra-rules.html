@@ -10,6 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link rel="icon" href="/favicon.ico">
             <style type="text/css">
+    div.sourceCode { overflow-x: auto; }
     table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
       margin: 0; padding: 0; vertical-align: baseline; border: none; }
     table.sourceCode { width: 100%; line-height: 100%; }
@@ -49,7 +50,7 @@
       <div class="row">
         <div class="col-md-3 sidebar">
             <a href="/">
-				<div align="center"><img src="/images/wfq0.png"/></div>
+				<!-- <div align="center"><img src="/images/wfq0.png"/></div> -->
                 <h2 class="text-center">扶墙老师</h2>
             </a>
             <p class="text-center lead slogan"><a href="/slogan.html">lollapalooza &amp; positioning</a></p>
@@ -100,9 +101,9 @@
 <p>主要提供两个扩展函数， 即com.alibaba.cobar.route.function.PartitionByRange和com.alibaba.cobar.route.function.PartitionByDateTimeRange</p>
 <h2 id="com.alibaba.cobar.route.function.partitionbyrange"><span class="header-section-number">2.1</span> com.alibaba.cobar.route.function.PartitionByRange</h2>
 <p>以数字型Column字段为分区标准(内部可强制转型为Java的Long型)，通过单独的配置文件指定数字区间：</p>
-<pre class="sourceCode xml"><code class="sourceCode xml">  <span class="kw">&lt;function</span><span class="ot"> name=</span><span class="st">&quot;func&quot;</span><span class="ot"> class=</span><span class="st">&quot;com.alibaba.cobar.route.function.PartitionByRange&quot;</span><span class="kw">&gt;</span>
+<div class="sourceCode"><pre class="sourceCode xml"><code class="sourceCode xml">  <span class="kw">&lt;function</span><span class="ot"> name=</span><span class="st">&quot;func&quot;</span><span class="ot"> class=</span><span class="st">&quot;com.alibaba.cobar.route.function.PartitionByRange&quot;</span><span class="kw">&gt;</span>
     <span class="kw">&lt;property</span><span class="ot"> name=</span><span class="st">&quot;rangeDefinitionFile&quot;</span><span class="kw">&gt;</span>${config_file_path}<span class="kw">&lt;/property&gt;</span>
-  <span class="kw">&lt;/function&gt;</span></code></pre>
+  <span class="kw">&lt;/function&gt;</span></code></pre></div>
 <p>${config_file_path}指向的分区规则配置文件内容类似于：</p>
 <pre>
 0, 2014 = 0
@@ -120,9 +121,9 @@
 <h2 id="com.alibaba.cobar.route.function.partitionbydatetimerange"><span class="header-section-number">2.2</span> com.alibaba.cobar.route.function.PartitionByDateTimeRange</h2>
 <p>PartitionByRange处理路由的时候，接收的是数字型的参数， 对于数据库中DateTime类型的参数，我们需要从String形式转换为Java里的强类型，所以，没法重用PartitionByRange， 故此开发了PartitionByDateTimeRange， 它接收符合DateTime格式化的String类型参数， 然后决定如何路由数据库访问。</p>
 <p>PartitionByDateTimeRange也是通过一个外部规则文件来配置：</p>
-<pre class="sourceCode xml"><code class="sourceCode xml">  <span class="kw">&lt;function</span><span class="ot"> name=</span><span class="st">&quot;func&quot;</span><span class="ot"> class=</span><span class="st">&quot;com.alibaba.cobar.route.function.PartitionByDateTimeRange&quot;</span><span class="kw">&gt;</span>
+<div class="sourceCode"><pre class="sourceCode xml"><code class="sourceCode xml">  <span class="kw">&lt;function</span><span class="ot"> name=</span><span class="st">&quot;func&quot;</span><span class="ot"> class=</span><span class="st">&quot;com.alibaba.cobar.route.function.PartitionByDateTimeRange&quot;</span><span class="kw">&gt;</span>
     <span class="kw">&lt;property</span><span class="ot"> name=</span><span class="st">&quot;rangeDefinitionFile&quot;</span><span class="kw">&gt;</span>${config_file_path}<span class="kw">&lt;/property&gt;</span>
-  <span class="kw">&lt;/function&gt;</span></code></pre>
+  <span class="kw">&lt;/function&gt;</span></code></pre></div>
 <p>配置文件内容格式与PartitionByRange的稍微有些小变动，但大体规则相同， 只是从以数字作为区间的开始和结束， 变成以格式化的时间的字符串作为区间的开始和结束 比如：</p>
 <pre>
 2014-06-27 01:11:51, 2014-07-27 01:11:51=0

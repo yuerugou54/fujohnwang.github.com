@@ -10,6 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link rel="icon" href="/favicon.ico">
             <style type="text/css">
+    div.sourceCode { overflow-x: auto; }
     table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
       margin: 0; padding: 0; vertical-align: baseline; border: none; }
     table.sourceCode { width: 100%; line-height: 100%; }
@@ -49,7 +50,7 @@
       <div class="row">
         <div class="col-md-3 sidebar">
             <a href="/">
-				<div align="center"><img src="/images/wfq0.png"/></div>
+				<!-- <div align="center"><img src="/images/wfq0.png"/></div> -->
                 <h2 class="text-center">扶墙老师</h2>
             </a>
             <p class="text-center lead slogan"><a href="/slogan.html">lollapalooza &amp; positioning</a></p>
@@ -94,7 +95,7 @@ groupId = {
 </pre>
 <p>即可以配置为key-value的形式（以=或者:分割），或者group的形式（group暂时不考虑嵌套group的形式）。</p>
 <p>定义一个Scala的Parser combinator如下：</p>
-<table class="sourceCode scala numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode scala numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
@@ -163,10 +164,10 @@ groupId = {
   <span class="kw">def</span> booleanLiteral = <span class="st">&quot;true&quot;</span> ^^^ <span class="kw">true</span> | <span class="st">&quot;false&quot;</span> ^^^ <span class="kw">false</span>
 
   <span class="kw">def</span> nullLiteral = <span class="st">&quot;null&quot;</span> ^^^ <span class="kw">null</span>
-}</code></pre></td></tr></table>
+}</code></pre></td></tr></table></div>
 <p>代码写的有点儿矬， 将就看吧，呵呵， 本来用的JavaTokenParsers.stringLiteral， 但后来发现他没有去掉引号&quot;, 所以，只能自己重新定义一个， 当然，代码直接拷贝它的。</p>
 <p>有了parser之后， 就可以定义一个Configurator，比如：</p>
-<table class="sourceCode scala numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+<div class="sourceCode"><table class="sourceCode scala numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
 2
 3
 4
@@ -179,7 +180,7 @@ groupId = {
         <span class="kw">case</span> p.<span class="fu">Success</span>(r, in)=&gt; <span class="co">// use r to get parsed result and feed your program, hehe </span>
         <span class="kw">case</span> x=&gt; <span class="kw">throw</span> <span class="kw">new</span> Exception(<span class="st">&quot;parse error:&quot;</span>+x)
    }
-}</code></pre></td></tr></table>
+}</code></pre></td></tr></table></div>
 <p>OK， That's it！Have Fun!</p>
                 
                 <!--百度分享按钮-->

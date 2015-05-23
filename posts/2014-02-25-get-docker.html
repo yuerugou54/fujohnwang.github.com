@@ -10,6 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link rel="icon" href="/favicon.ico">
             <style type="text/css">
+    div.sourceCode { overflow-x: auto; }
     table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
       margin: 0; padding: 0; vertical-align: baseline; border: none; }
     table.sourceCode { width: 100%; line-height: 100%; }
@@ -49,7 +50,7 @@
       <div class="row">
         <div class="col-md-3 sidebar">
             <a href="/">
-				<div align="center"><img src="/images/wfq0.png"/></div>
+				<!-- <div align="center"><img src="/images/wfq0.png"/></div> -->
                 <h2 class="text-center">扶墙老师</h2>
             </a>
             <p class="text-center lead slogan"><a href="/slogan.html">lollapalooza &amp; positioning</a></p>
@@ -193,12 +194,12 @@ sudo docker attach -sig-proxy=false $CONTAINER_ID        // “-sig-proxy=false�
 </pre>
 <h1 id="private-registry"><span class="header-section-number">4</span> Private Registry</h1>
 <p>fast way to install/setup a private registry:</p>
-<pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">docker</span> run –p 5000 samalba/docker-registry</code></pre>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">docker</span> run –p 5000 samalba/docker-registry</code></pre></div>
 <p>then use it:</p>
-<pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">docker</span> push <span class="kw">&lt;</span>namespace<span class="kw">&gt;</span>/<span class="kw">&lt;</span>name<span class="kw">&gt;</span></code></pre>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">docker</span> push <span class="kw">&lt;</span>namespace<span class="kw">&gt;</span>/<span class="kw">&lt;</span>name<span class="kw">&gt;</span></code></pre></div>
 <p>Docker uses the namespace to know where to push, if the namespace is an url, it will push on this url:</p>
-<pre class="sourceCode bash"><code class="sourceCode bash"><span class="co">#push the &lt;name&gt; to your a private registry &lt;url&gt;</span>
-$ <span class="kw">docker</span> push <span class="kw">&lt;</span>url<span class="kw">&gt;</span>/<span class="kw">&lt;</span>name<span class="kw">&gt;</span></code></pre>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="co">#push the &lt;name&gt; to your a private registry &lt;url&gt;</span>
+$ <span class="kw">docker</span> push <span class="kw">&lt;</span>url<span class="kw">&gt;</span>/<span class="kw">&lt;</span>name<span class="kw">&gt;</span></code></pre></div>
 <h1 id="系统细节"><span class="header-section-number">5</span> 系统细节</h1>
 <h2 id="docker元数据存放位置"><span class="header-section-number">5.1</span> docker元数据存放位置</h2>
 <pre>

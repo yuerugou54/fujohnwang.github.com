@@ -10,6 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link rel="icon" href="/favicon.ico">
             <style type="text/css">
+    div.sourceCode { overflow-x: auto; }
     table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
       margin: 0; padding: 0; vertical-align: baseline; border: none; }
     table.sourceCode { width: 100%; line-height: 100%; }
@@ -49,7 +50,7 @@
       <div class="row">
         <div class="col-md-3 sidebar">
             <a href="/">
-				<div align="center"><img src="/images/wfq0.png"/></div>
+				<!-- <div align="center"><img src="/images/wfq0.png"/></div> -->
                 <h2 class="text-center">扶墙老师</h2>
             </a>
             <p class="text-center lead slogan"><a href="/slogan.html">lollapalooza &amp; positioning</a></p>
@@ -139,7 +140,7 @@ jmx-host=192.168.3.190jmx-port=1099
 <p>监控端口开放之后，通过jvisualvm或者jconsole直接连接监控即可。</p>
 <h1 id="启动"><span class="header-section-number">2</span> 启动</h1>
 <p>The startup script <strong>nexus</strong> supports the common service commands start, stop, restart, status, console and dump.</p>
-<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">./bin/nexus</span> start</code></pre>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">./bin/nexus</span> start</code></pre></div>
 <h1 id="常见问题"><span class="header-section-number">3</span> 常见问题</h1>
 <h2 id="访问maven-metadata.xml慢"><span class="header-section-number">3.1</span> 访问maven-metadata.xml慢</h2>
 <h3 id="原因描述"><span class="header-section-number">3.1.1</span> 原因描述</h3>
@@ -154,7 +155,7 @@ jmx-host=192.168.3.190jmx-port=1099
 .*/org/apache/maven/.*     -> Central
 </pre>
 <h1 id="httpcentral是怎么回事"><span class="header-section-number">4</span> http://central是怎么回事？</h1>
-<pre class="sourceCode xml"><code class="sourceCode xml"><span class="kw">&lt;settings&gt;</span>
+<div class="sourceCode"><pre class="sourceCode xml"><code class="sourceCode xml"><span class="kw">&lt;settings&gt;</span>
   <span class="kw">&lt;mirrors&gt;</span>
     <span class="kw">&lt;mirror&gt;</span>
       <span class="co">&lt;!--This sends everything else to /public --&gt;</span>
@@ -190,7 +191,7 @@ jmx-host=192.168.3.190jmx-port=1099
     <span class="co">&lt;!--make the profile active all the time --&gt;</span>
     <span class="kw">&lt;activeProfile&gt;</span>nexus<span class="kw">&lt;/activeProfile&gt;</span>
   <span class="kw">&lt;/activeProfiles&gt;</span>
-<span class="kw">&lt;/settings&gt;</span></code></pre>
+<span class="kw">&lt;/settings&gt;</span></code></pre></div>
 <p>settings.xml文件中， profile元素下配置的<strong>http://central</strong>是一个bogus URL, 会被mirror配置的URL覆盖， 指向mirror指定的url。 其实， 直接写具体的URL也是可以的。</p>
                 
                 <!--百度分享按钮-->

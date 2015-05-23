@@ -10,6 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link rel="icon" href="/favicon.ico">
             <style type="text/css">
+    div.sourceCode { overflow-x: auto; }
     table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
       margin: 0; padding: 0; vertical-align: baseline; border: none; }
     table.sourceCode { width: 100%; line-height: 100%; }
@@ -49,7 +50,7 @@
       <div class="row">
         <div class="col-md-3 sidebar">
             <a href="/">
-				<div align="center"><img src="/images/wfq0.png"/></div>
+				<!-- <div align="center"><img src="/images/wfq0.png"/></div> -->
                 <h2 class="text-center">扶墙老师</h2>
             </a>
             <p class="text-center lead slogan"><a href="/slogan.html">lollapalooza &amp; positioning</a></p>
@@ -93,7 +94,7 @@
 <p>实际上，实现原理很简单，直接SSH登录那台Linux机器执行df命令就可以了，其他信息，像当前目录拥有的文件列表等，运行ls -ls命令，这些我想大家都很清楚，那么在Java中我们是如何实现类似功能的那？！</p>
 <p>可能有人以前做过类似功能，那他一定听说过JSch或者说OpenSSH（当然，我们会用他的Java实现安ganymed），对，我们也只是为JSch提供了一个简单的Wrapper而已。</p>
 <p>先来看看这个Wrapper是什么样子的吧，然后我再详细说一下这个程序的设计和实现细节：</p>
-<pre class="sourceCode java"><code class="sourceCode java"><span class="kw">package org.darrenstudio.ssh;</span>
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="kw">package org.darrenstudio.ssh;</span>
 
 <span class="kw">import java.io.InputStream;</span>
 <span class="kw">import java.util.Properties;</span>
@@ -201,10 +202,10 @@ session = <span class="kw">null</span>;
 }
 login = <span class="kw">false</span>;
 }
-}</code></pre>
+}</code></pre></div>
 <p>我们给出一个Executor，他负责为我们执行Shell命令，他首先要求我们登录到要执行命令的Linux机器（即login方法），然后，如果登录成功，client端就可以调用execute方法来执行相应的shell命令，执行后，在finally中dispose掉该Executor。</p>
 <p>对于login方法来说，因为需要提供login相关信息，而且这些信息参数较多，3－4个，当然，相对来说也不是很多，但是，我们还是采用将他们归并到一个参数类的做法（我想Effective Java大家都读过），这就有了我们的SSHLoginOptions类：</p>
-<pre class="sourceCode java"><code class="sourceCode java"><span class="kw">public</span> <span class="kw">class</span> SSHLoginOptions <span class="kw">implements</span> Serializable {
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="kw">public</span> <span class="kw">class</span> SSHLoginOptions <span class="kw">implements</span> Serializable {
 
 <span class="kw">private</span> <span class="dt">static</span> <span class="dt">final</span> <span class="dt">long</span> serialVersionUID = -8018206086412607771L;
 
@@ -262,9 +263,9 @@ login = <span class="kw">false</span>;
 <span class="st">&quot;username&quot;</span>, username).<span class="fu">append</span>(<span class="st">&quot;password&quot;</span>, password).<span class="fu">append</span>(
 <span class="st">&quot;port&quot;</span>, port).<span class="fu">toString</span>();
 }
-}</code></pre>
+}</code></pre></div>
 <p>如果登录不成功的话(可能因为网络不通等原因），我们需要抛出一个异常以便告诉Client端该事件，并终止以下步骤，所以，我们采用抛出自定义的SSHExecException：</p>
-<pre class="sourceCode java"><code class="sourceCode java"><span class="kw">public</span> <span class="kw">class</span> SSHExecException <span class="kw">extends</span> NestableException {
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="kw">public</span> <span class="kw">class</span> SSHExecException <span class="kw">extends</span> NestableException {
 
 <span class="kw">private</span> <span class="dt">static</span> <span class="dt">final</span> <span class="dt">long</span> serialVersionUID = -2804917566444475128L;
 
@@ -280,16 +281,16 @@ login = <span class="kw">false</span>;
 {
 <span class="kw">super</span>(cause,t);
 }
-}</code></pre>
+}</code></pre></div>
 <p>（这里定义为一个Checked异常，实际上，感觉定义为unchecked异常更恰当一些，因为如果失败，Client端也做不了什么）</p>
 <p>登录成功后，login标志被置为true，这样execute方法才可以被调用。</p>
 <p>execute方法有两个参数，第一个参数为String类型，表示将被执行Shell命令；第二个参数较为特殊，他是我们自己定义的一个接口：</p>
-<pre class="sourceCode java"><code class="sourceCode java"><span class="kw">public</span> <span class="kw">interface</span> SSHExecCallback {
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="kw">public</span> <span class="kw">interface</span> SSHExecCallback {
     <span class="dt">void</span> <span class="fu">dumpConsole</span>(String line);
     <span class="dt">void</span> <span class="fu">dumpErrStream</span>(String errline);
-}</code></pre>
+}</code></pre></div>
 <p>这个接口的实现负责处理Linux的正常输出和Error输出，至于说如何处理这些输出，你可以按照自己的需要给出自己的实现，比如，只是简单的打印到控制台：</p>
-<pre class="sourceCode java"><code class="sourceCode java"><span class="kw">public</span> <span class="kw">class</span> DefaultSSHExecCallback <span class="kw">implements</span> SSHExecCallback {
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="kw">public</span> <span class="kw">class</span> DefaultSSHExecCallback <span class="kw">implements</span> SSHExecCallback {
 
     <span class="kw">public</span> <span class="dt">void</span> <span class="fu">dumpConsole</span>(String line) {
     System.<span class="fu">out</span>.<span class="fu">println</span>(line);
@@ -298,11 +299,11 @@ login = <span class="kw">false</span>;
     <span class="kw">public</span> <span class="dt">void</span> <span class="fu">dumpErrStream</span>(String errline) {
     System.<span class="fu">err</span>.<span class="fu">println</span>(errline);
     }
-｝</code></pre>
+｝</code></pre></div>
 <p>在execute方法一开始，我们会检查是否登录成功，如果没有，那同样会抛出SSHExecException，以示说该类没有为Shell命令的执行准备好相应的状态，从而阻止随后的不安全操作。 之后，我们会打开一个Exec Channel，通过这个Channel来执行Shell命令，这可以很容易的从Executor的源码中看出来，如果执行过程中出现异常，我们会抛给Client端我们的自定义异常，当然，不管执行成功或者失败与否，我们都会关掉该Channel以释放连接，否则，主程序会挂在那里。在execute方法中，唯一需要关注的一个地方就是((ChannelExec)channel).setPty(true);这一句，如果没有他，那你的控制台将什么东西都没有，你将得不到任何想要的信息。</p>
 <p>为了说命令执行完成后释放资源，我们给出一个dispose方法，这也是很自然的，这里不再赘述。</p>
 <p>下面是该类的一个TestCase，大家可以很容易看出该类的使用，很简单。</p>
-<pre class="sourceCode java"><code class="sourceCode java"><span class="kw">public</span> <span class="kw">class</span> SSHExecutorTest <span class="kw">extends</span> TestCase {
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="kw">public</span> <span class="kw">class</span> SSHExecutorTest <span class="kw">extends</span> TestCase {
 
     <span class="kw">private</span> SSHExecutor executor;
 
@@ -330,11 +331,11 @@ login = <span class="kw">false</span>;
     executor.<span class="fu">execute</span>(command,callback);
     <span class="fu">assertEquals</span>(<span class="st">&quot;The Operating System of m.livedoor.cn should be Linux&quot;</span>,<span class="st">&quot;Linux&quot;</span>,StringUtils.<span class="fu">trimToEmpty</span>(callback.<span class="fu">getOutput</span>()));
     }
-}</code></pre>
+}</code></pre></div>
 <p>至此，我们的Wrapper类就算完成了，让我们回过头来看看，我们能归纳出什么东西。</p>
 <p>到目前为止，我所可以提供的相关信息有两类，一类就是执行Scp相关操作，一类就是基于SSH的Shell命令的执行，那么要完成这两类功能，现在有什么东西可以让我们避免去重新发明轮子那？！</p>
 <p>对于Scp相关任务来说，除了前面blog曾经提到过的通过Ant来实现外，你也可以通过JSch来完成，不要忘了，Ant的Scp Task也是通过JSch完成的，除此之外，OpenSSH的Java实现---ganymed也可以很容易的实现scp功能，而且，代码也看起来很简洁：</p>
-<pre class="sourceCode java"><code class="sourceCode java"><span class="co">/**</span>
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="co">/**</span>
 <span class="co">* </span><span class="kw">@author </span><span class="co">darrenwang</span>
 <span class="co">* </span><span class="kw">@since </span><span class="co">1.0</span>
 <span class="co">*/</span>
@@ -381,7 +382,7 @@ login = <span class="kw">false</span>;
         }
         login = <span class="kw">false</span>;
     }
-}</code></pre>
+}</code></pre></div>
 <p>除了Scp，那剩下很大一部分任务可能都是基于SSH的Shell命令执行啦，这个同样，你可以通过Ant，JSch和ganymed来实现，这里就不做赘述了，因为通过上面的SSHExecutor和以前的blog，你可以很容易的给出实现。</p>
 <p>OK，今天就写这些了，《地海传说》，我来啦...</p>
                 

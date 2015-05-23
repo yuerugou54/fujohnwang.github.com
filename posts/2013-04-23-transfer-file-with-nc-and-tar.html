@@ -10,6 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link rel="icon" href="/favicon.ico">
             <style type="text/css">
+    div.sourceCode { overflow-x: auto; }
     table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
       margin: 0; padding: 0; vertical-align: baseline; border: none; }
     table.sourceCode { width: 100%; line-height: 100%; }
@@ -49,7 +50,7 @@
       <div class="row">
         <div class="col-md-3 sidebar">
             <a href="/">
-				<div align="center"><img src="/images/wfq0.png"/></div>
+				<!-- <div align="center"><img src="/images/wfq0.png"/></div> -->
                 <h2 class="text-center">扶墙老师</h2>
             </a>
             <p class="text-center lead slogan"><a href="/slogan.html">lollapalooza &amp; positioning</a></p>
@@ -98,9 +99,9 @@
 </ol>
 <h1 id="结合tar使用"><span class="header-section-number">2</span> 结合tar使用</h1>
 <p>依然首先在目标机器上执行:</p>
-<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">nc</span> -l -p 6969 <span class="kw">|</span> <span class="kw">tar</span> xf – -C /tmp/</code></pre>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">nc</span> -l -p 6969 <span class="kw">|</span> <span class="kw">tar</span> xf – -C /tmp/</code></pre></div>
 <p>之后，在源端机器上执行：</p>
-<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">tar</span> cf – dir <span class="kw">|</span> <span class="kw">nc</span> -w1 hostB 6969</code></pre>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">tar</span> cf – dir <span class="kw">|</span> <span class="kw">nc</span> -w1 hostB 6969</code></pre></div>
 <blockquote>
 If the name of the tarfile is '-', tar writes to the standard output or reads from the standard input, whichever is appropriate.
 </blockquote>

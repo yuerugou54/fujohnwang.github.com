@@ -10,6 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link rel="icon" href="/favicon.ico">
             <style type="text/css">
+    div.sourceCode { overflow-x: auto; }
     table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
       margin: 0; padding: 0; vertical-align: baseline; border: none; }
     table.sourceCode { width: 100%; line-height: 100%; }
@@ -49,7 +50,7 @@
       <div class="row">
         <div class="col-md-3 sidebar">
             <a href="/">
-				<div align="center"><img src="/images/wfq0.png"/></div>
+				<!-- <div align="center"><img src="/images/wfq0.png"/></div> -->
                 <h2 class="text-center">扶墙老师</h2>
             </a>
             <p class="text-center lead slogan"><a href="/slogan.html">lollapalooza &amp; positioning</a></p>
@@ -93,11 +94,11 @@
                                 <p>总的来讲， 现在百度和google都支持使用utf8编码的URL，所以，大的层面来看，在网站中使用中文URL，从SEO层面来看是OK的，也会有好的效果，这里只是详细调研一下落实过程中的一些小的容易坑人的细节。</p>
 <h1 id="wrong-way"><span class="header-section-number">1</span> Wrong Way</h1>
 <p>使用java.net.URLEncoder对__整体__URL进行编码和解码，实验代码：</p>
-<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> encodedUrl = java.<span class="fu">net</span>.<span class="fu">URLEncoder</span>.<span class="fu">encode</span>(<span class="st">&quot;http://afoo.me/抗震设计.html&quot;</span>, <span class="st">&quot;utf-8&quot;</span>)
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> encodedUrl = java.<span class="fu">net</span>.<span class="fu">URLEncoder</span>.<span class="fu">encode</span>(<span class="st">&quot;http://afoo.me/抗震设计.html&quot;</span>, <span class="st">&quot;utf-8&quot;</span>)
 <span class="fu">println</span>(s<span class="st">&quot;encoded url = $encodedUrl&quot;</span>)
 
 <span class="kw">val</span> decodedUrl = java.<span class="fu">net</span>.<span class="fu">URLDecoder</span>.<span class="fu">decode</span>(encodedUrl, <span class="st">&quot;utf-8&quot;</span>)
-<span class="fu">println</span>(s<span class="st">&quot;decodedUrl=$decodedUrl&quot;</span>)</code></pre>
+<span class="fu">println</span>(s<span class="st">&quot;decodedUrl=$decodedUrl&quot;</span>)</code></pre></div>
 运行结果是：
 <pre>
 encoded url = http%3A%2F%2Fafoo.me%2F%E6%8A%97%E9%9C%87%E8%AE%BE%E8%AE%A1.html
@@ -111,7 +112,7 @@ http://afoo.me/抗震设计.html => http://afoo.me/%E6%8A%97%E9%9C%87%E8%AE%BE%E
 <h1 id="正确做法"><span class="header-section-number">2</span> 正确做法</h1>
 <p>实际上，我们应该将URL分区域(part)进行编码和解码！</p>
 <p>但是，陷阱依然存在！</p>
-<pre class="sourceCode scala"><code class="sourceCode scala"><span class="fu">println</span>(java.<span class="fu">net</span>.<span class="fu">URLEncoder</span>.<span class="fu">encode</span>(<span class="st">&quot;空格 plus+&quot;</span>, <span class="st">&quot;utf-8&quot;</span>))</code></pre>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="fu">println</span>(java.<span class="fu">net</span>.<span class="fu">URLEncoder</span>.<span class="fu">encode</span>(<span class="st">&quot;空格 plus+&quot;</span>, <span class="st">&quot;utf-8&quot;</span>))</code></pre></div>
 我们得到的是：
 <pre>
 %E7%A9%BA%E6%A0%BC+plus%2B
@@ -124,12 +125,12 @@ Now in the query part, spaces may be encoded to either &quot;+&quot; (for backwa
 </blockquote>
 <p>根据java.net.URLEncoder的javadoc，这个类只能用来编码URL中query部分。</p>
 <p>本来想自己写了，google了下，发现可以用URI类， 小实验了一把：</p>
-<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> uri = <span class="kw">new</span> URI(<span class="st">&quot;http&quot;</span>, <span class="st">&quot;afoo.me&quot;</span>, <span class="st">&quot;/抗震 +设计.html&quot;</span>, <span class="kw">null</span>, <span class="kw">null</span>)
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> uri = <span class="kw">new</span> URI(<span class="st">&quot;http&quot;</span>, <span class="st">&quot;afoo.me&quot;</span>, <span class="st">&quot;/抗震 +设计.html&quot;</span>, <span class="kw">null</span>, <span class="kw">null</span>)
 <span class="kw">val</span> encodeduri = uri.<span class="fu">toASCIIString</span>
 <span class="fu">println</span>(encodeduri)  <span class="co">// what we want</span>
 <span class="fu">println</span>(uri.<span class="fu">toString</span>)                <span class="co">// just for display,not for our use</span>
 <span class="fu">println</span>(URI.<span class="fu">create</span>(encodeduri).<span class="fu">getRawPath</span>) <span class="co">// raw, not decoded</span>
-<span class="fu">println</span>(URI.<span class="fu">create</span>(encodeduri).<span class="fu">getPath</span>) <span class="co">// decoded</span></code></pre>
+<span class="fu">println</span>(URI.<span class="fu">create</span>(encodeduri).<span class="fu">getPath</span>) <span class="co">// decoded</span></code></pre></div>
 结果：
 <pre>
 http://afoo.me/%E6%8A%97%E9%9C%87%20+%E8%AE%BE%E8%AE%A1.html

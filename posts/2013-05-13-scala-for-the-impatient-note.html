@@ -10,6 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link rel="icon" href="/favicon.ico">
             <style type="text/css">
+    div.sourceCode { overflow-x: auto; }
     table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
       margin: 0; padding: 0; vertical-align: baseline; border: none; }
     table.sourceCode { width: 100%; line-height: 100%; }
@@ -49,7 +50,7 @@
       <div class="row">
         <div class="col-md-3 sidebar">
             <a href="/">
-				<div align="center"><img src="/images/wfq0.png"/></div>
+				<!-- <div align="center"><img src="/images/wfq0.png"/></div> -->
                 <h2 class="text-center">扶墙老师</h2>
             </a>
             <p class="text-center lead slogan"><a href="/slogan.html">lollapalooza &amp; positioning</a></p>
@@ -109,30 +110,30 @@
 <p>scala里面没有啦，不过有三种alternatives可供选择。 使用boolean变量+while循环那，还好，对Java开发者来说其实很自家style啦， 不过，写多了scala，除非迫不得已其实不想多声明一个变量的； 使用scala.util.control.Breaks嘛， 也用过， 肯定不爽啦，而且貌似某次偶还遇到过灵异事件，哈； 最后那，是我觉得比较好的方式， 就是单独为循环结构声明一个方法，然后通过这个单独方法+return的方式来完成同样的功能。</p>
 <p>当然啦，“萝卜白菜各有所爱”嘛，各位看官自己定夺啦，俺只是这里多嘴几句罢了（这里读liao）～</p>
 <h1 id="变长参数的你来我往"><span class="header-section-number">3</span> 变长参数的你来我往</h1>
-<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> <span class="fu">recur</span>(args:Int*) : Int = <span class="kw">if</span>(args.<span class="fu">length</span> == <span class="dv">0</span>) <span class="dv">0</span> <span class="kw">else</span> args.<span class="fu">head</span> + <span class="fu">recur</span>(args.<span class="fu">tail</span>:_*)</code></pre>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> <span class="fu">recur</span>(args:Int*) : Int = <span class="kw">if</span>(args.<span class="fu">length</span> == <span class="dv">0</span>) <span class="dv">0</span> <span class="kw">else</span> args.<span class="fu">head</span> + <span class="fu">recur</span>(args.<span class="fu">tail</span>:_*)</code></pre></div>
 <p>如果方法声明的是变长参数， 比如Int*这种类型，那么可以以recur(1,1,3,4)之类的形式来调用它，但如果原来就有一组值想作为参数来调用变长参数方法，则需要将这组值先展开，即valueSeq:_*的形式，个人老tnd忘，遂mark下～</p>
 <h1 id="getters和setters"><span class="header-section-number">4</span> getters和setters</h1>
 <p>有两种方式可供选择，第一种：</p>
-<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">private</span> <span class="kw">var</span> privateAge = <span class="dv">0</span>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">private</span> <span class="kw">var</span> privateAge = <span class="dv">0</span>
 <span class="kw">def</span> age = privateAge
 <span class="kw">def</span> age_=(newAge:Int) {
     privateAge = newAge
-}</code></pre>
+}</code></pre></div>
 <p>这种是scala独有的，不过，一般情况下不需要自己声明，直接声明一个var变量age，编译器自动回帮我们生成这些方法。</p>
 <blockquote>
 age_=方法编译为字节码后，名称是age_$eq(...), 因为Java里=不能包含在方法名声明中。
 </blockquote>
 <p>第二种，使用@BeanProperty这个annnotation来标注我们想为其生成setters和getters方法的变量，不过，这种方式生成的setters和getters方法则跟JavaBean中的setters和getters是一样的命名风格咯，即setAge(age:Int)和getAge()这样的形式，跟传统Java框架，比如Spring来编码的时候，通常使用这种方式更多一些。</p>
 <h1 id="private与privatethis"><span class="header-section-number">5</span> private与private[this]</h1>
-<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">class</span> Counter{
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">class</span> Counter{
   <span class="kw">private</span> <span class="kw">var</span> value = <span class="dv">0</span>
   <span class="kw">def</span> <span class="fu">isLess</span>(other:Counter) = value &lt; other.<span class="fu">value</span>
-}</code></pre>
+}</code></pre></div>
 <p>如果只声明为private，则同一个类所有的对象都可以访问， 而如果声明为<code>private[this] var value = 0</code>的形式，则只有当前对象可以访问，像other.value则废废了。</p>
 <h1 id="多trait与继承的解读"><span class="header-section-number">6</span> 多Trait与继承的解读</h1>
-<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">class</span> A <span class="kw">extends</span> B <span class="kw">with</span> C <span class="kw">with</span> D <span class="kw">with</span> E </code></pre>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">class</span> A <span class="kw">extends</span> B <span class="kw">with</span> C <span class="kw">with</span> D <span class="kw">with</span> E </code></pre></div>
 <p>应做类似如下形式解读：</p>
-<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">class</span> A <span class="kw">extends</span> (B <span class="kw">with</span> C <span class="kw">with</span> D <span class="kw">with</span> E)</code></pre>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">class</span> A <span class="kw">extends</span> (B <span class="kw">with</span> C <span class="kw">with</span> D <span class="kw">with</span> E)</code></pre></div>
 <p>即还是单一继承，多个traits组合成一个复合类型作为A的父类！</p>
 <h1 id="extractor---unapply"><span class="header-section-number">7</span> extractor - unapply</h1>
 <p>返回三种形式</p>
@@ -141,22 +142,22 @@ age_=方法编译为字节码后，名称是age_$eq(...), 因为Java里=不能�
 <li>一种是boolean，用于在模式匹配的时候进行test condition</li>
 <li>unapplySeq[Option[T]], 用于匹配长度的值序列</li>
 </ol>
-<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">object</span> Ex{
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">object</span> Ex{
   <span class="kw">def</span> <span class="fu">unapply</span>(input:T) : Option[S] = <span class="kw">if</span>(<span class="kw">true</span>) Some(S) <span class="kw">else</span> None
   <span class="kw">def</span> <span class="fu">unapply</span>(input:T) : Boolean = input.<span class="fu">matched</span>
 }
 
-<span class="kw">val</span> <span class="fu">Ex</span>(s) = input <span class="co">// == Ex.unapply(input) </span></code></pre>
+<span class="kw">val</span> <span class="fu">Ex</span>(s) = input <span class="co">// == Ex.unapply(input) </span></code></pre></div>
 <h1 id="specialized注解"><span class="header-section-number">8</span> <span class="citation">@specialized注解</span></h1>
-<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> methodName[T](x:T, y:T) = ...
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> methodName[T](x:T, y:T) = ...
 <span class="kw">def</span> methodName[@specialized T](x:T, y:T) = ...
-<span class="kw">def</span> methodName[@<span class="fu">specialized</span>(Long, Int) T](x:T, y:T) = ...</code></pre>
+<span class="kw">def</span> methodName[@<span class="fu">specialized</span>(Long, Int) T](x:T, y:T) = ...</code></pre></div>
 <p>如果T是基本类型，比如Int，Long等，如果没加@specialized，则参数将被打包成java.lang.Integer等Wrapper类型， 这有些不太高效，因为需要打包解包，甚至消耗不必要的内存甚至导致不必要的gc。 使用@specialized将让编译器为我们生成一系列重载的方法，分别对应原生类型参数。</p>
 <h1 id="类型界定"><span class="header-section-number">9</span> 类型界定</h1>
 <h2 id="与-的恩怨"><span class="header-section-number">9.1</span> &lt;: 与 &lt;%的恩怨</h2>
 <p>&lt;: 用于一般类型之间的继承关系， 但如果要界定的类型与上界类型之间没有继承关系，则可以通过implicit conversion来解决，如果存在implicit conversion，也是可以进行界定的，这个时候就使用&lt;%， 即view bound</p>
-<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">class</span> Pair[T &lt;: Comparable[T]]
-<span class="kw">class</span> Pair[T &lt;% Comparable[T]]</code></pre>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">class</span> Pair[T &lt;: Comparable[T]]
+<span class="kw">class</span> Pair[T &lt;% Comparable[T]]</code></pre></div>
 <p>前者对Int类型来说不能编译通过，因为Scala里的Int不是Comparable[Int]的子类，不过RichInt是，而且有相应的从Int到RIchInt的implict conversion，所以第二种形式可以。</p>
                 
                 <!--百度分享按钮-->

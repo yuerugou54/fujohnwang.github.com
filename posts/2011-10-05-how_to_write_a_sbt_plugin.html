@@ -11,6 +11,7 @@
     <link rel="icon" href="/favicon.ico">
         <meta name="date" content="2011-10-05" />
             <style type="text/css">
+    div.sourceCode { overflow-x: auto; }
     table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
       margin: 0; padding: 0; vertical-align: baseline; border: none; }
     table.sourceCode { width: 100%; line-height: 100%; }
@@ -50,7 +51,7 @@
       <div class="row">
         <div class="col-md-3 sidebar">
             <a href="/">
-				<div align="center"><img src="/images/wfq0.png"/></div>
+				<!-- <div align="center"><img src="/images/wfq0.png"/></div> -->
                 <h2 class="text-center">扶墙老师</h2>
             </a>
             <p class="text-center lead slogan"><a href="/slogan.html">lollapalooza &amp; positioning</a></p>
@@ -118,7 +119,7 @@ resolvers += "Typesafe Repo" at "http://repo.typesafe.com/typesafe/releases/"
 libraryDependencies ++= Seq("org.aspectj" % "aspectjtools" % "1.6.11.RELEASE", "org.aspectj" % "aspectjrt" % "1.6.11.RELEASE","org.aspectj" % "aspectjweaver" % "1.6.11.RELEASE")
 </pre>
 <h1 id="the-definition-file-of-the-plugin-samplesrcmainscala.scala"><span class="header-section-number">2</span> the definition file of the plugin sample(src/main/scala/*.scala)</h1>
-<pre class="sourceCode scala"><code class="sourceCode scala">
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala">
 <span class="kw">import</span> sbt.<span class="fu">_</span>
 <span class="kw">import</span> Keys.<span class="fu">_</span>
 
@@ -146,7 +147,7 @@ libraryDependencies ++= Seq("org.aspectj" % "aspectjtools" % "1.6.11.RELEASE", "
 
  ))
 
-}</code></pre>
+}</code></pre></div>
 <p>Note: U refer to each setting via their key and refer to their values via map from key.</p>
 <h1 id="last-mile---how-to-use-the-plugin-u-have-just-finished"><span class="header-section-number">3</span> Last Mile - How to use the plugin u have just finished?</h1>
 <p>in your project, 2 places should be taken care about:</p>

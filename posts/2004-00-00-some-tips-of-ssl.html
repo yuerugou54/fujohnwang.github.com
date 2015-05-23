@@ -10,6 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link rel="icon" href="/favicon.ico">
             <style type="text/css">
+    div.sourceCode { overflow-x: auto; }
     table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
       margin: 0; padding: 0; vertical-align: baseline; border: none; }
     table.sourceCode { width: 100%; line-height: 100%; }
@@ -49,7 +50,7 @@
       <div class="row">
         <div class="col-md-3 sidebar">
             <a href="/">
-				<div align="center"><img src="/images/wfq0.png"/></div>
+				<!-- <div align="center"><img src="/images/wfq0.png"/></div> -->
                 <h2 class="text-center">扶墙老师</h2>
             </a>
             <p class="text-center lead slogan"><a href="/slogan.html">lollapalooza &amp; positioning</a></p>
@@ -94,17 +95,17 @@
 <li>添加security provider：<code>&lt;security-provider id='com.sun.net.ssl.internal.ssl.Provider'/&gt;</code></li>
 <li>配置ssl端口和keystore等</li>
 </ol>
-<pre class="sourceCode xml"><code class="sourceCode xml"><span class="kw">&lt;http</span><span class="ot"> port=</span><span class="er">8443&gt;</span>
+<div class="sourceCode"><pre class="sourceCode xml"><code class="sourceCode xml"><span class="kw">&lt;http</span><span class="ot"> port=</span><span class="er">8443&gt;</span>
  <span class="er">&lt;ssl&gt;true&lt;/ssl&gt;</span>
  <span class="er">&lt;key-store-type&gt;jks&lt;/key-store-type&gt;</span>
  <span class="er">&lt;key-store-file&gt;file://D:/resin-2.1.9/keys/private.keystore&lt;/key-store-file&gt;</span>
  <span class="er">&lt;key-store-password&gt;darrenwang&lt;/key-store-password&gt;</span>
-<span class="er">&lt;/http&gt;</span></code></pre>
+<span class="er">&lt;/http&gt;</span></code></pre></div>
 <p>这些可以在resin的conf里面找到实例，另外，其实要使之ssl运行，在此之前需要配置JSSE或者是OpenSSL，但是因为笔者使用了jdk1.4.x，而jdk1.4.x已经集成了JSSE，所以这些可以省略，如果使用jdk1.3或者以前的jdk，需要单独下载JSSE，并按照JSSE提供的步骤进行JSSE的安装。</p>
 <p>然后，通过keytool为keystore加入相应的证书。</p>
 <p>最后，就可以使用HttpClient来访问server端程序了，比如servlet等。</p>
 <p>下面是使用HttpClient进行https连接的demo代码片断：</p>
-<pre class="sourceCode java"><code class="sourceCode java">Protocol myhttps = <span class="kw">new</span> <span class="fu">Protocol</span>(<span class="st">&quot;https&quot;</span>, <span class="kw">new</span> <span class="fu">EasySSLProtocolSocketFactory</span>(), <span class="dv">8443</span>);
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java">Protocol myhttps = <span class="kw">new</span> <span class="fu">Protocol</span>(<span class="st">&quot;https&quot;</span>, <span class="kw">new</span> <span class="fu">EasySSLProtocolSocketFactory</span>(), <span class="dv">8443</span>);
 Protocol.<span class="fu">registerProtocol</span>(<span class="st">&quot;https&quot;</span>,myhttps);
 
 HttpClient client = <span class="kw">new</span> <span class="fu">HttpClient</span>();
@@ -134,7 +135,7 @@ resultBuffer.<span class="fu">append</span>(line);
 }
 in.<span class="fu">close</span>();
 ins.<span class="fu">close</span>();
-method.<span class="fu">releaseConnection</span>();</code></pre>
+method.<span class="fu">releaseConnection</span>();</code></pre></div>
 <p>OK，先写这些，以后有时间将对SSL以及java security方面进行更多阐述。</p>
                 
                 <!--百度分享按钮-->

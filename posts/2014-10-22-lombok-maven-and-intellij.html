@@ -10,6 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link rel="icon" href="/favicon.ico">
             <style type="text/css">
+    div.sourceCode { overflow-x: auto; }
     table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
       margin: 0; padding: 0; vertical-align: baseline; border: none; }
     table.sourceCode { width: 100%; line-height: 100%; }
@@ -49,7 +50,7 @@
       <div class="row">
         <div class="col-md-3 sidebar">
             <a href="/">
-				<div align="center"><img src="/images/wfq0.png"/></div>
+				<!-- <div align="center"><img src="/images/wfq0.png"/></div> -->
                 <h2 class="text-center">扶墙老师</h2>
             </a>
             <p class="text-center lead slogan"><a href="/slogan.html">lollapalooza &amp; positioning</a></p>
@@ -91,7 +92,7 @@
                 </div>
                                 <h1 id="lombok和maven"><span class="header-section-number">1</span> Lombok和Maven</h1>
 <p>通过<a href="http://awhitford.github.io/lombok.maven/lombok-maven-plugin/index.html">lombok-maven-plugin</a>， 我们可以让这两者工作在一起：</p>
-<pre class="sourceCode xml"><code class="sourceCode xml"><span class="kw">&lt;?xml</span> version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;<span class="kw">?&gt;</span>
+<div class="sourceCode"><pre class="sourceCode xml"><code class="sourceCode xml"><span class="kw">&lt;?xml</span> version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;<span class="kw">?&gt;</span>
 <span class="kw">&lt;project</span><span class="ot"> xmlns=</span><span class="st">&quot;http://maven.apache.org/POM/4.0.0&quot;</span>
 <span class="ot">         xmlns:xsi=</span><span class="st">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span>
 <span class="ot">         xsi:schemaLocation=</span><span class="st">&quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&quot;</span><span class="kw">&gt;</span>
@@ -204,7 +205,7 @@
         <span class="kw">&lt;/dependency&gt;</span>
     <span class="kw">&lt;/dependencies&gt;</span>
 
-<span class="kw">&lt;/project&gt;</span></code></pre>
+<span class="kw">&lt;/project&gt;</span></code></pre></div>
 <p>配置profile的目的是为了解决非Mac系统下lombok依赖jdk的tools.jar的问题。</p>
 <h1 id="intellij的配置"><span class="header-section-number">2</span> IntelliJ的配置</h1>
 <p>首先，<a href="https://code.google.com/p/lombok-intellij-plugin/">这里</a>有一个intellij的插件， 装上！ 但它只负责通过inspect字节码来提供编辑器内代码语法的高亮和提示等功能， 而lombok得以生效的机制确实需要首先执行annotation processor，才会在字节码中生成那些辅助方法， 所以，即使我们已经配置了lombok-maven-plugin， 要想使用到这个intellij插件的好处，还是要每次都<code>mvn compile</code>一下 <a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a>，这显然不胜烦琐，不过，别急，稍微设置一下intellij就可以了。</p>

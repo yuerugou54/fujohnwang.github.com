@@ -10,6 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link rel="icon" href="/favicon.ico">
             <style type="text/css">
+    div.sourceCode { overflow-x: auto; }
     table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
       margin: 0; padding: 0; vertical-align: baseline; border: none; }
     table.sourceCode { width: 100%; line-height: 100%; }
@@ -49,7 +50,7 @@
       <div class="row">
         <div class="col-md-3 sidebar">
             <a href="/">
-				<div align="center"><img src="/images/wfq0.png"/></div>
+				<!-- <div align="center"><img src="/images/wfq0.png"/></div> -->
                 <h2 class="text-center">扶墙老师</h2>
             </a>
             <p class="text-center lead slogan"><a href="/slogan.html">lollapalooza &amp; positioning</a></p>
@@ -98,7 +99,7 @@
 <h1 id="old-days-solutions"><span class="header-section-number">1</span> Old Days Solutions</h1>
 <p>Directly “kill -9 ” ? Of course, that's a way, but that's too brutal.</p>
 <p>A Java process that will be run as a server process usually will be sent to OS's background to run, that's called “daemon ” on Unix and “service ” on Windows. A Simple way to control the life-cycle of a Java daemon is to start a loop and wait for user input, like this:</p>
-<pre class="sourceCode java"><code class="sourceCode java">BufferedReader reader = <span class="kw">new</span> BufferedReader(<span class="kw">new</span> InputStreamReader(System.<span class="fu">in</span>));  
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java">BufferedReader reader = <span class="kw">new</span> BufferedReader(<span class="kw">new</span> InputStreamReader(System.<span class="fu">in</span>));  
 String line = <span class="kw">null</span>;  
 <span class="kw">do</span> {  
     line = reader.<span class="fu">readLine</span>();  
@@ -108,17 +109,17 @@ String line = <span class="kw">null</span>;
 }  
 <span class="kw">while</span> (<span class="kw">true</span>);  
   
-<span class="co">// clean up and exit  </span></code></pre>
+<span class="co">// clean up and exit  </span></code></pre></div>
 <p>This solution is better than just start an infinite loop and do nothing, because the latter solution will occupy all of your CPU's power(I have seen such a stupid solution and it does exist). But this is still not a best one, although users can interactive with it, the process itself have no way to notify the process to exit. That's, you can control it from outside, but can't do it from inside.</p>
 <p>Another mostly used solution is, start a TCP server socket and listen control requests, when termination control request is received, a loop based on control flag will break and exit. This is similar to above solution, just with another communication channel. <a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a></p>
 <p>A common pattern for both solution can be found,that's, set up a control flag to start a loop with, and then wait for other channels to change the control flag. This can be formulated as:</p>
-<pre class="sourceCode java"><code class="sourceCode java"><span class="dt">boolean</span> running = <span class="kw">true</span>;  
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="dt">boolean</span> running = <span class="kw">true</span>;  
   
 <span class="kw">while</span>(running)  
 {  
     <span class="co">// do Sth.  </span>
 }  
-<span class="co">// exit</span></code></pre>
+<span class="co">// exit</span></code></pre></div>
 <p>As to how to change the control flag, there are two solutions presented, can you find more?</p>
 <h1 id="alternatives-available-today"><span class="header-section-number">2</span> Alternatives Available Today</h1>
 <p>Old Days Solutions have their pros and cons, today more solutions are available for us.</p>
@@ -127,38 +128,38 @@ String line = <span class="kw">null</span>;
 <p>Other Solutions are Akuma , Start-Stop-Daemon, or Classword , but I don't get patience to read their document. If you are interested in them,follow the links I provide or google them.</p>
 <h1 id="my-choice"><span class="header-section-number">3</span> My Choice</h1>
 <p>I choose to combine shell and “sun.misc.Signal ” and “sun.misc.SignalHandler ” to achieve Java daemon, because they are much simpler to me to understand them and use them. The Shell will take care of running-in-background stuff:</p>
-<pre class="sourceCode bash"><code class="sourceCode bash"><span class="co">#!/bin/sh  </span>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="co">#!/bin/sh  </span>
 <span class="kw">java</span> -cp your_class_path com.domain.main_class <span class="kw">&lt;&amp;-</span> <span class="kw">&amp;</span>  
 <span class="ot">pid=$!</span>  
-<span class="kw">echo</span> <span class="ot">${pid}</span> <span class="kw">&gt;</span> mydaemon.pid  </code></pre>
+<span class="kw">echo</span> <span class="ot">${pid}</span> <span class="kw">&gt;</span> mydaemon.pid  </code></pre></div>
 <p>And “sun.misc.Signal ” and “sun.misc.SignalHandler ” will take care of controlling the life-cycle of the program. About “sun.misc.Signal ” and “sun.misc.SignalHandler ” , you can find more information at 参考文档 , here I just simply introduce how to use them together to achieve asynchronous communication between processes or just internally in a same process.</p>
 <p>The concept of “sun.misc.Signal ” and “sun.misc.SignalHandler ” is simple</p>
 <h2 id="signal"><span class="header-section-number">3.1</span> Signal</h2>
 <p>Signal is the signal that u will send to SignalHandler to process, so you can create a Signal just like instantiate a simple value object:</p>
-<pre class="sourceCode java"><code class="sourceCode java">Signal sig = <span class="kw">new</span> <span class="fu">Signal</span>(<span class="st">&quot;USR1&quot;</span>);  </code></pre>
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java">Signal sig = <span class="kw">new</span> <span class="fu">Signal</span>(<span class="st">&quot;USR1&quot;</span>);  </code></pre></div>
 <p>The signal names you pass to “Signal ” conform a pattern, that's, remove the prefix &quot;SIG&quot; from the name of the standard signals that's used by JVM. For example, if you want to send “SIGINT ” , then you create “Signal ” instance with name of “INT ” ; If you want to send “SIGTERM ” , you create “Signal ” instance with name of “TERM ” :</p>
-<pre class="sourceCode java"><code class="sourceCode java">Signal interactiveSignal = <span class="kw">new</span> <span class="fu">Signal</span>(<span class="st">&quot;INT&quot;</span>);  
-Signal terminationSignal = <span class="kw">new</span> <span class="fu">Signal</span>(<span class="st">&quot;TERM&quot;</span>);</code></pre>
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java">Signal interactiveSignal = <span class="kw">new</span> <span class="fu">Signal</span>(<span class="st">&quot;INT&quot;</span>);  
+Signal terminationSignal = <span class="kw">new</span> <span class="fu">Signal</span>(<span class="st">&quot;TERM&quot;</span>);</code></pre></div>
 <p>Fucking Simple, right?</p>
 <p>After you have a Signal, you can send it out by using “Signal ” class's “raise ” method:</p>
-<pre class="sourceCode java"><code class="sourceCode java">Signal.<span class="fu">raise</span>(sig);   
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java">Signal.<span class="fu">raise</span>(sig);   
 Signal.<span class="fu">raise</span>(interactiveSignal);   
-Signal.<span class="fu">raise</span>(terminationSignal);   </code></pre>
+Signal.<span class="fu">raise</span>(terminationSignal);   </code></pre></div>
 <h2 id="signalhandler"><span class="header-section-number">3.2</span> SignalHandler</h2>
 <p>As the name indicates, “SignalHandler ” will take the responsibility of handling the “Signal ” s. You implements your own signal handlers by implementing the “SignalHandler ” interface. It has only one method:</p>
-<pre class="sourceCode java"><code class="sourceCode java"><span class="kw">public</span> <span class="kw">class</span> MySigHandler <span class="kw">implements</span> SignalHandler {  
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="kw">public</span> <span class="kw">class</span> MySigHandler <span class="kw">implements</span> SignalHandler {  
   
     <span class="kw">public</span> <span class="dt">void</span> <span class="fu">handle</span>(Signal sig) {  
         <span class="co">// ...  </span>
     }  
-}  </code></pre>
+}  </code></pre></div>
 <p>It's fucking simple too.</p>
 <h2 id="glue-them-together"><span class="header-section-number">3.3</span> Glue them together</h2>
 <p>After you get both “Signal ” and “SignalHandler ” of your own, you should link them together to make it work. This is by “Signal ” class's static method “handle ” :</p>
-<pre class="sourceCode java"><code class="sourceCode java">MySigHandler sigHandler = <span class="kw">new</span> <span class="fu">MySigHandler</span>();  
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java">MySigHandler sigHandler = <span class="kw">new</span> <span class="fu">MySigHandler</span>();  
 Signal.<span class="fu">handle</span>(sig, sigHandler);  
 Signal.<span class="fu">handle</span>(interactiveSignal, sigHandler);  
-Signal.<span class="fu">handle</span>(terminationSignal, sigHandler);  </code></pre>
+Signal.<span class="fu">handle</span>(terminationSignal, sigHandler);  </code></pre></div>
 <p>Now as long as you add them to your java programs and send proper signals to it, the pairs of “Signal ” and “SignalHandler ” will work for you.</p>
 <p>You have 2 ways to send signals to your program's process:</p>
 <ol style="list-style-type: decimal">

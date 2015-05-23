@@ -10,6 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link rel="icon" href="/favicon.ico">
             <style type="text/css">
+    div.sourceCode { overflow-x: auto; }
     table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
       margin: 0; padding: 0; vertical-align: baseline; border: none; }
     table.sourceCode { width: 100%; line-height: 100%; }
@@ -49,7 +50,7 @@
       <div class="row">
         <div class="col-md-3 sidebar">
             <a href="/">
-				<div align="center"><img src="/images/wfq0.png"/></div>
+				<!-- <div align="center"><img src="/images/wfq0.png"/></div> -->
                 <h2 class="text-center">扶墙老师</h2>
             </a>
             <p class="text-center lead slogan"><a href="/slogan.html">lollapalooza &amp; positioning</a></p>
@@ -90,7 +91,7 @@
 <p>分析代码后估计是两个实例指向了同一个automation（具体原因确实无从考证，因为偶对于微软的程序相关的东西实在不甚了了），所以前一个实例指向的automation被改动或者破坏了，从而导致以上问题。</p>
 <p>所以，直接改为直接静态实例化，并将调用方法同时改为static的，这样反而减少了调用时候实例化的繁琐，只要最后在系统的Shell dispose的时候调用JacobExcelLauncher的release方法就可以了。</p>
 <p>附上改动后的程序代码：</p>
-<pre class="sourceCode java"><code class="sourceCode java"><span class="co">/**</span>
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="co">/**</span>
 
 <span class="co">* </span><span class="kw">@author </span><span class="co">Darren.Wang</span>
 
@@ -166,7 +167,7 @@ ComThread.<span class="fu">Release</span>();
 
 }
 
-}</code></pre>
+}</code></pre></div>
                 
                 <!--百度分享按钮-->
                 <div class="pull-left bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a><a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a></div>

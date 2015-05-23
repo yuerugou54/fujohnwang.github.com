@@ -10,6 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link rel="icon" href="/favicon.ico">
             <style type="text/css">
+    div.sourceCode { overflow-x: auto; }
     table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
       margin: 0; padding: 0; vertical-align: baseline; border: none; }
     table.sourceCode { width: 100%; line-height: 100%; }
@@ -49,7 +50,7 @@
       <div class="row">
         <div class="col-md-3 sidebar">
             <a href="/">
-				<div align="center"><img src="/images/wfq0.png"/></div>
+				<!-- <div align="center"><img src="/images/wfq0.png"/></div> -->
                 <h2 class="text-center">扶墙老师</h2>
             </a>
             <p class="text-center lead slogan"><a href="/slogan.html">lollapalooza &amp; positioning</a></p>
@@ -125,9 +126,9 @@
 <ol style="list-style-type: decimal">
 <li>使用jacob启动一个IE进程，并隐藏IE窗口；</li>
 </ol>
-<pre class="sourceCode java"><code class="sourceCode java"><span class="kw">if</span>(ieAutomation == <span class="kw">null</span>) 
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="kw">if</span>(ieAutomation == <span class="kw">null</span>) 
     ieAutomation = <span class="kw">new</span> <span class="fu">ActiveXComponent</span>(<span class="st">&quot;InternetExplorer.Application&quot;</span>); 
-ieAutomation.<span class="fu">setProperty</span>(<span class="st">&quot;Visible&quot;</span>,<span class="kw">new</span> <span class="fu">Variant</span>(<span class="kw">false</span>));</code></pre>
+ieAutomation.<span class="fu">setProperty</span>(<span class="st">&quot;Visible&quot;</span>,<span class="kw">new</span> <span class="fu">Variant</span>(<span class="kw">false</span>));</code></pre></div>
 <ol start="2" style="list-style-type: decimal">
 <li><p>PDF前端在生成PDF文件之后发送生成后的文件到JacobPDFPrinter，JacobPDFPrinter根据出入的PDF文件的全路径使用Velocity模板引擎动态生成一个包含使用Javascript代码实现的PDF打印逻辑的HTML文档（当然，使用Velocity生成文档这部分逻辑我们单独抽出到VeloIEPrinterGenerator类中）；</p></li>
 <li><p>在HTML生成之后，在JacobPDFPrinter中就可以使用jacob调用IE的Navigate2，将IE重定向到刚才生成的这个HTML文件啦，这样，IE就会在后台调用JS代码将PDF打印到默认打印机；</p></li>

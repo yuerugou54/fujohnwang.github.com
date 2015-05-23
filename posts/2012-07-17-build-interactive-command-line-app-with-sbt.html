@@ -11,6 +11,7 @@
     <link rel="icon" href="/favicon.ico">
         <meta name="date" content="2012-07-17" />
             <style type="text/css">
+    div.sourceCode { overflow-x: auto; }
     table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
       margin: 0; padding: 0; vertical-align: baseline; border: none; }
     table.sourceCode { width: 100%; line-height: 100%; }
@@ -50,7 +51,7 @@
       <div class="row">
         <div class="col-md-3 sidebar">
             <a href="/">
-				<div align="center"><img src="/images/wfq0.png"/></div>
+				<!-- <div align="center"><img src="/images/wfq0.png"/></div> -->
                 <h2 class="text-center">扶墙老师</h2>
             </a>
             <p class="text-center lead slogan"><a href="/slogan.html">lollapalooza &amp; positioning</a></p>
@@ -143,7 +144,7 @@
 </pre>
 <p>像启动时要使用的scala version， 启动哪个artifact(org + name + version)， 使用哪个main函数(class)， 从哪些repo中去加载指定的artifact，在这个launch speficiation的配置中都有罗列。sbt launcher程序只需要根据这些信息来工作就足够了。</p>
 <p>launch specification中配置的class需要符合一定的规则，简单来讲，就是指定的类需要实现<code>xsbti.AppMain</code> trait:</p>
-<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">package</span> org.<span class="fu">example</span>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">package</span> org.<span class="fu">example</span>
 
 <span class="kw">import</span> sbt.<span class="fu">_</span>
 <span class="kw">import</span> complete.<span class="fu">_</span>
@@ -202,7 +203,7 @@
 <span class="co">   * provide access to the backing file (like sbt&#39;s last command and logLevel setting).*/</span>
    <span class="kw">def</span> initialGlobalLogging: GlobalLogging =
       GlobalLogging.<span class="fu">initial</span>(MainLogging.<span class="fu">globalDefault</span> _, java.<span class="fu">io</span>.<span class="fu">File</span>.<span class="fu">createTempFile</span>(<span class="st">&quot;app&quot;</span>, <span class="st">&quot;log&quot;</span>))
-}</code></pre>
+}</code></pre></div>
 <p>该trait的实现类只需要实现<code>def run (configuration: AppConfiguration): MainResult</code>方法， 它接收AppConfiguration参数，返回MainResult结果， MainResult主要有两种，即重启或者退出(Exit)，一般会选择退出，不过特殊情况下也可以选择重启，比如如果我们依赖的运行环境不满足，我们可以调整配置，降级也好，升级也好， 要求重启当前应用，在启动成功后，要求退出的情况下，再行退出。</p>
 <p>以上实现类看起来纷繁复杂，其实很简单，基本原则就是： 1. 实现xsbt.AppMain的run方法； 2. 添加自定的commands</p>
 <p>至于其他细节，都是可以暂时忽略的。</p>

@@ -11,6 +11,7 @@
     <link rel="icon" href="/favicon.ico">
         <meta name="date" content="2011-11-21" />
             <style type="text/css">
+    div.sourceCode { overflow-x: auto; }
     table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
       margin: 0; padding: 0; vertical-align: baseline; border: none; }
     table.sourceCode { width: 100%; line-height: 100%; }
@@ -50,7 +51,7 @@
       <div class="row">
         <div class="col-md-3 sidebar">
             <a href="/">
-				<div align="center"><img src="/images/wfq0.png"/></div>
+				<!-- <div align="center"><img src="/images/wfq0.png"/></div> -->
                 <h2 class="text-center">扶墙老师</h2>
             </a>
             <p class="text-center lead slogan"><a href="/slogan.html">lollapalooza &amp; positioning</a></p>
@@ -85,13 +86,13 @@
                 <hr>
 
                                 <p>在SBT的<a href="https://github.com/harrah/xsbt/wiki/Quick-Configuration-Examples">Quick Configuration Examples</a>最末尾发现个小惊喜：</p>
-<pre class="sourceCode scala"><code class="sourceCode scala"><span class="co">// Exclude transitive dependencies, e.g., include log4j without including logging via jdmk, jmx, or jms.</span>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="co">// Exclude transitive dependencies, e.g., include log4j without including logging via jdmk, jmx, or jms.</span>
 libraryDependencies +=
 <span class="st">&quot;log4j&quot;</span> % <span class="st">&quot;log4j&quot;</span> % <span class="st">&quot;1.2.15&quot;</span> <span class="fu">excludeAll</span>(
     <span class="fu">ExclusionRule</span>(organization = <span class="st">&quot;com.sun.jdmk&quot;</span>),
     <span class="fu">ExclusionRule</span>(organization = <span class="st">&quot;com.sun.jmx&quot;</span>),
     <span class="fu">ExclusionRule</span>(organization = <span class="st">&quot;javax.jms&quot;</span>)
-)</code></pre>
+)</code></pre></div>
 <p>称其为小惊喜是因为，这个功能可以帮我去掉看起来比较丑陋的inline ivy xml配置：</p>
 <pre>
 ivyXML :=

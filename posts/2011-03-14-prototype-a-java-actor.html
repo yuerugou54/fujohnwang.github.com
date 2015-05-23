@@ -10,6 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link rel="icon" href="/favicon.ico">
             <style type="text/css">
+    div.sourceCode { overflow-x: auto; }
     table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
       margin: 0; padding: 0; vertical-align: baseline; border: none; }
     table.sourceCode { width: 100%; line-height: 100%; }
@@ -49,7 +50,7 @@
       <div class="row">
         <div class="col-md-3 sidebar">
             <a href="/">
-				<div align="center"><img src="/images/wfq0.png"/></div>
+				<!-- <div align="center"><img src="/images/wfq0.png"/></div> -->
                 <h2 class="text-center">扶墙老师</h2>
             </a>
             <p class="text-center lead slogan"><a href="/slogan.html">lollapalooza &amp; positioning</a></p>
@@ -100,12 +101,12 @@
     * To simply the prototyping process, I will left any generic type design behind, hope u can polish it so that it can be your own tools.
 </pre>
 <p>Before start, we need to make something clear. In Java, the concurrency is modeled in Task-Based Concurrency, We run different logic which is modeled as tasks to run in parallel. But The actor is different, it belongs to the category of Data-Based Concurrency, to bridge the differences between this two concurrency models, I will declare an interface to confine the process logic into it:</p>
-<pre class="sourceCode java"><code class="sourceCode java"><span class="kw">public</span> <span class="kw">interface</span> ActorClosure&lt;T&gt; <span class="kw">extends</span> Runnable {
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="kw">public</span> <span class="kw">interface</span> ActorClosure&lt;T&gt; <span class="kw">extends</span> Runnable {
      <span class="dt">void</span> <span class="fu">sinkEvent</span>(T event);
-}</code></pre>
+}</code></pre></div>
 <p>ActorClosure will accept different events each time but run them one by one with same process logic. That's why a sinkeEvent() method is declared.</p>
 <p>Besides, we also give out an stub for our demonstration:</p>
-<pre class="sourceCode java"><code class="sourceCode java"><span class="kw">public</span> <span class="kw">class</span> ActorClosureStub <span class="kw">implements</span> ActorClosure&lt;String&gt; {
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="kw">public</span> <span class="kw">class</span> ActorClosureStub <span class="kw">implements</span> ActorClosure&lt;String&gt; {
     <span class="kw">private</span> String event;
     
     <span class="kw">public</span> <span class="dt">void</span> <span class="fu">run</span>() {
@@ -120,11 +121,11 @@
     <span class="kw">public</span> <span class="dt">void</span> <span class="fu">sinkEvent</span>(String event) {
         <span class="kw">this</span>.<span class="fu">event</span> = event;
     }
-}</code></pre>
+}</code></pre></div>
 <p>OK, background is done, let's start with our java actor prototyping play...</p>
 <h1 id="actor-with-same-instance-reference-of-actionfailed"><span class="header-section-number">1</span> Actor with Same Instance Reference of Action(Failed)</h1>
 <p>Since each event that send to the actor should be processed by one processing logic, At first, we will just let our actor to use only one ActorClosure to process all of the events that's sent to it. So below is the code :</p>
-<pre class="sourceCode java"><code class="sourceCode java"><span class="kw">public</span> <span class="kw">class</span> FailedActorWithSameReference {
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="kw">public</span> <span class="kw">class</span> FailedActorWithSameReference {
 
     <span class="kw">private</span> ExecutorService      scheduler = Executors.<span class="fu">newFixedThreadPool</span>(<span class="dv">1</span>);
     <span class="kw">private</span> ActorClosure&lt;String&gt; action    = <span class="kw">new</span> <span class="fu">ActorClosureStub</span>();
@@ -146,13 +147,13 @@
         f2.<span class="fu">get</span>();
         actor.<span class="fu">terminate</span>();
     }
-}</code></pre>
+}</code></pre></div>
 <p>In fact, no need to run this piece of code, we can see that it won't work properly, why? Because we didn't handle the concurrency operation on the ActorClosure properly, the latter bang(!) will replace or corrupt the state in the ActorClosure, If you run the above piece of code, it will print &quot;b&quot; twice, but we do expect &quot;a&quot; and &quot;b&quot; in sequence. But the problem really is the bad concurrency control on ActorClosure? No, If we add concurrency control on ActorClosure, then we go wrong way in the process of modeling an actor.</p>
 <p>So, no concurrency control on ActorClosure, how to avoid the state corruption?</p>
 <h1 id="actor-with-prototype-scope-actionworkable"><span class="header-section-number">2</span> Actor With Prototype Scope Action(Workable)</h1>
 <p>We of course can allocate a new ActorClosure instance for each event, in this way, the state of ActorClosures and their events will be confined into their own boundary without leak and interference.</p>
 <p>With this in mind, we got code piece below:</p>
-<pre class="sourceCode java"><code class="sourceCode java"><span class="co">/**</span>
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="co">/**</span>
 <span class="co"> * This actor implementation just simply works, but it can&#39;t fully simulate the</span>
 <span class="co"> * exact behavior of an actor, e.g. since we will create new action closure for</span>
 <span class="co"> * each event, the states of the action closure can&#39;t be kept in the time-line</span>
@@ -198,12 +199,12 @@
 
         actor.<span class="fu">terminate</span>();
     }
-}</code></pre>
+}</code></pre></div>
 <p>If we run the above piece of code, the result will be as we expected. Seems it work, but wait, it's not perfect. Why? (Why again ha?) Since we wrap each event(the data) into a ActorClosureStub instance(the task), we lost the smooth timeline state of the processsing. Simply put, the ActorClosureStub runs first has no correlation with other ActorClosureStubs. But in actor's semantics, they should be one. So although this prototyping seems work, but it still have improvement space.</p>
 <h1 id="actor-with-state-copy-between-prototype-scope-actions"><span class="header-section-number">3</span> Actor With State Copy Between Prototype Scope Actions</h1>
 <p>So I hope to copy the state between each ActorClosure after they run, in this way, the 1st ActorClosure will pass its state to the 2nd ActorClosure before the 2nd ActorClosure will run, and the 2nd ActorClosure will pass its state to the 3rd ActorClosure before the 3rd ActorClosure will run, and so on.</p>
 <p>To make this happen, we can recall the hooks the ThreadPoolExecutor has, e.g. afterExecute(), beforeExecute(), furthermore, we can even directly override the execute() of it. Anyway, we can write such-alike code:</p>
-<pre class="sourceCode java"><code class="sourceCode java"><span class="co">/**</span>
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="co">/**</span>
 <span class="co"> * Although we seek to extend </span><span class="kw">{@link ActorWithPrototypeScopeActionClosure}</span><span class="co"> to</span>
 <span class="co"> * enable state copy between the action closures, BUT it seems that the Executor</span>
 <span class="co"> * implementation doesn&#39;t allow us to go this way.&lt;br</span>&gt;
@@ -301,17 +302,17 @@
 <span class="er">        actor.terminate();</span>
 <span class="er">    }</span>
 
-}</code></pre>
+}</code></pre></div>
 <p>Let's run the code. Oops, something goes wrong:</p>
-<pre class="sourceCode java"><code class="sourceCode java">Exception in thread <span class="st">&quot;main&quot;</span> java.<span class="fu">lang</span>.<span class="fu">ClassCastException</span>: java.<span class="fu">util</span>.<span class="fu">concurrent</span>.<span class="fu">FutureTask</span> cannot be cast to cn.<span class="fu">spring21</span>.<span class="fu">sandbox</span>.<span class="fu">actor</span>.<span class="fu">ActorClosure</span>
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java">Exception in thread <span class="st">&quot;main&quot;</span> java.<span class="fu">lang</span>.<span class="fu">ClassCastException</span>: java.<span class="fu">util</span>.<span class="fu">concurrent</span>.<span class="fu">FutureTask</span> cannot be cast to cn.<span class="fu">spring21</span>.<span class="fu">sandbox</span>.<span class="fu">actor</span>.<span class="fu">ActorClosure</span>
  at cn.<span class="fu">spring21</span>.<span class="fu">sandbox</span>.<span class="fu">actor</span>.<span class="fu">ActorWithStateCopy</span>$<span class="fl">2.</span><span class="fu">execute</span>(ActorWithStateCopy.<span class="fu">java</span>:<span class="dv">55</span>)
  at java.<span class="fu">util</span>.<span class="fu">concurrent</span>.<span class="fu">AbstractExecutorService</span>.<span class="fu">submit</span>(AbstractExecutorService.<span class="fu">java</span>:<span class="dv">85</span>)
  at cn.<span class="fu">spring21</span>.<span class="fu">sandbox</span>.<span class="fu">actor</span>.<span class="fu">ActorWithStateCopy</span>.<span class="fu">bang</span>(ActorWithStateCopy.<span class="fu">java</span>:<span class="dv">76</span>)
- at cn.<span class="fu">spring21</span>.<span class="fu">sandbox</span>.<span class="fu">actor</span>.<span class="fu">ActorWithStateCopy</span>.<span class="fu">main</span>(ActorWithStateCopy.<span class="fu">java</span>:<span class="dv">96</span>) </code></pre>
+ at cn.<span class="fu">spring21</span>.<span class="fu">sandbox</span>.<span class="fu">actor</span>.<span class="fu">ActorWithStateCopy</span>.<span class="fu">main</span>(ActorWithStateCopy.<span class="fu">java</span>:<span class="dv">96</span>) </code></pre></div>
 <p>See the problem? Wow, ThreadPoolExecutor really do some dirty things there, and I tries to bypass it but finally, I found I couldn't :-(</p>
 <h1 id="raw-thread-based-actor-prototyping-workable"><span class="header-section-number">4</span> Raw Thread Based Actor Prototyping (Workable)</h1>
 <p>I fall back to a raw thread solution for the actor. The final code is listed here:</p>
-<pre class="sourceCode java"><code class="sourceCode java"><span class="kw">public</span> <span class="kw">class</span> ImprovedThreadBasedActor&lt;T&gt; <span class="kw">extends</span> Thread {
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="kw">public</span> <span class="kw">class</span> ImprovedThreadBasedActor&lt;T&gt; <span class="kw">extends</span> Thread {
 
     <span class="kw">private</span> <span class="dt">static</span> <span class="dt">final</span> Logger            logger  = LoggerFactory
                                                            .<span class="fu">getLogger</span>(ImprovedThreadBasedActor.<span class="fu">class</span>);
@@ -389,10 +390,10 @@
         System.<span class="fu">out</span>.<span class="fu">println</span>(<span class="st">&quot;stop the actor.&quot;</span>);
         actor.<span class="fu">terminate</span>();
     }
-}</code></pre>
+}</code></pre></div>
 <p>No explanation on this, you can explore it yourself. There are several tricky things in the code, I hope you can figure out the reason. GL and HF.</p>
 <h2 id="another-version"><span class="header-section-number">4.1</span> Another Version</h2>
-<pre class="sourceCode java"><code class="sourceCode java"><span class="co">/**</span>
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="co">/**</span>
 <span class="co"> * This is a heavy weight thread based actor implementation.&lt;br</span>&gt;
 <span class="er"> * </span>
 <span class="er"> * @author fujohnwang</span>
@@ -500,7 +501,7 @@
 <span class="er">        this.event = event;</span>
 <span class="er">    }</span>
 
-}</code></pre>
+}</code></pre></div>
 <p>优劣不解释。</p>
 <h1 id="conclusion"><span class="header-section-number">5</span> Conclusion</h1>
 <p>The above words just a play-around, don't treat it too serious. It's not rocket science, If you are looking for such thing, get away. These words are not for you.</p>

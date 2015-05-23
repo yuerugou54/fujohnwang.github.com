@@ -11,6 +11,7 @@
     <link rel="icon" href="/favicon.ico">
         <meta name="date" content="2005-02-25" />
             <style type="text/css">
+    div.sourceCode { overflow-x: auto; }
     table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
       margin: 0; padding: 0; vertical-align: baseline; border: none; }
     table.sourceCode { width: 100%; line-height: 100%; }
@@ -50,7 +51,7 @@
       <div class="row">
         <div class="col-md-3 sidebar">
             <a href="/">
-				<div align="center"><img src="/images/wfq0.png"/></div>
+				<!-- <div align="center"><img src="/images/wfq0.png"/></div> -->
                 <h2 class="text-center">扶墙老师</h2>
             </a>
             <p class="text-center lead slogan"><a href="/slogan.html">lollapalooza &amp; positioning</a></p>
@@ -98,7 +99,7 @@
 </ol>
 <p>在完成了以上的工作之后，就可以将压缩文件作为附件attach到邮件之中并发送，整个流程也就这么简单。但是，简单归简单，我们依然可以做出简洁漂亮的设计并参照实现之。</p>
 <p>其实，所有的工作无非就是要发送邮件，以上的三步最终都是为发送mail做准备，至于这三步到底如何实现，我们可以不去关心，我们所关注的只是发送mail，所以，首先我们要提出一个接口，标志我们的mail发送逻辑，姑且将该接口命名为ICSVMailSender，下面是其代码：</p>
-<pre class="sourceCode java"><code class="sourceCode java"><span class="kw">package com.livedoor.finance.credit.csvmail.bo;</span>
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="kw">package com.livedoor.finance.credit.csvmail.bo;</span>
 
 <span class="co">/**</span>
 <span class="co"> * </span><span class="kw">@author </span><span class="co">Darren.Wang</span>
@@ -106,9 +107,9 @@
 <span class="co"> */</span>
 <span class="kw">public</span> <span class="kw">interface</span> ICSVMailSender {
  <span class="dt">void</span> <span class="fu">sendCSV</span>();
-}</code></pre>
+}</code></pre></div>
 <p>针对该接口，我们给出一个抽象的实现：</p>
-<pre class="sourceCode java"><code class="sourceCode java"><span class="kw">public</span> <span class="kw">abstract</span> <span class="kw">class</span> AbstractCSVMailSender <span class="kw">implements</span> ICSVMailSender{
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="kw">public</span> <span class="kw">abstract</span> <span class="kw">class</span> AbstractCSVMailSender <span class="kw">implements</span> ICSVMailSender{
 …….
 <span class="kw">public</span> <span class="dt">final</span> <span class="dt">void</span> <span class="fu">sendCSV</span>() {
 <span class="dv">1</span>. 生成csv文件
@@ -138,10 +139,10 @@
 <span class="co">  * </span><span class="kw">@return </span><span class="co">File, zipFile after zip</span>
 <span class="co">  */</span>
  <span class="kw">protected</span> <span class="kw">abstract</span> File <span class="fu">zipCSV</span>(<span class="dt">byte</span>[] encryptedData);
-}</code></pre>
+}</code></pre></div>
 <p>其实，对于明眼人来说，以上代码一出，则马上就会认出，呵呵，这不明显一个template模式的应用嘛，right，呵呵，就是它，在Rod的《Expert ….》一书中也着重提过该设计模式的应用，而且spring中应用该模式的例子也挺多，比如JdbcTemlate等，鉴于这次所要求的功能，我认为将template设计模式应用于此再合适不过了。在以上模板的基础上，我们可以自由实现以上三个抽象方法来提供最终的数据，你是用jdbc还是hibernate还是其他，我们不关心，这些自由选择的权利我们都下放给具体的实现者，这不是很好嘛！</p>
 <p>有了以上的基础，我们的实现也变得很简单,只要继承类并实现三个方法所要实现的业务逻辑就可以了，比如：</p>
-<pre class="sourceCode java"><code class="sourceCode java"><span class="kw">public</span> <span class="kw">class</span> CSVMailSenderImpl <span class="kw">extends</span> AbstractCSVMailSender
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="kw">public</span> <span class="kw">class</span> CSVMailSenderImpl <span class="kw">extends</span> AbstractCSVMailSender
 {
  <span class="co">/* (non-Javadoc)</span>
 <span class="co">  * @see com.livedoor.finance.credit.csvmail.bo.AbstractCSVMailSender#createCSV()</span>
@@ -161,10 +162,10 @@
  <span class="kw">protected</span> File <span class="fu">zipCSV</span>(<span class="dt">byte</span>[] encryptedData) {
  …
 }
-}</code></pre>
+}</code></pre></div>
 <p>这样，我们总的业务框架就完成了，在此基础上，我们要实现job schedule，而这在有了spring之后，变得是如此的简单，因为他对于quartz和timer都进行了有效的封装，我们只需要配置一下配置文件就可以全部搞定，而在具体的job实现类里面，我们只要实例化ICSVMailSender的某个具体实现类，并调用其sendCSV（）方法就可以了。是不是很便捷那？！</p>
 <p>下面是spring-config.xml的部分片段，以供参考：</p>
-<pre class="sourceCode xml"><code class="sourceCode xml"> ...
+<div class="sourceCode"><pre class="sourceCode xml"><code class="sourceCode xml"> ...
 <span class="kw">&lt;bean</span><span class="ot"> name=</span><span class="st">&quot;mailJob&quot;</span><span class="ot"> class=</span><span class="st">&quot;org.springframework.scheduling.quartz.JobDetailBean&quot;</span><span class="kw">&gt;</span>
   <span class="kw">&lt;property</span><span class="ot"> name=</span><span class="st">&quot;jobClass&quot;</span><span class="kw">&gt;</span>
    <span class="kw">&lt;value&gt;</span>com.livedoor.finance.credit.csvmail.job.CSVMailJob<span class="kw">&lt;/value&gt;</span>
@@ -192,7 +193,7 @@
     <span class="kw">&lt;ref</span><span class="ot"> bean=</span><span class="st">&quot;cronTrigger&quot;</span><span class="kw">/&gt;</span>
    <span class="kw">&lt;/list&gt;</span>
   <span class="kw">&lt;/property&gt;</span>
- <span class="kw">&lt;/bean&gt;</span></code></pre>
+ <span class="kw">&lt;/bean&gt;</span></code></pre></div>
 <p>除了以上所述之外，还有一点可以值得一提的就是spring提供的邮件发送功能，我们既然要给b公司发送数据邮件，当然邮件的发送逻辑是不可少的啦，所以，在AbstractCSVMailSender模板类的sendCSV（）方法中，我们还要实现邮件发送逻辑，而这些，都是通过spring提供的mail封装来完成的，同时，因为日方提供了邮件模板，要根据模板设置邮件内容，所以我又引入了velocity，而spring对其也同样有所支持，呵呵，到此看来，这些东西真的是结合的天衣无缝了。</p>
 <p>对于数据邮件的发送部分，偶在这里就不作详述了，不过大家如果有兴趣的话，可以参考Matt Raible的一篇blog《Sending Velocity－based Email with Spring》，上面对整个流程阐述的很明了，另外，读一下spring的javadoc也挺好，对于邮件发送部分，spring只是提供了几个包装类，很容易就可以搞清楚各个类的左右和他们之间的关系，而这对于你以后应用spring来说更会得心应手。</p>
 <p>最后，我们不妨用一个UML的class图来阐明这个简单的框架实现吧 - [img]http://images.blogcn.com/2005/2/25/12/darrenwang,2005022523923.jpg[/img]</p>

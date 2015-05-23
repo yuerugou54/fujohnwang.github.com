@@ -10,6 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link rel="icon" href="/favicon.ico">
             <style type="text/css">
+    div.sourceCode { overflow-x: auto; }
     table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
       margin: 0; padding: 0; vertical-align: baseline; border: none; }
     table.sourceCode { width: 100%; line-height: 100%; }
@@ -49,7 +50,7 @@
       <div class="row">
         <div class="col-md-3 sidebar">
             <a href="/">
-				<div align="center"><img src="/images/wfq0.png"/></div>
+				<!-- <div align="center"><img src="/images/wfq0.png"/></div> -->
                 <h2 class="text-center">扶墙老师</h2>
             </a>
             <p class="text-center lead slogan"><a href="/slogan.html">lollapalooza &amp; positioning</a></p>
@@ -106,14 +107,14 @@
 </ol>
 <p>当你感觉所有这些东西都准备齐活之后，就可以开始最后的工序了。</p>
 <p>首先， 要创建archetype，当然是要先把maven的archetype plugin添加到pom.xml中啦：</p>
-<pre class="sourceCode xml"><code class="sourceCode xml"><span class="kw">&lt;plugins&gt;</span>  
+<div class="sourceCode"><pre class="sourceCode xml"><code class="sourceCode xml"><span class="kw">&lt;plugins&gt;</span>  
     <span class="kw">&lt;plugin&gt;</span>  
         <span class="kw">&lt;groupId&gt;</span>org.apache.maven.plugins<span class="kw">&lt;groupId&gt;</span>  
         <span class="kw">&lt;artifactId&gt;</span>maven-archetype-plugin<span class="kw">&lt;artifactId&gt;</span>  
         <span class="kw">&lt;version&gt;</span>2.0-alpha-4<span class="kw">&lt;version&gt;</span>  
     <span class="kw">&lt;/plugin&gt;</span>  
 ...  
-<span class="kw">&lt;/plugins&gt;</span> </code></pre>
+<span class="kw">&lt;/plugins&gt;</span> </code></pre></div>
 <p>之后， 就可以开个命令行窗口，进入当前project所在目录，敲下：</p>
 <pre>
 $ mvn archetype:create-from-project 
@@ -135,13 +136,13 @@ $ mvn archetype:generate -DarchetypeCatalog=local
 <p>当archetype:create-from-project 之后， archetype中对应的文件就变成了： <code>QuickStartController</code></p>
 <p>这显然不是我们想要的结果（当然，对于不在乎这一结构的archetype来说则无所谓），为此，我们要对archetype:create-from-project 之后生成的结果文件进行定制。</p>
 <p>首先， 我们编辑文件target/generated-sources/archetype/src/main/resources/META-INF/maven/archetype.xml ，它记载了archetype里都包含哪些文件和目录结构，将如下内容：</p>
-<pre class="sourceCode xml"><code class="sourceCode xml"><span class="kw">&lt;sources&gt;</span>  
+<div class="sourceCode"><pre class="sourceCode xml"><code class="sourceCode xml"><span class="kw">&lt;sources&gt;</span>  
   <span class="kw">&lt;source&gt;</span>src/main/java/QuickStartController.java<span class="kw">&lt;/source&gt;</span>  
-<span class="kw">&lt;/sources&gt;</span> </code></pre>
+<span class="kw">&lt;/sources&gt;</span> </code></pre></div>
 <p>变更为:</p>
-<pre class="sourceCode xml"><code class="sourceCode xml"><span class="kw">&lt;sources&gt;</span>  
+<div class="sourceCode"><pre class="sourceCode xml"><code class="sourceCode xml"><span class="kw">&lt;sources&gt;</span>  
   <span class="kw">&lt;source&gt;</span>src/main/java/cn/spring21/app/defaults/controller/QuickStartController.java<span class="kw">&lt;/source&gt;</span>  
-<span class="kw">&lt;/sources&gt;</span>  </code></pre>
+<span class="kw">&lt;/sources&gt;</span>  </code></pre></div>
 <p>然后，将以上文件和目录结构创建或者Copy到如下目录：</p>
 <blockquote>
 <p>target/generated-sources/archetype/src/main/resources/archetype-resources/src/main/java</p>
@@ -168,13 +169,13 @@ $ mvn archetype:generate -DarchetypeCatalog=local
 </blockquote>
 <hr />
 <p>for java code we want to include into the archetype, the default behavior from &quot;archetype:create-from-project&quot; is that it will ignore the package structure, e.g. if we have a source folder with package structure , below: cn.spring21.app.defaults.controller.QuickStartController but with the default behavior from &quot;archetype:create-from-project&quot;, the final structure will be only java file left. that's, QuickStartController that's not what we want, we want to keep the package structure as it is. so we need to customize this. go to &quot;target/generated-sources/archetype/src/main/resources/META-INF/maven/archetype.xml&quot;, change following part:</p>
-<pre class="sourceCode xml"><code class="sourceCode xml"><span class="kw">&lt;sources&gt;</span>
+<div class="sourceCode"><pre class="sourceCode xml"><code class="sourceCode xml"><span class="kw">&lt;sources&gt;</span>
   <span class="kw">&lt;source&gt;</span>src/main/java/QuickStartController.java<span class="kw">&lt;/source&gt;</span>
-<span class="kw">&lt;/sources&gt;</span></code></pre>
+<span class="kw">&lt;/sources&gt;</span></code></pre></div>
 <p>TO:</p>
-<pre class="sourceCode xml"><code class="sourceCode xml"><span class="kw">&lt;sources&gt;</span>
+<div class="sourceCode"><pre class="sourceCode xml"><code class="sourceCode xml"><span class="kw">&lt;sources&gt;</span>
   <span class="kw">&lt;source&gt;</span>src/main/java/cn/spring21/app/defaults/controller/QuickStartController.java<span class="kw">&lt;/source&gt;</span>
-<span class="kw">&lt;/sources&gt;</span></code></pre>
+<span class="kw">&lt;/sources&gt;</span></code></pre></div>
 <p>then, copy or create such folder structure under :</p>
 <blockquote>
 <p>target/generated-sources/archetype/src/main/resources/archetype-resources/src/main/java</p>

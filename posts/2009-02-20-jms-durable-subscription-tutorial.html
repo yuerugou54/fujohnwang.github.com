@@ -10,6 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link rel="icon" href="/favicon.ico">
             <style type="text/css">
+    div.sourceCode { overflow-x: auto; }
     table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
       margin: 0; padding: 0; vertical-align: baseline; border: none; }
     table.sourceCode { width: 100%; line-height: 100%; }
@@ -49,7 +50,7 @@
       <div class="row">
         <div class="col-md-3 sidebar">
             <a href="/">
-				<div align="center"><img src="/images/wfq0.png"/></div>
+				<!-- <div align="center"><img src="/images/wfq0.png"/></div> -->
                 <h2 class="text-center">扶墙老师</h2>
             </a>
             <p class="text-center lead slogan"><a href="/slogan.html">lollapalooza &amp; positioning</a></p>
@@ -112,7 +113,7 @@
 <p>在了解了Durable Subscription的语义之后，我们马上来看一下如何使用JMS API进行实际的Durable Subscription编程， 并详细了解在JMS API中，我们可以通过什么途径为JMS Provider提供Durable Subscription消息订阅者的标志信息...</p>
 <h1 id="如何进行durable-subscriptiondurable-subscription-how-to"><span class="header-section-number">2</span> 如何进行Durable Subscription(Durable Subscription How to)</h1>
 <p>我们以一个简化功能的类似Spring的SimpleMessageListenerContainer为例，来说明进行Durable Subscription的过程中应该注意的几个问题，下面是该类的代码：</p>
-<pre class="sourceCode java"><code class="sourceCode java"><span class="kw">public</span> <span class="kw">class</span> GenericSimpleMessageListenerContainer <span class="kw">extends</span> ServiceWithLifecycle {
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="kw">public</span> <span class="kw">class</span> GenericSimpleMessageListenerContainer <span class="kw">extends</span> ServiceWithLifecycle {
     
     <span class="kw">private</span> <span class="dt">static</span> <span class="dt">final</span> <span class="kw">transient</span> Log logger = LogFactory.<span class="fu">getLog</span>(GenericSimpleMessageListenerContainer .<span class="fu">class</span>);
     
@@ -264,7 +265,7 @@
 <span class="er">    }</span>
 
 <span class="er">    // getters and setters...</span>
-}</code></pre>
+}</code></pre></div>
 <p>如果你在使用Spring 2.x之前的版本而又不能升级，那么这个类可以“凑合”用一下(因为它的功能并不完备，比如没有添加MessageSelector以及多线程等功能支持)， 如果可能，还是建议你使用Spring 2.x之后引入的SimpleMessageListenerContainer或者DefaultMessageListenerContainer，当然了，这些属于题外话，使用JMS API进行Durable Subscription编程与通常的方式没有太多差异，只要搞清楚一下两点，剩下的基本就不会有太大问题了。</p>
 <h2 id="client-id"><span class="header-section-number">2.1</span> Client Id</h2>
 <p>JMS规定了两种Administered Object，即ConnnectionFactory和Destination，所以，“万物伊始”，我们得先将这两个东西从JNDI上拿下来， GenericSimpleMessageListenerContainer提供了两种方式，要么你在外面获取到这两个东西， 然后直接注入给他；要么你就传一个JndiTemplate， 然后注入这两个东西对应的Jndi名称。</p>
@@ -287,9 +288,9 @@
 </blockquote>
 <h2 id="subscriber-name"><span class="header-section-number">2.2</span> Subscriber Name</h2>
 <p>单凭Client Id还不足以唯一标志某一个Durable Subscription，就跟我凭一个身份证，可以预定多个房间一样。 同一个连接里，你可以创建多个MessageConsumer去订阅不同Topic的消息，如果下回回来，你只想继续接受某一个Topic消息的话，JMS Provider如何知道是哪一个？ 所以，为了区分同一个Connection中不同的Durable Subscription，我们还需要进一步的标志物，这就是Subscriber Name！</p>
-<pre class="sourceCode java"><code class="sourceCode java">messageConsumer = session.<span class="fu">createDurableSubscriber</span>((Topic)<span class="fu">getDestination</span>(), <span class="fu">getDurableSubscriptionName</span>());</code></pre>
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java">messageConsumer = session.<span class="fu">createDurableSubscriber</span>((Topic)<span class="fu">getDestination</span>(), <span class="fu">getDurableSubscriptionName</span>());</code></pre></div>
 <p>通过Session创建DurableSubscriber的时候，我们要为其提供一个Durable Subscriber Name，这是与普通订阅最基本的区别:</p>
-<pre class="sourceCode java"><code class="sourceCode java">messageConsumer = session.<span class="fu">createConsumer</span>(<span class="fu">getDestination</span>());</code></pre>
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java">messageConsumer = session.<span class="fu">createConsumer</span>(<span class="fu">getDestination</span>());</code></pre></div>
 <p>有了SubscriberName之后，下回，当我们重新连接然后使用相同的SubscriberName创建消息订阅的时候，JMS Provider就会知道将哪一个Durable Subscription使用的Topic中的消息进行传送了。</p>
 <blockquote>
 <p>NOTE</p>

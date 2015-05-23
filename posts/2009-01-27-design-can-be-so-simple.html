@@ -10,6 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link rel="icon" href="/favicon.ico">
             <style type="text/css">
+    div.sourceCode { overflow-x: auto; }
     table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
       margin: 0; padding: 0; vertical-align: baseline; border: none; }
     table.sourceCode { width: 100%; line-height: 100%; }
@@ -49,7 +50,7 @@
       <div class="row">
         <div class="col-md-3 sidebar">
             <a href="/">
-				<div align="center"><img src="/images/wfq0.png"/></div>
+				<!-- <div align="center"><img src="/images/wfq0.png"/></div> -->
                 <h2 class="text-center">扶墙老师</h2>
             </a>
             <p class="text-center lead slogan"><a href="/slogan.html">lollapalooza &amp; positioning</a></p>
@@ -108,14 +109,14 @@
 <h2 id="亲密性proximity"><span class="header-section-number">2.1</span> 亲密性(Proximity)</h2>
 <p>设计的亲密性原则强调信息的组织，相关的信息要尽可能的靠近，相反，不相关的信息，则尽可能的分离。 实际上，同样的原则，我们无时无刻不在使用，只不过，这些事物我们日常接触太多，却忽略了它们背后的东西。</p>
 <p>我是做软件的，所以，就先构建软件的代码说起吧！在过程式编程的年代，像C或者Pascal， 老师或者说教材都会告诉你为了代码复用，将某些相关的代码组织成函数(Function)或者过程(Procedure)； 而到了面向对象编程的年代，比如Java中，我们会将相关的代码组织为方法或者是对象；实际上，这些都是亲密性原则的体现。 试想，你愿意看到各种逻辑混杂的一大段代码那，还是愿意看到关注点划分清晰又组织良好的代码那？ 具体一点儿，你是愿意看到“代码清单1”中代码那，还是愿意看到“代码清单2”中的代码？</p>
-<pre class="sourceCode java"><code class="sourceCode java">代码清单<span class="dv">1</span>
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java">代码清单<span class="dv">1</span>
 <span class="kw">public</span> <span class="kw">class</span> CodeStyleSample {
     <span class="kw">private</span> <span class="dt">static</span> <span class="dt">final</span> <span class="kw">transient</span> Log logger=LogFactory.<span class="fu">getLog</span>(CodeStyleSample.<span class="fu">class</span>);
     <span class="kw">public</span> <span class="dt">static</span> <span class="dt">final</span> String CONSTANT_ONE=<span class="st">&quot;..&quot;</span>;
     <span class="kw">public</span> <span class="dt">static</span> <span class="dt">final</span> <span class="dt">int</span> CONSTANT_TWO=<span class="dv">11</span>;
     ...
-}</code></pre>
-<pre class="sourceCode java"><code class="sourceCode java">代码清单<span class="dv">2</span>
+}</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java">代码清单<span class="dv">2</span>
 <span class="kw">public</span> <span class="kw">class</span> CodeStyleSample {
 
     <span class="kw">private</span> <span class="dt">static</span> <span class="dt">final</span> <span class="kw">transient</span> Log logger=LogFactory.<span class="fu">getLog</span>(CodeStyleSample.<span class="fu">class</span>);
@@ -124,7 +125,7 @@
     <span class="kw">public</span> <span class="dt">static</span> <span class="dt">final</span> <span class="dt">int</span> CONSTANT_TWO=<span class="dv">11</span>;
     
     ...
-}</code></pre>
+}</code></pre></div>
 <p>我想代码清单2要更有条理一些吧？！（当然，还不算最好，说道对齐原则的时候，我们还会看到进一步的改进）</p>
 <p>代码是一个级别，推而广之，架构之中的逻辑分层，实际上也可以算是亲密性原则的体现。 还有， 你愿意将所有的组件部署在一台服务器上，还是愿意将职责分明的组件分别部署到不同的服务器上？ 就跟亲密性原则所说，尽可能的将相近的信息放在一起，而将不相关的信息相分离，侧重Scale out而不是Scale up， 或许亲密性原则也是一种解释吧，呵呵，一台机器的Scale up，你只能买更强大的硬件，而多台机器的Scale out，你可以购买更廉价的硬件来组建各种server farms，后者看起来不是很像是亲密性原则的信徒吗？！</p>
 <p>光说软件与亲密性的联系有些狭隘，那我们推广到社会与家庭如何？！一个个的家庭是不是相互分离的那？可是家庭内部是不是亲密性很强？ 再进一步的放眼，一个个的国家内部是不是亲密性很强，放到世界的范围内，它们看起来是不是又成为了一个个的个体？！</p>
@@ -132,7 +133,7 @@
 <h2 id="对齐alignment"><span class="header-section-number">2.2</span> 对齐(Alignment)</h2>
 <p>对齐的概念很简单，不用我说大家也知道，在某个有限的平面空间内，通常也就“向左对齐”，“向右对齐”以及“居中对齐”， 要么说作者这本书写的简单易懂嘛，这么简单的概念，经作者一提点，你我就会发现，原来如此简单的原则，却可以构建那么不简单的效果。</p>
 <p>还是先以代码为例，我不知道大家是愿意看到“代码清单2”中的代码那，还是愿意看到“代码清单3”中的代码？！</p>
-<pre class="sourceCode java"><code class="sourceCode java">代码清单<span class="dv">3</span>
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java">代码清单<span class="dv">3</span>
 <span class="kw">public</span> <span class="kw">class</span> CodeStyleSample {
 
     <span class="kw">private</span> <span class="dt">static</span> <span class="dt">final</span> <span class="kw">transient</span> Log logger=LogFactory.<span class="fu">getLog</span>(CodeStyleSample.<span class="fu">class</span>);
@@ -141,7 +142,7 @@
     <span class="kw">public</span> <span class="dt">static</span> <span class="dt">final</span> <span class="dt">int</span>      CONSTANT_TWO=<span class="dv">11</span>;   
     
     ...
-}</code></pre>
+}</code></pre></div>
 <p>将代码按照某一基线对齐之后，看起来是不是更加赏心悦目那？！</p>
 <p>“向右看齐！”，当你还是学生的时候，出操排队的时候是不是经常被要求这么做那？ 在了解了对齐原则之后，你有没有认为这里也是对齐原则的一处体现之地那？做领导的，可不愿意看到下面零零散散，乱七八糟的人群， 当你排好队，一排排齐刷刷的出现在操场的时候，领导看着要舒心多了，哈哈！ 类似的，国家领导人阅兵的时候， 也希望看到的是雄赳赳，齐刷刷的方阵，而这些恰好都是对齐原则的体现，创造美，实际上就这么简单。</p>
 <p>所以说，对齐，作为四大设计原则之一，或许作者只是在这本更强调平面设计的书里提出，但同样可以推而广之到其他的领域来应用。敞开你畅想的翅膀，尽情飞翔吧！</p>

@@ -10,6 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link rel="icon" href="/favicon.ico">
             <style type="text/css">
+    div.sourceCode { overflow-x: auto; }
     table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
       margin: 0; padding: 0; vertical-align: baseline; border: none; }
     table.sourceCode { width: 100%; line-height: 100%; }
@@ -49,7 +50,7 @@
       <div class="row">
         <div class="col-md-3 sidebar">
             <a href="/">
-				<div align="center"><img src="/images/wfq0.png"/></div>
+				<!-- <div align="center"><img src="/images/wfq0.png"/></div> -->
                 <h2 class="text-center">扶墙老师</h2>
             </a>
             <p class="text-center lead slogan"><a href="/slogan.html">lollapalooza &amp; positioning</a></p>
@@ -87,7 +88,7 @@
 <p>2014年从msn space存档中重新恢复出来！</p>
 </blockquote>
 <p>近来看了JbossAop的相关资料，也做过几个demo，对于其原理也稍有了解，现将编译用的ant脚本罗列如下，以备后查。呵呵，十分简单，但是本人记性不好，所以，为了以后copy好用。</p>
-<pre class="sourceCode xml"><code class="sourceCode xml"><span class="kw">&lt;?xml</span> version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;<span class="kw">?&gt;</span>
+<div class="sourceCode"><pre class="sourceCode xml"><code class="sourceCode xml"><span class="kw">&lt;?xml</span> version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;<span class="kw">?&gt;</span>
 
 <span class="kw">&lt;project</span><span class="ot"> default=</span><span class="st">&quot;simple.run&quot;</span><span class="ot"> name=</span><span class="st">&quot;JBoss/AOP&quot;</span><span class="ot"> basedir=</span><span class="st">&quot;.&quot;</span><span class="kw">&gt;</span>
  
@@ -184,7 +185,7 @@
   <span class="kw">&lt;delete</span><span class="ot"> dir=</span><span class="st">&quot;{dist.dir}&quot;</span><span class="kw">&gt;&lt;/delete&gt;</span>
  <span class="kw">&lt;/target&gt;</span>
 
-<span class="kw">&lt;/project&gt;</span></code></pre>
+<span class="kw">&lt;/project&gt;</span></code></pre></div>
 <p>对于JbossAOP来说，因为其weaving过程是在runtime进行的，所以需要在运行的时候为其classloader指定jboss-aop.xml文件。</p>
 <p>其实，jbossaop虽然说是随jboss as发布的，但是，也可作为standalone使用，只是，与其他不同的java文件编译所不同的是，在javac之后，我们还需要对于javac生成后的class进行aopc编译，为jbossaop的classloader做准备，其中annotationc是可选的（对于jdk5来说，因为已经提供了annotation的支持，所以无需另外处理，因为其annotation支持runtime类型，所以，可以在runtime时期直接取得并处理），只是对于jdk1.4,并且需要使用annotation的场合，才会需要该task对jbossaop规定的1.4形势的annotation进行预处理。</p>
 <p>因为现在机器上使用的是1.4的jdk，所以，以上ant脚本是针对1.4的，如果像我笔记本上那样使用jdk5.0的环境，在运行前，根本不需要执行annotationc和aopc这两个任务。具体情况可以参照jbossaop的reference。</p>

@@ -10,6 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link rel="icon" href="/favicon.ico">
             <style type="text/css">
+    div.sourceCode { overflow-x: auto; }
     table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
       margin: 0; padding: 0; vertical-align: baseline; border: none; }
     table.sourceCode { width: 100%; line-height: 100%; }
@@ -49,7 +50,7 @@
       <div class="row">
         <div class="col-md-3 sidebar">
             <a href="/">
-				<div align="center"><img src="/images/wfq0.png"/></div>
+				<!-- <div align="center"><img src="/images/wfq0.png"/></div> -->
                 <h2 class="text-center">扶墙老师</h2>
             </a>
             <p class="text-center lead slogan"><a href="/slogan.html">lollapalooza &amp; positioning</a></p>
@@ -113,14 +114,14 @@
 <h2 id="texlatex"><span class="header-section-number">1.2</span> Tex/LaTex</h2>
 <p>笔者想当年因为经济条件没有考研，所以也就没有真正验证过，只是听说，只要是读过研究生写过论文的， 好像大多数都接触过LaTeX（http://www.latex-project.org/），它属于TeX的改进版，但同样属于基于普通标记文本的文字编写方式。 LaTeX好像对各种公式的表达支持很好，不过，对于中文的支持来说，好像要诉诸于CTeX之类的本地化版本，但这都是笔者道听途说， 如果您对这种基于TeX/LaTeX的编辑方式感兴趣，倒是应该自己验证一下。俺此行的目的，仅仅是为了罗列选择项而已。</p>
 <p>这里有一个摘自LaTeX网站的实例，或许能够让我们有一个感性的认识。如果编写如下源文本：</p>
-<pre class="sourceCode latex"><code class="sourceCode latex">\documentclass{article}
+<div class="sourceCode"><pre class="sourceCode latex"><code class="sourceCode latex">\documentclass{article}
 \title{Cartesian closed categories and the price of eggs}
 \author{Jane Doe}
 \date{September 1994}
 \begin{document}
    \maketitle
    Hello world!
-\end{document}</code></pre>
+\end{document}</code></pre></div>
 <p>那么，通过LaTeX处理后，将输出类似如下形式的显示效果(下面的输出无法完全反映效果，可以参考LaTeX网站上的样子)：</p>
 <pre>
 Cartesian closed categories and the price of eggs

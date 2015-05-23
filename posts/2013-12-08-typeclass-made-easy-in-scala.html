@@ -10,6 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link rel="icon" href="/favicon.ico">
             <style type="text/css">
+    div.sourceCode { overflow-x: auto; }
     table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
       margin: 0; padding: 0; vertical-align: baseline; border: none; }
     table.sourceCode { width: 100%; line-height: 100%; }
@@ -49,7 +50,7 @@
       <div class="row">
         <div class="col-md-3 sidebar">
             <a href="/">
-				<div align="center"><img src="/images/wfq0.png"/></div>
+				<!-- <div align="center"><img src="/images/wfq0.png"/></div> -->
                 <h2 class="text-center">扶墙老师</h2>
             </a>
             <p class="text-center lead slogan"><a href="/slogan.html">lollapalooza &amp; positioning</a></p>
@@ -118,20 +119,20 @@ class String implements Comparable<String>{...}
 <p>前面所有的例子都是有了typeclass声明，然后再有相应的Type Instance实现， 但是， 如果我们某些类早就已经有了，但这些类在声明的时候有没有实现我们的typeclass声明定义的行为接口，想要他们符合typeclass定义的行为契约，我们该怎么办？也就是说，木已成舟，我们总不能把这些现成的类再塞回他娘的肚子里去不是？</p>
 <p>这个时候， Scala的Implicit Resolution特性就可以派上用场了。</p>
 <p>假设我们有类型A， 它之前没有实现Comarable，现在我们想要给它加上这个typeclass的约束， 使其可以被比较，那么，按照上面的第三步，我们应该这样来声明这个使用场景:</p>
-<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> <span class="fu">compare</span>(a:A, b:A)：Int</code></pre>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> <span class="fu">compare</span>(a:A, b:A)：Int</code></pre></div>
 <p>可是， A并没有实现Comparable，所以上面的声明显然不能工作，不过，我们可以稍微改进一下:</p>
-<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> <span class="fu">compare</span>(a:A, b:A)(<span class="kw">implicit</span> handler: ComparableTypeClassAdaptor[A]):Int </code></pre>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> <span class="fu">compare</span>(a:A, b:A)(<span class="kw">implicit</span> handler: ComparableTypeClassAdaptor[A]):Int </code></pre></div>
 <p>这里的<code>ComparableTypeClassAdaptor[A]</code>可以根据传入的A的类型来提供Comparable约束的行为，比如：</p>
-<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">class</span> ATypeClassAdaptor <span class="kw">extends</span> ComparableTypeClassAdaptor[A]{
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">class</span> ATypeClassAdaptor <span class="kw">extends</span> ComparableTypeClassAdaptor[A]{
     <span class="kw">def</span> <span class="fu">makeItComparable</span>(a:A) = <span class="kw">new</span> Comparable[A]{<span class="kw">def</span> <span class="fu">compare</span>(o:A):Int = {实现逻辑}}
-}</code></pre>
+}</code></pre></div>
 <p>那么，只要我们在调用的时候，将相应的<code>ATypeClassAdaptor[A]</code>的实现作为implicit parameter传入就可以完成typeclass的约束:</p>
-<pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> <span class="fu">compare</span>(a:A, b:A)(<span class="kw">implicit</span> <span class="kw">val</span> handler:ATypeClassAdaptor[A]) = handler.<span class="fu">makeItComparable</span>(a).<span class="fu">compare</span>(b))
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> <span class="fu">compare</span>(a:A, b:A)(<span class="kw">implicit</span> <span class="kw">val</span> handler:ATypeClassAdaptor[A]) = handler.<span class="fu">makeItComparable</span>(a).<span class="fu">compare</span>(b))
 
 <span class="kw">implicit</span> handler = <span class="kw">new</span> ATypeClassAdaptor
 <span class="kw">val</span> a1 : A = _
 <span class="kw">val</span> a2 : A = _
-<span class="fu">compare</span>(a1, a2)</code></pre>
+<span class="fu">compare</span>(a1, a2)</code></pre></div>
 <p>只不过，这种场景按照二八原则应该属于二的那一部分，而大部分blog post或者书上却把这东西讲得跟八那部分似的。</p>
 <p>好啦， 关于typeclass就扯这么多，各位看官尽兴，手里有砖的也可以拍出来 ；）</p>
                 

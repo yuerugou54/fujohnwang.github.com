@@ -11,6 +11,7 @@
     <link rel="icon" href="/favicon.ico">
         <meta name="date" content="2009-10-21" />
             <style type="text/css">
+    div.sourceCode { overflow-x: auto; }
     table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
       margin: 0; padding: 0; vertical-align: baseline; border: none; }
     table.sourceCode { width: 100%; line-height: 100%; }
@@ -50,7 +51,7 @@
       <div class="row">
         <div class="col-md-3 sidebar">
             <a href="/">
-				<div align="center"><img src="/images/wfq0.png"/></div>
+				<!-- <div align="center"><img src="/images/wfq0.png"/></div> -->
                 <h2 class="text-center">扶墙老师</h2>
             </a>
             <p class="text-center lead slogan"><a href="/slogan.html">lollapalooza &amp; positioning</a></p>
@@ -188,7 +189,7 @@ Xml代码
 <p>URIBroker的初衷是为了避免因为页面内链接的变更导致大批相关页面都要变动的局面。实际上， URIBroker起到一个隔离层的功效。从这一点来说， URIBroker功不可没，不过， 从个人角度来看，如果能够稍微改进一些， 则可以让这把小刀子更亮，更快。</p>
 <p>先来看现在URIBroker的使用场景。 在一个视图模板中，因为uribroker已经成为vm的内嵌对象，所以，为了表达一个链接，我们通常这么写：</p>
 <p>Java代码</p>
-<pre class="sourceCode java"><code class="sourceCode java">$uribroker.<span class="fu">subscription</span>.<span class="fu">subcontroller</span>.<span class="fu">setTarget</span>( <span class="st">&quot;search.htm&quot;</span> )  </code></pre>
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java">$uribroker.<span class="fu">subscription</span>.<span class="fu">subcontroller</span>.<span class="fu">setTarget</span>( <span class="st">&quot;search.htm&quot;</span> )  </code></pre></div>
 <p>当视图渲染完成后， 以上链接地址就可能变为“ http://host:port/contextpath/subscription/subcontroller/search.htm ”， 因为URIBroker会从一个外部的配置文件uri.xml中读取配置信息，形如：</p>
 <pre>
 Xml代码  

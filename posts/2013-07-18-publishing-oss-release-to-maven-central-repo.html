@@ -10,6 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link rel="icon" href="/favicon.ico">
             <style type="text/css">
+    div.sourceCode { overflow-x: auto; }
     table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
       margin: 0; padding: 0; vertical-align: baseline; border: none; }
     table.sourceCode { width: 100%; line-height: 100%; }
@@ -49,7 +50,7 @@
       <div class="row">
         <div class="col-md-3 sidebar">
             <a href="/">
-				<div align="center"><img src="/images/wfq0.png"/></div>
+				<!-- <div align="center"><img src="/images/wfq0.png"/></div> -->
                 <h2 class="text-center">扶墙老师</h2>
             </a>
             <p class="text-center lead slogan"><a href="/slogan.html">lollapalooza &amp; positioning</a></p>
@@ -212,11 +213,11 @@
 <p>用户名和密码在一开始已经申请过了，填上即可。</p>
 <p>更详细步骤参看<a href="https://docs.sonatype.org/display/Repository/How+To+Generate+PGP+Signatures+With+Maven" class="uri">https://docs.sonatype.org/display/Repository/How+To+Generate+PGP+Signatures+With+Maven</a></p>
 <h1 id="发布snapshot版本"><span class="header-section-number">5</span> 发布SNAPSHOT版本</h1>
-<pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">mvn</span> clean deploy</code></pre>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">mvn</span> clean deploy</code></pre></div>
 <h1 id="发布staging版本"><span class="header-section-number">6</span> 发布Staging版本</h1>
-<pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">mvn</span> release:clean
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">mvn</span> release:clean
 $ <span class="kw">mvn</span> release:prepare
-$ <span class="kw">mvn</span> release:perform</code></pre>
+$ <span class="kw">mvn</span> release:perform</code></pre></div>
 <p>期间会提示需要输入pgp key的passphrase，照办就是了。</p>
 哥的Ticket当天没批下来，所以，运行会告诉我没有权限上传artifacts:
 <pre>

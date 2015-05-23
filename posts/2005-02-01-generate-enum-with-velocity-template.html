@@ -10,6 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link rel="icon" href="/favicon.ico">
             <style type="text/css">
+    div.sourceCode { overflow-x: auto; }
     table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
       margin: 0; padding: 0; vertical-align: baseline; border: none; }
     table.sourceCode { width: 100%; line-height: 100%; }
@@ -49,7 +50,7 @@
       <div class="row">
         <div class="col-md-3 sidebar">
             <a href="/">
-				<div align="center"><img src="/images/wfq0.png"/></div>
+				<!-- <div align="center"><img src="/images/wfq0.png"/></div> -->
                 <h2 class="text-center">扶墙老师</h2>
             </a>
             <p class="text-center lead slogan"><a href="/slogan.html">lollapalooza &amp; positioning</a></p>
@@ -138,7 +139,7 @@ public final class clazz extends Enum
 <li>更容易想到，“万事具备”了嘛，当然就是将数据和模板merge一下咯</li>
 </ol>
 <p>好了，说了这么些废话，还是用code说话吧：</p>
-<pre class="sourceCode java"><code class="sourceCode java"><span class="co">// 1.init Config</span>
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="co">// 1.init Config</span>
    InputStream ins = EnumBuilder.<span class="fu">class</span>.<span class="fu">getResourceAsStream</span>(<span class="st">&quot;v.properties&quot;</span>);
    Properties prop = <span class="kw">new</span> Properties();
    prop.<span class="fu">load</span>(ins);
@@ -165,10 +166,10 @@ public final class clazz extends Enum
             
             <span class="co">// 4. merge the template and context</span>
             <span class="kw">if</span> ( template != <span class="kw">null</span>)
-                template.<span class="fu">merge</span>(context, writer);</code></pre>
+                template.<span class="fu">merge</span>(context, writer);</code></pre></div>
 <p>好，以上就是所有的代码了，细节（象异常处理什么的）这里就不写了，大家都明白，是吧？！</p>
 <p>主要工作完成的差不多了，让我们调用我们的EnumBuilder看看:</p>
-<pre class="sourceCode java"><code class="sourceCode java"><span class="co">// 1.</span>
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="co">// 1.</span>
   String pkg = <span class="st">&quot;net.darrenwang.enum&quot;</span>;<span class="co">// Package Name of the Class</span>
   String clazz = <span class="st">&quot;ColorEnum&quot;</span>;        <span class="co">// Enum Class Name</span>
   List enums = <span class="kw">new</span> ArrayList();      <span class="co">// Enum Names</span>
@@ -184,7 +185,7 @@ public final class clazz extends Enum
    EnumBuilder.<span class="fu">buildEnum</span>(<span class="st">&quot;net.darrenwang.enum&quot;</span>,<span class="st">&quot;ColorEnum&quot;</span>,enums,writer);
   } <span class="kw">catch</span> (IOException e) {
    e.<span class="fu">printStackTrace</span>();
-  }</code></pre>
+  }</code></pre></div>
 <p>哈哈，大功告成！不过，来之不易啊，有谁知道要让这么简单的东西出来，让我浪费了多少时间啊，呵呵，经验教训还是要总结di ，hoho</p>
 <pre>
 NOTE：  实际上，在没有重新看Velocity的文档之前，我已经忘记了Velocity的Resource Loader策略问题，所以，在刚开始的Velocity引擎初始化的时候，和取得模板的时候，都直接制定Properties的文件名和模板文件名的时候，根本就找不到，大家都讨厌的异常自然就频频出来烦我咯。

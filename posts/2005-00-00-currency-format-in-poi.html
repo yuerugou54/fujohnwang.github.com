@@ -10,6 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link rel="icon" href="/favicon.ico">
             <style type="text/css">
+    div.sourceCode { overflow-x: auto; }
     table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
       margin: 0; padding: 0; vertical-align: baseline; border: none; }
     table.sourceCode { width: 100%; line-height: 100%; }
@@ -49,7 +50,7 @@
       <div class="row">
         <div class="col-md-3 sidebar">
             <a href="/">
-				<div align="center"><img src="/images/wfq0.png"/></div>
+				<!-- <div align="center"><img src="/images/wfq0.png"/></div> -->
                 <h2 class="text-center">扶墙老师</h2>
             </a>
             <p class="text-center lead slogan"><a href="/slogan.html">lollapalooza &amp; positioning</a></p>
@@ -105,8 +106,8 @@
 <p>如果不制定是横向打印还是竖向打印的话，excel会默认以竖向Vertical的形式打印，而我们却向横向打印，这个时候，可以使用HSSFPrintSetup类。假定要对yourSheet设置打印模式为横向打印，直接调用yourSheet.getPrintSetup().setLandscape(true);就可以了。呵呵，easy，right？其他情况类似处理。</p>
 <h1 id="tip3"><span class="header-section-number">3</span> tip3</h1>
 <p>今天遇到的问题。中午询问大家工作量的时候，发现所有人在金额统计的栏中都是以美元符来表示金额的，但是这种情况让日本人看到肯定不行，应该用日元符来格式化金额，所以，今天下午在修改完顾客和申请检索部分的bug之后，对该问题进行了调研。结果就是POI的内置格式化中没有提供日元Currency的格式化格式，需要用custom的格式，但是，这个格式如何指定那？且看下面代码：</p>
-<pre class="sourceCode java"><code class="sourceCode java">     HSSFCellStyle style = workbook.<span class="fu">createCellStyle</span>();
-     style.<span class="fu">setDataFormat</span>(workbook.<span class="fu">createDataFormat</span>().<span class="fu">getFormat</span>(customFormat));</code></pre>
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java">     HSSFCellStyle style = workbook.<span class="fu">createCellStyle</span>();
+     style.<span class="fu">setDataFormat</span>(workbook.<span class="fu">createDataFormat</span>().<span class="fu">getFormat</span>(customFormat));</code></pre></div>
 <p>其中，customFormat需要指定为类似于这样形式的字符串：[0a5]#,##0.00</p>
 <p>另外需要注意的是，必须使用workbook.createDataFormat().getFormat(customFormat)这样的代码生成DataFormat，而不能直接调用HSSFDataFormat.getBuildinFormat(customFormat)的形式，因为后者是取得DataFormat的内置格式化格式，而以上形式则不是。</p>
 <p>还有就是，以上形式目前只是针对日元符有用，对于其他Currency是否依然有效则不可知，比如，我在查找资料的时候，发现有人使用类似格式格式化欧元符的时候就好用。</p>
