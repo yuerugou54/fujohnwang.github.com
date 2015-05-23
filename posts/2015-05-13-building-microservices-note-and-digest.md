@@ -21,6 +21,8 @@ bounded context  -> atomic unit boundary -> compositional boundaries
 
 
 
+
+
 # Orchestration VS. Choreography
 
 (终于tmd理解了这两个鸟单词在软件行业里的确切意思了...)
@@ -146,8 +148,17 @@ So, I skip this section.
 > tradeoffs between Shiro and Spring Security with authorization framework.
 
 
+# System Design 
 
+> * Any organization that designs a system (defined more broadly here than just information systems)will inevitably produce a design whose structure is a copy of the organization’s communicationstructure.
 
+> * Adapting to Communication Pathways
+
+组织结构也要“高内聚，低耦合”。 
+
+> Service Ownership
+
+我们实行PO制度，也是同样的道理, 职责不清，纠缠扯皮的事儿就多。
 
 
 

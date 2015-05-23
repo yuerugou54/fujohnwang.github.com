@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>BuildingMicroservices读书笔记与感悟 - 一个架构士的思考与沉淀@afoo.me</title>
+    <meta name="author" content="FuqiangWang">
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="icon" href="/favicon.ico">
+        <meta name="date" content="2015-05-13" />
+                    
+    <link href='/font/Syncopate/stylesheet.css' rel='stylesheet' type='text/css'>
+    <link href='/font/News_Cycle/stylesheet.css' rel='stylesheet' type='text/css'>
+
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/bootstrap-theme.min.css" rel="stylesheet">
+    <link href="/css/afoo.me.css" rel="stylesheet">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-3 sidebar">
+            <a href="/">
+				<div align="center"><img src="/images/wfq0.png"/></div>
+                <h2 class="text-center">扶墙老师</h2>
+            </a>
+            <p class="text-center lead slogan"><a href="/slogan.html">lollapalooza &amp; positioning</a></p>
+			<p class="text-center lead slogan">瞎子摸象的践行者</p>
+            <ul class="nav nav-pills nav-stacked">
+              <li><a href="/favorite.html" class="text-center"><i class="icon-star-empty"></i> 我的收藏</a></li>
+              <li><a href="/dashboard.html" class="text-center"><i class="icon-fullscreen"></i> 金融看板</a></li>
+              <li><a href="/columns.html" class="text-center"><i class="icon-folder-close-alt"></i> 专栏</a></li>
+              <li><a href="/references.html" class="text-center"><i class="icon-folder-close-alt"></i> 快捷参考</a></li>
+              <li><a href="/whoami.html" class="text-center"><i class="icon-user-md"></i> 我是谁</a></li>
+              <li><a href="/interlinks.html" class="text-center"><i class="icon-user-md"></i> 友情链接</a></li>
+              <li><a href="/feeds.xml" class="text-center"><i class="icon-folder-close-alt"></i> RSS</a></li>
+            </ul>
+
+        </div>
+        <div class="col-md-9 col-md-offset-3 main">
+            <div class="row">
+              <div class="container-fluid">
+                
+                <div class="row">
+                                <div id="header">
+                <p class="lead">
+                <h1 class="title">BuildingMicroservices读书笔记与感悟&nbsp;&nbsp;
+                <small>
+                                    王福强
+                                </small>
+                </h1>
+                </p>
+                </div>
+                                <div>
+
+                <hr>
+
+                                <div id="TOC">
+                <ul>
+                <li><a href="#orchestration-vs.-choreography"><span class="toc-section-number">1</span> Orchestration VS. Choreography</a></li>
+                <li><a href="#versioning"><span class="toc-section-number">2</span> Versioning</a></li>
+                <li><a href="#数据库"><span class="toc-section-number">3</span> 数据库</a><ul>
+                <li><a href="#transactional-boundary"><span class="toc-section-number">3.1</span> Transactional Boundary</a></li>
+                <li><a href="#报表与数据仓库"><span class="toc-section-number">3.2</span> 报表与数据仓库</a></li>
+                </ul></li>
+                <li><a href="#deployment-artifacts"><span class="toc-section-number">4</span> Deployment Artifacts</a><ul>
+                <li><a href="#platform-specific-artifacts"><span class="toc-section-number">4.1</span> Platform-Specific Artifacts</a></li>
+                <li><a href="#operating-system-artifacts"><span class="toc-section-number">4.2</span> Operating System Artifacts</a></li>
+                </ul></li>
+                <li><a href="#service-to-host-mapping"><span class="toc-section-number">5</span> Service-to-Host Mapping</a><ul>
+                <li><a href="#virtualization"><span class="toc-section-number">5.1</span> Virtualization</a></li>
+                </ul></li>
+                <li><a href="#test"><span class="toc-section-number">6</span> Test</a></li>
+                <li><a href="#monitoring"><span class="toc-section-number">7</span> Monitoring</a><ul>
+                <li><a href="#监控的内与外"><span class="toc-section-number">7.1</span> 监控的内与外</a></li>
+                </ul></li>
+                <li><a href="#security"><span class="toc-section-number">8</span> Security</a><ul>
+                <li><a href="#authentication-authorization"><span class="toc-section-number">8.1</span> Authentication &amp; Authorization</a></li>
+                </ul></li>
+                <li><a href="#system-design"><span class="toc-section-number">9</span> System Design</a></li>
+                <li><a href="#工具参考"><span class="toc-section-number">10</span> 工具参考</a></li>
+                <li><a href="#单词与词组学习复习"><span class="toc-section-number">11</span> 单词与词组学习/复习</a></li>
+                </ul>
+                </div>
+                                <p>loose coupling(interexchange) and high cohesion(autonomy), the most simple but long-lived rule for software development stand!!!</p>
+<p>align service/functionality, person, team, organization, even bigger entities...</p>
+<pre><code>bounded context  -&gt; atomic unit boundary -&gt; compositional boundaries</code></pre>
+<blockquote>
+<p>== Words That Make Sense In This Book ==</p>
+<ul>
+<li>trade short-term gain for long-term pain</li>
+<li>Build if it's <strong>unique</strong> to what you do.</li>
+<li>we can make a change to a single service and deploy it independently of the rest.</li>
+</ul>
+</blockquote>
+<h1 id="orchestration-vs.-choreography"><span class="header-section-number">1</span> Orchestration VS. Choreography</h1>
+<p>(终于tmd理解了这两个鸟单词在软件行业里的确切意思了...)</p>
+<p>With orchestration, we rely on a central brain to guide and drive the process, much like the conductor in an orchestra. (the coordination way)</p>
+<p>With choreography, we inform each part of the system of its job, and let it work out the details, like dancers all finding their way and reacting to others around them in a ballet. (the fire-and-forget way)</p>
+<p>类似于计划经济 VS. 市场经济，或者中央集权 VS. 地方自治，the former can be implemented in synchronous RPCs way, and the latter in asynchronous event-driven way.</p>
+<h1 id="versioning"><span class="header-section-number">2</span> Versioning</h1>
+<p>刚开始个人看法是， 在URI上不要明确使用version作为URI的一部分， 而采用通用的资源标志URI， 但允许通过参数来明确version， 如果不指定，则默认访问已经部署的最高版本的服务或者资源。这相当于COC的思想体现。</p>
+<p>但后来想想，这样做（指采用默认访问latest版本服务的方式）其实存在问题， 如果客户端都采用默认不加版本的访问方式，一旦服务端升级造成不兼容， 那么客户端很大面积上会受影响。原则上，服务发布不应该影响面这么大！</p>
+<p>所以， URI中明确version可能是更合适的方式， 由客户端或者服务访问端自己决定是否升级。</p>
+<p>遵循一般Major.Minor.Patch的版本语意， 通常情况下， Minor版本以下的发布，对客户端来说应该是没影响的。 Major版本的发布，则可能牵扯同时存在多个版本服务实例/集群的情况。</p>
+<p>基本原则应该是： <strong>服务不管如何升级改造， 服务的访问者有权利决定是否升级，即是否使用新版本的服务； 但服务提供者有通知的义务。</strong></p>
+<h1 id="数据库"><span class="header-section-number">3</span> 数据库</h1>
+<p>最大的共享状态， 也往往是scalability最大的障碍。</p>
+<p>本质上，如果根据实体边界将各个实体划分清晰， 状态也应该是屏蔽在实体内部， 这里唯一比较困难的一点就是， 数据库表之间的外键关系。 要达到按照实体划分清楚边界的目的， 需要打破外键（Breaking Foreign Key Relationships），由应用来管理schema之间的关系，这里的schema其实也就变成了domain实体之间的关系了。实体与实体之间（或者说服务与服务之间），各自状态内聚不外露(状态封装)， 只通过消息传递的方式进行交互。</p>
+<h2 id="transactional-boundary"><span class="header-section-number">3.1</span> Transactional Boundary</h2>
+<p>并非所有服务都是职能单一的，很多时候多种服务是要协同工作的，这个时候往往就需要管理事务性的服务执行，通常情况下，会再设置独立的组合性质的服务来管理跨多个服务的事务。</p>
+<p>单数据库结点即可满足需求的服务， 事务完全可以交给数据库来管理； 一旦跳出这个能力边界， 比如跨库或者跨服务， 就需要通过其它方式来管理事务。</p>
+<p>常见的手段有：</p>
+<ol style="list-style-type: decimal">
+<li>数据补偿与订正；(the compensating/retry way)</li>
+<li>2PC或者相似思想的分布式事务管理方式; (the orchestration way)</li>
+</ol>
+<p>等等。</p>
+<h2 id="报表与数据仓库"><span class="header-section-number">3.2</span> 报表与数据仓库</h2>
+<p>如果进行服务切分，且状态随服务而行，那么，原来的基于数据同步和数据仓库的思路就会受到冲击， 相当于前端业务开发理解并研发一套系统， 后端BI人员再理解一遍，并以他们认为的形式再研发一套系统， 实际上，就后端系统的服务压力来说， 直接由前端服务统一接管并服务之应该也未尝不可，应该不像之前预想的那么恐怖吧？！</p>
+<p>报表也好， BI其它需求也罢， 本质上是根据需求聚合并分析数据(the aggregated view of data/state)， 直接捅数据库当然最直接，但通过统一封装的服务来做这种事情也未尝不可， latency？ 应该不是核心问题吧！</p>
+<p>另外一种思路是， 服务状态可以开放订阅，需要状态事件变更的下游系统可以直接订阅数据，汇总到自己的存储，再借助存储的支持做分析。</p>
+<p>本质上， 还是Orchestration和Choreography两种思路的体现， 非互斥关系， 完全可以根据具体场景组合使用。</p>
+<h1 id="deployment-artifacts"><span class="header-section-number">4</span> Deployment Artifacts</h1>
+<p>制作self-contained deployable microservices as artifacts</p>
+<h2 id="platform-specific-artifacts"><span class="header-section-number">4.1</span> Platform-Specific Artifacts</h2>
+<p>aka. technology-specific artifacts, like gem, jar, npm, etc..</p>
+<h2 id="operating-system-artifacts"><span class="header-section-number">4.2</span> Operating System Artifacts</h2>
+<blockquote>
+<p>One way to avoid the problems associated with technology-specific artifacts is to create artifacts that are native to the underlying operating system.</p>
+</blockquote>
+<p>say, rpm for redhat/centos, deb for debian/ubuntu, msi for windows</p>
+<p>减少支持的操作系统类型的数量以避免无必要的资源投入。</p>
+<p>制作自定义的Image景象，减少不必要的provisioning过程和重复（One approach to reducing this spin-up time is to create a virtual machine image that bakes in some of the common dependencies we use）。</p>
+<p>在组织层次不足以支撑和cover新技术栈的情况下，不建议使用docker之类的容器Image技术，虽然属于发布的artifact的形式之一，但牵扯到周边系统的工作也会需要变更，包括人员，工作流程等。 &quot;先进的，往往也是落后的&quot;！</p>
+<h1 id="service-to-host-mapping"><span class="header-section-number">5</span> Service-to-Host Mapping</h1>
+<p>单节点部署多服务的情况，主要需要考虑资源隔离的问题。</p>
+<p>单节点部署单一服务的情况，主要需要解决资源利用率的问题。</p>
+<p>关注那句老话：<code>threads don't scale, processes do.</code></p>
+<h2 id="virtualization"><span class="header-section-number">5.1</span> Virtualization</h2>
+<blockquote>
+<ul>
+<li>Type 1 virtualization refers to technology where the VMs run directly on hardware, not on top of another operating system.</li>
+<li>Type 2 virtualization, AWS, VMWare, VSphere, Xen, and KVM...</li>
+</ul>
+</blockquote>
+<blockquote>
+<p>if you don’t trust the code you are running, don’t expect that you can run it in a container and be safe. If you need that sort of isolation, you’ll need to consider using virtual machines instead.</p>
+</blockquote>
+<p>&quot;After many years of working in this space, I am convinced that the most sensible way to trigger any deployment is via a single, parameterizable command-line call.&quot;, 实际上， 命令行只是一种表现形式， 你当然可以把核心功能用shell脚本来写，但核心功能只要集中管理之后， 命令行也好， 操作页面也罢，都只是核心功能的一种延伸形式罢了。</p>
+<h1 id="test"><span class="header-section-number">6</span> Test</h1>
+<p>as long as you understand that test design and performing help you to design and implement your services/systems better, you will find the way to do the test properly.</p>
+<p>So, I skip this section.</p>
+<h1 id="monitoring"><span class="header-section-number">7</span> Monitoring</h1>
+<p>我坚持&quot;No News Is The Good News&quot;原则！</p>
+<ol style="list-style-type: decimal">
+<li>Alert是后继流程的起点，and <strong>Identity</strong> Matters here!
+<ul>
+<li>Including <code>Correlation ID</code>s</li>
+<li>artifactId is not enough, mix everything about environment together like host, IDC, etc.</li>
+</ul></li>
+<li>Interconnections smooth the process!<br /></li>
+<li>Convention and Consistency saves your ass too!</li>
+<li>跳出单机思维， 构建平台生态圈！
+<ul>
+<li><blockquote>
+<p>monitor the small things, and use aggregation to see the bigger picture.</p>
+</blockquote></li>
+<li><blockquote>
+<p>away from systems specialized to do just one thing, and toward generic event processing systems that allow you to look at your system in a more holistic way.</p>
+</blockquote></li>
+<li>logs(kibana), system metrics(dashboard which can help drill things down, like <a href="http://graphite.wikidot.com/">Graphite</a> or zabbix)， application metrics(JMX, <a href="https://github.com/dropwizard/metrics">dropwizard/metrics</a>)</li>
+</ul></li>
+</ol>
+<p>实行‘计划经济’， 去他妈的‘市场经济’，这里根本不需要后者！</p>
+<h2 id="监控的内与外"><span class="header-section-number">7.1</span> 监控的内与外</h2>
+<p>大部分情况下我们会关注身体内部的情况(各种agents，各种logs, 各种metrics，诸如此类)，但实际上，我们最好同时也对别人怎么看我们有一个起码基础的认识， 比如使用synthetic monitoring之类的手段来模拟用户访问，看看我们的提供是否正常。</p>
+<h1 id="security"><span class="header-section-number">8</span> Security</h1>
+<h2 id="authentication-authorization"><span class="header-section-number">8.1</span> Authentication &amp; Authorization</h2>
+<p>跟哥整合挖财内网帐号体系和系统的思路相似， 偶的基本思路就是， “确定Identity， 让遵循Identity规范的系统在基本前提下根据各自情况flurish(especially, fine-grained authorization)”</p>
+<blockquote>
+<p>tradeoffs between Shiro and Spring Security with authorization framework.</p>
+</blockquote>
+<h1 id="system-design"><span class="header-section-number">9</span> System Design</h1>
+<blockquote>
+<ul>
+<li>Any organization that designs a system (defined more broadly here than just information systems)will inevitably produce a design whose structure is a copy of the organization’s communicationstructure.</li>
+</ul>
+</blockquote>
+<blockquote>
+<ul>
+<li>Adapting to Communication Pathways</li>
+</ul>
+</blockquote>
+<p>组织结构也要“高内聚，低耦合”。</p>
+<blockquote>
+<p>Service Ownership</p>
+</blockquote>
+<p>我们实行PO制度，也是同样的道理, 职责不清，纠缠扯皮的事儿就多。</p>
+<h1 id="工具参考"><span class="header-section-number">10</span> 工具参考</h1>
+<ol style="list-style-type: decimal">
+<li><a href="https://github.com/jordansissel/fpm/wiki">fpm - Effing Package Management</a></li>
+<li><a href="https://www.packer.io/">Packer is a tool for creating identical machine images for multiple platforms from a single source configuration.</a></li>
+</ol>
+<h1 id="单词与词组学习复习"><span class="header-section-number">11</span> 单词与词组学习/复习</h1>
+<ol style="list-style-type: decimal">
+<li>inhibit, [ɪn'hɪbɪt] , v., 抑制；阻止；使不能
+<ul>
+<li>e.g. Distributed Transaction cand inhibit scaling.</li>
+<li>区别于inhabit, v.居住于；占据；栖息</li>
+<li>可以引申联想到prohibitive</li>
+</ul></li>
+<li>perilous, ['perələs], adj.危险的；冒险的
+<ul>
+<li>The snow and the blackout combined to make motoring perilous - 大雪加上灯火管制使得车辆行驶成了危险的事。</li>
+</ul></li>
+<li>lull, [lʌl], v.使安静；使入睡；哄骗；平息, n.暂停；间歇
+<ul>
+<li>The mother lulled the baby to sleep.</li>
+<li>They lulled me into a false sense of security.</li>
+</ul></li>
+</ol>
+                
+                <!--百度分享按钮-->
+                <div class="pull-left bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a><a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a></div>
+                <script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"1","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+
+                <!--二维码分享-->
+                <div id="wx_qr"></div>
+                <script type="text/javascript">
+                  var baseUrl = "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data="
+                  var qrUrl = baseUrl.concat(document.URL)
+                  var img = document.createElement("img")
+                  img.setAttribute("src", qrUrl)
+
+                  document.getElementById("wx_qr").appendChild(img)
+                </script>
+
+
+                <div id="disqus_thread"></div>
+                <script type="text/javascript">
+                    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+                    var disqus_shortname = 'afoo'; // required: replace example with your forum shortname
+
+                    /* * * DON'T EDIT BELOW THIS LINE * * */
+                    (function() {
+                        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                    })();
+                </script>
+                <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+                <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+              </div>
+              </div>
+              </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 footer">
+                  <hr>
+                  <p>Powered by <a href="http://johnmacfarlane.net/pandoc/">pandoc</a>, <a href="http://rometools.github.io/rome/index.html">ROME</a> and <a href="http://pages.github.com/">github pages</a></p>
+                </div>
+            </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="/js/jquery-2.1.1.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+  </body>
+
+</html>
