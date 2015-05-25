@@ -44,7 +44,7 @@
 
 * > any decent answer to an interesting question begins with, "it depends..."
 
-
+* > 令之以文， 齐之以武， 是谓必取。
 
 
 
