@@ -1,7 +1,5 @@
 # 我是谁(Who Am I)
 
-<img src="images/profile.png" alt="WangFuqiang's portrait"/>
-
 王福强，《Spring揭秘》作者, 浸淫Java平台多年，然近年更喜Scala,
 专注于并发并行编程，HPC，分布式系统设计与实现，Big Data， 实时数据追踪与流计算等领域,
 相关Web Framework, DDAL(Distributed Data Access Layer)^[<https://github.com/alibaba/cobarclient>, 原有域名阿里内部已经弃用，很多同学又很懒（人性啊~）， 所以， 我还是编译一份文档供参考吧， [中文参考文档](/shortcuts/cobarclient/zh/index.html)看这里，[英文参考文档(Reference Doc)](/shortcuts/cobarclient/en/index.html)看这里], Middleware的Product Owner/Co-owner.
