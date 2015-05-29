@@ -214,7 +214,7 @@ with MapReduce](http://lintool.github.com/MapReduceAlgorithms/index.html) ^^^
 	- many commands demonstrated for misc. senarios
 3. <https://sysadmincasts.com/>
     - Sysadmin Casts - bite-sized sysadmin screencasts (released weekly)
-
+4. [Incident Response Hunting Tools](http://sroberts.github.io//2015/04/21/hunting-tools/)
 
 
 ### Docker
@@ -255,6 +255,12 @@ with MapReduce](http://lintool.github.com/MapReduceAlgorithms/index.html) ^^^
 3. [社工库](http://www.weigongkai.com/)
 4. <http://www.273tech.com/>
 5. <https://veracrypt.codeplex.com/> - Veracrpyt, enhanced truecrypt
+6. [osquery](https://osquery.io/)
+    - osquery gives you the ability to query and log things like running processes, logged in users, password changes, usb devices, firewall exceptions, listening ports, and more. 
+You can perform ad-hoc queries or schedule them.
+
+
+
 
 ## Shell
 1. [http://explainshell.com/](http://explainshell.com/)
