@@ -189,6 +189,12 @@ with MapReduce](http://lintool.github.com/MapReduceAlgorithms/index.html) ^^^
 *  <https://python.zeef.com/alan.richmond>
 *  [Full Stack Python](http://www.fullstackpython.com/table-of-contents.html)
 
+## Javascript
+* [Learning Advanced JavaScript](http://ejohn.org/apps/learn/)
+
+
+
+
 ## SEO
 1. [Google Keyword Tool](https://adwords.google.com/o/Targeting/Explorer?__c=1000000000&__u=1000000000&ideaRequestType=KEYWORD_IDEAS)
 2. [百度站长工具](http://zhanzhang.baidu.com/dashboard/index) ****
