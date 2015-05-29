@@ -4,6 +4,8 @@
 
 * **Scenario-Driven Learning**
 
+* 条理化， 独立概念是第一步；融合是第二步，不要将概念对立起来！！！
+
 * 积善之家，必有余庆； 积不善之家， 必有余殃。
 
 * 造命在天， 立命在人！
@@ -45,6 +47,7 @@
 * > any decent answer to an interesting question begins with, "it depends..."
 
 * > 令之以文， 齐之以武， 是谓必取。
+
 
 
 
