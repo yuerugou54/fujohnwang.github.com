@@ -50,6 +50,19 @@
 
 * > 一个人最终要为自己的处境负责任。
 
+* Adobe Marketing Cloud营销框架(http://www.adobe.com/marketing-cloud.html)
+    - Analytics
+    - Audience Manager
+    - Campaign
+    - Experience Manager
+    - Media Optimizer
+    - Primetime
+    - Social
+    - Target
+
+
+
+
 
 
 
