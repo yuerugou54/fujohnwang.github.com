@@ -208,6 +208,8 @@ with MapReduce](http://lintool.github.com/MapReduceAlgorithms/index.html) ^^^
 10. [seomoz的seo工具群](http://www.seomoz.org/)
 11. [Onsite SEO Cheatsheet Cheat Sheet](http://www.cheatography.com/colinbancmedia/cheat-sheets/onsite-seo-cheatsheet/pdf/) **
 
+
+
 ## Ops
 1. <http://www.thegeekstuff.com/>
 2. <http://www.commandlinefu.com/commands/browse>
@@ -243,7 +245,7 @@ with MapReduce](http://lintool.github.com/MapReduceAlgorithms/index.html) ^^^
 9. [https://infogr.am/](https://infogr.am/) - 在线图表制作工具，比如制作报告
 10. [http://asciiflow.com/](http://asciiflow.com/)  - 在线画ASCII arts， 比如搞个有个性的代码中的注释
 11. <http://schemaspy.sourceforge.net/> - 基于Java的图形化工具，用于分析数据库schema的关系
-
+12. <https://www.iconfinder.com/free_icons>  - 免费图标
 
 ## Mac OS X
 1. [How to create a bootable USB to install OS X](http://www.techrepublic.com/blog/mac/how-to-create-a-bootable-usb-to-install-os-x/2699)
