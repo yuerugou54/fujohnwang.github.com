@@ -16,6 +16,7 @@
 * [專案管理生活思維](http://www.projectup.net/blog/)
 * [http://www.cheatography.com/](http://www.cheatography.com/)  - cheatsheet search
 * [http://www.emoji-cheat-sheet.com/](http://www.emoji-cheat-sheet.com/)  - github friendly Emoji 
+* <http://www.excite.co.jp/world/chinese/>   - 多语字典翻译
 
 ## Finance
 * [中国银行外汇当日牌价](http://www.boc.cn/sourcedb/whpj/)
