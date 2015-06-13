@@ -314,3 +314,10 @@ You can perform ad-hoc queries or schedule them.
 5. <http://acgcomic.com/>
 6. <http://www.bttiantang.com>
 7. <http://imax.im>
+
+## 汽车
+
+1. [4*4 Magazine](http://www.4x4emag.com/)
+
+
+
