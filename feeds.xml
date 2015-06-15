@@ -5,6 +5,13 @@
     <link>http://afoo.me</link>
     <description>一个架构士的思考与实践点滴记录</description>
     <item>
+      <title>在SBT中如何mvn dependency:tree</title>
+      <link>http://afoo.me/posts/2015-06-15-sbt-dependency-analysis.html</link>
+      <pubDate>Sun, 14 Jun 2015 16:00:00 GMT</pubDate>
+      <guid>http://afoo.me/posts/2015-06-15-sbt-dependency-analysis.html</guid>
+      <dc:date>2015-06-14T16:00:00Z</dc:date>
+    </item>
+    <item>
       <title>BuildingMicroservices读书笔记与感悟</title>
       <link>http://afoo.me/posts/2015-05-13-building-microservices-note-and-digest.html</link>
       <pubDate>Tue, 12 May 2015 16:00:00 GMT</pubDate>
@@ -73,13 +80,6 @@
       <pubDate>Tue, 13 Jan 2015 16:00:00 GMT</pubDate>
       <guid>http://afoo.me/posts/2015-01-14-where-yed-store-ur-preference-data.html</guid>
       <dc:date>2015-01-13T16:00:00Z</dc:date>
-    </item>
-    <item>
-      <title>了解LaunchDaemons</title>
-      <link>http://afoo.me/posts/2014-12-12-understanding-launch-daemons-of-macosx.html</link>
-      <pubDate>Thu, 11 Dec 2014 16:00:00 GMT</pubDate>
-      <guid>http://afoo.me/posts/2014-12-12-understanding-launch-daemons-of-macosx.html</guid>
-      <dc:date>2014-12-11T16:00:00Z</dc:date>
     </item>
   </channel>
 </rss>
