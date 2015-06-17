@@ -83,6 +83,9 @@
 
 * > 我们只是想找一个谈得来、合脾性，在一起生活舒坦、分开久了有点想念，安静久了想闹腾一下，吵架了又立马会后悔认输的人生伴侣。
 
+* > You want a good girl, but you need the bad pussy.
+
+
 
 
 
