@@ -237,6 +237,7 @@ with MapReduce](http://lintool.github.com/MapReduceAlgorithms/index.html) ^^^
 2. <http://www.tagcloud-generator.com/generator.php>  *****
 	- Tag Cloud Generator
 3. [MockingGrid - 页面草案](https://gomockingbird.com/mockingbird/)
+4. <http://ascii.mastervb.net/> - ASCII generator
 4. [http://asciinema.org/](http://asciinema.org/)
 	 - 纯文字录屏， 不需要浏览器插件
 5. [http://tool.17mon.cn/](http://tool.17mon.cn/)
