@@ -394,7 +394,7 @@ SpringBoot因为一些历史原因和向前兼容保持一致性等因素的关�
 2. 添加logback.xml配置文件，配置规则遵循我们自己的规范；
 3. 启动的时候，设置LOG_HOME环境变量或者命令行参数；
 
-# Scala Is Bootiful 
+# Scala Is Bootiful Too
 
 我们团队有部分精英同学使用Scala语言进行开发， 而对于SpringBoot来说， 使用任何JVM上的语言原则上都不是什么问题， 比如， 要使用Scala进行SpringBoot应用的开发， 只需要添加Scala的相应依赖和编译支持就可以了：
 
@@ -482,7 +482,7 @@ SpringBoot因为一些历史原因和向前兼容保持一致性等因素的关�
 </project>
 ~~~~~~~
 
-> 如果使用SBT而不是Maven, 可能需要费点儿周折， 需要自己添加一系列的依赖，并且解决按照SpringBoot的jar格式规范发布的问题。
+> 如果使用SBT而不是Maven, 可能需要费点儿周折， 需要自己添加一系列的依赖，并且解决按照SpringBoot的可执行jar规范格式发布的问题。
 
 
 # Distribute SpringBoot Application
@@ -504,9 +504,9 @@ SpringBoot提供了相应的Maven插件用于将SpringBoot应用以可执行jar�
 
 # Conclusion
 
-SpringBoot初看上去颇为复杂，但一旦你了解了它内部的精妙设计， 就会有那种“柳暗花明”的感觉了。本文最后引用的参考连接中使用钢铁侠来类比SpringBoot，我觉得还是挺恰当的， 感觉上很笨重，但实际上确实灵活可拆卸， 多种组合备选， 有雄厚的商业实体支撑， 还有良好的群众基础， fucking perfect！
+SpringBoot初看上去颇为复杂，但一旦你了解了它内部的精妙设计， 就会有那种“柳暗花明”的感觉了。本文最后引用的参考连接中使用钢铁侠来类比SpringBoot，我觉得还是挺恰当的， 感觉上很笨重，但实际上却是灵活可拆装， 多种后备组合可供选择， 既有雄厚的商业实体支撑， 还有良好的群众基础， fucking perfect！
 
-选择SpringBoot， 你值得拥有 ；）
+SpringBoot， 你值得拥有 ；）
 
 # References
 
