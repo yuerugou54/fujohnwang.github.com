@@ -394,9 +394,9 @@ SpringBoot因为一些历史原因和向前兼容保持一致性等因素的关�
 2. 添加logback.xml配置文件，配置规则遵循我们自己的规范；
 3. 启动的时候，设置LOG_HOME环境变量或者命令行参数；
 
-# Scala Is Bootiful Too
+# Scala Is Also Bootiful
 
-我们团队有部分精英同学使用Scala语言进行开发， 而对于SpringBoot来说， 使用任何JVM上的语言原则上都不是什么问题， 比如， 要使用Scala进行SpringBoot应用的开发， 只需要添加Scala的相应依赖和编译支持就可以了：
+我们团队有部分精英同学(Scala Elites)使用Scala语言进行开发， 而对于SpringBoot来说， 使用任何JVM上的语言原则上都不是什么问题， 比如， 要使用Scala进行SpringBoot应用的开发， 只需要添加Scala的相应依赖和编译支持就可以了：
 
 ~~~~~~~ {.xml}
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -519,3 +519,5 @@ SpringBoot， 你值得拥有 ；）
 5. [Why We Do Not Use Spring Boot Auto Configuration](http://dev-blog.xoom.com/2015/03/15/use-spring-boot-auto-configuration/)
 6. [CORS support in Spring Framework](http://spring.io/blog/2015/06/08/cors-support-in-spring-framework)
 7. [http://www.schibsted.pl/2015/07/spring-boot-and-dropwizard-in-microservices-development/](http://www.schibsted.pl/2015/07/spring-boot-and-dropwizard-in-microservices-development/)
+8. SpringBoot Javadoc and Sourcecode
+9. other more posts and docs that I can't remember...
