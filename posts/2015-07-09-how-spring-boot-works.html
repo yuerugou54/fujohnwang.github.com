@@ -117,7 +117,7 @@
                 <li><a href="#logging-customization"><span class="toc-section-number">4.3.2</span> logging customization</a></li>
                 </ul></li>
                 </ul></li>
-                <li><a href="#scala-is-bootiful"><span class="toc-section-number">5</span> Scala Is Bootiful</a></li>
+                <li><a href="#scala-is-also-bootiful"><span class="toc-section-number">5</span> Scala Is Also Bootiful</a></li>
                 <li><a href="#distribute-springboot-application"><span class="toc-section-number">6</span> Distribute SpringBoot Application</a></li>
                 <li><a href="#conclusion"><span class="toc-section-number">7</span> Conclusion</a></li>
                 <li><a href="#references"><span class="toc-section-number">8</span> References</a></li>
@@ -190,7 +190,7 @@
 <p><span class="citation">@PropertySource和</span><span class="citation">@PropertySources的区别在于</span>， 后者属于前者的Aggregation类型， 在有多个.properties资源需要引入的情况下，如果能够使用Java8的repeatable annotation特性，则只需要声明多个@PropertySource就行了， 否则，作为fallback方案，使用@PropertySources然后再其中引用多个<span class="citation">@PropertySource好了</span>。</p>
 <h3 id="environment和profile"><span class="header-section-number">3.1.6</span> Environment和Profile</h3>
 <p>这两个概念应该是Spring3时代引入的， Environment用来统一表达当前应用程序运行环境的概念，会以Properties的形式提供一系列该环境下的上下文信息，而且允许当前应用程序获取activeProfile是哪个。</p>
-<p>说实话， Environment的设计，我觉得到提供上下文信息这一关键职能就可以了， 而Profile的设计，则有些太过于Monolithic时代的做事风格。 Profile一般用来提供某些灵活性， 但这种灵活性是内部化的， 这意味着， 你的软件实体需要知道外面可能提供多少种profiles， 然后在不同的profile下，我的软件实体需要做什么样的调整。 而实际上， 软件实体从研发到交付和使用， 最好是在整条流水线上设计和生产都是一致， 只有“销售”之前，才根据目标环境或者目标客户调整“包装”和配置， 然后“发货”， 用户拿到手的产品(当然包括我们搞的软件产品)应该是开箱即用的， 这个产品既不会存在我不需要的功能，也不应该每次使用的时候先自己“很智能”的扫描一下上下文环境然后决定使用哪一个Profile。尤其是在微服务时代，随着你服务数量的增长， <code>服务数量 * Environment数量 * 所谓的Profile数量</code>（注意很多时候Profile不一定与Environment相对应）更是指数级增长， 如果应用开发的时候还要考虑这么多，那出问题的几率就更大了。</p>
+<p>说实话， Environment的设计，我觉得到提供上下文信息这一关键职能就可以了， 而Profile的设计，则有些太过于Monolithic时代的做事风格。 Profile一般用来提供某些灵活性， 但这种灵活性是内部化的， 这意味着， 你的软件实体需要知道外面可能提供多少种profiles， 然后在不同的profile下，我的软件实体需要做什么样的调整。 而实际上， 软件实体从研发到交付和使用， 最好是在整条流水线上设计和生产都是一致， 只有“销售”之前，才根据目标环境或者目标客户调整“包装”和配置， 然后“发货”， 用户拿到手的产品(当然包括我们搞的软件产品)应该是开箱即用的， 这个产品既不会存在我不需要的功能，也不应该每次使用的时候先自己“很智能”的扫描一下上下文环境然后决定使用哪一个Profile。尤其是在微服务时代，随着你服务数量的增长， <code>服务数量 * Environment数量 * 所谓的Profile数量</code>更是指数级增长 <a href="#fn3" class="footnoteRef" id="fnref3"><sup>3</sup></a>， 如果应用开发的时候还要考虑这么多，那出问题的几率就更大了。</p>
 <p>所以， 在Microservices时代，我们更建议外部化你的软件产品差异化配置管理， 尽量减少Profile的滥用甚至不用(这就减少一个纬度的管理)。</p>
 <h2 id="understanding-enableautoconfiguration"><span class="header-section-number">3.2</span> Understanding <span class="citation">@EnableAutoConfiguration</span></h2>
 <p>在本文之前提到的所有Annotation都属于SpringFramework提供的， 现在要说的这个Annotation，即@EnableAutoConfiguration， 则属于SpringBoot。</p>
@@ -296,9 +296,39 @@
 <h2 id="specific-microservice-type-customization"><span class="header-section-number">4.2</span> Specific Microservice Type Customization</h2>
 <p>SpringBoot提供的功能倒是蛮丰富的了，但是，你会发现，爽了的同时，整个应用也会看起笨重了些， 比如有人就抱怨说SpringBoot应用启动慢(虽然这不是什么大问题，你生产环境又不会闲着没事经常重启，服务就应该长久，哈哈)， 好在SpringBoot的设计提供了足够的灵活度，让我们可以对其进行裁剪和瘦身。</p>
 <h3 id="dubbomicroserviceautoconfiguration"><span class="header-section-number">4.2.1</span> DubboMicroServiceAutoConfiguration</h3>
-<p>很多公司在使用dubbo作为java服务的开发框架，我们也不例外， 所以， 构建基于SpringBoot和Dubbo的微服务属于比较普遍的需求， 要完成这个事情其实很简单，只要提供一个特定于dubbo的自动加载模块就可以了， 比如我们称其为DubboMicroServiceAutoConfiguration：</p>
-<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"></code></pre></div>
-<p>当然， dubbo跟哥属于一个时代，其实使用JavaConfig来配置还是有些不适应的，不过没关系， 退一步讲， 都不需要自动配置模块， 通过convention来约定说我们所有的dubbo项目从src/main/resources/spring/*.xml这样的资源路径来加载容器的配置就可以了， 更他娘的简单！</p>
+<p>很多公司在使用dubbo作为java服务的开发框架，我们也不例外， 所以， 构建基于SpringBoot和Dubbo的微服务属于比较普遍的需求， 要完成这个事情其实很简单，只要提供一个特定于dubbo的自动加载模块就可以了， 比如我们称其为DubboMicroServiceAutoConfiguration（只是举例，非实际生产代码）：</p>
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="fu">@Configuration</span>
+<span class="fu">@Order</span>(Ordered.<span class="fu">HIGHEST_PRECEDENCE</span>)
+<span class="kw">public</span> <span class="kw">class</span> DubboMicroServiceAutoConfiguration {
+
+    <span class="co">// 1. Application Bean Definition</span>
+    <span class="fu">@Bean</span>
+    <span class="fu">@ConditionalOnMissingBean</span>
+    <span class="fu">@Value</span>(${dubo.<span class="fu">application</span>.<span class="fu">name</span>})
+    <span class="kw">public</span> <span class="dt">static</span> DubboApplication <span class="fu">dubboApp</span>() {
+        <span class="kw">return</span> <span class="kw">new</span> xxx;
+    }
+    
+    <span class="co">// 2. Registry Bean Definition</span>
+    
+    <span class="co">// 3. Protocol Bean Definition</span>
+}</code></pre></div>
+<p>然后， 在pom中添加其依赖就完工了：</p>
+<div class="sourceCode"><pre class="sourceCode xml"><code class="sourceCode xml">    <span class="kw">&lt;dependency&gt;</span>
+        <span class="kw">&lt;groupId&gt;</span>com.wacai<span class="kw">&lt;/groupId&gt;</span>
+        <span class="kw">&lt;artifactId&gt;</span>spring-boot-starter-dubbo<span class="kw">&lt;/artifactId&gt;</span>
+        <span class="kw">&lt;version&gt;</span>...<span class="kw">&lt;/version&gt;</span>
+    <span class="kw">&lt;/dependency&gt;</span></code></pre></div>
+<p>当然， dubbo跟哥属于一个时代，其实使用JavaConfig来配置还是有些不适应的，而且基本上大部分dubbo服务也都是通过xml形式进行配置的，不过没关系， 退一步讲， 都不需要自动配置模块， 通过convention来约定说我们所有的dubbo项目从src/main/resources/spring/*.xml这样的资源路径来加载容器的配置就可以了， 更他娘的简单！</p>
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="fu">@Configuration</span>
+<span class="fu">@ImportResource</span>(<span class="st">&quot;classpath*:/spring/*.xml&quot;</span>)
+...
+<span class="kw">public</span> <span class="kw">class</span> Main {
+    ...
+}</code></pre></div>
+<blockquote>
+<p>使用的pattern请各位看官灵活把握！</p>
+</blockquote>
 <h3 id="webapiautoconfiguration"><span class="header-section-number">4.2.2</span> WebAPIAutoConfiguration</h3>
 <p>其实对于性能要求不是那么苛刻的场景（大多数应用其实都归于此类）， 我们完全可以只走HTTP就好了， 服务注册中心都现成的经过多年验证的成熟方案（I mean DNS）, 而且，多语言生态下的互通这也是唯一比较合理的一条路， 这就是我现在公司内部一直强调“大部分情况下，互通优于性能”， 只有在特殊需求下，才有必要花费经历对性能去进行优化（比如使用dubbo这种特定于java的方案， 对网络，系统甚至代码等进行调优）。</p>
 <p>故此，我们内部除了基于dubbo的微服务，还有web api形式的微服务，我说web api而不是说rest(ful) api， 是因为，虽然后者更高大上， 但对于我们的团队来说， 简单粗暴的做法更容易接受且符合团队现状， hibernate当年搞得映射关系支持的多么牛逼，最后还不是都自己在代码逻辑里管理这些关系， 而几乎只用它最基本的CURD支持吗？！ 存在肯定是有理由的，哈哈</p>
@@ -351,7 +381,7 @@
 <h2 id="devops-specific-customization"><span class="header-section-number">4.3</span> DevOps-Specific Customization</h2>
 <p>系统不是一个个的孤岛， 我们需要连接起来才会发挥更大的效能， 为了让SpringBoot可以融入<a href="http://www.wacai.com">挖财</a>的技术生态中，我们会对其进行一些定制， 这些定制对各位看官来说不一定有用， 权且作为点滴参考。</p>
 <h3 id="config-customization"><span class="header-section-number">4.3.1</span> config customization</h3>
-<p>我们的应用配置采用配置中心（注意，这里的配置中心跟现在技术社区里提到的配置中心是两个概念， 现在技术社区里常常提到的配置中心叫&quot;状态中心&quot;还差不多！）进行管理， 但流程上对研发是透明的， 开发阶段配置文件按照约定放在项目根目录下的conf/目录， 发布包的结构也是同样的，配置文件名采用SpringBoot的默认application.properties即可， 唯一需要调整的配置就是配置文件的加载路径， 这可以在应用启动的时候指定命令行参数搞定：<code>--spring.config.location=file:conf/</code>, 或者：</p>
+<p>我们的应用配置采用配置中心 <a href="#fn4" class="footnoteRef" id="fnref4"><sup>4</sup></a>进行管理， 但流程上对研发是透明的， 开发阶段配置文件按照约定放在项目根目录下的conf/目录， 发布包的结构也是同样的，配置文件名采用SpringBoot的默认application.properties即可， 唯一需要调整的配置就是配置文件的加载路径， 这可以在应用启动的时候指定命令行参数搞定：<code>--spring.config.location=file:conf/</code>, 或者：</p>
 <div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java">...
 <span class="fu">@PropertySource</span>(<span class="st">&quot;file:conf/application.properties&quot;</span>)
 ...
@@ -365,14 +395,14 @@
 <p>我们还可以提供一个新的AutoConfiguraiton的module， 这个module提供一个新的PropertySource指向我们约定的位置就行了， 具体方案会结合我们的发布平台再选择最为合适的， 可选方案只是为了给大家一些启发思路。</p>
 <h3 id="logging-customization"><span class="header-section-number">4.3.2</span> logging customization</h3>
 <p>在挖财，我们对日志格式进行了规范， 而且使用logback， 且对日志的输出路径也做了规定，以便所有应用一旦部署就可以自动享受到我们的日志采集分析平台的服务。</p>
-<p>SpringBoot因为一些历史原因和兼容（不知道有没有其它利害）的关系， 一直主要用commons-logging， 我们显然不喜欢这个默认设置，所以， 我们对SpringBoot的日志设定做了一些定制：</p>
+<p>SpringBoot因为一些历史原因和向前兼容保持一致性等因素的关系（不知道有没有其它利害）， 一直主要用commons-logging， 我们显然不喜欢这个默认设置，所以， 我们对SpringBoot的日志设定做了一些定制：</p>
 <ol style="list-style-type: decimal">
 <li>添加spring-boot-starter-logging依赖，让spring boot使用logback;</li>
 <li>添加logback.xml配置文件，配置规则遵循我们自己的规范；</li>
 <li>启动的时候，设置LOG_HOME环境变量或者命令行参数；</li>
 </ol>
-<h1 id="scala-is-bootiful"><span class="header-section-number">5</span> Scala Is Bootiful</h1>
-<p>我们团队有部分精英同学使用Scala语言进行开发， 而对于SpringBoot来说， 使用任何JVM上的语言原则上都不是什么问题， 比如， 要使用Scala进行SpringBoot应用的开发， 只需要添加Scala的相应依赖和编译支持就可以了：</p>
+<h1 id="scala-is-also-bootiful"><span class="header-section-number">5</span> Scala Is Also Bootiful</h1>
+<p>我们团队有部分精英同学(Scala Elites)使用Scala语言进行开发， 而对于SpringBoot来说， 使用任何JVM上的语言原则上都不是什么问题， 比如， 要使用Scala进行SpringBoot应用的开发， 只需要添加Scala的相应依赖和编译支持就可以了：</p>
 <div class="sourceCode"><pre class="sourceCode xml"><code class="sourceCode xml"><span class="kw">&lt;project</span><span class="ot"> xmlns=</span><span class="st">&quot;http://maven.apache.org/POM/4.0.0&quot;</span><span class="ot"> xmlns:xsi=</span><span class="st">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span>
 <span class="ot">         xsi:schemaLocation=</span><span class="st">&quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&quot;</span><span class="kw">&gt;</span>
     <span class="kw">&lt;modelVersion&gt;</span>4.0.0<span class="kw">&lt;/modelVersion&gt;</span>
@@ -455,7 +485,7 @@
     <span class="kw">&lt;/dependencies&gt;</span>
 <span class="kw">&lt;/project&gt;</span></code></pre></div>
 <blockquote>
-<p>如果使用SBT而不是Maven, 可能需要费点儿周折， 需要自己添加一系列的依赖，并且解决按照SpringBoot的jar格式规范发布的问题。</p>
+<p>如果使用SBT而不是Maven, 可能需要费点儿周折， 需要自己添加一系列的依赖，并且解决按照SpringBoot的可执行jar规范格式发布的问题。</p>
 </blockquote>
 <h1 id="distribute-springboot-application"><span class="header-section-number">6</span> Distribute SpringBoot Application</h1>
 <p>SpringBoot提供了相应的Maven插件用于将SpringBoot应用以可执行jar包的形式发布出去， 只要将如下插件配置加入pom即可：</p>
@@ -469,8 +499,8 @@
 <span class="kw">&lt;/build&gt;</span></code></pre></div>
 <p>允许<code>mvn package</code>将直接获得一个可执行的jar包(<code>java -jar xxxx.jar</code>)， 具体原理参考SpringBoot的Reference文档附录。</p>
 <h1 id="conclusion"><span class="header-section-number">7</span> Conclusion</h1>
-<p>SpringBoot初看上去颇为复杂，但一旦你了解了它内部的精妙设计， 就会有那种“柳暗花明”的感觉了。本文最后引用的参考连接中使用钢铁侠来类比SpringBoot，我觉得还是挺恰当的， 感觉上很笨重，但实际上确实灵活可拆卸， 多种组合备选， 有雄厚的商业实体支撑， 还有良好的群众基础， fucking perfect！</p>
-<p>选择SpringBoot， 你值得拥有 ；）</p>
+<p>SpringBoot初看上去颇为复杂，但一旦你了解了它内部的精妙设计， 就会有那种“柳暗花明”的感觉了。本文最后引用的参考连接中使用钢铁侠来类比SpringBoot，我觉得还是挺恰当的， 感觉上很笨重，但实际上却是灵活可拆装， 多种后备组合可供选择， 既有雄厚的商业实体支撑， 还有良好的群众基础， fucking perfect！</p>
+<p>SpringBoot， 你值得拥有 ；）</p>
 <h1 id="references"><span class="header-section-number">8</span> References</h1>
 <ol style="list-style-type: decimal">
 <li><a href="http://spring.io/blog/2013/08/06/spring-boot-simplifying-spring-for-everyone/">Spring Boot – Simplifying Spring for Everyone</a>
@@ -484,12 +514,16 @@
 <li><a href="http://dev-blog.xoom.com/2015/03/15/use-spring-boot-auto-configuration/">Why We Do Not Use Spring Boot Auto Configuration</a></li>
 <li><a href="http://spring.io/blog/2015/06/08/cors-support-in-spring-framework">CORS support in Spring Framework</a></li>
 <li><a href="http://www.schibsted.pl/2015/07/spring-boot-and-dropwizard-in-microservices-development/" class="uri">http://www.schibsted.pl/2015/07/spring-boot-and-dropwizard-in-microservices-development/</a></li>
+<li>SpringBoot Javadoc and Sourcecode</li>
+<li>other more posts and docs that I can't remember...</li>
 </ol>
 <div class="footnotes">
 <hr />
 <ol>
 <li id="fn1"><p>Dropwizard的做事方式对于Senior来说是OK的，但还是处于半自动状态，很多东西需要自己装配，技术选型很优秀，但拼整体的时候，就有些力有不歹<a href="#fnref1">↩</a></p></li>
 <li id="fn2"><p>默认运行嵌入的tomcat，所以使用默认的8080端口<a href="#fnref2">↩</a></p></li>
+<li id="fn3"><p>注意很多时候Profile不一定与Environment相对应, 估计很多开发人员看到文档后并没有完全理解概念，只是照葫芦画瓢，导致profile概念现在大面上被滥用/用坏<a href="#fnref3">↩</a></p></li>
+<li id="fn4"><p>注意，这里的配置中心跟现在技术社区里提到的配置中心是两个概念， 现在技术社区里常常提到的配置中心叫&quot;状态中心&quot;还差不多, 因为本质上他们是在用数据库也好还是zookeeper也罢作为一个共享状态， 然后让相关系统来“参拜”， 而如果系统设计趋于理想化的话，这些状态应该内聚到服务内部， 如果外部要与这些状态交互， 通过消息传递依次或者并行送达相应的消息就好了，只不过， 这对研发人员的要求，对服务治理，安全等都会造成压力，所以大家就都省事，采用了现在SharedState的模式， 当然，也不失为实践的一种合理方式，无绝对好坏<a href="#fnref4">↩</a></p></li>
 </ol>
 </div>
                 
