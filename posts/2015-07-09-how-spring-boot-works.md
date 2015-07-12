@@ -263,6 +263,7 @@ public class DubboMicroServiceAutoConfiguration {
     // 1. Application Bean Definition
     @Bean
     @ConditionalOnMissingBean
+    @Value(${dubo.application.name})
     public static DubboApplication dubboApp() {
         return new xxx;
     }
