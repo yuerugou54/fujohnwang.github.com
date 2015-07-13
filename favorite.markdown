@@ -193,6 +193,8 @@ with MapReduce](http://lintool.github.com/MapReduceAlgorithms/index.html) ^^^
 ## Javascript
 * [Learning Advanced JavaScript](http://ejohn.org/apps/learn/)
 
+### React
+1. [https://fakefish.github.io/react-webpack-cookbook/](https://fakefish.github.io/react-webpack-cookbook/)
 
 
 
