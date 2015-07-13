@@ -5,6 +5,13 @@
     <link>http://afoo.me</link>
     <description>一个架构士的思考与实践点滴记录</description>
     <item>
+      <title>说说我日常把玩的小工具</title>
+      <link>http://afoo.me/posts/2015-07-13-talking-about-my-favorite-toolset.html</link>
+      <pubDate>Sun, 12 Jul 2015 16:00:00 GMT</pubDate>
+      <guid>http://afoo.me/posts/2015-07-13-talking-about-my-favorite-toolset.html</guid>
+      <dc:date>2015-07-12T16:00:00Z</dc:date>
+    </item>
+    <item>
       <title>Spring Boot Rock'n'Roll</title>
       <link>http://afoo.me/posts/2015-07-09-how-spring-boot-works.html</link>
       <pubDate>Wed, 08 Jul 2015 16:00:00 GMT</pubDate>
@@ -73,13 +80,6 @@
       <pubDate>Mon, 16 Feb 2015 16:00:00 GMT</pubDate>
       <guid>http://afoo.me/posts/2015-02-17-my-actor-practice-advices.html</guid>
       <dc:date>2015-02-16T16:00:00Z</dc:date>
-    </item>
-    <item>
-      <title>我为什么不喜欢子项目或者子模块的概念</title>
-      <link>http://afoo.me/posts/2015-02-04-why-sub-modules-or-sub-projects-sucks.html</link>
-      <pubDate>Tue, 03 Feb 2015 16:00:00 GMT</pubDate>
-      <guid>http://afoo.me/posts/2015-02-04-why-sub-modules-or-sub-projects-sucks.html</guid>
-      <dc:date>2015-02-03T16:00:00Z</dc:date>
     </item>
   </channel>
 </rss>
