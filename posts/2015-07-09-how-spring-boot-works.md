@@ -522,4 +522,5 @@ SpringBoot， 你值得拥有 ；）
 7. [http://www.schibsted.pl/2015/07/spring-boot-and-dropwizard-in-microservices-development/](http://www.schibsted.pl/2015/07/spring-boot-and-dropwizard-in-microservices-development/)
 8. SpringBoot Javadoc and Sourcecode
 9. <http://callistaenterprise.se/blogg/teknik/2015/03/25/an-operations-model-for-microservices/>
-10. other more posts and docs that I can't remember...
+10. <http://microservices.io/patterns/index.html>
+11. other more posts and docs that I can't remember...
