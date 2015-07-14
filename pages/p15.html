@@ -1,68 +1,254 @@
 <!DOCTYPE html>
 <html lang="zh">
-
   <head>
-	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
-	<title>扶墙老师的博客@afoo.me</title>
-	<meta name="author" content="FuqiangWang">
-    <meta name="keywords" content="afoo, 架构, 思考, 技术">
-    <meta name="description" content="一个架构师的日常思考积淀于此">
-    <meta charset='utf-8'>
-    <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <link rel="icon" href="/favicon.ico">
-    <link href='/font/Syncopate/stylesheet.css' rel='stylesheet' type='text/css'>
-    <link href='/font/News_Cycle/stylesheet.css' rel='stylesheet' type='text/css'>
+    <meta charset="utf-8">
+    <title>扶墙老师的博客 - 一个架构士的思考与沉淀之地</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="扶墙老师的博客， 一个架构士的思考与沉淀之地">
+    <meta name="keywords" content="architecture, book author, thinker, fighter, 架构, 思考, 技术, 武术, 哲学">
+    <meta name="author" content="扶墙老师">
+    <!--template from aura-->
 
-    <link href="/css/bootstrap.min.css" rel="stylesheet">
-    <link href="/css/bootstrap-theme.min.css" rel="stylesheet">
-    <link href="/css/afoo.me.css" rel="stylesheet">
-    
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!-- Le styles -->
+    <link href="assets/css/bootstrap.css" rel="stylesheet">
+    <style type="text/css">
+      .sidebar-nav {
+        padding: 9px 0;
+      }
+      .collapse-inner {
+        list-style: none !important;
+        margin: 0px !important;
+        }
+        .collapse-inner li{
+            background: #fff;
+            color: #000;
+            border-bottom: solid 1px #ccc;
+            padding: 3px 6px;
+        }
+        .promo-home{
+            margin-top: -30px !important;
+        }
+    </style>
+    <link href="assets/css/bootstrap-responsive.css" rel="stylesheet">
+    <link href="assets/css/extension.css" rel="stylesheet">
+    <link href="assets/css/typography.css" rel="stylesheet">
+    <link href="assets/css/fonts/fontawesome/css/font-awesome.css" rel="stylesheet" >
+    <link href="assets/css/prettyPhoto.css" rel="stylesheet">
+    <link href="assets/css/style.css" rel="stylesheet">
+    <link href="assets/css/responsive.css" rel="stylesheet">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
+
+    <!-- Le fav and touch icons -->
+    <link rel="shortcut icon" href="/favicon.ico">
+    <!--
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="assets/ico/apple-touch-icon-144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="assets/ico/apple-touch-icon-114-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="assets/ico/apple-touch-icon-72-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" href="assets/ico/apple-touch-icon-57-precomposed.png">
+    -->
   </head>
 
   <body>
-    <div class="container-fluid">
-      <div class="row">
-        <div class="col-md-3 sidebar">
-            <a href="/">
-              <!-- <div align="center"><img src="/images/wfq0.png"/></div>-->
-              <h2 class="text-center">扶墙老师</h2>
-            </a>
-            <p class="text-center lead slogan"><a href="slogan.html">lollapalooza &amp; positioning</a></p>
-			<p class="text-center lead slogan">瞎子摸象的践行者</p>
-            <ul class="nav nav-pills nav-stacked">
-              <li><a href="/favorite.html" class="text-center"><i class="icon-star-empty"></i> 我的收藏</a></li>
-              <li><a href="/dashboard.html" class="text-center"><i class="icon-fullscreen"></i> 金融看板</a></li>
-              <li><a href="/columns.html" class="text-center"><i class="icon-folder-close-alt"></i> 专栏</a></li>
-              <li><a href="/references.html" class="text-center"><i class="icon-folder-close-alt"></i> 快捷参考</a></li>
-              <li><a href="/whoami.html" class="text-center"><i class="icon-user-md"></i> 我是谁</a></li>
-              <li><a href="/interlinks.html" class="text-center"><i class="icon-user-md"></i> 友情链接</a></li>
-              <li><a href="/feeds.xml" class="text-center"><i class="icon-folder-close-alt"></i> RSS</a></li>
-            </ul>
 
-        </div>
-        <div class="col-md-9 col-md-offset-3 main">
-            <div class="row">
-              <h3><a href="/posts/2009-10-26-misc.html">杂记 </a></h3><p>by 扶墙老师 at 2009-10-26</p><h3><a href="/posts/2009-10-21-thinking_in_how_to_improve_ROMA_framework.html">ROMA框架潜在改进点思考 </a></h3><p>by 扶墙老师 at 2009-10-21</p><h3><a href="/posts/2009-10-20-good-will-bad-execution.html">我不知道是不是我操作上不对... </a></h3><p>by 扶墙老师 at 2009-10-20</p><h3><a href="/posts/2009-10-19-valang-validator-under-the-hood.html">Valang Validator under the hood </a></h3><p>by 扶墙老师 at 2009-10-19</p><h3><a href="/posts/2009-10-09-thread-safe-and-state.html">ThreadSafety, Non</a></h3><p>by 扶墙老师 at 2009-10-09</p><h3><a href="/posts/2009-10-09-mid-autumn-holiday.html">回家过中秋，在招远转了转，拍了几张照片，感觉还不错，呵呵 </a></h3><p>by 扶墙老师 at 2009-10-09</p><h3><a href="/posts/2009-09-12-a-big-picture-on-concurrency.html">A Big Piture On Concurrency </a></h3><p>by 扶墙老师 at 2009-09-12</p><h3><a href="/posts/2009-09-09-unveil-spring-published-today.html">《Spring揭秘》(the original 《unveil spring》)正式登场了！ </a></h3><p>by 扶墙老师 at 2009-09-09</p><h3><a href="/posts/2009-08-25-coc-in-embarrassment.html">尴尬的COC </a></h3><p>by 扶墙老师 at 2009-08-25</p><h3><a href="/posts/2009-08-24-classwork-with-springframework.html">ClassWorking With Spring Framework </a></h3><p>by 扶墙老师 at 2009-08-24</p><h3><a href="/posts/2009-08-24-book-cover-confirmed.html">封面终于确定下来了... </a></h3><p>by 扶墙老师 at 2009-08-24</p>
+  
+    <div class="container-fluid">
+      <div class="row-fluid">
+
+            <header id="left-panel" class="span5 hidden-phone">
+            	<section class="page-left dark">
+            	<div class="row">
+                	<article class="promo promo-contact span12 align-center add-top-main">
+                        <h2 class="title-sub"><span class="title"></span><span class="title-highlight">扶墙老师</span></h2>
+                        <h1 class="main-heading"><a href="slogan.html">瞎子摸象的践行者</a></h1>
+                        
+                        <nav class="promo-social pad-top-half align-center">
+                            <ul id="main-nav" class="nav">
+                                <li><a href="/favorite.html" class="main-heading"><h4>我的收藏</h4></a></li>
+                                <li><a href="/dashboard.html" class="main-heading"><h4>金融看板</h4></a></li>
+                                <li><a href="/columns.html" class="main-heading"><h4>专栏文章</h4></a></li>
+                                <li><a href="/references.html" class="main-heading"><h4>快捷参考</h4></a></li>
+                                <li><a href="/whoami.html" class="main-heading"><h4>我是何人</h4></a></li>
+                                <li><a href="/interlinks.html" class="main-heading"><h4>友情链接</h4></a></li>
+                                <li><a href="/feeds.xml" class="main-heading"><h4>RSS订阅</h4></a></li>
+                            </ul>
+                        </nav>
+
+                        <p class="copyright">Copyright &copy; afoo.me <br/>Powered by <a href="http://johnmacfarlane.net/pandoc/">pandoc</a>, <a href="http://rometools.github.io/rome/index.html">ROME</a> and <a href="http://pages.github.com/">github pages</a></p>
+                	</article>
+
+                </div>
+                </section>
+  			</header>
+            
+            <section id="right-panel" class="span7 offset4 pad-left-extra remove-pad-on-phone">
+            	<section class="page-right">
+            	<div class="row">
+                	<!--span12 starts-->
+                	<article class="span10 align-center pad-top offset2 remove-offset-on-phone">
+                    	<!--outer row : starts-->
+                    	<div class="row">
+                            
+ <article class="align-left block add-bottom-extra">
+                                <a href="/posts/2009-10-26-misc.html">
+                                <h1 class="in-main-heading color-high text-shadow-white">
+                                    <span class="iconize color-high">/</span>
+                                    <span class="iconize color-dark">/</span>
+                                    <span class="add-left-half color-dark">杂记 </span>
+                                </h1>
+                                </a>
+                                <h3 class="in-sub-heading add-top add-bottom color-dark">
+                                    <span class="color-high">/</span>AT 2009-10-26
+                                </h3>
+                            </article>
+           
+ <article class="align-left block add-bottom-extra">
+                                <a href="/posts/2009-10-21-thinking_in_how_to_improve_ROMA_framework.html">
+                                <h1 class="in-main-heading color-high text-shadow-white">
+                                    <span class="iconize color-high">/</span>
+                                    <span class="iconize color-dark">/</span>
+                                    <span class="add-left-half color-dark">ROMA框架潜在改进点思考 </span>
+                                </h1>
+                                </a>
+                                <h3 class="in-sub-heading add-top add-bottom color-dark">
+                                    <span class="color-high">/</span>AT 2009-10-21
+                                </h3>
+                            </article>
+           
+ <article class="align-left block add-bottom-extra">
+                                <a href="/posts/2009-10-20-good-will-bad-execution.html">
+                                <h1 class="in-main-heading color-high text-shadow-white">
+                                    <span class="iconize color-high">/</span>
+                                    <span class="iconize color-dark">/</span>
+                                    <span class="add-left-half color-dark">我不知道是不是我操作上不对... </span>
+                                </h1>
+                                </a>
+                                <h3 class="in-sub-heading add-top add-bottom color-dark">
+                                    <span class="color-high">/</span>AT 2009-10-20
+                                </h3>
+                            </article>
+           
+ <article class="align-left block add-bottom-extra">
+                                <a href="/posts/2009-10-19-valang-validator-under-the-hood.html">
+                                <h1 class="in-main-heading color-high text-shadow-white">
+                                    <span class="iconize color-high">/</span>
+                                    <span class="iconize color-dark">/</span>
+                                    <span class="add-left-half color-dark">Valang Validator under the hood </span>
+                                </h1>
+                                </a>
+                                <h3 class="in-sub-heading add-top add-bottom color-dark">
+                                    <span class="color-high">/</span>AT 2009-10-19
+                                </h3>
+                            </article>
+           
+ <article class="align-left block add-bottom-extra">
+                                <a href="/posts/2009-10-09-thread-safe-and-state.html">
+                                <h1 class="in-main-heading color-high text-shadow-white">
+                                    <span class="iconize color-high">/</span>
+                                    <span class="iconize color-dark">/</span>
+                                    <span class="add-left-half color-dark">ThreadSafety, Non</span>
+                                </h1>
+                                </a>
+                                <h3 class="in-sub-heading add-top add-bottom color-dark">
+                                    <span class="color-high">/</span>AT 2009-10-09
+                                </h3>
+                            </article>
+           
+ <article class="align-left block add-bottom-extra">
+                                <a href="/posts/2009-10-09-mid-autumn-holiday.html">
+                                <h1 class="in-main-heading color-high text-shadow-white">
+                                    <span class="iconize color-high">/</span>
+                                    <span class="iconize color-dark">/</span>
+                                    <span class="add-left-half color-dark">回家过中秋，在招远转了转，拍了几张照片，感觉还不错，呵呵 </span>
+                                </h1>
+                                </a>
+                                <h3 class="in-sub-heading add-top add-bottom color-dark">
+                                    <span class="color-high">/</span>AT 2009-10-09
+                                </h3>
+                            </article>
+           
+ <article class="align-left block add-bottom-extra">
+                                <a href="/posts/2009-09-12-a-big-picture-on-concurrency.html">
+                                <h1 class="in-main-heading color-high text-shadow-white">
+                                    <span class="iconize color-high">/</span>
+                                    <span class="iconize color-dark">/</span>
+                                    <span class="add-left-half color-dark">A Big Piture On Concurrency </span>
+                                </h1>
+                                </a>
+                                <h3 class="in-sub-heading add-top add-bottom color-dark">
+                                    <span class="color-high">/</span>AT 2009-09-12
+                                </h3>
+                            </article>
+           
+ <article class="align-left block add-bottom-extra">
+                                <a href="/posts/2009-09-09-unveil-spring-published-today.html">
+                                <h1 class="in-main-heading color-high text-shadow-white">
+                                    <span class="iconize color-high">/</span>
+                                    <span class="iconize color-dark">/</span>
+                                    <span class="add-left-half color-dark">《Spring揭秘》(the original 《unveil spring》)正式登场了！ </span>
+                                </h1>
+                                </a>
+                                <h3 class="in-sub-heading add-top add-bottom color-dark">
+                                    <span class="color-high">/</span>AT 2009-09-09
+                                </h3>
+                            </article>
+           
+ <article class="align-left block add-bottom-extra">
+                                <a href="/posts/2009-08-25-coc-in-embarrassment.html">
+                                <h1 class="in-main-heading color-high text-shadow-white">
+                                    <span class="iconize color-high">/</span>
+                                    <span class="iconize color-dark">/</span>
+                                    <span class="add-left-half color-dark">尴尬的COC </span>
+                                </h1>
+                                </a>
+                                <h3 class="in-sub-heading add-top add-bottom color-dark">
+                                    <span class="color-high">/</span>AT 2009-08-25
+                                </h3>
+                            </article>
+           
+ <article class="align-left block add-bottom-extra">
+                                <a href="/posts/2009-08-24-classwork-with-springframework.html">
+                                <h1 class="in-main-heading color-high text-shadow-white">
+                                    <span class="iconize color-high">/</span>
+                                    <span class="iconize color-dark">/</span>
+                                    <span class="add-left-half color-dark">ClassWorking With Spring Framework </span>
+                                </h1>
+                                </a>
+                                <h3 class="in-sub-heading add-top add-bottom color-dark">
+                                    <span class="color-high">/</span>AT 2009-08-24
+                                </h3>
+                            </article>
+           
+ <article class="align-left block add-bottom-extra">
+                                <a href="/posts/2009-08-24-book-cover-confirmed.html">
+                                <h1 class="in-main-heading color-high text-shadow-white">
+                                    <span class="iconize color-high">/</span>
+                                    <span class="iconize color-dark">/</span>
+                                    <span class="add-left-half color-dark">封面终于确定下来了... </span>
+                                </h1>
+                                </a>
+                                <h3 class="in-sub-heading add-top add-bottom color-dark">
+                                    <span class="color-high">/</span>AT 2009-08-24
+                                </h3>
+                            </article>
+           
   <hr>
   <a href="/pages/p14.html">前(Previous)</a> --- <a href="/pages/p16.html">后(Next)</a>
     
 <hr>
 <p>Powered by <a href="http://johnmacfarlane.net/pandoc/">pandoc</a>, <a href="http://rometools.github.io/rome/index.html">ROME</a> and <a href="http://pages.github.com/">github pages</a></p>
         
-            </div>
-        </div>
-      </div>
-    </div>
-
-    <script src="/js/jquery-2.1.1.min.js"></script>
-    <script src="/js/bootstrap.min.js"></script>
+                         </div><!--outer row : ends-->
+                	</article>
+                    <!--span12 ends-->
+                </div>
+                </section>
+                <!--Page-->
+      </div><!--/row-->
+    </div><!--/.fluid-container-->
+   
   </body>
-
 </html>

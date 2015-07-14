@@ -2,9 +2,11 @@ name := "site-builder"
 
 version := "1.0"
 
-scalaVersion := "2.11.4"
+scalaVersion := "2.11.7"
 
-scalacOptions ++= Seq("-feature")
+scalacOptions := Seq("-deprecation", "-unchecked","-optimise")
+
+javacOptions ++= Seq("-source", "1.8", "-target", "1.8")
 
 libraryDependencies += "org.slf4j" % "slf4j-api" % "1.7.7"
 

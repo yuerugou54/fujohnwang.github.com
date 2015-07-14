@@ -42,7 +42,25 @@ object SiteBuilder {
       })
 
       val pageContent = tuples.foldLeft("")((index, tuple) => {
-        index ++ s"""<h3><a href="/posts/${tuple._2}">${tuple._1}</a></h3><p>by 扶墙老师 at ${tuple._3}</p>"""
+//        index ++ s"""<h3><a href="/posts/${tuple._2}">${tuple._1}</a></h3><p>by 扶墙老师 at ${tuple._3}</p>"""
+
+        val block =
+          s"""
+             | <article class="align-left block add-bottom-extra">
+             |                                <a href="/posts/${tuple._2}">
+             |                                <h1 class="in-main-heading color-high text-shadow-white">
+             |                                    <span class="iconize color-high">/</span>
+             |                                    <span class="iconize color-dark">/</span>
+             |                                    <span class="add-left-half color-dark">${tuple._1}</span>
+             |                                </h1>
+             |                                </a>
+             |                                <h3 class="in-sub-heading add-top add-bottom color-dark">
+             |                                    <span class="color-high">/</span>AT ${tuple._3}
+             |                                </h3>
+             |                            </article>
+           """.stripMargin
+
+        index ++ block
       })
 
       val pageFile = new File(paginationDirectory, s"p${pageNumber}.html")
@@ -62,9 +80,9 @@ object SiteBuilder {
         // generate feeds
         val feed = new SyndFeedImpl
         feed.setFeedType("rss_2.0") // (rss_0.90, rss_0.91, rss_0.92, rss_0.93, rss_0.94, rss_1.0 rss_2.0 or atom_0.3)
-        feed.setTitle("afoo.me, thoughts of an architect")
+        feed.setTitle("扶墙老师的博客 - 一个架构士的思考与实践之地")
         feed.setLink("http://afoo.me")
-        feed.setDescription("一个架构士的思考与实践点滴记录")
+        feed.setDescription("扶墙老师的博客 - 一个架构士的思考与实践之地")
 
         val feeds  = new util.ArrayList[SyndEntry]
         for(t <- tuples){

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <rss xmlns:dc="http://purl.org/dc/elements/1.1/" version="2.0">
   <channel>
-    <title>afoo.me, thoughts of an architect</title>
+    <title>扶墙老师的博客 - 一个架构士的思考与实践之地</title>
     <link>http://afoo.me</link>
-    <description>一个架构士的思考与实践点滴记录</description>
+    <description>扶墙老师的博客 - 一个架构士的思考与实践之地</description>
     <item>
       <title>说说我日常把玩的小工具</title>
       <link>http://afoo.me/posts/2015-07-13-talking-about-my-favorite-toolset.html</link>
