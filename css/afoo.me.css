@@ -1,3 +1,9 @@
+#sidebar {
+    background-image: url('/images/myseal.png');
+    background-repeat: no-repeat;
+    background-position: left top;
+}
+
 .seal{
     float: right !important;
 }
