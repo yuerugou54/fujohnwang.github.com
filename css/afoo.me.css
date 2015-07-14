@@ -1,7 +1,5 @@
 .seal{
-    position: absolute;
-    left: 0;
-    top: 0;
+    float: right !important;
 }
 
 body {
