@@ -27,60 +27,51 @@
 </head>
 
 <body>
-<div class="container-fluid">
+<div class="container">
   <div class="row">
-    <div class="col-md-3 sidebar">
-      <a href="/">
-        <!-- <div align="center"><img src="/images/wfq0.png"/></div> -->
-        <h2 class="text-center">扶墙老师</h2>
-      </a>
-      <p class="text-center lead slogan"><a href="/slogan.html">lollapalooza &amp; positioning</a></p>
-      <p class="text-center lead slogan">瞎子摸象的践行者</p>
-      <ul class="nav nav-pills nav-stacked">
-        <li><a href="/favorite.html" class="text-center"><i class="icon-star-empty"></i> 我的收藏</a></li>
-        <li><a href="/dashboard.html" class="text-center"><i class="icon-fullscreen"></i> 金融看板</a></li>
-        <li><a href="/columns.html" class="text-center"><i class="icon-folder-close-alt"></i> 专栏</a></li>
-        <li><a href="/references.html" class="text-center"><i class="icon-folder-close-alt"></i> 快捷参考</a></li>
-        <li><a href="/whoami.html" class="text-center"><i class="icon-user-md"></i> 我是谁</a></li>
-        <li><a href="/interlinks.html" class="text-center"><i class="icon-user-md"></i> 友情链接</a></li>
-        <li><a href="/feeds.xml" class="text-center"><i class="icon-folder-close-alt"></i> RSS</a></li>
-      </ul>
-
+    
+    <div class="col-md-2">
+        <div class="seal text-right">
+          <a href="http://afoo.me">
+            <img src="/images/myseal.png"/>
+          </a>
+        </div>
     </div>
-    <div class="col-md-9 col-md-offset-3 main">
-      <div class="row">
-        <div class="container-fluid">
+    <div class="col-md-10 col-xs-12">
+
           
           <div class="row">
                         <div id="header">
               <p class="lead">
-              <h1 class="title">检车大厅所见所闻对软件架构设计的联想&nbsp;&nbsp;
-                <small>
-                                    fujohnwang
-                                  </small>
-              </h1>
-              </p>
+              <h1 class="title">检车大厅所见所闻对软件架构设计的联想</h1>
+                            <small>
+                  <h3 class="author">fujohnwang</h3>
+              </small>
+                                        <h4 class="date">2012-09-17</h4>
+                              </p>
             </div>
-                        <div>
-
+            
               <hr>
 
-                            <p><strong>author: fujohnwang</strong></p>
-<p>检车这事儿已经过去一阵子了，只不过回想起当时的一个情景，联想到软件架构设计，冒出个想法，简单扯一扯…</p>
-<p>车走完流水线基本就是去大厅办手续了，办手续的流程是从一个窗口完成一个步骤，然后去另一个窗口，到底去哪个窗口不是按照序号1234这样，而是跳着来，基本乱序，没有规律可言，这对于检车人来说（尤其是之前不知道流程的）很不方便。在各个窗口之间“徜徉”的时候，发现一个窗口的工作人员婀娜的起身，收拾东西，出门（下班了？！）， 看到这里我就在想，她走了，后面检车的人咋办，卡死在这个窗口吗？ 显然，每个窗口负责的事情是不一样的，如果按照严格意义上来讲，她的离开基本上就打破了整个流程。</p>
-<blockquote>
-<p><strong>one link breaks the whole pipeline!</strong></p>
-</blockquote>
-<p>可是（这个可是是我臆想的，正常情况下，其它窗口的工作人员应该也可以暂时帮助处理离开工作人员负责的窗口业务）， 假如我们让每一个窗口的工作人员都能够负责处理整个的流程，那么，每个窗口负责的工作就全都相同，业务流程的处理也变成了多条并行的流水线， 在系统架构中，基本上就是scale out easily了。 如果把每个工作人员都比作一个个的硬件结点，在原来的流水线规划中，他们或许负荷不高，硬件资源利用有限，一旦转换为每个硬件结点负责整体流水线业务，则可以充分利用每一硬件资源。 而且，系统的可用性也可以更上一个档次，不会因为一个结点的缺失，导致整体流程的断裂。</p>
-<p>整个类比到系统的架构层次，如下图：</p>
-<div class="figure">
-<img src="../images/vertical_stack_in_one.png" alt="vertical_stack" />
-<p class="caption">vertical_stack</p>
-</div>
-<blockquote>
-<p>当然， 并非说之前的流水线规划不能达到很好的可用性，只要在加几倍的人，开辟多个流水线，也是可以保证整体服务的可用，只不过，这或许要以多倍的成本提高和系统复杂度为代价。</p>
-</blockquote>
-<p>个人感觉这个本质上是内聚与耦合的粒度到底到哪里合适的问题，具体如何权衡，当然要依据实际情况来决定。</p>
+              
+              <hr/>
+
+              <p><strong>author: fujohnwang</strong></p>
+              <p>检车这事儿已经过去一阵子了，只不过回想起当时的一个情景，联想到软件架构设计，冒出个想法，简单扯一扯…</p>
+              <p>车走完流水线基本就是去大厅办手续了，办手续的流程是从一个窗口完成一个步骤，然后去另一个窗口，到底去哪个窗口不是按照序号1234这样，而是跳着来，基本乱序，没有规律可言，这对于检车人来说（尤其是之前不知道流程的）很不方便。在各个窗口之间“徜徉”的时候，发现一个窗口的工作人员婀娜的起身，收拾东西，出门（下班了？！）， 看到这里我就在想，她走了，后面检车的人咋办，卡死在这个窗口吗？ 显然，每个窗口负责的事情是不一样的，如果按照严格意义上来讲，她的离开基本上就打破了整个流程。</p>
+              <blockquote>
+              <p><strong>one link breaks the whole pipeline!</strong></p>
+              </blockquote>
+              <p>可是（这个可是是我臆想的，正常情况下，其它窗口的工作人员应该也可以暂时帮助处理离开工作人员负责的窗口业务）， 假如我们让每一个窗口的工作人员都能够负责处理整个的流程，那么，每个窗口负责的工作就全都相同，业务流程的处理也变成了多条并行的流水线， 在系统架构中，基本上就是scale out easily了。 如果把每个工作人员都比作一个个的硬件结点，在原来的流水线规划中，他们或许负荷不高，硬件资源利用有限，一旦转换为每个硬件结点负责整体流水线业务，则可以充分利用每一硬件资源。 而且，系统的可用性也可以更上一个档次，不会因为一个结点的缺失，导致整体流程的断裂。</p>
+              <p>整个类比到系统的架构层次，如下图：</p>
+              <div class="figure">
+              <img src="../images/vertical_stack_in_one.png" alt="vertical_stack" />
+              <p class="caption">vertical_stack</p>
+              </div>
+              <blockquote>
+              <p>当然， 并非说之前的流水线规划不能达到很好的可用性，只要在加几倍的人，开辟多个流水线，也是可以保证整体服务的可用，只不过，这或许要以多倍的成本提高和系统复杂度为代价。</p>
+              </blockquote>
+              <p>个人感觉这个本质上是内聚与耦合的粒度到底到哪里合适的问题，具体如何权衡，当然要依据实际情况来决定。</p>
               
               <!--百度分享按钮-->
               <div class="pull-left bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a><a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a></div>
@@ -113,9 +104,6 @@
               <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
               <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
 
-            </div>
-          </div>
-        </div>
       </div>
       <div class="row">
         <div class="col-md-12 footer">
@@ -123,9 +111,9 @@
           <p>Powered by <a href="http://johnmacfarlane.net/pandoc/">pandoc</a>, <a href="http://rometools.github.io/rome/index.html">ROME</a> and <a href="http://pages.github.com/">github pages</a></p>
         </div>
       </div>
-    </div>
-  </div>
-</div>
+    </div> <!--main-->
+  </div> <!--row-->
+</div> <!--container-->
 
 <script src="/js/jquery-2.1.1.min.js"></script>
 <script src="/js/bootstrap.min.js"></script>

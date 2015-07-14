@@ -47,42 +47,30 @@
 </head>
 
 <body>
-<div class="container-fluid">
+<div class="container">
   <div class="row">
-    <div class="col-md-3 sidebar">
-      <a href="/">
-        <!-- <div align="center"><img src="/images/wfq0.png"/></div> -->
-        <h2 class="text-center">扶墙老师</h2>
-      </a>
-      <p class="text-center lead slogan"><a href="/slogan.html">lollapalooza &amp; positioning</a></p>
-      <p class="text-center lead slogan">瞎子摸象的践行者</p>
-      <ul class="nav nav-pills nav-stacked">
-        <li><a href="/favorite.html" class="text-center"><i class="icon-star-empty"></i> 我的收藏</a></li>
-        <li><a href="/dashboard.html" class="text-center"><i class="icon-fullscreen"></i> 金融看板</a></li>
-        <li><a href="/columns.html" class="text-center"><i class="icon-folder-close-alt"></i> 专栏</a></li>
-        <li><a href="/references.html" class="text-center"><i class="icon-folder-close-alt"></i> 快捷参考</a></li>
-        <li><a href="/whoami.html" class="text-center"><i class="icon-user-md"></i> 我是谁</a></li>
-        <li><a href="/interlinks.html" class="text-center"><i class="icon-user-md"></i> 友情链接</a></li>
-        <li><a href="/feeds.xml" class="text-center"><i class="icon-folder-close-alt"></i> RSS</a></li>
-      </ul>
-
+    
+    <div class="col-md-2">
+        <div class="seal text-right">
+          <a href="http://afoo.me">
+            <img src="/images/myseal.png"/>
+          </a>
+        </div>
     </div>
-    <div class="col-md-9 col-md-offset-3 main">
-      <div class="row">
-        <div class="container-fluid">
+    <div class="col-md-10 col-xs-12">
+
           
           <div class="row">
                         <div id="header">
               <p class="lead">
-              <h1 class="title">Understanding SBT In My Way&nbsp;&nbsp;
-                <small>
-                                    fujohnwang
-                                  </small>
-              </h1>
-              </p>
+              <h1 class="title">Understanding SBT In My Way</h1>
+                            <small>
+                  <h3 class="author">fujohnwang</h3>
+              </small>
+                                        <h4 class="date">2010-11-24</h4>
+                              </p>
             </div>
-                        <div>
-
+            
               <hr>
 
                             <div id="TOC">
@@ -91,66 +79,69 @@
                 <li><a href="#how-sbt-works"><span class="toc-section-number">2</span> How SBT works</a></li>
                 </ul>
               </div>
-                            <p><strong>author: fujohnwang</strong></p>
-<p><strong>NOTE: this is for SBT0.7.x-0.9.x versions</strong></p>
-<h1 id="sbt-quick-start"><span class="header-section-number">1</span> SBT Quick Start</h1>
-<p>To use SBT, you have to download the sbt-launch-version.jar first, in order to use it easily in future, I create a shell called sbt as per the documentation of SBT setup introduction:</p>
-<pre>
-java -Xmx512M -jar `dirname $0`/sbt-launch-0.7.4.jar "$@"
-</pre>
-<p>I make a directory under workspace, call &quot;scalafun&quot;, then &quot;cd scalafun&quot; and run sbt. Since it's the first time I use sbt, it ask me whether to create a project, I choose Y of course, then it ask for some information on the project I create before the project creation is done. The information contains the project name, organize name, sbt version or scala version, just type in your answer or use the default choices.</p>
-<blockquote>
-when create project structure with sbt, it may loss the &quot;project/build&quot; directory where you should put your build file there, so usually after running sbt to setup the default project structure, you may have to create the &quot;project/build&quot; directory and corresponding build defintion files manully.
-</blockquote>
-<p>After the project setup is done, firstly, we have to define our build file in sbt, this is done by creating a scala file under &quot;project/build&quot;, the content may be:</p>
-<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">import</span> sbt.<span class="fu">_</span>
+              
+              <hr/>
 
-<span class="kw">class</span> <span class="fu">MySQLEventEmitter</span>(info:ProjectInfo) <span class="kw">extends</span> <span class="fu">DefaultProject</span>(info){
- <span class="kw">val</span> jbossRepository        = <span class="st">&quot;Jboss Repository&quot;</span> at <span class="st">&quot;http://repository.jboss.org/nexus/content/groups/public&quot;</span>
- <span class="kw">val</span> jbossRepository2       = <span class="st">&quot;jboss Maven2 repo&quot;</span> at <span class="st">&quot;http://repository.jboss.com/maven2&quot;</span>
- ...
- 
- <span class="kw">val</span> netty = <span class="st">&quot;org.jboss.netty&quot;</span> % <span class="st">&quot;netty&quot;</span> % <span class="st">&quot;3.2.2.Final&quot;</span>
- <span class="kw">val</span> scalatest = <span class="st">&quot;org.scalatest&quot;</span> % <span class="st">&quot;scalatest&quot;</span> % <span class="st">&quot;1.2&quot;</span> % <span class="st">&quot;test&quot;</span>
- ...
-}</code></pre></div>
-<p>As you can see, I add some repositories and dependencies as per sbt's scala method syntax, it's so easy to setup such a common project without any difficulty.</p>
-<p>Once above job is done, we can add our scala source files into src/main/scala directory, the src directory structure follows the maven's convention(if you used maven before, more exactly, it should be ivy style).</p>
-<p>After you have finished you code, you can run &quot;sbt update clean compile run&quot; in the command under the &quot;scalafun&quot; directory, or most of the time, I will just run &quot;sbt&quot; and then get into the interactive console of sbt, there, I just type &quot;~compile&quot; and then everything starts to rock, commands with &quot;~&quot; means &quot;continual&quot;, so once I edit my source file and save it, the compile will be performed immediately then you can see whether your code is ok or not. Of course, the most important thing is you don't have to care about the result if you don't want to, but the compilation will always there until you interrupt it when you will.</p>
-<blockquote>
-Although we have add dependencies in the build file, they are not available before we run &quot;sbt update&quot; or just &quot;update&quot; in sbt console, even we have maven2 local repository there. So when some compilation errors complain some classes are missing, most of the time, they are asking you to run &quot;update&quot; to fetch the dependencies.^_^
-</blockquote>
-<p>OK, until now, I think most of the things work for us, but how SBT makes all of the things run smoothly?</p>
-<h1 id="how-sbt-works"><span class="header-section-number">2</span> How SBT works</h1>
-<p>The most interested thing about SBT is that it conforms to Scala everywhere, If you used maven before or still using it, you know the build defintion in maven is defined in xml(pom.xml) or groovy after maven3, although maven are mostly used with java projects. But since SBT is mainly for scala projects, its build files are written in scala too.</p>
-<p>SBT build artifacts are located at &quot;<span class="math"><em>y</em><em>o</em><em>u</em><em>r</em><sub><em>p</em></sub><em>r</em><em>o</em><em>j</em><em>e</em><em>c</em><em>t</em><sub><em>f</em></sub><em>o</em><em>l</em><em>d</em><em>e</em><em>r</em></span>/project&quot; folder which contains:</p>
-<ul>
-<li>build.properties // your project information and scala version information</li>
-<li>build // folder contains build file defintiion</li>
-<li>* boot // folder</li>
-</ul>
-<p>Under &quot;build&quot; sub-folder, you can define build file in a format of scala. SBT defines a scala trait Project as build specification, so to create your own build file, you just create a scala class which extends Project trait of SBT, most of the time we will extend DefaultProject, just as we have done in section 1 - SBT Quick Start.</p>
-<p>The build file can be placed under &quot;project/build&quot; directly, or if your build file depends on other dependencies, you can create a similar directory structure as top sbt project, that's, the &quot;project/build&quot; is also a sbt project. That's means you can create src/main/scala/ directory and place your build file there, or you can create &quot;lib&quot; directory and place your 3rd party dependencies there too, blablabla.</p>
-<p>we can define different things in your Project defintion, whether val, lazy task or methods, we can add our own artifacts definitions or we can override the orginal ones.</p>
-<p>for example, method &quot;unmanagedClasspath&quot; will return the classpaths of unmanaged libraries, we can override it to add more paths we want:</p>
-<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">class</span> <span class="fu">MyProject</span>(info: ProjectInfo) <span class="kw">extends</span> <span class="fu">DefaultProject</span>(info)
-{
-  <span class="kw">override</span> <span class="kw">def</span> unmanagedClasspath: PathFinder =
-  {
-    <span class="kw">super</span>.<span class="fu">unmanagedClasspath</span> +++ Path.<span class="fu">fromFile</span>(<span class="st">&quot;some path&quot;</span>)
-   }
-}</code></pre></div>
-<p>Note that if you just write :</p>
-<pre>
-super.unmanagedClasspath +++ "your extension classpath"
-</pre>
-exception may raise which looks like:
-<pre>
-java.lang.IllegalArgumentException: requirement failed: Path component 'your path' must not have forward slashes in it
-</pre>
-<p>If you dive into the code of &quot;Path.scala&quot;, you may find the reason, to save your ass, just do as I did in above code snippet.</p>
-<p>We can find more methods that we can customize to our own needs in SBT documentations(http://code.google.com/p/simple-build-tool/wiki/DocumentationHome), more advance features can be found in the documenation too, like modules, cross-building, web application project types, etc. I will not elaborate on these here, you have to find them out yourself.</p>
-<p>Enjoy SBT.</p>
+              <p><strong>author: fujohnwang</strong></p>
+              <p><strong>NOTE: this is for SBT0.7.x-0.9.x versions</strong></p>
+              <h1 id="sbt-quick-start"><span class="header-section-number">1</span> SBT Quick Start</h1>
+              <p>To use SBT, you have to download the sbt-launch-version.jar first, in order to use it easily in future, I create a shell called sbt as per the documentation of SBT setup introduction:</p>
+              <pre>
+              java -Xmx512M -jar `dirname $0`/sbt-launch-0.7.4.jar "$@"
+              </pre>
+              <p>I make a directory under workspace, call &quot;scalafun&quot;, then &quot;cd scalafun&quot; and run sbt. Since it's the first time I use sbt, it ask me whether to create a project, I choose Y of course, then it ask for some information on the project I create before the project creation is done. The information contains the project name, organize name, sbt version or scala version, just type in your answer or use the default choices.</p>
+              <blockquote>
+              when create project structure with sbt, it may loss the &quot;project/build&quot; directory where you should put your build file there, so usually after running sbt to setup the default project structure, you may have to create the &quot;project/build&quot; directory and corresponding build defintion files manully.
+              </blockquote>
+              <p>After the project setup is done, firstly, we have to define our build file in sbt, this is done by creating a scala file under &quot;project/build&quot;, the content may be:</p>
+              <div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">import</span> sbt.<span class="fu">_</span>
+              
+              <span class="kw">class</span> <span class="fu">MySQLEventEmitter</span>(info:ProjectInfo) <span class="kw">extends</span> <span class="fu">DefaultProject</span>(info){
+               <span class="kw">val</span> jbossRepository        = <span class="st">&quot;Jboss Repository&quot;</span> at <span class="st">&quot;http://repository.jboss.org/nexus/content/groups/public&quot;</span>
+               <span class="kw">val</span> jbossRepository2       = <span class="st">&quot;jboss Maven2 repo&quot;</span> at <span class="st">&quot;http://repository.jboss.com/maven2&quot;</span>
+               ...
+               
+               <span class="kw">val</span> netty = <span class="st">&quot;org.jboss.netty&quot;</span> % <span class="st">&quot;netty&quot;</span> % <span class="st">&quot;3.2.2.Final&quot;</span>
+               <span class="kw">val</span> scalatest = <span class="st">&quot;org.scalatest&quot;</span> % <span class="st">&quot;scalatest&quot;</span> % <span class="st">&quot;1.2&quot;</span> % <span class="st">&quot;test&quot;</span>
+               ...
+              }</code></pre></div>
+              <p>As you can see, I add some repositories and dependencies as per sbt's scala method syntax, it's so easy to setup such a common project without any difficulty.</p>
+              <p>Once above job is done, we can add our scala source files into src/main/scala directory, the src directory structure follows the maven's convention(if you used maven before, more exactly, it should be ivy style).</p>
+              <p>After you have finished you code, you can run &quot;sbt update clean compile run&quot; in the command under the &quot;scalafun&quot; directory, or most of the time, I will just run &quot;sbt&quot; and then get into the interactive console of sbt, there, I just type &quot;~compile&quot; and then everything starts to rock, commands with &quot;~&quot; means &quot;continual&quot;, so once I edit my source file and save it, the compile will be performed immediately then you can see whether your code is ok or not. Of course, the most important thing is you don't have to care about the result if you don't want to, but the compilation will always there until you interrupt it when you will.</p>
+              <blockquote>
+              Although we have add dependencies in the build file, they are not available before we run &quot;sbt update&quot; or just &quot;update&quot; in sbt console, even we have maven2 local repository there. So when some compilation errors complain some classes are missing, most of the time, they are asking you to run &quot;update&quot; to fetch the dependencies.^_^
+              </blockquote>
+              <p>OK, until now, I think most of the things work for us, but how SBT makes all of the things run smoothly?</p>
+              <h1 id="how-sbt-works"><span class="header-section-number">2</span> How SBT works</h1>
+              <p>The most interested thing about SBT is that it conforms to Scala everywhere, If you used maven before or still using it, you know the build defintion in maven is defined in xml(pom.xml) or groovy after maven3, although maven are mostly used with java projects. But since SBT is mainly for scala projects, its build files are written in scala too.</p>
+              <p>SBT build artifacts are located at &quot;<span class="math"><em>y</em><em>o</em><em>u</em><em>r</em><sub><em>p</em></sub><em>r</em><em>o</em><em>j</em><em>e</em><em>c</em><em>t</em><sub><em>f</em></sub><em>o</em><em>l</em><em>d</em><em>e</em><em>r</em></span>/project&quot; folder which contains:</p>
+              <ul>
+              <li>build.properties // your project information and scala version information</li>
+              <li>build // folder contains build file defintiion</li>
+              <li>* boot // folder</li>
+              </ul>
+              <p>Under &quot;build&quot; sub-folder, you can define build file in a format of scala. SBT defines a scala trait Project as build specification, so to create your own build file, you just create a scala class which extends Project trait of SBT, most of the time we will extend DefaultProject, just as we have done in section 1 - SBT Quick Start.</p>
+              <p>The build file can be placed under &quot;project/build&quot; directly, or if your build file depends on other dependencies, you can create a similar directory structure as top sbt project, that's, the &quot;project/build&quot; is also a sbt project. That's means you can create src/main/scala/ directory and place your build file there, or you can create &quot;lib&quot; directory and place your 3rd party dependencies there too, blablabla.</p>
+              <p>we can define different things in your Project defintion, whether val, lazy task or methods, we can add our own artifacts definitions or we can override the orginal ones.</p>
+              <p>for example, method &quot;unmanagedClasspath&quot; will return the classpaths of unmanaged libraries, we can override it to add more paths we want:</p>
+              <div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">class</span> <span class="fu">MyProject</span>(info: ProjectInfo) <span class="kw">extends</span> <span class="fu">DefaultProject</span>(info)
+              {
+                <span class="kw">override</span> <span class="kw">def</span> unmanagedClasspath: PathFinder =
+                {
+                  <span class="kw">super</span>.<span class="fu">unmanagedClasspath</span> +++ Path.<span class="fu">fromFile</span>(<span class="st">&quot;some path&quot;</span>)
+                 }
+              }</code></pre></div>
+              <p>Note that if you just write :</p>
+              <pre>
+              super.unmanagedClasspath +++ "your extension classpath"
+              </pre>
+              exception may raise which looks like:
+              <pre>
+              java.lang.IllegalArgumentException: requirement failed: Path component 'your path' must not have forward slashes in it
+              </pre>
+              <p>If you dive into the code of &quot;Path.scala&quot;, you may find the reason, to save your ass, just do as I did in above code snippet.</p>
+              <p>We can find more methods that we can customize to our own needs in SBT documentations(http://code.google.com/p/simple-build-tool/wiki/DocumentationHome), more advance features can be found in the documenation too, like modules, cross-building, web application project types, etc. I will not elaborate on these here, you have to find them out yourself.</p>
+              <p>Enjoy SBT.</p>
               
               <!--百度分享按钮-->
               <div class="pull-left bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a><a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a></div>
@@ -183,9 +174,6 @@ java.lang.IllegalArgumentException: requirement failed: Path component 'your pat
               <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
               <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
 
-            </div>
-          </div>
-        </div>
       </div>
       <div class="row">
         <div class="col-md-12 footer">
@@ -193,9 +181,9 @@ java.lang.IllegalArgumentException: requirement failed: Path component 'your pat
           <p>Powered by <a href="http://johnmacfarlane.net/pandoc/">pandoc</a>, <a href="http://rometools.github.io/rome/index.html">ROME</a> and <a href="http://pages.github.com/">github pages</a></p>
         </div>
       </div>
-    </div>
-  </div>
-</div>
+    </div> <!--main-->
+  </div> <!--row-->
+</div> <!--container-->
 
 <script src="/js/jquery-2.1.1.min.js"></script>
 <script src="/js/bootstrap.min.js"></script>

@@ -46,42 +46,29 @@
 </head>
 
 <body>
-<div class="container-fluid">
+<div class="container">
   <div class="row">
-    <div class="col-md-3 sidebar">
-      <a href="/">
-        <!-- <div align="center"><img src="/images/wfq0.png"/></div> -->
-        <h2 class="text-center">扶墙老师</h2>
-      </a>
-      <p class="text-center lead slogan"><a href="/slogan.html">lollapalooza &amp; positioning</a></p>
-      <p class="text-center lead slogan">瞎子摸象的践行者</p>
-      <ul class="nav nav-pills nav-stacked">
-        <li><a href="/favorite.html" class="text-center"><i class="icon-star-empty"></i> 我的收藏</a></li>
-        <li><a href="/dashboard.html" class="text-center"><i class="icon-fullscreen"></i> 金融看板</a></li>
-        <li><a href="/columns.html" class="text-center"><i class="icon-folder-close-alt"></i> 专栏</a></li>
-        <li><a href="/references.html" class="text-center"><i class="icon-folder-close-alt"></i> 快捷参考</a></li>
-        <li><a href="/whoami.html" class="text-center"><i class="icon-user-md"></i> 我是谁</a></li>
-        <li><a href="/interlinks.html" class="text-center"><i class="icon-user-md"></i> 友情链接</a></li>
-        <li><a href="/feeds.xml" class="text-center"><i class="icon-folder-close-alt"></i> RSS</a></li>
-      </ul>
-
+    
+    <div class="col-md-2">
+        <div class="seal text-right">
+          <a href="http://afoo.me">
+            <img src="/images/myseal.png"/>
+          </a>
+        </div>
     </div>
-    <div class="col-md-9 col-md-offset-3 main">
-      <div class="row">
-        <div class="container-fluid">
+    <div class="col-md-10 col-xs-12">
+
           
           <div class="row">
                         <div id="header">
               <p class="lead">
-              <h1 class="title">sbt-native-packager快速上手&nbsp;&nbsp;
-                <small>
-                                    WangFuqiang
-                                  </small>
-              </h1>
-              </p>
+              <h1 class="title">sbt-native-packager快速上手</h1>
+                            <small>
+                  <h3 class="author">WangFuqiang</h3>
+              </small>
+                                          </p>
             </div>
-                        <div>
-
+            
               <hr>
 
                             <div id="TOC">
@@ -96,70 +83,73 @@
                 <li><a href="#添加自定义随同发布文件和目录"><span class="toc-section-number">5</span> 添加自定义随同发布文件和目录</a></li>
                 </ul>
               </div>
-                            <p>插件项目地址: <a href="http://www.scala-sbt.org/sbt-native-packager" class="uri">http://www.scala-sbt.org/sbt-native-packager</a></p>
-<h1 id="安装"><span class="header-section-number">1</span> 安装</h1>
-<p><code>project/plugins.sbt</code>中添加：</p>
-<blockquote>
-<p>addSbtPlugin(&quot;com.typesafe.sbt&quot; % &quot;sbt-native-packager&quot; % &quot;0.7.4&quot;)</p>
-</blockquote>
-build.sbt文件中添加:
-<pre>
-import com.typesafe.sbt.SbtNativePackager._
-import NativePackagerKeys._
+              
+              <hr/>
 
-...
-
-packageArchetype.java_application
-</pre>
-<blockquote>
-<p>java_application - Defines packaging of your project with a start script and automatic PATH additions java_server - Defines packaging of your project with automatic service start scripts (supports System V + init.d).</p>
-</blockquote>
-<h1 id="使用"><span class="header-section-number">2</span> 使用</h1>
-<p>运行<code>sbt stage</code>可以在路径<code>target/universal/stage/</code>下查看要发布的文件目录结构， 其中包含bin, lib等目录</p>
-<blockquote>
-<p>NOTE: 如果bin目录没有出现，可能因为当前sbt项目包含多个main class，这个时候，可以在build.sbt中明确指定使用哪个mainClass， 比如: mainClass in (Compile) := Some(&quot;com...Main&quot;)</p>
-</blockquote>
-<p>运行<code>sbt dist</code>发布相应的packages</p>
-<p>其它可以用的tasks包括：</p>
-<ul>
-<li>universal:packageBin - Generates a universal zip file</li>
-<li>universal:packageZipTarball - Generates a universal tgz file</li>
-<li>debian:packageBin - Generates a deb</li>
-<li>docker:publishLocal - Builds a Docker image using the local Docker server</li>
-<li>rpm:packageBin - Generates an rpm</li>
-<li>universal::packageOsxDmg - Generates a DMG file with the same contents as the universal zip/tgz.</li>
-<li>windows:packageBin - Generates an MSI</li>
-</ul>
-<h1 id="添加配置文件"><span class="header-section-number">3</span> 添加配置文件</h1>
-<p>配置文件有两种： 1. jvm相应的配置，比如虚拟机参数，这些会包含到自动生成的启动脚本中； 2. 应用特定的配置文件，比如spring xml， application.conf， logback.xml等</p>
-<p>创建<code>src/universal/conf</code>目录，并将这些文件添加进去</p>
-<blockquote>
-<p>默认情况下， <code>src/universal</code>目录会被包含到发布包中， 所以像lisence, readme之类的文件也可以放进去一并发布。</p>
-</blockquote>
-<h2 id="jvm相应配置"><span class="header-section-number">3.1</span> JVM相应配置</h2>
-<p>新建<code>src/universal/conf/jvmopts</code>文件，其中， jvmopts文件中保存了自定义的虚拟机参数，如果要让这些参数在发布后的script启动脚本中生效，我们需要在build.sbt中添加配置:</p>
-<blockquote>
-<p>bashScriptConfigLocation := Some(&quot;${app_home}/../conf/jvmopts&quot;)</p>
-</blockquote>
-<h2 id="命令行参数指定应用配置"><span class="header-section-number">3.2</span> 命令行参数指定应用配置</h2>
-<p>比如logback或者typesafe config等库可以通过启动参数指定配置(<code>-Dconfig.file=...</code>), 为了把这些配置文件的位置也添加到启动脚本， 我们需要在build.sbt中添加配置:</p>
-<blockquote>
-<p>bashScriptExtraDefines += &quot;&quot;&quot;addJava &quot;-Dconfig.file=${app_home}/../conf/app.config&quot;&quot;&quot;&quot;</p>
-</blockquote>
-<p>当然了，假设我们不通过命令行参数使用这些配置文件，那么我们完全可以通过相对路径来加载指定目录conf下的配置文件。</p>
-<h1 id="覆盖默认脚本"><span class="header-section-number">4</span> 覆盖默认脚本</h1>
-<p>如果自动打包的启动脚本有bug或者其它原因， 可以覆盖之， 参考<a href="http://www.scala-sbt.org/sbt-native-packager/GettingStartedApplications/OverridingTemplates.html" class="uri">http://www.scala-sbt.org/sbt-native-packager/GettingStartedApplications/OverridingTemplates.html</a>, 不过一般情况下不建议完全覆盖和替换。</p>
-<h1 id="添加自定义随同发布文件和目录"><span class="header-section-number">5</span> 添加自定义随同发布文件和目录</h1>
-<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">import</span> com.<span class="fu">typesafe</span>.<span class="fu">sbt</span>.<span class="fu">SbtNativePackager</span>.<span class="fu">_</span>
-<span class="kw">import</span> NativePackagerKeys.<span class="fu">_</span>
-
-<span class="co">// ...</span>
-
-mappings in Universal += <span class="fu">file</span>(<span class="st">&quot;ReleaseNote.md&quot;</span>) -&gt; <span class="st">&quot;ReleaseNote.md&quot;</span>
-
-mappings in Universal ++= <span class="fu">directory</span>(<span class="st">&quot;conf&quot;</span>)
-
-mappings in Universal ++= <span class="fu">directory</span>(<span class="st">&quot;agent&quot;</span>)</code></pre></div>
+              <p>插件项目地址: <a href="http://www.scala-sbt.org/sbt-native-packager" class="uri">http://www.scala-sbt.org/sbt-native-packager</a></p>
+              <h1 id="安装"><span class="header-section-number">1</span> 安装</h1>
+              <p><code>project/plugins.sbt</code>中添加：</p>
+              <blockquote>
+              <p>addSbtPlugin(&quot;com.typesafe.sbt&quot; % &quot;sbt-native-packager&quot; % &quot;0.7.4&quot;)</p>
+              </blockquote>
+              build.sbt文件中添加:
+              <pre>
+              import com.typesafe.sbt.SbtNativePackager._
+              import NativePackagerKeys._
+              
+              ...
+              
+              packageArchetype.java_application
+              </pre>
+              <blockquote>
+              <p>java_application - Defines packaging of your project with a start script and automatic PATH additions java_server - Defines packaging of your project with automatic service start scripts (supports System V + init.d).</p>
+              </blockquote>
+              <h1 id="使用"><span class="header-section-number">2</span> 使用</h1>
+              <p>运行<code>sbt stage</code>可以在路径<code>target/universal/stage/</code>下查看要发布的文件目录结构， 其中包含bin, lib等目录</p>
+              <blockquote>
+              <p>NOTE: 如果bin目录没有出现，可能因为当前sbt项目包含多个main class，这个时候，可以在build.sbt中明确指定使用哪个mainClass， 比如: mainClass in (Compile) := Some(&quot;com...Main&quot;)</p>
+              </blockquote>
+              <p>运行<code>sbt dist</code>发布相应的packages</p>
+              <p>其它可以用的tasks包括：</p>
+              <ul>
+              <li>universal:packageBin - Generates a universal zip file</li>
+              <li>universal:packageZipTarball - Generates a universal tgz file</li>
+              <li>debian:packageBin - Generates a deb</li>
+              <li>docker:publishLocal - Builds a Docker image using the local Docker server</li>
+              <li>rpm:packageBin - Generates an rpm</li>
+              <li>universal::packageOsxDmg - Generates a DMG file with the same contents as the universal zip/tgz.</li>
+              <li>windows:packageBin - Generates an MSI</li>
+              </ul>
+              <h1 id="添加配置文件"><span class="header-section-number">3</span> 添加配置文件</h1>
+              <p>配置文件有两种： 1. jvm相应的配置，比如虚拟机参数，这些会包含到自动生成的启动脚本中； 2. 应用特定的配置文件，比如spring xml， application.conf， logback.xml等</p>
+              <p>创建<code>src/universal/conf</code>目录，并将这些文件添加进去</p>
+              <blockquote>
+              <p>默认情况下， <code>src/universal</code>目录会被包含到发布包中， 所以像lisence, readme之类的文件也可以放进去一并发布。</p>
+              </blockquote>
+              <h2 id="jvm相应配置"><span class="header-section-number">3.1</span> JVM相应配置</h2>
+              <p>新建<code>src/universal/conf/jvmopts</code>文件，其中， jvmopts文件中保存了自定义的虚拟机参数，如果要让这些参数在发布后的script启动脚本中生效，我们需要在build.sbt中添加配置:</p>
+              <blockquote>
+              <p>bashScriptConfigLocation := Some(&quot;${app_home}/../conf/jvmopts&quot;)</p>
+              </blockquote>
+              <h2 id="命令行参数指定应用配置"><span class="header-section-number">3.2</span> 命令行参数指定应用配置</h2>
+              <p>比如logback或者typesafe config等库可以通过启动参数指定配置(<code>-Dconfig.file=...</code>), 为了把这些配置文件的位置也添加到启动脚本， 我们需要在build.sbt中添加配置:</p>
+              <blockquote>
+              <p>bashScriptExtraDefines += &quot;&quot;&quot;addJava &quot;-Dconfig.file=${app_home}/../conf/app.config&quot;&quot;&quot;&quot;</p>
+              </blockquote>
+              <p>当然了，假设我们不通过命令行参数使用这些配置文件，那么我们完全可以通过相对路径来加载指定目录conf下的配置文件。</p>
+              <h1 id="覆盖默认脚本"><span class="header-section-number">4</span> 覆盖默认脚本</h1>
+              <p>如果自动打包的启动脚本有bug或者其它原因， 可以覆盖之， 参考<a href="http://www.scala-sbt.org/sbt-native-packager/GettingStartedApplications/OverridingTemplates.html" class="uri">http://www.scala-sbt.org/sbt-native-packager/GettingStartedApplications/OverridingTemplates.html</a>, 不过一般情况下不建议完全覆盖和替换。</p>
+              <h1 id="添加自定义随同发布文件和目录"><span class="header-section-number">5</span> 添加自定义随同发布文件和目录</h1>
+              <div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">import</span> com.<span class="fu">typesafe</span>.<span class="fu">sbt</span>.<span class="fu">SbtNativePackager</span>.<span class="fu">_</span>
+              <span class="kw">import</span> NativePackagerKeys.<span class="fu">_</span>
+              
+              <span class="co">// ...</span>
+              
+              mappings in Universal += <span class="fu">file</span>(<span class="st">&quot;ReleaseNote.md&quot;</span>) -&gt; <span class="st">&quot;ReleaseNote.md&quot;</span>
+              
+              mappings in Universal ++= <span class="fu">directory</span>(<span class="st">&quot;conf&quot;</span>)
+              
+              mappings in Universal ++= <span class="fu">directory</span>(<span class="st">&quot;agent&quot;</span>)</code></pre></div>
               
               <!--百度分享按钮-->
               <div class="pull-left bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a><a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a></div>
@@ -192,9 +182,6 @@ mappings in Universal ++= <span class="fu">directory</span>(<span class="st">&qu
               <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
               <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
 
-            </div>
-          </div>
-        </div>
       </div>
       <div class="row">
         <div class="col-md-12 footer">
@@ -202,9 +189,9 @@ mappings in Universal ++= <span class="fu">directory</span>(<span class="st">&qu
           <p>Powered by <a href="http://johnmacfarlane.net/pandoc/">pandoc</a>, <a href="http://rometools.github.io/rome/index.html">ROME</a> and <a href="http://pages.github.com/">github pages</a></p>
         </div>
       </div>
-    </div>
-  </div>
-</div>
+    </div> <!--main-->
+  </div> <!--row-->
+</div> <!--container-->
 
 <script src="/js/jquery-2.1.1.min.js"></script>
 <script src="/js/bootstrap.min.js"></script>

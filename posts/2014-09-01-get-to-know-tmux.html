@@ -46,42 +46,29 @@
 </head>
 
 <body>
-<div class="container-fluid">
+<div class="container">
   <div class="row">
-    <div class="col-md-3 sidebar">
-      <a href="/">
-        <!-- <div align="center"><img src="/images/wfq0.png"/></div> -->
-        <h2 class="text-center">扶墙老师</h2>
-      </a>
-      <p class="text-center lead slogan"><a href="/slogan.html">lollapalooza &amp; positioning</a></p>
-      <p class="text-center lead slogan">瞎子摸象的践行者</p>
-      <ul class="nav nav-pills nav-stacked">
-        <li><a href="/favorite.html" class="text-center"><i class="icon-star-empty"></i> 我的收藏</a></li>
-        <li><a href="/dashboard.html" class="text-center"><i class="icon-fullscreen"></i> 金融看板</a></li>
-        <li><a href="/columns.html" class="text-center"><i class="icon-folder-close-alt"></i> 专栏</a></li>
-        <li><a href="/references.html" class="text-center"><i class="icon-folder-close-alt"></i> 快捷参考</a></li>
-        <li><a href="/whoami.html" class="text-center"><i class="icon-user-md"></i> 我是谁</a></li>
-        <li><a href="/interlinks.html" class="text-center"><i class="icon-user-md"></i> 友情链接</a></li>
-        <li><a href="/feeds.xml" class="text-center"><i class="icon-folder-close-alt"></i> RSS</a></li>
-      </ul>
-
+    
+    <div class="col-md-2">
+        <div class="seal text-right">
+          <a href="http://afoo.me">
+            <img src="/images/myseal.png"/>
+          </a>
+        </div>
     </div>
-    <div class="col-md-9 col-md-offset-3 main">
-      <div class="row">
-        <div class="container-fluid">
+    <div class="col-md-10 col-xs-12">
+
           
           <div class="row">
                         <div id="header">
               <p class="lead">
-              <h1 class="title">了解tmux&nbsp;&nbsp;
-                <small>
-                                    FuqiangWang
-                                  </small>
-              </h1>
-              </p>
+              <h1 class="title">了解tmux</h1>
+                            <small>
+                  <h3 class="author">FuqiangWang</h3>
+              </small>
+                                          </p>
             </div>
-                        <div>
-
+            
               <hr>
 
                             <div id="TOC">
@@ -92,82 +79,85 @@
                 <li><a href="#cheatsheet"><span class="toc-section-number">4</span> Cheatsheet</a></li>
                 </ul>
               </div>
-                            <p>tmux = terminal multiplexer</p>
-<p>tmux就是一个允许我们创建多个命令行窗口的程序， 采用C/S结构， tmux server运行在后台， tmux client连接到tmux server创建多个session和window， pane等， 即使关掉tmux client的窗口， 创建的session相关进程将持续在后台的tmux server上执行，除非所有的session都关闭。</p>
-<p>对于“键盘人”来说，尤其是vim或者emacs重度用户， tmux会让他们更爽； 即使对于其它客户，当管理服务器的时候，tmux也可以让命令行窗口更具“扩展性”。</p>
-<h1 id="基本命令"><span class="header-section-number">1</span> 基本命令</h1>
-<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">tmux</span>  // 新建匿名session
-$ <span class="kw">tmux</span> new -s [session name] // 新建命名session
-$ <span class="kw">tmux</span> list-sessions
-$ <span class="kw">tmux</span> detach // 脱离当前session
-$ <span class="kw">tmux</span> attach -t [session name]  // 重新attach到某个session
-$ <span class="kw">tmux</span> kill-session -t [session]  // 杀掉某个指定的session
-$ <span class="kw">tmux</span> kill-server //杀掉后台所有session</code></pre></div>
-<p>Prefix快捷键默认是Control + b， 在Mac下，我们通过更改~/.tmux.conf，将其更改为Control + a:</p>
-<pre>
-# improve colors
-set -g default-terminal "screen-256color"
+              
+              <hr/>
 
-# act like GNU screen
-unbind C-b
-set -g prefix C-a
-bind-key C-a send-prefix
-</pre>
-<p>Prefix快捷键的使用是， 首先按Prefix快捷键组合，然后松开，再紧跟着按相应命令的快捷键， 比如， 新建窗口的话，我们先按Control + a, 然后再按c，则完成在当前session下创建窗口的工作， 其它窗口(Window)操作包括：</p>
-<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">Ctrl</span> + a, c   // 创建窗口
-$ <span class="kw">Ctrl</span> + a, [0 - 9] // 输入0到9任何一个数字选择相应的窗口， 相当于命令tmux select-window 
-$ <span class="kw">Ctrl</span> + a, %       // 分割split窗口为多个pane
-$ <span class="kw">Ctrl</span> + a, ← <span class="kw">|</span> →   <span class="kw">//</span> 从窗口的pane跳到左边或者右边的pane</code></pre></div>
-<h1 id="拷贝模式"><span class="header-section-number">2</span> 拷贝模式</h1>
-<p><code>Ctrl + a, [</code>进入拷贝模式， 敲空格开始拷贝，回车结束拷贝， 敲<code>Ctrl + a, ]</code>退出拷贝模式。</p>
-<h1 id="say-goodbye-to-nohup"><span class="header-section-number">3</span> Say Goodbye to nohup &amp;</h1>
-<p>在服务器上安装tmux之后， 本地ssh登陆上去执行tmux，然后随便创建Window或者Pane， 甚至detach或者直接关掉命令行， 运行的进程和session状态将持续在后台的tmux server上运行。</p>
-<h1 id="cheatsheet"><span class="header-section-number">4</span> Cheatsheet</h1>
-<pre>
-tmux -- terminal multiplexer
-
-Managing tmux sessions:
-$ tmux      # start tmux server
-$ tmux at   # attach running sessions to a terminal
-$ tmux ls   # list running tmux sessions
-$ exit      # close tmux session
-
-Sharing sessions between terminals:
-$ tmux new -s session_name # make new named session
-$ tmux at -t session_name  # attach to exist session (allowing shared sessions)
-$ tmux kill-session -t session_name  # kill named session
-
-Commands (used within a running tmux session):
-
-NOTE: All commands need to be prefixed with the action key.
-      By default, this is CTRL-b
-
- c  - create new window
-n/p - move to next/previous window
-0-9 - move to window number 0-9
- f  - find window by name
- w  - menu with all windows
- &  - kill current window
- ,  - rename window
-
- %  - split window, adding a vertical pane to the right
- "  - split window, adding an horizontal pane below
-←/→ - move focus to left/right pane
-↑/↓ - move focus to upper/lower pane
-
- !  - Break current pane into new window
- x  - Kill the current pane.
- d  - detach the current client
-
- [  - enter copy mode (then use emacs select/yank keys)
-      * press CTRL-SPACE or CTRL-@ to start selecting text
-      * move cursor to end of desired text
-      * press ALT-w to copy selected text
-
- ]  - paste copied text
-
- ?  - show tmux key bindings
-</pre>
+              <p>tmux = terminal multiplexer</p>
+              <p>tmux就是一个允许我们创建多个命令行窗口的程序， 采用C/S结构， tmux server运行在后台， tmux client连接到tmux server创建多个session和window， pane等， 即使关掉tmux client的窗口， 创建的session相关进程将持续在后台的tmux server上执行，除非所有的session都关闭。</p>
+              <p>对于“键盘人”来说，尤其是vim或者emacs重度用户， tmux会让他们更爽； 即使对于其它客户，当管理服务器的时候，tmux也可以让命令行窗口更具“扩展性”。</p>
+              <h1 id="基本命令"><span class="header-section-number">1</span> 基本命令</h1>
+              <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">tmux</span>  // 新建匿名session
+              $ <span class="kw">tmux</span> new -s [session name] // 新建命名session
+              $ <span class="kw">tmux</span> list-sessions
+              $ <span class="kw">tmux</span> detach // 脱离当前session
+              $ <span class="kw">tmux</span> attach -t [session name]  // 重新attach到某个session
+              $ <span class="kw">tmux</span> kill-session -t [session]  // 杀掉某个指定的session
+              $ <span class="kw">tmux</span> kill-server //杀掉后台所有session</code></pre></div>
+              <p>Prefix快捷键默认是Control + b， 在Mac下，我们通过更改~/.tmux.conf，将其更改为Control + a:</p>
+              <pre>
+              # improve colors
+              set -g default-terminal "screen-256color"
+              
+              # act like GNU screen
+              unbind C-b
+              set -g prefix C-a
+              bind-key C-a send-prefix
+              </pre>
+              <p>Prefix快捷键的使用是， 首先按Prefix快捷键组合，然后松开，再紧跟着按相应命令的快捷键， 比如， 新建窗口的话，我们先按Control + a, 然后再按c，则完成在当前session下创建窗口的工作， 其它窗口(Window)操作包括：</p>
+              <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">Ctrl</span> + a, c   // 创建窗口
+              $ <span class="kw">Ctrl</span> + a, [0 - 9] // 输入0到9任何一个数字选择相应的窗口， 相当于命令tmux select-window 
+              $ <span class="kw">Ctrl</span> + a, %       // 分割split窗口为多个pane
+              $ <span class="kw">Ctrl</span> + a, ← <span class="kw">|</span> →   <span class="kw">//</span> 从窗口的pane跳到左边或者右边的pane</code></pre></div>
+              <h1 id="拷贝模式"><span class="header-section-number">2</span> 拷贝模式</h1>
+              <p><code>Ctrl + a, [</code>进入拷贝模式， 敲空格开始拷贝，回车结束拷贝， 敲<code>Ctrl + a, ]</code>退出拷贝模式。</p>
+              <h1 id="say-goodbye-to-nohup"><span class="header-section-number">3</span> Say Goodbye to nohup &amp;</h1>
+              <p>在服务器上安装tmux之后， 本地ssh登陆上去执行tmux，然后随便创建Window或者Pane， 甚至detach或者直接关掉命令行， 运行的进程和session状态将持续在后台的tmux server上运行。</p>
+              <h1 id="cheatsheet"><span class="header-section-number">4</span> Cheatsheet</h1>
+              <pre>
+              tmux -- terminal multiplexer
+              
+              Managing tmux sessions:
+              $ tmux      # start tmux server
+              $ tmux at   # attach running sessions to a terminal
+              $ tmux ls   # list running tmux sessions
+              $ exit      # close tmux session
+              
+              Sharing sessions between terminals:
+              $ tmux new -s session_name # make new named session
+              $ tmux at -t session_name  # attach to exist session (allowing shared sessions)
+              $ tmux kill-session -t session_name  # kill named session
+              
+              Commands (used within a running tmux session):
+              
+              NOTE: All commands need to be prefixed with the action key.
+                    By default, this is CTRL-b
+              
+               c  - create new window
+              n/p - move to next/previous window
+              0-9 - move to window number 0-9
+               f  - find window by name
+               w  - menu with all windows
+               &  - kill current window
+               ,  - rename window
+              
+               %  - split window, adding a vertical pane to the right
+               "  - split window, adding an horizontal pane below
+              ←/→ - move focus to left/right pane
+              ↑/↓ - move focus to upper/lower pane
+              
+               !  - Break current pane into new window
+               x  - Kill the current pane.
+               d  - detach the current client
+              
+               [  - enter copy mode (then use emacs select/yank keys)
+                    * press CTRL-SPACE or CTRL-@ to start selecting text
+                    * move cursor to end of desired text
+                    * press ALT-w to copy selected text
+              
+               ]  - paste copied text
+              
+               ?  - show tmux key bindings
+              </pre>
               
               <!--百度分享按钮-->
               <div class="pull-left bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a><a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a></div>
@@ -200,9 +190,6 @@ n/p - move to next/previous window
               <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
               <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
 
-            </div>
-          </div>
-        </div>
       </div>
       <div class="row">
         <div class="col-md-12 footer">
@@ -210,9 +197,9 @@ n/p - move to next/previous window
           <p>Powered by <a href="http://johnmacfarlane.net/pandoc/">pandoc</a>, <a href="http://rometools.github.io/rome/index.html">ROME</a> and <a href="http://pages.github.com/">github pages</a></p>
         </div>
       </div>
-    </div>
-  </div>
-</div>
+    </div> <!--main-->
+  </div> <!--row-->
+</div> <!--container-->
 
 <script src="/js/jquery-2.1.1.min.js"></script>
 <script src="/js/bootstrap.min.js"></script>

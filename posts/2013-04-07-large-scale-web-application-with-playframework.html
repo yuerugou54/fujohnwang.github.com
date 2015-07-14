@@ -26,81 +26,71 @@
 </head>
 
 <body>
-<div class="container-fluid">
+<div class="container">
   <div class="row">
-    <div class="col-md-3 sidebar">
-      <a href="/">
-        <!-- <div align="center"><img src="/images/wfq0.png"/></div> -->
-        <h2 class="text-center">扶墙老师</h2>
-      </a>
-      <p class="text-center lead slogan"><a href="/slogan.html">lollapalooza &amp; positioning</a></p>
-      <p class="text-center lead slogan">瞎子摸象的践行者</p>
-      <ul class="nav nav-pills nav-stacked">
-        <li><a href="/favorite.html" class="text-center"><i class="icon-star-empty"></i> 我的收藏</a></li>
-        <li><a href="/dashboard.html" class="text-center"><i class="icon-fullscreen"></i> 金融看板</a></li>
-        <li><a href="/columns.html" class="text-center"><i class="icon-folder-close-alt"></i> 专栏</a></li>
-        <li><a href="/references.html" class="text-center"><i class="icon-folder-close-alt"></i> 快捷参考</a></li>
-        <li><a href="/whoami.html" class="text-center"><i class="icon-user-md"></i> 我是谁</a></li>
-        <li><a href="/interlinks.html" class="text-center"><i class="icon-user-md"></i> 友情链接</a></li>
-        <li><a href="/feeds.xml" class="text-center"><i class="icon-folder-close-alt"></i> RSS</a></li>
-      </ul>
-
+    
+    <div class="col-md-2">
+        <div class="seal text-right">
+          <a href="http://afoo.me">
+            <img src="/images/myseal.png"/>
+          </a>
+        </div>
     </div>
-    <div class="col-md-9 col-md-offset-3 main">
-      <div class="row">
-        <div class="container-fluid">
+    <div class="col-md-10 col-xs-12">
+
           
           <div class="row">
                         <div id="header">
               <p class="lead">
-              <h1 class="title">How to &quot;Play&quot; Big - 记Playframework在大型网站架构下的实践探索&nbsp;&nbsp;
-                <small>
-                                    王福强
-                                  </small>
-              </h1>
-              </p>
+              <h1 class="title">How to &quot;Play&quot; Big - 记Playframework在大型网站架构下的实践探索</h1>
+                            <small>
+                  <h3 class="author">王福强</h3>
+              </small>
+                                          </p>
             </div>
-                        <div>
-
+            
               <hr>
 
-                            <ol style="list-style-type: decimal">
-<li>部署与发布
-<ul>
-<li>mechinisms
-<ul>
-<li>git
-<ul>
-<li>生产环境每个节点上各scala应用共享maven本地库</li>
-<li>只需要pull必要指定的版本进行部署，可以及时回滚</li>
-</ul></li>
-<li>rsync
-<ul>
-<li>单台发布机进行checkout和编译， 不必要的传输量， 回滚需要重新传输同步</li>
-</ul></li>
-</ul></li>
-<li>deployment web app
-<ul>
-<li>incremental deployment and rollback</li>
-</ul></li>
-<li>Port Forwarding
-<ul>
-<li>使用iptables， 不建议play使用1024以下端口，需要root权限</li>
-</ul></li>
-</ul></li>
-<li>CDN in another way?!
-<ul>
-<li>Pros and cons of playframeowrk</li>
-<li>play with netty inside is necessary, not enough
-<ul>
-<li>async is good</li>
-<li>one-stack-for-all is not good for large scale deployment</li>
-<li>防盗链/防攻击</li>
-<li>流量统计</li>
-<li>缓存调度</li>
-</ul></li>
-</ul></li>
-</ol>
+              
+              <hr/>
+
+              <ol style="list-style-type: decimal">
+              <li>部署与发布
+              <ul>
+              <li>mechinisms
+              <ul>
+              <li>git
+              <ul>
+              <li>生产环境每个节点上各scala应用共享maven本地库</li>
+              <li>只需要pull必要指定的版本进行部署，可以及时回滚</li>
+              </ul></li>
+              <li>rsync
+              <ul>
+              <li>单台发布机进行checkout和编译， 不必要的传输量， 回滚需要重新传输同步</li>
+              </ul></li>
+              </ul></li>
+              <li>deployment web app
+              <ul>
+              <li>incremental deployment and rollback</li>
+              </ul></li>
+              <li>Port Forwarding
+              <ul>
+              <li>使用iptables， 不建议play使用1024以下端口，需要root权限</li>
+              </ul></li>
+              </ul></li>
+              <li>CDN in another way?!
+              <ul>
+              <li>Pros and cons of playframeowrk</li>
+              <li>play with netty inside is necessary, not enough
+              <ul>
+              <li>async is good</li>
+              <li>one-stack-for-all is not good for large scale deployment</li>
+              <li>防盗链/防攻击</li>
+              <li>流量统计</li>
+              <li>缓存调度</li>
+              </ul></li>
+              </ul></li>
+              </ol>
               
               <!--百度分享按钮-->
               <div class="pull-left bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a><a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a></div>
@@ -133,9 +123,6 @@
               <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
               <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
 
-            </div>
-          </div>
-        </div>
       </div>
       <div class="row">
         <div class="col-md-12 footer">
@@ -143,9 +130,9 @@
           <p>Powered by <a href="http://johnmacfarlane.net/pandoc/">pandoc</a>, <a href="http://rometools.github.io/rome/index.html">ROME</a> and <a href="http://pages.github.com/">github pages</a></p>
         </div>
       </div>
-    </div>
-  </div>
-</div>
+    </div> <!--main-->
+  </div> <!--row-->
+</div> <!--container-->
 
 <script src="/js/jquery-2.1.1.min.js"></script>
 <script src="/js/bootstrap.min.js"></script>

@@ -46,100 +46,90 @@
 </head>
 
 <body>
-<div class="container-fluid">
+<div class="container">
   <div class="row">
-    <div class="col-md-3 sidebar">
-      <a href="/">
-        <!-- <div align="center"><img src="/images/wfq0.png"/></div> -->
-        <h2 class="text-center">扶墙老师</h2>
-      </a>
-      <p class="text-center lead slogan"><a href="/slogan.html">lollapalooza &amp; positioning</a></p>
-      <p class="text-center lead slogan">瞎子摸象的践行者</p>
-      <ul class="nav nav-pills nav-stacked">
-        <li><a href="/favorite.html" class="text-center"><i class="icon-star-empty"></i> 我的收藏</a></li>
-        <li><a href="/dashboard.html" class="text-center"><i class="icon-fullscreen"></i> 金融看板</a></li>
-        <li><a href="/columns.html" class="text-center"><i class="icon-folder-close-alt"></i> 专栏</a></li>
-        <li><a href="/references.html" class="text-center"><i class="icon-folder-close-alt"></i> 快捷参考</a></li>
-        <li><a href="/whoami.html" class="text-center"><i class="icon-user-md"></i> 我是谁</a></li>
-        <li><a href="/interlinks.html" class="text-center"><i class="icon-user-md"></i> 友情链接</a></li>
-        <li><a href="/feeds.xml" class="text-center"><i class="icon-folder-close-alt"></i> RSS</a></li>
-      </ul>
-
+    
+    <div class="col-md-2">
+        <div class="seal text-right">
+          <a href="http://afoo.me">
+            <img src="/images/myseal.png"/>
+          </a>
+        </div>
     </div>
-    <div class="col-md-9 col-md-offset-3 main">
-      <div class="row">
-        <div class="container-fluid">
+    <div class="col-md-10 col-xs-12">
+
           
           <div class="row">
                         <div id="header">
               <p class="lead">
-              <h1 class="title">Xindice随笔&nbsp;&nbsp;
-                <small>
-                                    FuqiangWang
-                                  </small>
-              </h1>
-              </p>
+              <h1 class="title">Xindice随笔</h1>
+                            <small>
+                  <h3 class="author">FuqiangWang</h3>
+              </small>
+                                          </p>
             </div>
-                        <div>
-
+            
               <hr>
 
-                            <blockquote>
-<p>2014年从msn space存档中重新恢复出来！</p>
-</blockquote>
-<p>作为本地xml数据库的一种，xindice遵循XML:DB API标准，给出了相当于Core Level 1水平的API功能实现。XML:DB API之相对于NXD（Native XML Database）来说，就相当于JDBC之相当于RDBMS。</p>
-<p>通过xindice，我们可以通过他来保存xml文档数据，通过其提供的各种服务来对文档数据进行管理。其中，我们可以通过XPathQueryService服务来查询xml数据库中的xml文档数据，通过XUpdateQueryService服务来对xml进行更新，等等。</p>
-<p>下面只是简单罗列一些XUpdateQueryService提供的XUpdate命令，处于时间考虑，如果有时间，可以写一些有关xindice本地xml数据库的更详细的文档，另外，developerworks网站有一篇说明xindice的介绍性质的文章，如要参考，可以search一下（在xml section）。</p>
-<pre>
-[b]XUpdate Commands[/b]
-xupdate:insert-before Inserts a new node in document order before the selected node
-xupdate:insert-after Inserts a new node in document order after the selected node
-xupdate:update Replaces all child nodes of the selected node with the specified nodes
-xupdate:append Appends the specified node to the content of the selected node
-xupdate:remove Remove the selected node
-xupdate:rename Renames the selected node
-xupdate:variable Defines a variable containing a node list that can be reused in later operations
+              
+              <hr/>
 
-[b]XUpdate Node Construction [/b] 
-xupdate:element Creates a new element in the document
-xupdate:attribute Creates a new attribute node associated with an xupdate:element
-xupdate:text Creates a text content node in the document
-xupdate:processing-instruction Creates a processing instruction node in the document
-xupdate:comment Creates a new comment node in the document
-</pre>
-<p>下面是xindice提供的文档中给出的一个简单的XUpdate命令实例：</p>
-<div class="sourceCode"><pre class="sourceCode xml"><code class="sourceCode xml">Basic XUpdate Insert Command
-
-<span class="kw">&lt;xupdate:modifications</span><span class="ot"> version=</span><span class="st">&quot;1.0&quot;</span>
-<span class="ot">        xmlns:xupdate=</span><span class="st">&quot;http://www.xmldb.org/xupdate&quot;</span><span class="kw">&gt;</span>
-   <span class="kw">&lt;xupdate:insert-after</span><span class="ot"> select=</span><span class="st">&quot;/addresses/address[1]&quot;</span> <span class="kw">&gt;</span>
-      
-      <span class="kw">&lt;xupdate:element</span><span class="ot"> name=</span><span class="st">&quot;address&quot;</span><span class="kw">&gt;</span>
-         <span class="kw">&lt;xupdate:attribute</span><span class="ot"> name=</span><span class="st">&quot;id&quot;</span><span class="kw">&gt;</span>2<span class="kw">&lt;/xupdate:attribute&gt;</span>
-         <span class="kw">&lt;fullname&gt;</span>John Smith<span class="kw">&lt;/fullname&gt;</span>
-         <span class="kw">&lt;born</span><span class="ot"> day=</span><span class="st">&#39;&#39;</span><span class="er">2&#39;&#39;</span><span class="ot"> month=</span><span class="st">&#39;&#39;</span><span class="er">12&#39;&#39;</span><span class="ot"> year=</span><span class="st">&#39;&#39;</span><span class="er">1974&#39;&#39;</span><span class="kw">/&gt;</span>
-         <span class="kw">&lt;country&gt;</span>Germany<span class="kw">&lt;/country&gt;</span>
-     <span class="kw">&lt;/xupdate:element&gt;</span>
-   <span class="kw">&lt;/xupdate:insert-after&gt;</span>
-<span class="kw">&lt;/xupdate:modifications&gt;</span></code></pre></div>
-<p>在程序中，可以通过以下类似代码调用该XUpdate命令对文档进行更新：</p>
-<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java">String xupdate = 刚才的XUpdate命令内容；
-XUpdateQueryService service =(XUpdateQueryService) col.<span class="fu">getService</span>(<span class="st">&quot;XUpdateQueryService&quot;</span>, <span class="st">&quot;1.0&quot;</span>);
-service.<span class="fu">update</span>(xupdate);
-...
-<span class="co">//其他操作，比如释放资源</span></code></pre></div>
-<p>因为更新命令中包括了insert，delete和update等功能，所以，其他的管理可以以上面类似的形式实现，通过为XUpdateQueryService提供相应的XUpdate命令就可以了。 至于查询操作，步骤类似，只要从Collection中取得XPathQueryService服务，然后为其指定查询用的Xpath表达式，最后对结果（Resource）进行处理。</p>
-<p>Xindice发布包中附带有一个AddressBook应用，以用来掩饰基于Xindice的web应用实现模型，但其提供的Ant编译脚本有问题，没有指定编译时候的classpath，所以，在现在的机器上不能编译成功，最后，通过为该脚本添加了以下内容才使编译通过：</p>
-<p>即在build.xml文件开始添加</p>
-<div class="sourceCode"><pre class="sourceCode xml"><code class="sourceCode xml"><span class="kw">&lt;path</span><span class="ot">  id=</span><span class="st">&quot;project.classpath&quot;</span><span class="kw">&gt;</span>
-   <span class="kw">&lt;fileset</span><span class="ot"> dir=</span><span class="st">&quot;E:\APIs&quot;</span><span class="kw">&gt;</span>
-     <span class="kw">&lt;include</span><span class="ot"> name=</span><span class="st">&quot;**/*.jar&quot;</span><span class="kw">/&gt;</span>
-   <span class="kw">&lt;/fileset&gt;</span>  
-   <span class="kw">&lt;fileset</span><span class="ot"> dir=</span><span class="st">&quot;E:\xindice\java\lib&quot;</span><span class="kw">&gt;</span>
-     <span class="kw">&lt;include</span><span class="ot"> name=</span><span class="st">&quot;**/*.jar&quot;</span><span class="kw">/&gt;</span>
-   <span class="kw">&lt;/fileset&gt;</span>   
- <span class="kw">&lt;/path&gt;</span></code></pre></div>
-<p>然后在compile目标的javac任务中为其指定classpathref为project.classpath即可，编译完成后生成Addressbook.war文件，可以部署到App Server（我部署在resin2.1.1 App服务器上）。 稍后会考虑使用struts对该Webapp进行重构，因为相对于现在基于Command模式实现的实例，struts能更清晰的表达控制流程。</p>
+              <blockquote>
+              <p>2014年从msn space存档中重新恢复出来！</p>
+              </blockquote>
+              <p>作为本地xml数据库的一种，xindice遵循XML:DB API标准，给出了相当于Core Level 1水平的API功能实现。XML:DB API之相对于NXD（Native XML Database）来说，就相当于JDBC之相当于RDBMS。</p>
+              <p>通过xindice，我们可以通过他来保存xml文档数据，通过其提供的各种服务来对文档数据进行管理。其中，我们可以通过XPathQueryService服务来查询xml数据库中的xml文档数据，通过XUpdateQueryService服务来对xml进行更新，等等。</p>
+              <p>下面只是简单罗列一些XUpdateQueryService提供的XUpdate命令，处于时间考虑，如果有时间，可以写一些有关xindice本地xml数据库的更详细的文档，另外，developerworks网站有一篇说明xindice的介绍性质的文章，如要参考，可以search一下（在xml section）。</p>
+              <pre>
+              [b]XUpdate Commands[/b]
+              xupdate:insert-before Inserts a new node in document order before the selected node
+              xupdate:insert-after Inserts a new node in document order after the selected node
+              xupdate:update Replaces all child nodes of the selected node with the specified nodes
+              xupdate:append Appends the specified node to the content of the selected node
+              xupdate:remove Remove the selected node
+              xupdate:rename Renames the selected node
+              xupdate:variable Defines a variable containing a node list that can be reused in later operations
+              
+              [b]XUpdate Node Construction [/b] 
+              xupdate:element Creates a new element in the document
+              xupdate:attribute Creates a new attribute node associated with an xupdate:element
+              xupdate:text Creates a text content node in the document
+              xupdate:processing-instruction Creates a processing instruction node in the document
+              xupdate:comment Creates a new comment node in the document
+              </pre>
+              <p>下面是xindice提供的文档中给出的一个简单的XUpdate命令实例：</p>
+              <div class="sourceCode"><pre class="sourceCode xml"><code class="sourceCode xml">Basic XUpdate Insert Command
+              
+              <span class="kw">&lt;xupdate:modifications</span><span class="ot"> version=</span><span class="st">&quot;1.0&quot;</span>
+              <span class="ot">        xmlns:xupdate=</span><span class="st">&quot;http://www.xmldb.org/xupdate&quot;</span><span class="kw">&gt;</span>
+                 <span class="kw">&lt;xupdate:insert-after</span><span class="ot"> select=</span><span class="st">&quot;/addresses/address[1]&quot;</span> <span class="kw">&gt;</span>
+                    
+                    <span class="kw">&lt;xupdate:element</span><span class="ot"> name=</span><span class="st">&quot;address&quot;</span><span class="kw">&gt;</span>
+                       <span class="kw">&lt;xupdate:attribute</span><span class="ot"> name=</span><span class="st">&quot;id&quot;</span><span class="kw">&gt;</span>2<span class="kw">&lt;/xupdate:attribute&gt;</span>
+                       <span class="kw">&lt;fullname&gt;</span>John Smith<span class="kw">&lt;/fullname&gt;</span>
+                       <span class="kw">&lt;born</span><span class="ot"> day=</span><span class="st">&#39;&#39;</span><span class="er">2&#39;&#39;</span><span class="ot"> month=</span><span class="st">&#39;&#39;</span><span class="er">12&#39;&#39;</span><span class="ot"> year=</span><span class="st">&#39;&#39;</span><span class="er">1974&#39;&#39;</span><span class="kw">/&gt;</span>
+                       <span class="kw">&lt;country&gt;</span>Germany<span class="kw">&lt;/country&gt;</span>
+                   <span class="kw">&lt;/xupdate:element&gt;</span>
+                 <span class="kw">&lt;/xupdate:insert-after&gt;</span>
+              <span class="kw">&lt;/xupdate:modifications&gt;</span></code></pre></div>
+              <p>在程序中，可以通过以下类似代码调用该XUpdate命令对文档进行更新：</p>
+              <div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java">String xupdate = 刚才的XUpdate命令内容；
+              XUpdateQueryService service =(XUpdateQueryService) col.<span class="fu">getService</span>(<span class="st">&quot;XUpdateQueryService&quot;</span>, <span class="st">&quot;1.0&quot;</span>);
+              service.<span class="fu">update</span>(xupdate);
+              ...
+              <span class="co">//其他操作，比如释放资源</span></code></pre></div>
+              <p>因为更新命令中包括了insert，delete和update等功能，所以，其他的管理可以以上面类似的形式实现，通过为XUpdateQueryService提供相应的XUpdate命令就可以了。 至于查询操作，步骤类似，只要从Collection中取得XPathQueryService服务，然后为其指定查询用的Xpath表达式，最后对结果（Resource）进行处理。</p>
+              <p>Xindice发布包中附带有一个AddressBook应用，以用来掩饰基于Xindice的web应用实现模型，但其提供的Ant编译脚本有问题，没有指定编译时候的classpath，所以，在现在的机器上不能编译成功，最后，通过为该脚本添加了以下内容才使编译通过：</p>
+              <p>即在build.xml文件开始添加</p>
+              <div class="sourceCode"><pre class="sourceCode xml"><code class="sourceCode xml"><span class="kw">&lt;path</span><span class="ot">  id=</span><span class="st">&quot;project.classpath&quot;</span><span class="kw">&gt;</span>
+                 <span class="kw">&lt;fileset</span><span class="ot"> dir=</span><span class="st">&quot;E:\APIs&quot;</span><span class="kw">&gt;</span>
+                   <span class="kw">&lt;include</span><span class="ot"> name=</span><span class="st">&quot;**/*.jar&quot;</span><span class="kw">/&gt;</span>
+                 <span class="kw">&lt;/fileset&gt;</span>  
+                 <span class="kw">&lt;fileset</span><span class="ot"> dir=</span><span class="st">&quot;E:\xindice\java\lib&quot;</span><span class="kw">&gt;</span>
+                   <span class="kw">&lt;include</span><span class="ot"> name=</span><span class="st">&quot;**/*.jar&quot;</span><span class="kw">/&gt;</span>
+                 <span class="kw">&lt;/fileset&gt;</span>   
+               <span class="kw">&lt;/path&gt;</span></code></pre></div>
+              <p>然后在compile目标的javac任务中为其指定classpathref为project.classpath即可，编译完成后生成Addressbook.war文件，可以部署到App Server（我部署在resin2.1.1 App服务器上）。 稍后会考虑使用struts对该Webapp进行重构，因为相对于现在基于Command模式实现的实例，struts能更清晰的表达控制流程。</p>
               
               <!--百度分享按钮-->
               <div class="pull-left bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a><a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a></div>
@@ -172,9 +162,6 @@ service.<span class="fu">update</span>(xupdate);
               <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
               <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
 
-            </div>
-          </div>
-        </div>
       </div>
       <div class="row">
         <div class="col-md-12 footer">
@@ -182,9 +169,9 @@ service.<span class="fu">update</span>(xupdate);
           <p>Powered by <a href="http://johnmacfarlane.net/pandoc/">pandoc</a>, <a href="http://rometools.github.io/rome/index.html">ROME</a> and <a href="http://pages.github.com/">github pages</a></p>
         </div>
       </div>
-    </div>
-  </div>
-</div>
+    </div> <!--main-->
+  </div> <!--row-->
+</div> <!--container-->
 
 <script src="/js/jquery-2.1.1.min.js"></script>
 <script src="/js/bootstrap.min.js"></script>

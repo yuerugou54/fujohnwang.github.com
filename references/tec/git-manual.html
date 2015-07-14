@@ -46,42 +46,29 @@
 </head>
 
 <body>
-<div class="container-fluid">
+<div class="container">
   <div class="row">
-    <div class="col-md-3 sidebar">
-      <a href="/">
-        <!-- <div align="center"><img src="/images/wfq0.png"/></div> -->
-        <h2 class="text-center">扶墙老师</h2>
-      </a>
-      <p class="text-center lead slogan"><a href="/slogan.html">lollapalooza &amp; positioning</a></p>
-      <p class="text-center lead slogan">瞎子摸象的践行者</p>
-      <ul class="nav nav-pills nav-stacked">
-        <li><a href="/favorite.html" class="text-center"><i class="icon-star-empty"></i> 我的收藏</a></li>
-        <li><a href="/dashboard.html" class="text-center"><i class="icon-fullscreen"></i> 金融看板</a></li>
-        <li><a href="/columns.html" class="text-center"><i class="icon-folder-close-alt"></i> 专栏</a></li>
-        <li><a href="/references.html" class="text-center"><i class="icon-folder-close-alt"></i> 快捷参考</a></li>
-        <li><a href="/whoami.html" class="text-center"><i class="icon-user-md"></i> 我是谁</a></li>
-        <li><a href="/interlinks.html" class="text-center"><i class="icon-user-md"></i> 友情链接</a></li>
-        <li><a href="/feeds.xml" class="text-center"><i class="icon-folder-close-alt"></i> RSS</a></li>
-      </ul>
-
+    
+    <div class="col-md-2">
+        <div class="seal text-right">
+          <a href="http://afoo.me">
+            <img src="/images/myseal.png"/>
+          </a>
+        </div>
     </div>
-    <div class="col-md-9 col-md-offset-3 main">
-      <div class="row">
-        <div class="container-fluid">
+    <div class="col-md-10 col-xs-12">
+
           
           <div class="row">
                         <div id="header">
               <p class="lead">
-              <h1 class="title">我的Git参考手册&nbsp;&nbsp;
-                <small>
-                                    FuqiangWang
-                                  </small>
-              </h1>
-              </p>
+              <h1 class="title">我的Git参考手册</h1>
+                            <small>
+                  <h3 class="author">FuqiangWang</h3>
+              </small>
+                                          </p>
             </div>
-                        <div>
-
+            
               <hr>
 
                             <div id="TOC">
@@ -91,17 +78,20 @@
                 <li><a href="#remote-branch"><span class="toc-section-number">3</span> Remote Branch</a></li>
                 </ul>
               </div>
-                            <h1 id="舍弃所有本地变更-回滚到最后提交状态"><span class="header-section-number">1</span> 舍弃所有本地变更， 回滚到最后提交状态</h1>
-<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">git</span> commit -a -m <span class="st">&quot;Saving my work, just in case&quot;</span>
-<span class="kw">git</span> branch my-saved-work
+              
+              <hr/>
 
-<span class="kw">git</span> fetch origin
-<span class="kw">git</span> reset --hard origin/master</code></pre></div>
-<h1 id="打包指定版本的文件"><span class="header-section-number">2</span> 打包指定版本的文件</h1>
-<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">git</span> archive -o docs.zip v2.2.0 <span class="st">&#39;Documentation/*.html&#39;</span></code></pre></div>
-<p>git版本2.2.0</p>
-<h1 id="remote-branch"><span class="header-section-number">3</span> Remote Branch</h1>
-<p><a href="http://git-scm.com/book/en/v2/Git-Branching-Remote-Branches" class="uri">http://git-scm.com/book/en/v2/Git-Branching-Remote-Branches</a></p>
+              <h1 id="舍弃所有本地变更-回滚到最后提交状态"><span class="header-section-number">1</span> 舍弃所有本地变更， 回滚到最后提交状态</h1>
+              <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">git</span> commit -a -m <span class="st">&quot;Saving my work, just in case&quot;</span>
+              <span class="kw">git</span> branch my-saved-work
+              
+              <span class="kw">git</span> fetch origin
+              <span class="kw">git</span> reset --hard origin/master</code></pre></div>
+              <h1 id="打包指定版本的文件"><span class="header-section-number">2</span> 打包指定版本的文件</h1>
+              <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">git</span> archive -o docs.zip v2.2.0 <span class="st">&#39;Documentation/*.html&#39;</span></code></pre></div>
+              <p>git版本2.2.0</p>
+              <h1 id="remote-branch"><span class="header-section-number">3</span> Remote Branch</h1>
+              <p><a href="http://git-scm.com/book/en/v2/Git-Branching-Remote-Branches" class="uri">http://git-scm.com/book/en/v2/Git-Branching-Remote-Branches</a></p>
               
               <!--百度分享按钮-->
               <div class="pull-left bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a><a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a></div>
@@ -134,9 +124,6 @@
               <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
               <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
 
-            </div>
-          </div>
-        </div>
       </div>
       <div class="row">
         <div class="col-md-12 footer">
@@ -144,9 +131,9 @@
           <p>Powered by <a href="http://johnmacfarlane.net/pandoc/">pandoc</a>, <a href="http://rometools.github.io/rome/index.html">ROME</a> and <a href="http://pages.github.com/">github pages</a></p>
         </div>
       </div>
-    </div>
-  </div>
-</div>
+    </div> <!--main-->
+  </div> <!--row-->
+</div> <!--container-->
 
 <script src="/js/jquery-2.1.1.min.js"></script>
 <script src="/js/bootstrap.min.js"></script>

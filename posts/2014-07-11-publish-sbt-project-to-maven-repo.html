@@ -26,42 +26,29 @@
 </head>
 
 <body>
-<div class="container-fluid">
+<div class="container">
   <div class="row">
-    <div class="col-md-3 sidebar">
-      <a href="/">
-        <!-- <div align="center"><img src="/images/wfq0.png"/></div> -->
-        <h2 class="text-center">扶墙老师</h2>
-      </a>
-      <p class="text-center lead slogan"><a href="/slogan.html">lollapalooza &amp; positioning</a></p>
-      <p class="text-center lead slogan">瞎子摸象的践行者</p>
-      <ul class="nav nav-pills nav-stacked">
-        <li><a href="/favorite.html" class="text-center"><i class="icon-star-empty"></i> 我的收藏</a></li>
-        <li><a href="/dashboard.html" class="text-center"><i class="icon-fullscreen"></i> 金融看板</a></li>
-        <li><a href="/columns.html" class="text-center"><i class="icon-folder-close-alt"></i> 专栏</a></li>
-        <li><a href="/references.html" class="text-center"><i class="icon-folder-close-alt"></i> 快捷参考</a></li>
-        <li><a href="/whoami.html" class="text-center"><i class="icon-user-md"></i> 我是谁</a></li>
-        <li><a href="/interlinks.html" class="text-center"><i class="icon-user-md"></i> 友情链接</a></li>
-        <li><a href="/feeds.xml" class="text-center"><i class="icon-folder-close-alt"></i> RSS</a></li>
-      </ul>
-
+    
+    <div class="col-md-2">
+        <div class="seal text-right">
+          <a href="http://afoo.me">
+            <img src="/images/myseal.png"/>
+          </a>
+        </div>
     </div>
-    <div class="col-md-9 col-md-offset-3 main">
-      <div class="row">
-        <div class="container-fluid">
+    <div class="col-md-10 col-xs-12">
+
           
           <div class="row">
                         <div id="header">
               <p class="lead">
-              <h1 class="title">Publish SBT project to Maven repo(Nexus?)&nbsp;&nbsp;
-                <small>
-                                    WangFuqiang
-                                  </small>
-              </h1>
-              </p>
+              <h1 class="title">Publish SBT project to Maven repo(Nexus?)</h1>
+                            <small>
+                  <h3 class="author">WangFuqiang</h3>
+              </small>
+                                          </p>
             </div>
-                        <div>
-
+            
               <hr>
 
                             <div id="TOC">
@@ -73,45 +60,48 @@
                 <li><a href="#其它参考"><span class="toc-section-number">5</span> 其它参考</a></li>
                 </ul>
               </div>
-                            <p>--阶段性反刍--</p>
-<h1 id="准备配置内容"><span class="header-section-number">1</span> 准备配置内容</h1>
-build.sbt中需要添加发布到maven相应配置：
-<pre>
-publishMavenStyle := true
+              
+              <hr/>
 
-publishTo := {
-  val nexus = "http://192.168.1.248:9111/nexus/content/repositories/"
-  if (version.value.trim.endsWith("SNAPSHOT"))
-    Some("snapshots" at nexus + "snapshots")
-  else
-    Some("releases"  at nexus + "releases")
-}
-
-credentials += Credentials("${realm}", "${host}", "${username}", "${password}")
-</pre>
-<p>对于Nexus来说，默认的realm是“Sonatype Nexus Repository Manager”，如果不确定的话， 可以通过命令<code>curl -X POST http://${port}:${port}/nexus/content/repositories/releases -v</code>来获得，或者直接不写username和password，待报错的时候获得相应信息，因为sbt使用WWW-AUthenticate这个header来确定basic auth的realm。</p>
-<p>host参数只写IP或者域名，不需要添加port！</p>
-<h1 id="本地测试"><span class="header-section-number">2</span> 本地测试</h1>
-<p>可以通过<code>sbt publish-local</code>先本地测试一下， 发布到本地maven库中并检查是否有遗漏或者错误</p>
-<h1 id="正式发布"><span class="header-section-number">3</span> 正式发布</h1>
-<p>运行<code>sbt publish</code>, 等待结果...</p>
-<h1 id="关于credentials"><span class="header-section-number">4</span> 关于Credentials</h1>
-<p>直接写到project的build文件当然可以，但还是放到独立的一台发布机上比较靠谱一些，所以，我们可以在project的build文件里只声明credential文件的位置：</p>
-<pre>
-      credentials += Credentials(Path.userHome / ".ivy2" / ".credentials_busymachines_snapshots"),
-      credentials += Credentials(Path.userHome / ".ivy2" / ".credentials_busymachines_releases")      
-</pre>
-<p>然后在相应的credentials文件中在存放相应的credential信息：</p>
-<pre>
-realm=Repository Archiva Managed snapshots Repository
-host=archiva.busymachines.com
-user=myuser
-password=mypass
-</pre>
-<h1 id="其它参考"><span class="header-section-number">5</span> 其它参考</h1>
-<ol style="list-style-type: decimal">
-<li><a href="http://www.cakesolutions.net/teamblogs/publishing-artefacts-to-oss-sonatype-nexus-using-sbt-and-travis-ci-here...">Publishing artefacts to OSS Sonatype Nexus using SBT and Travis CI Here...</a></li>
-</ol>
+              <p>--阶段性反刍--</p>
+              <h1 id="准备配置内容"><span class="header-section-number">1</span> 准备配置内容</h1>
+              build.sbt中需要添加发布到maven相应配置：
+              <pre>
+              publishMavenStyle := true
+              
+              publishTo := {
+                val nexus = "http://192.168.1.248:9111/nexus/content/repositories/"
+                if (version.value.trim.endsWith("SNAPSHOT"))
+                  Some("snapshots" at nexus + "snapshots")
+                else
+                  Some("releases"  at nexus + "releases")
+              }
+              
+              credentials += Credentials("${realm}", "${host}", "${username}", "${password}")
+              </pre>
+              <p>对于Nexus来说，默认的realm是“Sonatype Nexus Repository Manager”，如果不确定的话， 可以通过命令<code>curl -X POST http://${port}:${port}/nexus/content/repositories/releases -v</code>来获得，或者直接不写username和password，待报错的时候获得相应信息，因为sbt使用WWW-AUthenticate这个header来确定basic auth的realm。</p>
+              <p>host参数只写IP或者域名，不需要添加port！</p>
+              <h1 id="本地测试"><span class="header-section-number">2</span> 本地测试</h1>
+              <p>可以通过<code>sbt publish-local</code>先本地测试一下， 发布到本地maven库中并检查是否有遗漏或者错误</p>
+              <h1 id="正式发布"><span class="header-section-number">3</span> 正式发布</h1>
+              <p>运行<code>sbt publish</code>, 等待结果...</p>
+              <h1 id="关于credentials"><span class="header-section-number">4</span> 关于Credentials</h1>
+              <p>直接写到project的build文件当然可以，但还是放到独立的一台发布机上比较靠谱一些，所以，我们可以在project的build文件里只声明credential文件的位置：</p>
+              <pre>
+                    credentials += Credentials(Path.userHome / ".ivy2" / ".credentials_busymachines_snapshots"),
+                    credentials += Credentials(Path.userHome / ".ivy2" / ".credentials_busymachines_releases")      
+              </pre>
+              <p>然后在相应的credentials文件中在存放相应的credential信息：</p>
+              <pre>
+              realm=Repository Archiva Managed snapshots Repository
+              host=archiva.busymachines.com
+              user=myuser
+              password=mypass
+              </pre>
+              <h1 id="其它参考"><span class="header-section-number">5</span> 其它参考</h1>
+              <ol style="list-style-type: decimal">
+              <li><a href="http://www.cakesolutions.net/teamblogs/publishing-artefacts-to-oss-sonatype-nexus-using-sbt-and-travis-ci-here...">Publishing artefacts to OSS Sonatype Nexus using SBT and Travis CI Here...</a></li>
+              </ol>
               
               <!--百度分享按钮-->
               <div class="pull-left bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a><a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a></div>
@@ -144,9 +134,6 @@ password=mypass
               <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
               <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
 
-            </div>
-          </div>
-        </div>
       </div>
       <div class="row">
         <div class="col-md-12 footer">
@@ -154,9 +141,9 @@ password=mypass
           <p>Powered by <a href="http://johnmacfarlane.net/pandoc/">pandoc</a>, <a href="http://rometools.github.io/rome/index.html">ROME</a> and <a href="http://pages.github.com/">github pages</a></p>
         </div>
       </div>
-    </div>
-  </div>
-</div>
+    </div> <!--main-->
+  </div> <!--row-->
+</div> <!--container-->
 
 <script src="/js/jquery-2.1.1.min.js"></script>
 <script src="/js/bootstrap.min.js"></script>

@@ -46,42 +46,29 @@
 </head>
 
 <body>
-<div class="container-fluid">
+<div class="container">
   <div class="row">
-    <div class="col-md-3 sidebar">
-      <a href="/">
-        <!-- <div align="center"><img src="/images/wfq0.png"/></div> -->
-        <h2 class="text-center">扶墙老师</h2>
-      </a>
-      <p class="text-center lead slogan"><a href="/slogan.html">lollapalooza &amp; positioning</a></p>
-      <p class="text-center lead slogan">瞎子摸象的践行者</p>
-      <ul class="nav nav-pills nav-stacked">
-        <li><a href="/favorite.html" class="text-center"><i class="icon-star-empty"></i> 我的收藏</a></li>
-        <li><a href="/dashboard.html" class="text-center"><i class="icon-fullscreen"></i> 金融看板</a></li>
-        <li><a href="/columns.html" class="text-center"><i class="icon-folder-close-alt"></i> 专栏</a></li>
-        <li><a href="/references.html" class="text-center"><i class="icon-folder-close-alt"></i> 快捷参考</a></li>
-        <li><a href="/whoami.html" class="text-center"><i class="icon-user-md"></i> 我是谁</a></li>
-        <li><a href="/interlinks.html" class="text-center"><i class="icon-user-md"></i> 友情链接</a></li>
-        <li><a href="/feeds.xml" class="text-center"><i class="icon-folder-close-alt"></i> RSS</a></li>
-      </ul>
-
+    
+    <div class="col-md-2">
+        <div class="seal text-right">
+          <a href="http://afoo.me">
+            <img src="/images/myseal.png"/>
+          </a>
+        </div>
     </div>
-    <div class="col-md-9 col-md-offset-3 main">
-      <div class="row">
-        <div class="container-fluid">
+    <div class="col-md-10 col-xs-12">
+
           
           <div class="row">
                         <div id="header">
               <p class="lead">
-              <h1 class="title">scala package object quick reference&nbsp;&nbsp;
-                <small>
-                                    王福强
-                                  </small>
-              </h1>
-              </p>
+              <h1 class="title">scala package object quick reference</h1>
+                            <small>
+                  <h3 class="author">王福强</h3>
+              </small>
+                                          </p>
             </div>
-                        <div>
-
+            
               <hr>
 
                             <div id="TOC">
@@ -94,22 +81,25 @@
                 </ul></li>
                 </ul>
               </div>
-                            <h1 id="功效"><span class="header-section-number">1</span> 功效</h1>
-<p>定义在package object中的变量，方法，函数等都可以被这个package下所有的类定义所用！</p>
-<h1 id="步骤"><span class="header-section-number">2</span> 步骤</h1>
-<p>假设我们想定义com.github.fujohnwang.demo这个package对应的package object，那么，我们可以：</p>
-<h2 id="第一步-确定文件位置"><span class="header-section-number">2.1</span> 第一步: 确定文件位置</h2>
-<p>在目录com/github/fujohnwang/demo下新建package.scala文件；</p>
-<h2 id="第二步确定文件内容"><span class="header-section-number">2.2</span> 第二步：确定文件内容</h2>
-<p>文件定义中，前面的声明如下:</p>
-<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">package</span> com.<span class="fu">github</span>.<span class="fu">fujohnwang</span>;
+              
+              <hr/>
 
-<span class="kw">package</span> <span class="kw">object</span> demo{
-  <span class="co">// ...</span>
-}</code></pre></div>
-<p>即package object的名称为当前包的名字(demo)， 而声明在放到上一级package中（这里为什么容易混淆，就是因为，实际上，当前的定义文件package.scala不是放在文件开头的package声明对应的目录下，而是当前package目录下）</p>
-<h2 id="第三步-使用"><span class="header-section-number">2.3</span> 第三步： 使用</h2>
-<p>在要使用package object中定义的变量，方法或者函数之前， <code>import com.github.fujohnwang.demo._</code>即可。</p>
+              <h1 id="功效"><span class="header-section-number">1</span> 功效</h1>
+              <p>定义在package object中的变量，方法，函数等都可以被这个package下所有的类定义所用！</p>
+              <h1 id="步骤"><span class="header-section-number">2</span> 步骤</h1>
+              <p>假设我们想定义com.github.fujohnwang.demo这个package对应的package object，那么，我们可以：</p>
+              <h2 id="第一步-确定文件位置"><span class="header-section-number">2.1</span> 第一步: 确定文件位置</h2>
+              <p>在目录com/github/fujohnwang/demo下新建package.scala文件；</p>
+              <h2 id="第二步确定文件内容"><span class="header-section-number">2.2</span> 第二步：确定文件内容</h2>
+              <p>文件定义中，前面的声明如下:</p>
+              <div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">package</span> com.<span class="fu">github</span>.<span class="fu">fujohnwang</span>;
+              
+              <span class="kw">package</span> <span class="kw">object</span> demo{
+                <span class="co">// ...</span>
+              }</code></pre></div>
+              <p>即package object的名称为当前包的名字(demo)， 而声明在放到上一级package中（这里为什么容易混淆，就是因为，实际上，当前的定义文件package.scala不是放在文件开头的package声明对应的目录下，而是当前package目录下）</p>
+              <h2 id="第三步-使用"><span class="header-section-number">2.3</span> 第三步： 使用</h2>
+              <p>在要使用package object中定义的变量，方法或者函数之前， <code>import com.github.fujohnwang.demo._</code>即可。</p>
               
               <!--百度分享按钮-->
               <div class="pull-left bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a><a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a></div>
@@ -142,9 +132,6 @@
               <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
               <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
 
-            </div>
-          </div>
-        </div>
       </div>
       <div class="row">
         <div class="col-md-12 footer">
@@ -152,9 +139,9 @@
           <p>Powered by <a href="http://johnmacfarlane.net/pandoc/">pandoc</a>, <a href="http://rometools.github.io/rome/index.html">ROME</a> and <a href="http://pages.github.com/">github pages</a></p>
         </div>
       </div>
-    </div>
-  </div>
-</div>
+    </div> <!--main-->
+  </div> <!--row-->
+</div> <!--container-->
 
 <script src="/js/jquery-2.1.1.min.js"></script>
 <script src="/js/bootstrap.min.js"></script>

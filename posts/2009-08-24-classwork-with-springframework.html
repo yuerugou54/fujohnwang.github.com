@@ -46,41 +46,26 @@
 </head>
 
 <body>
-<div class="container-fluid">
+<div class="container">
   <div class="row">
-    <div class="col-md-3 sidebar">
-      <a href="/">
-        <!-- <div align="center"><img src="/images/wfq0.png"/></div> -->
-        <h2 class="text-center">扶墙老师</h2>
-      </a>
-      <p class="text-center lead slogan"><a href="/slogan.html">lollapalooza &amp; positioning</a></p>
-      <p class="text-center lead slogan">瞎子摸象的践行者</p>
-      <ul class="nav nav-pills nav-stacked">
-        <li><a href="/favorite.html" class="text-center"><i class="icon-star-empty"></i> 我的收藏</a></li>
-        <li><a href="/dashboard.html" class="text-center"><i class="icon-fullscreen"></i> 金融看板</a></li>
-        <li><a href="/columns.html" class="text-center"><i class="icon-folder-close-alt"></i> 专栏</a></li>
-        <li><a href="/references.html" class="text-center"><i class="icon-folder-close-alt"></i> 快捷参考</a></li>
-        <li><a href="/whoami.html" class="text-center"><i class="icon-user-md"></i> 我是谁</a></li>
-        <li><a href="/interlinks.html" class="text-center"><i class="icon-user-md"></i> 友情链接</a></li>
-        <li><a href="/feeds.xml" class="text-center"><i class="icon-folder-close-alt"></i> RSS</a></li>
-      </ul>
-
+    
+    <div class="col-md-2">
+        <div class="seal text-right">
+          <a href="http://afoo.me">
+            <img src="/images/myseal.png"/>
+          </a>
+        </div>
     </div>
-    <div class="col-md-9 col-md-offset-3 main">
-      <div class="row">
-        <div class="container-fluid">
+    <div class="col-md-10 col-xs-12">
+
           
           <div class="row">
                         <div id="header">
               <p class="lead">
-              <h1 class="title">ClassWorking With Spring Framework&nbsp;&nbsp;
-                <small>
-                                  </small>
-              </h1>
-              </p>
+              <h1 class="title">ClassWorking With Spring Framework</h1>
+                                          </p>
             </div>
-                        <div>
-
+            
               <hr>
 
                             <div id="TOC">
@@ -96,88 +81,91 @@
                 <li><a href="#classpath-auto-scanning-功能"><span class="toc-section-number">3</span> classpath auto scanning 功能</a></li>
                 </ul>
               </div>
-                            <h1 id="classworking-utilities-in-spring-framework"><span class="header-section-number">1</span> ClassWorking Utilities In Spring Framework</h1>
-<h2 id="org.springframework.core.genericcollectiontyperesolver"><span class="header-section-number">1.1</span> org.springframework.core.GenericCollectionTypeResolver</h2>
-<blockquote>
-<p>Helper class for determining element types of collections and maps. Mainly intended for usage within the framework, determining the target type of values to be added to a collection or map (to be able to attempt type conversion if appropriate). Only usable on Java 5. Use an appropriate JdkVersion check before calling this class, if a fallback for JDK 1.4 is desirable.</p>
-</blockquote>
-<p>从javadoc中的说明就可以猜到，像getCollectionType(), getMapKeyType()和getMapValueType()之类的常用方法， 在这个类里是不会缺的。</p>
-<p>org.springframework.core.GenericTypeResolver跟GenericCollectionTypeResolver类似， 只不过， 现在不是针对Collection类型， 而是针对一般的Generic类。</p>
-<h2 id="org.springframework.core.annotation.annotationutils"><span class="header-section-number">1.2</span> org.springframework.core.annotation.AnnotationUtils</h2>
-<p>AnnotationUtils填补了默认的反射API中有关Annotation相关的几个功能，比如， 使用默认的反射API你只能读取当前class上的Annotation，而通过AnnotationUtils， 我们则可以获取当前class继承层次上的所有标注的Annotation， 更多信息可以参考该类的Javadoc.</p>
-<pre>
-Tip
+              
+              <hr/>
 
-有关Annotation的继承， 这里可以总结几句：
-
-1. 如果Annotation是标注于Interface之上的话， 不管该Annotation类型是否标注了@Inherited这个Annotation， 被标注的Interface的实现类都不会“继承” 这一Annotation。 也就是说，标注于Interface上的Annotation，通过反射API只能在这个Interface上才能读取到这一Annotation。
-
-2. 如果Annotation是标注于Class之上的话， 分两种情况：
-
-    - 如果当前的Annotation类型被标注了@Inherited，那么， 标注了当前Annotation的Class的子类会获得当前Annotation的“继承”， 也就是说， 即使子类没有标注这个Annotation，通过subClass.getClass().getAnnoation(currentAnnotation)也会获得这个Annotation所持有的元数据信息。
-
-    - 如果这个Annotation没有被标注@Inherited，那么， 子类不会获得这种继承。
-
-结合以上信息， 也就不难想到为什么Spring会倡导将Transactional之类的Annotation标注在具体的实现类上，而不是Interface之上了。
-</pre>
-<h2 id="org.springframework.util.classutils"><span class="header-section-number">1.3</span> org.springframework.util.ClassUtils</h2>
-<p>在 org.apache.commons.lang.ClassUtils存在的前提下，有重新发明轮子之嫌， 不过， 还是有一些补足的， 用与不用完全看你个人口味啦。不过，千万别跟我提“绑定到XX框架”这样的论调， 除非你真的能够像古代那样做个自给自足的隐士！</p>
-<h2 id="org.springframework.util.methodinvoker"><span class="header-section-number">1.4</span> org.springframework.util.MethodInvoker</h2>
-<blockquote>
-<p>Helper class that allows for specifying a method to invoke in a declarative fashion, be it static or non-static. Usage: Specify &quot;targetClass&quot;/&quot;targetMethod&quot; or &quot;targetObject&quot;/&quot;targetMethod&quot;, optionally specify arguments, prepare the invoker. Afterwards, you may invoke the method any number of times, obtaining the invocation result. Typically not used directly but via its subclasses MethodInvokingFactoryBean and MethodInvokingJobDetailFactoryBean.</p>
-</blockquote>
-<p>主要适用于对某个确定的方法调用多次的场景， 如果每次都是调用不同的对象上的不同的方法的话， 需要提供多个该类的实例。 如果是在Spring容器内使用的话， 大多数时候会是使用MethodInvokingFactoryBean或者MethodInvokingJobDetailFactoryBean这样的子类。</p>
-<h2 id="org.springframework.util.reflectionutils"><span class="header-section-number">1.5</span> org.springframework.util.ReflectionUtils</h2>
-<p>这个类主要对Java ReflectionAPI进行了封装， 虽然它的javadoc中声明仅限于框架内部使用，不过如果你不介意的话， 也可以拿来一用吧！不过，后果自负，哈</p>
-<h1 id="取得方法参数名称"><span class="header-section-number">2</span> 取得方法参数名称</h1>
-<p>通过Java标准Reflection API是取不到方法参数的名称的，要达到这个目的，除了可以通过读取class文件中的debug信息（可能在compile的时候没有启用）， 也可以使用类似ASM这样的类库获得， 不过， Spring framework中已经对读取方法参数名称这一功能进行了抽象和实现，我们可以直接拿过来用， 这一抽象接口为org.springframework.core.ParameterNameDiscoverer。</p>
-<p>ParameterNameDiscoverer主要有三个实现类：</p>
-<ol style="list-style-type: decimal">
-<li>LocalVariableTableParameterNameDiscoverer</li>
-<li>PrioritizedParameterNameDiscoverer</li>
-<li>AspectJAdviceParameterNameDiscoverer</li>
-</ol>
-<p>其中， LocalVariableTableParameterNameDiscoverer为最常用的实现类， 它会使用ObjectWeb的ASM来读取方法参数名称。</p>
-<blockquote>
-<p>WARNING</p>
-<p>LocalVariableTableParameterNameDiscoverer只能发现具体实现类的Class上的方法参数名称，对于接口类型的Class上的方法参数名称， 需要另寻他路，比如扫描接口的实现类并匹配相应方法，然后读取实现类相应方法的参数名称 ，或者直接通过Annotation标注相应的方法参数， 然后通过反射API读取等等。</p>
-</blockquote>
-<blockquote>
-<p>NOTE</p>
-<p>Codehaus的<a href="http://paranamer.codehaus.org/">ParaNamer</a>可以完成同样的任务</p>
-</blockquote>
-<p>PrioritizedParameterNameDiscoverer纯粹是借助于它所持有的多个ParameterNameDiscoverer来完成方法参数名称的获取工作，它会按照顺序请求它所持有的ParameterNameDiscoverer来完成每一个ParameterNameDiscoverer本应完成的任务。</p>
-<p>AspectJAdviceParameterNameDiscoverer主要用于集成了AspectJ的SpringAOP Advice实现类， 通过它的Javadoc可以获得进一步的详细信息。</p>
-<p>以下是LocalVariableTableParameterNameDiscoverer和ParaNamer的简单使用代码示例：</p>
-<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java">Class&lt;SubscriptionServiceImpl&gt; clazz = SubscriptionServiceImpl.<span class="fu">class</span>;
-Method method = ReflectionUtils.<span class="fu">findMethod</span>(clazz, <span class="st">&quot;listAllSubscription&quot;</span>,<span class="kw">new</span> Class&lt;?&gt;[]{String.<span class="fu">class</span>, Integer.<span class="fu">class</span>,Date.<span class="fu">class</span>,Date.<span class="fu">class</span>} );
-
-ParameterNameDiscoverer pmDiscoverer = <span class="kw">new</span> <span class="fu">LocalVariableTableParameterNameDiscoverer</span>();
-String[] parameterNames = pmDiscoverer.<span class="fu">getParameterNames</span>(method);
-
-<span class="co">//        BytecodeReadingParanamer reader = new BytecodeReadingParanamer();</span>
-<span class="co">//        String[] parameterNames = reader.lookupParameterNames(method);</span>
-
-<span class="kw">for</span>(String parameterName : parameterNames)
-{
-    System.<span class="fu">out</span>.<span class="fu">println</span>(parameterName);
-}    </code></pre></div>
-<h1 id="classpath-auto-scanning-功能"><span class="header-section-number">3</span> classpath auto scanning 功能</h1>
-<p>我们知道，Spring2.5之后引入了类路径的自动扫描功能，Spring框架为这一功能提供了很好的扩展点，我们可以通过BeanNameGenerator或者自定义的org.springframework.core.type.filter.TypeFilter来定制自动扫描的行为， 比如：</p>
-<div class="sourceCode"><pre class="sourceCode xml"><code class="sourceCode xml"><span class="kw">&lt;context:component-scan</span><span class="ot"> base-package=</span><span class="st">&quot;...&quot;</span><span class="ot"> name-generator=</span><span class="st">&quot;..&quot;</span><span class="kw">&gt;</span>
-    <span class="kw">&lt;context:exclude-filter</span><span class="ot"> type=</span><span class="st">&quot;annotation&quot;</span><span class="ot"> expression=</span><span class="st">&quot;...&quot;</span><span class="kw">/&gt;</span>
-    <span class="kw">&lt;context:include-filter</span><span class="ot"> type=</span><span class="st">&quot;annotation&quot;</span><span class="ot"> expression=</span><span class="st">&quot;...&quot;</span><span class="kw">/&gt;</span>
- <span class="kw">&lt;/context:component-scan&gt;</span></code></pre></div>
-<p>除此之外，我们实际上还可以较为独立的形式来使用Spring框架提供的这一类路径自动扫描功能，或者说， class的元数据信息读取功能。 这一功能的核心类为MetadataReader， 以下代码给出了使用这一核心类的简单示例代码：</p>
-<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java">ResourcePatternResolver resourcePatternResolver = <span class="kw">new</span> <span class="fu">PathMatchingResourcePatternResolver</span>();
-MetadataReaderFactory metadataReaderFactory = <span class="kw">new</span> <span class="fu">CachingMetadataReaderFactory</span>(resourcePatternResolver);
-<span class="co">// or new SimpleMetadataReaderFactory()</span>
-MetadataReader reader = metadataReaderFactory.<span class="fu">getMetadataReader</span>(<span class="st">&quot;cn/spring21/code/samples/spring/controller/SimpleController&quot;</span>);
-AnnotationMetadata annotationMD = reader.<span class="fu">getAnnotationMetadata</span>();
-ClassMetadata clazzMD = reader.<span class="fu">getClassMetadata</span>();
-System.<span class="fu">out</span>.<span class="fu">println</span>(annotationMD.<span class="fu">hasAnnotation</span>(<span class="st">&quot;org.springframework.stereotype.Component&quot;</span>));
-System.<span class="fu">out</span>.<span class="fu">println</span>(clazzMD.<span class="fu">getClassName</span>());</code></pre></div>
-<p>ResourcePatternResolver主要用于加载相应的Resources， 这里就是class文件， MetadataReaderFactory用于构造相应的MetadataReader，它有两个实现类，即SimpleMetadataReaderFactory和CachingMetadataReaderFactory。通过相应MetadataReaderFactory实现类获得可用的MetadataReader之后，就可以根据MetadataReader的getAnnotationMetadata()和getClassMetadata()返回的值对象来提取自己需要的信息了。</p>
+              <h1 id="classworking-utilities-in-spring-framework"><span class="header-section-number">1</span> ClassWorking Utilities In Spring Framework</h1>
+              <h2 id="org.springframework.core.genericcollectiontyperesolver"><span class="header-section-number">1.1</span> org.springframework.core.GenericCollectionTypeResolver</h2>
+              <blockquote>
+              <p>Helper class for determining element types of collections and maps. Mainly intended for usage within the framework, determining the target type of values to be added to a collection or map (to be able to attempt type conversion if appropriate). Only usable on Java 5. Use an appropriate JdkVersion check before calling this class, if a fallback for JDK 1.4 is desirable.</p>
+              </blockquote>
+              <p>从javadoc中的说明就可以猜到，像getCollectionType(), getMapKeyType()和getMapValueType()之类的常用方法， 在这个类里是不会缺的。</p>
+              <p>org.springframework.core.GenericTypeResolver跟GenericCollectionTypeResolver类似， 只不过， 现在不是针对Collection类型， 而是针对一般的Generic类。</p>
+              <h2 id="org.springframework.core.annotation.annotationutils"><span class="header-section-number">1.2</span> org.springframework.core.annotation.AnnotationUtils</h2>
+              <p>AnnotationUtils填补了默认的反射API中有关Annotation相关的几个功能，比如， 使用默认的反射API你只能读取当前class上的Annotation，而通过AnnotationUtils， 我们则可以获取当前class继承层次上的所有标注的Annotation， 更多信息可以参考该类的Javadoc.</p>
+              <pre>
+              Tip
+              
+              有关Annotation的继承， 这里可以总结几句：
+              
+              1. 如果Annotation是标注于Interface之上的话， 不管该Annotation类型是否标注了@Inherited这个Annotation， 被标注的Interface的实现类都不会“继承” 这一Annotation。 也就是说，标注于Interface上的Annotation，通过反射API只能在这个Interface上才能读取到这一Annotation。
+              
+              2. 如果Annotation是标注于Class之上的话， 分两种情况：
+              
+                  - 如果当前的Annotation类型被标注了@Inherited，那么， 标注了当前Annotation的Class的子类会获得当前Annotation的“继承”， 也就是说， 即使子类没有标注这个Annotation，通过subClass.getClass().getAnnoation(currentAnnotation)也会获得这个Annotation所持有的元数据信息。
+              
+                  - 如果这个Annotation没有被标注@Inherited，那么， 子类不会获得这种继承。
+              
+              结合以上信息， 也就不难想到为什么Spring会倡导将Transactional之类的Annotation标注在具体的实现类上，而不是Interface之上了。
+              </pre>
+              <h2 id="org.springframework.util.classutils"><span class="header-section-number">1.3</span> org.springframework.util.ClassUtils</h2>
+              <p>在 org.apache.commons.lang.ClassUtils存在的前提下，有重新发明轮子之嫌， 不过， 还是有一些补足的， 用与不用完全看你个人口味啦。不过，千万别跟我提“绑定到XX框架”这样的论调， 除非你真的能够像古代那样做个自给自足的隐士！</p>
+              <h2 id="org.springframework.util.methodinvoker"><span class="header-section-number">1.4</span> org.springframework.util.MethodInvoker</h2>
+              <blockquote>
+              <p>Helper class that allows for specifying a method to invoke in a declarative fashion, be it static or non-static. Usage: Specify &quot;targetClass&quot;/&quot;targetMethod&quot; or &quot;targetObject&quot;/&quot;targetMethod&quot;, optionally specify arguments, prepare the invoker. Afterwards, you may invoke the method any number of times, obtaining the invocation result. Typically not used directly but via its subclasses MethodInvokingFactoryBean and MethodInvokingJobDetailFactoryBean.</p>
+              </blockquote>
+              <p>主要适用于对某个确定的方法调用多次的场景， 如果每次都是调用不同的对象上的不同的方法的话， 需要提供多个该类的实例。 如果是在Spring容器内使用的话， 大多数时候会是使用MethodInvokingFactoryBean或者MethodInvokingJobDetailFactoryBean这样的子类。</p>
+              <h2 id="org.springframework.util.reflectionutils"><span class="header-section-number">1.5</span> org.springframework.util.ReflectionUtils</h2>
+              <p>这个类主要对Java ReflectionAPI进行了封装， 虽然它的javadoc中声明仅限于框架内部使用，不过如果你不介意的话， 也可以拿来一用吧！不过，后果自负，哈</p>
+              <h1 id="取得方法参数名称"><span class="header-section-number">2</span> 取得方法参数名称</h1>
+              <p>通过Java标准Reflection API是取不到方法参数的名称的，要达到这个目的，除了可以通过读取class文件中的debug信息（可能在compile的时候没有启用）， 也可以使用类似ASM这样的类库获得， 不过， Spring framework中已经对读取方法参数名称这一功能进行了抽象和实现，我们可以直接拿过来用， 这一抽象接口为org.springframework.core.ParameterNameDiscoverer。</p>
+              <p>ParameterNameDiscoverer主要有三个实现类：</p>
+              <ol style="list-style-type: decimal">
+              <li>LocalVariableTableParameterNameDiscoverer</li>
+              <li>PrioritizedParameterNameDiscoverer</li>
+              <li>AspectJAdviceParameterNameDiscoverer</li>
+              </ol>
+              <p>其中， LocalVariableTableParameterNameDiscoverer为最常用的实现类， 它会使用ObjectWeb的ASM来读取方法参数名称。</p>
+              <blockquote>
+              <p>WARNING</p>
+              <p>LocalVariableTableParameterNameDiscoverer只能发现具体实现类的Class上的方法参数名称，对于接口类型的Class上的方法参数名称， 需要另寻他路，比如扫描接口的实现类并匹配相应方法，然后读取实现类相应方法的参数名称 ，或者直接通过Annotation标注相应的方法参数， 然后通过反射API读取等等。</p>
+              </blockquote>
+              <blockquote>
+              <p>NOTE</p>
+              <p>Codehaus的<a href="http://paranamer.codehaus.org/">ParaNamer</a>可以完成同样的任务</p>
+              </blockquote>
+              <p>PrioritizedParameterNameDiscoverer纯粹是借助于它所持有的多个ParameterNameDiscoverer来完成方法参数名称的获取工作，它会按照顺序请求它所持有的ParameterNameDiscoverer来完成每一个ParameterNameDiscoverer本应完成的任务。</p>
+              <p>AspectJAdviceParameterNameDiscoverer主要用于集成了AspectJ的SpringAOP Advice实现类， 通过它的Javadoc可以获得进一步的详细信息。</p>
+              <p>以下是LocalVariableTableParameterNameDiscoverer和ParaNamer的简单使用代码示例：</p>
+              <div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java">Class&lt;SubscriptionServiceImpl&gt; clazz = SubscriptionServiceImpl.<span class="fu">class</span>;
+              Method method = ReflectionUtils.<span class="fu">findMethod</span>(clazz, <span class="st">&quot;listAllSubscription&quot;</span>,<span class="kw">new</span> Class&lt;?&gt;[]{String.<span class="fu">class</span>, Integer.<span class="fu">class</span>,Date.<span class="fu">class</span>,Date.<span class="fu">class</span>} );
+              
+              ParameterNameDiscoverer pmDiscoverer = <span class="kw">new</span> <span class="fu">LocalVariableTableParameterNameDiscoverer</span>();
+              String[] parameterNames = pmDiscoverer.<span class="fu">getParameterNames</span>(method);
+              
+              <span class="co">//        BytecodeReadingParanamer reader = new BytecodeReadingParanamer();</span>
+              <span class="co">//        String[] parameterNames = reader.lookupParameterNames(method);</span>
+              
+              <span class="kw">for</span>(String parameterName : parameterNames)
+              {
+                  System.<span class="fu">out</span>.<span class="fu">println</span>(parameterName);
+              }    </code></pre></div>
+              <h1 id="classpath-auto-scanning-功能"><span class="header-section-number">3</span> classpath auto scanning 功能</h1>
+              <p>我们知道，Spring2.5之后引入了类路径的自动扫描功能，Spring框架为这一功能提供了很好的扩展点，我们可以通过BeanNameGenerator或者自定义的org.springframework.core.type.filter.TypeFilter来定制自动扫描的行为， 比如：</p>
+              <div class="sourceCode"><pre class="sourceCode xml"><code class="sourceCode xml"><span class="kw">&lt;context:component-scan</span><span class="ot"> base-package=</span><span class="st">&quot;...&quot;</span><span class="ot"> name-generator=</span><span class="st">&quot;..&quot;</span><span class="kw">&gt;</span>
+                  <span class="kw">&lt;context:exclude-filter</span><span class="ot"> type=</span><span class="st">&quot;annotation&quot;</span><span class="ot"> expression=</span><span class="st">&quot;...&quot;</span><span class="kw">/&gt;</span>
+                  <span class="kw">&lt;context:include-filter</span><span class="ot"> type=</span><span class="st">&quot;annotation&quot;</span><span class="ot"> expression=</span><span class="st">&quot;...&quot;</span><span class="kw">/&gt;</span>
+               <span class="kw">&lt;/context:component-scan&gt;</span></code></pre></div>
+              <p>除此之外，我们实际上还可以较为独立的形式来使用Spring框架提供的这一类路径自动扫描功能，或者说， class的元数据信息读取功能。 这一功能的核心类为MetadataReader， 以下代码给出了使用这一核心类的简单示例代码：</p>
+              <div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java">ResourcePatternResolver resourcePatternResolver = <span class="kw">new</span> <span class="fu">PathMatchingResourcePatternResolver</span>();
+              MetadataReaderFactory metadataReaderFactory = <span class="kw">new</span> <span class="fu">CachingMetadataReaderFactory</span>(resourcePatternResolver);
+              <span class="co">// or new SimpleMetadataReaderFactory()</span>
+              MetadataReader reader = metadataReaderFactory.<span class="fu">getMetadataReader</span>(<span class="st">&quot;cn/spring21/code/samples/spring/controller/SimpleController&quot;</span>);
+              AnnotationMetadata annotationMD = reader.<span class="fu">getAnnotationMetadata</span>();
+              ClassMetadata clazzMD = reader.<span class="fu">getClassMetadata</span>();
+              System.<span class="fu">out</span>.<span class="fu">println</span>(annotationMD.<span class="fu">hasAnnotation</span>(<span class="st">&quot;org.springframework.stereotype.Component&quot;</span>));
+              System.<span class="fu">out</span>.<span class="fu">println</span>(clazzMD.<span class="fu">getClassName</span>());</code></pre></div>
+              <p>ResourcePatternResolver主要用于加载相应的Resources， 这里就是class文件， MetadataReaderFactory用于构造相应的MetadataReader，它有两个实现类，即SimpleMetadataReaderFactory和CachingMetadataReaderFactory。通过相应MetadataReaderFactory实现类获得可用的MetadataReader之后，就可以根据MetadataReader的getAnnotationMetadata()和getClassMetadata()返回的值对象来提取自己需要的信息了。</p>
               
               <!--百度分享按钮-->
               <div class="pull-left bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a><a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a></div>
@@ -210,9 +198,6 @@ System.<span class="fu">out</span>.<span class="fu">println</span>(clazzMD.<span
               <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
               <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
 
-            </div>
-          </div>
-        </div>
       </div>
       <div class="row">
         <div class="col-md-12 footer">
@@ -220,9 +205,9 @@ System.<span class="fu">out</span>.<span class="fu">println</span>(clazzMD.<span
           <p>Powered by <a href="http://johnmacfarlane.net/pandoc/">pandoc</a>, <a href="http://rometools.github.io/rome/index.html">ROME</a> and <a href="http://pages.github.com/">github pages</a></p>
         </div>
       </div>
-    </div>
-  </div>
-</div>
+    </div> <!--main-->
+  </div> <!--row-->
+</div> <!--container-->
 
 <script src="/js/jquery-2.1.1.min.js"></script>
 <script src="/js/bootstrap.min.js"></script>

@@ -46,77 +46,67 @@
 </head>
 
 <body>
-<div class="container-fluid">
+<div class="container">
   <div class="row">
-    <div class="col-md-3 sidebar">
-      <a href="/">
-        <!-- <div align="center"><img src="/images/wfq0.png"/></div> -->
-        <h2 class="text-center">扶墙老师</h2>
-      </a>
-      <p class="text-center lead slogan"><a href="/slogan.html">lollapalooza &amp; positioning</a></p>
-      <p class="text-center lead slogan">瞎子摸象的践行者</p>
-      <ul class="nav nav-pills nav-stacked">
-        <li><a href="/favorite.html" class="text-center"><i class="icon-star-empty"></i> 我的收藏</a></li>
-        <li><a href="/dashboard.html" class="text-center"><i class="icon-fullscreen"></i> 金融看板</a></li>
-        <li><a href="/columns.html" class="text-center"><i class="icon-folder-close-alt"></i> 专栏</a></li>
-        <li><a href="/references.html" class="text-center"><i class="icon-folder-close-alt"></i> 快捷参考</a></li>
-        <li><a href="/whoami.html" class="text-center"><i class="icon-user-md"></i> 我是谁</a></li>
-        <li><a href="/interlinks.html" class="text-center"><i class="icon-user-md"></i> 友情链接</a></li>
-        <li><a href="/feeds.xml" class="text-center"><i class="icon-folder-close-alt"></i> RSS</a></li>
-      </ul>
-
+    
+    <div class="col-md-2">
+        <div class="seal text-right">
+          <a href="http://afoo.me">
+            <img src="/images/myseal.png"/>
+          </a>
+        </div>
     </div>
-    <div class="col-md-9 col-md-offset-3 main">
-      <div class="row">
-        <div class="container-fluid">
+    <div class="col-md-10 col-xs-12">
+
           
           <div class="row">
                         <div id="header">
               <p class="lead">
-              <h1 class="title">JComboBox组件添加KeyListner&nbsp;&nbsp;
-                <small>
-                                    FuqiangWang
-                                  </small>
-              </h1>
-              </p>
+              <h1 class="title">JComboBox组件添加KeyListner</h1>
+                            <small>
+                  <h3 class="author">FuqiangWang</h3>
+              </small>
+                                          </p>
             </div>
-                        <div>
-
+            
               <hr>
 
-                            <blockquote>
-<p>2014年从msn space存档中重新恢复出来！</p>
-</blockquote>
-<p>徐敬琪提出的这个问题，呵呵，以前没有注意到，就是为JComboBox组件添加KeyListner不起作用，我按照他说得添加了几乎所有JComboBox所支持的事件监听器都不好用，google了一下才知道，实际上，对于JComboBox设置为可编辑之后，要对他的KeyStroke进行监听，实际上是对他的editor的EditorComponent组件的KeyStroke事件进行监听（还记不记得JComboBox是由几个其他的组件组合而成的那？！事件上，这种情况下是要对JTextField组件上的KeyStroke进行监听），所以，使用类似的代码就可以正确监听到JComboBox上的KeyStroke事件了：</p>
-<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java">comboPattern.<span class="fu">getEditor</span>().<span class="fu">getEditorComponent</span>().<span class="fu">addKeyListener</span>(<span class="kw">new</span> KeyListener(){
-                            <span class="kw">public</span> <span class="dt">void</span> <span class="fu">keyPressed</span>(KeyEvent e)
-                            {
-                                <span class="co">//System.out.println(&quot;keyPressed&quot;;</span>
-                                JTextField jtf = (JTextField)e.<span class="fu">getComponent</span>();
-                                <span class="kw">if</span>(!(jtf.<span class="fu">getText</span>()==<span class="kw">null</span>||<span class="st">&quot;&quot;</span>.<span class="fu">equals</span>(jtf.<span class="fu">getText</span>())))
-                                {
-                                    btnFind.<span class="fu">setEnabled</span>(<span class="kw">true</span>);
-                                    btnReplace.<span class="fu">setEnabled</span>(<span class="kw">true</span>);
-                                    btnReplaceAll.<span class="fu">setEnabled</span>(<span class="kw">true</span>);
-                                }
-                            }
-                            <span class="kw">public</span> <span class="dt">void</span> <span class="fu">keyTyped</span>(KeyEvent e)
-                            {
-                                <span class="co">//System.out.println(&quot;keyTyped&quot;;</span>
-                            }
-                            <span class="kw">public</span> <span class="dt">void</span> <span class="fu">keyReleased</span>(KeyEvent e)
-                            {
-                                <span class="co">//System.out.println(&quot;keyReleased&quot;;</span>
-                                JTextField jtf = (JTextField)e.<span class="fu">getComponent</span>();
-                                <span class="kw">if</span>(jtf.<span class="fu">getText</span>()==<span class="kw">null</span>||<span class="st">&quot;&quot;</span>.<span class="fu">equals</span>(jtf.<span class="fu">getText</span>()))
-                                {
-                                    btnFind.<span class="fu">setEnabled</span>(<span class="kw">false</span>);
-                                    btnReplace.<span class="fu">setEnabled</span>(<span class="kw">false</span>);
-                                    btnReplaceAll.<span class="fu">setEnabled</span>(<span class="kw">false</span>);
-                                }
-                            }
-                        });;</code></pre></div>
-<p>Thanks to Java Comunity Forum！</p>
+              
+              <hr/>
+
+              <blockquote>
+              <p>2014年从msn space存档中重新恢复出来！</p>
+              </blockquote>
+              <p>徐敬琪提出的这个问题，呵呵，以前没有注意到，就是为JComboBox组件添加KeyListner不起作用，我按照他说得添加了几乎所有JComboBox所支持的事件监听器都不好用，google了一下才知道，实际上，对于JComboBox设置为可编辑之后，要对他的KeyStroke进行监听，实际上是对他的editor的EditorComponent组件的KeyStroke事件进行监听（还记不记得JComboBox是由几个其他的组件组合而成的那？！事件上，这种情况下是要对JTextField组件上的KeyStroke进行监听），所以，使用类似的代码就可以正确监听到JComboBox上的KeyStroke事件了：</p>
+              <div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java">comboPattern.<span class="fu">getEditor</span>().<span class="fu">getEditorComponent</span>().<span class="fu">addKeyListener</span>(<span class="kw">new</span> KeyListener(){
+                                          <span class="kw">public</span> <span class="dt">void</span> <span class="fu">keyPressed</span>(KeyEvent e)
+                                          {
+                                              <span class="co">//System.out.println(&quot;keyPressed&quot;;</span>
+                                              JTextField jtf = (JTextField)e.<span class="fu">getComponent</span>();
+                                              <span class="kw">if</span>(!(jtf.<span class="fu">getText</span>()==<span class="kw">null</span>||<span class="st">&quot;&quot;</span>.<span class="fu">equals</span>(jtf.<span class="fu">getText</span>())))
+                                              {
+                                                  btnFind.<span class="fu">setEnabled</span>(<span class="kw">true</span>);
+                                                  btnReplace.<span class="fu">setEnabled</span>(<span class="kw">true</span>);
+                                                  btnReplaceAll.<span class="fu">setEnabled</span>(<span class="kw">true</span>);
+                                              }
+                                          }
+                                          <span class="kw">public</span> <span class="dt">void</span> <span class="fu">keyTyped</span>(KeyEvent e)
+                                          {
+                                              <span class="co">//System.out.println(&quot;keyTyped&quot;;</span>
+                                          }
+                                          <span class="kw">public</span> <span class="dt">void</span> <span class="fu">keyReleased</span>(KeyEvent e)
+                                          {
+                                              <span class="co">//System.out.println(&quot;keyReleased&quot;;</span>
+                                              JTextField jtf = (JTextField)e.<span class="fu">getComponent</span>();
+                                              <span class="kw">if</span>(jtf.<span class="fu">getText</span>()==<span class="kw">null</span>||<span class="st">&quot;&quot;</span>.<span class="fu">equals</span>(jtf.<span class="fu">getText</span>()))
+                                              {
+                                                  btnFind.<span class="fu">setEnabled</span>(<span class="kw">false</span>);
+                                                  btnReplace.<span class="fu">setEnabled</span>(<span class="kw">false</span>);
+                                                  btnReplaceAll.<span class="fu">setEnabled</span>(<span class="kw">false</span>);
+                                              }
+                                          }
+                                      });;</code></pre></div>
+              <p>Thanks to Java Comunity Forum！</p>
               
               <!--百度分享按钮-->
               <div class="pull-left bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a><a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a></div>
@@ -149,9 +139,6 @@
               <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
               <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
 
-            </div>
-          </div>
-        </div>
       </div>
       <div class="row">
         <div class="col-md-12 footer">
@@ -159,9 +146,9 @@
           <p>Powered by <a href="http://johnmacfarlane.net/pandoc/">pandoc</a>, <a href="http://rometools.github.io/rome/index.html">ROME</a> and <a href="http://pages.github.com/">github pages</a></p>
         </div>
       </div>
-    </div>
-  </div>
-</div>
+    </div> <!--main-->
+  </div> <!--row-->
+</div> <!--container-->
 
 <script src="/js/jquery-2.1.1.min.js"></script>
 <script src="/js/bootstrap.min.js"></script>

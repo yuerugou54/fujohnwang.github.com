@@ -46,42 +46,29 @@
 </head>
 
 <body>
-<div class="container-fluid">
+<div class="container">
   <div class="row">
-    <div class="col-md-3 sidebar">
-      <a href="/">
-        <!-- <div align="center"><img src="/images/wfq0.png"/></div> -->
-        <h2 class="text-center">扶墙老师</h2>
-      </a>
-      <p class="text-center lead slogan"><a href="/slogan.html">lollapalooza &amp; positioning</a></p>
-      <p class="text-center lead slogan">瞎子摸象的践行者</p>
-      <ul class="nav nav-pills nav-stacked">
-        <li><a href="/favorite.html" class="text-center"><i class="icon-star-empty"></i> 我的收藏</a></li>
-        <li><a href="/dashboard.html" class="text-center"><i class="icon-fullscreen"></i> 金融看板</a></li>
-        <li><a href="/columns.html" class="text-center"><i class="icon-folder-close-alt"></i> 专栏</a></li>
-        <li><a href="/references.html" class="text-center"><i class="icon-folder-close-alt"></i> 快捷参考</a></li>
-        <li><a href="/whoami.html" class="text-center"><i class="icon-user-md"></i> 我是谁</a></li>
-        <li><a href="/interlinks.html" class="text-center"><i class="icon-user-md"></i> 友情链接</a></li>
-        <li><a href="/feeds.xml" class="text-center"><i class="icon-folder-close-alt"></i> RSS</a></li>
-      </ul>
-
+    
+    <div class="col-md-2">
+        <div class="seal text-right">
+          <a href="http://afoo.me">
+            <img src="/images/myseal.png"/>
+          </a>
+        </div>
     </div>
-    <div class="col-md-9 col-md-offset-3 main">
-      <div class="row">
-        <div class="container-fluid">
+    <div class="col-md-10 col-xs-12">
+
           
           <div class="row">
                         <div id="header">
               <p class="lead">
-              <h1 class="title">Cobar分区函数扩展项目简介(cobar-extra-rules)&nbsp;&nbsp;
-                <small>
-                                    陨石
-                                  </small>
-              </h1>
-              </p>
+              <h1 class="title">Cobar分区函数扩展项目简介(cobar-extra-rules)</h1>
+                            <small>
+                  <h3 class="author">陨石</h3>
+              </small>
+                                          </p>
             </div>
-                        <div>
-
+            
               <hr>
 
                             <div id="TOC">
@@ -94,57 +81,60 @@
                 <li><a href="#数据扩展与迁移"><span class="toc-section-number">3</span> 数据扩展与迁移</a></li>
                 </ul>
               </div>
-                            <h1 id="背景"><span class="header-section-number">1</span> 背景</h1>
-<p>对于随时间线性增长的数据集， 我们希望按照时间段的形式对数据集进行分区， cobar提供的一些默认分区函数无法满足这类场景需求，所以在参考现有分区函数实现的基础上，开发了两个新的分区函数用于此类场景。</p>
-<p>考虑到其他人可能也会用到，遂作为二方/三方包提供并发布到maven repository中。</p>
-<h1 id="cobar-extra-rules项目"><span class="header-section-number">2</span> cobar-extra-rules项目</h1>
-<p>主要提供两个扩展函数， 即com.alibaba.cobar.route.function.PartitionByRange和com.alibaba.cobar.route.function.PartitionByDateTimeRange</p>
-<h2 id="com.alibaba.cobar.route.function.partitionbyrange"><span class="header-section-number">2.1</span> com.alibaba.cobar.route.function.PartitionByRange</h2>
-<p>以数字型Column字段为分区标准(内部可强制转型为Java的Long型)，通过单独的配置文件指定数字区间：</p>
-<div class="sourceCode"><pre class="sourceCode xml"><code class="sourceCode xml">  <span class="kw">&lt;function</span><span class="ot"> name=</span><span class="st">&quot;func&quot;</span><span class="ot"> class=</span><span class="st">&quot;com.alibaba.cobar.route.function.PartitionByRange&quot;</span><span class="kw">&gt;</span>
-    <span class="kw">&lt;property</span><span class="ot"> name=</span><span class="st">&quot;rangeDefinitionFile&quot;</span><span class="kw">&gt;</span>${config_file_path}<span class="kw">&lt;/property&gt;</span>
-  <span class="kw">&lt;/function&gt;</span></code></pre></div>
-<p>${config_file_path}指向的分区规则配置文件内容类似于：</p>
-<pre>
-0, 2014 = 0
-2014, = 1
-</pre>
-<p>具体配置规则为：</p>
-<ol style="list-style-type: decimal">
-<li>每一行代表一条路由规则； （以#或者//开头的行为注释， 不会作为路由规则）;</li>
-<li>每一条路由规则以=分割， 左边为数字区间， 右边为data node序号(shard index);</li>
-<li>路由规则左边以逗号分割， 第一部分为开始， 第二部分为结束， 其中对于区间来说，第一部分是inclusive关系， 第二部分为exclusive关系，除了最后一条， 其它行都严格遵循这一规则；最后一行可以只指定开始部分， 逗号和第二部分都可以省略， 默认最后一条的结束边界是Long.MAX_VALUE;</li>
-<li>路由规则右边是data node序号，即如果在schema.xml中顺序定义了多个data node，那么， 这些data node将按照顺序被赋予从0到n的序号；</li>
-</ol>
-<p>有了以上规则之后， PartitionByRange将基本以如下逻辑对数据库访问进行路由：</p>
-<pre><code>if($col_value &gt;= $open  &amp;&amp; $col_value &lt; $end) return $node_index;</code></pre>
-<h2 id="com.alibaba.cobar.route.function.partitionbydatetimerange"><span class="header-section-number">2.2</span> com.alibaba.cobar.route.function.PartitionByDateTimeRange</h2>
-<p>PartitionByRange处理路由的时候，接收的是数字型的参数， 对于数据库中DateTime类型的参数，我们需要从String形式转换为Java里的强类型，所以，没法重用PartitionByRange， 故此开发了PartitionByDateTimeRange， 它接收符合DateTime格式化的String类型参数， 然后决定如何路由数据库访问。</p>
-<p>PartitionByDateTimeRange也是通过一个外部规则文件来配置：</p>
-<div class="sourceCode"><pre class="sourceCode xml"><code class="sourceCode xml">  <span class="kw">&lt;function</span><span class="ot"> name=</span><span class="st">&quot;func&quot;</span><span class="ot"> class=</span><span class="st">&quot;com.alibaba.cobar.route.function.PartitionByDateTimeRange&quot;</span><span class="kw">&gt;</span>
-    <span class="kw">&lt;property</span><span class="ot"> name=</span><span class="st">&quot;rangeDefinitionFile&quot;</span><span class="kw">&gt;</span>${config_file_path}<span class="kw">&lt;/property&gt;</span>
-  <span class="kw">&lt;/function&gt;</span></code></pre></div>
-<p>配置文件内容格式与PartitionByRange的稍微有些小变动，但大体规则相同， 只是从以数字作为区间的开始和结束， 变成以格式化的时间的字符串作为区间的开始和结束 比如：</p>
-<pre>
-2014-06-27 01:11:51, 2014-07-27 01:11:51=0
-2014-07-27 01:11:51, = 1
-</pre>
-<p>同样，最后一条区间结束可以不写，代表开区间。</p>
-<h1 id="数据扩展与迁移"><span class="header-section-number">3</span> 数据扩展与迁移</h1>
-<p>因为数据属性是线性增长，所以，只要在某个区间即将饱和之前， 添加新的data node就可以保证数据的横向扩展。 当然， 添加了新的data node，需要在规则文件中同样反映出来。</p>
-<p>所以， 数据的扩展包括：</p>
-<ol style="list-style-type: decimal">
-<li>添加新的数据库节点；</li>
-<li>更改cobar配置和路由规则；</li>
-<li>重启cobar <a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a>；</li>
-</ol>
-<p>至于数据的迁移，采用时间范围的分区，基本不需要数据迁移， 只有新数据的添加。</p>
-<div class="footnotes">
-<hr />
-<ol>
-<li id="fn1"><p>原则上， 应该可以动态变更路由规则和动态添加数据节点，但暂时没必要以复杂性来换取便捷，因为扩展行为频繁程度不会很高<a href="#fnref1">↩</a></p></li>
-</ol>
-</div>
+              
+              <hr/>
+
+              <h1 id="背景"><span class="header-section-number">1</span> 背景</h1>
+              <p>对于随时间线性增长的数据集， 我们希望按照时间段的形式对数据集进行分区， cobar提供的一些默认分区函数无法满足这类场景需求，所以在参考现有分区函数实现的基础上，开发了两个新的分区函数用于此类场景。</p>
+              <p>考虑到其他人可能也会用到，遂作为二方/三方包提供并发布到maven repository中。</p>
+              <h1 id="cobar-extra-rules项目"><span class="header-section-number">2</span> cobar-extra-rules项目</h1>
+              <p>主要提供两个扩展函数， 即com.alibaba.cobar.route.function.PartitionByRange和com.alibaba.cobar.route.function.PartitionByDateTimeRange</p>
+              <h2 id="com.alibaba.cobar.route.function.partitionbyrange"><span class="header-section-number">2.1</span> com.alibaba.cobar.route.function.PartitionByRange</h2>
+              <p>以数字型Column字段为分区标准(内部可强制转型为Java的Long型)，通过单独的配置文件指定数字区间：</p>
+              <div class="sourceCode"><pre class="sourceCode xml"><code class="sourceCode xml">  <span class="kw">&lt;function</span><span class="ot"> name=</span><span class="st">&quot;func&quot;</span><span class="ot"> class=</span><span class="st">&quot;com.alibaba.cobar.route.function.PartitionByRange&quot;</span><span class="kw">&gt;</span>
+                  <span class="kw">&lt;property</span><span class="ot"> name=</span><span class="st">&quot;rangeDefinitionFile&quot;</span><span class="kw">&gt;</span>${config_file_path}<span class="kw">&lt;/property&gt;</span>
+                <span class="kw">&lt;/function&gt;</span></code></pre></div>
+              <p>${config_file_path}指向的分区规则配置文件内容类似于：</p>
+              <pre>
+              0, 2014 = 0
+              2014, = 1
+              </pre>
+              <p>具体配置规则为：</p>
+              <ol style="list-style-type: decimal">
+              <li>每一行代表一条路由规则； （以#或者//开头的行为注释， 不会作为路由规则）;</li>
+              <li>每一条路由规则以=分割， 左边为数字区间， 右边为data node序号(shard index);</li>
+              <li>路由规则左边以逗号分割， 第一部分为开始， 第二部分为结束， 其中对于区间来说，第一部分是inclusive关系， 第二部分为exclusive关系，除了最后一条， 其它行都严格遵循这一规则；最后一行可以只指定开始部分， 逗号和第二部分都可以省略， 默认最后一条的结束边界是Long.MAX_VALUE;</li>
+              <li>路由规则右边是data node序号，即如果在schema.xml中顺序定义了多个data node，那么， 这些data node将按照顺序被赋予从0到n的序号；</li>
+              </ol>
+              <p>有了以上规则之后， PartitionByRange将基本以如下逻辑对数据库访问进行路由：</p>
+              <pre><code>if($col_value &gt;= $open  &amp;&amp; $col_value &lt; $end) return $node_index;</code></pre>
+              <h2 id="com.alibaba.cobar.route.function.partitionbydatetimerange"><span class="header-section-number">2.2</span> com.alibaba.cobar.route.function.PartitionByDateTimeRange</h2>
+              <p>PartitionByRange处理路由的时候，接收的是数字型的参数， 对于数据库中DateTime类型的参数，我们需要从String形式转换为Java里的强类型，所以，没法重用PartitionByRange， 故此开发了PartitionByDateTimeRange， 它接收符合DateTime格式化的String类型参数， 然后决定如何路由数据库访问。</p>
+              <p>PartitionByDateTimeRange也是通过一个外部规则文件来配置：</p>
+              <div class="sourceCode"><pre class="sourceCode xml"><code class="sourceCode xml">  <span class="kw">&lt;function</span><span class="ot"> name=</span><span class="st">&quot;func&quot;</span><span class="ot"> class=</span><span class="st">&quot;com.alibaba.cobar.route.function.PartitionByDateTimeRange&quot;</span><span class="kw">&gt;</span>
+                  <span class="kw">&lt;property</span><span class="ot"> name=</span><span class="st">&quot;rangeDefinitionFile&quot;</span><span class="kw">&gt;</span>${config_file_path}<span class="kw">&lt;/property&gt;</span>
+                <span class="kw">&lt;/function&gt;</span></code></pre></div>
+              <p>配置文件内容格式与PartitionByRange的稍微有些小变动，但大体规则相同， 只是从以数字作为区间的开始和结束， 变成以格式化的时间的字符串作为区间的开始和结束 比如：</p>
+              <pre>
+              2014-06-27 01:11:51, 2014-07-27 01:11:51=0
+              2014-07-27 01:11:51, = 1
+              </pre>
+              <p>同样，最后一条区间结束可以不写，代表开区间。</p>
+              <h1 id="数据扩展与迁移"><span class="header-section-number">3</span> 数据扩展与迁移</h1>
+              <p>因为数据属性是线性增长，所以，只要在某个区间即将饱和之前， 添加新的data node就可以保证数据的横向扩展。 当然， 添加了新的data node，需要在规则文件中同样反映出来。</p>
+              <p>所以， 数据的扩展包括：</p>
+              <ol style="list-style-type: decimal">
+              <li>添加新的数据库节点；</li>
+              <li>更改cobar配置和路由规则；</li>
+              <li>重启cobar <a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a>；</li>
+              </ol>
+              <p>至于数据的迁移，采用时间范围的分区，基本不需要数据迁移， 只有新数据的添加。</p>
+              <div class="footnotes">
+              <hr />
+              <ol>
+              <li id="fn1"><p>原则上， 应该可以动态变更路由规则和动态添加数据节点，但暂时没必要以复杂性来换取便捷，因为扩展行为频繁程度不会很高<a href="#fnref1">↩</a></p></li>
+              </ol>
+              </div>
               
               <!--百度分享按钮-->
               <div class="pull-left bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a><a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a></div>
@@ -177,9 +167,6 @@
               <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
               <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
 
-            </div>
-          </div>
-        </div>
       </div>
       <div class="row">
         <div class="col-md-12 footer">
@@ -187,9 +174,9 @@
           <p>Powered by <a href="http://johnmacfarlane.net/pandoc/">pandoc</a>, <a href="http://rometools.github.io/rome/index.html">ROME</a> and <a href="http://pages.github.com/">github pages</a></p>
         </div>
       </div>
-    </div>
-  </div>
-</div>
+    </div> <!--main-->
+  </div> <!--row-->
+</div> <!--container-->
 
 <script src="/js/jquery-2.1.1.min.js"></script>
 <script src="/js/bootstrap.min.js"></script>

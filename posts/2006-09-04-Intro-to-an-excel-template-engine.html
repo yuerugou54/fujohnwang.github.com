@@ -26,70 +26,60 @@
 </head>
 
 <body>
-<div class="container-fluid">
+<div class="container">
   <div class="row">
-    <div class="col-md-3 sidebar">
-      <a href="/">
-        <!-- <div align="center"><img src="/images/wfq0.png"/></div> -->
-        <h2 class="text-center">扶墙老师</h2>
-      </a>
-      <p class="text-center lead slogan"><a href="/slogan.html">lollapalooza &amp; positioning</a></p>
-      <p class="text-center lead slogan">瞎子摸象的践行者</p>
-      <ul class="nav nav-pills nav-stacked">
-        <li><a href="/favorite.html" class="text-center"><i class="icon-star-empty"></i> 我的收藏</a></li>
-        <li><a href="/dashboard.html" class="text-center"><i class="icon-fullscreen"></i> 金融看板</a></li>
-        <li><a href="/columns.html" class="text-center"><i class="icon-folder-close-alt"></i> 专栏</a></li>
-        <li><a href="/references.html" class="text-center"><i class="icon-folder-close-alt"></i> 快捷参考</a></li>
-        <li><a href="/whoami.html" class="text-center"><i class="icon-user-md"></i> 我是谁</a></li>
-        <li><a href="/interlinks.html" class="text-center"><i class="icon-user-md"></i> 友情链接</a></li>
-        <li><a href="/feeds.xml" class="text-center"><i class="icon-folder-close-alt"></i> RSS</a></li>
-      </ul>
-
+    
+    <div class="col-md-2">
+        <div class="seal text-right">
+          <a href="http://afoo.me">
+            <img src="/images/myseal.png"/>
+          </a>
+        </div>
     </div>
-    <div class="col-md-9 col-md-offset-3 main">
-      <div class="row">
-        <div class="container-fluid">
+    <div class="col-md-10 col-xs-12">
+
           
           <div class="row">
                         <div id="header">
               <p class="lead">
-              <h1 class="title">Introduction 2 an excel template engine&nbsp;&nbsp;
-                <small>
-                                    FuqiangWang
-                                  </small>
-              </h1>
-              </p>
+              <h1 class="title">Introduction 2 an excel template engine</h1>
+                            <small>
+                  <h3 class="author">FuqiangWang</h3>
+              </small>
+                                          </p>
             </div>
-                        <div>
-
+            
               <hr>
 
-                            <blockquote>
-<p>2014年从msn space存档中重新恢复出来！</p>
-</blockquote>
-<p>今天在浏览Javaeye论坛时候无意间发现一个Excel模板引擎的实现---jXLS（http://jxls.sourceforge.net/），才想起其实早些时候自己也想过写这么一个东西，但是后来考虑到全面支持的复杂性，觉得不是一朝一夕可以搞定的，所以就转而求其次了，只是写一个简单的Template Method实现类，根据具体报表实现其相应的渲染部分。</p>
-<p>因为如果说不用考虑太多的话，一个excel引擎很容易搞定，无非就是为excel的模版提供一种简单的expression,然后engine根据scan到的expression从数据context中抓取数据并填充expression所在位置，但是如果报表复杂性提高的话，实现这个engine就不那么容易了，比如loop logic的处理，数据显示的格式化如何关联，scan实现算法的选择等等，不过好在这些现在有人帮我们实现了（that's jXLS)，可以帮助我们剩下很多Money（Time is Money，呵呵）...</p>
-<p><strong>Main Features</strong></p>
-<ul>
-<li>Using SQL queries directly in XLS templates</li>
-<li>Simple property access notation</li>
-<li>Full expression language support</li>
-<li>Complex object graph export</li>
-<li>Flexible collection export</li>
-<li>Flow-Control Tags support</li>
-<li>Dynamic grouping of data</li>
-<li>Export of a single collection into multiple worksheets</li>
-<li>Adjacent tables support!</li>
-<li>Complex formulas support</li>
-<li>Charts, Macros and many other Excel features in XLS template</li>
-<li>Dynamic Outlines</li>
-<li>Dynamic Columns Hiding</li>
-<li>Dynamic Cell Style processing through custom Processors</li>
-<li>JDBC ResultSet export</li>
-<li>Merged Cells support</li>
-<li>Multiple bean properties in a single cell</li>
-</ul>
-<p>有了jXLS的支持加上原来的实现方式，现在你可以根据具体场景随心所欲的驰骋excel report field啦..</p>
+              
+              <hr/>
+
+              <blockquote>
+              <p>2014年从msn space存档中重新恢复出来！</p>
+              </blockquote>
+              <p>今天在浏览Javaeye论坛时候无意间发现一个Excel模板引擎的实现---jXLS（http://jxls.sourceforge.net/），才想起其实早些时候自己也想过写这么一个东西，但是后来考虑到全面支持的复杂性，觉得不是一朝一夕可以搞定的，所以就转而求其次了，只是写一个简单的Template Method实现类，根据具体报表实现其相应的渲染部分。</p>
+              <p>因为如果说不用考虑太多的话，一个excel引擎很容易搞定，无非就是为excel的模版提供一种简单的expression,然后engine根据scan到的expression从数据context中抓取数据并填充expression所在位置，但是如果报表复杂性提高的话，实现这个engine就不那么容易了，比如loop logic的处理，数据显示的格式化如何关联，scan实现算法的选择等等，不过好在这些现在有人帮我们实现了（that's jXLS)，可以帮助我们剩下很多Money（Time is Money，呵呵）...</p>
+              <p><strong>Main Features</strong></p>
+              <ul>
+              <li>Using SQL queries directly in XLS templates</li>
+              <li>Simple property access notation</li>
+              <li>Full expression language support</li>
+              <li>Complex object graph export</li>
+              <li>Flexible collection export</li>
+              <li>Flow-Control Tags support</li>
+              <li>Dynamic grouping of data</li>
+              <li>Export of a single collection into multiple worksheets</li>
+              <li>Adjacent tables support!</li>
+              <li>Complex formulas support</li>
+              <li>Charts, Macros and many other Excel features in XLS template</li>
+              <li>Dynamic Outlines</li>
+              <li>Dynamic Columns Hiding</li>
+              <li>Dynamic Cell Style processing through custom Processors</li>
+              <li>JDBC ResultSet export</li>
+              <li>Merged Cells support</li>
+              <li>Multiple bean properties in a single cell</li>
+              </ul>
+              <p>有了jXLS的支持加上原来的实现方式，现在你可以根据具体场景随心所欲的驰骋excel report field啦..</p>
               
               <!--百度分享按钮-->
               <div class="pull-left bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a><a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a></div>
@@ -122,9 +112,6 @@
               <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
               <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
 
-            </div>
-          </div>
-        </div>
       </div>
       <div class="row">
         <div class="col-md-12 footer">
@@ -132,9 +119,9 @@
           <p>Powered by <a href="http://johnmacfarlane.net/pandoc/">pandoc</a>, <a href="http://rometools.github.io/rome/index.html">ROME</a> and <a href="http://pages.github.com/">github pages</a></p>
         </div>
       </div>
-    </div>
-  </div>
-</div>
+    </div> <!--main-->
+  </div> <!--row-->
+</div> <!--container-->
 
 <script src="/js/jquery-2.1.1.min.js"></script>
 <script src="/js/bootstrap.min.js"></script>

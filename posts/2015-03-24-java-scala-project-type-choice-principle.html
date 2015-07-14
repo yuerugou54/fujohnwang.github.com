@@ -27,47 +27,35 @@
 </head>
 
 <body>
-<div class="container-fluid">
+<div class="container">
   <div class="row">
-    <div class="col-md-3 sidebar">
-      <a href="/">
-        <!-- <div align="center"><img src="/images/wfq0.png"/></div> -->
-        <h2 class="text-center">扶墙老师</h2>
-      </a>
-      <p class="text-center lead slogan"><a href="/slogan.html">lollapalooza &amp; positioning</a></p>
-      <p class="text-center lead slogan">瞎子摸象的践行者</p>
-      <ul class="nav nav-pills nav-stacked">
-        <li><a href="/favorite.html" class="text-center"><i class="icon-star-empty"></i> 我的收藏</a></li>
-        <li><a href="/dashboard.html" class="text-center"><i class="icon-fullscreen"></i> 金融看板</a></li>
-        <li><a href="/columns.html" class="text-center"><i class="icon-folder-close-alt"></i> 专栏</a></li>
-        <li><a href="/references.html" class="text-center"><i class="icon-folder-close-alt"></i> 快捷参考</a></li>
-        <li><a href="/whoami.html" class="text-center"><i class="icon-user-md"></i> 我是谁</a></li>
-        <li><a href="/interlinks.html" class="text-center"><i class="icon-user-md"></i> 友情链接</a></li>
-        <li><a href="/feeds.xml" class="text-center"><i class="icon-folder-close-alt"></i> RSS</a></li>
-      </ul>
-
+    
+    <div class="col-md-2">
+        <div class="seal text-right">
+          <a href="http://afoo.me">
+            <img src="/images/myseal.png"/>
+          </a>
+        </div>
     </div>
-    <div class="col-md-9 col-md-offset-3 main">
-      <div class="row">
-        <div class="container-fluid">
+    <div class="col-md-10 col-xs-12">
+
           
           <div class="row">
                         <div id="header">
               <p class="lead">
-              <h1 class="title">Java/Scala项目设立原则&nbsp;&nbsp;
-                <small>
-                                    <script type="text/javascript">
-                  <!--
-                  h='&#x77;&#x61;&#x63;&#x61;&#x69;&#46;&#x63;&#x6f;&#x6d;';a='&#64;';n='&#x79;&#x75;&#110;&#x73;&#104;&#x69;';e=n+a+h;
-                  document.write('<a h'+'ref'+'="ma'+'ilto'+':'+e+'" clas'+'s="em' + 'ail">'+'陨石 - yunshi@wacai.com'+'<\/'+'a'+'>');
-                  // -->
-                  </script><noscript>&#38504;&#x77f3;&#32;&#x2d;&#32;&#x79;&#x75;&#110;&#x73;&#104;&#x69;&#64;&#x77;&#x61;&#x63;&#x61;&#x69;&#46;&#x63;&#x6f;&#x6d;&#32;&#40;&#x79;&#x75;&#110;&#x73;&#104;&#x69;&#32;&#x61;&#116;&#32;&#x77;&#x61;&#x63;&#x61;&#x69;&#32;&#100;&#x6f;&#116;&#32;&#x63;&#x6f;&#x6d;&#x29;</noscript>
-                                  </small>
-              </h1>
-              </p>
+              <h1 class="title">Java/Scala项目设立原则</h1>
+                            <small>
+                  <h3 class="author"><script type="text/javascript">
+<!--
+h='&#x77;&#x61;&#x63;&#x61;&#x69;&#46;&#x63;&#x6f;&#x6d;';a='&#64;';n='&#x79;&#x75;&#110;&#x73;&#104;&#x69;';e=n+a+h;
+document.write('<a h'+'ref'+'="ma'+'ilto'+':'+e+'" clas'+'s="em' + 'ail">'+'陨石 - yunshi@wacai.com'+'<\/'+'a'+'>');
+// -->
+</script><noscript>&#38504;&#x77f3;&#32;&#x2d;&#32;&#x79;&#x75;&#110;&#x73;&#104;&#x69;&#64;&#x77;&#x61;&#x63;&#x61;&#x69;&#46;&#x63;&#x6f;&#x6d;&#32;&#40;&#x79;&#x75;&#110;&#x73;&#104;&#x69;&#32;&#x61;&#116;&#32;&#x77;&#x61;&#x63;&#x61;&#x69;&#32;&#100;&#x6f;&#116;&#32;&#x63;&#x6f;&#x6d;&#x29;</noscript></h3>
+              </small>
+                                        <h4 class="date">2015-03-24</h4>
+                              </p>
             </div>
-                        <div>
-
+            
               <hr>
 
                             <div id="TOC">
@@ -76,23 +64,26 @@
                 <li><a href="#endpoint型项目"><span class="toc-section-number">2</span> Endpoint型项目</a></li>
                 </ul>
               </div>
-                            <div class="figure">
-<img src="images/component-vs-endpoint.png" alt="project types by yunshi" />
-<p class="caption">project types by yunshi</p>
-</div>
-<p>所有的Java项目， 可以划分为两类：</p>
-<ol style="list-style-type: decimal">
-<li>component型项目（包括对外服务的接口，各种client等）建议使用Java进行开发和发布，以避免scala频繁的版本更新以及二进制兼容性考虑不多可能造成的依赖问题。</li>
-<li>endpoint型项目可以自由选择使用Java或者Scala语言进行开发。</li>
-</ol>
-<h1 id="components型项目"><span class="header-section-number">1</span> Components型项目</h1>
-<p>也可以称为Dependency型项目， 一般是作为jar包发布，该jar包不可独立运行，一般作为其它可独立运行系统的一部分依赖存在，比如加入到各项目classpath的那些jar包，皆属于此类型。</p>
-<p>这种类型的项目应该尽量减少变更， 维护API的兼容性， 而且尽可能少的减少自身依赖的其它component型项目的数量，为了尽量减少依赖的问题，甚至可以通过拷贝代码这样的实践方式，总之， 这种类型项目讲求的是精简，精致，可复用。</p>
-<p>因为Scala在二进制兼容性方面的“恶名”， 建议Component型项目使用Java进行开发， 只有Scala特定的项目，比如SBT插件项目或者确实是Scala的Component型项目， 才建议使用Scala进行开发，但需要进行交叉编译，发布针对多个Scala版本的jar包。</p>
-<h1 id="endpoint型项目"><span class="header-section-number">2</span> Endpoint型项目</h1>
-<p>Endpoint型项目属于独立可运行的实体， 一般指Java的Standalone类型的应用， 特定的比如dubbo服务，playframework的web应用等。</p>
-<p>对于这种类型的项目，没有特殊情况的话，可以说爱依赖什么包依赖什么包。</p>
-<p>使用Maven发布这种类型的项目，一般使用<a href="http://maven.apache.org/plugins/maven-assembly-plugin/">maven assembly插件</a>或者<a href="http://mojo.codehaus.org/rpm-maven-plugin/">maven的rpm插件</a>； 使用SBT发布这种类型的项目，一般使用<a href="https://github.com/sbt/sbt-native-packager">sbt-native-packager</a>。</p>
+              
+              <hr/>
+
+              <div class="figure">
+              <img src="images/component-vs-endpoint.png" alt="project types by yunshi" />
+              <p class="caption">project types by yunshi</p>
+              </div>
+              <p>所有的Java项目， 可以划分为两类：</p>
+              <ol style="list-style-type: decimal">
+              <li>component型项目（包括对外服务的接口，各种client等）建议使用Java进行开发和发布，以避免scala频繁的版本更新以及二进制兼容性考虑不多可能造成的依赖问题。</li>
+              <li>endpoint型项目可以自由选择使用Java或者Scala语言进行开发。</li>
+              </ol>
+              <h1 id="components型项目"><span class="header-section-number">1</span> Components型项目</h1>
+              <p>也可以称为Dependency型项目， 一般是作为jar包发布，该jar包不可独立运行，一般作为其它可独立运行系统的一部分依赖存在，比如加入到各项目classpath的那些jar包，皆属于此类型。</p>
+              <p>这种类型的项目应该尽量减少变更， 维护API的兼容性， 而且尽可能少的减少自身依赖的其它component型项目的数量，为了尽量减少依赖的问题，甚至可以通过拷贝代码这样的实践方式，总之， 这种类型项目讲求的是精简，精致，可复用。</p>
+              <p>因为Scala在二进制兼容性方面的“恶名”， 建议Component型项目使用Java进行开发， 只有Scala特定的项目，比如SBT插件项目或者确实是Scala的Component型项目， 才建议使用Scala进行开发，但需要进行交叉编译，发布针对多个Scala版本的jar包。</p>
+              <h1 id="endpoint型项目"><span class="header-section-number">2</span> Endpoint型项目</h1>
+              <p>Endpoint型项目属于独立可运行的实体， 一般指Java的Standalone类型的应用， 特定的比如dubbo服务，playframework的web应用等。</p>
+              <p>对于这种类型的项目，没有特殊情况的话，可以说爱依赖什么包依赖什么包。</p>
+              <p>使用Maven发布这种类型的项目，一般使用<a href="http://maven.apache.org/plugins/maven-assembly-plugin/">maven assembly插件</a>或者<a href="http://mojo.codehaus.org/rpm-maven-plugin/">maven的rpm插件</a>； 使用SBT发布这种类型的项目，一般使用<a href="https://github.com/sbt/sbt-native-packager">sbt-native-packager</a>。</p>
               
               <!--百度分享按钮-->
               <div class="pull-left bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a><a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a></div>
@@ -125,9 +116,6 @@
               <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
               <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
 
-            </div>
-          </div>
-        </div>
       </div>
       <div class="row">
         <div class="col-md-12 footer">
@@ -135,9 +123,9 @@
           <p>Powered by <a href="http://johnmacfarlane.net/pandoc/">pandoc</a>, <a href="http://rometools.github.io/rome/index.html">ROME</a> and <a href="http://pages.github.com/">github pages</a></p>
         </div>
       </div>
-    </div>
-  </div>
-</div>
+    </div> <!--main-->
+  </div> <!--row-->
+</div> <!--container-->
 
 <script src="/js/jquery-2.1.1.min.js"></script>
 <script src="/js/bootstrap.min.js"></script>

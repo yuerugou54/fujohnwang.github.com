@@ -45,28 +45,12 @@
 <body>
 <div class="container">
   <div class="row">
-    <!--
-    <div class="col-md-3 sidebar">
-      <a href="/">
-        <h2 class="text-center">扶墙老师</h2>
-      </a>
-      <p class="text-center lead slogan"><a href="/slogan.html">lollapalooza &amp; positioning</a></p>
-      <p class="text-center lead slogan">瞎子摸象的践行者</p>
-      <ul class="nav nav-pills nav-stacked">
-        <li><a href="/favorite.html" class="text-center"><i class="icon-star-empty"></i> 我的收藏</a></li>
-        <li><a href="/dashboard.html" class="text-center"><i class="icon-fullscreen"></i> 金融看板</a></li>
-        <li><a href="/columns.html" class="text-center"><i class="icon-folder-close-alt"></i> 专栏</a></li>
-        <li><a href="/references.html" class="text-center"><i class="icon-folder-close-alt"></i> 快捷参考</a></li>
-        <li><a href="/whoami.html" class="text-center"><i class="icon-user-md"></i> 我是谁</a></li>
-        <li><a href="/interlinks.html" class="text-center"><i class="icon-user-md"></i> 友情链接</a></li>
-        <li><a href="/feeds.xml" class="text-center"><i class="icon-folder-close-alt"></i> RSS</a></li>
-      </ul>
-    </div>
-    -->
-
+    
     <div class="col-md-2">
-        <div class="seal">
+        <div class="seal text-right">
+          <a href="http://afoo.me">
             <img src="/images/myseal.png"/>
+          </a>
         </div>
     </div>
     <div class="col-md-10 col-xs-12">
@@ -79,9 +63,7 @@
             $if(title)$
             <div id="$idprefix$header">
               <p class="lead">
-                <a href="http://afoo.me">
-                  <h1 class="title">$title$</h1>
-                </a>
+              <h1 class="title">$title$</h1>
               $for(author)$
               <small>
                   <h3 class="author">$author$</h3>

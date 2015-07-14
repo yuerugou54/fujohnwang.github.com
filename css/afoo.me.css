@@ -1,5 +1,6 @@
 .seal {
     display: block;
+    margin-top: 28px;
     margin-left: auto;
     margin-right: auto;
 }
@@ -16,8 +17,10 @@ body > *:first-child {
 body > *:last-child {
     margin-bottom: 0 !important; }
 
+/*
 a {
     color: black; }
+*/
 a.absent {
     color: #cc0000; }
 a.anchor {

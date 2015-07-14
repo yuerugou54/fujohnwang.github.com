@@ -27,111 +27,102 @@
 </head>
 
 <body>
-<div class="container-fluid">
+<div class="container">
   <div class="row">
-    <div class="col-md-3 sidebar">
-      <a href="/">
-        <!-- <div align="center"><img src="/images/wfq0.png"/></div> -->
-        <h2 class="text-center">扶墙老师</h2>
-      </a>
-      <p class="text-center lead slogan"><a href="/slogan.html">lollapalooza &amp; positioning</a></p>
-      <p class="text-center lead slogan">瞎子摸象的践行者</p>
-      <ul class="nav nav-pills nav-stacked">
-        <li><a href="/favorite.html" class="text-center"><i class="icon-star-empty"></i> 我的收藏</a></li>
-        <li><a href="/dashboard.html" class="text-center"><i class="icon-fullscreen"></i> 金融看板</a></li>
-        <li><a href="/columns.html" class="text-center"><i class="icon-folder-close-alt"></i> 专栏</a></li>
-        <li><a href="/references.html" class="text-center"><i class="icon-folder-close-alt"></i> 快捷参考</a></li>
-        <li><a href="/whoami.html" class="text-center"><i class="icon-user-md"></i> 我是谁</a></li>
-        <li><a href="/interlinks.html" class="text-center"><i class="icon-user-md"></i> 友情链接</a></li>
-        <li><a href="/feeds.xml" class="text-center"><i class="icon-folder-close-alt"></i> RSS</a></li>
-      </ul>
-
+    
+    <div class="col-md-2">
+        <div class="seal text-right">
+          <a href="http://afoo.me">
+            <img src="/images/myseal.png"/>
+          </a>
+        </div>
     </div>
-    <div class="col-md-9 col-md-offset-3 main">
-      <div class="row">
-        <div class="container-fluid">
+    <div class="col-md-10 col-xs-12">
+
           
           <div class="row">
                         <div id="header">
               <p class="lead">
-              <h1 class="title">jekyll风格到pandoc风格的转换(Transform)&nbsp;&nbsp;
-                <small>
-                                    fujohnwang
-                                  </small>
-              </h1>
-              </p>
+              <h1 class="title">jekyll风格到pandoc风格的转换(Transform)</h1>
+                            <small>
+                  <h3 class="author">fujohnwang</h3>
+              </small>
+                                        <h4 class="date">2013-03-10</h4>
+                              </p>
             </div>
-                        <div>
-
+            
               <hr>
 
-                            <p><strong>两种思路</strong></p>
-<ol style="list-style-type: decimal">
-<li>直接新起一个应用
-<ul>
-<li>托管服务器是主要问题</li>
-<li>可以顺便玩玩Playframework
-<ul>
-<li>新Post的发布方式
-<ul>
-<li>手动本地执行pandoc转换
-<ul>
-<li>定时扫描或者使用Java7+的WatchService使新Post可被访问</li>
-</ul></li>
-<li>服务器端实时部署和转换
-<ul>
-<li>linux下应该有pandoc，not a problem</li>
-<li>比较理想的方式</li>
-</ul></li>
-</ul></li>
-<li>不方便的地方
-<ul>
-<li>不管是哪一种，如果post相关的资源多， 部署上传稍微会有些繁琐，单个文件最简单，但是特殊情况</li>
-</ul></li>
-</ul></li>
-</ul></li>
-<li>在现有github page的基础设施上改造
-<ul>
-<li>旧有Posts的迁移流程梳理
-<ul>
-<li>jekyll template metadata extraction (store for later usage)</li>
-<li>jekyll markdown to pandoc markdown transformation
-<ul>
-<li>YAML Front Header to pandoc markdown header</li>
-<li>paragraph adjustment</li>
-</ul></li>
-<li>pandoc markdown to 1st-stage html</li>
-<li>1st-stage html to 2nd-stage html
-<ul>
-<li>add YAML Front Header back but without part of the headers before,say <code>permalink</code></li>
-<li>resource paths adjustment</li>
-</ul></li>
-<li>其它工作
-<ul>
-<li>调整layout模版</li>
-<li>调整index.html模版</li>
-</ul></li>
-</ul></li>
-<li>新Posts发布流程
-<ul>
-<li>draft markdown document in pandoc markdown syntax</li>
-<li>transform pandoc markdown document to html
-<ul>
-<li>including 1st-stage and 2nd-stage html transformation</li>
-<li>第一阶段转换区别于就有Posts转换的是，需要根据当前日期生成目标文件名，旧有的Posts转换前，文件名中已经包含了相应日期</li>
-</ul></li>
-</ul></li>
-<li>其他说明
-<ul>
-<li>因为有些文档写完后不想以博客的形式向外发布，所以，新的post采用本地转换然后人工决定发布与否的方式，源码与github page项目分离， 只发布最终转换后的html文档</li>
-<li>结合使用了DNSPod和Github Page的DNS服务和设置</li>
-<li>pandoc转换采用了自定义的template</li>
-<li>添加了google站具相应监控</li>
-</ul></li>
-</ul></li>
-</ol>
-<p><strong>Why I feels so fucked-me in this process?</strong></p>
-<p>wandering among solutions that all can help have this thing done, all tried, all quit but finally turn to scala, the one I am familier with and also would like to write code in it, although I know some other tools are more proper.</p>
+              
+              <hr/>
+
+              <p><strong>两种思路</strong></p>
+              <ol style="list-style-type: decimal">
+              <li>直接新起一个应用
+              <ul>
+              <li>托管服务器是主要问题</li>
+              <li>可以顺便玩玩Playframework
+              <ul>
+              <li>新Post的发布方式
+              <ul>
+              <li>手动本地执行pandoc转换
+              <ul>
+              <li>定时扫描或者使用Java7+的WatchService使新Post可被访问</li>
+              </ul></li>
+              <li>服务器端实时部署和转换
+              <ul>
+              <li>linux下应该有pandoc，not a problem</li>
+              <li>比较理想的方式</li>
+              </ul></li>
+              </ul></li>
+              <li>不方便的地方
+              <ul>
+              <li>不管是哪一种，如果post相关的资源多， 部署上传稍微会有些繁琐，单个文件最简单，但是特殊情况</li>
+              </ul></li>
+              </ul></li>
+              </ul></li>
+              <li>在现有github page的基础设施上改造
+              <ul>
+              <li>旧有Posts的迁移流程梳理
+              <ul>
+              <li>jekyll template metadata extraction (store for later usage)</li>
+              <li>jekyll markdown to pandoc markdown transformation
+              <ul>
+              <li>YAML Front Header to pandoc markdown header</li>
+              <li>paragraph adjustment</li>
+              </ul></li>
+              <li>pandoc markdown to 1st-stage html</li>
+              <li>1st-stage html to 2nd-stage html
+              <ul>
+              <li>add YAML Front Header back but without part of the headers before,say <code>permalink</code></li>
+              <li>resource paths adjustment</li>
+              </ul></li>
+              <li>其它工作
+              <ul>
+              <li>调整layout模版</li>
+              <li>调整index.html模版</li>
+              </ul></li>
+              </ul></li>
+              <li>新Posts发布流程
+              <ul>
+              <li>draft markdown document in pandoc markdown syntax</li>
+              <li>transform pandoc markdown document to html
+              <ul>
+              <li>including 1st-stage and 2nd-stage html transformation</li>
+              <li>第一阶段转换区别于就有Posts转换的是，需要根据当前日期生成目标文件名，旧有的Posts转换前，文件名中已经包含了相应日期</li>
+              </ul></li>
+              </ul></li>
+              <li>其他说明
+              <ul>
+              <li>因为有些文档写完后不想以博客的形式向外发布，所以，新的post采用本地转换然后人工决定发布与否的方式，源码与github page项目分离， 只发布最终转换后的html文档</li>
+              <li>结合使用了DNSPod和Github Page的DNS服务和设置</li>
+              <li>pandoc转换采用了自定义的template</li>
+              <li>添加了google站具相应监控</li>
+              </ul></li>
+              </ul></li>
+              </ol>
+              <p><strong>Why I feels so fucked-me in this process?</strong></p>
+              <p>wandering among solutions that all can help have this thing done, all tried, all quit but finally turn to scala, the one I am familier with and also would like to write code in it, although I know some other tools are more proper.</p>
               
               <!--百度分享按钮-->
               <div class="pull-left bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a><a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a></div>
@@ -164,9 +155,6 @@
               <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
               <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
 
-            </div>
-          </div>
-        </div>
       </div>
       <div class="row">
         <div class="col-md-12 footer">
@@ -174,9 +162,9 @@
           <p>Powered by <a href="http://johnmacfarlane.net/pandoc/">pandoc</a>, <a href="http://rometools.github.io/rome/index.html">ROME</a> and <a href="http://pages.github.com/">github pages</a></p>
         </div>
       </div>
-    </div>
-  </div>
-</div>
+    </div> <!--main-->
+  </div> <!--row-->
+</div> <!--container-->
 
 <script src="/js/jquery-2.1.1.min.js"></script>
 <script src="/js/bootstrap.min.js"></script>

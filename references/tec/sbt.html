@@ -26,42 +26,29 @@
 </head>
 
 <body>
-<div class="container-fluid">
+<div class="container">
   <div class="row">
-    <div class="col-md-3 sidebar">
-      <a href="/">
-        <!-- <div align="center"><img src="/images/wfq0.png"/></div> -->
-        <h2 class="text-center">扶墙老师</h2>
-      </a>
-      <p class="text-center lead slogan"><a href="/slogan.html">lollapalooza &amp; positioning</a></p>
-      <p class="text-center lead slogan">瞎子摸象的践行者</p>
-      <ul class="nav nav-pills nav-stacked">
-        <li><a href="/favorite.html" class="text-center"><i class="icon-star-empty"></i> 我的收藏</a></li>
-        <li><a href="/dashboard.html" class="text-center"><i class="icon-fullscreen"></i> 金融看板</a></li>
-        <li><a href="/columns.html" class="text-center"><i class="icon-folder-close-alt"></i> 专栏</a></li>
-        <li><a href="/references.html" class="text-center"><i class="icon-folder-close-alt"></i> 快捷参考</a></li>
-        <li><a href="/whoami.html" class="text-center"><i class="icon-user-md"></i> 我是谁</a></li>
-        <li><a href="/interlinks.html" class="text-center"><i class="icon-user-md"></i> 友情链接</a></li>
-        <li><a href="/feeds.xml" class="text-center"><i class="icon-folder-close-alt"></i> RSS</a></li>
-      </ul>
-
+    
+    <div class="col-md-2">
+        <div class="seal text-right">
+          <a href="http://afoo.me">
+            <img src="/images/myseal.png"/>
+          </a>
+        </div>
     </div>
-    <div class="col-md-9 col-md-offset-3 main">
-      <div class="row">
-        <div class="container-fluid">
+    <div class="col-md-10 col-xs-12">
+
           
           <div class="row">
                         <div id="header">
               <p class="lead">
-              <h1 class="title">SBT释疑&nbsp;&nbsp;
-                <small>
-                                    王福强
-                                  </small>
-              </h1>
-              </p>
+              <h1 class="title">SBT释疑</h1>
+                            <small>
+                  <h3 class="author">王福强</h3>
+              </small>
+                                          </p>
             </div>
-                        <div>
-
+            
               <hr>
 
                             <div id="TOC">
@@ -69,13 +56,16 @@
                 <li><a href="#project子目录与当前项目目录的关系"><span class="toc-section-number">1</span> project子目录与当前项目目录的关系</a></li>
                 </ul>
               </div>
-                            <h1 id="project子目录与当前项目目录的关系"><span class="header-section-number">1</span> project子目录与当前项目目录的关系</h1>
-<blockquote>
-<p>In sbt, any .scala file in the project/ directory can be used as a library in your build.</p>
-</blockquote>
-<p>可以简单认为当前项目目录下的project目录是一个lib目录，这个project目录下任何*.scala文件定义的东西，都是当前项目的build.sbt中可以依赖使用的。</p>
-<p>即build.sbt ---dependsOn---&gt; project/*.scala，所以， 很多build.sbt中如果定义之后感觉混乱的东西，可以抽取到这些文件中定义然后引用。</p>
-<p>project目录内可以再嵌套project， 相当于俄罗斯娃娃那样， 每一个都是合法的sbt项目。</p>
+              
+              <hr/>
+
+              <h1 id="project子目录与当前项目目录的关系"><span class="header-section-number">1</span> project子目录与当前项目目录的关系</h1>
+              <blockquote>
+              <p>In sbt, any .scala file in the project/ directory can be used as a library in your build.</p>
+              </blockquote>
+              <p>可以简单认为当前项目目录下的project目录是一个lib目录，这个project目录下任何*.scala文件定义的东西，都是当前项目的build.sbt中可以依赖使用的。</p>
+              <p>即build.sbt ---dependsOn---&gt; project/*.scala，所以， 很多build.sbt中如果定义之后感觉混乱的东西，可以抽取到这些文件中定义然后引用。</p>
+              <p>project目录内可以再嵌套project， 相当于俄罗斯娃娃那样， 每一个都是合法的sbt项目。</p>
               
               <!--百度分享按钮-->
               <div class="pull-left bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a><a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a></div>
@@ -108,9 +98,6 @@
               <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
               <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
 
-            </div>
-          </div>
-        </div>
       </div>
       <div class="row">
         <div class="col-md-12 footer">
@@ -118,9 +105,9 @@
           <p>Powered by <a href="http://johnmacfarlane.net/pandoc/">pandoc</a>, <a href="http://rometools.github.io/rome/index.html">ROME</a> and <a href="http://pages.github.com/">github pages</a></p>
         </div>
       </div>
-    </div>
-  </div>
-</div>
+    </div> <!--main-->
+  </div> <!--row-->
+</div> <!--container-->
 
 <script src="/js/jquery-2.1.1.min.js"></script>
 <script src="/js/bootstrap.min.js"></script>

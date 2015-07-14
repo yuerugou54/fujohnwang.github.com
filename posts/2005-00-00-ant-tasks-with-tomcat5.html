@@ -46,126 +46,116 @@
 </head>
 
 <body>
-<div class="container-fluid">
+<div class="container">
   <div class="row">
-    <div class="col-md-3 sidebar">
-      <a href="/">
-        <!-- <div align="center"><img src="/images/wfq0.png"/></div> -->
-        <h2 class="text-center">扶墙老师</h2>
-      </a>
-      <p class="text-center lead slogan"><a href="/slogan.html">lollapalooza &amp; positioning</a></p>
-      <p class="text-center lead slogan">瞎子摸象的践行者</p>
-      <ul class="nav nav-pills nav-stacked">
-        <li><a href="/favorite.html" class="text-center"><i class="icon-star-empty"></i> 我的收藏</a></li>
-        <li><a href="/dashboard.html" class="text-center"><i class="icon-fullscreen"></i> 金融看板</a></li>
-        <li><a href="/columns.html" class="text-center"><i class="icon-folder-close-alt"></i> 专栏</a></li>
-        <li><a href="/references.html" class="text-center"><i class="icon-folder-close-alt"></i> 快捷参考</a></li>
-        <li><a href="/whoami.html" class="text-center"><i class="icon-user-md"></i> 我是谁</a></li>
-        <li><a href="/interlinks.html" class="text-center"><i class="icon-user-md"></i> 友情链接</a></li>
-        <li><a href="/feeds.xml" class="text-center"><i class="icon-folder-close-alt"></i> RSS</a></li>
-      </ul>
-
+    
+    <div class="col-md-2">
+        <div class="seal text-right">
+          <a href="http://afoo.me">
+            <img src="/images/myseal.png"/>
+          </a>
+        </div>
     </div>
-    <div class="col-md-9 col-md-offset-3 main">
-      <div class="row">
-        <div class="container-fluid">
+    <div class="col-md-10 col-xs-12">
+
           
           <div class="row">
                         <div id="header">
               <p class="lead">
-              <h1 class="title">Ant Tasks Supplied With Tomcat5&nbsp;&nbsp;
-                <small>
-                                    FuqiangWang
-                                  </small>
-              </h1>
-              </p>
+              <h1 class="title">Ant Tasks Supplied With Tomcat5</h1>
+                            <small>
+                  <h3 class="author">FuqiangWang</h3>
+              </small>
+                                          </p>
             </div>
-                        <div>
-
+            
               <hr>
 
-                            <blockquote>
-<p>2014年从msn space存档中重新恢复出来！</p>
-</blockquote>
-<p>对于tomcat5来说，因为catalina已经提供了管理所需要的ant任务，所以，可以再外面通过ant来管理tomcat的webapp的部署等工作。</p>
-<p>下面是如何定义和使用这些ant任务的脚本表示：</p>
-<ol style="list-style-type: decimal">
-<li>定义一个tomcatTask.properties文件，文件中按照ant的taskdef任务文件定义的内容格式来定义以下内容：</li>
-</ol>
-<pre>
-deploy=org.apache.catalina.ant.DeployTask
- undeploy=org.apache.catalina.ant.UndeployTask
- remove=org.apache.catalina.ant.RemoveTask
- reload=org.apache.catalina.ant.ReloadTask
- start=org.apache.catalina.ant.StartTask
- stop=org.apache.catalina.ant.StopTask
- list=org.apache.catalina.ant.ListTask
-</pre>
-<blockquote>
-<p>注：【taskName=Task的实现class】是ant的taskdef规定的格式，当然，1和2完全可以按照每个task都对应自己的taskdef。</p>
-</blockquote>
-<ol start="2" style="list-style-type: decimal">
-<li>在ant的构建脚本build.xml中定义tomcat管理所用的Tasks</li>
-</ol>
-<div class="sourceCode"><pre class="sourceCode xml"><code class="sourceCode xml"><span class="kw">&lt;taskdef</span><span class="ot"> file=</span><span class="st">&quot;tomcatTasks.properties&quot;</span><span class="kw">&gt;</span>
-  <span class="kw">&lt;classpath&gt;</span>
-   <span class="kw">&lt;pathelement</span><span class="ot"> path=</span><span class="st">&quot;${tomcat.home}/server/lib/catalina-ant.jar&quot;</span><span class="kw">/&gt;</span>
-  <span class="kw">&lt;/classpath&gt;</span>
- <span class="kw">&lt;/taskdef&gt;</span></code></pre></div>
-<ol start="3" style="list-style-type: decimal">
-<li>Tasks定义完成后，就可以定义tomcat管理的target来对tomcat进行管理了：</li>
-</ol>
-<div class="sourceCode"><pre class="sourceCode xml"><code class="sourceCode xml">    <span class="kw">&lt;target</span><span class="ot"> name=</span><span class="st">&quot;install&quot;</span><span class="ot"> description=</span><span class="st">&quot;Install application in Tomcat&quot;</span><span class="ot"> depends=</span><span class="st">&quot;war&quot;</span><span class="kw">&gt;</span>
-        <span class="kw">&lt;deploy</span><span class="ot"> url=</span><span class="st">&quot;${tomcat.manager.url}&quot;</span>
-<span class="ot">            username=</span><span class="st">&quot;${tomcat.manager.username}&quot;</span>
-<span class="ot">            password=</span><span class="st">&quot;${tomcat.manager.password}&quot;</span>
-<span class="ot">            path=</span><span class="st">&quot;/${webapp.name}&quot;</span>
-<span class="ot">            war=</span><span class="st">&quot;file:${dist.dir}/${webapp.name}.war&quot;</span><span class="kw">/&gt;</span>
-    <span class="kw">&lt;/target&gt;</span>
+              
+              <hr/>
 
-    <span class="kw">&lt;target</span><span class="ot"> name=</span><span class="st">&quot;remove&quot;</span><span class="ot"> description=</span><span class="st">&quot;Remove application from Tomcat&quot;</span><span class="kw">&gt;</span>
-        <span class="kw">&lt;undeploy</span><span class="ot"> url=</span><span class="st">&quot;${tomcat.manager.url}&quot;</span>
-<span class="ot">            username=</span><span class="st">&quot;${tomcat.manager.username}&quot;</span>
-<span class="ot">            password=</span><span class="st">&quot;${tomcat.manager.password}&quot;</span>
-<span class="ot">            path=</span><span class="st">&quot;/${webapp.name}&quot;</span><span class="kw">/&gt;</span>
-    <span class="kw">&lt;/target&gt;</span>
-
-    <span class="kw">&lt;target</span><span class="ot"> name=</span><span class="st">&quot;reload&quot;</span><span class="ot"> description=</span><span class="st">&quot;Reload application in Tomcat&quot;</span><span class="kw">&gt;</span>
-        <span class="kw">&lt;reload</span><span class="ot"> url=</span><span class="st">&quot;${tomcat.manager.url}&quot;</span>
-<span class="ot">            username=</span><span class="st">&quot;${tomcat.manager.username}&quot;</span>
-<span class="ot">            password=</span><span class="st">&quot;${tomcat.manager.password}&quot;</span>
-<span class="ot">            path=</span><span class="st">&quot;/${webapp.name}&quot;</span><span class="kw">/&gt;</span>
-    <span class="kw">&lt;/target&gt;</span>
-
-    <span class="kw">&lt;target</span><span class="ot"> name=</span><span class="st">&quot;start&quot;</span><span class="ot"> description=</span><span class="st">&quot;Start Tomcat application&quot;</span><span class="kw">&gt;</span>
-        <span class="kw">&lt;start</span><span class="ot"> url=</span><span class="st">&quot;${tomcat.manager.url}&quot;</span>
-<span class="ot">            username=</span><span class="st">&quot;${tomcat.manager.username}&quot;</span>
-<span class="ot">            password=</span><span class="st">&quot;${tomcat.manager.password}&quot;</span>
-<span class="ot">            path=</span><span class="st">&quot;/${webapp.name}&quot;</span><span class="kw">/&gt;</span>
-    <span class="kw">&lt;/target&gt;</span>
-
-    <span class="kw">&lt;target</span><span class="ot"> name=</span><span class="st">&quot;stop&quot;</span><span class="ot"> description=</span><span class="st">&quot;Stop Tomcat application&quot;</span><span class="kw">&gt;</span>
-        <span class="kw">&lt;stop</span><span class="ot"> url=</span><span class="st">&quot;${tomcat.manager.url}&quot;</span>
-<span class="ot">            username=</span><span class="st">&quot;${tomcat.manager.username}&quot;</span>
-<span class="ot">            password=</span><span class="st">&quot;${tomcat.manager.password}&quot;</span>
-<span class="ot">            path=</span><span class="st">&quot;/${webapp.name}&quot;</span><span class="kw">/&gt;</span>
-    <span class="kw">&lt;/target&gt;</span>
-
-    <span class="kw">&lt;target</span><span class="ot"> name=</span><span class="st">&quot;list&quot;</span><span class="ot"> description=</span><span class="st">&quot;List Tomcat applications&quot;</span><span class="kw">&gt;</span>
-        <span class="kw">&lt;list</span><span class="ot"> url=</span><span class="st">&quot;${tomcat.manager.url}&quot;</span>
-<span class="ot">            username=</span><span class="st">&quot;${tomcat.manager.username}&quot;</span>
-<span class="ot">            password=</span><span class="st">&quot;${tomcat.manager.password}&quot;</span><span class="kw">/&gt;</span>
-    <span class="kw">&lt;/target&gt;</span></code></pre></div>
-<ol start="4" style="list-style-type: decimal">
-<li>另外，上面的task中时间上用到了与tomcat相关的一些property，所以，我们在build.properties中定义他们，当然也可以在其他地方定义他们，但总之，在用之前，需要定义这些properties。</li>
-</ol>
-<pre>
-tomcat.manager.url=http://localhost:8080/manager
-tomcat.manager.username=admin(对应你自己的username)
-tomcat.manager.password=admin(对应你自己的password)
-</pre>
-<p>之后，在build.xml的开始部分，定义<property file="build.properties"/>将这些properties引入。</p>
-<p>OK，以上就是使用tomcat5提供的ant任务对其进行管理的Overview，仅供Reference。</p>
+              <blockquote>
+              <p>2014年从msn space存档中重新恢复出来！</p>
+              </blockquote>
+              <p>对于tomcat5来说，因为catalina已经提供了管理所需要的ant任务，所以，可以再外面通过ant来管理tomcat的webapp的部署等工作。</p>
+              <p>下面是如何定义和使用这些ant任务的脚本表示：</p>
+              <ol style="list-style-type: decimal">
+              <li>定义一个tomcatTask.properties文件，文件中按照ant的taskdef任务文件定义的内容格式来定义以下内容：</li>
+              </ol>
+              <pre>
+              deploy=org.apache.catalina.ant.DeployTask
+               undeploy=org.apache.catalina.ant.UndeployTask
+               remove=org.apache.catalina.ant.RemoveTask
+               reload=org.apache.catalina.ant.ReloadTask
+               start=org.apache.catalina.ant.StartTask
+               stop=org.apache.catalina.ant.StopTask
+               list=org.apache.catalina.ant.ListTask
+              </pre>
+              <blockquote>
+              <p>注：【taskName=Task的实现class】是ant的taskdef规定的格式，当然，1和2完全可以按照每个task都对应自己的taskdef。</p>
+              </blockquote>
+              <ol start="2" style="list-style-type: decimal">
+              <li>在ant的构建脚本build.xml中定义tomcat管理所用的Tasks</li>
+              </ol>
+              <div class="sourceCode"><pre class="sourceCode xml"><code class="sourceCode xml"><span class="kw">&lt;taskdef</span><span class="ot"> file=</span><span class="st">&quot;tomcatTasks.properties&quot;</span><span class="kw">&gt;</span>
+                <span class="kw">&lt;classpath&gt;</span>
+                 <span class="kw">&lt;pathelement</span><span class="ot"> path=</span><span class="st">&quot;${tomcat.home}/server/lib/catalina-ant.jar&quot;</span><span class="kw">/&gt;</span>
+                <span class="kw">&lt;/classpath&gt;</span>
+               <span class="kw">&lt;/taskdef&gt;</span></code></pre></div>
+              <ol start="3" style="list-style-type: decimal">
+              <li>Tasks定义完成后，就可以定义tomcat管理的target来对tomcat进行管理了：</li>
+              </ol>
+              <div class="sourceCode"><pre class="sourceCode xml"><code class="sourceCode xml">    <span class="kw">&lt;target</span><span class="ot"> name=</span><span class="st">&quot;install&quot;</span><span class="ot"> description=</span><span class="st">&quot;Install application in Tomcat&quot;</span><span class="ot"> depends=</span><span class="st">&quot;war&quot;</span><span class="kw">&gt;</span>
+                      <span class="kw">&lt;deploy</span><span class="ot"> url=</span><span class="st">&quot;${tomcat.manager.url}&quot;</span>
+              <span class="ot">            username=</span><span class="st">&quot;${tomcat.manager.username}&quot;</span>
+              <span class="ot">            password=</span><span class="st">&quot;${tomcat.manager.password}&quot;</span>
+              <span class="ot">            path=</span><span class="st">&quot;/${webapp.name}&quot;</span>
+              <span class="ot">            war=</span><span class="st">&quot;file:${dist.dir}/${webapp.name}.war&quot;</span><span class="kw">/&gt;</span>
+                  <span class="kw">&lt;/target&gt;</span>
+              
+                  <span class="kw">&lt;target</span><span class="ot"> name=</span><span class="st">&quot;remove&quot;</span><span class="ot"> description=</span><span class="st">&quot;Remove application from Tomcat&quot;</span><span class="kw">&gt;</span>
+                      <span class="kw">&lt;undeploy</span><span class="ot"> url=</span><span class="st">&quot;${tomcat.manager.url}&quot;</span>
+              <span class="ot">            username=</span><span class="st">&quot;${tomcat.manager.username}&quot;</span>
+              <span class="ot">            password=</span><span class="st">&quot;${tomcat.manager.password}&quot;</span>
+              <span class="ot">            path=</span><span class="st">&quot;/${webapp.name}&quot;</span><span class="kw">/&gt;</span>
+                  <span class="kw">&lt;/target&gt;</span>
+              
+                  <span class="kw">&lt;target</span><span class="ot"> name=</span><span class="st">&quot;reload&quot;</span><span class="ot"> description=</span><span class="st">&quot;Reload application in Tomcat&quot;</span><span class="kw">&gt;</span>
+                      <span class="kw">&lt;reload</span><span class="ot"> url=</span><span class="st">&quot;${tomcat.manager.url}&quot;</span>
+              <span class="ot">            username=</span><span class="st">&quot;${tomcat.manager.username}&quot;</span>
+              <span class="ot">            password=</span><span class="st">&quot;${tomcat.manager.password}&quot;</span>
+              <span class="ot">            path=</span><span class="st">&quot;/${webapp.name}&quot;</span><span class="kw">/&gt;</span>
+                  <span class="kw">&lt;/target&gt;</span>
+              
+                  <span class="kw">&lt;target</span><span class="ot"> name=</span><span class="st">&quot;start&quot;</span><span class="ot"> description=</span><span class="st">&quot;Start Tomcat application&quot;</span><span class="kw">&gt;</span>
+                      <span class="kw">&lt;start</span><span class="ot"> url=</span><span class="st">&quot;${tomcat.manager.url}&quot;</span>
+              <span class="ot">            username=</span><span class="st">&quot;${tomcat.manager.username}&quot;</span>
+              <span class="ot">            password=</span><span class="st">&quot;${tomcat.manager.password}&quot;</span>
+              <span class="ot">            path=</span><span class="st">&quot;/${webapp.name}&quot;</span><span class="kw">/&gt;</span>
+                  <span class="kw">&lt;/target&gt;</span>
+              
+                  <span class="kw">&lt;target</span><span class="ot"> name=</span><span class="st">&quot;stop&quot;</span><span class="ot"> description=</span><span class="st">&quot;Stop Tomcat application&quot;</span><span class="kw">&gt;</span>
+                      <span class="kw">&lt;stop</span><span class="ot"> url=</span><span class="st">&quot;${tomcat.manager.url}&quot;</span>
+              <span class="ot">            username=</span><span class="st">&quot;${tomcat.manager.username}&quot;</span>
+              <span class="ot">            password=</span><span class="st">&quot;${tomcat.manager.password}&quot;</span>
+              <span class="ot">            path=</span><span class="st">&quot;/${webapp.name}&quot;</span><span class="kw">/&gt;</span>
+                  <span class="kw">&lt;/target&gt;</span>
+              
+                  <span class="kw">&lt;target</span><span class="ot"> name=</span><span class="st">&quot;list&quot;</span><span class="ot"> description=</span><span class="st">&quot;List Tomcat applications&quot;</span><span class="kw">&gt;</span>
+                      <span class="kw">&lt;list</span><span class="ot"> url=</span><span class="st">&quot;${tomcat.manager.url}&quot;</span>
+              <span class="ot">            username=</span><span class="st">&quot;${tomcat.manager.username}&quot;</span>
+              <span class="ot">            password=</span><span class="st">&quot;${tomcat.manager.password}&quot;</span><span class="kw">/&gt;</span>
+                  <span class="kw">&lt;/target&gt;</span></code></pre></div>
+              <ol start="4" style="list-style-type: decimal">
+              <li>另外，上面的task中时间上用到了与tomcat相关的一些property，所以，我们在build.properties中定义他们，当然也可以在其他地方定义他们，但总之，在用之前，需要定义这些properties。</li>
+              </ol>
+              <pre>
+              tomcat.manager.url=http://localhost:8080/manager
+              tomcat.manager.username=admin(对应你自己的username)
+              tomcat.manager.password=admin(对应你自己的password)
+              </pre>
+              <p>之后，在build.xml的开始部分，定义<property file="build.properties"/>将这些properties引入。</p>
+              <p>OK，以上就是使用tomcat5提供的ant任务对其进行管理的Overview，仅供Reference。</p>
               
               <!--百度分享按钮-->
               <div class="pull-left bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a><a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a></div>
@@ -198,9 +188,6 @@ tomcat.manager.password=admin(对应你自己的password)
               <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
               <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
 
-            </div>
-          </div>
-        </div>
       </div>
       <div class="row">
         <div class="col-md-12 footer">
@@ -208,9 +195,9 @@ tomcat.manager.password=admin(对应你自己的password)
           <p>Powered by <a href="http://johnmacfarlane.net/pandoc/">pandoc</a>, <a href="http://rometools.github.io/rome/index.html">ROME</a> and <a href="http://pages.github.com/">github pages</a></p>
         </div>
       </div>
-    </div>
-  </div>
-</div>
+    </div> <!--main-->
+  </div> <!--row-->
+</div> <!--container-->
 
 <script src="/js/jquery-2.1.1.min.js"></script>
 <script src="/js/bootstrap.min.js"></script>

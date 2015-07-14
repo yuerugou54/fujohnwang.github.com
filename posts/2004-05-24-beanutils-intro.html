@@ -46,116 +46,106 @@
 </head>
 
 <body>
-<div class="container-fluid">
+<div class="container">
   <div class="row">
-    <div class="col-md-3 sidebar">
-      <a href="/">
-        <!-- <div align="center"><img src="/images/wfq0.png"/></div> -->
-        <h2 class="text-center">扶墙老师</h2>
-      </a>
-      <p class="text-center lead slogan"><a href="/slogan.html">lollapalooza &amp; positioning</a></p>
-      <p class="text-center lead slogan">瞎子摸象的践行者</p>
-      <ul class="nav nav-pills nav-stacked">
-        <li><a href="/favorite.html" class="text-center"><i class="icon-star-empty"></i> 我的收藏</a></li>
-        <li><a href="/dashboard.html" class="text-center"><i class="icon-fullscreen"></i> 金融看板</a></li>
-        <li><a href="/columns.html" class="text-center"><i class="icon-folder-close-alt"></i> 专栏</a></li>
-        <li><a href="/references.html" class="text-center"><i class="icon-folder-close-alt"></i> 快捷参考</a></li>
-        <li><a href="/whoami.html" class="text-center"><i class="icon-user-md"></i> 我是谁</a></li>
-        <li><a href="/interlinks.html" class="text-center"><i class="icon-user-md"></i> 友情链接</a></li>
-        <li><a href="/feeds.xml" class="text-center"><i class="icon-folder-close-alt"></i> RSS</a></li>
-      </ul>
-
+    
+    <div class="col-md-2">
+        <div class="seal text-right">
+          <a href="http://afoo.me">
+            <img src="/images/myseal.png"/>
+          </a>
+        </div>
     </div>
-    <div class="col-md-9 col-md-offset-3 main">
-      <div class="row">
-        <div class="container-fluid">
+    <div class="col-md-10 col-xs-12">
+
           
           <div class="row">
                         <div id="header">
               <p class="lead">
-              <h1 class="title">随笔20040524（Beanutils）&nbsp;&nbsp;
-                <small>
-                                    FuqiangWang
-                                  </small>
-              </h1>
-              </p>
+              <h1 class="title">随笔20040524（Beanutils）</h1>
+                            <small>
+                  <h3 class="author">FuqiangWang</h3>
+              </small>
+                                          </p>
             </div>
-                        <div>
-
+            
               <hr>
 
-                            <blockquote>
-<p>2014年从msn space存档中重新恢复出来！</p>
-</blockquote>
-<p>上午看了一些Hibernate的faq等文档，时间过的也真快，一不留神就中午了。</p>
-<p>下午leader先开了一个会，讨论SFA的CM模块的实现问题，只是让我们先看一下截屏图，星期三再讨论，呵呵，公司想自己做这个CRM，但是好像情况并不乐观，而且是否能跟日立达成汉化改造的协议还难说，所以leader只是打算让我们组的人先从abstract层面了解一下，抽象一些共通的部品。开完会，我也没有去钻研截屏图，呵呵，是不是有些不敬业啊？！:em211:不过，话说回来了，那些东西其实也没有多少花露水，明天研究一下吧！仿制，埃...leader都实说了，自己没有数据源，做这些没有什么东西，所以他也没有让我们从头做到尾，免得到时候日立那边下来，这些都白做，也打击我们的积极性。</p>
-<p>因为近来又看了些hibernate的documentation，所以联想到VO在各个层之间的数据传递问题，就想起以前看过的commons beanutils，所以重新扫描了一遍，部分内容如下：</p>
-<p>首先需要说明的是PropertyUtils类，这个类提供了对javabean和动态bean的属性进行访问的各种方法，因为beanutils将bean的property分为simple，indexed和mapped三种，所以，这个类提供了get/setSimpleProperty(...),get/setIndexedProperty(...),和get/setMappedProperty(...)等方法分别针对各种property的访问。另外，除了以上这些property访问方法，还有get/setNestedProperty(...)和get/setProperty(...)方法，前两个针对bean的property依然是bean的property的访问问题，后者则是通用的property访问方式。下面是简短的代码实例：</p>
-<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java">Employee employee = ...;
-String city = (String) PropertyUtils.<span class="fu">getProperty</span>(employee,
-      <span class="st">&quot;subordinate[3].address(home).city&quot;</span>);</code></pre></div>
-<p>其他的property访问方法的parameter跟这个代码实例类似，如果还不明白可以参考BeanUtils的API。</p>
-<p>除了以上方法，PropertyUtils还提供了copyProperty（...)等静态方法，可以查阅API 文档以取得更多信息。</p>
-<p>其次我们要说的就是DynaBean和DynaClass接口了，我们可以通过为DynaClass的实现类提供DynaProperty类型的数组作为参数，调用其newInstance（）方法返回相应的DynaBean实例，之后，初始化该生成的bean并进行相应的处理。</p>
-<p>下面是代码实例：</p>
-<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"> DynaProperty[] props = <span class="kw">new</span> DynaProperty[]{
-        <span class="kw">new</span> <span class="fu">DynaProperty</span>(<span class="st">&quot;address&quot;</span>, java.<span class="fu">util</span>.<span class="fu">Map</span>.<span class="fu">class</span>),
-        <span class="kw">new</span> <span class="fu">DynaProperty</span>(<span class="st">&quot;subordinate&quot;</span>, mypackage.<span class="fu">Employee</span>[].<span class="fu">class</span>),
-        <span class="kw">new</span> <span class="fu">DynaProperty</span>(<span class="st">&quot;firstName&quot;</span>, String.<span class="fu">class</span>),
-        <span class="kw">new</span> <span class="fu">DynaProperty</span>(<span class="st">&quot;lastName&quot;</span>,  String.<span class="fu">class</span>)
-      };
-BasicDynaClass dynaClass = <span class="kw">new</span> <span class="fu">BasicDynaClass</span>(<span class="st">&quot;employee&quot;</span>, <span class="kw">null</span>, props);
-DynaBean employee = dynaClass.<span class="fu">newInstance</span>();
-employee.<span class="fu">set</span>(<span class="st">&quot;address&quot;</span>, <span class="kw">new</span> HashMap());
-employee.<span class="fu">set</span>(<span class="st">&quot;subordinate&quot;</span>, <span class="kw">new</span> mypackage.<span class="fu">Employee</span>[<span class="dv">0</span>]);
-employee.<span class="fu">set</span>(<span class="st">&quot;firstName&quot;</span>, <span class="st">&quot;Fred&quot;</span>);
-employee.<span class="fu">set</span>(<span class="st">&quot;lastName&quot;</span>, <span class="st">&quot;Flintstone&quot;</span>);</code></pre></div>
-<p>DynaBean和DynaClass的实现类分别可以归纳为【BasicDynaBean,ResultSetIterator,WrapDynaBean】和【BasicDynaClass, ResultSetDynaClass, RowSetDynaClass, WrapDynaClass】两组。其中，BasicDynaBean和BasicDynaClass在上面的代码中已经演示过了，剩下的尤其属ResultSetDynaClass, RowSetDynaClass两个类偶认为最为实用。他们可以对SQL查询后返回的ResultSet进行wrap，这个在web应用中很有用，你可以再也不用就数据在各层之间传递而写无数的相应的VO beans了。不过，二者也存在一定的区别。ResultSetDynaClass只能在保持数据库连接的情况下构造DynaBean并进行处理，这在很大程度上限制了其应用，因为不管怎么样，你应该将connection尽快的返回pool中而不是一直占有它，否则资源将很快的耗尽，这一点显而易见。</p>
-<p>不过，RowSetDynaClass则可以在数据库连接关闭的情况下返回数据bean并处理，它将data拷贝到memory，所以这种方法是以性能和内存的消耗为代价的，不过，这种情况对于web应用来说，却是很划的来。</p>
-<p>下面我们看看Beanutils文档提供的代码实例，不妨做一个比较：</p>
-<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java">Connection conn = ...;
-  Statement stmt = conn.<span class="fu">createStatement</span>();
-  ResultSet rs = stmt.<span class="fu">executeQuery</span>
-    (<span class="st">&quot;select account_id, name from customers&quot;</span>);
-  Iterator rows = (<span class="kw">new</span> <span class="fu">ResultSetDynaClass</span>(rs)).<span class="fu">iterator</span>();
-  <span class="kw">while</span> (rows.<span class="fu">hasNext</span>()) {
-    DynaBean row = (DynaBean) rows.<span class="fu">next</span>();
-    System.<span class="fu">out</span>.<span class="fu">println</span>(<span class="st">&quot;Account number is &quot;</span> +
-                       row.<span class="fu">get</span>(<span class="st">&quot;account_id&quot;</span>) +
-                       <span class="st">&quot; and name is &quot;</span> + row.<span class="fu">get</span>(<span class="st">&quot;name&quot;</span>));
-  }
-  rs.<span class="fu">close</span>();
-  stmt.<span class="fu">close</span>();</code></pre></div>
-<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java">Connection conn = ...;  <span class="co">// Acquire connection from pool</span>
-    Statement stmt = conn.<span class="fu">createStatement</span>();
-    ResultSet rs = stmt.<span class="fu">executeQuery</span>(<span class="st">&quot;SELECT ...&quot;</span>);
-    RowSetDynaClass rsdc = <span class="kw">new</span> <span class="fu">RowSetDynaClass</span>(rs);
-    rs.<span class="fu">close</span>();
-    stmt.<span class="fu">close</span>();
-    ...;                    <span class="co">// Return connection to pool</span>
-    List rows = rsdc.<span class="fu">getRows</span>();
-    ...;                   <span class="co">// Process the rows as desired</span></code></pre></div>
-<p>是不是后者更适合web应用那？！</p>
-<p>除了上面的一些实现类，还剩下了WrapDynaBean和WrapDynaClass类，他们同样相应的实现了DynaBean和DynaClass接口，作用就是：如果你愿意所以的bean访问（）都通过beanutils包的PropertyUtils类方式来访问，那么你可以通过这两个类对现有的bean进行wrap，例如：</p>
-<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java">MyBean bean = ...;
-DynaBean wrapper = <span class="kw">new</span> <span class="fu">WrapDynaBean</span>(bean);
-String firstName = wrapper.<span class="fu">get</span>(<span class="st">&quot;firstName&quot;</span>);</code></pre></div>
-<p>虽然在这里看不到WrapDynaClass的影子，不过不用担心，实际上在程序内部已经构造了它的实例，只是我们无须关心而已。</p>
-<p>以上差不多对beanutils提供 的主要功能类说的差不多了吧，不过，还有一点点儿，呵呵，那就是BeanUtils和ConvertUtils类以及Converter接口。</p>
-<p>其实那，beanutils包的本来目的就是由BeanUtils撑大纲的，如果了解struts的历史，也应该知道这些，或许它的doc提供的这段代码可以很好的解析其原来的用意吧：</p>
-<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java">    HttpServletRequest request = ...;
-    MyBean bean = ...;
-    HashMap map = <span class="kw">new</span> HashMap();
-    Enumeration names = request.<span class="fu">getParameterNames</span>();
-    <span class="kw">while</span> (names.<span class="fu">hasMoreElements</span>()) {
-      String name = (String) names.<span class="fu">nextElement</span>();
-      map.<span class="fu">put</span>(name, request.<span class="fu">getParameterValues</span>(name));
-    }
-    BeanUtils.<span class="fu">populate</span>(bean, map);</code></pre></div>
-<p>另外，它底层会使用ConvertUtils进行各种数据类型的cast，而ConvertUtils提供的一些方法也可以直接使用，但是因为版本更新和未来的考虑，并不提倡直接使用它提供的一些方法，而是推荐实现自己的转换类，但前提是implements Converter接口，呵呵</p>
-<p>还有就是如果考虑到I18N的问题，也就是Locale-Aware,可以使用org.apache.commons.beanutils.locale包中提供的相应类，因为缺省的org.apache.commons.beanutils包中提供的类不支持locale-aware。</p>
-<p>最好要说的是，在org.apache.commons.beanutils.converters包下面提供了许多的converter类，至于怎么使用我就想赘述了，只要会查API doc，使用他们就不会有太多问题。</p>
-<p>ok，写的我头疼脖子酸，休息先....</p>
+              
+              <hr/>
+
+              <blockquote>
+              <p>2014年从msn space存档中重新恢复出来！</p>
+              </blockquote>
+              <p>上午看了一些Hibernate的faq等文档，时间过的也真快，一不留神就中午了。</p>
+              <p>下午leader先开了一个会，讨论SFA的CM模块的实现问题，只是让我们先看一下截屏图，星期三再讨论，呵呵，公司想自己做这个CRM，但是好像情况并不乐观，而且是否能跟日立达成汉化改造的协议还难说，所以leader只是打算让我们组的人先从abstract层面了解一下，抽象一些共通的部品。开完会，我也没有去钻研截屏图，呵呵，是不是有些不敬业啊？！:em211:不过，话说回来了，那些东西其实也没有多少花露水，明天研究一下吧！仿制，埃...leader都实说了，自己没有数据源，做这些没有什么东西，所以他也没有让我们从头做到尾，免得到时候日立那边下来，这些都白做，也打击我们的积极性。</p>
+              <p>因为近来又看了些hibernate的documentation，所以联想到VO在各个层之间的数据传递问题，就想起以前看过的commons beanutils，所以重新扫描了一遍，部分内容如下：</p>
+              <p>首先需要说明的是PropertyUtils类，这个类提供了对javabean和动态bean的属性进行访问的各种方法，因为beanutils将bean的property分为simple，indexed和mapped三种，所以，这个类提供了get/setSimpleProperty(...),get/setIndexedProperty(...),和get/setMappedProperty(...)等方法分别针对各种property的访问。另外，除了以上这些property访问方法，还有get/setNestedProperty(...)和get/setProperty(...)方法，前两个针对bean的property依然是bean的property的访问问题，后者则是通用的property访问方式。下面是简短的代码实例：</p>
+              <div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java">Employee employee = ...;
+              String city = (String) PropertyUtils.<span class="fu">getProperty</span>(employee,
+                    <span class="st">&quot;subordinate[3].address(home).city&quot;</span>);</code></pre></div>
+              <p>其他的property访问方法的parameter跟这个代码实例类似，如果还不明白可以参考BeanUtils的API。</p>
+              <p>除了以上方法，PropertyUtils还提供了copyProperty（...)等静态方法，可以查阅API 文档以取得更多信息。</p>
+              <p>其次我们要说的就是DynaBean和DynaClass接口了，我们可以通过为DynaClass的实现类提供DynaProperty类型的数组作为参数，调用其newInstance（）方法返回相应的DynaBean实例，之后，初始化该生成的bean并进行相应的处理。</p>
+              <p>下面是代码实例：</p>
+              <div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"> DynaProperty[] props = <span class="kw">new</span> DynaProperty[]{
+                      <span class="kw">new</span> <span class="fu">DynaProperty</span>(<span class="st">&quot;address&quot;</span>, java.<span class="fu">util</span>.<span class="fu">Map</span>.<span class="fu">class</span>),
+                      <span class="kw">new</span> <span class="fu">DynaProperty</span>(<span class="st">&quot;subordinate&quot;</span>, mypackage.<span class="fu">Employee</span>[].<span class="fu">class</span>),
+                      <span class="kw">new</span> <span class="fu">DynaProperty</span>(<span class="st">&quot;firstName&quot;</span>, String.<span class="fu">class</span>),
+                      <span class="kw">new</span> <span class="fu">DynaProperty</span>(<span class="st">&quot;lastName&quot;</span>,  String.<span class="fu">class</span>)
+                    };
+              BasicDynaClass dynaClass = <span class="kw">new</span> <span class="fu">BasicDynaClass</span>(<span class="st">&quot;employee&quot;</span>, <span class="kw">null</span>, props);
+              DynaBean employee = dynaClass.<span class="fu">newInstance</span>();
+              employee.<span class="fu">set</span>(<span class="st">&quot;address&quot;</span>, <span class="kw">new</span> HashMap());
+              employee.<span class="fu">set</span>(<span class="st">&quot;subordinate&quot;</span>, <span class="kw">new</span> mypackage.<span class="fu">Employee</span>[<span class="dv">0</span>]);
+              employee.<span class="fu">set</span>(<span class="st">&quot;firstName&quot;</span>, <span class="st">&quot;Fred&quot;</span>);
+              employee.<span class="fu">set</span>(<span class="st">&quot;lastName&quot;</span>, <span class="st">&quot;Flintstone&quot;</span>);</code></pre></div>
+              <p>DynaBean和DynaClass的实现类分别可以归纳为【BasicDynaBean,ResultSetIterator,WrapDynaBean】和【BasicDynaClass, ResultSetDynaClass, RowSetDynaClass, WrapDynaClass】两组。其中，BasicDynaBean和BasicDynaClass在上面的代码中已经演示过了，剩下的尤其属ResultSetDynaClass, RowSetDynaClass两个类偶认为最为实用。他们可以对SQL查询后返回的ResultSet进行wrap，这个在web应用中很有用，你可以再也不用就数据在各层之间传递而写无数的相应的VO beans了。不过，二者也存在一定的区别。ResultSetDynaClass只能在保持数据库连接的情况下构造DynaBean并进行处理，这在很大程度上限制了其应用，因为不管怎么样，你应该将connection尽快的返回pool中而不是一直占有它，否则资源将很快的耗尽，这一点显而易见。</p>
+              <p>不过，RowSetDynaClass则可以在数据库连接关闭的情况下返回数据bean并处理，它将data拷贝到memory，所以这种方法是以性能和内存的消耗为代价的，不过，这种情况对于web应用来说，却是很划的来。</p>
+              <p>下面我们看看Beanutils文档提供的代码实例，不妨做一个比较：</p>
+              <div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java">Connection conn = ...;
+                Statement stmt = conn.<span class="fu">createStatement</span>();
+                ResultSet rs = stmt.<span class="fu">executeQuery</span>
+                  (<span class="st">&quot;select account_id, name from customers&quot;</span>);
+                Iterator rows = (<span class="kw">new</span> <span class="fu">ResultSetDynaClass</span>(rs)).<span class="fu">iterator</span>();
+                <span class="kw">while</span> (rows.<span class="fu">hasNext</span>()) {
+                  DynaBean row = (DynaBean) rows.<span class="fu">next</span>();
+                  System.<span class="fu">out</span>.<span class="fu">println</span>(<span class="st">&quot;Account number is &quot;</span> +
+                                     row.<span class="fu">get</span>(<span class="st">&quot;account_id&quot;</span>) +
+                                     <span class="st">&quot; and name is &quot;</span> + row.<span class="fu">get</span>(<span class="st">&quot;name&quot;</span>));
+                }
+                rs.<span class="fu">close</span>();
+                stmt.<span class="fu">close</span>();</code></pre></div>
+              <div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java">Connection conn = ...;  <span class="co">// Acquire connection from pool</span>
+                  Statement stmt = conn.<span class="fu">createStatement</span>();
+                  ResultSet rs = stmt.<span class="fu">executeQuery</span>(<span class="st">&quot;SELECT ...&quot;</span>);
+                  RowSetDynaClass rsdc = <span class="kw">new</span> <span class="fu">RowSetDynaClass</span>(rs);
+                  rs.<span class="fu">close</span>();
+                  stmt.<span class="fu">close</span>();
+                  ...;                    <span class="co">// Return connection to pool</span>
+                  List rows = rsdc.<span class="fu">getRows</span>();
+                  ...;                   <span class="co">// Process the rows as desired</span></code></pre></div>
+              <p>是不是后者更适合web应用那？！</p>
+              <p>除了上面的一些实现类，还剩下了WrapDynaBean和WrapDynaClass类，他们同样相应的实现了DynaBean和DynaClass接口，作用就是：如果你愿意所以的bean访问（）都通过beanutils包的PropertyUtils类方式来访问，那么你可以通过这两个类对现有的bean进行wrap，例如：</p>
+              <div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java">MyBean bean = ...;
+              DynaBean wrapper = <span class="kw">new</span> <span class="fu">WrapDynaBean</span>(bean);
+              String firstName = wrapper.<span class="fu">get</span>(<span class="st">&quot;firstName&quot;</span>);</code></pre></div>
+              <p>虽然在这里看不到WrapDynaClass的影子，不过不用担心，实际上在程序内部已经构造了它的实例，只是我们无须关心而已。</p>
+              <p>以上差不多对beanutils提供 的主要功能类说的差不多了吧，不过，还有一点点儿，呵呵，那就是BeanUtils和ConvertUtils类以及Converter接口。</p>
+              <p>其实那，beanutils包的本来目的就是由BeanUtils撑大纲的，如果了解struts的历史，也应该知道这些，或许它的doc提供的这段代码可以很好的解析其原来的用意吧：</p>
+              <div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java">    HttpServletRequest request = ...;
+                  MyBean bean = ...;
+                  HashMap map = <span class="kw">new</span> HashMap();
+                  Enumeration names = request.<span class="fu">getParameterNames</span>();
+                  <span class="kw">while</span> (names.<span class="fu">hasMoreElements</span>()) {
+                    String name = (String) names.<span class="fu">nextElement</span>();
+                    map.<span class="fu">put</span>(name, request.<span class="fu">getParameterValues</span>(name));
+                  }
+                  BeanUtils.<span class="fu">populate</span>(bean, map);</code></pre></div>
+              <p>另外，它底层会使用ConvertUtils进行各种数据类型的cast，而ConvertUtils提供的一些方法也可以直接使用，但是因为版本更新和未来的考虑，并不提倡直接使用它提供的一些方法，而是推荐实现自己的转换类，但前提是implements Converter接口，呵呵</p>
+              <p>还有就是如果考虑到I18N的问题，也就是Locale-Aware,可以使用org.apache.commons.beanutils.locale包中提供的相应类，因为缺省的org.apache.commons.beanutils包中提供的类不支持locale-aware。</p>
+              <p>最好要说的是，在org.apache.commons.beanutils.converters包下面提供了许多的converter类，至于怎么使用我就想赘述了，只要会查API doc，使用他们就不会有太多问题。</p>
+              <p>ok，写的我头疼脖子酸，休息先....</p>
               
               <!--百度分享按钮-->
               <div class="pull-left bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a><a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a></div>
@@ -188,9 +178,6 @@ String firstName = wrapper.<span class="fu">get</span>(<span class="st">&quot;fi
               <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
               <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
 
-            </div>
-          </div>
-        </div>
       </div>
       <div class="row">
         <div class="col-md-12 footer">
@@ -198,9 +185,9 @@ String firstName = wrapper.<span class="fu">get</span>(<span class="st">&quot;fi
           <p>Powered by <a href="http://johnmacfarlane.net/pandoc/">pandoc</a>, <a href="http://rometools.github.io/rome/index.html">ROME</a> and <a href="http://pages.github.com/">github pages</a></p>
         </div>
       </div>
-    </div>
-  </div>
-</div>
+    </div> <!--main-->
+  </div> <!--row-->
+</div> <!--container-->
 
 <script src="/js/jquery-2.1.1.min.js"></script>
 <script src="/js/bootstrap.min.js"></script>

@@ -46,142 +46,130 @@
 </head>
 
 <body>
-<div class="container-fluid">
+<div class="container">
   <div class="row">
-    <div class="col-md-3 sidebar">
-      <a href="/">
-        <!-- <div align="center"><img src="/images/wfq0.png"/></div> -->
-        <h2 class="text-center">扶墙老师</h2>
-      </a>
-      <p class="text-center lead slogan"><a href="/slogan.html">lollapalooza &amp; positioning</a></p>
-      <p class="text-center lead slogan">瞎子摸象的践行者</p>
-      <ul class="nav nav-pills nav-stacked">
-        <li><a href="/favorite.html" class="text-center"><i class="icon-star-empty"></i> 我的收藏</a></li>
-        <li><a href="/dashboard.html" class="text-center"><i class="icon-fullscreen"></i> 金融看板</a></li>
-        <li><a href="/columns.html" class="text-center"><i class="icon-folder-close-alt"></i> 专栏</a></li>
-        <li><a href="/references.html" class="text-center"><i class="icon-folder-close-alt"></i> 快捷参考</a></li>
-        <li><a href="/whoami.html" class="text-center"><i class="icon-user-md"></i> 我是谁</a></li>
-        <li><a href="/interlinks.html" class="text-center"><i class="icon-user-md"></i> 友情链接</a></li>
-        <li><a href="/feeds.xml" class="text-center"><i class="icon-folder-close-alt"></i> RSS</a></li>
-      </ul>
-
+    
+    <div class="col-md-2">
+        <div class="seal text-right">
+          <a href="http://afoo.me">
+            <img src="/images/myseal.png"/>
+          </a>
+        </div>
     </div>
-    <div class="col-md-9 col-md-offset-3 main">
-      <div class="row">
-        <div class="container-fluid">
+    <div class="col-md-10 col-xs-12">
+
           
           <div class="row">
                         <div id="header">
               <p class="lead">
-              <h1 class="title">一个简单的自定义配置格式的Scala实现&nbsp;&nbsp;
-                <small>
-                                  </small>
-              </h1>
-              </p>
+              <h1 class="title">一个简单的自定义配置格式的Scala实现</h1>
+                                          </p>
             </div>
-                        <div>
-
+            
               <hr>
 
-                            <p>本来想执行我Object As Configuration的理念， 不过google group上有人推荐我看看configgy， 看过之后， 觉得还是自己写一个简单些， So 马上动手...</p>
-<p>配置格式先简单定义为：</p>
-<pre>
-ident = value
-groupId = {
- ident1 = value1
- ident2 = value2
- ...
-}
-</pre>
-<p>即可以配置为key-value的形式（以=或者:分割），或者group的形式（group暂时不考虑嵌套group的形式）。</p>
-<p>定义一个Scala的Parser combinator如下：</p>
-<div class="sourceCode"><table class="sourceCode scala numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
-28
-29
-30
-31
-32
-33
-34
-35
-</pre></td><td class="sourceCode"><pre><code class="sourceCode scala"><span class="kw">class</span> BlockOrItemConfigurationParser <span class="kw">extends</span> JavaTokenParsers {
+              
+              <hr/>
 
-  <span class="kw">def</span> entry = ((item | block) +) ^^ {
-    _.<span class="fu">foldLeft</span>(Map[String, Any]()) {
-      (accum, i) =&gt;
-        i.<span class="fu">_2</span> <span class="kw">match</span> {
-          <span class="kw">case</span> lst: List[(String, Any)] =&gt; accum ++ lst.<span class="fu">foldLeft</span>(Map[String, Any]()) {
-            (ac, it) =&gt;
-              ac + ((i.<span class="fu">_1</span> + <span class="st">&quot;.&quot;</span> + it.<span class="fu">_1</span>) -&gt; it.<span class="fu">_2</span>)
-          }
-          <span class="kw">case</span> x =&gt; accum + (i.<span class="fu">_1</span> -&gt; x)
-        }
-    }
-  }
-
-  <span class="kw">def</span> block = ident ~ <span class="st">&quot;=&quot;</span> ~ <span class="st">&quot;{&quot;</span> ~ <span class="fu">rep</span>(item) ~ <span class="st">&quot;}&quot;</span> ^^ {
-    <span class="kw">case</span> k ~ <span class="st">&quot;=&quot;</span> ~ <span class="st">&quot;{&quot;</span> ~ v ~ <span class="st">&quot;}&quot;</span> =&gt; (k -&gt; v)
-  }
-
-  <span class="kw">def</span> item = ident ~ (<span class="st">&quot;=&quot;</span> | <span class="st">&quot;:&quot;</span>) ~ value &lt;~ <span class="fu">opt</span>(<span class="st">&quot;;&quot;</span>) ^^ {
-    <span class="kw">case</span> k ~ _ ~ v =&gt; (k -&gt; v)
-  }
-
-  <span class="kw">def</span> value = stringLit | decimalNumber | floatingPointNumber | booleanLiteral | nullLiteral
-
-  <span class="kw">def</span> stringLit = <span class="st">&quot;</span><span class="ch">\&quot;</span><span class="st">&quot;</span> ~&gt; string &lt;~ <span class="st">&quot;</span><span class="ch">\&quot;</span><span class="st">&quot;</span> ^^ {
-    <span class="kw">case</span> s =&gt; s
-  }
-
-  <span class="kw">def</span> string = (<span class="st">&quot;&quot;&quot;([^&quot;</span>\p{Cntrl}\\]|\\[\\/bfnrt]|\\u[a-fA-F0<span class="dv">-9</span>]{<span class="dv">4</span>})*<span class="st">&quot;&quot;&quot;).r</span>
-
-  <span class="kw">def</span> booleanLiteral = <span class="st">&quot;true&quot;</span> ^^^ <span class="kw">true</span> | <span class="st">&quot;false&quot;</span> ^^^ <span class="kw">false</span>
-
-  <span class="kw">def</span> nullLiteral = <span class="st">&quot;null&quot;</span> ^^^ <span class="kw">null</span>
-}</code></pre></td></tr></table></div>
-<p>代码写的有点儿矬， 将就看吧，呵呵， 本来用的JavaTokenParsers.stringLiteral， 但后来发现他没有去掉引号&quot;, 所以，只能自己重新定义一个， 当然，代码直接拷贝它的。</p>
-<p>有了parser之后， 就可以定义一个Configurator，比如：</p>
-<div class="sourceCode"><table class="sourceCode scala numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
-2
-3
-4
-5
-6
-7
-</pre></td><td class="sourceCode"><pre><code class="sourceCode scala"><span class="kw">class</span> <span class="fu">SimpleConfigurator</span>(configFile:File) {
-   <span class="kw">val</span> p = <span class="kw">new</span> BlockOrItemConfigurationParser
-   p.<span class="fu">parseAll</span>(p.<span class="fu">entry</span>, <span class="kw">new</span> <span class="fu">CharSeqReader</span>(FileUtils.<span class="fu">readFileToString</span>(configFile))) <span class="kw">match</span>{
-        <span class="kw">case</span> p.<span class="fu">Success</span>(r, in)=&gt; <span class="co">// use r to get parsed result and feed your program, hehe </span>
-        <span class="kw">case</span> x=&gt; <span class="kw">throw</span> <span class="kw">new</span> Exception(<span class="st">&quot;parse error:&quot;</span>+x)
-   }
-}</code></pre></td></tr></table></div>
-<p>OK， That's it！Have Fun!</p>
+              <p>本来想执行我Object As Configuration的理念， 不过google group上有人推荐我看看configgy， 看过之后， 觉得还是自己写一个简单些， So 马上动手...</p>
+              <p>配置格式先简单定义为：</p>
+              <pre>
+              ident = value
+              groupId = {
+               ident1 = value1
+               ident2 = value2
+               ...
+              }
+              </pre>
+              <p>即可以配置为key-value的形式（以=或者:分割），或者group的形式（group暂时不考虑嵌套group的形式）。</p>
+              <p>定义一个Scala的Parser combinator如下：</p>
+              <div class="sourceCode"><table class="sourceCode scala numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+              2
+              3
+              4
+              5
+              6
+              7
+              8
+              9
+              10
+              11
+              12
+              13
+              14
+              15
+              16
+              17
+              18
+              19
+              20
+              21
+              22
+              23
+              24
+              25
+              26
+              27
+              28
+              29
+              30
+              31
+              32
+              33
+              34
+              35
+              </pre></td><td class="sourceCode"><pre><code class="sourceCode scala"><span class="kw">class</span> BlockOrItemConfigurationParser <span class="kw">extends</span> JavaTokenParsers {
+              
+                <span class="kw">def</span> entry = ((item | block) +) ^^ {
+                  _.<span class="fu">foldLeft</span>(Map[String, Any]()) {
+                    (accum, i) =&gt;
+                      i.<span class="fu">_2</span> <span class="kw">match</span> {
+                        <span class="kw">case</span> lst: List[(String, Any)] =&gt; accum ++ lst.<span class="fu">foldLeft</span>(Map[String, Any]()) {
+                          (ac, it) =&gt;
+                            ac + ((i.<span class="fu">_1</span> + <span class="st">&quot;.&quot;</span> + it.<span class="fu">_1</span>) -&gt; it.<span class="fu">_2</span>)
+                        }
+                        <span class="kw">case</span> x =&gt; accum + (i.<span class="fu">_1</span> -&gt; x)
+                      }
+                  }
+                }
+              
+                <span class="kw">def</span> block = ident ~ <span class="st">&quot;=&quot;</span> ~ <span class="st">&quot;{&quot;</span> ~ <span class="fu">rep</span>(item) ~ <span class="st">&quot;}&quot;</span> ^^ {
+                  <span class="kw">case</span> k ~ <span class="st">&quot;=&quot;</span> ~ <span class="st">&quot;{&quot;</span> ~ v ~ <span class="st">&quot;}&quot;</span> =&gt; (k -&gt; v)
+                }
+              
+                <span class="kw">def</span> item = ident ~ (<span class="st">&quot;=&quot;</span> | <span class="st">&quot;:&quot;</span>) ~ value &lt;~ <span class="fu">opt</span>(<span class="st">&quot;;&quot;</span>) ^^ {
+                  <span class="kw">case</span> k ~ _ ~ v =&gt; (k -&gt; v)
+                }
+              
+                <span class="kw">def</span> value = stringLit | decimalNumber | floatingPointNumber | booleanLiteral | nullLiteral
+              
+                <span class="kw">def</span> stringLit = <span class="st">&quot;</span><span class="ch">\&quot;</span><span class="st">&quot;</span> ~&gt; string &lt;~ <span class="st">&quot;</span><span class="ch">\&quot;</span><span class="st">&quot;</span> ^^ {
+                  <span class="kw">case</span> s =&gt; s
+                }
+              
+                <span class="kw">def</span> string = (<span class="st">&quot;&quot;&quot;([^&quot;</span>\p{Cntrl}\\]|\\[\\/bfnrt]|\\u[a-fA-F0<span class="dv">-9</span>]{<span class="dv">4</span>})*<span class="st">&quot;&quot;&quot;).r</span>
+              
+                <span class="kw">def</span> booleanLiteral = <span class="st">&quot;true&quot;</span> ^^^ <span class="kw">true</span> | <span class="st">&quot;false&quot;</span> ^^^ <span class="kw">false</span>
+              
+                <span class="kw">def</span> nullLiteral = <span class="st">&quot;null&quot;</span> ^^^ <span class="kw">null</span>
+              }</code></pre></td></tr></table></div>
+              <p>代码写的有点儿矬， 将就看吧，呵呵， 本来用的JavaTokenParsers.stringLiteral， 但后来发现他没有去掉引号&quot;, 所以，只能自己重新定义一个， 当然，代码直接拷贝它的。</p>
+              <p>有了parser之后， 就可以定义一个Configurator，比如：</p>
+              <div class="sourceCode"><table class="sourceCode scala numberLines"><tr class="sourceCode"><td class="lineNumbers"><pre>1
+              2
+              3
+              4
+              5
+              6
+              7
+              </pre></td><td class="sourceCode"><pre><code class="sourceCode scala"><span class="kw">class</span> <span class="fu">SimpleConfigurator</span>(configFile:File) {
+                 <span class="kw">val</span> p = <span class="kw">new</span> BlockOrItemConfigurationParser
+                 p.<span class="fu">parseAll</span>(p.<span class="fu">entry</span>, <span class="kw">new</span> <span class="fu">CharSeqReader</span>(FileUtils.<span class="fu">readFileToString</span>(configFile))) <span class="kw">match</span>{
+                      <span class="kw">case</span> p.<span class="fu">Success</span>(r, in)=&gt; <span class="co">// use r to get parsed result and feed your program, hehe </span>
+                      <span class="kw">case</span> x=&gt; <span class="kw">throw</span> <span class="kw">new</span> Exception(<span class="st">&quot;parse error:&quot;</span>+x)
+                 }
+              }</code></pre></td></tr></table></div>
+              <p>OK， That's it！Have Fun!</p>
               
               <!--百度分享按钮-->
               <div class="pull-left bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a><a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a></div>
@@ -214,9 +202,6 @@ groupId = {
               <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
               <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
 
-            </div>
-          </div>
-        </div>
       </div>
       <div class="row">
         <div class="col-md-12 footer">
@@ -224,9 +209,9 @@ groupId = {
           <p>Powered by <a href="http://johnmacfarlane.net/pandoc/">pandoc</a>, <a href="http://rometools.github.io/rome/index.html">ROME</a> and <a href="http://pages.github.com/">github pages</a></p>
         </div>
       </div>
-    </div>
-  </div>
-</div>
+    </div> <!--main-->
+  </div> <!--row-->
+</div> <!--container-->
 
 <script src="/js/jquery-2.1.1.min.js"></script>
 <script src="/js/bootstrap.min.js"></script>

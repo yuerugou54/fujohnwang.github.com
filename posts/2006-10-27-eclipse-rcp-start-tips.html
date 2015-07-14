@@ -46,42 +46,29 @@
 </head>
 
 <body>
-<div class="container-fluid">
+<div class="container">
   <div class="row">
-    <div class="col-md-3 sidebar">
-      <a href="/">
-        <!-- <div align="center"><img src="/images/wfq0.png"/></div> -->
-        <h2 class="text-center">扶墙老师</h2>
-      </a>
-      <p class="text-center lead slogan"><a href="/slogan.html">lollapalooza &amp; positioning</a></p>
-      <p class="text-center lead slogan">瞎子摸象的践行者</p>
-      <ul class="nav nav-pills nav-stacked">
-        <li><a href="/favorite.html" class="text-center"><i class="icon-star-empty"></i> 我的收藏</a></li>
-        <li><a href="/dashboard.html" class="text-center"><i class="icon-fullscreen"></i> 金融看板</a></li>
-        <li><a href="/columns.html" class="text-center"><i class="icon-folder-close-alt"></i> 专栏</a></li>
-        <li><a href="/references.html" class="text-center"><i class="icon-folder-close-alt"></i> 快捷参考</a></li>
-        <li><a href="/whoami.html" class="text-center"><i class="icon-user-md"></i> 我是谁</a></li>
-        <li><a href="/interlinks.html" class="text-center"><i class="icon-user-md"></i> 友情链接</a></li>
-        <li><a href="/feeds.xml" class="text-center"><i class="icon-folder-close-alt"></i> RSS</a></li>
-      </ul>
-
+    
+    <div class="col-md-2">
+        <div class="seal text-right">
+          <a href="http://afoo.me">
+            <img src="/images/myseal.png"/>
+          </a>
+        </div>
     </div>
-    <div class="col-md-9 col-md-offset-3 main">
-      <div class="row">
-        <div class="container-fluid">
+    <div class="col-md-10 col-xs-12">
+
           
           <div class="row">
                         <div id="header">
               <p class="lead">
-              <h1 class="title">Eclipse RCP start tips&nbsp;&nbsp;
-                <small>
-                                    FuqiangWang
-                                  </small>
-              </h1>
-              </p>
+              <h1 class="title">Eclipse RCP start tips</h1>
+                            <small>
+                  <h3 class="author">FuqiangWang</h3>
+              </small>
+                                          </p>
             </div>
-                        <div>
-
+            
               <hr>
 
                             <div id="TOC">
@@ -93,76 +80,79 @@
                 <li><a href="#view和editor的title圆润风格如何显示"><span class="toc-section-number">5</span> View和Editor的title圆润风格如何显示?</a></li>
                 </ul>
               </div>
-                            <blockquote>
-<p>2014年从msn space存档中重新恢复出来！</p>
-</blockquote>
-<p>The blog has not been updated for such a long long time, so today, let's say something...</p>
-<p>写点儿有关RCP的小tips吧，反正也不知写些什么东西，无意间翻硬盘看到这个freemind文件，故此，罗列与此：</p>
-<h1 id="open-view-tip"><span class="header-section-number">1</span> Open View Tip</h1>
-<p>如果要在RCP中打开相应的View，你需要通过类似一下代码：</p>
-<p><code>window.getActivePage().showView(viewId, IWorkbenchPage.VIEW_ACTIVATE);</code></p>
-<p>不过，如果不在Perspective先行指定要打开的view所在位置的话，RCP应该不会知道你想让他帮你把该View放到什么位置，所以，我们还需要在Perspective中指定View的位置：</p>
-<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java">layout.<span class="fu">createPlaceholderFolder</span>(<span class="st">&quot;panelFolder&quot;</span>,IPageLayout.<span class="fu">TOP</span>,IPageLayout.<span class="fu">NULL_RATIO</span>,layout.<span class="fu">getEditorArea</span>()).<span class="fu">addPlaceholder</span>(AdministrationView.<span class="fu">ID</span>); 
-(Perspective.<span class="fu">java</span>)</code></pre></div>
-<h1 id="how-to-add-widget-onto-table-cell"><span class="header-section-number">2</span> How to Add Widget onto Table Cell</h1>
-<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java">Table table = <span class="kw">new</span> <span class="fu">Table</span>(top, SWT.<span class="fu">NONE</span>);
-table.<span class="fu">setHeaderVisible</span>(<span class="kw">true</span>);
-table.<span class="fu">setLinesVisible</span>(<span class="kw">true</span>);
-table.<span class="fu">setBounds</span>(<span class="kw">new</span> org.<span class="fu">eclipse</span>.<span class="fu">swt</span>.<span class="fu">graphics</span>.<span class="fu">Rectangle</span>(<span class="dv">47</span>,<span class="dv">67</span>,<span class="dv">190</span>,<span class="dv">70</span>));
-TableColumn tableColumn = <span class="kw">new</span> TableColumn(table, SWT.<span class="fu">NONE</span>);
-tableColumn.<span class="fu">setWidth</span>(<span class="dv">100</span>);
-tableColumn.<span class="fu">setText</span>(<span class="st">&quot;Check Column&quot;</span>);
+              
+              <hr/>
 
-TableColumn tableColumn1 = <span class="kw">new</span> TableColumn(table, SWT.<span class="fu">NONE</span>);
-tableColumn1.<span class="fu">setWidth</span>(<span class="dv">100</span>);
-tableColumn1.<span class="fu">setText</span>(<span class="st">&quot;Combo Column&quot;</span>);
-
-TableItem tableItem=<span class="kw">new</span> <span class="fu">TableItem</span>(table,SWT.<span class="fu">NONE</span>);
-TableEditor editor = <span class="kw">new</span> <span class="fu">TableEditor</span> (table);
-
-Button checkButton = <span class="kw">new</span> Button(table, SWT.<span class="fu">CHECK</span>);
-checkButton.<span class="fu">pack</span>();
-
-editor.<span class="fu">minimumWidth</span> = checkButton.<span class="fu">getSize</span> ().<span class="fu">x</span>;
-editor.<span class="fu">horizontalAlignment</span> = SWT.<span class="fu">CENTER</span>;
-editor.<span class="fu">setEditor</span>(checkButton, tableItem, <span class="dv">0</span>);
-editor = <span class="kw">new</span> <span class="fu">TableEditor</span> (table);
-
-Combo combo = <span class="kw">new</span> <span class="fu">Combo</span>(table, SWT.<span class="fu">CHECK</span>);
-combo.<span class="fu">pack</span>();
-
-editor.<span class="fu">minimumWidth</span> = combo.<span class="fu">getSize</span> ().<span class="fu">x</span>;
-editor.<span class="fu">horizontalAlignment</span> = SWT.<span class="fu">CENTER</span>;
-editor.<span class="fu">setEditor</span>(combo, tableItem, <span class="dv">1</span>);</code></pre></div>
-<h1 id="how-to-get-the-shell-reference-from-viewpart"><span class="header-section-number">3</span> How to get the Shell reference from ViewPart?!</h1>
-<p><code>viewPart.getViewSite().getShell()</code></p>
-<h1 id="how-to-restart-eclipse-rcp-application-in-program"><span class="header-section-number">4</span> how to restart eclipse RCP application in program?!</h1>
-<p><code>PlatformUI.getWorkbench().restart();</code></p>
-<h1 id="view和editor的title圆润风格如何显示"><span class="header-section-number">5</span> View和Editor的title圆润风格如何显示?</h1>
-<p>在RCP的product配置文件中(注意preferenceCustomization属性):</p>
-<div class="sourceCode"><pre class="sourceCode xml"><code class="sourceCode xml"><span class="kw">&lt;extension</span>
-<span class="ot">         id=</span><span class="st">&quot;product&quot;</span>
-<span class="ot">         point=</span><span class="st">&quot;org.eclipse.core.runtime.products&quot;</span><span class="kw">&gt;</span>
-      <span class="kw">&lt;product</span>
-<span class="ot">            application=</span><span class="st">&quot;cn.bestwiz.jhf.dealer.demo.application&quot;</span>
-<span class="ot">            name=</span><span class="st">&quot;Dealer Demo&quot;</span><span class="kw">&gt;</span>
-         <span class="kw">&lt;property</span>
-<span class="ot">               name=</span><span class="st">&quot;windowImages&quot;</span>
-<span class="ot">               value=</span><span class="st">&quot;/cn.bestwiz.jhf.dealer.demo/icons/letian.GIF&quot;</span><span class="kw">/&gt;</span>
-         <span class="kw">&lt;property</span>
-<span class="ot">               name=</span><span class="st">&quot;preferenceCustomization&quot;</span>
-<span class="ot">               value=</span><span class="st">&quot;plugin_customization.ini&quot;</span><span class="kw">/&gt;</span>
-      <span class="kw">&lt;/product&gt;</span>
-   <span class="kw">&lt;/extension&gt;</span></code></pre></div>
-其中，plugin_customization.ini文件的内容类似于（注意SHOW_TRADITIONAL_STYLE_TABS属性）：
-<pre>
-org.eclipse.ui/DOCK_PERSPECTIVE_BAR=topRight
-org.eclipse.ui/SHOW_PROGRESS_ON_STARTUP=false
-org.eclipse.ui/SHOW_TRADITIONAL_STYLE_TABS=false
-org.eclipse.ui/defaultPerspectiveId=cn.bestwiz.jhf.dealerdesk.perspective
-org.eclipse.update.core/org.eclipse.update.core.updateVersions=compatible
-</pre>
-<p>OK,that's all, if something new comes , append it later.</p>
+              <blockquote>
+              <p>2014年从msn space存档中重新恢复出来！</p>
+              </blockquote>
+              <p>The blog has not been updated for such a long long time, so today, let's say something...</p>
+              <p>写点儿有关RCP的小tips吧，反正也不知写些什么东西，无意间翻硬盘看到这个freemind文件，故此，罗列与此：</p>
+              <h1 id="open-view-tip"><span class="header-section-number">1</span> Open View Tip</h1>
+              <p>如果要在RCP中打开相应的View，你需要通过类似一下代码：</p>
+              <p><code>window.getActivePage().showView(viewId, IWorkbenchPage.VIEW_ACTIVATE);</code></p>
+              <p>不过，如果不在Perspective先行指定要打开的view所在位置的话，RCP应该不会知道你想让他帮你把该View放到什么位置，所以，我们还需要在Perspective中指定View的位置：</p>
+              <div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java">layout.<span class="fu">createPlaceholderFolder</span>(<span class="st">&quot;panelFolder&quot;</span>,IPageLayout.<span class="fu">TOP</span>,IPageLayout.<span class="fu">NULL_RATIO</span>,layout.<span class="fu">getEditorArea</span>()).<span class="fu">addPlaceholder</span>(AdministrationView.<span class="fu">ID</span>); 
+              (Perspective.<span class="fu">java</span>)</code></pre></div>
+              <h1 id="how-to-add-widget-onto-table-cell"><span class="header-section-number">2</span> How to Add Widget onto Table Cell</h1>
+              <div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java">Table table = <span class="kw">new</span> <span class="fu">Table</span>(top, SWT.<span class="fu">NONE</span>);
+              table.<span class="fu">setHeaderVisible</span>(<span class="kw">true</span>);
+              table.<span class="fu">setLinesVisible</span>(<span class="kw">true</span>);
+              table.<span class="fu">setBounds</span>(<span class="kw">new</span> org.<span class="fu">eclipse</span>.<span class="fu">swt</span>.<span class="fu">graphics</span>.<span class="fu">Rectangle</span>(<span class="dv">47</span>,<span class="dv">67</span>,<span class="dv">190</span>,<span class="dv">70</span>));
+              TableColumn tableColumn = <span class="kw">new</span> TableColumn(table, SWT.<span class="fu">NONE</span>);
+              tableColumn.<span class="fu">setWidth</span>(<span class="dv">100</span>);
+              tableColumn.<span class="fu">setText</span>(<span class="st">&quot;Check Column&quot;</span>);
+              
+              TableColumn tableColumn1 = <span class="kw">new</span> TableColumn(table, SWT.<span class="fu">NONE</span>);
+              tableColumn1.<span class="fu">setWidth</span>(<span class="dv">100</span>);
+              tableColumn1.<span class="fu">setText</span>(<span class="st">&quot;Combo Column&quot;</span>);
+              
+              TableItem tableItem=<span class="kw">new</span> <span class="fu">TableItem</span>(table,SWT.<span class="fu">NONE</span>);
+              TableEditor editor = <span class="kw">new</span> <span class="fu">TableEditor</span> (table);
+              
+              Button checkButton = <span class="kw">new</span> Button(table, SWT.<span class="fu">CHECK</span>);
+              checkButton.<span class="fu">pack</span>();
+              
+              editor.<span class="fu">minimumWidth</span> = checkButton.<span class="fu">getSize</span> ().<span class="fu">x</span>;
+              editor.<span class="fu">horizontalAlignment</span> = SWT.<span class="fu">CENTER</span>;
+              editor.<span class="fu">setEditor</span>(checkButton, tableItem, <span class="dv">0</span>);
+              editor = <span class="kw">new</span> <span class="fu">TableEditor</span> (table);
+              
+              Combo combo = <span class="kw">new</span> <span class="fu">Combo</span>(table, SWT.<span class="fu">CHECK</span>);
+              combo.<span class="fu">pack</span>();
+              
+              editor.<span class="fu">minimumWidth</span> = combo.<span class="fu">getSize</span> ().<span class="fu">x</span>;
+              editor.<span class="fu">horizontalAlignment</span> = SWT.<span class="fu">CENTER</span>;
+              editor.<span class="fu">setEditor</span>(combo, tableItem, <span class="dv">1</span>);</code></pre></div>
+              <h1 id="how-to-get-the-shell-reference-from-viewpart"><span class="header-section-number">3</span> How to get the Shell reference from ViewPart?!</h1>
+              <p><code>viewPart.getViewSite().getShell()</code></p>
+              <h1 id="how-to-restart-eclipse-rcp-application-in-program"><span class="header-section-number">4</span> how to restart eclipse RCP application in program?!</h1>
+              <p><code>PlatformUI.getWorkbench().restart();</code></p>
+              <h1 id="view和editor的title圆润风格如何显示"><span class="header-section-number">5</span> View和Editor的title圆润风格如何显示?</h1>
+              <p>在RCP的product配置文件中(注意preferenceCustomization属性):</p>
+              <div class="sourceCode"><pre class="sourceCode xml"><code class="sourceCode xml"><span class="kw">&lt;extension</span>
+              <span class="ot">         id=</span><span class="st">&quot;product&quot;</span>
+              <span class="ot">         point=</span><span class="st">&quot;org.eclipse.core.runtime.products&quot;</span><span class="kw">&gt;</span>
+                    <span class="kw">&lt;product</span>
+              <span class="ot">            application=</span><span class="st">&quot;cn.bestwiz.jhf.dealer.demo.application&quot;</span>
+              <span class="ot">            name=</span><span class="st">&quot;Dealer Demo&quot;</span><span class="kw">&gt;</span>
+                       <span class="kw">&lt;property</span>
+              <span class="ot">               name=</span><span class="st">&quot;windowImages&quot;</span>
+              <span class="ot">               value=</span><span class="st">&quot;/cn.bestwiz.jhf.dealer.demo/icons/letian.GIF&quot;</span><span class="kw">/&gt;</span>
+                       <span class="kw">&lt;property</span>
+              <span class="ot">               name=</span><span class="st">&quot;preferenceCustomization&quot;</span>
+              <span class="ot">               value=</span><span class="st">&quot;plugin_customization.ini&quot;</span><span class="kw">/&gt;</span>
+                    <span class="kw">&lt;/product&gt;</span>
+                 <span class="kw">&lt;/extension&gt;</span></code></pre></div>
+              其中，plugin_customization.ini文件的内容类似于（注意SHOW_TRADITIONAL_STYLE_TABS属性）：
+              <pre>
+              org.eclipse.ui/DOCK_PERSPECTIVE_BAR=topRight
+              org.eclipse.ui/SHOW_PROGRESS_ON_STARTUP=false
+              org.eclipse.ui/SHOW_TRADITIONAL_STYLE_TABS=false
+              org.eclipse.ui/defaultPerspectiveId=cn.bestwiz.jhf.dealerdesk.perspective
+              org.eclipse.update.core/org.eclipse.update.core.updateVersions=compatible
+              </pre>
+              <p>OK,that's all, if something new comes , append it later.</p>
               
               <!--百度分享按钮-->
               <div class="pull-left bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a><a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a></div>
@@ -195,9 +185,6 @@ org.eclipse.update.core/org.eclipse.update.core.updateVersions=compatible
               <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
               <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
 
-            </div>
-          </div>
-        </div>
       </div>
       <div class="row">
         <div class="col-md-12 footer">
@@ -205,9 +192,9 @@ org.eclipse.update.core/org.eclipse.update.core.updateVersions=compatible
           <p>Powered by <a href="http://johnmacfarlane.net/pandoc/">pandoc</a>, <a href="http://rometools.github.io/rome/index.html">ROME</a> and <a href="http://pages.github.com/">github pages</a></p>
         </div>
       </div>
-    </div>
-  </div>
-</div>
+    </div> <!--main-->
+  </div> <!--row-->
+</div> <!--container-->
 
 <script src="/js/jquery-2.1.1.min.js"></script>
 <script src="/js/bootstrap.min.js"></script>

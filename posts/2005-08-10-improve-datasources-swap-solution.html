@@ -46,82 +46,72 @@
 </head>
 
 <body>
-<div class="container-fluid">
+<div class="container">
   <div class="row">
-    <div class="col-md-3 sidebar">
-      <a href="/">
-        <!-- <div align="center"><img src="/images/wfq0.png"/></div> -->
-        <h2 class="text-center">扶墙老师</h2>
-      </a>
-      <p class="text-center lead slogan"><a href="/slogan.html">lollapalooza &amp; positioning</a></p>
-      <p class="text-center lead slogan">瞎子摸象的践行者</p>
-      <ul class="nav nav-pills nav-stacked">
-        <li><a href="/favorite.html" class="text-center"><i class="icon-star-empty"></i> 我的收藏</a></li>
-        <li><a href="/dashboard.html" class="text-center"><i class="icon-fullscreen"></i> 金融看板</a></li>
-        <li><a href="/columns.html" class="text-center"><i class="icon-folder-close-alt"></i> 专栏</a></li>
-        <li><a href="/references.html" class="text-center"><i class="icon-folder-close-alt"></i> 快捷参考</a></li>
-        <li><a href="/whoami.html" class="text-center"><i class="icon-user-md"></i> 我是谁</a></li>
-        <li><a href="/interlinks.html" class="text-center"><i class="icon-user-md"></i> 友情链接</a></li>
-        <li><a href="/feeds.xml" class="text-center"><i class="icon-folder-close-alt"></i> RSS</a></li>
-      </ul>
-
+    
+    <div class="col-md-2">
+        <div class="seal text-right">
+          <a href="http://afoo.me">
+            <img src="/images/myseal.png"/>
+          </a>
+        </div>
     </div>
-    <div class="col-md-9 col-md-offset-3 main">
-      <div class="row">
-        <div class="container-fluid">
+    <div class="col-md-10 col-xs-12">
+
           
           <div class="row">
                         <div id="header">
               <p class="lead">
-              <h1 class="title">对双数据源互换实现的改进（improve to 2-dataSource swapping）&nbsp;&nbsp;
-                <small>
-                                    FuqiangWang
-                                  </small>
-              </h1>
-              </p>
+              <h1 class="title">对双数据源互换实现的改进（improve to 2-dataSource swapping）</h1>
+                            <small>
+                  <h3 class="author">FuqiangWang</h3>
+              </small>
+                                          </p>
             </div>
-                        <div>
-
+            
               <hr>
 
-                            <blockquote>
-<p>2014年从msn space存档中重新恢复出来！</p>
-</blockquote>
-<p>好久没有写blog了，随便找一个话题吧！就从原来的那个双数据源互换的问题说起吧！</p>
-<p>下图是当时的实现演示（图片来自SpringIDE的BeanView）：</p>
-<p>当时是使用了Spring提供的org.springframework.jdbc.datasource.DelegatingDataSource类，使他拥有两个数据源的引用，默认的targetDataSource指向第一个数据源，当ThrowsAdvice捕获异常之后，重新替换掉targetDataSource指向的数据源引用。我不确定这种方式是否是最好的，但是好像某些情况下不是很可靠，所以，后来改为了以下的实现形式：</p>
-<p>现在我们采用Spring提供的org.springframework.aop.target.HotSwappableTargetSource类，构造的时候就直接让其默认为第一个数据源，bean的配置类似于：</p>
-<div class="sourceCode"><pre class="sourceCode xml"><code class="sourceCode xml"><span class="kw">&lt;bean</span><span class="ot"> id=</span><span class="st">&quot;hotSwapTarget&quot;</span><span class="ot"> class=</span><span class="st">&quot;org.springframework.aop.target.HotSwappableTargetSource&quot;</span><span class="kw">&gt;</span>
-    <span class="kw">&lt;constructor-arg&gt;&lt;ref</span><span class="ot"> bean=</span><span class="st">&quot;dataSourcePrimary&quot;</span><span class="kw">/&gt;&lt;/constructor-arg&gt;</span>
-<span class="kw">&lt;/bean&gt;</span></code></pre></div>
-<p>有了TargetSource之后，我们就可以使用ProxyFactoryBean将其包装起来，给外层引用了，但是在这之前，我们要实现我们的主要功能，即某一个数据源崩溃之后，我们要马上切换到可用的数据源:</p>
-<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java">targetSource.<span class="fu">swap</span>(isPrimaryUsed?slave:primary);
-isPrimaryUsed = !isPrimaryUsed;</code></pre></div>
-<p>这样，我们所有需要准备的都ok了，最后要做的就是组装TargetSource和Advice了。下面就简单得罗列部分配置，或许更能帮助大家了解SpringAop的使用：</p>
-<div class="sourceCode"><pre class="sourceCode xml"><code class="sourceCode xml"><span class="kw">&lt;bean</span><span class="ot"> id=</span><span class="st">&quot;swapThrowsAdvice&quot;</span><span class="ot"> class=</span><span class="st">&quot;com.livedoor.finance.credit.ivr.aspects.SwapSourceThrowsAdvice&quot;</span><span class="kw">&gt;</span>
-    <span class="kw">&lt;property</span><span class="ot"> name=</span><span class="st">&quot;primary&quot;</span><span class="kw">&gt;&lt;ref</span><span class="ot"> bean=</span><span class="st">&quot;dataSourcePrimary&quot;</span><span class="kw">/&gt;&lt;/property&gt;</span>
-    <span class="kw">&lt;property</span><span class="ot"> name=</span><span class="st">&quot;slave&quot;</span><span class="kw">&gt;&lt;ref</span><span class="ot"> bean=</span><span class="st">&quot;dataSourceSecondary&quot;</span><span class="kw">/&gt;&lt;/property&gt;</span>
-    <span class="kw">&lt;property</span><span class="ot"> name=</span><span class="st">&quot;targetSource&quot;</span><span class="kw">&gt;&lt;ref</span><span class="ot"> bean=</span><span class="st">&quot;hotSwapTarget&quot;</span><span class="kw">/&gt;&lt;/property&gt;</span>
-<span class="kw">&lt;/bean&gt;</span>
- 
-<span class="kw">&lt;bean</span><span class="ot"> id=</span><span class="st">&quot;swapThrowsAdvisor&quot;</span><span class="ot"> class=</span><span class="st">&quot;org.springframework.aop.support.RegexpMethodPointcutAdvisor&quot;</span><span class="kw">&gt;</span>
-    <span class="kw">&lt;property</span><span class="ot"> name=</span><span class="st">&quot;advice&quot;</span><span class="kw">&gt;&lt;ref</span><span class="ot"> local=</span><span class="st">&quot;swapThrowsAdvice&quot;</span><span class="kw">/&gt;&lt;/property&gt;</span>
-    <span class="kw">&lt;property</span><span class="ot"> name=</span><span class="st">&quot;pattern&quot;</span><span class="kw">&gt;&lt;value&gt;</span>.*getConnection.*<span class="kw">&lt;/value&gt;&lt;/property&gt;</span>
-<span class="kw">&lt;/bean&gt;</span>
- 
-<span class="kw">&lt;bean</span><span class="ot"> id=</span><span class="st">&quot;dataSource&quot;</span><span class="ot"> class=</span><span class="st">&quot;org.springframework.aop.framework.ProxyFactoryBean&quot;</span><span class="kw">&gt;</span>
-    <span class="kw">&lt;property</span><span class="ot"> name=</span><span class="st">&quot;targetSource&quot;</span><span class="kw">&gt;</span>
-        <span class="kw">&lt;ref</span><span class="ot"> bean=</span><span class="st">&quot;hotSwapTarget&quot;</span><span class="kw">/&gt;</span>
-    <span class="kw">&lt;/property&gt;</span>
+              
+              <hr/>
 
-    <span class="kw">&lt;property</span><span class="ot"> name=</span><span class="st">&quot;interceptorNames&quot;</span><span class="kw">&gt;</span>
-        <span class="kw">&lt;list&gt;</span>
-            <span class="kw">&lt;value&gt;</span>swapThrowsAdvisor<span class="kw">&lt;/value&gt;</span>
-        <span class="kw">&lt;/list&gt;</span>
-    <span class="kw">&lt;/property&gt;</span>
-<span class="kw">&lt;/bean&gt;</span></code></pre></div>
-<p>这样，最终外层所引用的dataSource就可以在某个数据源崩溃之后，直接切换到可用的备用数据源，而这些都在Proxy内部屏蔽掉了，客户端无需关心这些。</p>
-<p>好了，今天就扯这些，呵呵</p>
+              <blockquote>
+              <p>2014年从msn space存档中重新恢复出来！</p>
+              </blockquote>
+              <p>好久没有写blog了，随便找一个话题吧！就从原来的那个双数据源互换的问题说起吧！</p>
+              <p>下图是当时的实现演示（图片来自SpringIDE的BeanView）：</p>
+              <p>当时是使用了Spring提供的org.springframework.jdbc.datasource.DelegatingDataSource类，使他拥有两个数据源的引用，默认的targetDataSource指向第一个数据源，当ThrowsAdvice捕获异常之后，重新替换掉targetDataSource指向的数据源引用。我不确定这种方式是否是最好的，但是好像某些情况下不是很可靠，所以，后来改为了以下的实现形式：</p>
+              <p>现在我们采用Spring提供的org.springframework.aop.target.HotSwappableTargetSource类，构造的时候就直接让其默认为第一个数据源，bean的配置类似于：</p>
+              <div class="sourceCode"><pre class="sourceCode xml"><code class="sourceCode xml"><span class="kw">&lt;bean</span><span class="ot"> id=</span><span class="st">&quot;hotSwapTarget&quot;</span><span class="ot"> class=</span><span class="st">&quot;org.springframework.aop.target.HotSwappableTargetSource&quot;</span><span class="kw">&gt;</span>
+                  <span class="kw">&lt;constructor-arg&gt;&lt;ref</span><span class="ot"> bean=</span><span class="st">&quot;dataSourcePrimary&quot;</span><span class="kw">/&gt;&lt;/constructor-arg&gt;</span>
+              <span class="kw">&lt;/bean&gt;</span></code></pre></div>
+              <p>有了TargetSource之后，我们就可以使用ProxyFactoryBean将其包装起来，给外层引用了，但是在这之前，我们要实现我们的主要功能，即某一个数据源崩溃之后，我们要马上切换到可用的数据源:</p>
+              <div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java">targetSource.<span class="fu">swap</span>(isPrimaryUsed?slave:primary);
+              isPrimaryUsed = !isPrimaryUsed;</code></pre></div>
+              <p>这样，我们所有需要准备的都ok了，最后要做的就是组装TargetSource和Advice了。下面就简单得罗列部分配置，或许更能帮助大家了解SpringAop的使用：</p>
+              <div class="sourceCode"><pre class="sourceCode xml"><code class="sourceCode xml"><span class="kw">&lt;bean</span><span class="ot"> id=</span><span class="st">&quot;swapThrowsAdvice&quot;</span><span class="ot"> class=</span><span class="st">&quot;com.livedoor.finance.credit.ivr.aspects.SwapSourceThrowsAdvice&quot;</span><span class="kw">&gt;</span>
+                  <span class="kw">&lt;property</span><span class="ot"> name=</span><span class="st">&quot;primary&quot;</span><span class="kw">&gt;&lt;ref</span><span class="ot"> bean=</span><span class="st">&quot;dataSourcePrimary&quot;</span><span class="kw">/&gt;&lt;/property&gt;</span>
+                  <span class="kw">&lt;property</span><span class="ot"> name=</span><span class="st">&quot;slave&quot;</span><span class="kw">&gt;&lt;ref</span><span class="ot"> bean=</span><span class="st">&quot;dataSourceSecondary&quot;</span><span class="kw">/&gt;&lt;/property&gt;</span>
+                  <span class="kw">&lt;property</span><span class="ot"> name=</span><span class="st">&quot;targetSource&quot;</span><span class="kw">&gt;&lt;ref</span><span class="ot"> bean=</span><span class="st">&quot;hotSwapTarget&quot;</span><span class="kw">/&gt;&lt;/property&gt;</span>
+              <span class="kw">&lt;/bean&gt;</span>
+               
+              <span class="kw">&lt;bean</span><span class="ot"> id=</span><span class="st">&quot;swapThrowsAdvisor&quot;</span><span class="ot"> class=</span><span class="st">&quot;org.springframework.aop.support.RegexpMethodPointcutAdvisor&quot;</span><span class="kw">&gt;</span>
+                  <span class="kw">&lt;property</span><span class="ot"> name=</span><span class="st">&quot;advice&quot;</span><span class="kw">&gt;&lt;ref</span><span class="ot"> local=</span><span class="st">&quot;swapThrowsAdvice&quot;</span><span class="kw">/&gt;&lt;/property&gt;</span>
+                  <span class="kw">&lt;property</span><span class="ot"> name=</span><span class="st">&quot;pattern&quot;</span><span class="kw">&gt;&lt;value&gt;</span>.*getConnection.*<span class="kw">&lt;/value&gt;&lt;/property&gt;</span>
+              <span class="kw">&lt;/bean&gt;</span>
+               
+              <span class="kw">&lt;bean</span><span class="ot"> id=</span><span class="st">&quot;dataSource&quot;</span><span class="ot"> class=</span><span class="st">&quot;org.springframework.aop.framework.ProxyFactoryBean&quot;</span><span class="kw">&gt;</span>
+                  <span class="kw">&lt;property</span><span class="ot"> name=</span><span class="st">&quot;targetSource&quot;</span><span class="kw">&gt;</span>
+                      <span class="kw">&lt;ref</span><span class="ot"> bean=</span><span class="st">&quot;hotSwapTarget&quot;</span><span class="kw">/&gt;</span>
+                  <span class="kw">&lt;/property&gt;</span>
+              
+                  <span class="kw">&lt;property</span><span class="ot"> name=</span><span class="st">&quot;interceptorNames&quot;</span><span class="kw">&gt;</span>
+                      <span class="kw">&lt;list&gt;</span>
+                          <span class="kw">&lt;value&gt;</span>swapThrowsAdvisor<span class="kw">&lt;/value&gt;</span>
+                      <span class="kw">&lt;/list&gt;</span>
+                  <span class="kw">&lt;/property&gt;</span>
+              <span class="kw">&lt;/bean&gt;</span></code></pre></div>
+              <p>这样，最终外层所引用的dataSource就可以在某个数据源崩溃之后，直接切换到可用的备用数据源，而这些都在Proxy内部屏蔽掉了，客户端无需关心这些。</p>
+              <p>好了，今天就扯这些，呵呵</p>
               
               <!--百度分享按钮-->
               <div class="pull-left bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a><a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a></div>
@@ -154,9 +144,6 @@ isPrimaryUsed = !isPrimaryUsed;</code></pre></div>
               <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
               <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
 
-            </div>
-          </div>
-        </div>
       </div>
       <div class="row">
         <div class="col-md-12 footer">
@@ -164,9 +151,9 @@ isPrimaryUsed = !isPrimaryUsed;</code></pre></div>
           <p>Powered by <a href="http://johnmacfarlane.net/pandoc/">pandoc</a>, <a href="http://rometools.github.io/rome/index.html">ROME</a> and <a href="http://pages.github.com/">github pages</a></p>
         </div>
       </div>
-    </div>
-  </div>
-</div>
+    </div> <!--main-->
+  </div> <!--row-->
+</div> <!--container-->
 
 <script src="/js/jquery-2.1.1.min.js"></script>
 <script src="/js/bootstrap.min.js"></script>

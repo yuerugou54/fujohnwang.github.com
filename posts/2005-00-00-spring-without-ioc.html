@@ -46,85 +46,75 @@
 </head>
 
 <body>
-<div class="container-fluid">
+<div class="container">
   <div class="row">
-    <div class="col-md-3 sidebar">
-      <a href="/">
-        <!-- <div align="center"><img src="/images/wfq0.png"/></div> -->
-        <h2 class="text-center">扶墙老师</h2>
-      </a>
-      <p class="text-center lead slogan"><a href="/slogan.html">lollapalooza &amp; positioning</a></p>
-      <p class="text-center lead slogan">瞎子摸象的践行者</p>
-      <ul class="nav nav-pills nav-stacked">
-        <li><a href="/favorite.html" class="text-center"><i class="icon-star-empty"></i> 我的收藏</a></li>
-        <li><a href="/dashboard.html" class="text-center"><i class="icon-fullscreen"></i> 金融看板</a></li>
-        <li><a href="/columns.html" class="text-center"><i class="icon-folder-close-alt"></i> 专栏</a></li>
-        <li><a href="/references.html" class="text-center"><i class="icon-folder-close-alt"></i> 快捷参考</a></li>
-        <li><a href="/whoami.html" class="text-center"><i class="icon-user-md"></i> 我是谁</a></li>
-        <li><a href="/interlinks.html" class="text-center"><i class="icon-user-md"></i> 友情链接</a></li>
-        <li><a href="/feeds.xml" class="text-center"><i class="icon-folder-close-alt"></i> RSS</a></li>
-      </ul>
-
+    
+    <div class="col-md-2">
+        <div class="seal text-right">
+          <a href="http://afoo.me">
+            <img src="/images/myseal.png"/>
+          </a>
+        </div>
     </div>
-    <div class="col-md-9 col-md-offset-3 main">
-      <div class="row">
-        <div class="container-fluid">
+    <div class="col-md-10 col-xs-12">
+
           
           <div class="row">
                         <div id="header">
               <p class="lead">
-              <h1 class="title">Spring Without IoC&nbsp;&nbsp;
-                <small>
-                                    FuqiangWang
-                                  </small>
-              </h1>
-              </p>
+              <h1 class="title">Spring Without IoC</h1>
+                            <small>
+                  <h3 class="author">FuqiangWang</h3>
+              </small>
+                                          </p>
             </div>
-                        <div>
-
+            
               <hr>
 
-                            <blockquote>
-<p>2014年从msn space存档中重新恢复出来！</p>
-</blockquote>
-<p>或许有的时候你并不想用spring的beanFactory，比如，你目前不做j2EE，而是做一般的java应用，并且，项目也已经启动了，并没有使用spring的IoC支持，这种情况下，你是否会怀念spring中提供的种种便利那？！</p>
-<p>其实没有了spring的BeanFactory，你同样可以很容易的使用spring的种种便利，不要忘了，spring的BeanFactory组装的也仅仅是普通的pojo而已，现在只是通过一样的方式构造并使用它们就可以了。</p>
-<p>比如，我们要在应用中使用spring提供的发送mail的API的支持，那么现在我们现在就可以这样写：</p>
-<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java">JavaMailSender mailSender = <span class="kw">new</span> <span class="fu">JavaMailSenderImpl</span>();
-((JavaMailSenderImpl)mailSender).<span class="fu">setHost</span>(<span class="st">&quot;mail.livedoor.cn&quot;</span>);
-((JavaMailSenderImpl)mailSender).<span class="fu">setUsername</span>(<span class="st">&quot;wfq@livedoor.cn&quot;</span>);
-((JavaMailSenderImpl)mailSender).<span class="fu">setPassword</span>(<span class="st">&quot;458524033931&quot;</span>);
-<span class="co">// IF your Mail Server request SMTP authentication, you must set properties below,</span>
-<span class="co">// Otherwise, mail sending will fail.</span>
-Properties prop = <span class="kw">new</span> Properties();
-prop.<span class="fu">setProperty</span>(<span class="st">&quot;mail.smtp.auth&quot;</span>,<span class="st">&quot;true&quot;</span>);
-((JavaMailSenderImpl)mailSender).<span class="fu">setJavaMailProperties</span>(prop);
+              
+              <hr/>
 
-mailSender.<span class="fu">send</span>(<span class="kw">new</span> <span class="fu">MimeMessagePreparator</span>(){
-<span class="kw">public</span> <span class="dt">void</span> <span class="fu">prepare</span>(MimeMessage message) <span class="kw">throws</span> Exception
-{
-MimeMessageHelper helper = <span class="kw">new</span> <span class="fu">MimeMessageHelper</span>(message);
-helper.<span class="fu">setTo</span>(<span class="st">&quot;wfq@livedoor.cn&quot;</span>);
-helper.<span class="fu">setFrom</span>(<span class="st">&quot;wfq@livedoor.cn&quot;</span>);
-helper.<span class="fu">setSubject</span>(<span class="st">&quot;Spring Mail Test Without IoC&quot;</span>);
-helper.<span class="fu">setText</span>(<span class="st">&quot;Spring Mail is cool!&quot;</span>);
-}
-});</code></pre></div>
-<p>或者，我们仅仅为了拦截某个对象的方法，而不是很普遍，那么我们也可以这样：</p>
-<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java">BusinessImpl impl = <span class="kw">new</span> <span class="fu">BusinessImpl</span>();
-BusinessBeforeAdvice advice = <span class="kw">new</span> <span class="fu">BusinessBeforeAdvice</span>();
-<span class="co">// construct advisor in Regexp Way</span>
-RegexpMethodPointcutAdvisor advisor = <span class="kw">new</span> <span class="fu">RegexpMethodPointcutAdvisor</span>();
-advisor.<span class="fu">setAdvice</span>(advice);
-advisor.<span class="fu">setPattern</span>(<span class="st">&quot;.*doSomething.*&quot;</span>);
-
-ProxyFactory factory = <span class="kw">new</span> <span class="fu">ProxyFactory</span>();
-factory.<span class="fu">setTarget</span>(impl);
-factory.<span class="fu">addAdvisor</span>(advisor);
-IBusiness bo = (IBusiness)factory.<span class="fu">getProxy</span>();
-bo.<span class="fu">doSomething</span>();</code></pre></div>
-<p>怎么样？！是不是很容易那？</p>
-<p>仅仅是这几天实在想不出写些什么，故此闲话些许。</p>
+              <blockquote>
+              <p>2014年从msn space存档中重新恢复出来！</p>
+              </blockquote>
+              <p>或许有的时候你并不想用spring的beanFactory，比如，你目前不做j2EE，而是做一般的java应用，并且，项目也已经启动了，并没有使用spring的IoC支持，这种情况下，你是否会怀念spring中提供的种种便利那？！</p>
+              <p>其实没有了spring的BeanFactory，你同样可以很容易的使用spring的种种便利，不要忘了，spring的BeanFactory组装的也仅仅是普通的pojo而已，现在只是通过一样的方式构造并使用它们就可以了。</p>
+              <p>比如，我们要在应用中使用spring提供的发送mail的API的支持，那么现在我们现在就可以这样写：</p>
+              <div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java">JavaMailSender mailSender = <span class="kw">new</span> <span class="fu">JavaMailSenderImpl</span>();
+              ((JavaMailSenderImpl)mailSender).<span class="fu">setHost</span>(<span class="st">&quot;mail.livedoor.cn&quot;</span>);
+              ((JavaMailSenderImpl)mailSender).<span class="fu">setUsername</span>(<span class="st">&quot;wfq@livedoor.cn&quot;</span>);
+              ((JavaMailSenderImpl)mailSender).<span class="fu">setPassword</span>(<span class="st">&quot;458524033931&quot;</span>);
+              <span class="co">// IF your Mail Server request SMTP authentication, you must set properties below,</span>
+              <span class="co">// Otherwise, mail sending will fail.</span>
+              Properties prop = <span class="kw">new</span> Properties();
+              prop.<span class="fu">setProperty</span>(<span class="st">&quot;mail.smtp.auth&quot;</span>,<span class="st">&quot;true&quot;</span>);
+              ((JavaMailSenderImpl)mailSender).<span class="fu">setJavaMailProperties</span>(prop);
+              
+              mailSender.<span class="fu">send</span>(<span class="kw">new</span> <span class="fu">MimeMessagePreparator</span>(){
+              <span class="kw">public</span> <span class="dt">void</span> <span class="fu">prepare</span>(MimeMessage message) <span class="kw">throws</span> Exception
+              {
+              MimeMessageHelper helper = <span class="kw">new</span> <span class="fu">MimeMessageHelper</span>(message);
+              helper.<span class="fu">setTo</span>(<span class="st">&quot;wfq@livedoor.cn&quot;</span>);
+              helper.<span class="fu">setFrom</span>(<span class="st">&quot;wfq@livedoor.cn&quot;</span>);
+              helper.<span class="fu">setSubject</span>(<span class="st">&quot;Spring Mail Test Without IoC&quot;</span>);
+              helper.<span class="fu">setText</span>(<span class="st">&quot;Spring Mail is cool!&quot;</span>);
+              }
+              });</code></pre></div>
+              <p>或者，我们仅仅为了拦截某个对象的方法，而不是很普遍，那么我们也可以这样：</p>
+              <div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java">BusinessImpl impl = <span class="kw">new</span> <span class="fu">BusinessImpl</span>();
+              BusinessBeforeAdvice advice = <span class="kw">new</span> <span class="fu">BusinessBeforeAdvice</span>();
+              <span class="co">// construct advisor in Regexp Way</span>
+              RegexpMethodPointcutAdvisor advisor = <span class="kw">new</span> <span class="fu">RegexpMethodPointcutAdvisor</span>();
+              advisor.<span class="fu">setAdvice</span>(advice);
+              advisor.<span class="fu">setPattern</span>(<span class="st">&quot;.*doSomething.*&quot;</span>);
+              
+              ProxyFactory factory = <span class="kw">new</span> <span class="fu">ProxyFactory</span>();
+              factory.<span class="fu">setTarget</span>(impl);
+              factory.<span class="fu">addAdvisor</span>(advisor);
+              IBusiness bo = (IBusiness)factory.<span class="fu">getProxy</span>();
+              bo.<span class="fu">doSomething</span>();</code></pre></div>
+              <p>怎么样？！是不是很容易那？</p>
+              <p>仅仅是这几天实在想不出写些什么，故此闲话些许。</p>
               
               <!--百度分享按钮-->
               <div class="pull-left bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a><a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a></div>
@@ -157,9 +147,6 @@ bo.<span class="fu">doSomething</span>();</code></pre></div>
               <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
               <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
 
-            </div>
-          </div>
-        </div>
       </div>
       <div class="row">
         <div class="col-md-12 footer">
@@ -167,9 +154,9 @@ bo.<span class="fu">doSomething</span>();</code></pre></div>
           <p>Powered by <a href="http://johnmacfarlane.net/pandoc/">pandoc</a>, <a href="http://rometools.github.io/rome/index.html">ROME</a> and <a href="http://pages.github.com/">github pages</a></p>
         </div>
       </div>
-    </div>
-  </div>
-</div>
+    </div> <!--main-->
+  </div> <!--row-->
+</div> <!--container-->
 
 <script src="/js/jquery-2.1.1.min.js"></script>
 <script src="/js/bootstrap.min.js"></script>

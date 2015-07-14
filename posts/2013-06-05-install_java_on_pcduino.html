@@ -46,42 +46,29 @@
 </head>
 
 <body>
-<div class="container-fluid">
+<div class="container">
   <div class="row">
-    <div class="col-md-3 sidebar">
-      <a href="/">
-        <!-- <div align="center"><img src="/images/wfq0.png"/></div> -->
-        <h2 class="text-center">扶墙老师</h2>
-      </a>
-      <p class="text-center lead slogan"><a href="/slogan.html">lollapalooza &amp; positioning</a></p>
-      <p class="text-center lead slogan">瞎子摸象的践行者</p>
-      <ul class="nav nav-pills nav-stacked">
-        <li><a href="/favorite.html" class="text-center"><i class="icon-star-empty"></i> 我的收藏</a></li>
-        <li><a href="/dashboard.html" class="text-center"><i class="icon-fullscreen"></i> 金融看板</a></li>
-        <li><a href="/columns.html" class="text-center"><i class="icon-folder-close-alt"></i> 专栏</a></li>
-        <li><a href="/references.html" class="text-center"><i class="icon-folder-close-alt"></i> 快捷参考</a></li>
-        <li><a href="/whoami.html" class="text-center"><i class="icon-user-md"></i> 我是谁</a></li>
-        <li><a href="/interlinks.html" class="text-center"><i class="icon-user-md"></i> 友情链接</a></li>
-        <li><a href="/feeds.xml" class="text-center"><i class="icon-folder-close-alt"></i> RSS</a></li>
-      </ul>
-
+    
+    <div class="col-md-2">
+        <div class="seal text-right">
+          <a href="http://afoo.me">
+            <img src="/images/myseal.png"/>
+          </a>
+        </div>
     </div>
-    <div class="col-md-9 col-md-offset-3 main">
-      <div class="row">
-        <div class="container-fluid">
+    <div class="col-md-10 col-xs-12">
+
           
           <div class="row">
                         <div id="header">
               <p class="lead">
-              <h1 class="title">pcDuino上安装Java运行环境&nbsp;&nbsp;
-                <small>
-                                    王福强
-                                  </small>
-              </h1>
-              </p>
+              <h1 class="title">pcDuino上安装Java运行环境</h1>
+                            <small>
+                  <h3 class="author">王福强</h3>
+              </small>
+                                          </p>
             </div>
-                        <div>
-
+            
               <hr>
 
                             <div id="TOC">
@@ -90,37 +77,40 @@
                 <li><a href="#references"><span class="toc-section-number">2</span> References</a></li>
                 </ul>
               </div>
-                            <p>之前pcDuino刚拿到手的时候装过，经历了很多的曲折，昨天重新装了Kernal和ubuntu的系统更新，真tmd顺，这还不是最爽的，最爽的是，装Java运行环境也tmd很顺，人品真好，哈哈</p>
-<h1 id="how-to..."><span class="header-section-number">1</span> How to...</h1>
-<p>新的ubuntu更新之后默认安装了OpenJDK，而且是6，不爽，所以，决定重新安装Oracle的， 因为是卡片电脑，所以需要装<a href="http://www.oracle.com/technetwork/java/embedded/index.html">Java Embedded</a>版本的jre，遂下载ejre-7u21-fcs-b11-linux-arm-vfp-server_headless-04_apr_2013.gz， 随便找个目录解压：</p>
-<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">tar</span> xvf ejre-7u21-fcs-b11-linux-arm-vfp-server_headless-04_apr_2013.gz</code></pre></div>
-<blockquote>
-<p>$ sudo apt-get install -y libc6-armel libsfgcc1</p>
-这一步不知道是否必须，反正我是运行了
-</blockquote>
-<p>之后，<strong>重启</strong>！！！</p>
-<p>成果展示:</p>
-<pre>
-ubuntu@ubuntu:~$ ./java/ejre1.7.0_21/bin/java -version
-java version "1.7.0_21"
-Java(TM) SE Embedded Runtime Environment (build 1.7.0_21-b11, headless)
-Java HotSpot(TM) Embedded Server VM (build 23.21-b01, mixed mode)
-</pre>
-<p>当然了，也可以将安装路径添加到bash的配置文件里：</p>
-<pre>
-ubuntu@ubuntu:~$ cat .bash_profile
-export JAVA_HOME=~/java/ejre1.7.0_21
-export PATH=$JAVA_HOME/bin:$PATH
-</pre>
-<p>至此，基本搞定， 后面可以开始玩动态DNS绑定，并部署个Play应用玩玩了...</p>
-<blockquote>
-BTW. 如果闲麻烦，可以直接运行apt-get install arduino最简单，只可惜安装的是openjdk6, :)
-</blockquote>
-<h1 id="references"><span class="header-section-number">2</span> References</h1>
-<ol style="list-style-type: decimal">
-<li><a href="https://github.com/cjdaly/napkin/wiki/Server-on-pcduino" class="uri">https://github.com/cjdaly/napkin/wiki/Server-on-pcduino</a></li>
-<li><a href="http://bradsmc.blogspot.com/2013/04/installing-java-runtime-environment-on.html" class="uri">http://bradsmc.blogspot.com/2013/04/installing-java-runtime-environment-on.html</a></li>
-</ol>
+              
+              <hr/>
+
+              <p>之前pcDuino刚拿到手的时候装过，经历了很多的曲折，昨天重新装了Kernal和ubuntu的系统更新，真tmd顺，这还不是最爽的，最爽的是，装Java运行环境也tmd很顺，人品真好，哈哈</p>
+              <h1 id="how-to..."><span class="header-section-number">1</span> How to...</h1>
+              <p>新的ubuntu更新之后默认安装了OpenJDK，而且是6，不爽，所以，决定重新安装Oracle的， 因为是卡片电脑，所以需要装<a href="http://www.oracle.com/technetwork/java/embedded/index.html">Java Embedded</a>版本的jre，遂下载ejre-7u21-fcs-b11-linux-arm-vfp-server_headless-04_apr_2013.gz， 随便找个目录解压：</p>
+              <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">tar</span> xvf ejre-7u21-fcs-b11-linux-arm-vfp-server_headless-04_apr_2013.gz</code></pre></div>
+              <blockquote>
+              <p>$ sudo apt-get install -y libc6-armel libsfgcc1</p>
+              这一步不知道是否必须，反正我是运行了
+              </blockquote>
+              <p>之后，<strong>重启</strong>！！！</p>
+              <p>成果展示:</p>
+              <pre>
+              ubuntu@ubuntu:~$ ./java/ejre1.7.0_21/bin/java -version
+              java version "1.7.0_21"
+              Java(TM) SE Embedded Runtime Environment (build 1.7.0_21-b11, headless)
+              Java HotSpot(TM) Embedded Server VM (build 23.21-b01, mixed mode)
+              </pre>
+              <p>当然了，也可以将安装路径添加到bash的配置文件里：</p>
+              <pre>
+              ubuntu@ubuntu:~$ cat .bash_profile
+              export JAVA_HOME=~/java/ejre1.7.0_21
+              export PATH=$JAVA_HOME/bin:$PATH
+              </pre>
+              <p>至此，基本搞定， 后面可以开始玩动态DNS绑定，并部署个Play应用玩玩了...</p>
+              <blockquote>
+              BTW. 如果闲麻烦，可以直接运行apt-get install arduino最简单，只可惜安装的是openjdk6, :)
+              </blockquote>
+              <h1 id="references"><span class="header-section-number">2</span> References</h1>
+              <ol style="list-style-type: decimal">
+              <li><a href="https://github.com/cjdaly/napkin/wiki/Server-on-pcduino" class="uri">https://github.com/cjdaly/napkin/wiki/Server-on-pcduino</a></li>
+              <li><a href="http://bradsmc.blogspot.com/2013/04/installing-java-runtime-environment-on.html" class="uri">http://bradsmc.blogspot.com/2013/04/installing-java-runtime-environment-on.html</a></li>
+              </ol>
               
               <!--百度分享按钮-->
               <div class="pull-left bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a><a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a></div>
@@ -153,9 +143,6 @@ BTW. 如果闲麻烦，可以直接运行apt-get install arduino最简单，只�
               <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
               <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
 
-            </div>
-          </div>
-        </div>
       </div>
       <div class="row">
         <div class="col-md-12 footer">
@@ -163,9 +150,9 @@ BTW. 如果闲麻烦，可以直接运行apt-get install arduino最简单，只�
           <p>Powered by <a href="http://johnmacfarlane.net/pandoc/">pandoc</a>, <a href="http://rometools.github.io/rome/index.html">ROME</a> and <a href="http://pages.github.com/">github pages</a></p>
         </div>
       </div>
-    </div>
-  </div>
-</div>
+    </div> <!--main-->
+  </div> <!--row-->
+</div> <!--container-->
 
 <script src="/js/jquery-2.1.1.min.js"></script>
 <script src="/js/bootstrap.min.js"></script>

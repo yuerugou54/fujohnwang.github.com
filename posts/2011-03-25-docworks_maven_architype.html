@@ -27,61 +27,52 @@
 </head>
 
 <body>
-<div class="container-fluid">
+<div class="container">
   <div class="row">
-    <div class="col-md-3 sidebar">
-      <a href="/">
-        <!-- <div align="center"><img src="/images/wfq0.png"/></div> -->
-        <h2 class="text-center">扶墙老师</h2>
-      </a>
-      <p class="text-center lead slogan"><a href="/slogan.html">lollapalooza &amp; positioning</a></p>
-      <p class="text-center lead slogan">瞎子摸象的践行者</p>
-      <ul class="nav nav-pills nav-stacked">
-        <li><a href="/favorite.html" class="text-center"><i class="icon-star-empty"></i> 我的收藏</a></li>
-        <li><a href="/dashboard.html" class="text-center"><i class="icon-fullscreen"></i> 金融看板</a></li>
-        <li><a href="/columns.html" class="text-center"><i class="icon-folder-close-alt"></i> 专栏</a></li>
-        <li><a href="/references.html" class="text-center"><i class="icon-folder-close-alt"></i> 快捷参考</a></li>
-        <li><a href="/whoami.html" class="text-center"><i class="icon-user-md"></i> 我是谁</a></li>
-        <li><a href="/interlinks.html" class="text-center"><i class="icon-user-md"></i> 友情链接</a></li>
-        <li><a href="/feeds.xml" class="text-center"><i class="icon-folder-close-alt"></i> RSS</a></li>
-      </ul>
-
+    
+    <div class="col-md-2">
+        <div class="seal text-right">
+          <a href="http://afoo.me">
+            <img src="/images/myseal.png"/>
+          </a>
+        </div>
     </div>
-    <div class="col-md-9 col-md-offset-3 main">
-      <div class="row">
-        <div class="container-fluid">
+    <div class="col-md-10 col-xs-12">
+
           
           <div class="row">
                         <div id="header">
               <p class="lead">
-              <h1 class="title">开放个人docworks maven architype到github&nbsp;&nbsp;
-                <small>
-                                    fujohnwang
-                                  </small>
-              </h1>
-              </p>
+              <h1 class="title">开放个人docworks maven architype到github</h1>
+                            <small>
+                  <h3 class="author">fujohnwang</h3>
+              </small>
+                                        <h4 class="date">2011-03-25</h4>
+                              </p>
             </div>
-                        <div>
-
+            
               <hr>
 
-                            <p><strong>author: fujohnwang</strong></p>
-<p>docbook maven build archetype project with docbkx maven plugin</p>
-<p>Location: <a href="https://github.com/fujohnwang/docworks" class="uri">https://github.com/fujohnwang/docworks</a></p>
-<p>This is my personal docbook project which helps me write a lot of blogs and articles. I had an Ant-based alike project before which helped me complete my first book - &quot;UnveilSpring&quot;(Spring揭秘 In Chinese), but it just works. After I moved to Maven, I found the docbkx maven plugin, so it finally helped me build this archetype project.</p>
-<p>To start to use it, you need to know some common locations:</p>
-<p>1- <strong>src/main/docbook</strong></p>
-<p>you put your docbook writings under this directory, sub-directories are allowed. In practice, you should create its own sub-directory for your articles, the reason is with each of your article, it not only contains words but also pictures and other media materials. So usually, before starting to write a new article, you create a sub-folder under src/main/docbook and at least create an &quot;images&quot; sub-folder to hold the images of your article, the real docbook writing will be dropped under this sub-folder directly.</p>
-<p>Sounds tedious, don't worry, I create some easy things to help you on this:</p>
-<p><code>mvn -Pcreate</code></p>
-<p>or</p>
-<p><code>mvn -PcreateX -Dmodule=the path you want to create for your article</code></p>
-<p>The former command will create a &quot;tmpdir&quot; under src/main/docbook, and copy article template and necessary images(addons and callout icons) to it, you can rename it after the command run. Of course, if you want to customize the name of the folder to be created, you can run the latter command. OK, that's for src/main/docbook folder.</p>
-<p>2- <strong>src/main/resources</strong></p>
-<p>I have collected necessary resources and put them under this folder, most of the time, you don't need to worry about these things.</p>
-<p>3- <strong>src/main/assembly</strong></p>
-<p>If you wan't to distributed your articles, you can customize assembly descriptor under this folder, of course, using the default is ok. Since you have know everything necessary, and you may have put some docbook articles under the src/main/docbook folder, run &quot;mvn package&quot;, after that, you can get your generated document under &quot;target/docs/html&quot; folder, What? Build Error? Find out the reason yourself by focusing on your docbook document structure and elements ;-)</p>
-<p>GL &amp; HF</p>
+              
+              <hr/>
+
+              <p><strong>author: fujohnwang</strong></p>
+              <p>docbook maven build archetype project with docbkx maven plugin</p>
+              <p>Location: <a href="https://github.com/fujohnwang/docworks" class="uri">https://github.com/fujohnwang/docworks</a></p>
+              <p>This is my personal docbook project which helps me write a lot of blogs and articles. I had an Ant-based alike project before which helped me complete my first book - &quot;UnveilSpring&quot;(Spring揭秘 In Chinese), but it just works. After I moved to Maven, I found the docbkx maven plugin, so it finally helped me build this archetype project.</p>
+              <p>To start to use it, you need to know some common locations:</p>
+              <p>1- <strong>src/main/docbook</strong></p>
+              <p>you put your docbook writings under this directory, sub-directories are allowed. In practice, you should create its own sub-directory for your articles, the reason is with each of your article, it not only contains words but also pictures and other media materials. So usually, before starting to write a new article, you create a sub-folder under src/main/docbook and at least create an &quot;images&quot; sub-folder to hold the images of your article, the real docbook writing will be dropped under this sub-folder directly.</p>
+              <p>Sounds tedious, don't worry, I create some easy things to help you on this:</p>
+              <p><code>mvn -Pcreate</code></p>
+              <p>or</p>
+              <p><code>mvn -PcreateX -Dmodule=the path you want to create for your article</code></p>
+              <p>The former command will create a &quot;tmpdir&quot; under src/main/docbook, and copy article template and necessary images(addons and callout icons) to it, you can rename it after the command run. Of course, if you want to customize the name of the folder to be created, you can run the latter command. OK, that's for src/main/docbook folder.</p>
+              <p>2- <strong>src/main/resources</strong></p>
+              <p>I have collected necessary resources and put them under this folder, most of the time, you don't need to worry about these things.</p>
+              <p>3- <strong>src/main/assembly</strong></p>
+              <p>If you wan't to distributed your articles, you can customize assembly descriptor under this folder, of course, using the default is ok. Since you have know everything necessary, and you may have put some docbook articles under the src/main/docbook folder, run &quot;mvn package&quot;, after that, you can get your generated document under &quot;target/docs/html&quot; folder, What? Build Error? Find out the reason yourself by focusing on your docbook document structure and elements ;-)</p>
+              <p>GL &amp; HF</p>
               
               <!--百度分享按钮-->
               <div class="pull-left bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a><a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a></div>
@@ -114,9 +105,6 @@
               <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
               <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
 
-            </div>
-          </div>
-        </div>
       </div>
       <div class="row">
         <div class="col-md-12 footer">
@@ -124,9 +112,9 @@
           <p>Powered by <a href="http://johnmacfarlane.net/pandoc/">pandoc</a>, <a href="http://rometools.github.io/rome/index.html">ROME</a> and <a href="http://pages.github.com/">github pages</a></p>
         </div>
       </div>
-    </div>
-  </div>
-</div>
+    </div> <!--main-->
+  </div> <!--row-->
+</div> <!--container-->
 
 <script src="/js/jquery-2.1.1.min.js"></script>
 <script src="/js/bootstrap.min.js"></script>

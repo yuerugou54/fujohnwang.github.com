@@ -27,42 +27,30 @@
 </head>
 
 <body>
-<div class="container-fluid">
+<div class="container">
   <div class="row">
-    <div class="col-md-3 sidebar">
-      <a href="/">
-        <!-- <div align="center"><img src="/images/wfq0.png"/></div> -->
-        <h2 class="text-center">扶墙老师</h2>
-      </a>
-      <p class="text-center lead slogan"><a href="/slogan.html">lollapalooza &amp; positioning</a></p>
-      <p class="text-center lead slogan">瞎子摸象的践行者</p>
-      <ul class="nav nav-pills nav-stacked">
-        <li><a href="/favorite.html" class="text-center"><i class="icon-star-empty"></i> 我的收藏</a></li>
-        <li><a href="/dashboard.html" class="text-center"><i class="icon-fullscreen"></i> 金融看板</a></li>
-        <li><a href="/columns.html" class="text-center"><i class="icon-folder-close-alt"></i> 专栏</a></li>
-        <li><a href="/references.html" class="text-center"><i class="icon-folder-close-alt"></i> 快捷参考</a></li>
-        <li><a href="/whoami.html" class="text-center"><i class="icon-user-md"></i> 我是谁</a></li>
-        <li><a href="/interlinks.html" class="text-center"><i class="icon-user-md"></i> 友情链接</a></li>
-        <li><a href="/feeds.xml" class="text-center"><i class="icon-folder-close-alt"></i> RSS</a></li>
-      </ul>
-
+    
+    <div class="col-md-2">
+        <div class="seal text-right">
+          <a href="http://afoo.me">
+            <img src="/images/myseal.png"/>
+          </a>
+        </div>
     </div>
-    <div class="col-md-9 col-md-offset-3 main">
-      <div class="row">
-        <div class="container-fluid">
+    <div class="col-md-10 col-xs-12">
+
           
           <div class="row">
                         <div id="header">
               <p class="lead">
-              <h1 class="title">&quot;Linkedin Search-Related Projects Rough Notes&quot;&nbsp;&nbsp;
-                <small>
-                                    fujohnwang
-                                  </small>
-              </h1>
-              </p>
+              <h1 class="title">&quot;Linkedin Search-Related Projects Rough Notes&quot;</h1>
+                            <small>
+                  <h3 class="author">fujohnwang</h3>
+              </small>
+                                        <h4 class="date">2012-02-03</h4>
+                              </p>
             </div>
-                        <div>
-
+            
               <hr>
 
                             <div id="TOC">
@@ -75,38 +63,41 @@
                 <li><a href="#in-conclusion"><span class="toc-section-number">6</span> In conclusion</a></li>
                 </ul>
               </div>
-                            <h1 id="solr"><span class="header-section-number">1</span> solr</h1>
-<ul>
-<li>References
-<ul>
-<li><a href="http://codeascraft.etsy.com/2012/01/23/solr-bittorrent-index-replication/" class="uri">http://codeascraft.etsy.com/2012/01/23/solr-bittorrent-index-replication/</a></li>
-<li><a href="http://blog.sematext.com/2012/02/01/solrcloud-distributed-realtime-search/">The New SolrCloud: Overview</a></li>
-</ul></li>
-</ul>
-<h1 id="bobo"><span class="header-section-number">2</span> <a href="http://sna-projects.com/bobo/">bobo</a></h1>
-<ul>
-<li>a Faceted Search implementation written purely in Java, an extension of Apache Lucene.</li>
-<li><a href="http://cdc.tencent.com/?p=1401" class="uri">http://cdc.tencent.com/?p=1401</a></li>
-<li>complement unstructured data set (in lucene) with semi- or full-structured data set, that's, we can search all of the kinds of data sets</li>
-</ul>
-<h1 id="zoie"><span class="header-section-number">3</span> <a href="http://javasoze.github.com/zoie/">zoie</a></h1>
-<ul>
-<li>a real-time search and indexing system built on Apache Lucene</li>
-<li>sub-system of sensidb or backbone?!</li>
-<li>data provider -&gt; indexs(ram or disk based) -&gt; index reader factory -&gt; query clients</li>
-</ul>
-<h1 id="cleo"><span class="header-section-number">4</span> <a href="http://sna-projects.com/cleo/">cleo</a></h1>
-<ul>
-<li>real-time typeahead and autocomplete services</li>
-<li>front tier(cache, web) + aggregator(1..1) + searching services(1..*)</li>
-</ul>
-<h1 id="senseidb"><span class="header-section-number">5</span> <a href="http://sna-projects.com/sensei">senseidb</a></h1>
-<pre><code>data sources -&gt; gateways -{indexing}-&gt; sensi node(s) -{load balancing}-&gt; broker(s)-&gt; query clients</code></pre>
-<ul>
-<li><a href="http://engineering.linkedin.com/open-source/introducing-senseidb-10-open-source-distributed-realtime-semi-structured-database" class="uri">http://engineering.linkedin.com/open-source/introducing-senseidb-10-open-source-distributed-realtime-semi-structured-database</a></li>
-</ul>
-<h1 id="in-conclusion"><span class="header-section-number">6</span> In conclusion</h1>
-<pre><code>zoie -{make it clustered}-&gt; sensidb -{make it SOA}-&gt; cleo </code></pre>
+              
+              <hr/>
+
+              <h1 id="solr"><span class="header-section-number">1</span> solr</h1>
+              <ul>
+              <li>References
+              <ul>
+              <li><a href="http://codeascraft.etsy.com/2012/01/23/solr-bittorrent-index-replication/" class="uri">http://codeascraft.etsy.com/2012/01/23/solr-bittorrent-index-replication/</a></li>
+              <li><a href="http://blog.sematext.com/2012/02/01/solrcloud-distributed-realtime-search/">The New SolrCloud: Overview</a></li>
+              </ul></li>
+              </ul>
+              <h1 id="bobo"><span class="header-section-number">2</span> <a href="http://sna-projects.com/bobo/">bobo</a></h1>
+              <ul>
+              <li>a Faceted Search implementation written purely in Java, an extension of Apache Lucene.</li>
+              <li><a href="http://cdc.tencent.com/?p=1401" class="uri">http://cdc.tencent.com/?p=1401</a></li>
+              <li>complement unstructured data set (in lucene) with semi- or full-structured data set, that's, we can search all of the kinds of data sets</li>
+              </ul>
+              <h1 id="zoie"><span class="header-section-number">3</span> <a href="http://javasoze.github.com/zoie/">zoie</a></h1>
+              <ul>
+              <li>a real-time search and indexing system built on Apache Lucene</li>
+              <li>sub-system of sensidb or backbone?!</li>
+              <li>data provider -&gt; indexs(ram or disk based) -&gt; index reader factory -&gt; query clients</li>
+              </ul>
+              <h1 id="cleo"><span class="header-section-number">4</span> <a href="http://sna-projects.com/cleo/">cleo</a></h1>
+              <ul>
+              <li>real-time typeahead and autocomplete services</li>
+              <li>front tier(cache, web) + aggregator(1..1) + searching services(1..*)</li>
+              </ul>
+              <h1 id="senseidb"><span class="header-section-number">5</span> <a href="http://sna-projects.com/sensei">senseidb</a></h1>
+              <pre><code>data sources -&gt; gateways -{indexing}-&gt; sensi node(s) -{load balancing}-&gt; broker(s)-&gt; query clients</code></pre>
+              <ul>
+              <li><a href="http://engineering.linkedin.com/open-source/introducing-senseidb-10-open-source-distributed-realtime-semi-structured-database" class="uri">http://engineering.linkedin.com/open-source/introducing-senseidb-10-open-source-distributed-realtime-semi-structured-database</a></li>
+              </ul>
+              <h1 id="in-conclusion"><span class="header-section-number">6</span> In conclusion</h1>
+              <pre><code>zoie -{make it clustered}-&gt; sensidb -{make it SOA}-&gt; cleo </code></pre>
               
               <!--百度分享按钮-->
               <div class="pull-left bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a><a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a></div>
@@ -139,9 +130,6 @@
               <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
               <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
 
-            </div>
-          </div>
-        </div>
       </div>
       <div class="row">
         <div class="col-md-12 footer">
@@ -149,9 +137,9 @@
           <p>Powered by <a href="http://johnmacfarlane.net/pandoc/">pandoc</a>, <a href="http://rometools.github.io/rome/index.html">ROME</a> and <a href="http://pages.github.com/">github pages</a></p>
         </div>
       </div>
-    </div>
-  </div>
-</div>
+    </div> <!--main-->
+  </div> <!--row-->
+</div> <!--container-->
 
 <script src="/js/jquery-2.1.1.min.js"></script>
 <script src="/js/bootstrap.min.js"></script>

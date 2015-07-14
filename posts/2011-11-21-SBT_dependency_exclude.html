@@ -47,80 +47,71 @@
 </head>
 
 <body>
-<div class="container-fluid">
+<div class="container">
   <div class="row">
-    <div class="col-md-3 sidebar">
-      <a href="/">
-        <!-- <div align="center"><img src="/images/wfq0.png"/></div> -->
-        <h2 class="text-center">扶墙老师</h2>
-      </a>
-      <p class="text-center lead slogan"><a href="/slogan.html">lollapalooza &amp; positioning</a></p>
-      <p class="text-center lead slogan">瞎子摸象的践行者</p>
-      <ul class="nav nav-pills nav-stacked">
-        <li><a href="/favorite.html" class="text-center"><i class="icon-star-empty"></i> 我的收藏</a></li>
-        <li><a href="/dashboard.html" class="text-center"><i class="icon-fullscreen"></i> 金融看板</a></li>
-        <li><a href="/columns.html" class="text-center"><i class="icon-folder-close-alt"></i> 专栏</a></li>
-        <li><a href="/references.html" class="text-center"><i class="icon-folder-close-alt"></i> 快捷参考</a></li>
-        <li><a href="/whoami.html" class="text-center"><i class="icon-user-md"></i> 我是谁</a></li>
-        <li><a href="/interlinks.html" class="text-center"><i class="icon-user-md"></i> 友情链接</a></li>
-        <li><a href="/feeds.xml" class="text-center"><i class="icon-folder-close-alt"></i> RSS</a></li>
-      </ul>
-
+    
+    <div class="col-md-2">
+        <div class="seal text-right">
+          <a href="http://afoo.me">
+            <img src="/images/myseal.png"/>
+          </a>
+        </div>
     </div>
-    <div class="col-md-9 col-md-offset-3 main">
-      <div class="row">
-        <div class="container-fluid">
+    <div class="col-md-10 col-xs-12">
+
           
           <div class="row">
                         <div id="header">
               <p class="lead">
-              <h1 class="title">SBT Dependencies Exlusion Gotchas&nbsp;&nbsp;
-                <small>
-                                    fujohnwang
-                                  </small>
-              </h1>
-              </p>
+              <h1 class="title">SBT Dependencies Exlusion Gotchas</h1>
+                            <small>
+                  <h3 class="author">fujohnwang</h3>
+              </small>
+                                        <h4 class="date">2011-11-21</h4>
+                              </p>
             </div>
-                        <div>
-
+            
               <hr>
 
-                            <p>在SBT的<a href="https://github.com/harrah/xsbt/wiki/Quick-Configuration-Examples">Quick Configuration Examples</a>最末尾发现个小惊喜：</p>
-<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="co">// Exclude transitive dependencies, e.g., include log4j without including logging via jdmk, jmx, or jms.</span>
-libraryDependencies +=
-<span class="st">&quot;log4j&quot;</span> % <span class="st">&quot;log4j&quot;</span> % <span class="st">&quot;1.2.15&quot;</span> <span class="fu">excludeAll</span>(
-    <span class="fu">ExclusionRule</span>(organization = <span class="st">&quot;com.sun.jdmk&quot;</span>),
-    <span class="fu">ExclusionRule</span>(organization = <span class="st">&quot;com.sun.jmx&quot;</span>),
-    <span class="fu">ExclusionRule</span>(organization = <span class="st">&quot;javax.jms&quot;</span>)
-)</code></pre></div>
-<p>称其为小惊喜是因为，这个功能可以帮我去掉看起来比较丑陋的inline ivy xml配置：</p>
-<pre>
-ivyXML :=
-&lt;dependencies>
-&lt;exclude module="junit"/>
-&lt;exclude module="activation"/>
-&lt;exclude module="jmxri"/>
-&lt;exclude module="jmxtools"/>
-&lt;exclude module="jms"/>
-&lt;exclude module="mail"/>
-&lt;/dependencies>
-</pre>
-<p>但试过时候发现，不行，老报ModuleId没有exclude或者excludeAll方法，我就纳闷了。查了0.10.x的代码，确实没有，　但我用的是0.11.0啊，查了代码，明明是有呀，擦，先不管，升级SBT到0.11.1再说，升级之后，果然OK，我了个去，查了github上代码的history，发现了证据：</p>
-<pre>   
-Sep 09, 2011
- 
-Support for simple exclusion rules in inline dependencies 
-…
-This support excluding a library from the dependency tree for a given
-set of `ExclusionRule`s. There are two ways to achieve this:
+              
+              <hr/>
 
-- Using `organization` and `name` pairs:
-val dep = "org" % "name" % "version" exclude("commons-codec", "commons-codec") exclude("org.slf4j", "slf4j-log4j")
-
-- Using `ExclusionRule`:
-val dep = "org" % "name" % "version" excludeAll(ExclusionRule("commons-codec", "commons-codec"), ExclusionRule("org.slf4j", "slf4j-log4j"))
-</pre>
-<p>好吧，就是这样子，大家想用特定于ModuleId的依赖排除，记得升级到0.11.1吧！</p>
+              <p>在SBT的<a href="https://github.com/harrah/xsbt/wiki/Quick-Configuration-Examples">Quick Configuration Examples</a>最末尾发现个小惊喜：</p>
+              <div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="co">// Exclude transitive dependencies, e.g., include log4j without including logging via jdmk, jmx, or jms.</span>
+              libraryDependencies +=
+              <span class="st">&quot;log4j&quot;</span> % <span class="st">&quot;log4j&quot;</span> % <span class="st">&quot;1.2.15&quot;</span> <span class="fu">excludeAll</span>(
+                  <span class="fu">ExclusionRule</span>(organization = <span class="st">&quot;com.sun.jdmk&quot;</span>),
+                  <span class="fu">ExclusionRule</span>(organization = <span class="st">&quot;com.sun.jmx&quot;</span>),
+                  <span class="fu">ExclusionRule</span>(organization = <span class="st">&quot;javax.jms&quot;</span>)
+              )</code></pre></div>
+              <p>称其为小惊喜是因为，这个功能可以帮我去掉看起来比较丑陋的inline ivy xml配置：</p>
+              <pre>
+              ivyXML :=
+              &lt;dependencies>
+              &lt;exclude module="junit"/>
+              &lt;exclude module="activation"/>
+              &lt;exclude module="jmxri"/>
+              &lt;exclude module="jmxtools"/>
+              &lt;exclude module="jms"/>
+              &lt;exclude module="mail"/>
+              &lt;/dependencies>
+              </pre>
+              <p>但试过时候发现，不行，老报ModuleId没有exclude或者excludeAll方法，我就纳闷了。查了0.10.x的代码，确实没有，　但我用的是0.11.0啊，查了代码，明明是有呀，擦，先不管，升级SBT到0.11.1再说，升级之后，果然OK，我了个去，查了github上代码的history，发现了证据：</p>
+              <pre>   
+              Sep 09, 2011
+               
+              Support for simple exclusion rules in inline dependencies 
+              …
+              This support excluding a library from the dependency tree for a given
+              set of `ExclusionRule`s. There are two ways to achieve this:
+              
+              - Using `organization` and `name` pairs:
+              val dep = "org" % "name" % "version" exclude("commons-codec", "commons-codec") exclude("org.slf4j", "slf4j-log4j")
+              
+              - Using `ExclusionRule`:
+              val dep = "org" % "name" % "version" excludeAll(ExclusionRule("commons-codec", "commons-codec"), ExclusionRule("org.slf4j", "slf4j-log4j"))
+              </pre>
+              <p>好吧，就是这样子，大家想用特定于ModuleId的依赖排除，记得升级到0.11.1吧！</p>
               
               <!--百度分享按钮-->
               <div class="pull-left bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a><a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a></div>
@@ -153,9 +144,6 @@ val dep = "org" % "name" % "version" excludeAll(ExclusionRule("commons-codec", "
               <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
               <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
 
-            </div>
-          </div>
-        </div>
       </div>
       <div class="row">
         <div class="col-md-12 footer">
@@ -163,9 +151,9 @@ val dep = "org" % "name" % "version" excludeAll(ExclusionRule("commons-codec", "
           <p>Powered by <a href="http://johnmacfarlane.net/pandoc/">pandoc</a>, <a href="http://rometools.github.io/rome/index.html">ROME</a> and <a href="http://pages.github.com/">github pages</a></p>
         </div>
       </div>
-    </div>
-  </div>
-</div>
+    </div> <!--main-->
+  </div> <!--row-->
+</div> <!--container-->
 
 <script src="/js/jquery-2.1.1.min.js"></script>
 <script src="/js/bootstrap.min.js"></script>

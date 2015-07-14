@@ -46,67 +46,57 @@
 </head>
 
 <body>
-<div class="container-fluid">
+<div class="container">
   <div class="row">
-    <div class="col-md-3 sidebar">
-      <a href="/">
-        <!-- <div align="center"><img src="/images/wfq0.png"/></div> -->
-        <h2 class="text-center">扶墙老师</h2>
-      </a>
-      <p class="text-center lead slogan"><a href="/slogan.html">lollapalooza &amp; positioning</a></p>
-      <p class="text-center lead slogan">瞎子摸象的践行者</p>
-      <ul class="nav nav-pills nav-stacked">
-        <li><a href="/favorite.html" class="text-center"><i class="icon-star-empty"></i> 我的收藏</a></li>
-        <li><a href="/dashboard.html" class="text-center"><i class="icon-fullscreen"></i> 金融看板</a></li>
-        <li><a href="/columns.html" class="text-center"><i class="icon-folder-close-alt"></i> 专栏</a></li>
-        <li><a href="/references.html" class="text-center"><i class="icon-folder-close-alt"></i> 快捷参考</a></li>
-        <li><a href="/whoami.html" class="text-center"><i class="icon-user-md"></i> 我是谁</a></li>
-        <li><a href="/interlinks.html" class="text-center"><i class="icon-user-md"></i> 友情链接</a></li>
-        <li><a href="/feeds.xml" class="text-center"><i class="icon-folder-close-alt"></i> RSS</a></li>
-      </ul>
-
+    
+    <div class="col-md-2">
+        <div class="seal text-right">
+          <a href="http://afoo.me">
+            <img src="/images/myseal.png"/>
+          </a>
+        </div>
     </div>
-    <div class="col-md-9 col-md-offset-3 main">
-      <div class="row">
-        <div class="container-fluid">
+    <div class="col-md-10 col-xs-12">
+
           
           <div class="row">
                         <div id="header">
               <p class="lead">
-              <h1 class="title">在spring中发信的时候&nbsp;&nbsp;
-                <small>
-                                    FuqiangWang
-                                  </small>
-              </h1>
-              </p>
+              <h1 class="title">在spring中发信的时候</h1>
+                            <small>
+                  <h3 class="author">FuqiangWang</h3>
+              </small>
+                                          </p>
             </div>
-                        <div>
-
+            
               <hr>
 
-                            <blockquote>
-<p>2014年从msn space存档中重新恢复出来！</p>
-</blockquote>
-<p>以前使用spring发信的时候，只是简单的为MailSender设置host,username和password属性就OK，但是今天却遇到了发信失败异常的一个553ReturnCode，而且日志中主要的信息也都是tmd的问号，搞得我很郁闷，不知道问题出在什么地方。后来问过系统部是否在MailServer上加了什么限制，系统部说只是添加了一个smtp认证，原来如此啊！所以，在MailSender的配置属性中加入了一个properties属性搞定。</p>
-<div class="sourceCode"><pre class="sourceCode xml"><code class="sourceCode xml"><span class="kw">&lt;bean</span><span class="ot"> id=</span><span class="st">&quot;mailSender&quot;</span><span class="ot"> class=</span><span class="st">&quot;org.springframework.mail.javamail.JavaMailSenderImpl&quot;</span><span class="kw">&gt;</span>
-<span class="kw">&lt;property</span><span class="ot"> name=</span><span class="st">&quot;host&quot;</span><span class="kw">&gt;</span>
-<span class="kw">&lt;value&gt;</span>mail.livedoor.cn<span class="kw">&lt;/value&gt;</span>
-<span class="kw">&lt;/property&gt;</span>
-<span class="kw">&lt;property</span><span class="ot"> name=</span><span class="st">&quot;username&quot;</span><span class="kw">&gt;</span>
-<span class="kw">&lt;value&gt;</span>XXX<span class="kw">&lt;/value&gt;</span>
-<span class="kw">&lt;/property&gt;</span>
-<span class="kw">&lt;property</span><span class="ot"> name=</span><span class="st">&quot;password&quot;</span><span class="kw">&gt;</span>
-<span class="kw">&lt;value&gt;</span>XXX<span class="kw">&lt;/value&gt;</span>
-<span class="kw">&lt;/property&gt;</span>
-<span class="kw">&lt;property</span><span class="ot"> name=</span><span class="st">&quot;port&quot;</span><span class="kw">&gt;</span>
-<span class="kw">&lt;value&gt;</span>25<span class="kw">&lt;/value&gt;</span>
-<span class="kw">&lt;/property&gt;</span>
-<span class="kw">&lt;property</span><span class="ot"> name=</span><span class="st">&quot;javaMailProperties&quot;</span><span class="kw">&gt;</span>
-<span class="kw">&lt;props&gt;</span>
-<span class="kw">&lt;prop</span><span class="ot"> key=</span><span class="st">&quot;mail.smtp.auth&quot;</span><span class="kw">&gt;</span>true<span class="kw">&lt;/prop&gt;</span>
-<span class="kw">&lt;/props&gt;</span>
-<span class="kw">&lt;/property&gt;</span>
-<span class="kw">&lt;/bean&gt;</span></code></pre></div>
+              
+              <hr/>
+
+              <blockquote>
+              <p>2014年从msn space存档中重新恢复出来！</p>
+              </blockquote>
+              <p>以前使用spring发信的时候，只是简单的为MailSender设置host,username和password属性就OK，但是今天却遇到了发信失败异常的一个553ReturnCode，而且日志中主要的信息也都是tmd的问号，搞得我很郁闷，不知道问题出在什么地方。后来问过系统部是否在MailServer上加了什么限制，系统部说只是添加了一个smtp认证，原来如此啊！所以，在MailSender的配置属性中加入了一个properties属性搞定。</p>
+              <div class="sourceCode"><pre class="sourceCode xml"><code class="sourceCode xml"><span class="kw">&lt;bean</span><span class="ot"> id=</span><span class="st">&quot;mailSender&quot;</span><span class="ot"> class=</span><span class="st">&quot;org.springframework.mail.javamail.JavaMailSenderImpl&quot;</span><span class="kw">&gt;</span>
+              <span class="kw">&lt;property</span><span class="ot"> name=</span><span class="st">&quot;host&quot;</span><span class="kw">&gt;</span>
+              <span class="kw">&lt;value&gt;</span>mail.livedoor.cn<span class="kw">&lt;/value&gt;</span>
+              <span class="kw">&lt;/property&gt;</span>
+              <span class="kw">&lt;property</span><span class="ot"> name=</span><span class="st">&quot;username&quot;</span><span class="kw">&gt;</span>
+              <span class="kw">&lt;value&gt;</span>XXX<span class="kw">&lt;/value&gt;</span>
+              <span class="kw">&lt;/property&gt;</span>
+              <span class="kw">&lt;property</span><span class="ot"> name=</span><span class="st">&quot;password&quot;</span><span class="kw">&gt;</span>
+              <span class="kw">&lt;value&gt;</span>XXX<span class="kw">&lt;/value&gt;</span>
+              <span class="kw">&lt;/property&gt;</span>
+              <span class="kw">&lt;property</span><span class="ot"> name=</span><span class="st">&quot;port&quot;</span><span class="kw">&gt;</span>
+              <span class="kw">&lt;value&gt;</span>25<span class="kw">&lt;/value&gt;</span>
+              <span class="kw">&lt;/property&gt;</span>
+              <span class="kw">&lt;property</span><span class="ot"> name=</span><span class="st">&quot;javaMailProperties&quot;</span><span class="kw">&gt;</span>
+              <span class="kw">&lt;props&gt;</span>
+              <span class="kw">&lt;prop</span><span class="ot"> key=</span><span class="st">&quot;mail.smtp.auth&quot;</span><span class="kw">&gt;</span>true<span class="kw">&lt;/prop&gt;</span>
+              <span class="kw">&lt;/props&gt;</span>
+              <span class="kw">&lt;/property&gt;</span>
+              <span class="kw">&lt;/bean&gt;</span></code></pre></div>
               
               <!--百度分享按钮-->
               <div class="pull-left bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a><a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a></div>
@@ -139,9 +129,6 @@
               <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
               <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
 
-            </div>
-          </div>
-        </div>
       </div>
       <div class="row">
         <div class="col-md-12 footer">
@@ -149,9 +136,9 @@
           <p>Powered by <a href="http://johnmacfarlane.net/pandoc/">pandoc</a>, <a href="http://rometools.github.io/rome/index.html">ROME</a> and <a href="http://pages.github.com/">github pages</a></p>
         </div>
       </div>
-    </div>
-  </div>
-</div>
+    </div> <!--main-->
+  </div> <!--row-->
+</div> <!--container-->
 
 <script src="/js/jquery-2.1.1.min.js"></script>
 <script src="/js/bootstrap.min.js"></script>

@@ -27,42 +27,30 @@
 </head>
 
 <body>
-<div class="container-fluid">
+<div class="container">
   <div class="row">
-    <div class="col-md-3 sidebar">
-      <a href="/">
-        <!-- <div align="center"><img src="/images/wfq0.png"/></div> -->
-        <h2 class="text-center">扶墙老师</h2>
-      </a>
-      <p class="text-center lead slogan"><a href="/slogan.html">lollapalooza &amp; positioning</a></p>
-      <p class="text-center lead slogan">瞎子摸象的践行者</p>
-      <ul class="nav nav-pills nav-stacked">
-        <li><a href="/favorite.html" class="text-center"><i class="icon-star-empty"></i> 我的收藏</a></li>
-        <li><a href="/dashboard.html" class="text-center"><i class="icon-fullscreen"></i> 金融看板</a></li>
-        <li><a href="/columns.html" class="text-center"><i class="icon-folder-close-alt"></i> 专栏</a></li>
-        <li><a href="/references.html" class="text-center"><i class="icon-folder-close-alt"></i> 快捷参考</a></li>
-        <li><a href="/whoami.html" class="text-center"><i class="icon-user-md"></i> 我是谁</a></li>
-        <li><a href="/interlinks.html" class="text-center"><i class="icon-user-md"></i> 友情链接</a></li>
-        <li><a href="/feeds.xml" class="text-center"><i class="icon-folder-close-alt"></i> RSS</a></li>
-      </ul>
-
+    
+    <div class="col-md-2">
+        <div class="seal text-right">
+          <a href="http://afoo.me">
+            <img src="/images/myseal.png"/>
+          </a>
+        </div>
     </div>
-    <div class="col-md-9 col-md-offset-3 main">
-      <div class="row">
-        <div class="container-fluid">
+    <div class="col-md-10 col-xs-12">
+
           
           <div class="row">
                         <div id="header">
               <p class="lead">
-              <h1 class="title">&quot;初探Hadoop MapReduce NextGen|MRv2|YARN(工作上下文紧急切换， 该篇待续)&quot;&nbsp;&nbsp;
-                <small>
-                                    fujohnwang
-                                  </small>
-              </h1>
-              </p>
+              <h1 class="title">&quot;初探Hadoop MapReduce NextGen|MRv2|YARN(工作上下文紧急切换， 该篇待续)&quot;</h1>
+                            <small>
+                  <h3 class="author">fujohnwang</h3>
+              </small>
+                                        <h4 class="date">2011-12-16</h4>
+                              </p>
             </div>
-                        <div>
-
+            
               <hr>
 
                             <div id="TOC">
@@ -76,48 +64,51 @@
                 <li><a href="#references"><span class="toc-section-number">5</span> References</a></li>
                 </ul>
               </div>
-                            <blockquote>
-<p>人家年初提出来的想法，我年末才刚开始看， 惭愧…</p>
-</blockquote>
-<h1 id="architecture"><span class="header-section-number">1</span> Architecture</h1>
-<ol style="list-style-type: decimal">
-<li>further separation of concerns on JobTracker
-<ul>
-<li>resource management concern</li>
-<li>job scheduling/monitoring concern</li>
-</ul></li>
-<li>not limited to MapReduce pattern, multiple different parallel programming patterns can be used too, like master-workers, MPI, iterative monads, etc. This is a more generic distributed parallel programming framework.</li>
-</ol>
-<h1 id="components"><span class="header-section-number">2</span> Components</h1>
-<ol style="list-style-type: decimal">
-<li>ResourceManager
-<ul>
-<li>Scheduler</li>
-<li>ApplicationManager</li>
-</ul></li>
-<li>NodeManager</li>
-<li>ApplicationMaster</li>
-</ol>
-<h1 id="interesting-projects-built-on-hadoop"><span class="header-section-number">3</span> Interesting projects built on hadoop</h1>
-<ol style="list-style-type: decimal">
-<li><a href="http://www.lilyproject.org/lily/index.html" class="uri">http://www.lilyproject.org/lily/index.html</a> - LILY - SMART DATA, AT SCALE, MADE EASY</li>
-</ol>
-<h1 id="hadoop-in-multiple-com"><span class="header-section-number">4</span> Hadoop in multiple com</h1>
-<h2 id="hadoop-百度"><span class="header-section-number">4.1</span> Hadoop @ 百度</h2>
-<pre><code>1. 透明压缩
-    - linux idle class调度
-    - 异步block级别压缩
+              
+              <hr/>
 
-2. 资源隔离 
-    - cgroup</code></pre>
-<h1 id="references"><span class="header-section-number">5</span> References</h1>
-<ol style="list-style-type: decimal">
-<li><a href="http://developer.yahoo.com/blogs/hadoop/posts/2011/02/mapreduce-nextgen/" class="uri">http://developer.yahoo.com/blogs/hadoop/posts/2011/02/mapreduce-nextgen/</a></li>
-<li><a href="http://developer.yahoo.com/blogs/hadoop/posts/2011/03/mapreduce-nextgen-scheduler/" class="uri">http://developer.yahoo.com/blogs/hadoop/posts/2011/03/mapreduce-nextgen-scheduler/</a></li>
-<li><a href="http://www.mesosproject.org/" class="uri">http://www.mesosproject.org/</a></li>
-<li><a href="http://developer.yahoo.com/blogs/hadoop/posts/2011/02/capacity-scheduler/" class="uri">http://developer.yahoo.com/blogs/hadoop/posts/2011/02/capacity-scheduler/</a></li>
-<li><a href="http://wiki.apache.org/hadoop/SupportingProjects" class="uri">http://wiki.apache.org/hadoop/SupportingProjects</a></li>
-</ol>
+              <blockquote>
+              <p>人家年初提出来的想法，我年末才刚开始看， 惭愧…</p>
+              </blockquote>
+              <h1 id="architecture"><span class="header-section-number">1</span> Architecture</h1>
+              <ol style="list-style-type: decimal">
+              <li>further separation of concerns on JobTracker
+              <ul>
+              <li>resource management concern</li>
+              <li>job scheduling/monitoring concern</li>
+              </ul></li>
+              <li>not limited to MapReduce pattern, multiple different parallel programming patterns can be used too, like master-workers, MPI, iterative monads, etc. This is a more generic distributed parallel programming framework.</li>
+              </ol>
+              <h1 id="components"><span class="header-section-number">2</span> Components</h1>
+              <ol style="list-style-type: decimal">
+              <li>ResourceManager
+              <ul>
+              <li>Scheduler</li>
+              <li>ApplicationManager</li>
+              </ul></li>
+              <li>NodeManager</li>
+              <li>ApplicationMaster</li>
+              </ol>
+              <h1 id="interesting-projects-built-on-hadoop"><span class="header-section-number">3</span> Interesting projects built on hadoop</h1>
+              <ol style="list-style-type: decimal">
+              <li><a href="http://www.lilyproject.org/lily/index.html" class="uri">http://www.lilyproject.org/lily/index.html</a> - LILY - SMART DATA, AT SCALE, MADE EASY</li>
+              </ol>
+              <h1 id="hadoop-in-multiple-com"><span class="header-section-number">4</span> Hadoop in multiple com</h1>
+              <h2 id="hadoop-百度"><span class="header-section-number">4.1</span> Hadoop @ 百度</h2>
+              <pre><code>1. 透明压缩
+                  - linux idle class调度
+                  - 异步block级别压缩
+              
+              2. 资源隔离 
+                  - cgroup</code></pre>
+              <h1 id="references"><span class="header-section-number">5</span> References</h1>
+              <ol style="list-style-type: decimal">
+              <li><a href="http://developer.yahoo.com/blogs/hadoop/posts/2011/02/mapreduce-nextgen/" class="uri">http://developer.yahoo.com/blogs/hadoop/posts/2011/02/mapreduce-nextgen/</a></li>
+              <li><a href="http://developer.yahoo.com/blogs/hadoop/posts/2011/03/mapreduce-nextgen-scheduler/" class="uri">http://developer.yahoo.com/blogs/hadoop/posts/2011/03/mapreduce-nextgen-scheduler/</a></li>
+              <li><a href="http://www.mesosproject.org/" class="uri">http://www.mesosproject.org/</a></li>
+              <li><a href="http://developer.yahoo.com/blogs/hadoop/posts/2011/02/capacity-scheduler/" class="uri">http://developer.yahoo.com/blogs/hadoop/posts/2011/02/capacity-scheduler/</a></li>
+              <li><a href="http://wiki.apache.org/hadoop/SupportingProjects" class="uri">http://wiki.apache.org/hadoop/SupportingProjects</a></li>
+              </ol>
               
               <!--百度分享按钮-->
               <div class="pull-left bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a><a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a></div>
@@ -150,9 +141,6 @@
               <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
               <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
 
-            </div>
-          </div>
-        </div>
       </div>
       <div class="row">
         <div class="col-md-12 footer">
@@ -160,9 +148,9 @@
           <p>Powered by <a href="http://johnmacfarlane.net/pandoc/">pandoc</a>, <a href="http://rometools.github.io/rome/index.html">ROME</a> and <a href="http://pages.github.com/">github pages</a></p>
         </div>
       </div>
-    </div>
-  </div>
-</div>
+    </div> <!--main-->
+  </div> <!--row-->
+</div> <!--container-->
 
 <script src="/js/jquery-2.1.1.min.js"></script>
 <script src="/js/bootstrap.min.js"></script>

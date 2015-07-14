@@ -26,47 +26,34 @@
 </head>
 
 <body>
-<div class="container-fluid">
+<div class="container">
   <div class="row">
-    <div class="col-md-3 sidebar">
-      <a href="/">
-        <!-- <div align="center"><img src="/images/wfq0.png"/></div> -->
-        <h2 class="text-center">扶墙老师</h2>
-      </a>
-      <p class="text-center lead slogan"><a href="/slogan.html">lollapalooza &amp; positioning</a></p>
-      <p class="text-center lead slogan">瞎子摸象的践行者</p>
-      <ul class="nav nav-pills nav-stacked">
-        <li><a href="/favorite.html" class="text-center"><i class="icon-star-empty"></i> 我的收藏</a></li>
-        <li><a href="/dashboard.html" class="text-center"><i class="icon-fullscreen"></i> 金融看板</a></li>
-        <li><a href="/columns.html" class="text-center"><i class="icon-folder-close-alt"></i> 专栏</a></li>
-        <li><a href="/references.html" class="text-center"><i class="icon-folder-close-alt"></i> 快捷参考</a></li>
-        <li><a href="/whoami.html" class="text-center"><i class="icon-user-md"></i> 我是谁</a></li>
-        <li><a href="/interlinks.html" class="text-center"><i class="icon-user-md"></i> 友情链接</a></li>
-        <li><a href="/feeds.xml" class="text-center"><i class="icon-folder-close-alt"></i> RSS</a></li>
-      </ul>
-
+    
+    <div class="col-md-2">
+        <div class="seal text-right">
+          <a href="http://afoo.me">
+            <img src="/images/myseal.png"/>
+          </a>
+        </div>
     </div>
-    <div class="col-md-9 col-md-offset-3 main">
-      <div class="row">
-        <div class="container-fluid">
+    <div class="col-md-10 col-xs-12">
+
           
           <div class="row">
                         <div id="header">
               <p class="lead">
-              <h1 class="title">nmap手册&nbsp;&nbsp;
-                <small>
-                                    陨石 - <script type="text/javascript">
-                  <!--
-                  h='&#x77;&#x61;&#x63;&#x61;&#x69;&#46;&#x63;&#x6f;&#x6d;';a='&#64;';n='&#x79;&#x75;&#110;&#x73;&#104;&#x69;';e=n+a+h;
-                  document.write('<a h'+'ref'+'="ma'+'ilto'+':'+e+'" clas'+'s="em' + 'ail">'+e+'<\/'+'a'+'>');
-                  // -->
-                  </script><noscript>&#x79;&#x75;&#110;&#x73;&#104;&#x69;&#32;&#x61;&#116;&#32;&#x77;&#x61;&#x63;&#x61;&#x69;&#32;&#100;&#x6f;&#116;&#32;&#x63;&#x6f;&#x6d;</noscript>
-                                  </small>
-              </h1>
-              </p>
+              <h1 class="title">nmap手册</h1>
+                            <small>
+                  <h3 class="author">陨石 - <script type="text/javascript">
+<!--
+h='&#x77;&#x61;&#x63;&#x61;&#x69;&#46;&#x63;&#x6f;&#x6d;';a='&#64;';n='&#x79;&#x75;&#110;&#x73;&#104;&#x69;';e=n+a+h;
+document.write('<a h'+'ref'+'="ma'+'ilto'+':'+e+'" clas'+'s="em' + 'ail">'+e+'<\/'+'a'+'>');
+// -->
+</script><noscript>&#x79;&#x75;&#110;&#x73;&#104;&#x69;&#32;&#x61;&#116;&#32;&#x77;&#x61;&#x63;&#x61;&#x69;&#32;&#100;&#x6f;&#116;&#32;&#x63;&#x6f;&#x6d;</noscript></h3>
+              </small>
+                                          </p>
             </div>
-                        <div>
-
+            
               <hr>
 
                             <div id="TOC">
@@ -87,93 +74,96 @@
                 <li><a href="#参考资料"><span class="toc-section-number">14</span> 参考资料</a></li>
                 </ul>
               </div>
-                            <h1 id="获取远程主机的系统类型及开放端口"><span class="header-section-number">1</span> 获取远程主机的系统类型及开放端口</h1>
-<blockquote>
-<p>nmap -sS -P0 -sV -O <target></p>
-</blockquote>
-<p>这里的 &lt; target &gt; 可以是单一 IP, 或主机名，或域名，或子网</p>
-<ol style="list-style-type: decimal">
-<li>-sS TCP SYN 扫描 (又称半开放,或隐身扫描)</li>
-<li>-P0 允许你关闭 ICMP pings.</li>
-<li>-sV 打开系统版本检测</li>
-<li>-O 尝试识别远程操作系统</li>
-</ol>
-<p>其它选项:</p>
-<p>-A 同时打开操作系统指纹和版本检测 -v 详细输出扫描情况.</p>
-<blockquote>
-<p>nmap -sS -P0 -A -v &lt; target &gt;</p>
-</blockquote>
-<h1 id="列出开放了指定端口的主机列表"><span class="header-section-number">2</span> 列出开放了指定端口的主机列表</h1>
-<blockquote>
-<p>nmap -sT -p 80 -oG – 192.168.1.* | grep open</p>
-</blockquote>
-<h1 id="在网络寻找所有在线主机"><span class="header-section-number">3</span> 在网络寻找所有在线主机</h1>
-<blockquote>
-<p>nmap -sP 192.168.0.*</p>
-</blockquote>
-<p>或者也可用以下命令:</p>
-<blockquote>
-<p>nmap -sP 192.168.0.0/24</p>
-</blockquote>
-<p>指定 subnet</p>
-<h1 id="ping-指定范围内的-ip-地址"><span class="header-section-number">4</span> Ping 指定范围内的 IP 地址</h1>
-<blockquote>
-<p>nmap -sP 192.168.1.100-254</p>
-</blockquote>
-<h1 id="在某段子网上查找未占用的-ip"><span class="header-section-number">5</span> 在某段子网上查找未占用的 IP</h1>
-<blockquote>
-<p>nmap -T4 -sP 192.168.2.0/24 &amp;&amp; egrep “00:00:00:00:00:00″ /proc/net/arp</p>
-</blockquote>
-<h1 id="在局域网上扫找-conficker-蠕虫病毒"><span class="header-section-number">6</span> 在局域网上扫找 Conficker 蠕虫病毒</h1>
-<blockquote>
-<p>nmap -PN -T4 -p139,445 -n -v –script=smb-check-vulns –script-args safe=1 192.168.0.1-254</p>
-</blockquote>
-<h1 id="扫描网络上的恶意接入点-rogue-aps."><span class="header-section-number">7</span> 扫描网络上的恶意接入点 （rogue APs）.</h1>
-<blockquote>
-<p>nmap -A -p1-85,113,443,8080-8100 -T4 –min-hostgroup 50 –max-rtt-timeout 2000 –initial-rtt-timeout 300 –max-retries 3 –host-timeout 20m –max-scan-delay 1000 -oA wapscan 10.0.0.0/8</p>
-</blockquote>
-<h1 id="使用诱饵扫描方法来扫描主机端口"><span class="header-section-number">8</span> 使用诱饵扫描方法来扫描主机端口</h1>
-<blockquote>
-<p>sudo nmap -sS 192.168.0.10 -D 192.168.0.2</p>
-</blockquote>
-<h1 id="为一个子网列出反向-dns-记录"><span class="header-section-number">9</span> 为一个子网列出反向 DNS 记录</h1>
-<blockquote>
-<p>nmap -R -sL 209.85.229.99/27 | awk ‘{if($3==”not”)print”(“$2″) no PTR”;else print$3″ is “$2}’ | grep ‘(‘</p>
-</blockquote>
-<h1 id="显示网络上共有多少台-linux-及-win-设备"><span class="header-section-number">10</span> 显示网络上共有多少台 Linux 及 Win 设备?</h1>
-<p>sudo nmap -F -O 192.168.0.1-255 | grep “Running: ” &gt; /tmp/os; echo “<span class="math">(<em>c</em><em>a</em><em>t</em>/<em>t</em><em>m</em><em>p</em>/<em>o</em><em>s</em>|<em>g</em><em>r</em><em>e</em><em>p</em><em>L</em><em>i</em><em>n</em><em>u</em><em>x</em>|<em>w</em><em>c</em> − <em>l</em>)<em>L</em><em>i</em><em>n</em><em>u</em><em>x</em><em>d</em><em>e</em><em>v</em><em>i</em><em>c</em><em>e</em>(<em>s</em>)” ; <em>e</em><em>c</em><em>h</em><em>o</em>“ </span>(cat /tmp/os | grep Windows | wc -l) Window(s) device”</p>
-<h1 id="扫描主机中所有的保留tcp端口"><span class="header-section-number">11</span> 扫描主机中所有的保留TCP端口</h1>
-<blockquote>
-<p>nmap -v scanme.nmap.org</p>
-</blockquote>
-<p>选项-v启用细节模式。</p>
-<h1 id="syn扫描"><span class="header-section-number">12</span> SYN扫描</h1>
-<blockquote>
-<p>nmap -sS -O scanme.nmap.org/24</p>
-</blockquote>
-<p>进行秘密SYN扫描，对象为主机Saznme所在的“C类”网段 的255台主机。同时尝试确定每台工作主机的操作系统类型。因为进行SYN扫描 和操作系统检测，这个扫描需要有根权限。</p>
-<h1 id="其它"><span class="header-section-number">13</span> 其它</h1>
-<blockquote>
-<p>nmap -sV -p 22，53，110，143，4564 198.116.0-255.1-127</p>
-</blockquote>
-<p>进行主机列举和TCP扫描，对象为B类188.116网段中255个8位子网。这 个测试用于确定系统是否运行了sshd、DNS、imapd或4564端口。如果这些端口 打开，将使用版本检测来确定哪种应用在运行。</p>
-<blockquote>
-<p>nmap -v -iR 100000 -P0 -p 80</p>
-</blockquote>
-<p>随机选择100000台主机扫描是否运行Web服务器(80端口)。由起始阶段 发送探测报文来确定主机是否工作非常浪费时间，而且只需探测主机的一个端口，因 此使用-P0禁止对主机列表。</p>
-<blockquote>
-<p>nmap -P0 -p80 -oX logs/pb-port80scan.xml -oG logs/pb-port80scan.gnmap 216.163.128.20/20</p>
-</blockquote>
-<p>扫描4096个IP地址，查找Web服务器(不ping)，将结果以Grep和XML格式保存。</p>
-<blockquote>
-<p>host -l company.com | cut -d -f 4 | nmap -v -iL -</p>
-</blockquote>
-<p>进行DNS区域传输，以发现company.com中的主机，然后将IP地址提供给 Nmap。上述命令用于GNU/Linux -- 其它系统进行区域传输时有不同的命令。</p>
-<h1 id="参考资料"><span class="header-section-number">14</span> 参考资料</h1>
-<ol style="list-style-type: decimal">
-<li><a href="http://www.91ri.org/891.html">十条nmap常用的扫描命令</a></li>
-<li><a href="http://nmap.org/man/zh/man-examples.html" class="uri">http://nmap.org/man/zh/man-examples.html</a></li>
-</ol>
+              
+              <hr/>
+
+              <h1 id="获取远程主机的系统类型及开放端口"><span class="header-section-number">1</span> 获取远程主机的系统类型及开放端口</h1>
+              <blockquote>
+              <p>nmap -sS -P0 -sV -O <target></p>
+              </blockquote>
+              <p>这里的 &lt; target &gt; 可以是单一 IP, 或主机名，或域名，或子网</p>
+              <ol style="list-style-type: decimal">
+              <li>-sS TCP SYN 扫描 (又称半开放,或隐身扫描)</li>
+              <li>-P0 允许你关闭 ICMP pings.</li>
+              <li>-sV 打开系统版本检测</li>
+              <li>-O 尝试识别远程操作系统</li>
+              </ol>
+              <p>其它选项:</p>
+              <p>-A 同时打开操作系统指纹和版本检测 -v 详细输出扫描情况.</p>
+              <blockquote>
+              <p>nmap -sS -P0 -A -v &lt; target &gt;</p>
+              </blockquote>
+              <h1 id="列出开放了指定端口的主机列表"><span class="header-section-number">2</span> 列出开放了指定端口的主机列表</h1>
+              <blockquote>
+              <p>nmap -sT -p 80 -oG – 192.168.1.* | grep open</p>
+              </blockquote>
+              <h1 id="在网络寻找所有在线主机"><span class="header-section-number">3</span> 在网络寻找所有在线主机</h1>
+              <blockquote>
+              <p>nmap -sP 192.168.0.*</p>
+              </blockquote>
+              <p>或者也可用以下命令:</p>
+              <blockquote>
+              <p>nmap -sP 192.168.0.0/24</p>
+              </blockquote>
+              <p>指定 subnet</p>
+              <h1 id="ping-指定范围内的-ip-地址"><span class="header-section-number">4</span> Ping 指定范围内的 IP 地址</h1>
+              <blockquote>
+              <p>nmap -sP 192.168.1.100-254</p>
+              </blockquote>
+              <h1 id="在某段子网上查找未占用的-ip"><span class="header-section-number">5</span> 在某段子网上查找未占用的 IP</h1>
+              <blockquote>
+              <p>nmap -T4 -sP 192.168.2.0/24 &amp;&amp; egrep “00:00:00:00:00:00″ /proc/net/arp</p>
+              </blockquote>
+              <h1 id="在局域网上扫找-conficker-蠕虫病毒"><span class="header-section-number">6</span> 在局域网上扫找 Conficker 蠕虫病毒</h1>
+              <blockquote>
+              <p>nmap -PN -T4 -p139,445 -n -v –script=smb-check-vulns –script-args safe=1 192.168.0.1-254</p>
+              </blockquote>
+              <h1 id="扫描网络上的恶意接入点-rogue-aps."><span class="header-section-number">7</span> 扫描网络上的恶意接入点 （rogue APs）.</h1>
+              <blockquote>
+              <p>nmap -A -p1-85,113,443,8080-8100 -T4 –min-hostgroup 50 –max-rtt-timeout 2000 –initial-rtt-timeout 300 –max-retries 3 –host-timeout 20m –max-scan-delay 1000 -oA wapscan 10.0.0.0/8</p>
+              </blockquote>
+              <h1 id="使用诱饵扫描方法来扫描主机端口"><span class="header-section-number">8</span> 使用诱饵扫描方法来扫描主机端口</h1>
+              <blockquote>
+              <p>sudo nmap -sS 192.168.0.10 -D 192.168.0.2</p>
+              </blockquote>
+              <h1 id="为一个子网列出反向-dns-记录"><span class="header-section-number">9</span> 为一个子网列出反向 DNS 记录</h1>
+              <blockquote>
+              <p>nmap -R -sL 209.85.229.99/27 | awk ‘{if($3==”not”)print”(“$2″) no PTR”;else print$3″ is “$2}’ | grep ‘(‘</p>
+              </blockquote>
+              <h1 id="显示网络上共有多少台-linux-及-win-设备"><span class="header-section-number">10</span> 显示网络上共有多少台 Linux 及 Win 设备?</h1>
+              <p>sudo nmap -F -O 192.168.0.1-255 | grep “Running: ” &gt; /tmp/os; echo “<span class="math">(<em>c</em><em>a</em><em>t</em>/<em>t</em><em>m</em><em>p</em>/<em>o</em><em>s</em>|<em>g</em><em>r</em><em>e</em><em>p</em><em>L</em><em>i</em><em>n</em><em>u</em><em>x</em>|<em>w</em><em>c</em> − <em>l</em>)<em>L</em><em>i</em><em>n</em><em>u</em><em>x</em><em>d</em><em>e</em><em>v</em><em>i</em><em>c</em><em>e</em>(<em>s</em>)” ; <em>e</em><em>c</em><em>h</em><em>o</em>“ </span>(cat /tmp/os | grep Windows | wc -l) Window(s) device”</p>
+              <h1 id="扫描主机中所有的保留tcp端口"><span class="header-section-number">11</span> 扫描主机中所有的保留TCP端口</h1>
+              <blockquote>
+              <p>nmap -v scanme.nmap.org</p>
+              </blockquote>
+              <p>选项-v启用细节模式。</p>
+              <h1 id="syn扫描"><span class="header-section-number">12</span> SYN扫描</h1>
+              <blockquote>
+              <p>nmap -sS -O scanme.nmap.org/24</p>
+              </blockquote>
+              <p>进行秘密SYN扫描，对象为主机Saznme所在的“C类”网段 的255台主机。同时尝试确定每台工作主机的操作系统类型。因为进行SYN扫描 和操作系统检测，这个扫描需要有根权限。</p>
+              <h1 id="其它"><span class="header-section-number">13</span> 其它</h1>
+              <blockquote>
+              <p>nmap -sV -p 22，53，110，143，4564 198.116.0-255.1-127</p>
+              </blockquote>
+              <p>进行主机列举和TCP扫描，对象为B类188.116网段中255个8位子网。这 个测试用于确定系统是否运行了sshd、DNS、imapd或4564端口。如果这些端口 打开，将使用版本检测来确定哪种应用在运行。</p>
+              <blockquote>
+              <p>nmap -v -iR 100000 -P0 -p 80</p>
+              </blockquote>
+              <p>随机选择100000台主机扫描是否运行Web服务器(80端口)。由起始阶段 发送探测报文来确定主机是否工作非常浪费时间，而且只需探测主机的一个端口，因 此使用-P0禁止对主机列表。</p>
+              <blockquote>
+              <p>nmap -P0 -p80 -oX logs/pb-port80scan.xml -oG logs/pb-port80scan.gnmap 216.163.128.20/20</p>
+              </blockquote>
+              <p>扫描4096个IP地址，查找Web服务器(不ping)，将结果以Grep和XML格式保存。</p>
+              <blockquote>
+              <p>host -l company.com | cut -d -f 4 | nmap -v -iL -</p>
+              </blockquote>
+              <p>进行DNS区域传输，以发现company.com中的主机，然后将IP地址提供给 Nmap。上述命令用于GNU/Linux -- 其它系统进行区域传输时有不同的命令。</p>
+              <h1 id="参考资料"><span class="header-section-number">14</span> 参考资料</h1>
+              <ol style="list-style-type: decimal">
+              <li><a href="http://www.91ri.org/891.html">十条nmap常用的扫描命令</a></li>
+              <li><a href="http://nmap.org/man/zh/man-examples.html" class="uri">http://nmap.org/man/zh/man-examples.html</a></li>
+              </ol>
               
               <!--百度分享按钮-->
               <div class="pull-left bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a><a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a></div>
@@ -206,9 +196,6 @@
               <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
               <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
 
-            </div>
-          </div>
-        </div>
       </div>
       <div class="row">
         <div class="col-md-12 footer">
@@ -216,9 +203,9 @@
           <p>Powered by <a href="http://johnmacfarlane.net/pandoc/">pandoc</a>, <a href="http://rometools.github.io/rome/index.html">ROME</a> and <a href="http://pages.github.com/">github pages</a></p>
         </div>
       </div>
-    </div>
-  </div>
-</div>
+    </div> <!--main-->
+  </div> <!--row-->
+</div> <!--container-->
 
 <script src="/js/jquery-2.1.1.min.js"></script>
 <script src="/js/bootstrap.min.js"></script>
