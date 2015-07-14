@@ -40,9 +40,7 @@
 hr {
     margin-top: 10px;
     margin-bottom: 10px;
-    border-bottom-color: rgb(217, 217, 217);
-    border-bottom-style: dashed;
-    border-bottom-width: 1px;
+    border-bottom: 1px dotted #ff8000;
 }
 
 .pull-right {
