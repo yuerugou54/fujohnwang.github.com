@@ -106,7 +106,7 @@ object SiteBuilder {
 
     s"""
       |  <hr>
-      |  <a href="$previousLink"><span class="iconize color-dark">前(Previous)</span></a> | <a href="$nextLink"><span class="iconize color-dark">后(Next)</span></a>
+      |  <a href="$previousLink"><span class="color-dark">前(Previous) | </span></a><a href="$nextLink"><span class="color-dark"> | 后(Next)</span></a>
     """.stripMargin
   }
 
