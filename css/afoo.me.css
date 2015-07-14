@@ -5,42 +5,46 @@
 */
 
 @media (min-width: 768px) {
-  .sidebar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    z-index: 1000;
-    display: block;
-    overflow-y: scroll;
-    scrollbar-base-color: blue;
-    color: blue;
-    font-family: 'Syncopate', sans-serif;
-    background-color: #000;
-    border-right: 1px solid #eee;
-  }
+    .sidebar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        z-index: 1000;
+        display: block;
+        overflow-y: scroll;
+        scrollbar-base-color: blue;
+        color: blue;
+        font-family: 'Syncopate', sans-serif;
+        background-color: #000;
+        border-right: 1px solid #eee;
+    }
 }
 
-.main{
-	padding: 20px 20px 20px 20px;
-  font-family: 'News Cycle', Helvetica,  sans-serif;
-  font-size: 18px;
+.main {
+    padding: 20px 20px 20px 20px;
+    background-color: white;
+    font-family: 'News Cycle', 'lucida grande', 'lucida sans unicode', lucida, helvetica, 'Hiragino Sans GB', 'Microsoft YaHei', 'WenQuanYi Micro Hei', sans-serif;
+    font-size: 18px;
 }
 
-.footer{
-	color: #999;
-	text-align: center;
+.footer {
+    color: #999;
+    text-align: center;
 }
 
-.slogan{
-	color: #33FF33;
+.slogan {
+    color: #33FF33;
 }
 
-hr{
-	margin-top: 10px;
-	margin-bottom: 10px;
+hr {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border-bottom-color: rgb(217, 217, 217);
+    border-bottom-style: dashed;
+    border-bottom-width: 1px;
 }
 
 .pull-right {
-  float: right !important;
+    float: right !important;
 }

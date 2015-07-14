@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html lang="zh">
 
-  <head>
-    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-    <title>《Scala For The Impatient》琐碎记录 - 一个架构士的思考与沉淀@afoo.me</title>
-    <meta name="author" content="FuqiangWang">
-    <meta charset='utf-8'>
-    <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <link rel="icon" href="/favicon.ico">
-            <style type="text/css">
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+  <title>《Scala For The Impatient》琐碎记录 - 一个架构士的思考与沉淀@afoo.me</title>
+  <meta name="author" content="FuqiangWang">
+  <meta charset='utf-8'>
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <link rel="icon" href="/favicon.ico">
+      <style type="text/css">
     div.sourceCode { overflow-x: auto; }
     table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
       margin: 0; padding: 0; vertical-align: baseline; border: none; }
@@ -28,63 +28,63 @@
     code > span.al { color: #ff0000; font-weight: bold; }
     code > span.fu { color: #06287e; }
     code > span.er { color: #ff0000; font-weight: bold; }
-    </style>
-                
-    <link href='/font/Syncopate/stylesheet.css' rel='stylesheet' type='text/css'>
-    <link href='/font/News_Cycle/stylesheet.css' rel='stylesheet' type='text/css'>
+  </style>
+        
+  <link href='/font/Syncopate/stylesheet.css' rel='stylesheet' type='text/css'>
+  <link href='/font/News_Cycle/stylesheet.css' rel='stylesheet' type='text/css'>
 
-    <link href="/css/bootstrap.min.css" rel="stylesheet">
-    <link href="/css/bootstrap-theme.min.css" rel="stylesheet">
-    <link href="/css/afoo.me.css" rel="stylesheet">
+  <link href="/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/css/bootstrap-theme.min.css" rel="stylesheet">
+  <link href="/css/afoo.me.css" rel="stylesheet">
 
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
-  </head>
+  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+  <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+  <![endif]-->
+</head>
 
-  <body>
-    <div class="container-fluid">
+<body>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-3 sidebar">
+      <a href="/">
+        <!-- <div align="center"><img src="/images/wfq0.png"/></div> -->
+        <h2 class="text-center">扶墙老师</h2>
+      </a>
+      <p class="text-center lead slogan"><a href="/slogan.html">lollapalooza &amp; positioning</a></p>
+      <p class="text-center lead slogan">瞎子摸象的践行者</p>
+      <ul class="nav nav-pills nav-stacked">
+        <li><a href="/favorite.html" class="text-center"><i class="icon-star-empty"></i> 我的收藏</a></li>
+        <li><a href="/dashboard.html" class="text-center"><i class="icon-fullscreen"></i> 金融看板</a></li>
+        <li><a href="/columns.html" class="text-center"><i class="icon-folder-close-alt"></i> 专栏</a></li>
+        <li><a href="/references.html" class="text-center"><i class="icon-folder-close-alt"></i> 快捷参考</a></li>
+        <li><a href="/whoami.html" class="text-center"><i class="icon-user-md"></i> 我是谁</a></li>
+        <li><a href="/interlinks.html" class="text-center"><i class="icon-user-md"></i> 友情链接</a></li>
+        <li><a href="/feeds.xml" class="text-center"><i class="icon-folder-close-alt"></i> RSS</a></li>
+      </ul>
+
+    </div>
+    <div class="col-md-9 col-md-offset-3 main">
       <div class="row">
-        <div class="col-md-3 sidebar">
-            <a href="/">
-				<!-- <div align="center"><img src="/images/wfq0.png"/></div> -->
-                <h2 class="text-center">扶墙老师</h2>
-            </a>
-            <p class="text-center lead slogan"><a href="/slogan.html">lollapalooza &amp; positioning</a></p>
-			<p class="text-center lead slogan">瞎子摸象的践行者</p>
-            <ul class="nav nav-pills nav-stacked">
-              <li><a href="/favorite.html" class="text-center"><i class="icon-star-empty"></i> 我的收藏</a></li>
-              <li><a href="/dashboard.html" class="text-center"><i class="icon-fullscreen"></i> 金融看板</a></li>
-              <li><a href="/columns.html" class="text-center"><i class="icon-folder-close-alt"></i> 专栏</a></li>
-              <li><a href="/references.html" class="text-center"><i class="icon-folder-close-alt"></i> 快捷参考</a></li>
-              <li><a href="/whoami.html" class="text-center"><i class="icon-user-md"></i> 我是谁</a></li>
-              <li><a href="/interlinks.html" class="text-center"><i class="icon-user-md"></i> 友情链接</a></li>
-              <li><a href="/feeds.xml" class="text-center"><i class="icon-folder-close-alt"></i> RSS</a></li>
-            </ul>
-
-        </div>
-        <div class="col-md-9 col-md-offset-3 main">
-            <div class="row">
-              <div class="container-fluid">
-                
-                <div class="row">
-                                <div id="header">
-                <p class="lead">
-                <h1 class="title">《Scala For The Impatient》琐碎记录&nbsp;&nbsp;
+        <div class="container-fluid">
+          
+          <div class="row">
+                        <div id="header">
+              <p class="lead">
+              <h1 class="title">《Scala For The Impatient》琐碎记录&nbsp;&nbsp;
                 <small>
                                     王福强
-                                </small>
-                </h1>
-                </p>
-                </div>
-                                <div>
+                                  </small>
+              </h1>
+              </p>
+            </div>
+                        <div>
 
-                <hr>
+              <hr>
 
-                                <div id="TOC">
+                            <div id="TOC">
                 <ul>
                 <li><a href="#关于在repl里粘贴多行代码的问题"><span class="toc-section-number">1</span> 关于在REPL里粘贴多行代码的问题</a></li>
                 <li><a href="#关于break语句"><span class="toc-section-number">2</span> 关于break语句</a></li>
@@ -98,8 +98,8 @@
                 <li><a href="#与-的恩怨"><span class="toc-section-number">9.1</span> &lt;: 与 &lt;%的恩怨</a></li>
                 </ul></li>
                 </ul>
-                </div>
-                                <p>感谢宏江借我这本书，现在可以当“闲书”来零散时间做消遣 ：）</p>
+              </div>
+                            <p>感谢宏江借我这本书，现在可以当“闲书”来零散时间做消遣 ：）</p>
 <h1 id="关于在repl里粘贴多行代码的问题"><span class="header-section-number">1</span> 关于在REPL里粘贴多行代码的问题</h1>
 书中说到，使用粘贴模式即可解决， 即在命令中先键入：
 <pre>
@@ -159,54 +159,54 @@ age_=方法编译为字节码后，名称是age_$eq(...), 因为Java里=不能�
 <div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">class</span> Pair[T &lt;: Comparable[T]]
 <span class="kw">class</span> Pair[T &lt;% Comparable[T]]</code></pre></div>
 <p>前者对Int类型来说不能编译通过，因为Scala里的Int不是Comparable[Int]的子类，不过RichInt是，而且有相应的从Int到RIchInt的implict conversion，所以第二种形式可以。</p>
-                
-                <!--百度分享按钮-->
-                <div class="pull-left bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a><a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a></div>
-                <script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"1","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+              
+              <!--百度分享按钮-->
+              <div class="pull-left bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a><a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a></div>
+              <script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"1","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
 
-                <!--二维码分享-->
-                <div id="wx_qr"></div>
-                <script type="text/javascript">
-                  var baseUrl = "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data="
-                  var qrUrl = baseUrl.concat(document.URL)
-                  var img = document.createElement("img")
-                  img.setAttribute("src", qrUrl)
+              <!--二维码分享-->
+              <div id="wx_qr"></div>
+              <script type="text/javascript">
+                var baseUrl = "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data="
+                var qrUrl = baseUrl.concat(document.URL)
+                var img = document.createElement("img")
+                img.setAttribute("src", qrUrl)
 
-                  document.getElementById("wx_qr").appendChild(img)
-                </script>
+                document.getElementById("wx_qr").appendChild(img)
+              </script>
 
 
-                <div id="disqus_thread"></div>
-                <script type="text/javascript">
-                    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
-                    var disqus_shortname = 'afoo'; // required: replace example with your forum shortname
+              <div id="disqus_thread"></div>
+              <script type="text/javascript">
+                /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+                var disqus_shortname = 'afoo'; // required: replace example with your forum shortname
 
-                    /* * * DON'T EDIT BELOW THIS LINE * * */
-                    (function() {
-                        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-                        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-                        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-                    })();
-                </script>
-                <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-                <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+                /* * * DON'T EDIT BELOW THIS LINE * * */
+                (function() {
+                  var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                  dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                })();
+              </script>
+              <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+              <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
 
-              </div>
-              </div>
-              </div>
             </div>
-            <div class="row">
-                <div class="col-md-12 footer">
-                  <hr>
-                  <p>Powered by <a href="http://johnmacfarlane.net/pandoc/">pandoc</a>, <a href="http://rometools.github.io/rome/index.html">ROME</a> and <a href="http://pages.github.com/">github pages</a></p>
-                </div>
-            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12 footer">
+          <hr>
+          <p>Powered by <a href="http://johnmacfarlane.net/pandoc/">pandoc</a>, <a href="http://rometools.github.io/rome/index.html">ROME</a> and <a href="http://pages.github.com/">github pages</a></p>
         </div>
       </div>
     </div>
+  </div>
+</div>
 
-    <script src="/js/jquery-2.1.1.min.js"></script>
-    <script src="/js/bootstrap.min.js"></script>
-  </body>
+<script src="/js/jquery-2.1.1.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+</body>
 
 </html>

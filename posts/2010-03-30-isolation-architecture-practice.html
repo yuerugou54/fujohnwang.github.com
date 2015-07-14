@@ -1,76 +1,76 @@
 <!DOCTYPE html>
 <html lang="zh">
 
-  <head>
-    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-    <title>Simple, Yet Powerful系列之“隔离” - 一个架构士的思考与沉淀@afoo.me</title>
-    <meta name="author" content="FuqiangWang">
-    <meta charset='utf-8'>
-    <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <link rel="icon" href="/favicon.ico">
-                    
-    <link href='/font/Syncopate/stylesheet.css' rel='stylesheet' type='text/css'>
-    <link href='/font/News_Cycle/stylesheet.css' rel='stylesheet' type='text/css'>
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+  <title>Simple, Yet Powerful系列之“隔离” - 一个架构士的思考与沉淀@afoo.me</title>
+  <meta name="author" content="FuqiangWang">
+  <meta charset='utf-8'>
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <link rel="icon" href="/favicon.ico">
+          
+  <link href='/font/Syncopate/stylesheet.css' rel='stylesheet' type='text/css'>
+  <link href='/font/News_Cycle/stylesheet.css' rel='stylesheet' type='text/css'>
 
-    <link href="/css/bootstrap.min.css" rel="stylesheet">
-    <link href="/css/bootstrap-theme.min.css" rel="stylesheet">
-    <link href="/css/afoo.me.css" rel="stylesheet">
+  <link href="/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/css/bootstrap-theme.min.css" rel="stylesheet">
+  <link href="/css/afoo.me.css" rel="stylesheet">
 
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
-  </head>
+  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+  <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+  <![endif]-->
+</head>
 
-  <body>
-    <div class="container-fluid">
+<body>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-3 sidebar">
+      <a href="/">
+        <!-- <div align="center"><img src="/images/wfq0.png"/></div> -->
+        <h2 class="text-center">扶墙老师</h2>
+      </a>
+      <p class="text-center lead slogan"><a href="/slogan.html">lollapalooza &amp; positioning</a></p>
+      <p class="text-center lead slogan">瞎子摸象的践行者</p>
+      <ul class="nav nav-pills nav-stacked">
+        <li><a href="/favorite.html" class="text-center"><i class="icon-star-empty"></i> 我的收藏</a></li>
+        <li><a href="/dashboard.html" class="text-center"><i class="icon-fullscreen"></i> 金融看板</a></li>
+        <li><a href="/columns.html" class="text-center"><i class="icon-folder-close-alt"></i> 专栏</a></li>
+        <li><a href="/references.html" class="text-center"><i class="icon-folder-close-alt"></i> 快捷参考</a></li>
+        <li><a href="/whoami.html" class="text-center"><i class="icon-user-md"></i> 我是谁</a></li>
+        <li><a href="/interlinks.html" class="text-center"><i class="icon-user-md"></i> 友情链接</a></li>
+        <li><a href="/feeds.xml" class="text-center"><i class="icon-folder-close-alt"></i> RSS</a></li>
+      </ul>
+
+    </div>
+    <div class="col-md-9 col-md-offset-3 main">
       <div class="row">
-        <div class="col-md-3 sidebar">
-            <a href="/">
-				<!-- <div align="center"><img src="/images/wfq0.png"/></div> -->
-                <h2 class="text-center">扶墙老师</h2>
-            </a>
-            <p class="text-center lead slogan"><a href="/slogan.html">lollapalooza &amp; positioning</a></p>
-			<p class="text-center lead slogan">瞎子摸象的践行者</p>
-            <ul class="nav nav-pills nav-stacked">
-              <li><a href="/favorite.html" class="text-center"><i class="icon-star-empty"></i> 我的收藏</a></li>
-              <li><a href="/dashboard.html" class="text-center"><i class="icon-fullscreen"></i> 金融看板</a></li>
-              <li><a href="/columns.html" class="text-center"><i class="icon-folder-close-alt"></i> 专栏</a></li>
-              <li><a href="/references.html" class="text-center"><i class="icon-folder-close-alt"></i> 快捷参考</a></li>
-              <li><a href="/whoami.html" class="text-center"><i class="icon-user-md"></i> 我是谁</a></li>
-              <li><a href="/interlinks.html" class="text-center"><i class="icon-user-md"></i> 友情链接</a></li>
-              <li><a href="/feeds.xml" class="text-center"><i class="icon-folder-close-alt"></i> RSS</a></li>
-            </ul>
-
-        </div>
-        <div class="col-md-9 col-md-offset-3 main">
-            <div class="row">
-              <div class="container-fluid">
-                
-                <div class="row">
-                                <div id="header">
-                <p class="lead">
-                <h1 class="title">Simple, Yet Powerful系列之“隔离”&nbsp;&nbsp;
+        <div class="container-fluid">
+          
+          <div class="row">
+                        <div id="header">
+              <p class="lead">
+              <h1 class="title">Simple, Yet Powerful系列之“隔离”&nbsp;&nbsp;
                 <small>
-                                </small>
-                </h1>
-                </p>
-                </div>
-                                <div>
+                                  </small>
+              </h1>
+              </p>
+            </div>
+                        <div>
 
-                <hr>
+              <hr>
 
-                                <div id="TOC">
+                            <div id="TOC">
                 <ul>
                 <li><a href="#隔离以提高系统的容灾"><span class="toc-section-number">1</span> 隔离以提高系统的容灾</a></li>
                 <li><a href="#隔离以规避状态的冲突"><span class="toc-section-number">2</span> 隔离以规避状态的冲突</a></li>
                 <li><a href="#结束语"><span class="toc-section-number">3</span> 结束语</a></li>
                 </ul>
-                </div>
-                                <p>隔离的概念其实很简单， 但越是简单的东西， 就越不能小看。应用得当的话， 可以让我们的系统“天生丽质”， 一出生就在某些方面领先他人一步， 不信， 咱上眼瞧...</p>
+              </div>
+                            <p>隔离的概念其实很简单， 但越是简单的东西， 就越不能小看。应用得当的话， 可以让我们的系统“天生丽质”， 一出生就在某些方面领先他人一步， 不信， 咱上眼瞧...</p>
 <h1 id="隔离以提高系统的容灾"><span class="header-section-number">1</span> 隔离以提高系统的容灾</h1>
 <p>部门本来有一个项目可以满足其它部门的需求， 但一些架构师不想使用现有的这个项目，而要另起炉灶， 其中的一个原因是某个应用如果突发状况致使统一的服务down掉， 那么使用统一服务的其它应用也将受牵连， 让我们来看一下为什么会出现这种情况。</p>
 <p><img src="images/service-without-isolation.png" alt=""/></p>
@@ -91,54 +91,54 @@
 <p>事务的隔离级别大家应该不陌生吧？那它的作用是什么那？我知道， 把它归到并发控制策略那边或许更合适一些， 可我这里要说隔离， 所以， 我就死拉硬扯地， 把它先暂且划归这里一会儿吧。 通过事务隔离级别，我们可以控制数据的可见性， 从而在一定程度上规避共享状态地某些冲突， 或者说即使有冲突， 我们也可以按照预先设定地策略进行规避（MVCC）， 但扩展来讲，如果我们能够将某些关注点从一开始就隔离开来的话， 那也就从根本上规避了某些状态地冲突， 至于相应地， 系统更易于管理和维护，以及更加易于扩展之类的好处， 那自然而然就都随之而来了。 这么“一石多鸟”的事情， 可能的情况下，应该多为才对。</p>
 <h1 id="结束语"><span class="header-section-number">3</span> 结束语</h1>
 <p>本来我还想胡搅蛮缠一下扩充点儿篇幅， 想将“关注点／功能／服务／系统”的治理和维护也纳入道这个topic下， 但发现“隔离”和”分离“语意上可能还是有些差异的， 所以就此作罢， 先写一部分确定的内容吧！</p>
-                
-                <!--百度分享按钮-->
-                <div class="pull-left bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a><a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a></div>
-                <script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"1","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+              
+              <!--百度分享按钮-->
+              <div class="pull-left bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a><a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a></div>
+              <script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"1","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
 
-                <!--二维码分享-->
-                <div id="wx_qr"></div>
-                <script type="text/javascript">
-                  var baseUrl = "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data="
-                  var qrUrl = baseUrl.concat(document.URL)
-                  var img = document.createElement("img")
-                  img.setAttribute("src", qrUrl)
+              <!--二维码分享-->
+              <div id="wx_qr"></div>
+              <script type="text/javascript">
+                var baseUrl = "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data="
+                var qrUrl = baseUrl.concat(document.URL)
+                var img = document.createElement("img")
+                img.setAttribute("src", qrUrl)
 
-                  document.getElementById("wx_qr").appendChild(img)
-                </script>
+                document.getElementById("wx_qr").appendChild(img)
+              </script>
 
 
-                <div id="disqus_thread"></div>
-                <script type="text/javascript">
-                    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
-                    var disqus_shortname = 'afoo'; // required: replace example with your forum shortname
+              <div id="disqus_thread"></div>
+              <script type="text/javascript">
+                /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+                var disqus_shortname = 'afoo'; // required: replace example with your forum shortname
 
-                    /* * * DON'T EDIT BELOW THIS LINE * * */
-                    (function() {
-                        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-                        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-                        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-                    })();
-                </script>
-                <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-                <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+                /* * * DON'T EDIT BELOW THIS LINE * * */
+                (function() {
+                  var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                  dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                })();
+              </script>
+              <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+              <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
 
-              </div>
-              </div>
-              </div>
             </div>
-            <div class="row">
-                <div class="col-md-12 footer">
-                  <hr>
-                  <p>Powered by <a href="http://johnmacfarlane.net/pandoc/">pandoc</a>, <a href="http://rometools.github.io/rome/index.html">ROME</a> and <a href="http://pages.github.com/">github pages</a></p>
-                </div>
-            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12 footer">
+          <hr>
+          <p>Powered by <a href="http://johnmacfarlane.net/pandoc/">pandoc</a>, <a href="http://rometools.github.io/rome/index.html">ROME</a> and <a href="http://pages.github.com/">github pages</a></p>
         </div>
       </div>
     </div>
+  </div>
+</div>
 
-    <script src="/js/jquery-2.1.1.min.js"></script>
-    <script src="/js/bootstrap.min.js"></script>
-  </body>
+<script src="/js/jquery-2.1.1.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+</body>
 
 </html>

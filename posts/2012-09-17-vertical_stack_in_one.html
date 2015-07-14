@@ -1,71 +1,71 @@
 <!DOCTYPE html>
 <html lang="zh">
 
-  <head>
-    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-    <title>检车大厅所见所闻对软件架构设计的联想 - 一个架构士的思考与沉淀@afoo.me</title>
-    <meta name="author" content="FuqiangWang">
-    <meta charset='utf-8'>
-    <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <link rel="icon" href="/favicon.ico">
-        <meta name="date" content="2012-09-17" />
-                    
-    <link href='/font/Syncopate/stylesheet.css' rel='stylesheet' type='text/css'>
-    <link href='/font/News_Cycle/stylesheet.css' rel='stylesheet' type='text/css'>
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+  <title>检车大厅所见所闻对软件架构设计的联想 - 一个架构士的思考与沉淀@afoo.me</title>
+  <meta name="author" content="FuqiangWang">
+  <meta charset='utf-8'>
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <link rel="icon" href="/favicon.ico">
+    <meta name="date" content="2012-09-17" />
+          
+  <link href='/font/Syncopate/stylesheet.css' rel='stylesheet' type='text/css'>
+  <link href='/font/News_Cycle/stylesheet.css' rel='stylesheet' type='text/css'>
 
-    <link href="/css/bootstrap.min.css" rel="stylesheet">
-    <link href="/css/bootstrap-theme.min.css" rel="stylesheet">
-    <link href="/css/afoo.me.css" rel="stylesheet">
+  <link href="/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/css/bootstrap-theme.min.css" rel="stylesheet">
+  <link href="/css/afoo.me.css" rel="stylesheet">
 
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
-  </head>
+  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+  <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+  <![endif]-->
+</head>
 
-  <body>
-    <div class="container-fluid">
+<body>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-3 sidebar">
+      <a href="/">
+        <!-- <div align="center"><img src="/images/wfq0.png"/></div> -->
+        <h2 class="text-center">扶墙老师</h2>
+      </a>
+      <p class="text-center lead slogan"><a href="/slogan.html">lollapalooza &amp; positioning</a></p>
+      <p class="text-center lead slogan">瞎子摸象的践行者</p>
+      <ul class="nav nav-pills nav-stacked">
+        <li><a href="/favorite.html" class="text-center"><i class="icon-star-empty"></i> 我的收藏</a></li>
+        <li><a href="/dashboard.html" class="text-center"><i class="icon-fullscreen"></i> 金融看板</a></li>
+        <li><a href="/columns.html" class="text-center"><i class="icon-folder-close-alt"></i> 专栏</a></li>
+        <li><a href="/references.html" class="text-center"><i class="icon-folder-close-alt"></i> 快捷参考</a></li>
+        <li><a href="/whoami.html" class="text-center"><i class="icon-user-md"></i> 我是谁</a></li>
+        <li><a href="/interlinks.html" class="text-center"><i class="icon-user-md"></i> 友情链接</a></li>
+        <li><a href="/feeds.xml" class="text-center"><i class="icon-folder-close-alt"></i> RSS</a></li>
+      </ul>
+
+    </div>
+    <div class="col-md-9 col-md-offset-3 main">
       <div class="row">
-        <div class="col-md-3 sidebar">
-            <a href="/">
-				<!-- <div align="center"><img src="/images/wfq0.png"/></div> -->
-                <h2 class="text-center">扶墙老师</h2>
-            </a>
-            <p class="text-center lead slogan"><a href="/slogan.html">lollapalooza &amp; positioning</a></p>
-			<p class="text-center lead slogan">瞎子摸象的践行者</p>
-            <ul class="nav nav-pills nav-stacked">
-              <li><a href="/favorite.html" class="text-center"><i class="icon-star-empty"></i> 我的收藏</a></li>
-              <li><a href="/dashboard.html" class="text-center"><i class="icon-fullscreen"></i> 金融看板</a></li>
-              <li><a href="/columns.html" class="text-center"><i class="icon-folder-close-alt"></i> 专栏</a></li>
-              <li><a href="/references.html" class="text-center"><i class="icon-folder-close-alt"></i> 快捷参考</a></li>
-              <li><a href="/whoami.html" class="text-center"><i class="icon-user-md"></i> 我是谁</a></li>
-              <li><a href="/interlinks.html" class="text-center"><i class="icon-user-md"></i> 友情链接</a></li>
-              <li><a href="/feeds.xml" class="text-center"><i class="icon-folder-close-alt"></i> RSS</a></li>
-            </ul>
-
-        </div>
-        <div class="col-md-9 col-md-offset-3 main">
-            <div class="row">
-              <div class="container-fluid">
-                
-                <div class="row">
-                                <div id="header">
-                <p class="lead">
-                <h1 class="title">检车大厅所见所闻对软件架构设计的联想&nbsp;&nbsp;
+        <div class="container-fluid">
+          
+          <div class="row">
+                        <div id="header">
+              <p class="lead">
+              <h1 class="title">检车大厅所见所闻对软件架构设计的联想&nbsp;&nbsp;
                 <small>
                                     fujohnwang
-                                </small>
-                </h1>
-                </p>
-                </div>
-                                <div>
+                                  </small>
+              </h1>
+              </p>
+            </div>
+                        <div>
 
-                <hr>
+              <hr>
 
-                                <p><strong>author: fujohnwang</strong></p>
+                            <p><strong>author: fujohnwang</strong></p>
 <p>检车这事儿已经过去一阵子了，只不过回想起当时的一个情景，联想到软件架构设计，冒出个想法，简单扯一扯…</p>
 <p>车走完流水线基本就是去大厅办手续了，办手续的流程是从一个窗口完成一个步骤，然后去另一个窗口，到底去哪个窗口不是按照序号1234这样，而是跳着来，基本乱序，没有规律可言，这对于检车人来说（尤其是之前不知道流程的）很不方便。在各个窗口之间“徜徉”的时候，发现一个窗口的工作人员婀娜的起身，收拾东西，出门（下班了？！）， 看到这里我就在想，她走了，后面检车的人咋办，卡死在这个窗口吗？ 显然，每个窗口负责的事情是不一样的，如果按照严格意义上来讲，她的离开基本上就打破了整个流程。</p>
 <blockquote>
@@ -81,54 +81,54 @@
 <p>当然， 并非说之前的流水线规划不能达到很好的可用性，只要在加几倍的人，开辟多个流水线，也是可以保证整体服务的可用，只不过，这或许要以多倍的成本提高和系统复杂度为代价。</p>
 </blockquote>
 <p>个人感觉这个本质上是内聚与耦合的粒度到底到哪里合适的问题，具体如何权衡，当然要依据实际情况来决定。</p>
-                
-                <!--百度分享按钮-->
-                <div class="pull-left bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a><a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a></div>
-                <script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"1","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+              
+              <!--百度分享按钮-->
+              <div class="pull-left bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a><a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a></div>
+              <script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"1","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
 
-                <!--二维码分享-->
-                <div id="wx_qr"></div>
-                <script type="text/javascript">
-                  var baseUrl = "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data="
-                  var qrUrl = baseUrl.concat(document.URL)
-                  var img = document.createElement("img")
-                  img.setAttribute("src", qrUrl)
+              <!--二维码分享-->
+              <div id="wx_qr"></div>
+              <script type="text/javascript">
+                var baseUrl = "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data="
+                var qrUrl = baseUrl.concat(document.URL)
+                var img = document.createElement("img")
+                img.setAttribute("src", qrUrl)
 
-                  document.getElementById("wx_qr").appendChild(img)
-                </script>
+                document.getElementById("wx_qr").appendChild(img)
+              </script>
 
 
-                <div id="disqus_thread"></div>
-                <script type="text/javascript">
-                    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
-                    var disqus_shortname = 'afoo'; // required: replace example with your forum shortname
+              <div id="disqus_thread"></div>
+              <script type="text/javascript">
+                /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+                var disqus_shortname = 'afoo'; // required: replace example with your forum shortname
 
-                    /* * * DON'T EDIT BELOW THIS LINE * * */
-                    (function() {
-                        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-                        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-                        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-                    })();
-                </script>
-                <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-                <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+                /* * * DON'T EDIT BELOW THIS LINE * * */
+                (function() {
+                  var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                  dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                })();
+              </script>
+              <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+              <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
 
-              </div>
-              </div>
-              </div>
             </div>
-            <div class="row">
-                <div class="col-md-12 footer">
-                  <hr>
-                  <p>Powered by <a href="http://johnmacfarlane.net/pandoc/">pandoc</a>, <a href="http://rometools.github.io/rome/index.html">ROME</a> and <a href="http://pages.github.com/">github pages</a></p>
-                </div>
-            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12 footer">
+          <hr>
+          <p>Powered by <a href="http://johnmacfarlane.net/pandoc/">pandoc</a>, <a href="http://rometools.github.io/rome/index.html">ROME</a> and <a href="http://pages.github.com/">github pages</a></p>
         </div>
       </div>
     </div>
+  </div>
+</div>
 
-    <script src="/js/jquery-2.1.1.min.js"></script>
-    <script src="/js/bootstrap.min.js"></script>
-  </body>
+<script src="/js/jquery-2.1.1.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+</body>
 
 </html>

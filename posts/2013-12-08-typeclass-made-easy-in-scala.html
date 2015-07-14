@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html lang="zh">
 
-  <head>
-    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-    <title>Understanding Typeclass In Scala The Easy Way - 一个架构士的思考与沉淀@afoo.me</title>
-    <meta name="author" content="FuqiangWang">
-    <meta charset='utf-8'>
-    <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <link rel="icon" href="/favicon.ico">
-            <style type="text/css">
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+  <title>Understanding Typeclass In Scala The Easy Way - 一个架构士的思考与沉淀@afoo.me</title>
+  <meta name="author" content="FuqiangWang">
+  <meta charset='utf-8'>
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <link rel="icon" href="/favicon.ico">
+      <style type="text/css">
     div.sourceCode { overflow-x: auto; }
     table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
       margin: 0; padding: 0; vertical-align: baseline; border: none; }
@@ -28,63 +28,63 @@
     code > span.al { color: #ff0000; font-weight: bold; }
     code > span.fu { color: #06287e; }
     code > span.er { color: #ff0000; font-weight: bold; }
-    </style>
-                
-    <link href='/font/Syncopate/stylesheet.css' rel='stylesheet' type='text/css'>
-    <link href='/font/News_Cycle/stylesheet.css' rel='stylesheet' type='text/css'>
+  </style>
+        
+  <link href='/font/Syncopate/stylesheet.css' rel='stylesheet' type='text/css'>
+  <link href='/font/News_Cycle/stylesheet.css' rel='stylesheet' type='text/css'>
 
-    <link href="/css/bootstrap.min.css" rel="stylesheet">
-    <link href="/css/bootstrap-theme.min.css" rel="stylesheet">
-    <link href="/css/afoo.me.css" rel="stylesheet">
+  <link href="/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/css/bootstrap-theme.min.css" rel="stylesheet">
+  <link href="/css/afoo.me.css" rel="stylesheet">
 
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
-  </head>
+  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+  <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+  <![endif]-->
+</head>
 
-  <body>
-    <div class="container-fluid">
+<body>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-3 sidebar">
+      <a href="/">
+        <!-- <div align="center"><img src="/images/wfq0.png"/></div> -->
+        <h2 class="text-center">扶墙老师</h2>
+      </a>
+      <p class="text-center lead slogan"><a href="/slogan.html">lollapalooza &amp; positioning</a></p>
+      <p class="text-center lead slogan">瞎子摸象的践行者</p>
+      <ul class="nav nav-pills nav-stacked">
+        <li><a href="/favorite.html" class="text-center"><i class="icon-star-empty"></i> 我的收藏</a></li>
+        <li><a href="/dashboard.html" class="text-center"><i class="icon-fullscreen"></i> 金融看板</a></li>
+        <li><a href="/columns.html" class="text-center"><i class="icon-folder-close-alt"></i> 专栏</a></li>
+        <li><a href="/references.html" class="text-center"><i class="icon-folder-close-alt"></i> 快捷参考</a></li>
+        <li><a href="/whoami.html" class="text-center"><i class="icon-user-md"></i> 我是谁</a></li>
+        <li><a href="/interlinks.html" class="text-center"><i class="icon-user-md"></i> 友情链接</a></li>
+        <li><a href="/feeds.xml" class="text-center"><i class="icon-folder-close-alt"></i> RSS</a></li>
+      </ul>
+
+    </div>
+    <div class="col-md-9 col-md-offset-3 main">
       <div class="row">
-        <div class="col-md-3 sidebar">
-            <a href="/">
-				<!-- <div align="center"><img src="/images/wfq0.png"/></div> -->
-                <h2 class="text-center">扶墙老师</h2>
-            </a>
-            <p class="text-center lead slogan"><a href="/slogan.html">lollapalooza &amp; positioning</a></p>
-			<p class="text-center lead slogan">瞎子摸象的践行者</p>
-            <ul class="nav nav-pills nav-stacked">
-              <li><a href="/favorite.html" class="text-center"><i class="icon-star-empty"></i> 我的收藏</a></li>
-              <li><a href="/dashboard.html" class="text-center"><i class="icon-fullscreen"></i> 金融看板</a></li>
-              <li><a href="/columns.html" class="text-center"><i class="icon-folder-close-alt"></i> 专栏</a></li>
-              <li><a href="/references.html" class="text-center"><i class="icon-folder-close-alt"></i> 快捷参考</a></li>
-              <li><a href="/whoami.html" class="text-center"><i class="icon-user-md"></i> 我是谁</a></li>
-              <li><a href="/interlinks.html" class="text-center"><i class="icon-user-md"></i> 友情链接</a></li>
-              <li><a href="/feeds.xml" class="text-center"><i class="icon-folder-close-alt"></i> RSS</a></li>
-            </ul>
-
-        </div>
-        <div class="col-md-9 col-md-offset-3 main">
-            <div class="row">
-              <div class="container-fluid">
-                
-                <div class="row">
-                                <div id="header">
-                <p class="lead">
-                <h1 class="title">Understanding Typeclass In Scala The Easy Way&nbsp;&nbsp;
+        <div class="container-fluid">
+          
+          <div class="row">
+                        <div id="header">
+              <p class="lead">
+              <h1 class="title">Understanding Typeclass In Scala The Easy Way&nbsp;&nbsp;
                 <small>
                                     FuqiangWang
-                                </small>
-                </h1>
-                </p>
-                </div>
-                                <div>
+                                  </small>
+              </h1>
+              </p>
+            </div>
+                        <div>
 
-                <hr>
+              <hr>
 
-                                <p>typeclass并不神秘， 本质上， 它只是某种定义了一系列行为模式的契约。 这与OO中的抽象概念是类似的，比如Java中的Interface，其实跟FP中的typeclass基本类似， 如果理解了OO中的interface，那么，理解FP中的typeclass也没有太大问题。</p>
+                            <p>typeclass并不神秘， 本质上， 它只是某种定义了一系列行为模式的契约。 这与OO中的抽象概念是类似的，比如Java中的Interface，其实跟FP中的typeclass基本类似， 如果理解了OO中的interface，那么，理解FP中的typeclass也没有太大问题。</p>
 <p>在FP中， 数据和行为是分开思考的，行为只是对数据的一系列转换(即体现在Function这一概念上), 如果很多数据类型可能都需要有某些共通的行为，那么就可以定义typeclass来约束这些数据类型， 是他们符合某种行为契约。</p>
 <p>假设我们有Integer和String两种数据类型，而我们认为这两种类型内部都应该是可以相互比较的，那么，我们可以分别为其定义相应的<strong>可比较</strong>行为逻辑实现：</p>
 <pre>
@@ -135,54 +135,54 @@ class String implements Comparable<String>{...}
 <span class="fu">compare</span>(a1, a2)</code></pre></div>
 <p>只不过，这种场景按照二八原则应该属于二的那一部分，而大部分blog post或者书上却把这东西讲得跟八那部分似的。</p>
 <p>好啦， 关于typeclass就扯这么多，各位看官尽兴，手里有砖的也可以拍出来 ；）</p>
-                
-                <!--百度分享按钮-->
-                <div class="pull-left bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a><a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a></div>
-                <script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"1","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+              
+              <!--百度分享按钮-->
+              <div class="pull-left bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a><a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a></div>
+              <script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"1","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
 
-                <!--二维码分享-->
-                <div id="wx_qr"></div>
-                <script type="text/javascript">
-                  var baseUrl = "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data="
-                  var qrUrl = baseUrl.concat(document.URL)
-                  var img = document.createElement("img")
-                  img.setAttribute("src", qrUrl)
+              <!--二维码分享-->
+              <div id="wx_qr"></div>
+              <script type="text/javascript">
+                var baseUrl = "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data="
+                var qrUrl = baseUrl.concat(document.URL)
+                var img = document.createElement("img")
+                img.setAttribute("src", qrUrl)
 
-                  document.getElementById("wx_qr").appendChild(img)
-                </script>
+                document.getElementById("wx_qr").appendChild(img)
+              </script>
 
 
-                <div id="disqus_thread"></div>
-                <script type="text/javascript">
-                    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
-                    var disqus_shortname = 'afoo'; // required: replace example with your forum shortname
+              <div id="disqus_thread"></div>
+              <script type="text/javascript">
+                /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+                var disqus_shortname = 'afoo'; // required: replace example with your forum shortname
 
-                    /* * * DON'T EDIT BELOW THIS LINE * * */
-                    (function() {
-                        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-                        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-                        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-                    })();
-                </script>
-                <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-                <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+                /* * * DON'T EDIT BELOW THIS LINE * * */
+                (function() {
+                  var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                  dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                })();
+              </script>
+              <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+              <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
 
-              </div>
-              </div>
-              </div>
             </div>
-            <div class="row">
-                <div class="col-md-12 footer">
-                  <hr>
-                  <p>Powered by <a href="http://johnmacfarlane.net/pandoc/">pandoc</a>, <a href="http://rometools.github.io/rome/index.html">ROME</a> and <a href="http://pages.github.com/">github pages</a></p>
-                </div>
-            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12 footer">
+          <hr>
+          <p>Powered by <a href="http://johnmacfarlane.net/pandoc/">pandoc</a>, <a href="http://rometools.github.io/rome/index.html">ROME</a> and <a href="http://pages.github.com/">github pages</a></p>
         </div>
       </div>
     </div>
+  </div>
+</div>
 
-    <script src="/js/jquery-2.1.1.min.js"></script>
-    <script src="/js/bootstrap.min.js"></script>
-  </body>
+<script src="/js/jquery-2.1.1.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+</body>
 
 </html>
