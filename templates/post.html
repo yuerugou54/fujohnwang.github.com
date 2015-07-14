@@ -75,14 +75,16 @@
             <div id="$idprefix$header">
               <p class="lead">
                 <a href="http://afoo.me">
-                  <h1 class="title">$title$&nbsp;&nbsp;
-                    <small>
-                      $for(author)$
-                      $author$
-                      $endfor$
-                    </small>
-                  </h1>
+                  <h1 class="title">$title$</h1>
                 </a>
+              $for(author)$
+              <small>
+                  <h3 class="author">$author$</h3>
+              </small>
+              $endfor$
+              $if(date)$
+            <h4 class="date">$date$</h4>
+                $endif$
               </p>
             </div>
             $endif$
