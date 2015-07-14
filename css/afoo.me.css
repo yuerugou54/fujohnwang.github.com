@@ -1,5 +1,11 @@
 .sidebar {
-    background: url("/images/myseal.png");
+    position: relative;
+}
+
+.seal{
+    position: absolute;
+    left: 0;
+    top: 0;
 }
 
 body {
