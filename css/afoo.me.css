@@ -1,11 +1,8 @@
-#sidebar {
-    background-image: url('/images/myseal.png');
-    background-repeat: no-repeat;
-    background-position: left top;
-    height: auto;
-    max-width: 100%;
+.seal {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
 }
-
 
 body {
     font-family: 'News Cycle', 'lucida grande', 'Hiragino Sans GB', 'Microsoft YaHei', 'WenQuanYi Micro Hei', Helvetica, sans-serif;
