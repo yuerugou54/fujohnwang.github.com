@@ -2,15 +2,17 @@
 <html lang="zh">
 
 <head>
-  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-  <title>了解TCP Friends机制 - 一个架构士的思考与沉淀@afoo.me</title>
-  <meta name="author" content="FuqiangWang">
   <meta charset='utf-8'>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta http-equiv="X-UA-Compatible" content="chrome=1">
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="author" content="扶墙老师@afoo.me">
+
   <link rel="icon" href="/favicon.ico">
+
+  <title>了解TCP Friends机制 - 一个架构士的思考与沉淀@afoo.me</title>
+
           
-  <link href='/font/Syncopate/stylesheet.css' rel='stylesheet' type='text/css'>
   <link href='/font/News_Cycle/stylesheet.css' rel='stylesheet' type='text/css'>
 
   <link href="/css/bootstrap.min.css" rel="stylesheet">
@@ -29,14 +31,14 @@
 <div class="container">
   <div class="row">
     
-    <div class="col-md-2">
+    <div class="col-xs-12 col-md-2">
         <div class="seal text-right">
           <a href="http://afoo.me">
             <img src="/images/myseal.png"/>
           </a>
         </div>
     </div>
-    <div class="col-md-10 col-xs-12">
+    <div class="col-xs-12 col-md-10">
 
           
           <div class="row">
@@ -56,9 +58,8 @@
                 <li><a href="#参考"><span class="toc-section-number">1</span> 参考</a></li>
                 </ul>
               </div>
-              
               <hr/>
-
+              
               <p>在今年的ADC试讲会上听日子哥在其PPT中提到tcp friends，之前没有了解过，遂打算简单了解一下， 而且感觉这东西可能对早先几年我的那个&quot;实现一个基于网络层面抽象的actor库&quot;&quot;的念想的实现有些好处，只可惜当时只是想简单的通过loopback走，却不知道有这东东...</p>
               <p>tcp stack层面的短路， 比loopback更近一步的减少了不必要的开销</p>
               <p>loopback是避免了网路上的开销，而tcp friends则是进一步的减少了内核tcp stack层面的开销；</p>

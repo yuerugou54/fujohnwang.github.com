@@ -2,15 +2,17 @@
 <html lang="zh">
 
 <head>
-  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-  <title>分布式数据访问与同步场景浅析 - 一个架构士的思考与沉淀@afoo.me</title>
-  <meta name="author" content="FuqiangWang">
   <meta charset='utf-8'>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta http-equiv="X-UA-Compatible" content="chrome=1">
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="author" content="扶墙老师@afoo.me">
+
   <link rel="icon" href="/favicon.ico">
+
+  <title>分布式数据访问与同步场景浅析 - 一个架构士的思考与沉淀@afoo.me</title>
+
           
-  <link href='/font/Syncopate/stylesheet.css' rel='stylesheet' type='text/css'>
   <link href='/font/News_Cycle/stylesheet.css' rel='stylesheet' type='text/css'>
 
   <link href="/css/bootstrap.min.css" rel="stylesheet">
@@ -29,14 +31,14 @@
 <div class="container">
   <div class="row">
     
-    <div class="col-md-2">
+    <div class="col-xs-12 col-md-2">
         <div class="seal text-right">
           <a href="http://afoo.me">
             <img src="/images/myseal.png"/>
           </a>
         </div>
     </div>
-    <div class="col-md-10 col-xs-12">
+    <div class="col-xs-12 col-md-10">
 
           
           <div class="row">
@@ -55,9 +57,8 @@
                 <li><a href="#the-end"><span class="toc-section-number">3</span> The end</a></li>
                 </ul>
               </div>
-              
               <hr/>
-
+              
               <p>其实不想说这东西， 因为我也不知道正宗不正宗，完善不完善， 而且， 往简单了说，就2点， 简单的要死， 不过，我感觉我要真的不说，有些人可能也真的不知道我在说什么，而且今天有点儿小破事儿， 也促使我 就此 “嚼嚼舌头 ” 。当然一家之言， 看官自己掂量。</p>
               <p>随着应用数据规模的增长， 相应的数据库集群自然而然的浮出水面， 进而， 为了应用和管理位于这些数据库集群中的海量数据，你通常会提供一个分布式的数据访问层， 由这一层来屏蔽分布式环境下数据库集群的数据访问复杂度，此为一；另外，你要保证系统的高可用性， 或许会对数据库集群整体或者某些节点进行备份， 这些备份或许发生在在同一个数据中心，或许发生在位于不同地理区域内的数据中心， 因此，你或许会寻求数据复制技术来达此目的，此为二；另外，面对海量的数据，不同的应用有不同的使用角度，如何将同一份数据有效的分发给不同的应用来使用，也是需要你来考虑的问题。</p>
               <p>要处理这些东西， 我们可以以数据存储为中心， 从前面和后面两个角度来解决。 Just like this:</p>

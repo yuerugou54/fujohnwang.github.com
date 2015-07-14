@@ -2,15 +2,17 @@
 <html lang="zh">
 
 <head>
-  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-  <title>The Ways To Achieve Your Modular System - 一个架构士的思考与沉淀@afoo.me</title>
-  <meta name="author" content="FuqiangWang">
   <meta charset='utf-8'>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta http-equiv="X-UA-Compatible" content="chrome=1">
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="author" content="扶墙老师@afoo.me">
+
   <link rel="icon" href="/favicon.ico">
+
+  <title>The Ways To Achieve Your Modular System - 一个架构士的思考与沉淀@afoo.me</title>
+
           
-  <link href='/font/Syncopate/stylesheet.css' rel='stylesheet' type='text/css'>
   <link href='/font/News_Cycle/stylesheet.css' rel='stylesheet' type='text/css'>
 
   <link href="/css/bootstrap.min.css" rel="stylesheet">
@@ -29,14 +31,14 @@
 <div class="container">
   <div class="row">
     
-    <div class="col-md-2">
+    <div class="col-xs-12 col-md-2">
         <div class="seal text-right">
           <a href="http://afoo.me">
             <img src="/images/myseal.png"/>
           </a>
         </div>
     </div>
-    <div class="col-md-10 col-xs-12">
+    <div class="col-xs-12 col-md-10">
 
           
           <div class="row">
@@ -49,8 +51,6 @@
               <hr>
 
               
-              <hr/>
-
               <p>进CSTS(大连)之后，当前的项目的frontend是用Swing实现的，这本来没啥惊奇的，但是，时间长了却发现一个比较现实的问题。本来以为当前的GUI的framework只是我们team用的，后来才发现，另一个Team开发的功能也要挂在这个应用框架之上，当两个team的发布时间不同的时候，问题就来了，我们Team要做Code Freeze的时候，需要同时协调另一个Team是否继续让他们提交代码，因为同时在一个Branch上开发，同时提交到相同的codebase，或许通过配置管理可以解决这样的冲突，但是，为什么不一开始就通过模块化系统的设计，来分离这样比较独立的功能模块那？这就促使我想要提一提标题所给出的这个话题...</p>
               <p>但是，即使是仅关注桌面应用的开发这一块儿，即使是仅关注Java平台上桌面应用这一块儿，也会发现，整个话题牵扯的范围依然过于宽泛了，根本就不是三言两语可以说清楚的，即使是三言两语说出来的，也可能只是皮毛而已。 而且现在感觉自己各方面状态不好，所以，这个话题暂且搁置了吧，不过，把开始的构思先放这里，或许以后某一天，我可以从这里继续...</p>
               <pre>

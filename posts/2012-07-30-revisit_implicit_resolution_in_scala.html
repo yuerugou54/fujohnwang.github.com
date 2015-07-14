@@ -2,16 +2,18 @@
 <html lang="zh">
 
 <head>
-  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-  <title>revisit_implicit_resolution_in_scala - 一个架构士的思考与沉淀@afoo.me</title>
-  <meta name="author" content="FuqiangWang">
   <meta charset='utf-8'>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta http-equiv="X-UA-Compatible" content="chrome=1">
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="author" content="扶墙老师@afoo.me">
+
   <link rel="icon" href="/favicon.ico">
+
+  <title>revisit_implicit_resolution_in_scala - 一个架构士的思考与沉淀@afoo.me</title>
+
     <meta name="date" content="2012-07-30" />
           
-  <link href='/font/Syncopate/stylesheet.css' rel='stylesheet' type='text/css'>
   <link href='/font/News_Cycle/stylesheet.css' rel='stylesheet' type='text/css'>
 
   <link href="/css/bootstrap.min.css" rel="stylesheet">
@@ -30,14 +32,14 @@
 <div class="container">
   <div class="row">
     
-    <div class="col-md-2">
+    <div class="col-xs-12 col-md-2">
         <div class="seal text-right">
           <a href="http://afoo.me">
             <img src="/images/myseal.png"/>
           </a>
         </div>
     </div>
-    <div class="col-md-10 col-xs-12">
+    <div class="col-xs-12 col-md-10">
 
           
           <div class="row">
@@ -69,9 +71,8 @@
                 <li><a href="#references"><span class="toc-section-number">4</span> References</a></li>
                 </ul>
               </div>
-              
               <hr/>
-
+              
               <p><strong>author: fujohnwang</strong></p>
               <p>implicit在日常的Scala编程中不是很经常用，间隔以时日，很容易忘记如何区分implicit resolution或者implicit conversion的时候，到底是以目标类型为基准，还是以起始类型为基准，故此，决定重新梳理一下…</p>
               <div class="figure">

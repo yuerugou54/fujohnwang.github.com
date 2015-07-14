@@ -2,13 +2,16 @@
 <html lang="zh">
 
 <head>
-  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-  <title>了解tmux - 一个架构士的思考与沉淀@afoo.me</title>
-  <meta name="author" content="FuqiangWang">
   <meta charset='utf-8'>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta http-equiv="X-UA-Compatible" content="chrome=1">
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="author" content="扶墙老师@afoo.me">
+
   <link rel="icon" href="/favicon.ico">
+
+  <title>了解tmux - 一个架构士的思考与沉淀@afoo.me</title>
+
       <style type="text/css">
     div.sourceCode { overflow-x: auto; }
     table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
@@ -30,7 +33,6 @@
     code > span.er { color: #ff0000; font-weight: bold; }
   </style>
         
-  <link href='/font/Syncopate/stylesheet.css' rel='stylesheet' type='text/css'>
   <link href='/font/News_Cycle/stylesheet.css' rel='stylesheet' type='text/css'>
 
   <link href="/css/bootstrap.min.css" rel="stylesheet">
@@ -49,14 +51,14 @@
 <div class="container">
   <div class="row">
     
-    <div class="col-md-2">
+    <div class="col-xs-12 col-md-2">
         <div class="seal text-right">
           <a href="http://afoo.me">
             <img src="/images/myseal.png"/>
           </a>
         </div>
     </div>
-    <div class="col-md-10 col-xs-12">
+    <div class="col-xs-12 col-md-10">
 
           
           <div class="row">
@@ -79,9 +81,8 @@
                 <li><a href="#cheatsheet"><span class="toc-section-number">4</span> Cheatsheet</a></li>
                 </ul>
               </div>
-              
               <hr/>
-
+              
               <p>tmux = terminal multiplexer</p>
               <p>tmux就是一个允许我们创建多个命令行窗口的程序， 采用C/S结构， tmux server运行在后台， tmux client连接到tmux server创建多个session和window， pane等， 即使关掉tmux client的窗口， 创建的session相关进程将持续在后台的tmux server上执行，除非所有的session都关闭。</p>
               <p>对于“键盘人”来说，尤其是vim或者emacs重度用户， tmux会让他们更爽； 即使对于其它客户，当管理服务器的时候，tmux也可以让命令行窗口更具“扩展性”。</p>

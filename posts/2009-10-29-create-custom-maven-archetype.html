@@ -2,13 +2,16 @@
 <html lang="zh">
 
 <head>
-  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-  <title>自定义Maven archetype的创建 - 一个架构士的思考与沉淀@afoo.me</title>
-  <meta name="author" content="FuqiangWang">
   <meta charset='utf-8'>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta http-equiv="X-UA-Compatible" content="chrome=1">
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="author" content="扶墙老师@afoo.me">
+
   <link rel="icon" href="/favicon.ico">
+
+  <title>自定义Maven archetype的创建 - 一个架构士的思考与沉淀@afoo.me</title>
+
       <style type="text/css">
     div.sourceCode { overflow-x: auto; }
     table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
@@ -30,7 +33,6 @@
     code > span.er { color: #ff0000; font-weight: bold; }
   </style>
         
-  <link href='/font/Syncopate/stylesheet.css' rel='stylesheet' type='text/css'>
   <link href='/font/News_Cycle/stylesheet.css' rel='stylesheet' type='text/css'>
 
   <link href="/css/bootstrap.min.css" rel="stylesheet">
@@ -49,14 +51,14 @@
 <div class="container">
   <div class="row">
     
-    <div class="col-md-2">
+    <div class="col-xs-12 col-md-2">
         <div class="seal text-right">
           <a href="http://afoo.me">
             <img src="/images/myseal.png"/>
           </a>
         </div>
     </div>
-    <div class="col-md-10 col-xs-12">
+    <div class="col-xs-12 col-md-10">
 
           
           <div class="row">
@@ -81,9 +83,8 @@
                 <li><a href="#最初草稿"><span class="toc-section-number">3</span> 最初草稿</a></li>
                 </ul>
               </div>
-              
               <hr/>
-
+              
               <p>以下只是Maven自定义Archetype创建的简单流程以及期间可能碰到的问题的一些整理性内容，大部分内容从Maven的官方站点或者相关书籍中都可以找到。</p>
               <p>关于Archetype是个什么东西，我想用过Maven的都不用说了， 没用过的也没关系， 简单来讲， 就是一堆预先设定好的项目结构文档， 有了这个东西，在新建同一类型的项目的时候，就不用又从头捣鼓一遍， 比如，从这个项目抓个log4j.xml改一下，到那个项目抓一个web.xml文件改一下等等。预先建立一个针对某种场景下使用的archetype， 用的时候只需要运行一条命令就所有东西都备齐了。就是这么个简单的东西， appfuse啦， springside啦，应该都类似于这种东西，体现形式不同而已。</p>
               <h1 id="创建maven自定义archetype一般流程"><span class="header-section-number">1</span> 创建Maven自定义Archetype一般流程</h1>

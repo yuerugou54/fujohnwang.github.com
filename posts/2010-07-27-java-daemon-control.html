@@ -2,13 +2,16 @@
 <html lang="zh">
 
 <head>
-  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-  <title>Java Daemon Control - 一个架构士的思考与沉淀@afoo.me</title>
-  <meta name="author" content="FuqiangWang">
   <meta charset='utf-8'>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta http-equiv="X-UA-Compatible" content="chrome=1">
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="author" content="扶墙老师@afoo.me">
+
   <link rel="icon" href="/favicon.ico">
+
+  <title>Java Daemon Control - 一个架构士的思考与沉淀@afoo.me</title>
+
       <style type="text/css">
     div.sourceCode { overflow-x: auto; }
     table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
@@ -30,7 +33,6 @@
     code > span.er { color: #ff0000; font-weight: bold; }
   </style>
         
-  <link href='/font/Syncopate/stylesheet.css' rel='stylesheet' type='text/css'>
   <link href='/font/News_Cycle/stylesheet.css' rel='stylesheet' type='text/css'>
 
   <link href="/css/bootstrap.min.css" rel="stylesheet">
@@ -49,14 +51,14 @@
 <div class="container">
   <div class="row">
     
-    <div class="col-md-2">
+    <div class="col-xs-12 col-md-2">
         <div class="seal text-right">
           <a href="http://afoo.me">
             <img src="/images/myseal.png"/>
           </a>
         </div>
     </div>
-    <div class="col-md-10 col-xs-12">
+    <div class="col-xs-12 col-md-10">
 
           
           <div class="row">
@@ -80,9 +82,8 @@
                 <li><a href="#参考文档"><span class="toc-section-number">4</span> 参考文档</a></li>
                 </ul>
               </div>
-              
               <hr/>
-
+              
               <p>As to desktop or normal Java applications, we can easily know when we should shutdown the application or not, because users have explicit ways to do this, for example, for a Swing Application, usually a &quot;CLOSE&quot; menu or tool-bar item will be available, or directly click the &quot;X&quot; icon on the left/right top of the window. But for a Java application that will be run as a server process(which don't need interactive behavior), what we do?</p>
               <h1 id="old-days-solutions"><span class="header-section-number">1</span> Old Days Solutions</h1>
               <p>Directly “kill -9 ” ? Of course, that's a way, but that's too brutal.</p>

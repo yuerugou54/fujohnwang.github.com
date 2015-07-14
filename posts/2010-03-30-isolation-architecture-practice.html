@@ -2,15 +2,17 @@
 <html lang="zh">
 
 <head>
-  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-  <title>Simple, Yet Powerful系列之“隔离” - 一个架构士的思考与沉淀@afoo.me</title>
-  <meta name="author" content="FuqiangWang">
   <meta charset='utf-8'>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta http-equiv="X-UA-Compatible" content="chrome=1">
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="author" content="扶墙老师@afoo.me">
+
   <link rel="icon" href="/favicon.ico">
+
+  <title>Simple, Yet Powerful系列之“隔离” - 一个架构士的思考与沉淀@afoo.me</title>
+
           
-  <link href='/font/Syncopate/stylesheet.css' rel='stylesheet' type='text/css'>
   <link href='/font/News_Cycle/stylesheet.css' rel='stylesheet' type='text/css'>
 
   <link href="/css/bootstrap.min.css" rel="stylesheet">
@@ -29,14 +31,14 @@
 <div class="container">
   <div class="row">
     
-    <div class="col-md-2">
+    <div class="col-xs-12 col-md-2">
         <div class="seal text-right">
           <a href="http://afoo.me">
             <img src="/images/myseal.png"/>
           </a>
         </div>
     </div>
-    <div class="col-md-10 col-xs-12">
+    <div class="col-xs-12 col-md-10">
 
           
           <div class="row">
@@ -55,9 +57,8 @@
                 <li><a href="#结束语"><span class="toc-section-number">3</span> 结束语</a></li>
                 </ul>
               </div>
-              
               <hr/>
-
+              
               <p>隔离的概念其实很简单， 但越是简单的东西， 就越不能小看。应用得当的话， 可以让我们的系统“天生丽质”， 一出生就在某些方面领先他人一步， 不信， 咱上眼瞧...</p>
               <h1 id="隔离以提高系统的容灾"><span class="header-section-number">1</span> 隔离以提高系统的容灾</h1>
               <p>部门本来有一个项目可以满足其它部门的需求， 但一些架构师不想使用现有的这个项目，而要另起炉灶， 其中的一个原因是某个应用如果突发状况致使统一的服务down掉， 那么使用统一服务的其它应用也将受牵连， 让我们来看一下为什么会出现这种情况。</p>

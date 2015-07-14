@@ -2,15 +2,17 @@
 <html lang="zh">
 
 <head>
-  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-  <title>自用二维码Chrome插件/扩展 (A Chrome Extension of QR Code) - 一个架构士的思考与沉淀@afoo.me</title>
-  <meta name="author" content="FuqiangWang">
   <meta charset='utf-8'>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta http-equiv="X-UA-Compatible" content="chrome=1">
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="author" content="扶墙老师@afoo.me">
+
   <link rel="icon" href="/favicon.ico">
+
+  <title>自用二维码Chrome插件/扩展 (A Chrome Extension of QR Code) - 一个架构士的思考与沉淀@afoo.me</title>
+
           
-  <link href='/font/Syncopate/stylesheet.css' rel='stylesheet' type='text/css'>
   <link href='/font/News_Cycle/stylesheet.css' rel='stylesheet' type='text/css'>
 
   <link href="/css/bootstrap.min.css" rel="stylesheet">
@@ -29,14 +31,14 @@
 <div class="container">
   <div class="row">
     
-    <div class="col-md-2">
+    <div class="col-xs-12 col-md-2">
         <div class="seal text-right">
           <a href="http://afoo.me">
             <img src="/images/myseal.png"/>
           </a>
         </div>
     </div>
-    <div class="col-md-10 col-xs-12">
+    <div class="col-xs-12 col-md-10">
 
           
           <div class="row">
@@ -58,9 +60,8 @@
                 <li><a href="#refrence"><span class="toc-section-number">3</span> Refrence</a></li>
                 </ul>
               </div>
-              
               <hr/>
-
+              
               <p>经常在电脑上看到很多比较不错的内容想要分享到微信朋友圈， 原来个人比较笨的做法是，如果这个内容我也想同时分享到微博，那么，就在电脑上发布，然后通过手机上的微博客户端再Copy或者分享到微博朋友圈， 但如果只想定向分享到朋友圈的时候， 做简单的方式可能是直接拍张照， 但这别人是不友好的，人家没法看一下照片，在手机浏览器里输入一个字符，甚至如果有图像识别能够提取拍到的URL也可以，只是技术难度大， 估计也没有这种小工具； 如果有一些文件同步的应用，也可以通过粘贴文本然后同步到手机再分享，但流程依然复杂； 所以，我现在是拷贝URL，然后到某些生成二维码的网站，生成二维码，自己用手机扫了再分享。</p>
               <p>不过， 拷贝，打开二维码网站，粘贴这样的动作对懒人来说也挺烦，所以，就想到了借助chrome扩展机制， 在地址栏边上一点击， 二维码直接显示出来就好了， 故此有了这个小东西。</p>
               <h1 id="过程与成果"><span class="header-section-number">1</span> 过程与成果</h1>

@@ -2,13 +2,16 @@
 <html lang="zh">
 
 <head>
-  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-  <title>SBT Dependencies Exlusion Gotchas - 一个架构士的思考与沉淀@afoo.me</title>
-  <meta name="author" content="FuqiangWang">
   <meta charset='utf-8'>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta http-equiv="X-UA-Compatible" content="chrome=1">
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="author" content="扶墙老师@afoo.me">
+
   <link rel="icon" href="/favicon.ico">
+
+  <title>SBT Dependencies Exlusion Gotchas - 一个架构士的思考与沉淀@afoo.me</title>
+
     <meta name="date" content="2011-11-21" />
       <style type="text/css">
     div.sourceCode { overflow-x: auto; }
@@ -31,7 +34,6 @@
     code > span.er { color: #ff0000; font-weight: bold; }
   </style>
         
-  <link href='/font/Syncopate/stylesheet.css' rel='stylesheet' type='text/css'>
   <link href='/font/News_Cycle/stylesheet.css' rel='stylesheet' type='text/css'>
 
   <link href="/css/bootstrap.min.css" rel="stylesheet">
@@ -50,14 +52,14 @@
 <div class="container">
   <div class="row">
     
-    <div class="col-md-2">
+    <div class="col-xs-12 col-md-2">
         <div class="seal text-right">
           <a href="http://afoo.me">
             <img src="/images/myseal.png"/>
           </a>
         </div>
     </div>
-    <div class="col-md-10 col-xs-12">
+    <div class="col-xs-12 col-md-10">
 
           
           <div class="row">
@@ -74,8 +76,6 @@
               <hr>
 
               
-              <hr/>
-
               <p>在SBT的<a href="https://github.com/harrah/xsbt/wiki/Quick-Configuration-Examples">Quick Configuration Examples</a>最末尾发现个小惊喜：</p>
               <div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="co">// Exclude transitive dependencies, e.g., include log4j without including logging via jdmk, jmx, or jms.</span>
               libraryDependencies +=

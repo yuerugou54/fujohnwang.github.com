@@ -10,14 +10,15 @@ body {
     font-size: 17px;
     line-height: 1.6;
     background-color: white;
-    padding: 30px 50px; }
+    padding: 0px 10px 0px 10px;
+}
 
+/*
 body > *:first-child {
     margin-top: 0 !important; }
 body > *:last-child {
     margin-bottom: 0 !important; }
 
-/*
 a {
     color: black; }
 */
@@ -284,3 +285,4 @@ sup {
 * {
     -webkit-print-color-adjust: exact;
 }
+

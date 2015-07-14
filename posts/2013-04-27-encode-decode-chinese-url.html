@@ -2,13 +2,16 @@
 <html lang="zh">
 
 <head>
-  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-  <title>关于SEO友好的中文URL编码解码的调研 - 一个架构士的思考与沉淀@afoo.me</title>
-  <meta name="author" content="FuqiangWang">
   <meta charset='utf-8'>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta http-equiv="X-UA-Compatible" content="chrome=1">
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="author" content="扶墙老师@afoo.me">
+
   <link rel="icon" href="/favicon.ico">
+
+  <title>关于SEO友好的中文URL编码解码的调研 - 一个架构士的思考与沉淀@afoo.me</title>
+
       <style type="text/css">
     div.sourceCode { overflow-x: auto; }
     table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
@@ -30,7 +33,6 @@
     code > span.er { color: #ff0000; font-weight: bold; }
   </style>
         
-  <link href='/font/Syncopate/stylesheet.css' rel='stylesheet' type='text/css'>
   <link href='/font/News_Cycle/stylesheet.css' rel='stylesheet' type='text/css'>
 
   <link href="/css/bootstrap.min.css" rel="stylesheet">
@@ -49,14 +51,14 @@
 <div class="container">
   <div class="row">
     
-    <div class="col-md-2">
+    <div class="col-xs-12 col-md-2">
         <div class="seal text-right">
           <a href="http://afoo.me">
             <img src="/images/myseal.png"/>
           </a>
         </div>
     </div>
-    <div class="col-md-10 col-xs-12">
+    <div class="col-xs-12 col-md-10">
 
           
           <div class="row">
@@ -78,9 +80,8 @@
                 <li><a href="#references"><span class="toc-section-number">3</span> References</a></li>
                 </ul>
               </div>
-              
               <hr/>
-
+              
               <p>总的来讲， 现在百度和google都支持使用utf8编码的URL，所以，大的层面来看，在网站中使用中文URL，从SEO层面来看是OK的，也会有好的效果，这里只是详细调研一下落实过程中的一些小的容易坑人的细节。</p>
               <h1 id="wrong-way"><span class="header-section-number">1</span> Wrong Way</h1>
               <p>使用java.net.URLEncoder对__整体__URL进行编码和解码，实验代码：</p>

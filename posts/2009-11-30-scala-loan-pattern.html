@@ -2,13 +2,16 @@
 <html lang="zh">
 
 <head>
-  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-  <title>Scala Pattern 之 Loan Pattern - 一个架构士的思考与沉淀@afoo.me</title>
-  <meta name="author" content="FuqiangWang">
   <meta charset='utf-8'>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta http-equiv="X-UA-Compatible" content="chrome=1">
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="author" content="扶墙老师@afoo.me">
+
   <link rel="icon" href="/favicon.ico">
+
+  <title>Scala Pattern 之 Loan Pattern - 一个架构士的思考与沉淀@afoo.me</title>
+
       <style type="text/css">
     div.sourceCode { overflow-x: auto; }
     table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
@@ -30,7 +33,6 @@
     code > span.er { color: #ff0000; font-weight: bold; }
   </style>
         
-  <link href='/font/Syncopate/stylesheet.css' rel='stylesheet' type='text/css'>
   <link href='/font/News_Cycle/stylesheet.css' rel='stylesheet' type='text/css'>
 
   <link href="/css/bootstrap.min.css" rel="stylesheet">
@@ -49,14 +51,14 @@
 <div class="container">
   <div class="row">
     
-    <div class="col-md-2">
+    <div class="col-xs-12 col-md-2">
         <div class="seal text-right">
           <a href="http://afoo.me">
             <img src="/images/myseal.png"/>
           </a>
         </div>
     </div>
-    <div class="col-md-10 col-xs-12">
+    <div class="col-xs-12 col-md-10">
 
           
           <div class="row">
@@ -69,8 +71,6 @@
               <hr>
 
               
-              <hr/>
-
               <p>Loan Pattern从字面上的来看，意思就是， “我 ”贷给“你 ”某样东西， 用完后还得还“我 ”。 在Scala里面，你可以使用这种模式来实现相应资源的管理和使用。这跟Spring框架里JdbcTemplate+相应Callback的实践很相似， 不过， 在表达上面， 用Scala要更简洁，明确。 因为Java7之后才能用到Closure， 所以，在此之前，Spring给出的Template Method Pattern + Callback的最佳实践， 是我们可以优雅的解决资源管理和使用的最好方式。Java7就好像这个问题的一个分水岭， 有了Java7，你会发现针对这个问题的支持变得那么资源充沛， 因为，Java7里有了Closure，我们再也不用求助于Callback接口和相应的匿名内部类了， 并且， Java7里还专门针对资源的自动管理提供了一种语法糖（Syntactic Sugar）， 使得这一问题的表达更简单， 例如：</p>
               <div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="kw">try</span> (BufferedReader br = <span class="kw">new</span> BufferedReader(<span class="kw">new</span> FileReader(path)) {    
                  <span class="kw">return</span> br.<span class="fu">readLine</span>();    

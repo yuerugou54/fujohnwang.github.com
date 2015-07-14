@@ -2,13 +2,16 @@
 <html lang="zh">
 
 <head>
-  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-  <title>Understanding Typeclass In Scala The Easy Way - 一个架构士的思考与沉淀@afoo.me</title>
-  <meta name="author" content="FuqiangWang">
   <meta charset='utf-8'>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta http-equiv="X-UA-Compatible" content="chrome=1">
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="author" content="扶墙老师@afoo.me">
+
   <link rel="icon" href="/favicon.ico">
+
+  <title>Understanding Typeclass In Scala The Easy Way - 一个架构士的思考与沉淀@afoo.me</title>
+
       <style type="text/css">
     div.sourceCode { overflow-x: auto; }
     table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
@@ -30,7 +33,6 @@
     code > span.er { color: #ff0000; font-weight: bold; }
   </style>
         
-  <link href='/font/Syncopate/stylesheet.css' rel='stylesheet' type='text/css'>
   <link href='/font/News_Cycle/stylesheet.css' rel='stylesheet' type='text/css'>
 
   <link href="/css/bootstrap.min.css" rel="stylesheet">
@@ -49,14 +51,14 @@
 <div class="container">
   <div class="row">
     
-    <div class="col-md-2">
+    <div class="col-xs-12 col-md-2">
         <div class="seal text-right">
           <a href="http://afoo.me">
             <img src="/images/myseal.png"/>
           </a>
         </div>
     </div>
-    <div class="col-md-10 col-xs-12">
+    <div class="col-xs-12 col-md-10">
 
           
           <div class="row">
@@ -72,8 +74,6 @@
               <hr>
 
               
-              <hr/>
-
               <p>typeclass并不神秘， 本质上， 它只是某种定义了一系列行为模式的契约。 这与OO中的抽象概念是类似的，比如Java中的Interface，其实跟FP中的typeclass基本类似， 如果理解了OO中的interface，那么，理解FP中的typeclass也没有太大问题。</p>
               <p>在FP中， 数据和行为是分开思考的，行为只是对数据的一系列转换(即体现在Function这一概念上), 如果很多数据类型可能都需要有某些共通的行为，那么就可以定义typeclass来约束这些数据类型， 是他们符合某种行为契约。</p>
               <p>假设我们有Integer和String两种数据类型，而我们认为这两种类型内部都应该是可以相互比较的，那么，我们可以分别为其定义相应的<strong>可比较</strong>行为逻辑实现：</p>

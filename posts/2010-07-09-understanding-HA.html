@@ -2,15 +2,17 @@
 <html lang="zh">
 
 <head>
-  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-  <title>HA狭义与广义论 - 一个架构士的思考与沉淀@afoo.me</title>
-  <meta name="author" content="FuqiangWang">
   <meta charset='utf-8'>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta http-equiv="X-UA-Compatible" content="chrome=1">
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="author" content="扶墙老师@afoo.me">
+
   <link rel="icon" href="/favicon.ico">
+
+  <title>HA狭义与广义论 - 一个架构士的思考与沉淀@afoo.me</title>
+
           
-  <link href='/font/Syncopate/stylesheet.css' rel='stylesheet' type='text/css'>
   <link href='/font/News_Cycle/stylesheet.css' rel='stylesheet' type='text/css'>
 
   <link href="/css/bootstrap.min.css" rel="stylesheet">
@@ -29,14 +31,14 @@
 <div class="container">
   <div class="row">
     
-    <div class="col-md-2">
+    <div class="col-xs-12 col-md-2">
         <div class="seal text-right">
           <a href="http://afoo.me">
             <img src="/images/myseal.png"/>
           </a>
         </div>
     </div>
-    <div class="col-md-10 col-xs-12">
+    <div class="col-xs-12 col-md-10">
 
           
           <div class="row">
@@ -49,8 +51,6 @@
               <hr>
 
               
-              <hr/>
-
               <p>HA概念本身平淡无奇， HA者， High Availability的简称嘛！不过， 或许真的是自身愚笨， HA， HA的听多了， 还真没把它当回事。 很多年之后才真正“吃”出点儿味儿来。</p>
               <p>我得说， 大家通常挂在嘴边的HA应该属于狭义概念上的HA， 它通常指代某种Active+Standby的Pair Service， 最长见的当然就是数据库的主备结构。反正大家天天这么招呼， 在狭义的HA层面上也能达成一定的共识， 不过， HA概念本身其实简单背后蕴含着更多的玄机。</p>
               <p>从更广义的角度来说， HA就是HA（这可能听着有点儿绕）， 为了让我们的系统可以高可用(High Availability), 我们有许多手段或者说方式来达成这个目的， 而我们常常挂在嘴边的HA， 实际上只是其中的一个手段或者几个手段的代称而已。</p>

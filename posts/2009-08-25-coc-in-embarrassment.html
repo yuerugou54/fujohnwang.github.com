@@ -2,13 +2,16 @@
 <html lang="zh">
 
 <head>
-  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-  <title>尴尬的COC - 一个架构士的思考与沉淀@afoo.me</title>
-  <meta name="author" content="FuqiangWang">
   <meta charset='utf-8'>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta http-equiv="X-UA-Compatible" content="chrome=1">
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="author" content="扶墙老师@afoo.me">
+
   <link rel="icon" href="/favicon.ico">
+
+  <title>尴尬的COC - 一个架构士的思考与沉淀@afoo.me</title>
+
       <style type="text/css">
     div.sourceCode { overflow-x: auto; }
     table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
@@ -30,7 +33,6 @@
     code > span.er { color: #ff0000; font-weight: bold; }
   </style>
         
-  <link href='/font/Syncopate/stylesheet.css' rel='stylesheet' type='text/css'>
   <link href='/font/News_Cycle/stylesheet.css' rel='stylesheet' type='text/css'>
 
   <link href="/css/bootstrap.min.css" rel="stylesheet">
@@ -49,14 +51,14 @@
 <div class="container">
   <div class="row">
     
-    <div class="col-md-2">
+    <div class="col-xs-12 col-md-2">
         <div class="seal text-right">
           <a href="http://afoo.me">
             <img src="/images/myseal.png"/>
           </a>
         </div>
     </div>
-    <div class="col-md-10 col-xs-12">
+    <div class="col-xs-12 col-md-10">
 
           
           <div class="row">
@@ -69,8 +71,6 @@
               <hr>
 
               
-              <hr/>
-
               <p>Convention Over Configuration大家都已经耳熟能详了， 这东西好不好那？ 好， 绝对是好， 不过， 还要看用的人到底怎么用， 或者说是否真的理解了它到底是怎么回事， 说两三个小场景...</p>
               <p>发现某个框架虽声称COC是其主打特色， 但某些功能模块在实现的时候却没有将COC执行彻底， 比方说， 大部分情况下可以根据URL取得的信息， 现在依然要求开发人员在某个配置文件中进行统一配置， 虽然这个功能侧重就是统一配置和管理某些URL映射， 但key和value都一样的情况下， 完全可以让框架根据某一Convention自动提取， 而没必要重复配置这些key和value的值， 实际上，只有说key和value不同的时候，进行一下配置就可以了， 你说，这里的COC尴尬不？</p>
               <p>JUnit4之后引入了@Test用于标注测试用例的测试方法， 这东西好不好？ 好， 让你可以在一处管理所有的信息， 而且像强类型支持， IDE的支持等等好处都可以享受到， 再也不会因为把testXXX拼错成tsetXXX之类并导致测试用例的“怪异”行为而头疼了，不过， 事情真的像宣称的或者说看起来的那么美嘛？ 你用@Test标注的测试方法依然需要声明吧？测试方法依然需要有一个表意清晰的名称吧？ 按理说， 每个测试方法的名称以test开头不就是个Convention嘛？ 现在使用@Test代替这个Convention， 那COC是不是又感觉很尴尬呀？ 我怎么就觉得直接敲方法名要比敲方法名和@Test这个Annotation更便捷那？ 拼写错误？ come on， 数数大家还是会的吧？ 上一次跑了12/12个测试方法，你添加个新的测试方法之后，run的时候还是12/12， 你难道不知道问题出在哪里嘛？</p>

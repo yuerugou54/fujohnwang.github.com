@@ -2,16 +2,18 @@
 <html lang="zh">
 
 <head>
-  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-  <title>mysql多个slave使用同一个server id会怎样？ - 一个架构士的思考与沉淀@afoo.me</title>
-  <meta name="author" content="FuqiangWang">
   <meta charset='utf-8'>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta http-equiv="X-UA-Compatible" content="chrome=1">
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="author" content="扶墙老师@afoo.me">
+
   <link rel="icon" href="/favicon.ico">
+
+  <title>mysql多个slave使用同一个server id会怎样？ - 一个架构士的思考与沉淀@afoo.me</title>
+
     <meta name="date" content="2011-05-31" />
           
-  <link href='/font/Syncopate/stylesheet.css' rel='stylesheet' type='text/css'>
   <link href='/font/News_Cycle/stylesheet.css' rel='stylesheet' type='text/css'>
 
   <link href="/css/bootstrap.min.css" rel="stylesheet">
@@ -30,14 +32,14 @@
 <div class="container">
   <div class="row">
     
-    <div class="col-md-2">
+    <div class="col-xs-12 col-md-2">
         <div class="seal text-right">
           <a href="http://afoo.me">
             <img src="/images/myseal.png"/>
           </a>
         </div>
     </div>
-    <div class="col-md-10 col-xs-12">
+    <div class="col-xs-12 col-md-10">
 
           
           <div class="row">
@@ -54,8 +56,6 @@
               <hr>
 
               
-              <hr/>
-
               <p><strong>author: fujohnwang</strong></p>
               <p>答案是： master会只保留一个slave的replication连接， 而把其它的replication连接给“咔嚓”掉，即便其他replication已经开始并处理了一段时间。</p>
               <p>引出这个其实是周六EroX在某个部署环境下会莫名的， 无端的连接中断， 即使重启数次也还是那个熊样， 之前出现过这个原因， 但后期测试再没出现过，也就放下了，现在又出现，让我很是纳闷， 日志里有没有标志性的异常信息，很是丈二和尚摸不着头脑。</p>
