@@ -169,6 +169,7 @@
               <p>ResourcePatternResolver主要用于加载相应的Resources， 这里就是class文件， MetadataReaderFactory用于构造相应的MetadataReader，它有两个实现类，即SimpleMetadataReaderFactory和CachingMetadataReaderFactory。通过相应MetadataReaderFactory实现类获得可用的MetadataReader之后，就可以根据MetadataReader的getAnnotationMetadata()和getClassMetadata()返回的值对象来提取自己需要的信息了。</p>
               
       </div>
+      <div id="qrcode"></div>
       <div class="row">
         <div class="col-md-12 footer">
           <hr>
@@ -181,6 +182,11 @@
 
 <script src="/js/jquery-2.1.1.min.js"></script>
 <script src="/js/bootstrap.min.js"></script>
+<script src="/js/qrcode.min.js"></script>
+<script type="text/javascript">
+new QRCode(document.getElementById("qrcode"), window.location.href);
+</script>
+
 </body>
 
 </html>

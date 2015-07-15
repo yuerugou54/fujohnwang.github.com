@@ -62,6 +62,7 @@
               <p>That means, firstly, you should have a big picture on the features of your data, and then consider in which way you will use them, simply put, data + operations. that's the key point of every software systems.</p>
               
       </div>
+      <div id="qrcode"></div>
       <div class="row">
         <div class="col-md-12 footer">
           <hr>
@@ -74,6 +75,11 @@
 
 <script src="/js/jquery-2.1.1.min.js"></script>
 <script src="/js/bootstrap.min.js"></script>
+<script src="/js/qrcode.min.js"></script>
+<script type="text/javascript">
+new QRCode(document.getElementById("qrcode"), window.location.href);
+</script>
+
 </body>
 
 </html>

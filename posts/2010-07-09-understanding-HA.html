@@ -66,6 +66,7 @@
               <p>总之那， HA就是HA（还是那么绕）， 简单又不简单。为了这么个简单的概念， 诸君却需要付出不简单的努力。</p>
               
       </div>
+      <div id="qrcode"></div>
       <div class="row">
         <div class="col-md-12 footer">
           <hr>
@@ -78,6 +79,11 @@
 
 <script src="/js/jquery-2.1.1.min.js"></script>
 <script src="/js/bootstrap.min.js"></script>
+<script src="/js/qrcode.min.js"></script>
+<script type="text/javascript">
+new QRCode(document.getElementById("qrcode"), window.location.href);
+</script>
+
 </body>
 
 </html>

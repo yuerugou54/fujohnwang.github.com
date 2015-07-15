@@ -119,6 +119,7 @@
               <p>BTW. 好像记得flickr的一个工程师写过类似的东西, 介绍flickr如何实现这样的东西, 链接找不到了, 大体上是使用MySQL的MyISAM做存储, 然后两个库采用不同的主键步长来保证HA, 不过, 记得当时看过之后感觉不靠谱,大家感兴趣可以搜一下看看.</p>
               
       </div>
+      <div id="qrcode"></div>
       <div class="row">
         <div class="col-md-12 footer">
           <hr>
@@ -131,6 +132,11 @@
 
 <script src="/js/jquery-2.1.1.min.js"></script>
 <script src="/js/bootstrap.min.js"></script>
+<script src="/js/qrcode.min.js"></script>
+<script type="text/javascript">
+new QRCode(document.getElementById("qrcode"), window.location.href);
+</script>
+
 </body>
 
 </html>

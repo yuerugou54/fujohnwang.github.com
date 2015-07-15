@@ -139,6 +139,7 @@
               <p>since FiledError is added with “#rejectValue(..) ”, we use “#reject(..) ” to fill GlobalError to Errors . After these rules are applied to the target object, the corresponding global errors will be available. You can pull them in you view via spring's RequestContext or other way you resort to.</p>
               
       </div>
+      <div id="qrcode"></div>
       <div class="row">
         <div class="col-md-12 footer">
           <hr>
@@ -151,6 +152,11 @@
 
 <script src="/js/jquery-2.1.1.min.js"></script>
 <script src="/js/bootstrap.min.js"></script>
+<script src="/js/qrcode.min.js"></script>
+<script type="text/javascript">
+new QRCode(document.getElementById("qrcode"), window.location.href);
+</script>
+
 </body>
 
 </html>

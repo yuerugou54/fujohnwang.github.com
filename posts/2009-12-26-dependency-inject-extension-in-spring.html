@@ -377,6 +377,7 @@
               <p>无论是设计还是实现,都是在各种因素之间进行权衡, 没有普遍适用的设计方案,也没有普遍适用的实现方案, 因时因地而权衡吧! 经济学第一原则不是“People face tradeoffs ”嘛, 其实哪里都一样.</p>
               
       </div>
+      <div id="qrcode"></div>
       <div class="row">
         <div class="col-md-12 footer">
           <hr>
@@ -389,6 +390,11 @@
 
 <script src="/js/jquery-2.1.1.min.js"></script>
 <script src="/js/bootstrap.min.js"></script>
+<script src="/js/qrcode.min.js"></script>
+<script type="text/javascript">
+new QRCode(document.getElementById("qrcode"), window.location.href);
+</script>
+
 </body>
 
 </html>

@@ -152,6 +152,7 @@
               <p>前者对Int类型来说不能编译通过，因为Scala里的Int不是Comparable[Int]的子类，不过RichInt是，而且有相应的从Int到RIchInt的implict conversion，所以第二种形式可以。</p>
               
       </div>
+      <div id="qrcode"></div>
       <div class="row">
         <div class="col-md-12 footer">
           <hr>
@@ -164,6 +165,11 @@
 
 <script src="/js/jquery-2.1.1.min.js"></script>
 <script src="/js/bootstrap.min.js"></script>
+<script src="/js/qrcode.min.js"></script>
+<script type="text/javascript">
+new QRCode(document.getElementById("qrcode"), window.location.href);
+</script>
+
 </body>
 
 </html>

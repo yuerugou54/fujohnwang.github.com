@@ -166,6 +166,7 @@
               <p>By the Way：上次那个Gotches是我的疏忽，敲错一个字母，应该是Gotchas,意即“I've got you&quot;，不过，一般字典上查不到</p>
               
       </div>
+      <div id="qrcode"></div>
       <div class="row">
         <div class="col-md-12 footer">
           <hr>
@@ -178,6 +179,11 @@
 
 <script src="/js/jquery-2.1.1.min.js"></script>
 <script src="/js/bootstrap.min.js"></script>
+<script src="/js/qrcode.min.js"></script>
+<script type="text/javascript">
+new QRCode(document.getElementById("qrcode"), window.location.href);
+</script>
+
 </body>
 
 </html>

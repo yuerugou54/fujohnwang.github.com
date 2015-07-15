@@ -82,6 +82,7 @@
               <p>BTW. 今天晚上酒喝大了，头疼的情况下写下的文字，恐怕只是部分呓语，呵呵，看官最好加入自己的判断。可能以上所有的东西都是Nonsense。</p>
               
       </div>
+      <div id="qrcode"></div>
       <div class="row">
         <div class="col-md-12 footer">
           <hr>
@@ -94,6 +95,11 @@
 
 <script src="/js/jquery-2.1.1.min.js"></script>
 <script src="/js/bootstrap.min.js"></script>
+<script src="/js/qrcode.min.js"></script>
+<script type="text/javascript">
+new QRCode(document.getElementById("qrcode"), window.location.href);
+</script>
+
 </body>
 
 </html>

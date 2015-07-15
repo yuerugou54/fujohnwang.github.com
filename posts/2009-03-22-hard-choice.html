@@ -95,6 +95,7 @@
               <p>我这可怜的脑瓜子里装上这些，然后再加上其他的一些乱七八糟的东西，一句话，it sucks. 何去何从？！ Time will give me the answer. Currently, I still have to stay between the devils and deep sea...</p>
               
       </div>
+      <div id="qrcode"></div>
       <div class="row">
         <div class="col-md-12 footer">
           <hr>
@@ -107,6 +108,11 @@
 
 <script src="/js/jquery-2.1.1.min.js"></script>
 <script src="/js/bootstrap.min.js"></script>
+<script src="/js/qrcode.min.js"></script>
+<script type="text/javascript">
+new QRCode(document.getElementById("qrcode"), window.location.href);
+</script>
+
 </body>
 
 </html>
