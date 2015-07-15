@@ -1,0 +1,1 @@
+ansible digitalocean -m shell -a "cd afoo.me; git pull"
