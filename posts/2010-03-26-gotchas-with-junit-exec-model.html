@@ -10,7 +10,7 @@
 
   <link rel="icon" href="/favicon.ico">
 
-  <title>Gotchas With JUnit's Execution Model - 一个架构士的思考与沉淀@afoo.me</title>
+  <title>Gotchas With JUnit's Execution Model - 一个架构士的思考与沉淀之地</title>
 
       <style type="text/css">
     div.sourceCode { overflow-x: auto; }
@@ -92,37 +92,6 @@
               <p>JUnit will create a new instance for each test method when executing the test, most of the time, you may let it go because it doesn’t bother you too much, even it does, you will resort to the best practices of JUnit and get through it. It makes sense as per JUnit’s design philosophy, but it doesn’t make sense to me. It mixes 2 concerns together and make things “dirty”. When you have to setup heavy resources, this model makes things worse, yeah, I know you would suggest to setup such things in static block, but why should I do things this way, is it the best and only way? No, even you have been fucked by GGFFWW for a long time and become to accept it, but it doesn’t mean u are treated fairly and there are no other options.</p>
               <p>If you do still want to use it, use it in proper way and avoid getting trapped by gotchas like this one.</p>
               
-              <!--百度分享按钮-->
-              <div class="pull-left bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a><a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a></div>
-              <script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"1","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
-
-              <!--二维码分享-->
-              <div id="wx_qr"></div>
-              <script type="text/javascript">
-                var baseUrl = "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data="
-                var qrUrl = baseUrl.concat(document.URL)
-                var img = document.createElement("img")
-                img.setAttribute("src", qrUrl)
-
-                document.getElementById("wx_qr").appendChild(img)
-              </script>
-
-
-              <div id="disqus_thread"></div>
-              <script type="text/javascript">
-                /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
-                var disqus_shortname = 'afoo'; // required: replace example with your forum shortname
-
-                /* * * DON'T EDIT BELOW THIS LINE * * */
-                (function() {
-                  var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-                  dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-                  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-                })();
-              </script>
-              <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-              <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
-
       </div>
       <div class="row">
         <div class="col-md-12 footer">

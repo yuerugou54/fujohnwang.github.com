@@ -10,7 +10,7 @@
 
   <link rel="icon" href="/favicon.ico">
 
-  <title>ROMA框架潜在改进点思考 - 一个架构士的思考与沉淀@afoo.me</title>
+  <title>ROMA框架潜在改进点思考 - 一个架构士的思考与沉淀之地</title>
 
     <meta name="date" content="2009-10-21" />
       <style type="text/css">
@@ -205,37 +205,6 @@
               <p>可是对照一下使用<span class="math"><em>u</em><em>r</em><em>i</em><em>b</em><em>r</em><em>o</em><em>k</em><em>e</em><em>r</em><em>表</em><em>述</em><em>的</em><em>路</em><em>径</em>，<em>和</em><em>u</em><em>r</em><em>i</em>.<em>x</em><em>m</em><em>l</em><em>中</em><em>表</em><em>述</em><em>的</em><em>内</em><em>容</em>，<em>很</em><em>容</em><em>易</em><em>发</em><em>现</em>，<em>许</em><em>多</em><em>信</em><em>息</em><em>都</em><em>是</em><em>重</em><em>复</em><em>出</em><em>现</em><em>的</em>，<em>如</em><em>果</em><em>按</em><em>照</em><em>C</em><em>O</em><em>C</em><em>的</em><em>理</em><em>念</em>，<em>这</em><em>些</em><em>相</em><em>同</em><em>的</em><em>信</em><em>息</em><em>完</em><em>全</em><em>可</em><em>以</em><em>推</em><em>导</em><em>出</em><em>来</em>，<em>而</em><em>不</em><em>用</em><em>明</em><em>确</em><em>再</em><em>去</em><em>配</em><em>置</em><em>一</em><em>遍</em>，<em>理</em><em>想</em><em>的</em><em>情</em><em>况</em><em>是</em>，<em>只</em><em>有</em><em>路</em><em>径</em><em>信</em><em>息</em><em>和</em></span>uribroker所表述的路径不一致的时候，明确在uri.xml中配置这种路径信息才是合理而有效的。</p>
               <p>那么， 是不是可以这样那？！ 当<span class="math"><em>u</em><em>r</em><em>i</em><em>b</em><em>r</em><em>o</em><em>k</em><em>e</em><em>r</em><em>生</em><em>成</em><em>路</em><em>径</em><em>信</em><em>息</em><em>的</em><em>时</em><em>候</em>，<em>首</em><em>先</em><em>去</em><em>检</em><em>查</em><em>u</em><em>r</em><em>i</em>.<em>x</em><em>m</em><em>l</em><em>中</em><em>有</em><em>没</em><em>有</em><em>对</em><em>应</em><em>当</em><em>前</em><em>路</em><em>径</em><em>的</em><em>配</em><em>置</em><em>项</em>，<em>如</em><em>果</em><em>有</em>，<em>则</em><em>使</em><em>用</em><em>之</em>，<em>如</em><em>果</em><em>没</em><em>有</em>，<em>则</em><em>把</em></span>uribroker中指定的路径作为最终输出。 这样，就可以极大减少配置量，降低开发人员的负担。实现过程中是否有困难，这里不做考虑，从为开发人员考虑，和提高生产率的角度来说，个人认为，这样的需求是合理的。</p>
               
-              <!--百度分享按钮-->
-              <div class="pull-left bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a><a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a></div>
-              <script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"1","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
-
-              <!--二维码分享-->
-              <div id="wx_qr"></div>
-              <script type="text/javascript">
-                var baseUrl = "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data="
-                var qrUrl = baseUrl.concat(document.URL)
-                var img = document.createElement("img")
-                img.setAttribute("src", qrUrl)
-
-                document.getElementById("wx_qr").appendChild(img)
-              </script>
-
-
-              <div id="disqus_thread"></div>
-              <script type="text/javascript">
-                /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
-                var disqus_shortname = 'afoo'; // required: replace example with your forum shortname
-
-                /* * * DON'T EDIT BELOW THIS LINE * * */
-                (function() {
-                  var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-                  dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-                  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-                })();
-              </script>
-              <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-              <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
-
       </div>
       <div class="row">
         <div class="col-md-12 footer">

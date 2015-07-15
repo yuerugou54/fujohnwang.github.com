@@ -10,7 +10,7 @@
 
   <link rel="icon" href="/favicon.ico">
 
-  <title>将tools.jar添加到sbt编译期classpath中 - 一个架构士的思考与沉淀@afoo.me</title>
+  <title>将tools.jar添加到sbt编译期classpath中 - 一个架构士的思考与沉淀之地</title>
 
     <meta name="date" content="2012-07-31" />
       <style type="text/css">
@@ -100,37 +100,6 @@
               <p>复杂的东西其实并不复杂，通常都是由简单的东西组合而来（这话有哲理性，可我说的太挫了，看官见谅）。 第一版总算能independent了，可还有个问题，如果我们真的明确指定了javaHome这个设置并override了默认的编译用JDK，那第一版好像就不够严谨了，鉴于此，老衲再接再厉，终于搞出了第二版能work，又build environment independent的编译配置。</p>
               <p>嗯，基本上，还算满意，收工！</p>
               
-              <!--百度分享按钮-->
-              <div class="pull-left bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a><a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a></div>
-              <script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"1","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
-
-              <!--二维码分享-->
-              <div id="wx_qr"></div>
-              <script type="text/javascript">
-                var baseUrl = "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data="
-                var qrUrl = baseUrl.concat(document.URL)
-                var img = document.createElement("img")
-                img.setAttribute("src", qrUrl)
-
-                document.getElementById("wx_qr").appendChild(img)
-              </script>
-
-
-              <div id="disqus_thread"></div>
-              <script type="text/javascript">
-                /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
-                var disqus_shortname = 'afoo'; // required: replace example with your forum shortname
-
-                /* * * DON'T EDIT BELOW THIS LINE * * */
-                (function() {
-                  var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-                  dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-                  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-                })();
-              </script>
-              <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-              <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
-
       </div>
       <div class="row">
         <div class="col-md-12 footer">
