@@ -1,3 +1,3 @@
 ansible digitalocean -m shell -a "cd afoo.me; git pull" 
 
-ansible pcduino -m shell -a "cd ~/sdcard/nginx/afoo.me; git pull"
+ansible pcduino -m shell -a "cd cd sdcard/nginx/afoo.me; git pull"
