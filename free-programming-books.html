@@ -698,6 +698,7 @@
               </ul>
               
       </div>
+      <div id="qrcode"></div>
       <div class="row">
         <div class="col-md-12 footer">
           <hr>
@@ -710,6 +711,11 @@
 
 <script src="/js/jquery-2.1.1.min.js"></script>
 <script src="/js/bootstrap.min.js"></script>
+<script src="/js/qrcode.min.js"></script>
+<script type="text/javascript">
+new QRCode(document.getElementById("qrcode"), window.location.href);
+</script>
+
 </body>
 
 </html>

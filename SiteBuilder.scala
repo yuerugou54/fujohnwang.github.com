@@ -48,14 +48,12 @@ object SiteBuilder {
           s"""
              | <article class="align-left block add-bottom-extra">
              |                                <a href="/posts/${tuple._2}">
-             |                                <h1 class="in-main-heading color-high text-shadow-white">
-             |                                    <span class="iconize color-high">/</span>
-             |                                    <span class="iconize color-dark">/</span>
-             |                                    <span class="add-left-half color-dark">${tuple._1}</span>
+             |                                <h1 class="in-main-heading">
+             |                                    <span class="color-dark">${tuple._1}</span>
              |                                </h1>
              |                                </a>
-             |                                <h3 class="in-sub-heading add-top add-bottom color-dark">
-             |                                    <span class="color-high">/</span>AT ${tuple._3}
+             |                                <h3 class="in-sub-heading color-dark">
+             |                                    <span class="color-dark">AT ${tuple._3}</span>
              |                                </h3>
              |                            </article>
            """.stripMargin
