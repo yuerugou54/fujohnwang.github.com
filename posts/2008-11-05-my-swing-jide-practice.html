@@ -7,12 +7,19 @@
   <meta http-equiv="X-UA-Compatible" content="chrome=1">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="author" content="扶墙老师@afoo.me">
-
-  <link rel="icon" href="/favicon.ico">
+    <link rel="icon" href="/favicon.ico">
 
   <title>我的Swing Jide WizardDialog实践个论 -- 外部化，统一化, 职责化你的代码 - 一个架构士的思考与沉淀之地</title>
 
-      <style type="text/css">
+  
+
+  <link href='/font/News_Cycle/stylesheet.css' rel='stylesheet' type='text/css'>
+  <link href="/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/css/bootstrap-theme.min.css" rel="stylesheet">
+  <link href="/css/afoo.me.css" rel="stylesheet">
+
+  <style type="text/css">code{white-space: pre;}</style>
+    <style type="text/css">
     div.sourceCode { overflow-x: auto; }
     table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
       margin: 0; padding: 0; vertical-align: baseline; border: none; }
@@ -33,12 +40,6 @@
     code > span.er { color: #ff0000; font-weight: bold; }
   </style>
         
-  <link href='/font/News_Cycle/stylesheet.css' rel='stylesheet' type='text/css'>
-
-  <link href="/css/bootstrap.min.css" rel="stylesheet">
-  <link href="/css/bootstrap-theme.min.css" rel="stylesheet">
-  <link href="/css/afoo.me.css" rel="stylesheet">
-
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>
@@ -58,216 +59,218 @@
           </a>
         </div>
     </div>
-    <div class="col-xs-12 col-md-10">
 
+<div class="col-xs-12 col-md-10">
+
+
+<div class="row">
+<div id="header">
+<p class="lead">
+<h1 class="title">我的Swing Jide WizardDialog实践个论 -- 外部化，统一化, 职责化你的代码</h1>
+</p>
+</div>
+
+<hr>
+
+<div id="TOC">
+<ul>
+<li><a href="#楔子"><span class="toc-section-number">1</span> 楔子</a></li>
+<li><a href="#jide简介"><span class="toc-section-number">2</span> Jide简介</a></li>
+<li><a href="#现有codebase中的wizarddialog代码实践"><span class="toc-section-number">3</span> 现有codebase中的WizardDialog代码实践</a></li>
+<li><a href="#重构后的wizarddialog代码实践"><span class="toc-section-number">4</span> 重构后的WizardDialog代码实践</a></li>
+<li><a href="#小结"><span class="toc-section-number">5</span> 小结</a></li>
+</ul>
+</div>
+<hr/>
+
+<h1 id="楔子"><span class="header-section-number">1</span> 楔子</h1>
+<p>感觉好久没写技术方面的博客了，沉寂了这么久，今天正好借机疏解一下自己的“郁闷”之情。自从8月中旬加入花旗软件（大连），转眼已经快三个月了，原先的美好愿望和希冀，现在却由淡淡的“忧伤”和“郁闷”而替代，原因或许很多，也或许根本就没有啥，纯粹庸人自扰：</p>
+<ol style="list-style-type: decimal">
+<li>书稿写完了，提交给出版社之后的空虚？</li>
+<li>因为前女友家里人全员反对而分开后的郁郁寡欢？</li>
+<li>抑或是现在的工作与当初的设想大相径庭？！</li>
+</ol>
+<p>道不清说不明的，反正这阵子一直是过得不快乐就是了。 其实，花旗大连这边的工作氛围是比较轻松的，应该说正是自己当时所希望的，但是，现实的情况却是，闲大法了也不好，当你已经习惯了飚车的速度感，猛然让你陷入闹市的堵车当中，应该是比较烦躁的吧？！</p>
+<p>还记得自己当初刚进花旗软件（大连）时候的激情四射，狂啃项目组中业务相关的金融资料的情景，可是随着时间的流逝，才发现，短期内自己是多么的无助，呵呵，银行系统内部系统的庞大，又怎么可能一朝之间让你了然于心那？！现在的感觉真的只能用那句“心有余而力不足”来形容了。</p>
+<p>当前项目组的技术架构虽然很简单，但是，前面写了两年多的codebase却着实让我无能为力，不能说代码很烂，但是，各种细节之间的纠缠却非我这刚进来的newbie所能掌控的，所以，每每有新的issue交给我处理，都是小心翼翼的，能不动之前的codebase就不动， 要知道，&quot;失节&quot;事小，&quot;驾崩&quot;事大，这可是金融系统，稍一不慎把系统搞挂掉，那可不是闹着玩的（虽然发布之前回旋余地大一些）。</p>
+<p>不过那，不去动之前的codebase并不是说这些codebase有多好，有多容易维护，实际上，整个项目有些“挂羊头，卖狗肉”的味道，说是敏捷开发，但没有看到多少敏捷的实践；说是使用Spring框架，却让它形同虚设；说是用Hibernate做数据访问，却仅仅用它来做为调用存储过程的中间层，只用了调用存储过程后能够帮助你将结果映射到结果对象这一点点功能，个人感觉就是Hibernate在这里真的是“生不逢时”…</p>
+<p>当然啦，我今天可不是要为了挑刺儿，毕竟任何项目都会存在这样那样的问题嘛，我今天要说的，只不过是从一个小小的功能点引申出来的代码实践而已，下面让我们进入正题…</p>
+<h1 id="jide简介"><span class="header-section-number">2</span> Jide简介</h1>
+<p>或许做Swing的各位同仁对jidesoft(http://www.jidesoft.com/)所提供的产品早就有所耳闻，也或许没有，总之俺是进花旗这个项目组之后才知道有这么一个产品（其实，从身边许多人那里都可以了解到，许多金融相关产品的客户端使用swing做的），你可以鄙视我，谁让俺之前只做过两年左右的swt/jface而没有用swing那，呵呵。</p>
+<p>应该说，jide提供的产品还是比较强大的，不过，商业产品，应该不是谁都愿意花这份儿银子吧！jide在原有swing基础上给出了多种扩展，包括dockable framework， action framework，dialogs，data grid/pivot table等等，我们今天要扯的话题与jide提供的WizardDialog有关，所以，就在这里对jide简单提及一下，希望没有说太多废话。</p>
+<h1 id="现有codebase中的wizarddialog代码实践"><span class="header-section-number">3</span> 现有codebase中的WizardDialog代码实践</h1>
+<p>话说我们要为用户提供接口，分多步从用户那里获取输入数据，这种情况下，为用户提供一个向导式的输入界面应该说是比较自然的事情，现在，就有这样的一个场景，所以，我们决定使用jide提供的WizardDialog来实现之。</p>
+<p>《JIDE Dialogs Developer Guide》虽然对WizardDialog相关的各个类以及功能做了介绍，但是，如何在开发过程中使用它们，就得由我们来决定了，这自然就会引出不同的实践方式，下面是我从现有的codebase中移植过来的代码片段原型，我称之为“内部化”的代码实践（代码风格如何暂且不论）。</p>
+<p>首先，XAction类是一个标准的Swing Action，其定义如下：</p>
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java">XXXAction <span class="kw">extends</span> AbstractAction  
+{  
+    …  
+    Public <span class="dt">void</span> <span class="fu">actionPerformed</span>(ActionEvent e)  
+    {  
+        <span class="co">// collect data from event object or outer references  </span>
+        ByBkWizard.<span class="fu">showByBkDialog</span>(trades);  
+    }  
+}  </code></pre></div>
+<p>当用户触发该Action对应的事件之后，定义的逻辑即被执行，简单点来说就是，搜集前提条件相关的数据，然后显示WizardDialog给用户，当用户输入完成之后，根据收集的输入结果进行后继处理，而这些工作，现在显然都是由这个ByBkWizard类来做了：</p>
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="kw">public</span> <span class="kw">class</span> ByBkWizard  
+{  
+        <span class="kw">public</span> <span class="dt">static</span> <span class="dt">void</span> <span class="fu">showByBkDialog</span>(Collection&lt;TransactionEntity&gt; trades_) {  
+            <span class="kw">new</span> <span class="fu">ByBkWizard</span>(trades_);  
+        }  
+  
+        <span class="kw">public</span> <span class="fu">ByBkWizard</span>(Collection&lt;TransactionEntity&gt; trades_) {  
+            _backupTrades = <span class="kw">new</span> HashMap&lt;String, TransactionEntity&gt;(trades_.<span class="fu">size</span>());  
+            _trades = <span class="kw">new</span> ArrayList&lt;TransactionEntity&gt;(trades_.<span class="fu">size</span>());  
+            <span class="kw">for</span> (TransactionEntity entity : trades_) {  
+            <span class="kw">try</span> {  
+                _backupTrades.<span class="fu">put</span>(<span class="fu">getTempKey</span>(entity), (TransactionEntity) entity.<span class="fu">clone</span>());  
+                _trades.<span class="fu">add</span>((TransactionEntity) entity.<span class="fu">clone</span>());  
+            } <span class="kw">catch</span> (Exception e) {  
+                logger.<span class="fu">error</span>(e, e);  
+            }  
+<span class="fu">initWizard</span>();  
+        }  
+  
+        <span class="co">// initWizard定义  </span>
+        PageList model = <span class="kw">new</span> <span class="fu">PageList</span>();  
+  
+        AbstractWizardPage setDataView = <span class="kw">new</span> <span class="fu">BuyBackStepOneWizardPage</span>();  
+        AbstractWizardPage editView = <span class="kw">new</span> <span class="fu">BuyBackStepTwoWizardPage</span>();  
+        model.<span class="fu">append</span>(setDataView);  
+        model.<span class="fu">append</span>(editView);  
+        wizard.<span class="fu">setPageList</span>(model);  
+  
+        wizard.<span class="fu">addWindowListener</span>(<span class="kw">new</span> WindowAdapter() {  
+        <span class="kw">public</span> <span class="dt">void</span> <span class="fu">windowClosing</span>(<span class="dt">final</span> WindowEvent e) {  
+            wizard.<span class="fu">dispose</span>();  
+            _tradePanel.<span class="fu">destroy</span>();  
+            _tradePanel = <span class="kw">null</span>;  
+        }  
+        });  
+        wizard.<span class="fu">setFinishAction</span>(<span class="kw">new</span> AbstractAction(<span class="st">&quot;Send&quot;</span>) {  
+        <span class="kw">private</span> <span class="dt">static</span> <span class="dt">final</span> <span class="dt">long</span> serialVersionUID = 1L;  
+  
+        <span class="kw">public</span> <span class="dt">void</span> <span class="fu">actionPerformed</span>(<span class="dt">final</span> ActionEvent e) {  
+            <span class="kw">if</span> (wizard.<span class="fu">closeCurrentPage</span>()) {  
+            <span class="kw">if</span> (! <span class="fu">checkInput</span>()) {  
+                GenericExceptionHandler.<span class="fu">showOptionDialog</span>(<span class="st">&quot;Warn&quot;</span>,  
+                    <span class="st">&quot;The input is illegal for the callable trade(s)&quot;</span>,  
+                    JOptionPane.<span class="fu">WARNING_MESSAGE</span>);  
+                <span class="kw">return</span>;  
+            }  
+            <span class="fu">handleFinish</span>();  
+            wizard.<span class="fu">setVisible</span>(<span class="kw">false</span>);  
+            wizard.<span class="fu">dispose</span>();  
+            _tradePanel.<span class="fu">destroy</span>();  
+            _tradePanel = <span class="kw">null</span>;  
+            }  
+        }  
+        });  
+        wizard.<span class="fu">setCancelAction</span>(<span class="kw">new</span> AbstractAction(<span class="st">&quot;Cancel&quot;</span>) {  
+        <span class="kw">private</span> <span class="dt">static</span> <span class="dt">final</span> <span class="dt">long</span> serialVersionUID = 1L;  
+  
+        <span class="kw">public</span> <span class="dt">void</span> <span class="fu">actionPerformed</span>(<span class="dt">final</span> ActionEvent e) {  
+            <span class="kw">if</span> (wizard.<span class="fu">closeCurrentPage</span>()) {  
+            wizard.<span class="fu">dispose</span>();  
+            _tradePanel.<span class="fu">destroy</span>();  
+            _tradePanel = <span class="kw">null</span>;  
+            }  
+        }  
+        });  
           
-          <div class="row">
-                        <div id="header">
-              <p class="lead">
-              <h1 class="title">我的Swing Jide WizardDialog实践个论 -- 外部化，统一化, 职责化你的代码</h1>
-                                          </p>
-            </div>
-            
-              <hr>
+           <span class="co">// 内部类声明  </span>
+           Class BuyBackStepOneWizardPage  
+                      State, operations;  
+           Class BuyBackStepTwoWizardPage  
+                      State, operations;  
+}  </code></pre></div>
+<p>OK, 从功能上来说，ByBkWizard完成了预期的业务处理需求，但是，这样的ByBkWizard定义是否合适，却有值得商榷的地方（看官，如果你觉得“只要功能完成了就得了呗！”，那么就到此为止吧，下面的话其实再看就没啥意思了）：</p>
+<ol style="list-style-type: decimal">
+<li>提供静态方法showByBkDialog的必要性是什么？！图方便？赶时髦？</li>
+<li>将各种逻辑都塞到一个类（ByBkWizard）里面不会觉得让这个类身材太“丰满”吗？怎么说也不符合当今的审美观吧？！界面显示的逻辑，模型数据处理逻辑要是给予独立的关注，是不是能让整个逻辑实现更加清晰一些那？！</li>
+<li>按理说这里的WizardDialog使用的各个Page确实也就这一个地方使用，将Page类定义为内部类也不算为过，而且，还能从ByBkWizard里直接访问这些Page的内部状态，多爽啊，不过，在我看来，更多的为是为了handleFinish（）这个方法服务吧？！</li>
+<li>而说到这个handleFinish()方法，也就引出了我最初所说的“内部化”实践的问题，对最终数据进行处理的逻辑“内部化”到了当前类当中，而不是剥离并封装为单独的实体，有错吗？！其实也没错，就是感觉不符合我的审美观，毕竟，DI和IoC提了这么些年，回过头来再看到这样的代码有些难以忍受罢了。</li>
+</ol>
+<p>其实，往简单了说，所有的问题都归结为一点，即，代码职责不明确，或者专业点儿来说，关注点分离不够。而造成这种问题的前兆往往却是，不做足够的思考就根据功能去堆砌代码了。</p>
+<h1 id="重构后的wizarddialog代码实践"><span class="header-section-number">4</span> 重构后的WizardDialog代码实践</h1>
+<p>现在让我们来重构这一功能实现，重构的主要目标包括：</p>
+<ol style="list-style-type: decimal">
+<li>重用WizardDialog的初始化逻辑；</li>
+<li>封装最终的数据处理逻辑；</li>
+<li>处理页面间的数据状态管理；</li>
+</ol>
+<p>通常情况下，WizardDialog的使用流程是这样的：</p>
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java">AbstractWizardPage page1 = …;  
+AbstractWizardPage page2= …;  
+AbstractWizardPage page3 = …;  
+…  
+PageList model = <span class="kw">new</span> <span class="fu">PageList</span>();  
+model .<span class="fu">append</span>(page1);  
+model .<span class="fu">append</span>(page2);  
+model .<span class="fu">append</span>(page3);  
+…  
+      
+WizardSample wizard = <span class="kw">new</span> <span class="fu">WizardSample</span>(<span class="st">&quot;JIDE Wizard Demo&quot;</span>);  
+wizard.<span class="fu">setPageList</span>(model);  
+wizard.<span class="fu">setResizable</span>(<span class="kw">false</span>);   
+wizard.<span class="fu">pack</span>();  
+wizard.<span class="fu">setVisible</span>(<span class="kw">true</span>); </code></pre></div>
+<p>显然，除了使用的Pages不同，初始化一个WizardDialog并使用它的流程基本模式是不变的，那么我们就可以这一流程采用模板化封装，以期之后能够复用之，这也就有了如下模板类定义：</p>
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="kw">public</span> <span class="kw">class</span> WizardDialogLauncher {  
+      
+    <span class="kw">public</span> <span class="dt">void</span> <span class="fu">launch</span>(String title,<span class="dt">final</span> PageList pageList,<span class="dt">final</span> Runnable finishAction)  
+    {  
+        <span class="fu">launch</span>(title,<span class="kw">new</span> <span class="fu">IWizardDialogCustomizer</span>(){  
+            <span class="kw">public</span> <span class="dt">void</span> <span class="fu">customizeWizardDialog</span>(WizardDialog dialog) {  
+                dialog.<span class="fu">setPageList</span>(pageList);  
+                                dialog.<span class="fu">setFinishAction</span>(<span class="kw">new</span> AbstractAction(<span class="st">&quot;&quot;</span>)  
+                                {  
+                                    <span class="kw">...  </span>
+                                    <span class="co">// finishAction.run();  </span>
+                                }  
+                                ...<span class="co">// other settings  </span>
+            }});  
+    }  
+      
+    <span class="kw">public</span> <span class="dt">void</span> <span class="fu">launch</span>(String title,IWizardDialogCustomizer customizer)  
+    {  
+        WizardDialog dialog = <span class="kw">new</span> <span class="fu">WizardDialog</span>(title);  
+        customizer.<span class="fu">customizeWizardDialog</span>(dialog);  
+        dialog.<span class="fu">setVisible</span>(<span class="kw">true</span>);  
+    }  
+}  </code></pre></div>
+<p>其中，IWizardDialogCustomizer为Callback接口，如果默认的模板方法不能满足需求的话，可以通过该Callback接口进一步定制WizardDialog。</p>
+<p>现在第一个重构目标达成，而重构的过程中我们也引出了第二个重构目标，即封装最终的数据处理逻辑。当用户走完WizardDialog给出的数据输入请求流程之后，我们就应该对最终收集到的用户输入结果进行处理了，显然，不同的WizardDialog因为会根据需求而使用不同的Page，那么，对应的最终数据处理逻辑也是各异的，所以，我们不能将这些数据处理逻辑硬编码到我们的模板类当中，所以，我们暂且以Runnable的形式抽取出来，这样，每次启动新的WizardDialog的时候，只要根据需要，传入相应的Runnable形式封装的最终数据处理逻辑即可。（当然，你也可以以其它形式来封装最终的数据处理逻辑，只要能够保证这一逻辑可以被重用，并能够灵活处理）</p>
+<p>最后一个重构的目标是要处理页面间的数据状态管理，为什么要这么做那？！每一个WizardDialog都由多个WizardPage所组成，WizardDialog将这些Page来显示每一步的具体界面给用户，我们所要做的，只不过是通过PageList将这些Page交给WizardDialog进行显示罢了，至于这些Page管理则全都交由WizardDialog来做。但是，WizardDialog主要只负责这些页面之间的显示顺序以及最后向导结束后的行为定义，至于这些Page之间的数据状态管理，比如前后页面之间的数据依赖关系和传递，无论是《JIDE Dialogs Developer Guide》和相关类的Javadoc上都是只字未提，我想这就是为什么之前提到的实践方式中要将所有的数据状态以及页面逻辑都纳入一个类来管理的原因了，因为没有什么定规嘛，不过，这并不能为“内部化”的实践方式博得多少“同情”，实际上，我们完全可以将各个Page之间的模型数据以数据链的形式进行提供，比如，声明一个PagesModel，或者如果关心进一步的结构重用并不在乎数据类型检查的话，直接使用Map结构，让整个向导期间的数据交互都直接跟PagesModel或者Map形式的数据容器打交道，而之前的实践方式则基本上是通过同一个类定义范围内的状态共享来实现的。那么，我们是否要像之前的实践方式那样，做适当的变通，将状态定义为每一个Page的状态属性那？！稍微思考一下就会发现，这并不会带来什么好处，假设第二个Page要依赖第一个Page的数据状态，那么我们是不是要在初始化第二个Page的时候将第一个Page的引用传入那？如果第三个，第四个Page也有同样地状况那？！那就会纠缠不清了，还不如一了百了，让他们都直接跟某个统一的数据容器打交道来的清爽，我们所要所得，只不过是将同一个数据容器传给它们就是了。显然，作为数据容器的PagesModel或者Map可以在每一个Page中根据需要进行数据的获取和填充，比如页面初始化的时候获取数据容器中的数据初始化界面，而页面关闭的时候将页面上的某部分数据设置回数据容器，所有这些都可以通过为每个page注册相应的PageListener来完成，而且对每个Page都是独立的。</p>
+<p>当所有这些重构目标达成之后，我们的XAction定义基本上就是如下的样子：</p>
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="kw">public</span> <span class="kw">class</span> XAction <span class="kw">extends</span> AbstractAction {  
+    <span class="kw">private</span> WizardDialogLauncher launcher;  
+      
+    <span class="kw">public</span> <span class="dt">void</span> <span class="fu">actionPerformed</span>(ActionEvent arg0) {  
+        PagesModel model = <span class="kw">new</span> <span class="fu">PagesModel</span>();  
+        model.<span class="fu">setX</span>(..);  
+        <span class="kw">...  </span>
+        PageList pageList = <span class="kw">new</span> <span class="fu">PageList</span>();  
+        pageList.<span class="fu">append</span>(<span class="kw">new</span> <span class="fu">YourPageOne</span>(model));  
+        pageList.<span class="fu">append</span>(<span class="kw">new</span> <span class="fu">YourPageTwo</span>(model));  
+        <span class="kw">...  </span>
+  
+        Runnable finishAction = <span class="kw">new</span> <span class="fu">YourFinishAction</span>(model);  
+          
+        launcher.<span class="fu">launch</span>(pageList, finishAction);  
+    }  
+    <span class="co">// getters and setters  </span>
+}  </code></pre></div>
+<p>显然，如果有新的WizardDialog需求，我们所要做的，无非就是像如上代码所示，提供相应的Page实现和对应的FinishAction实现即可。</p>
+<p>重构的过程其实很简单，最主要在于，即使你不能使用Spring或者Guice之类的IoC容器或者框架，那也不应该放弃“外部化你的依赖管理”，没有框架的支持，不应该成为你不去编写可复用性，可测试性，可维护性良好的代码的借口。</p>
+<h1 id="小结"><span class="header-section-number">5</span> 小结</h1>
+<ol style="list-style-type: decimal">
+<li>以旁观者的角度去观察，设计和实现你的代码逻辑，这将使你更加专注于明确各个实现类的职责，而不会被来自不同“地区”的依赖打乱“战局”。</li>
+<li>大家都知道，做同样一件事情有很多种方式，但是，总有更好的方式，如果你是一个追求完美的人，那即使没有任何的理论和设计模式之类的指导，你也同样可以写出令人赏心悦目地代码，因为，那是艺术，而你就是拥有艺术气质的那种人！</li>
+</ol>
 
-                            <div id="TOC">
-                <ul>
-                <li><a href="#楔子"><span class="toc-section-number">1</span> 楔子</a></li>
-                <li><a href="#jide简介"><span class="toc-section-number">2</span> Jide简介</a></li>
-                <li><a href="#现有codebase中的wizarddialog代码实践"><span class="toc-section-number">3</span> 现有codebase中的WizardDialog代码实践</a></li>
-                <li><a href="#重构后的wizarddialog代码实践"><span class="toc-section-number">4</span> 重构后的WizardDialog代码实践</a></li>
-                <li><a href="#小结"><span class="toc-section-number">5</span> 小结</a></li>
-                </ul>
-              </div>
-              <hr/>
-              
-              <h1 id="楔子"><span class="header-section-number">1</span> 楔子</h1>
-              <p>感觉好久没写技术方面的博客了，沉寂了这么久，今天正好借机疏解一下自己的“郁闷”之情。自从8月中旬加入花旗软件（大连），转眼已经快三个月了，原先的美好愿望和希冀，现在却由淡淡的“忧伤”和“郁闷”而替代，原因或许很多，也或许根本就没有啥，纯粹庸人自扰：</p>
-              <ol style="list-style-type: decimal">
-              <li>书稿写完了，提交给出版社之后的空虚？</li>
-              <li>因为前女友家里人全员反对而分开后的郁郁寡欢？</li>
-              <li>抑或是现在的工作与当初的设想大相径庭？！</li>
-              </ol>
-              <p>道不清说不明的，反正这阵子一直是过得不快乐就是了。 其实，花旗大连这边的工作氛围是比较轻松的，应该说正是自己当时所希望的，但是，现实的情况却是，闲大法了也不好，当你已经习惯了飚车的速度感，猛然让你陷入闹市的堵车当中，应该是比较烦躁的吧？！</p>
-              <p>还记得自己当初刚进花旗软件（大连）时候的激情四射，狂啃项目组中业务相关的金融资料的情景，可是随着时间的流逝，才发现，短期内自己是多么的无助，呵呵，银行系统内部系统的庞大，又怎么可能一朝之间让你了然于心那？！现在的感觉真的只能用那句“心有余而力不足”来形容了。</p>
-              <p>当前项目组的技术架构虽然很简单，但是，前面写了两年多的codebase却着实让我无能为力，不能说代码很烂，但是，各种细节之间的纠缠却非我这刚进来的newbie所能掌控的，所以，每每有新的issue交给我处理，都是小心翼翼的，能不动之前的codebase就不动， 要知道，&quot;失节&quot;事小，&quot;驾崩&quot;事大，这可是金融系统，稍一不慎把系统搞挂掉，那可不是闹着玩的（虽然发布之前回旋余地大一些）。</p>
-              <p>不过那，不去动之前的codebase并不是说这些codebase有多好，有多容易维护，实际上，整个项目有些“挂羊头，卖狗肉”的味道，说是敏捷开发，但没有看到多少敏捷的实践；说是使用Spring框架，却让它形同虚设；说是用Hibernate做数据访问，却仅仅用它来做为调用存储过程的中间层，只用了调用存储过程后能够帮助你将结果映射到结果对象这一点点功能，个人感觉就是Hibernate在这里真的是“生不逢时”…</p>
-              <p>当然啦，我今天可不是要为了挑刺儿，毕竟任何项目都会存在这样那样的问题嘛，我今天要说的，只不过是从一个小小的功能点引申出来的代码实践而已，下面让我们进入正题…</p>
-              <h1 id="jide简介"><span class="header-section-number">2</span> Jide简介</h1>
-              <p>或许做Swing的各位同仁对jidesoft(http://www.jidesoft.com/)所提供的产品早就有所耳闻，也或许没有，总之俺是进花旗这个项目组之后才知道有这么一个产品（其实，从身边许多人那里都可以了解到，许多金融相关产品的客户端使用swing做的），你可以鄙视我，谁让俺之前只做过两年左右的swt/jface而没有用swing那，呵呵。</p>
-              <p>应该说，jide提供的产品还是比较强大的，不过，商业产品，应该不是谁都愿意花这份儿银子吧！jide在原有swing基础上给出了多种扩展，包括dockable framework， action framework，dialogs，data grid/pivot table等等，我们今天要扯的话题与jide提供的WizardDialog有关，所以，就在这里对jide简单提及一下，希望没有说太多废话。</p>
-              <h1 id="现有codebase中的wizarddialog代码实践"><span class="header-section-number">3</span> 现有codebase中的WizardDialog代码实践</h1>
-              <p>话说我们要为用户提供接口，分多步从用户那里获取输入数据，这种情况下，为用户提供一个向导式的输入界面应该说是比较自然的事情，现在，就有这样的一个场景，所以，我们决定使用jide提供的WizardDialog来实现之。</p>
-              <p>《JIDE Dialogs Developer Guide》虽然对WizardDialog相关的各个类以及功能做了介绍，但是，如何在开发过程中使用它们，就得由我们来决定了，这自然就会引出不同的实践方式，下面是我从现有的codebase中移植过来的代码片段原型，我称之为“内部化”的代码实践（代码风格如何暂且不论）。</p>
-              <p>首先，XAction类是一个标准的Swing Action，其定义如下：</p>
-              <div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java">XXXAction <span class="kw">extends</span> AbstractAction  
-              {  
-                  …  
-                  Public <span class="dt">void</span> <span class="fu">actionPerformed</span>(ActionEvent e)  
-                  {  
-                      <span class="co">// collect data from event object or outer references  </span>
-                      ByBkWizard.<span class="fu">showByBkDialog</span>(trades);  
-                  }  
-              }  </code></pre></div>
-              <p>当用户触发该Action对应的事件之后，定义的逻辑即被执行，简单点来说就是，搜集前提条件相关的数据，然后显示WizardDialog给用户，当用户输入完成之后，根据收集的输入结果进行后继处理，而这些工作，现在显然都是由这个ByBkWizard类来做了：</p>
-              <div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="kw">public</span> <span class="kw">class</span> ByBkWizard  
-              {  
-                      <span class="kw">public</span> <span class="dt">static</span> <span class="dt">void</span> <span class="fu">showByBkDialog</span>(Collection&lt;TransactionEntity&gt; trades_) {  
-                          <span class="kw">new</span> <span class="fu">ByBkWizard</span>(trades_);  
-                      }  
-                
-                      <span class="kw">public</span> <span class="fu">ByBkWizard</span>(Collection&lt;TransactionEntity&gt; trades_) {  
-                          _backupTrades = <span class="kw">new</span> HashMap&lt;String, TransactionEntity&gt;(trades_.<span class="fu">size</span>());  
-                          _trades = <span class="kw">new</span> ArrayList&lt;TransactionEntity&gt;(trades_.<span class="fu">size</span>());  
-                          <span class="kw">for</span> (TransactionEntity entity : trades_) {  
-                          <span class="kw">try</span> {  
-                              _backupTrades.<span class="fu">put</span>(<span class="fu">getTempKey</span>(entity), (TransactionEntity) entity.<span class="fu">clone</span>());  
-                              _trades.<span class="fu">add</span>((TransactionEntity) entity.<span class="fu">clone</span>());  
-                          } <span class="kw">catch</span> (Exception e) {  
-                              logger.<span class="fu">error</span>(e, e);  
-                          }  
-              <span class="fu">initWizard</span>();  
-                      }  
-                
-                      <span class="co">// initWizard定义  </span>
-                      PageList model = <span class="kw">new</span> <span class="fu">PageList</span>();  
-                
-                      AbstractWizardPage setDataView = <span class="kw">new</span> <span class="fu">BuyBackStepOneWizardPage</span>();  
-                      AbstractWizardPage editView = <span class="kw">new</span> <span class="fu">BuyBackStepTwoWizardPage</span>();  
-                      model.<span class="fu">append</span>(setDataView);  
-                      model.<span class="fu">append</span>(editView);  
-                      wizard.<span class="fu">setPageList</span>(model);  
-                
-                      wizard.<span class="fu">addWindowListener</span>(<span class="kw">new</span> WindowAdapter() {  
-                      <span class="kw">public</span> <span class="dt">void</span> <span class="fu">windowClosing</span>(<span class="dt">final</span> WindowEvent e) {  
-                          wizard.<span class="fu">dispose</span>();  
-                          _tradePanel.<span class="fu">destroy</span>();  
-                          _tradePanel = <span class="kw">null</span>;  
-                      }  
-                      });  
-                      wizard.<span class="fu">setFinishAction</span>(<span class="kw">new</span> AbstractAction(<span class="st">&quot;Send&quot;</span>) {  
-                      <span class="kw">private</span> <span class="dt">static</span> <span class="dt">final</span> <span class="dt">long</span> serialVersionUID = 1L;  
-                
-                      <span class="kw">public</span> <span class="dt">void</span> <span class="fu">actionPerformed</span>(<span class="dt">final</span> ActionEvent e) {  
-                          <span class="kw">if</span> (wizard.<span class="fu">closeCurrentPage</span>()) {  
-                          <span class="kw">if</span> (! <span class="fu">checkInput</span>()) {  
-                              GenericExceptionHandler.<span class="fu">showOptionDialog</span>(<span class="st">&quot;Warn&quot;</span>,  
-                                  <span class="st">&quot;The input is illegal for the callable trade(s)&quot;</span>,  
-                                  JOptionPane.<span class="fu">WARNING_MESSAGE</span>);  
-                              <span class="kw">return</span>;  
-                          }  
-                          <span class="fu">handleFinish</span>();  
-                          wizard.<span class="fu">setVisible</span>(<span class="kw">false</span>);  
-                          wizard.<span class="fu">dispose</span>();  
-                          _tradePanel.<span class="fu">destroy</span>();  
-                          _tradePanel = <span class="kw">null</span>;  
-                          }  
-                      }  
-                      });  
-                      wizard.<span class="fu">setCancelAction</span>(<span class="kw">new</span> AbstractAction(<span class="st">&quot;Cancel&quot;</span>) {  
-                      <span class="kw">private</span> <span class="dt">static</span> <span class="dt">final</span> <span class="dt">long</span> serialVersionUID = 1L;  
-                
-                      <span class="kw">public</span> <span class="dt">void</span> <span class="fu">actionPerformed</span>(<span class="dt">final</span> ActionEvent e) {  
-                          <span class="kw">if</span> (wizard.<span class="fu">closeCurrentPage</span>()) {  
-                          wizard.<span class="fu">dispose</span>();  
-                          _tradePanel.<span class="fu">destroy</span>();  
-                          _tradePanel = <span class="kw">null</span>;  
-                          }  
-                      }  
-                      });  
-                        
-                         <span class="co">// 内部类声明  </span>
-                         Class BuyBackStepOneWizardPage  
-                                    State, operations;  
-                         Class BuyBackStepTwoWizardPage  
-                                    State, operations;  
-              }  </code></pre></div>
-              <p>OK, 从功能上来说，ByBkWizard完成了预期的业务处理需求，但是，这样的ByBkWizard定义是否合适，却有值得商榷的地方（看官，如果你觉得“只要功能完成了就得了呗！”，那么就到此为止吧，下面的话其实再看就没啥意思了）：</p>
-              <ol style="list-style-type: decimal">
-              <li>提供静态方法showByBkDialog的必要性是什么？！图方便？赶时髦？</li>
-              <li>将各种逻辑都塞到一个类（ByBkWizard）里面不会觉得让这个类身材太“丰满”吗？怎么说也不符合当今的审美观吧？！界面显示的逻辑，模型数据处理逻辑要是给予独立的关注，是不是能让整个逻辑实现更加清晰一些那？！</li>
-              <li>按理说这里的WizardDialog使用的各个Page确实也就这一个地方使用，将Page类定义为内部类也不算为过，而且，还能从ByBkWizard里直接访问这些Page的内部状态，多爽啊，不过，在我看来，更多的为是为了handleFinish（）这个方法服务吧？！</li>
-              <li>而说到这个handleFinish()方法，也就引出了我最初所说的“内部化”实践的问题，对最终数据进行处理的逻辑“内部化”到了当前类当中，而不是剥离并封装为单独的实体，有错吗？！其实也没错，就是感觉不符合我的审美观，毕竟，DI和IoC提了这么些年，回过头来再看到这样的代码有些难以忍受罢了。</li>
-              </ol>
-              <p>其实，往简单了说，所有的问题都归结为一点，即，代码职责不明确，或者专业点儿来说，关注点分离不够。而造成这种问题的前兆往往却是，不做足够的思考就根据功能去堆砌代码了。</p>
-              <h1 id="重构后的wizarddialog代码实践"><span class="header-section-number">4</span> 重构后的WizardDialog代码实践</h1>
-              <p>现在让我们来重构这一功能实现，重构的主要目标包括：</p>
-              <ol style="list-style-type: decimal">
-              <li>重用WizardDialog的初始化逻辑；</li>
-              <li>封装最终的数据处理逻辑；</li>
-              <li>处理页面间的数据状态管理；</li>
-              </ol>
-              <p>通常情况下，WizardDialog的使用流程是这样的：</p>
-              <div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java">AbstractWizardPage page1 = …;  
-              AbstractWizardPage page2= …;  
-              AbstractWizardPage page3 = …;  
-              …  
-              PageList model = <span class="kw">new</span> <span class="fu">PageList</span>();  
-              model .<span class="fu">append</span>(page1);  
-              model .<span class="fu">append</span>(page2);  
-              model .<span class="fu">append</span>(page3);  
-              …  
-                    
-              WizardSample wizard = <span class="kw">new</span> <span class="fu">WizardSample</span>(<span class="st">&quot;JIDE Wizard Demo&quot;</span>);  
-              wizard.<span class="fu">setPageList</span>(model);  
-              wizard.<span class="fu">setResizable</span>(<span class="kw">false</span>);   
-              wizard.<span class="fu">pack</span>();  
-              wizard.<span class="fu">setVisible</span>(<span class="kw">true</span>); </code></pre></div>
-              <p>显然，除了使用的Pages不同，初始化一个WizardDialog并使用它的流程基本模式是不变的，那么我们就可以这一流程采用模板化封装，以期之后能够复用之，这也就有了如下模板类定义：</p>
-              <div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="kw">public</span> <span class="kw">class</span> WizardDialogLauncher {  
-                    
-                  <span class="kw">public</span> <span class="dt">void</span> <span class="fu">launch</span>(String title,<span class="dt">final</span> PageList pageList,<span class="dt">final</span> Runnable finishAction)  
-                  {  
-                      <span class="fu">launch</span>(title,<span class="kw">new</span> <span class="fu">IWizardDialogCustomizer</span>(){  
-                          <span class="kw">public</span> <span class="dt">void</span> <span class="fu">customizeWizardDialog</span>(WizardDialog dialog) {  
-                              dialog.<span class="fu">setPageList</span>(pageList);  
-                                              dialog.<span class="fu">setFinishAction</span>(<span class="kw">new</span> AbstractAction(<span class="st">&quot;&quot;</span>)  
-                                              {  
-                                                  <span class="kw">...  </span>
-                                                  <span class="co">// finishAction.run();  </span>
-                                              }  
-                                              ...<span class="co">// other settings  </span>
-                          }});  
-                  }  
-                    
-                  <span class="kw">public</span> <span class="dt">void</span> <span class="fu">launch</span>(String title,IWizardDialogCustomizer customizer)  
-                  {  
-                      WizardDialog dialog = <span class="kw">new</span> <span class="fu">WizardDialog</span>(title);  
-                      customizer.<span class="fu">customizeWizardDialog</span>(dialog);  
-                      dialog.<span class="fu">setVisible</span>(<span class="kw">true</span>);  
-                  }  
-              }  </code></pre></div>
-              <p>其中，IWizardDialogCustomizer为Callback接口，如果默认的模板方法不能满足需求的话，可以通过该Callback接口进一步定制WizardDialog。</p>
-              <p>现在第一个重构目标达成，而重构的过程中我们也引出了第二个重构目标，即封装最终的数据处理逻辑。当用户走完WizardDialog给出的数据输入请求流程之后，我们就应该对最终收集到的用户输入结果进行处理了，显然，不同的WizardDialog因为会根据需求而使用不同的Page，那么，对应的最终数据处理逻辑也是各异的，所以，我们不能将这些数据处理逻辑硬编码到我们的模板类当中，所以，我们暂且以Runnable的形式抽取出来，这样，每次启动新的WizardDialog的时候，只要根据需要，传入相应的Runnable形式封装的最终数据处理逻辑即可。（当然，你也可以以其它形式来封装最终的数据处理逻辑，只要能够保证这一逻辑可以被重用，并能够灵活处理）</p>
-              <p>最后一个重构的目标是要处理页面间的数据状态管理，为什么要这么做那？！每一个WizardDialog都由多个WizardPage所组成，WizardDialog将这些Page来显示每一步的具体界面给用户，我们所要做的，只不过是通过PageList将这些Page交给WizardDialog进行显示罢了，至于这些Page管理则全都交由WizardDialog来做。但是，WizardDialog主要只负责这些页面之间的显示顺序以及最后向导结束后的行为定义，至于这些Page之间的数据状态管理，比如前后页面之间的数据依赖关系和传递，无论是《JIDE Dialogs Developer Guide》和相关类的Javadoc上都是只字未提，我想这就是为什么之前提到的实践方式中要将所有的数据状态以及页面逻辑都纳入一个类来管理的原因了，因为没有什么定规嘛，不过，这并不能为“内部化”的实践方式博得多少“同情”，实际上，我们完全可以将各个Page之间的模型数据以数据链的形式进行提供，比如，声明一个PagesModel，或者如果关心进一步的结构重用并不在乎数据类型检查的话，直接使用Map结构，让整个向导期间的数据交互都直接跟PagesModel或者Map形式的数据容器打交道，而之前的实践方式则基本上是通过同一个类定义范围内的状态共享来实现的。那么，我们是否要像之前的实践方式那样，做适当的变通，将状态定义为每一个Page的状态属性那？！稍微思考一下就会发现，这并不会带来什么好处，假设第二个Page要依赖第一个Page的数据状态，那么我们是不是要在初始化第二个Page的时候将第一个Page的引用传入那？如果第三个，第四个Page也有同样地状况那？！那就会纠缠不清了，还不如一了百了，让他们都直接跟某个统一的数据容器打交道来的清爽，我们所要所得，只不过是将同一个数据容器传给它们就是了。显然，作为数据容器的PagesModel或者Map可以在每一个Page中根据需要进行数据的获取和填充，比如页面初始化的时候获取数据容器中的数据初始化界面，而页面关闭的时候将页面上的某部分数据设置回数据容器，所有这些都可以通过为每个page注册相应的PageListener来完成，而且对每个Page都是独立的。</p>
-              <p>当所有这些重构目标达成之后，我们的XAction定义基本上就是如下的样子：</p>
-              <div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="kw">public</span> <span class="kw">class</span> XAction <span class="kw">extends</span> AbstractAction {  
-                  <span class="kw">private</span> WizardDialogLauncher launcher;  
-                    
-                  <span class="kw">public</span> <span class="dt">void</span> <span class="fu">actionPerformed</span>(ActionEvent arg0) {  
-                      PagesModel model = <span class="kw">new</span> <span class="fu">PagesModel</span>();  
-                      model.<span class="fu">setX</span>(..);  
-                      <span class="kw">...  </span>
-                      PageList pageList = <span class="kw">new</span> <span class="fu">PageList</span>();  
-                      pageList.<span class="fu">append</span>(<span class="kw">new</span> <span class="fu">YourPageOne</span>(model));  
-                      pageList.<span class="fu">append</span>(<span class="kw">new</span> <span class="fu">YourPageTwo</span>(model));  
-                      <span class="kw">...  </span>
-                
-                      Runnable finishAction = <span class="kw">new</span> <span class="fu">YourFinishAction</span>(model);  
-                        
-                      launcher.<span class="fu">launch</span>(pageList, finishAction);  
-                  }  
-                  <span class="co">// getters and setters  </span>
-              }  </code></pre></div>
-              <p>显然，如果有新的WizardDialog需求，我们所要做的，无非就是像如上代码所示，提供相应的Page实现和对应的FinishAction实现即可。</p>
-              <p>重构的过程其实很简单，最主要在于，即使你不能使用Spring或者Guice之类的IoC容器或者框架，那也不应该放弃“外部化你的依赖管理”，没有框架的支持，不应该成为你不去编写可复用性，可测试性，可维护性良好的代码的借口。</p>
-              <h1 id="小结"><span class="header-section-number">5</span> 小结</h1>
-              <ol style="list-style-type: decimal">
-              <li>以旁观者的角度去观察，设计和实现你的代码逻辑，这将使你更加专注于明确各个实现类的职责，而不会被来自不同“地区”的依赖打乱“战局”。</li>
-              <li>大家都知道，做同样一件事情有很多种方式，但是，总有更好的方式，如果你是一个追求完美的人，那即使没有任何的理论和设计模式之类的指导，你也同样可以写出令人赏心悦目地代码，因为，那是艺术，而你就是拥有艺术气质的那种人！</li>
-              </ol>
-              
-      </div>
+</div>
+
       <div id="qrcode"></div>
       <div class="row">
         <div class="col-md-12 footer">

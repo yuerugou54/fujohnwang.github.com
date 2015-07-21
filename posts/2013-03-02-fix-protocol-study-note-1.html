@@ -7,19 +7,20 @@
   <meta http-equiv="X-UA-Compatible" content="chrome=1">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="author" content="扶墙老师@afoo.me">
-
-  <link rel="icon" href="/favicon.ico">
+    <meta name="date" content="2013-03-02" />
+    <link rel="icon" href="/favicon.ico">
 
   <title>FIX Protocol Study Note - Part 1 - 一个架构士的思考与沉淀之地</title>
 
-    <meta name="date" content="2013-03-02" />
-          
-  <link href='/font/News_Cycle/stylesheet.css' rel='stylesheet' type='text/css'>
+  
 
+  <link href='/font/News_Cycle/stylesheet.css' rel='stylesheet' type='text/css'>
   <link href="/css/bootstrap.min.css" rel="stylesheet">
   <link href="/css/bootstrap-theme.min.css" rel="stylesheet">
   <link href="/css/afoo.me.css" rel="stylesheet">
 
+  <style type="text/css">code{white-space: pre;}</style>
+        
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>
@@ -39,105 +40,107 @@
           </a>
         </div>
     </div>
-    <div class="col-xs-12 col-md-10">
 
-          
-          <div class="row">
-                        <div id="header">
-              <p class="lead">
-              <h1 class="title">FIX Protocol Study Note - Part 1</h1>
-                            <small>
-                  <h3 class="author">fujohnwang</h3>
-              </small>
-                                        <h4 class="date">2013-03-02</h4>
-                              </p>
-            </div>
-            
-              <hr>
+<div class="col-xs-12 col-md-10">
 
-                            <div id="TOC">
-                <ul>
-                <li><a href="#big-picture"><span class="toc-section-number">1</span> Big Picture</a></li>
-                <li><a href="#structure-of-fix-message"><span class="toc-section-number">2</span> Structure of FIX Message</a></li>
-                <li><a href="#fix-message-categories"><span class="toc-section-number">3</span> FIX Message Categories</a></li>
-                <li><a href="#references"><span class="toc-section-number">4</span> References</a></li>
-                </ul>
-              </div>
-              <hr/>
-              
-              <p><strong>author: fujohnwang</strong></p>
-              <h1 id="big-picture"><span class="header-section-number">1</span> Big Picture</h1>
-              <p>Institutional Investers &lt;-&gt; Brokerage Firms &lt;-&gt; Liquidation Sources</p>
-              <ol style="list-style-type: decimal">
-              <li>Institutional Investers
-              <ul>
-              <li>Mutual Funds</li>
-              <li>Hedge Fund</li>
-              <li>Asset Mgmt</li>
-              </ul></li>
-              <li>Brokerage Firms
-              <ul>
-              <li>Order Management System (OMS)</li>
-              <li>Order Routing System (ORS)</li>
-              <li>Execution System</li>
-              <li>Other Systems</li>
-              </ul></li>
-              <li>Liquidation Sources
-              <ul>
-              <li>Exchange</li>
-              <li>ECN</li>
-              <li>Other sources</li>
-              </ul></li>
-              </ol>
-              <p>Each party will deploy a FIX Engine with one as client and one as server.</p>
-              <div class="figure">
-              <img src="../images/fixprotocol/fix_protocol_parties.png" alt="a big picture" />
-              <p class="caption">a big picture</p>
-              </div>
-              <h1 id="structure-of-fix-message"><span class="header-section-number">2</span> Structure of FIX Message</h1>
-              <p>FIX Messages are composed of Field in a format of &quot;Key=Value&quot; and seperated by non-printed character such as ^. All of the Fields can be classified into 3 groups, that's:</p>
-              <ol style="list-style-type: decimal">
-              <li>Header Tags</li>
-              <li>Body Tags</li>
-              <li>Footer/Trailer Tags</li>
-              </ol>
-              <h1 id="fix-message-categories"><span class="header-section-number">3</span> FIX Message Categories</h1>
-              <ol style="list-style-type: decimal">
-              <li>Admin Messages
-              <ul>
-              <li>Logon</li>
-              <li>Logout</li>
-              <li>Heartbeat</li>
-              <li>Test Request</li>
-              <li>Resend Request</li>
-              <li>Reject</li>
-              <li>Sequence Reset/Gap Fill</li>
-              </ul></li>
-              <li>Application Messages
-              <ul>
-              <li>Pre-Trade messages
-              <ul>
-              <li>IOIs, Quotes, News, Emails, MarketData, Security Info, etc.</li>
-              </ul></li>
-              <li>Trade Messages
-              <ul>
-              <li>Single Orders, Basket/List Orders, Multi-leg Orders, Executions, Order Cancel, Cancel/Replace, Status, etc.</li>
-              </ul></li>
-              <li>Post-Trade messages
-              <ul>
-              <li>Allocations, Settlement Instructions, Positions Mgmt, etc.</li>
-              </ul></li>
-              </ul></li>
-              </ol>
-              <h1 id="references"><span class="header-section-number">4</span> References</h1>
-              <ol style="list-style-type: decimal">
-              <li><a href="http://www.youtube.com/watch?v=HBtyQTVVfZ0">FIX Protocol Introduction, part 1</a></li>
-              <li><a href="http://www.youtube.com/watch?v=vwyXySnGrbc">FIX Protocol Introduction, part 2</a></li>
-              <li><a href="http://www.youtube.com/watch?v=8wx6TLECQBw">FIX Protocol Introduction, part 3</a></li>
-              <li><a href="http://www.youtube.com/watch?v=1OseF27iMoc">FIX Protocol Introduction, part 4</a></li>
-              </ol>
-              
-      </div>
+
+<div class="row">
+<div id="header">
+<p class="lead">
+<h1 class="title">FIX Protocol Study Note - Part 1</h1>
+<small>
+<h3 class="author">fujohnwang</h3>
+</small>
+<h4 class="date">2013-03-02</h4>
+</p>
+</div>
+
+<hr>
+
+<div id="TOC">
+<ul>
+<li><a href="#big-picture"><span class="toc-section-number">1</span> Big Picture</a></li>
+<li><a href="#structure-of-fix-message"><span class="toc-section-number">2</span> Structure of FIX Message</a></li>
+<li><a href="#fix-message-categories"><span class="toc-section-number">3</span> FIX Message Categories</a></li>
+<li><a href="#references"><span class="toc-section-number">4</span> References</a></li>
+</ul>
+</div>
+<hr/>
+
+<p><strong>author: fujohnwang</strong></p>
+<h1 id="big-picture"><span class="header-section-number">1</span> Big Picture</h1>
+<p>Institutional Investers &lt;-&gt; Brokerage Firms &lt;-&gt; Liquidation Sources</p>
+<ol style="list-style-type: decimal">
+<li>Institutional Investers
+<ul>
+<li>Mutual Funds</li>
+<li>Hedge Fund</li>
+<li>Asset Mgmt</li>
+</ul></li>
+<li>Brokerage Firms
+<ul>
+<li>Order Management System (OMS)</li>
+<li>Order Routing System (ORS)</li>
+<li>Execution System</li>
+<li>Other Systems</li>
+</ul></li>
+<li>Liquidation Sources
+<ul>
+<li>Exchange</li>
+<li>ECN</li>
+<li>Other sources</li>
+</ul></li>
+</ol>
+<p>Each party will deploy a FIX Engine with one as client and one as server.</p>
+<div class="figure">
+<img src="../images/fixprotocol/fix_protocol_parties.png" alt="a big picture" />
+<p class="caption">a big picture</p>
+</div>
+<h1 id="structure-of-fix-message"><span class="header-section-number">2</span> Structure of FIX Message</h1>
+<p>FIX Messages are composed of Field in a format of &quot;Key=Value&quot; and seperated by non-printed character such as ^. All of the Fields can be classified into 3 groups, that's:</p>
+<ol style="list-style-type: decimal">
+<li>Header Tags</li>
+<li>Body Tags</li>
+<li>Footer/Trailer Tags</li>
+</ol>
+<h1 id="fix-message-categories"><span class="header-section-number">3</span> FIX Message Categories</h1>
+<ol style="list-style-type: decimal">
+<li>Admin Messages
+<ul>
+<li>Logon</li>
+<li>Logout</li>
+<li>Heartbeat</li>
+<li>Test Request</li>
+<li>Resend Request</li>
+<li>Reject</li>
+<li>Sequence Reset/Gap Fill</li>
+</ul></li>
+<li>Application Messages
+<ul>
+<li>Pre-Trade messages
+<ul>
+<li>IOIs, Quotes, News, Emails, MarketData, Security Info, etc.</li>
+</ul></li>
+<li>Trade Messages
+<ul>
+<li>Single Orders, Basket/List Orders, Multi-leg Orders, Executions, Order Cancel, Cancel/Replace, Status, etc.</li>
+</ul></li>
+<li>Post-Trade messages
+<ul>
+<li>Allocations, Settlement Instructions, Positions Mgmt, etc.</li>
+</ul></li>
+</ul></li>
+</ol>
+<h1 id="references"><span class="header-section-number">4</span> References</h1>
+<ol style="list-style-type: decimal">
+<li><a href="http://www.youtube.com/watch?v=HBtyQTVVfZ0">FIX Protocol Introduction, part 1</a></li>
+<li><a href="http://www.youtube.com/watch?v=vwyXySnGrbc">FIX Protocol Introduction, part 2</a></li>
+<li><a href="http://www.youtube.com/watch?v=8wx6TLECQBw">FIX Protocol Introduction, part 3</a></li>
+<li><a href="http://www.youtube.com/watch?v=1OseF27iMoc">FIX Protocol Introduction, part 4</a></li>
+</ol>
+
+</div>
+
       <div id="qrcode"></div>
       <div class="row">
         <div class="col-md-12 footer">

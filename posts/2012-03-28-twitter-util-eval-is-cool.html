@@ -7,13 +7,20 @@
   <meta http-equiv="X-UA-Compatible" content="chrome=1">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="author" content="扶墙老师@afoo.me">
-
-  <link rel="icon" href="/favicon.ico">
+    <meta name="date" content="2012-03-28" />
+    <link rel="icon" href="/favicon.ico">
 
   <title>&quot;twitter_util_eval_is_cool&quot; - 一个架构士的思考与沉淀之地</title>
 
-    <meta name="date" content="2012-03-28" />
-      <style type="text/css">
+  
+
+  <link href='/font/News_Cycle/stylesheet.css' rel='stylesheet' type='text/css'>
+  <link href="/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/css/bootstrap-theme.min.css" rel="stylesheet">
+  <link href="/css/afoo.me.css" rel="stylesheet">
+
+  <style type="text/css">code{white-space: pre;}</style>
+    <style type="text/css">
     div.sourceCode { overflow-x: auto; }
     table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
       margin: 0; padding: 0; vertical-align: baseline; border: none; }
@@ -34,12 +41,6 @@
     code > span.er { color: #ff0000; font-weight: bold; }
   </style>
         
-  <link href='/font/News_Cycle/stylesheet.css' rel='stylesheet' type='text/css'>
-
-  <link href="/css/bootstrap.min.css" rel="stylesheet">
-  <link href="/css/bootstrap-theme.min.css" rel="stylesheet">
-  <link href="/css/afoo.me.css" rel="stylesheet">
-
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>
@@ -59,49 +60,51 @@
           </a>
         </div>
     </div>
-    <div class="col-xs-12 col-md-10">
 
-          
-          <div class="row">
-                        <div id="header">
-              <p class="lead">
-              <h1 class="title">&quot;twitter_util_eval_is_cool&quot;</h1>
-                            <small>
-                  <h3 class="author">fujohnwang</h3>
-              </small>
-                                        <h4 class="date">2012-03-28</h4>
-                              </p>
-            </div>
-            
-              <hr>
+<div class="col-xs-12 col-md-10">
 
-              
-              <p>You define a scala trait:</p>
-              <div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> ServerConfig <span class="kw">extends</span> (() =&gt; Server) {
-                <span class="kw">var</span> port: Int = <span class="dv">9999</span>
-                <span class="kw">var</span> timeout: Option[Duration] = None
-              
-                <span class="kw">def</span> <span class="fu">apply</span>(): Server = <span class="kw">new</span> <span class="fu">Server</span>(port, timeout, ...)
-              }</code></pre></div>
-              <p>You define a new implementation for the trait in a scala source code file which will be used as configuration file:</p>
-              <div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">new</span> ServerConfig {
-                port = <span class="dv">12345</span>
-                timeout = <span class="fl">250.</span>milliseconds
-              }</code></pre></div>
-              <p>Then you can use Eval to bind your configuration and bootstrap together:</p>
-              <div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala">  <span class="kw">val</span> eval = <span class="kw">new</span> <span class="fu">Eval</span>()
-                <span class="kw">val</span> config: ServerConfig = eval[ServerConfig](<span class="kw">new</span> File(<span class="st">&quot;...&quot;</span>))
-                <span class="kw">val</span> server: Server = <span class="fu">config</span>()
-                server.<span class="fu">start</span>()</code></pre></div>
-              <p>Now it's done!</p>
-              <p>Neat and cool, typesafe-proof configuration with scala as configuration DSL! Don't you like it?! ^_^</p>
-              <p><strong>References</strong></p>
-              <ol style="list-style-type: decimal">
-              <li><a href="http://robey.lag.net//2012/03/26/why-config.html">Why Config?</a></li>
-              <li><a href="https://github.com/twitter/util" class="uri">https://github.com/twitter/util</a></li>
-              </ol>
-              
-      </div>
+
+<div class="row">
+<div id="header">
+<p class="lead">
+<h1 class="title">&quot;twitter_util_eval_is_cool&quot;</h1>
+<small>
+<h3 class="author">fujohnwang</h3>
+</small>
+<h4 class="date">2012-03-28</h4>
+</p>
+</div>
+
+<hr>
+
+
+<p>You define a scala trait:</p>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">trait</span> ServerConfig <span class="kw">extends</span> (() =&gt; Server) {
+  <span class="kw">var</span> port: Int = <span class="dv">9999</span>
+  <span class="kw">var</span> timeout: Option[Duration] = None
+
+  <span class="kw">def</span> <span class="fu">apply</span>(): Server = <span class="kw">new</span> <span class="fu">Server</span>(port, timeout, ...)
+}</code></pre></div>
+<p>You define a new implementation for the trait in a scala source code file which will be used as configuration file:</p>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">new</span> ServerConfig {
+  port = <span class="dv">12345</span>
+  timeout = <span class="fl">250.</span>milliseconds
+}</code></pre></div>
+<p>Then you can use Eval to bind your configuration and bootstrap together:</p>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala">  <span class="kw">val</span> eval = <span class="kw">new</span> <span class="fu">Eval</span>()
+  <span class="kw">val</span> config: ServerConfig = eval[ServerConfig](<span class="kw">new</span> File(<span class="st">&quot;...&quot;</span>))
+  <span class="kw">val</span> server: Server = <span class="fu">config</span>()
+  server.<span class="fu">start</span>()</code></pre></div>
+<p>Now it's done!</p>
+<p>Neat and cool, typesafe-proof configuration with scala as configuration DSL! Don't you like it?! ^_^</p>
+<p><strong>References</strong></p>
+<ol style="list-style-type: decimal">
+<li><a href="http://robey.lag.net//2012/03/26/why-config.html">Why Config?</a></li>
+<li><a href="https://github.com/twitter/util" class="uri">https://github.com/twitter/util</a></li>
+</ol>
+
+</div>
+
       <div id="qrcode"></div>
       <div class="row">
         <div class="col-md-12 footer">

@@ -7,18 +7,19 @@
   <meta http-equiv="X-UA-Compatible" content="chrome=1">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="author" content="扶墙老师@afoo.me">
-
-  <link rel="icon" href="/favicon.ico">
+    <link rel="icon" href="/favicon.ico">
 
   <title>杂草丛生 VS 整洁有序 - 一个架构士的思考与沉淀之地</title>
 
-          
-  <link href='/font/News_Cycle/stylesheet.css' rel='stylesheet' type='text/css'>
+  
 
+  <link href='/font/News_Cycle/stylesheet.css' rel='stylesheet' type='text/css'>
   <link href="/css/bootstrap.min.css" rel="stylesheet">
   <link href="/css/bootstrap-theme.min.css" rel="stylesheet">
   <link href="/css/afoo.me.css" rel="stylesheet">
 
+  <style type="text/css">code{white-space: pre;}</style>
+        
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>
@@ -38,35 +39,37 @@
           </a>
         </div>
     </div>
-    <div class="col-xs-12 col-md-10">
 
-          
-          <div class="row">
-                        <div id="header">
-              <p class="lead">
-              <h1 class="title">杂草丛生 VS 整洁有序</h1>
-                                          </p>
-            </div>
-            
-              <hr>
+<div class="col-xs-12 col-md-10">
 
-              
-              <p>这个话题得从现在的项目经理的一个言论引出来。</p>
-              <p>按照PM的说法，“我是简单原则的支持者”，云云， 那么，让我们来看一下这些简单的原则是什么吧！</p>
-              <ol style="list-style-type: decimal">
-              <li>尽量减少接口和类的数量；</li>
-              <li>尽量不用接口；</li>
-              <li>package不要太深，也不要太多；</li>
-              <li>远程之类全部使用EJB(2.x)；</li>
-              </ol>
-              <p>等等</p>
-              <p>其实这个扯得多了，呵呵，这个话题是跟第三点有关，要开发一个功能，框架代码完成后，剩下的就是根据具体功能给出实现类了，这个应该算是常识，将所有这些实现类单独放在一个package下，既便于管理，语义上也比较好理解，但是那，这样的提议（真不算啥提议）让人家给踢回来了，呵呵，我真的不知道说啥好， 我说随着实现功能的增多，把所有的实现类放在当前一个package下面会flood当前package, 可是人家说了，就10几个类，能flood到啥程度啊，呵呵</p>
-              <p>某一天，突然想到一个比喻， 设想有一个花园，在我的花园里，花朵开放在修葺整齐的花坛中，草儿则轻轻爽爽的长在花坛外的草地上；而在PM的花园里，花和草则是间杂生长，至于那回事啥景象，我就不去想了，因为那跟我的理念完全是两个世界。</p>
-              <p>前几天还看到Javaeye上一个帖子，说不要把简单的事情搞得复杂，把所有的东西都一骨碌得print到console上就较简单了？多写几个循环就较复杂了？还将多么容易维护之类云云，nnd，你写软件真的就几个print到console就OK了？ 你或许可以将其裱称为有创意的思考，不过，你常年的修炼难道就是为了这个？说句不好听的话，这种伎俩，新手都比你玩得好， 我还从“袜子“那里听到过更又创意的那</p>
-              <p>你的mind就是一个花园，当你历尽千辛把它打理的井井有条，整洁有序的时候，让它荒芜也很简单，不去管它就是了。 不是写不出来那些所谓的println,而是经过了励练，那种东西已经早被抛弃了。到底是退步还是进步， 你自己或许比我更清楚！</p>
-              <p>设想一下，做codeReview的时候，你看到这样的代码会怎么做吧 ...</p>
-              
-      </div>
+
+<div class="row">
+<div id="header">
+<p class="lead">
+<h1 class="title">杂草丛生 VS 整洁有序</h1>
+</p>
+</div>
+
+<hr>
+
+
+<p>这个话题得从现在的项目经理的一个言论引出来。</p>
+<p>按照PM的说法，“我是简单原则的支持者”，云云， 那么，让我们来看一下这些简单的原则是什么吧！</p>
+<ol style="list-style-type: decimal">
+<li>尽量减少接口和类的数量；</li>
+<li>尽量不用接口；</li>
+<li>package不要太深，也不要太多；</li>
+<li>远程之类全部使用EJB(2.x)；</li>
+</ol>
+<p>等等</p>
+<p>其实这个扯得多了，呵呵，这个话题是跟第三点有关，要开发一个功能，框架代码完成后，剩下的就是根据具体功能给出实现类了，这个应该算是常识，将所有这些实现类单独放在一个package下，既便于管理，语义上也比较好理解，但是那，这样的提议（真不算啥提议）让人家给踢回来了，呵呵，我真的不知道说啥好， 我说随着实现功能的增多，把所有的实现类放在当前一个package下面会flood当前package, 可是人家说了，就10几个类，能flood到啥程度啊，呵呵</p>
+<p>某一天，突然想到一个比喻， 设想有一个花园，在我的花园里，花朵开放在修葺整齐的花坛中，草儿则轻轻爽爽的长在花坛外的草地上；而在PM的花园里，花和草则是间杂生长，至于那回事啥景象，我就不去想了，因为那跟我的理念完全是两个世界。</p>
+<p>前几天还看到Javaeye上一个帖子，说不要把简单的事情搞得复杂，把所有的东西都一骨碌得print到console上就较简单了？多写几个循环就较复杂了？还将多么容易维护之类云云，nnd，你写软件真的就几个print到console就OK了？ 你或许可以将其裱称为有创意的思考，不过，你常年的修炼难道就是为了这个？说句不好听的话，这种伎俩，新手都比你玩得好， 我还从“袜子“那里听到过更又创意的那</p>
+<p>你的mind就是一个花园，当你历尽千辛把它打理的井井有条，整洁有序的时候，让它荒芜也很简单，不去管它就是了。 不是写不出来那些所谓的println,而是经过了励练，那种东西已经早被抛弃了。到底是退步还是进步， 你自己或许比我更清楚！</p>
+<p>设想一下，做codeReview的时候，你看到这样的代码会怎么做吧 ...</p>
+
+</div>
+
       <div id="qrcode"></div>
       <div class="row">
         <div class="col-md-12 footer">

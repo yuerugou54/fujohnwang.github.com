@@ -7,12 +7,19 @@
   <meta http-equiv="X-UA-Compatible" content="chrome=1">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="author" content="扶墙老师@afoo.me">
-
-  <link rel="icon" href="/favicon.ico">
+    <link rel="icon" href="/favicon.ico">
 
   <title>创建纯基于SBT的Play工程 - 一个架构士的思考与沉淀之地</title>
 
-      <style type="text/css">
+  
+
+  <link href='/font/News_Cycle/stylesheet.css' rel='stylesheet' type='text/css'>
+  <link href="/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/css/bootstrap-theme.min.css" rel="stylesheet">
+  <link href="/css/afoo.me.css" rel="stylesheet">
+
+  <style type="text/css">code{white-space: pre;}</style>
+    <style type="text/css">
     div.sourceCode { overflow-x: auto; }
     table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
       margin: 0; padding: 0; vertical-align: baseline; border: none; }
@@ -33,12 +40,6 @@
     code > span.er { color: #ff0000; font-weight: bold; }
   </style>
         
-  <link href='/font/News_Cycle/stylesheet.css' rel='stylesheet' type='text/css'>
-
-  <link href="/css/bootstrap.min.css" rel="stylesheet">
-  <link href="/css/bootstrap-theme.min.css" rel="stylesheet">
-  <link href="/css/afoo.me.css" rel="stylesheet">
-
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>
@@ -58,111 +59,113 @@
           </a>
         </div>
     </div>
-    <div class="col-xs-12 col-md-10">
 
-          
-          <div class="row">
-                        <div id="header">
-              <p class="lead">
-              <h1 class="title">创建纯基于SBT的Play工程</h1>
-                                          </p>
-            </div>
-            
-              <hr>
+<div class="col-xs-12 col-md-10">
 
-                            <div id="TOC">
-                <ul>
-                <li><a href="#为sbt工程添加play插件"><span class="toc-section-number">1</span> 为SBT工程添加Play插件</a></li>
-                <li><a href="#明确指定项目使用的sbt版本"><span class="toc-section-number">2</span> 明确指定项目使用的SBT版本</a></li>
-                <li><a href="#在build文件中启用play插件"><span class="toc-section-number">3</span> 在build文件中启用Play插件</a></li>
-                <li><a href="#补充"><span class="toc-section-number">4</span> 补充</a></li>
-                </ul>
-              </div>
-              <hr/>
-              
-              <p>使用typesafe activator当然可以，但是这鸟东西每次都要升级， 而且哥一般都是直接命令行走SBT， 即使是使用activator创建了工程，也会一并将创建的工程下所有activator相关的东西都删掉，免得提交到版本控制系统。</p>
-              <p>因为Play使用SBT编译，所以，Play工程本身也就是一个标准的SBT工程，做多加上Play插件，所以，我等可以从头干净的自己创建一个Play工程...</p>
-              <h1 id="为sbt工程添加play插件"><span class="header-section-number">1</span> 为SBT工程添加Play插件</h1>
-              <p>在<code>project/plugins.sbt</code>配置中添加:</p>
-              <div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala">resolvers += <span class="st">&quot;Typesafe repository&quot;</span> at <span class="st">&quot;http://repo.typesafe.com/typesafe/releases/&quot;</span>
-              
-              <span class="fu">addSbtPlugin</span>(<span class="st">&quot;com.typesafe.play&quot;</span> % <span class="st">&quot;sbt-plugin&quot;</span> % <span class="st">&quot;2.3.6&quot;</span>)</code></pre></div>
-              <p>sbt-plugin的版本随play的发布改为最新的或者自己合适的版本即可。</p>
-              <h1 id="明确指定项目使用的sbt版本"><span class="header-section-number">2</span> 明确指定项目使用的SBT版本</h1>
-              <p>在<code>project/build.properties</code>中配置, 比如: <code>sbt.version=0.13.5</code></p>
-              <blockquote>
-              <p>注意</p>
-              <p>sbt-plugin 2.3.7等都严格依赖sbt0.13.5，所以， 版本一定要对应上</p>
-              </blockquote>
-              <h1 id="在build文件中启用play插件"><span class="header-section-number">3</span> 在build文件中启用Play插件</h1>
-              <p>在build.sbt中</p>
-              <div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala">name := <span class="st">&quot;my-first-app&quot;</span>
-              
-              version := <span class="st">&quot;1.0.0-SNAPSHOT&quot;</span>
-              
-              <span class="kw">lazy</span> <span class="kw">val</span> root = (project in <span class="fu">file</span>(<span class="st">&quot;.&quot;</span>)).<span class="fu">enablePlugins</span>(PlayScala)</code></pre></div>
-              <p>OK, 按照一般的SBT项目来编译即可。</p>
-              <h1 id="补充"><span class="header-section-number">4</span> 补充</h1>
-              <p>以上只是基本配置， 实际上，我们还会添加更多配置项，比如， 在<code>project/plugins.sbt</code>中，我们可能会配置更多插件:</p>
-              <div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala">resolvers += <span class="st">&quot;Typesafe repository&quot;</span> at <span class="st">&quot;http://repo.typesafe.com/typesafe/releases/&quot;</span>
-              
-              resolvers += Resolver.<span class="fu">url</span>(<span class="st">&quot;git://github.com/jrudolph/sbt-dependency-graph.git&quot;</span>)
-              
-              resolvers += <span class="st">&quot;sbt-idea-repo&quot;</span> at <span class="st">&quot;http://mpeltonen.github.com/maven/&quot;</span>
-              
-              <span class="fu">addSbtPlugin</span>(<span class="st">&quot;com.typesafe.play&quot;</span> % <span class="st">&quot;sbt-plugin&quot;</span> % <span class="st">&quot;2.3.6&quot;</span>)
-              
-              <span class="fu">addSbtPlugin</span>(<span class="st">&quot;com.github.mpeltonen&quot;</span> % <span class="st">&quot;sbt-idea&quot;</span> % <span class="st">&quot;1.5.2&quot;</span>)
-              
-              <span class="fu">addSbtPlugin</span>(<span class="st">&quot;net.virtual-void&quot;</span> % <span class="st">&quot;sbt-dependency-graph&quot;</span> % <span class="st">&quot;0.7.4&quot;</span>)
-              
-              <span class="fu">addSbtPlugin</span>(<span class="st">&quot;com.typesafe.sbt&quot;</span> % <span class="st">&quot;sbt-native-packager&quot;</span> % <span class="st">&quot;0.7.1&quot;</span>)
-              
-              <span class="fu">addSbtPlugin</span>(<span class="st">&quot;de.johoop&quot;</span> % <span class="st">&quot;sbt-testng-plugin&quot;</span> % <span class="st">&quot;3.0.2&quot;</span>)</code></pre></div>
-              <p>而在build.sbt中：</p>
-              <div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">import</span> com.<span class="fu">typesafe</span>.<span class="fu">sbt</span>.<span class="fu">SbtNativePackager</span>.<span class="fu">_</span>
-              <span class="kw">import</span> NativePackagerKeys.<span class="fu">_</span>
-              <span class="kw">import</span> com.<span class="fu">typesafe</span>.<span class="fu">sbt</span>.<span class="fu">packager</span>.<span class="fu">MappingsHelper</span>.<span class="fu">_</span>
-              
-              organization := <span class="st">&quot;com.github.fujohnwang&quot;</span>
-              
-              name := <span class="st">&quot;&quot;&quot;my-app-name&quot;&quot;&quot;</span>
-              
-              version := <span class="st">&quot;1.0.6-SNAPSHOT&quot;</span>
-              
-              <span class="kw">lazy</span> <span class="kw">val</span> root = (project in <span class="fu">file</span>(<span class="st">&quot;.&quot;</span>)).<span class="fu">enablePlugins</span>(PlayScala)
-              
-              javacOptions ++= Seq(<span class="st">&quot;-source&quot;</span>, <span class="st">&quot;1.6&quot;</span>, <span class="st">&quot;-target&quot;</span>, <span class="st">&quot;1.6&quot;</span>)
-              
-              scalaVersion := <span class="st">&quot;2.11.1&quot;</span>
-              
-              fullResolvers := Seq(
-                <span class="st">&quot;Local Maven Repository&quot;</span> at <span class="st">&quot;file://&quot;</span>+Path.<span class="fu">userHome</span>.<span class="fu">absolutePath</span>+<span class="st">&quot;/.m2/repository&quot;</span>,
-                <span class="st">&quot;WaCai Internal Repository&quot;</span> at <span class="st">&quot;http://repo.caimi-inc.com/content/groups/public/&quot;</span>,
-                <span class="st">&quot;SBT Plugins Release&quot;</span> at <span class="st">&quot;http://repo.scala-sbt.org/scalasbt/sbt-plugin-releases/&quot;</span>,
-                <span class="st">&quot;Typesafe Ivy Release&quot;</span> at <span class="st">&quot;http://repo.typesafe.com/typesafe/ivy-releases/&quot;</span>,
-                <span class="st">&quot;Typesafe Maven Release&quot;</span> at <span class="st">&quot;http://repo.typesafe.com/typesafe/maven-releases/&quot;</span>,
-                <span class="st">&quot;Central Maven Repository&quot;</span> at <span class="st">&quot;https://repo1.maven.org/maven2/&quot;</span>
-              )
-              
-              libraryDependencies ++= Seq(
-                jdbc,
-                anorm,
-                cache,
-                ws,
-                <span class="st">&quot;mysql&quot;</span> % <span class="st">&quot;mysql-connector-java&quot;</span> % <span class="st">&quot;5.1.32&quot;</span>,
-                <span class="st">&quot;redis.clients&quot;</span> % <span class="st">&quot;jedis&quot;</span> % <span class="st">&quot;2.5.2&quot;</span>
-              )
-              
-              mappings in Universal += <span class="fu">file</span>(<span class="st">&quot;ReleaseNote.md&quot;</span>) -&gt; <span class="st">&quot;ReleaseNote.md&quot;</span>
-              
-              mappings in Universal ++= <span class="fu">directory</span>(<span class="st">&quot;agents&quot;</span>)</code></pre></div>
-              <blockquote>
-              <p>注意</p>
-              <p>play的sbt-plugin的依赖的sbt native packager是0.7.4!</p>
-              </blockquote>
-              
-      </div>
+
+<div class="row">
+<div id="header">
+<p class="lead">
+<h1 class="title">创建纯基于SBT的Play工程</h1>
+</p>
+</div>
+
+<hr>
+
+<div id="TOC">
+<ul>
+<li><a href="#为sbt工程添加play插件"><span class="toc-section-number">1</span> 为SBT工程添加Play插件</a></li>
+<li><a href="#明确指定项目使用的sbt版本"><span class="toc-section-number">2</span> 明确指定项目使用的SBT版本</a></li>
+<li><a href="#在build文件中启用play插件"><span class="toc-section-number">3</span> 在build文件中启用Play插件</a></li>
+<li><a href="#补充"><span class="toc-section-number">4</span> 补充</a></li>
+</ul>
+</div>
+<hr/>
+
+<p>使用typesafe activator当然可以，但是这鸟东西每次都要升级， 而且哥一般都是直接命令行走SBT， 即使是使用activator创建了工程，也会一并将创建的工程下所有activator相关的东西都删掉，免得提交到版本控制系统。</p>
+<p>因为Play使用SBT编译，所以，Play工程本身也就是一个标准的SBT工程，做多加上Play插件，所以，我等可以从头干净的自己创建一个Play工程...</p>
+<h1 id="为sbt工程添加play插件"><span class="header-section-number">1</span> 为SBT工程添加Play插件</h1>
+<p>在<code>project/plugins.sbt</code>配置中添加:</p>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala">resolvers += <span class="st">&quot;Typesafe repository&quot;</span> at <span class="st">&quot;http://repo.typesafe.com/typesafe/releases/&quot;</span>
+
+<span class="fu">addSbtPlugin</span>(<span class="st">&quot;com.typesafe.play&quot;</span> % <span class="st">&quot;sbt-plugin&quot;</span> % <span class="st">&quot;2.3.6&quot;</span>)</code></pre></div>
+<p>sbt-plugin的版本随play的发布改为最新的或者自己合适的版本即可。</p>
+<h1 id="明确指定项目使用的sbt版本"><span class="header-section-number">2</span> 明确指定项目使用的SBT版本</h1>
+<p>在<code>project/build.properties</code>中配置, 比如: <code>sbt.version=0.13.5</code></p>
+<blockquote>
+<p>注意</p>
+<p>sbt-plugin 2.3.7等都严格依赖sbt0.13.5，所以， 版本一定要对应上</p>
+</blockquote>
+<h1 id="在build文件中启用play插件"><span class="header-section-number">3</span> 在build文件中启用Play插件</h1>
+<p>在build.sbt中</p>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala">name := <span class="st">&quot;my-first-app&quot;</span>
+
+version := <span class="st">&quot;1.0.0-SNAPSHOT&quot;</span>
+
+<span class="kw">lazy</span> <span class="kw">val</span> root = (project in <span class="fu">file</span>(<span class="st">&quot;.&quot;</span>)).<span class="fu">enablePlugins</span>(PlayScala)</code></pre></div>
+<p>OK, 按照一般的SBT项目来编译即可。</p>
+<h1 id="补充"><span class="header-section-number">4</span> 补充</h1>
+<p>以上只是基本配置， 实际上，我们还会添加更多配置项，比如， 在<code>project/plugins.sbt</code>中，我们可能会配置更多插件:</p>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala">resolvers += <span class="st">&quot;Typesafe repository&quot;</span> at <span class="st">&quot;http://repo.typesafe.com/typesafe/releases/&quot;</span>
+
+resolvers += Resolver.<span class="fu">url</span>(<span class="st">&quot;git://github.com/jrudolph/sbt-dependency-graph.git&quot;</span>)
+
+resolvers += <span class="st">&quot;sbt-idea-repo&quot;</span> at <span class="st">&quot;http://mpeltonen.github.com/maven/&quot;</span>
+
+<span class="fu">addSbtPlugin</span>(<span class="st">&quot;com.typesafe.play&quot;</span> % <span class="st">&quot;sbt-plugin&quot;</span> % <span class="st">&quot;2.3.6&quot;</span>)
+
+<span class="fu">addSbtPlugin</span>(<span class="st">&quot;com.github.mpeltonen&quot;</span> % <span class="st">&quot;sbt-idea&quot;</span> % <span class="st">&quot;1.5.2&quot;</span>)
+
+<span class="fu">addSbtPlugin</span>(<span class="st">&quot;net.virtual-void&quot;</span> % <span class="st">&quot;sbt-dependency-graph&quot;</span> % <span class="st">&quot;0.7.4&quot;</span>)
+
+<span class="fu">addSbtPlugin</span>(<span class="st">&quot;com.typesafe.sbt&quot;</span> % <span class="st">&quot;sbt-native-packager&quot;</span> % <span class="st">&quot;0.7.1&quot;</span>)
+
+<span class="fu">addSbtPlugin</span>(<span class="st">&quot;de.johoop&quot;</span> % <span class="st">&quot;sbt-testng-plugin&quot;</span> % <span class="st">&quot;3.0.2&quot;</span>)</code></pre></div>
+<p>而在build.sbt中：</p>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">import</span> com.<span class="fu">typesafe</span>.<span class="fu">sbt</span>.<span class="fu">SbtNativePackager</span>.<span class="fu">_</span>
+<span class="kw">import</span> NativePackagerKeys.<span class="fu">_</span>
+<span class="kw">import</span> com.<span class="fu">typesafe</span>.<span class="fu">sbt</span>.<span class="fu">packager</span>.<span class="fu">MappingsHelper</span>.<span class="fu">_</span>
+
+organization := <span class="st">&quot;com.github.fujohnwang&quot;</span>
+
+name := <span class="st">&quot;&quot;&quot;my-app-name&quot;&quot;&quot;</span>
+
+version := <span class="st">&quot;1.0.6-SNAPSHOT&quot;</span>
+
+<span class="kw">lazy</span> <span class="kw">val</span> root = (project in <span class="fu">file</span>(<span class="st">&quot;.&quot;</span>)).<span class="fu">enablePlugins</span>(PlayScala)
+
+javacOptions ++= Seq(<span class="st">&quot;-source&quot;</span>, <span class="st">&quot;1.6&quot;</span>, <span class="st">&quot;-target&quot;</span>, <span class="st">&quot;1.6&quot;</span>)
+
+scalaVersion := <span class="st">&quot;2.11.1&quot;</span>
+
+fullResolvers := Seq(
+  <span class="st">&quot;Local Maven Repository&quot;</span> at <span class="st">&quot;file://&quot;</span>+Path.<span class="fu">userHome</span>.<span class="fu">absolutePath</span>+<span class="st">&quot;/.m2/repository&quot;</span>,
+  <span class="st">&quot;WaCai Internal Repository&quot;</span> at <span class="st">&quot;http://repo.caimi-inc.com/content/groups/public/&quot;</span>,
+  <span class="st">&quot;SBT Plugins Release&quot;</span> at <span class="st">&quot;http://repo.scala-sbt.org/scalasbt/sbt-plugin-releases/&quot;</span>,
+  <span class="st">&quot;Typesafe Ivy Release&quot;</span> at <span class="st">&quot;http://repo.typesafe.com/typesafe/ivy-releases/&quot;</span>,
+  <span class="st">&quot;Typesafe Maven Release&quot;</span> at <span class="st">&quot;http://repo.typesafe.com/typesafe/maven-releases/&quot;</span>,
+  <span class="st">&quot;Central Maven Repository&quot;</span> at <span class="st">&quot;https://repo1.maven.org/maven2/&quot;</span>
+)
+
+libraryDependencies ++= Seq(
+  jdbc,
+  anorm,
+  cache,
+  ws,
+  <span class="st">&quot;mysql&quot;</span> % <span class="st">&quot;mysql-connector-java&quot;</span> % <span class="st">&quot;5.1.32&quot;</span>,
+  <span class="st">&quot;redis.clients&quot;</span> % <span class="st">&quot;jedis&quot;</span> % <span class="st">&quot;2.5.2&quot;</span>
+)
+
+mappings in Universal += <span class="fu">file</span>(<span class="st">&quot;ReleaseNote.md&quot;</span>) -&gt; <span class="st">&quot;ReleaseNote.md&quot;</span>
+
+mappings in Universal ++= <span class="fu">directory</span>(<span class="st">&quot;agents&quot;</span>)</code></pre></div>
+<blockquote>
+<p>注意</p>
+<p>play的sbt-plugin的依赖的sbt native packager是0.7.4!</p>
+</blockquote>
+
+</div>
+
       <div id="qrcode"></div>
       <div class="row">
         <div class="col-md-12 footer">

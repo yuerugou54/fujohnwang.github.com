@@ -7,19 +7,20 @@
   <meta http-equiv="X-UA-Compatible" content="chrome=1">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="author" content="扶墙老师@afoo.me">
-
-  <link rel="icon" href="/favicon.ico">
+    <meta name="date" content="2012-02-27" />
+    <link rel="icon" href="/favicon.ico">
 
   <title>&quot;senseidb VS. Solr VS. elasticsearch (Incomplete)&quot; - 一个架构士的思考与沉淀之地</title>
 
-    <meta name="date" content="2012-02-27" />
-          
-  <link href='/font/News_Cycle/stylesheet.css' rel='stylesheet' type='text/css'>
+  
 
+  <link href='/font/News_Cycle/stylesheet.css' rel='stylesheet' type='text/css'>
   <link href="/css/bootstrap.min.css" rel="stylesheet">
   <link href="/css/bootstrap-theme.min.css" rel="stylesheet">
   <link href="/css/afoo.me.css" rel="stylesheet">
 
+  <style type="text/css">code{white-space: pre;}</style>
+        
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>
@@ -39,248 +40,250 @@
           </a>
         </div>
     </div>
-    <div class="col-xs-12 col-md-10">
 
-          
-          <div class="row">
-                        <div id="header">
-              <p class="lead">
-              <h1 class="title">&quot;senseidb VS. Solr VS. elasticsearch (<strong><em>Incomplete</em></strong>)&quot;</h1>
-                            <small>
-                  <h3 class="author">fujohnwang</h3>
-              </small>
-                                        <h4 class="date">2012-02-27</h4>
-                              </p>
-            </div>
-            
-              <hr>
+<div class="col-xs-12 col-md-10">
 
-                            <div id="TOC">
-                <ul>
-                <li><a href="#solr"><span class="toc-section-number">1</span> 1. <a href="http://lucene.apache.org/solr/">Solr</a></a><ul>
-                <li><a href="#features"><span class="toc-section-number">1.1</span> Features</a></li>
-                <li><a href="#pros-cons"><span class="toc-section-number">1.2</span> Pros &amp; Cons</a></li>
-                <li><a href="#references"><span class="toc-section-number">1.3</span> References</a></li>
-                </ul></li>
-                <li><a href="#senseidb"><span class="toc-section-number">2</span> 2. <a href="http://senseidb.com/overview.html">Senseidb</a></a><ul>
-                <li><a href="#features-1"><span class="toc-section-number">2.1</span> Features</a></li>
-                <li><a href="#pros-cons-1"><span class="toc-section-number">2.2</span> Pros &amp; Cons</a></li>
-                <li><a href="#为何没有直接用solr"><span class="toc-section-number">2.3</span> 为何没有直接用Solr？</a></li>
-                <li><a href="#references-1"><span class="toc-section-number">2.4</span> References</a></li>
-                </ul></li>
-                <li><a href="#elasticsearch"><span class="toc-section-number">3</span> 3. <a href="http://www.elasticsearch.org/">elasticsearch</a></a><ul>
-                <li><a href="#features-2"><span class="toc-section-number">3.1</span> Features</a></li>
-                <li><a href="#pros-cons-2"><span class="toc-section-number">3.2</span> Pros &amp; Cons</a></li>
-                <li><a href="#references-2"><span class="toc-section-number">3.3</span> References</a></li>
-                </ul></li>
-                <li><a href="#conclusion"><span class="toc-section-number">4</span> 4. Conclusion</a></li>
-                <li><a href="#其它参考文献"><span class="toc-section-number">5</span> 其它参考文献</a></li>
-                </ul>
-              </div>
-              <hr/>
-              
-              <p>比较的时候，主要关注以下几个方面：</p>
-              <ol style="list-style-type: decimal">
-              <li>Clustering
-              <ul>
-              <li>Scalability on Storage and Service</li>
-              <li>High Availability Considerations</li>
-              </ul></li>
-              <li>Features</li>
-              <li>Flexibility</li>
-              </ol>
-              <h1 id="solr"><span class="header-section-number">1</span> 1. <a href="http://lucene.apache.org/solr/">Solr</a></h1>
-              <p>很显然， Solr跟Lucene是一家，所以，对Lucene做了很多扩展，与lucene的集成也比较好，而且，业界貌似求稳的都会选择Solr来构建他们的搜索体系。</p>
-              <p>但SolrCloud才是最终的理想解决方案，而SolrCloud还没有production-ready。</p>
-              <p>下面是Solr相关的架构图： <img src="http://people.apache.org/~sgoeschl/presentations/solr/pix/solr-overview.png" alt="image" /> <img src="http://www.ibm.com/developerworks/java/library/j-solr-update/search-architecture.gif" alt="solr architecture" /></p>
-              <h2 id="features"><span class="header-section-number">1.1</span> Features</h2>
-              <p>Solr的首页上对自己的特性罗列阐述的很详细了，这里不再赘述。</p>
-              <h2 id="pros-cons"><span class="header-section-number">1.2</span> Pros &amp; Cons</h2>
-              <ul>
-              <li>Pros
-              <ul>
-              <li>成熟且验证过的方案</li>
-              <li>文档资料丰富</li>
-              <li>社区活跃</li>
-              <li>plugin extension points</li>
-              </ul></li>
-              <li>Cons
-              <ul>
-              <li>貌似体系比较庞杂， replication的架构扩展有稍许问题？！</li>
-              </ul></li>
-              </ul>
-              <h2 id="references"><span class="header-section-number">1.3</span> References</h2>
-              <ol style="list-style-type: decimal">
-              <li><a href="http://wiki.apache.org/solr/NewSolrCloudDesign">New SolrCloud Design</a></li>
-              <li><a href="http://www.lucidimagination.com/content/scaling-lucene-and-solr">Scaling Lucene and Solr</a></li>
-              <li><a href="http://codeascraft.etsy.com/2012/01/23/solr-bittorrent-index-replication/">Turbocharging Solr Index Replication with BitTorrent</a>
-              <ul>
-              <li>funny and sparkling idea by introducing BitTorrent replication mechanism *****</li>
-              </ul></li>
-              <li><a href="http://wiki.apache.org/solr/DistributedSearch">Distributed Searching</a></li>
-              <li><a href="http://project.carrot2.org/">Carrot2-OSS framework for building search clustering engine</a>
-              <ul>
-              <li>Solr search results clustering is based on the Carrot2 real-time document clustering engine.</li>
-              </ul></li>
-              <li><a href="http://wiki.apache.org/solr/ClusteringComponent">Clustering Component</a>
-              <ul>
-              <li>结果集的分类</li>
-              </ul></li>
-              <li><a href="http://wiki.apache.org/solr/NewSolrCloudDesign">New SolrCloud Design</a></li>
-              <li><a href="http://wiki.apache.org/solr/SolrCloud">SolrCloud</a></li>
-              <li><a href="http://wiki.apache.org/solr/UniqueKey">UniqueKey</a></li>
-              <li><a href="http://wiki.apache.org/solr/NearRealtimeSearch">Solr Near Realtime Search</a>
-              <ul>
-              <li>will be added in Solr4, currently available in trunk</li>
-              </ul></li>
-              <li><a href="http://java.dzone.com/articles/scaling-solr-indexing">Scaling Solr Indexing with SolrCloud, Hadoop and Behemoth</a></li>
-              </ol>
-              <hr />
-              <h1 id="senseidb"><span class="header-section-number">2</span> 2. <a href="http://senseidb.com/overview.html">Senseidb</a></h1>
-              <div class="figure">
-              <img src="http://linkedin.github.com/sensei//images/sensei-architect.png" alt="architecture of sensei" />
-              <p class="caption">architecture of sensei</p>
-              </div>
-              <h2 id="features-1"><span class="header-section-number">2.1</span> Features</h2>
-              <ol style="list-style-type: decimal">
-              <li>主要解决高速索引更新的问题;
-              <ul>
-              <li>底层是zoie的“<strong>2-swapping-in-memory-index + 1-on-disk-index</strong>”索引结构支持</li>
-              </ul></li>
-              <li>需要定义schema;</li>
-              <li>通过Gateway可以接入多种数据源;</li>
-              <li>通过BQL或者REST API，甚至各种语言bindings进行数据查询；</li>
-              <li>支持通过hadoop MR job批量更新数据索引；</li>
-              </ol>
-              <h2 id="pros-cons-1"><span class="header-section-number">2.2</span> Pros &amp; Cons</h2>
-              <ul>
-              <li>Pros
-              <ul>
-              <li>高速索引更新</li>
-              <li>多数据源接入</li>
-              <li>灵活的访问接口</li>
-              <li>与hadoop生态的集成</li>
-              <li>优秀的分布式扩展能力</li>
-              </ul></li>
-              <li>Cons
-              <ul>
-              <li>static schema</li>
-              <li>application side versioning maitaining</li>
-              </ul></li>
-              </ul>
-              <h2 id="为何没有直接用solr"><span class="header-section-number">2.3</span> 为何没有直接用Solr？</h2>
-              <p>摘录在John Wang的访谈片段：</p>
-              <pre><code>Sensei leverages Lucene.
-              
-              We weren’t able to leverage Solr because of the following requirements:
-              
-                  * High update requirement, 10’s of thousands updates per second in to the system
-                  * Real distributed solution, current Solr’s distributed story has a SPOF at the master, and Solr Cloud is not yet completed.
-                  * Complex faceting support. Not just your standard terms based faceting. We needed to facet on social graph, dynamic time ranges and many other interesting faceting scenarios. Faceting behavior also needs to be highly customizable, which is not available via Solr.</code></pre>
-              <h2 id="references-1"><span class="header-section-number">2.4</span> References</h2>
-              <ol style="list-style-type: decimal">
-              <li><a href="http://engineering.linkedin.com/open-source/introducing-senseidb-10-open-source-distributed-realtime-semi-structured-database">Introducing SenseiDB 1.0: an open-source, distributed, realtime, semi-structured database</a></li>
-              <li><a href="http://blog.sematext.com/2012/01/26/sensei-distributed-realtime-semi-structured-database/">Sensei: distributed, realtime, semi-structured database</a></li>
-              </ol>
-              <hr />
-              <h1 id="elasticsearch"><span class="header-section-number">3</span> 3. <a href="http://www.elasticsearch.org/">elasticsearch</a></h1>
-              <p>很新，当前0.19RC3版本， 文档缺乏 <img src="http://log.medcl.net/wp-content/uploads/2011/08/es-architecture.png" alt="image" /></p>
-              <p>不过， ES确实有很多值得喝彩的地方。</p>
-              <h2 id="features-2"><span class="header-section-number">3.1</span> Features</h2>
-              <ol style="list-style-type: decimal">
-              <li>Schema-Free | Schemaless</li>
-              <li>feed index engine with JSON formatted documents</li>
-              <li>Query by Lucene based query string or JSON based query DSL over HTTP or Native Java;</li>
-              <li>shards and replicas, LB and routings</li>
-              <li>cloud integration</li>
-              <li>multiple search types</li>
-              <li>multiple data sources integration with River</li>
-              <li>many more...</li>
-              </ol>
-              <h2 id="pros-cons-2"><span class="header-section-number">3.2</span> Pros &amp; Cons</h2>
-              <ul>
-              <li>Pros
-              <ul>
-              <li>许多灵活， 优秀的特性（见features列表）</li>
-              <li>作者拥有多年在搜索领域的涉猎经验</li>
-              <li>senseidb的pros它也基本都有</li>
-              </ul></li>
-              <li>Cons
-              <ul>
-              <li>文档不足</li>
-              <li>后端没有大的商业机构支持</li>
-              </ul></li>
-              </ul>
-              <h2 id="references-2"><span class="header-section-number">3.3</span> References</h2>
-              <ol style="list-style-type: decimal">
-              <li><a href="http://www.slideshare.net/medcl/elastic-search-quick-intro?from=ss_embed">quick intro to elastic search</a></li>
-              <li><a href="https://blog.mozilla.com/data/2010/12/30/flume-hive-and-realtime-indexing-via-elasticsearch-2/">Flume, Hive and realtime indexing via ElasticSearch</a></li>
-              <li><a href="http://www.kimchy.org/the_future_of_compass/">The Future of Compass &amp; ElasticSearch</a></li>
-              <li><a href="http://blog.sematext.com/2010/05/03/elastic-search-distributed-lucene/">Elastic Search: Distributed, Lucene-based Search Engine</a></li>
-              <li><a href="http://www.slideshare.net/elasticsearch/elasticsearch-at-berlinbuzzwords-2010">ElasticSearch at berlinbuzzwords 2010</a></li>
-              <li><a href="http://www.slideshare.net/macrochen/elastic-search-apachesolr-10881377?from=ss_embed">Elastic Search Vs. Apache Solr</a>
-              <ul>
-              <li>这篇貌似倾向于ES比较多一些</li>
-              </ul></li>
-              <li><a href="http://www.elasticsearch.org/blog/2010/02/12/yourdatayoursearch.html">Your Data, Your Search</a></li>
-              <li><a href="http://www.elasticsearch.org/blog/2010/02/16/searchengine_time_machine.html">Search Engine Time Machine</a>
-              <ul>
-              <li>transient状态与持久化状态的结合， write behind策略</li>
-              </ul></li>
-              <li><a href="http://www.elasticsearch.org/blog/2010/02/25/nosql_yessearch.html">NoSQL, Yes Search</a>
-              <ul>
-              <li>多种数据源类型的平滑接入</li>
-              </ul></li>
-              <li><a href="http://www.elasticsearch.org/blog/2010/08/16/geo_location_and_search.html">Geo Location and Search</a>
-              <ul>
-              <li>基于geo进行排序的特性很新颖</li>
-              </ul></li>
-              <li><a href="http://www.elasticsearch.org/blog/2010/09/27/zero_conf_persistency.html">Zero Conf Persistency</a>
-              <ul>
-              <li>Local Gateway (Local Storage | Local FileSystem)</li>
-              </ul></li>
-              <li><a href="http://www.elasticsearch.org/blog/2010/09/28/the_river.html">The River</a>
-              <ul>
-              <li>ES里River的概念跟Senseidb里Gateway的概念相近， 是数据源通道的意思，可以根据不同的数据源给出不同的River实现，比如基于MysqlBinlog的River， 基于Hbase的River，或者<a href="http://www.elasticsearch.org/blog/2010/09/28/the_river_rabbitmq.html">RabbitMQ River</a>，<a href="http://www.elasticsearch.org/blog/2010/09/28/the_river_searchable_couchdb.html">CouchDB River</a> etc.</li>
-              </ul></li>
-              <li><a href="http://www.elasticsearch.org/blog/2011/02/08/percolator.html">Percolator</a>
-              <ul>
-              <li>这个Percolator是ES里的概念，不要跟Google的Percolator混淆</li>
-              </ul></li>
-              <li><a href="http://www.elasticsearch.org/blog/2011/02/08/versioning.html">Versioning</a>
-              <ul>
-              <li>Optimistic Concurrency Control</li>
-              </ul></li>
-              <li><a href="http://www.elasticsearch.org/blog/2011/03/24/new-search-types.html">New Search Types</a>
-              <ul>
-              <li>Introduce <strong>count</strong> and <strong>scan</strong> search types, the latter can be used to scroll large result set</li>
-              </ul></li>
-              <li><a href="http://www.elasticsearch.org/blog/2011/05/13/data-visualization-with-elasticsearch-and-protovis.html">Data Visualization with ElasticSearch and</a> <a href="http://vis.stanford.edu/protovis/"><strong>Protovis</strong></a></li>
-              <li><a href="http://www.elasticsearch.org/videos/2010/02/08/es-distributed-diagram.html">Distributed Diagram</a> (Video)</li>
-              <li><a href="http://www.elasticsearch.org/videos/2011/08/09/road-to-a-distributed-searchengine-berlinbuzzwords.html">Road to a Distributed Search Engine</a> (Video)*****</li>
-              </ol>
-              <hr />
-              <h1 id="conclusion"><span class="header-section-number">4</span> 4. Conclusion</h1>
-              <ol style="list-style-type: decimal">
-              <li>All are based on Lucene.</li>
-              <li>All are distributed.
-              <ul>
-              <li>senseidb shards with multi-write?!</li>
-              <li>solr shards with master-slaves and slave pull strategy;</li>
-              <li>elasticsearch shards with primary-secondary push strategy;</li>
-              </ul></li>
-              <li>All do partitioning in document granularity, All require some unique key for each document(optional for some situations);</li>
-              <li>Sensei is good at real-time index update; Solr is good at stable and wide adoption; Elasticsearch is good at flexible and good ideas;</li>
-              </ol>
-              <h1 id="其它参考文献"><span class="header-section-number">5</span> 其它参考文献</h1>
-              <ol style="list-style-type: decimal">
-              <li><a href="http://www.spnguru.com/2011/02/lily%E6%9E%B6%E6%9E%84%E7%AE%80%E4%BB%8B/">Lily架构简介</a>
-              <ul>
-              <li>在自己的lily node里实现了multiwrite + wal+ message queue的数据分发， 没有充分利用现有系统中各个组件/系统的能力(虽然是基于hbase的table实现的)， 部分上来讲把事情搞复杂了。</li>
-              </ul></li>
-              </ol>
-              
-      </div>
+
+<div class="row">
+<div id="header">
+<p class="lead">
+<h1 class="title">&quot;senseidb VS. Solr VS. elasticsearch (<strong><em>Incomplete</em></strong>)&quot;</h1>
+<small>
+<h3 class="author">fujohnwang</h3>
+</small>
+<h4 class="date">2012-02-27</h4>
+</p>
+</div>
+
+<hr>
+
+<div id="TOC">
+<ul>
+<li><a href="#solr"><span class="toc-section-number">1</span> 1. <a href="http://lucene.apache.org/solr/">Solr</a></a><ul>
+<li><a href="#features"><span class="toc-section-number">1.1</span> Features</a></li>
+<li><a href="#pros-cons"><span class="toc-section-number">1.2</span> Pros &amp; Cons</a></li>
+<li><a href="#references"><span class="toc-section-number">1.3</span> References</a></li>
+</ul></li>
+<li><a href="#senseidb"><span class="toc-section-number">2</span> 2. <a href="http://senseidb.com/overview.html">Senseidb</a></a><ul>
+<li><a href="#features-1"><span class="toc-section-number">2.1</span> Features</a></li>
+<li><a href="#pros-cons-1"><span class="toc-section-number">2.2</span> Pros &amp; Cons</a></li>
+<li><a href="#为何没有直接用solr"><span class="toc-section-number">2.3</span> 为何没有直接用Solr？</a></li>
+<li><a href="#references-1"><span class="toc-section-number">2.4</span> References</a></li>
+</ul></li>
+<li><a href="#elasticsearch"><span class="toc-section-number">3</span> 3. <a href="http://www.elasticsearch.org/">elasticsearch</a></a><ul>
+<li><a href="#features-2"><span class="toc-section-number">3.1</span> Features</a></li>
+<li><a href="#pros-cons-2"><span class="toc-section-number">3.2</span> Pros &amp; Cons</a></li>
+<li><a href="#references-2"><span class="toc-section-number">3.3</span> References</a></li>
+</ul></li>
+<li><a href="#conclusion"><span class="toc-section-number">4</span> 4. Conclusion</a></li>
+<li><a href="#其它参考文献"><span class="toc-section-number">5</span> 其它参考文献</a></li>
+</ul>
+</div>
+<hr/>
+
+<p>比较的时候，主要关注以下几个方面：</p>
+<ol style="list-style-type: decimal">
+<li>Clustering
+<ul>
+<li>Scalability on Storage and Service</li>
+<li>High Availability Considerations</li>
+</ul></li>
+<li>Features</li>
+<li>Flexibility</li>
+</ol>
+<h1 id="solr"><span class="header-section-number">1</span> 1. <a href="http://lucene.apache.org/solr/">Solr</a></h1>
+<p>很显然， Solr跟Lucene是一家，所以，对Lucene做了很多扩展，与lucene的集成也比较好，而且，业界貌似求稳的都会选择Solr来构建他们的搜索体系。</p>
+<p>但SolrCloud才是最终的理想解决方案，而SolrCloud还没有production-ready。</p>
+<p>下面是Solr相关的架构图： <img src="http://people.apache.org/~sgoeschl/presentations/solr/pix/solr-overview.png" alt="image" /> <img src="http://www.ibm.com/developerworks/java/library/j-solr-update/search-architecture.gif" alt="solr architecture" /></p>
+<h2 id="features"><span class="header-section-number">1.1</span> Features</h2>
+<p>Solr的首页上对自己的特性罗列阐述的很详细了，这里不再赘述。</p>
+<h2 id="pros-cons"><span class="header-section-number">1.2</span> Pros &amp; Cons</h2>
+<ul>
+<li>Pros
+<ul>
+<li>成熟且验证过的方案</li>
+<li>文档资料丰富</li>
+<li>社区活跃</li>
+<li>plugin extension points</li>
+</ul></li>
+<li>Cons
+<ul>
+<li>貌似体系比较庞杂， replication的架构扩展有稍许问题？！</li>
+</ul></li>
+</ul>
+<h2 id="references"><span class="header-section-number">1.3</span> References</h2>
+<ol style="list-style-type: decimal">
+<li><a href="http://wiki.apache.org/solr/NewSolrCloudDesign">New SolrCloud Design</a></li>
+<li><a href="http://www.lucidimagination.com/content/scaling-lucene-and-solr">Scaling Lucene and Solr</a></li>
+<li><a href="http://codeascraft.etsy.com/2012/01/23/solr-bittorrent-index-replication/">Turbocharging Solr Index Replication with BitTorrent</a>
+<ul>
+<li>funny and sparkling idea by introducing BitTorrent replication mechanism *****</li>
+</ul></li>
+<li><a href="http://wiki.apache.org/solr/DistributedSearch">Distributed Searching</a></li>
+<li><a href="http://project.carrot2.org/">Carrot2-OSS framework for building search clustering engine</a>
+<ul>
+<li>Solr search results clustering is based on the Carrot2 real-time document clustering engine.</li>
+</ul></li>
+<li><a href="http://wiki.apache.org/solr/ClusteringComponent">Clustering Component</a>
+<ul>
+<li>结果集的分类</li>
+</ul></li>
+<li><a href="http://wiki.apache.org/solr/NewSolrCloudDesign">New SolrCloud Design</a></li>
+<li><a href="http://wiki.apache.org/solr/SolrCloud">SolrCloud</a></li>
+<li><a href="http://wiki.apache.org/solr/UniqueKey">UniqueKey</a></li>
+<li><a href="http://wiki.apache.org/solr/NearRealtimeSearch">Solr Near Realtime Search</a>
+<ul>
+<li>will be added in Solr4, currently available in trunk</li>
+</ul></li>
+<li><a href="http://java.dzone.com/articles/scaling-solr-indexing">Scaling Solr Indexing with SolrCloud, Hadoop and Behemoth</a></li>
+</ol>
+<hr />
+<h1 id="senseidb"><span class="header-section-number">2</span> 2. <a href="http://senseidb.com/overview.html">Senseidb</a></h1>
+<div class="figure">
+<img src="http://linkedin.github.com/sensei//images/sensei-architect.png" alt="architecture of sensei" />
+<p class="caption">architecture of sensei</p>
+</div>
+<h2 id="features-1"><span class="header-section-number">2.1</span> Features</h2>
+<ol style="list-style-type: decimal">
+<li>主要解决高速索引更新的问题;
+<ul>
+<li>底层是zoie的“<strong>2-swapping-in-memory-index + 1-on-disk-index</strong>”索引结构支持</li>
+</ul></li>
+<li>需要定义schema;</li>
+<li>通过Gateway可以接入多种数据源;</li>
+<li>通过BQL或者REST API，甚至各种语言bindings进行数据查询；</li>
+<li>支持通过hadoop MR job批量更新数据索引；</li>
+</ol>
+<h2 id="pros-cons-1"><span class="header-section-number">2.2</span> Pros &amp; Cons</h2>
+<ul>
+<li>Pros
+<ul>
+<li>高速索引更新</li>
+<li>多数据源接入</li>
+<li>灵活的访问接口</li>
+<li>与hadoop生态的集成</li>
+<li>优秀的分布式扩展能力</li>
+</ul></li>
+<li>Cons
+<ul>
+<li>static schema</li>
+<li>application side versioning maitaining</li>
+</ul></li>
+</ul>
+<h2 id="为何没有直接用solr"><span class="header-section-number">2.3</span> 为何没有直接用Solr？</h2>
+<p>摘录在John Wang的访谈片段：</p>
+<pre><code>Sensei leverages Lucene.
+
+We weren’t able to leverage Solr because of the following requirements:
+
+    * High update requirement, 10’s of thousands updates per second in to the system
+    * Real distributed solution, current Solr’s distributed story has a SPOF at the master, and Solr Cloud is not yet completed.
+    * Complex faceting support. Not just your standard terms based faceting. We needed to facet on social graph, dynamic time ranges and many other interesting faceting scenarios. Faceting behavior also needs to be highly customizable, which is not available via Solr.</code></pre>
+<h2 id="references-1"><span class="header-section-number">2.4</span> References</h2>
+<ol style="list-style-type: decimal">
+<li><a href="http://engineering.linkedin.com/open-source/introducing-senseidb-10-open-source-distributed-realtime-semi-structured-database">Introducing SenseiDB 1.0: an open-source, distributed, realtime, semi-structured database</a></li>
+<li><a href="http://blog.sematext.com/2012/01/26/sensei-distributed-realtime-semi-structured-database/">Sensei: distributed, realtime, semi-structured database</a></li>
+</ol>
+<hr />
+<h1 id="elasticsearch"><span class="header-section-number">3</span> 3. <a href="http://www.elasticsearch.org/">elasticsearch</a></h1>
+<p>很新，当前0.19RC3版本， 文档缺乏 <img src="http://log.medcl.net/wp-content/uploads/2011/08/es-architecture.png" alt="image" /></p>
+<p>不过， ES确实有很多值得喝彩的地方。</p>
+<h2 id="features-2"><span class="header-section-number">3.1</span> Features</h2>
+<ol style="list-style-type: decimal">
+<li>Schema-Free | Schemaless</li>
+<li>feed index engine with JSON formatted documents</li>
+<li>Query by Lucene based query string or JSON based query DSL over HTTP or Native Java;</li>
+<li>shards and replicas, LB and routings</li>
+<li>cloud integration</li>
+<li>multiple search types</li>
+<li>multiple data sources integration with River</li>
+<li>many more...</li>
+</ol>
+<h2 id="pros-cons-2"><span class="header-section-number">3.2</span> Pros &amp; Cons</h2>
+<ul>
+<li>Pros
+<ul>
+<li>许多灵活， 优秀的特性（见features列表）</li>
+<li>作者拥有多年在搜索领域的涉猎经验</li>
+<li>senseidb的pros它也基本都有</li>
+</ul></li>
+<li>Cons
+<ul>
+<li>文档不足</li>
+<li>后端没有大的商业机构支持</li>
+</ul></li>
+</ul>
+<h2 id="references-2"><span class="header-section-number">3.3</span> References</h2>
+<ol style="list-style-type: decimal">
+<li><a href="http://www.slideshare.net/medcl/elastic-search-quick-intro?from=ss_embed">quick intro to elastic search</a></li>
+<li><a href="https://blog.mozilla.com/data/2010/12/30/flume-hive-and-realtime-indexing-via-elasticsearch-2/">Flume, Hive and realtime indexing via ElasticSearch</a></li>
+<li><a href="http://www.kimchy.org/the_future_of_compass/">The Future of Compass &amp; ElasticSearch</a></li>
+<li><a href="http://blog.sematext.com/2010/05/03/elastic-search-distributed-lucene/">Elastic Search: Distributed, Lucene-based Search Engine</a></li>
+<li><a href="http://www.slideshare.net/elasticsearch/elasticsearch-at-berlinbuzzwords-2010">ElasticSearch at berlinbuzzwords 2010</a></li>
+<li><a href="http://www.slideshare.net/macrochen/elastic-search-apachesolr-10881377?from=ss_embed">Elastic Search Vs. Apache Solr</a>
+<ul>
+<li>这篇貌似倾向于ES比较多一些</li>
+</ul></li>
+<li><a href="http://www.elasticsearch.org/blog/2010/02/12/yourdatayoursearch.html">Your Data, Your Search</a></li>
+<li><a href="http://www.elasticsearch.org/blog/2010/02/16/searchengine_time_machine.html">Search Engine Time Machine</a>
+<ul>
+<li>transient状态与持久化状态的结合， write behind策略</li>
+</ul></li>
+<li><a href="http://www.elasticsearch.org/blog/2010/02/25/nosql_yessearch.html">NoSQL, Yes Search</a>
+<ul>
+<li>多种数据源类型的平滑接入</li>
+</ul></li>
+<li><a href="http://www.elasticsearch.org/blog/2010/08/16/geo_location_and_search.html">Geo Location and Search</a>
+<ul>
+<li>基于geo进行排序的特性很新颖</li>
+</ul></li>
+<li><a href="http://www.elasticsearch.org/blog/2010/09/27/zero_conf_persistency.html">Zero Conf Persistency</a>
+<ul>
+<li>Local Gateway (Local Storage | Local FileSystem)</li>
+</ul></li>
+<li><a href="http://www.elasticsearch.org/blog/2010/09/28/the_river.html">The River</a>
+<ul>
+<li>ES里River的概念跟Senseidb里Gateway的概念相近， 是数据源通道的意思，可以根据不同的数据源给出不同的River实现，比如基于MysqlBinlog的River， 基于Hbase的River，或者<a href="http://www.elasticsearch.org/blog/2010/09/28/the_river_rabbitmq.html">RabbitMQ River</a>，<a href="http://www.elasticsearch.org/blog/2010/09/28/the_river_searchable_couchdb.html">CouchDB River</a> etc.</li>
+</ul></li>
+<li><a href="http://www.elasticsearch.org/blog/2011/02/08/percolator.html">Percolator</a>
+<ul>
+<li>这个Percolator是ES里的概念，不要跟Google的Percolator混淆</li>
+</ul></li>
+<li><a href="http://www.elasticsearch.org/blog/2011/02/08/versioning.html">Versioning</a>
+<ul>
+<li>Optimistic Concurrency Control</li>
+</ul></li>
+<li><a href="http://www.elasticsearch.org/blog/2011/03/24/new-search-types.html">New Search Types</a>
+<ul>
+<li>Introduce <strong>count</strong> and <strong>scan</strong> search types, the latter can be used to scroll large result set</li>
+</ul></li>
+<li><a href="http://www.elasticsearch.org/blog/2011/05/13/data-visualization-with-elasticsearch-and-protovis.html">Data Visualization with ElasticSearch and</a> <a href="http://vis.stanford.edu/protovis/"><strong>Protovis</strong></a></li>
+<li><a href="http://www.elasticsearch.org/videos/2010/02/08/es-distributed-diagram.html">Distributed Diagram</a> (Video)</li>
+<li><a href="http://www.elasticsearch.org/videos/2011/08/09/road-to-a-distributed-searchengine-berlinbuzzwords.html">Road to a Distributed Search Engine</a> (Video)*****</li>
+</ol>
+<hr />
+<h1 id="conclusion"><span class="header-section-number">4</span> 4. Conclusion</h1>
+<ol style="list-style-type: decimal">
+<li>All are based on Lucene.</li>
+<li>All are distributed.
+<ul>
+<li>senseidb shards with multi-write?!</li>
+<li>solr shards with master-slaves and slave pull strategy;</li>
+<li>elasticsearch shards with primary-secondary push strategy;</li>
+</ul></li>
+<li>All do partitioning in document granularity, All require some unique key for each document(optional for some situations);</li>
+<li>Sensei is good at real-time index update; Solr is good at stable and wide adoption; Elasticsearch is good at flexible and good ideas;</li>
+</ol>
+<h1 id="其它参考文献"><span class="header-section-number">5</span> 其它参考文献</h1>
+<ol style="list-style-type: decimal">
+<li><a href="http://www.spnguru.com/2011/02/lily%E6%9E%B6%E6%9E%84%E7%AE%80%E4%BB%8B/">Lily架构简介</a>
+<ul>
+<li>在自己的lily node里实现了multiwrite + wal+ message queue的数据分发， 没有充分利用现有系统中各个组件/系统的能力(虽然是基于hbase的table实现的)， 部分上来讲把事情搞复杂了。</li>
+</ul></li>
+</ol>
+
+</div>
+
       <div id="qrcode"></div>
       <div class="row">
         <div class="col-md-12 footer">

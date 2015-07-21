@@ -7,12 +7,19 @@
   <meta http-equiv="X-UA-Compatible" content="chrome=1">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="author" content="扶墙老师@afoo.me">
-
-  <link rel="icon" href="/favicon.ico">
+    <link rel="icon" href="/favicon.ico">
 
   <title>了解docker - 一个架构士的思考与沉淀之地</title>
 
-      <style type="text/css">
+  
+
+  <link href='/font/News_Cycle/stylesheet.css' rel='stylesheet' type='text/css'>
+  <link href="/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/css/bootstrap-theme.min.css" rel="stylesheet">
+  <link href="/css/afoo.me.css" rel="stylesheet">
+
+  <style type="text/css">code{white-space: pre;}</style>
+    <style type="text/css">
     div.sourceCode { overflow-x: auto; }
     table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
       margin: 0; padding: 0; vertical-align: baseline; border: none; }
@@ -33,12 +40,6 @@
     code > span.er { color: #ff0000; font-weight: bold; }
   </style>
         
-  <link href='/font/News_Cycle/stylesheet.css' rel='stylesheet' type='text/css'>
-
-  <link href="/css/bootstrap.min.css" rel="stylesheet">
-  <link href="/css/bootstrap-theme.min.css" rel="stylesheet">
-  <link href="/css/afoo.me.css" rel="stylesheet">
-
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>
@@ -58,170 +59,172 @@
           </a>
         </div>
     </div>
-    <div class="col-xs-12 col-md-10">
 
-          
-          <div class="row">
-                        <div id="header">
-              <p class="lead">
-              <h1 class="title">了解docker</h1>
-                                          </p>
-            </div>
-            
-              <hr>
+<div class="col-xs-12 col-md-10">
 
-                            <div id="TOC">
-                <ul>
-                <li><a href="#docker-architecture"><span class="toc-section-number">1</span> Docker Architecture</a></li>
-                <li><a href="#安装"><span class="toc-section-number">2</span> 安装</a><ul>
-                <li><a href="#ubuntu13.10下安装说明"><span class="toc-section-number">2.1</span> ubuntu13.10下安装说明</a><ul>
-                <li><a href="#local-dns-resovle的问题"><span class="toc-section-number">2.1.1</span> local dns resovle的问题</a></li>
-                <li><a href="#error-client.go2315-error-getting-size-bad-file-descriptor问题"><span class="toc-section-number">2.1.2</span> [error] client.go:2315 Error getting size: bad file descriptor问题</a></li>
-                <li><a href="#warning-no-swap-limit-support"><span class="toc-section-number">2.1.3</span> WARNING: No swap limit support</a></li>
-                </ul></li>
-                <li><a href="#使用非root用户使用docker不用每次sudo"><span class="toc-section-number">2.2</span> 使用非root用户使用docker(不用每次sudo)</a></li>
-                <li><a href="#升级"><span class="toc-section-number">2.3</span> 升级</a></li>
-                </ul></li>
-                <li><a href="#使用"><span class="toc-section-number">3</span> 使用</a><ul>
-                <li><a href="#docker-daemon"><span class="toc-section-number">3.1</span> docker daemon</a></li>
-                <li><a href="#run"><span class="toc-section-number">3.2</span> RUN</a><ul>
-                <li><a href="#交互形式运行"><span class="toc-section-number">3.2.1</span> 交互形式运行</a></li>
-                <li><a href="#指定端口运行"><span class="toc-section-number">3.2.2</span> 指定端口运行</a></li>
-                <li><a href="#以deamon形式运行"><span class="toc-section-number">3.2.3</span> 以deamon形式运行</a></li>
-                </ul></li>
-                <li><a href="#查看运行状态"><span class="toc-section-number">3.3</span> 查看运行状态</a></li>
-                <li><a href="#attach到运行的container"><span class="toc-section-number">3.4</span> attach到运行的container</a></li>
-                </ul></li>
-                <li><a href="#private-registry"><span class="toc-section-number">4</span> Private Registry</a></li>
-                <li><a href="#系统细节"><span class="toc-section-number">5</span> 系统细节</a><ul>
-                <li><a href="#docker元数据存放位置"><span class="toc-section-number">5.1</span> docker元数据存放位置</a></li>
-                <li><a href="#使用data-volumes"><span class="toc-section-number">5.2</span> 使用Data Volumes</a></li>
-                </ul></li>
-                <li><a href="#参考"><span class="toc-section-number">6</span> 参考</a></li>
-                </ul>
-              </div>
-              <hr/>
-              
-              <p>Docker = versioned lightweight provisioning</p>
-              <h1 id="docker-architecture"><span class="header-section-number">1</span> Docker Architecture</h1>
-              <p>server : docker daemon</p>
-              <p>client : docker cli</p>
-              <p>lxc</p>
-              <p>virtualization vs. containerization</p>
-              <h1 id="安装"><span class="header-section-number">2</span> 安装</h1>
-              <h2 id="ubuntu13.10下安装说明"><span class="header-section-number">2.1</span> ubuntu13.10下安装说明</h2>
-              <p>ubuntu : 13.10</p>
-              <p>docker : 0.9.0</p>
-              <p>官方安装说明文档见<a href="http://docs.docker.io/en/latest/installation/ubuntulinux/" class="uri">http://docs.docker.io/en/latest/installation/ubuntulinux/</a></p>
-              <h3 id="local-dns-resovle的问题"><span class="header-section-number">2.1.1</span> local dns resovle的问题</h3>
-              <p>参照官方安装说明文档中&quot;Docker and local DNS server warnings&quot;部分的说明， 将<code>/etc/default/docker</code>配置文件中<code>DOCKER_OPTS=&quot;-dns 8.8.8.8&quot;</code>配置注释打开，并重启docker即可(如果没有，则添加此行)。</p>
-              <h3 id="error-client.go2315-error-getting-size-bad-file-descriptor问题"><span class="header-section-number">2.1.2</span> [error] client.go:2315 Error getting size: bad file descriptor问题</h3>
-              <p>ubuntu13.10, 按照官方文档进行(<a href="http://docs.docker.io/en/latest/installation/ubuntulinux/" class="uri">http://docs.docker.io/en/latest/installation/ubuntulinux/</a>)0.9安装之后，如果运行<code>sudo docker run -i -t ubuntu /bin/bash</code>, 会出现&quot;[error] client.go:2315 Error getting size: bad file descriptor&quot;这样的信息，只要使用<a href="https://raw.github.com/dotcloud/docker/master/contrib/init/upstart/docker.conf" class="uri">https://raw.github.com/dotcloud/docker/master/contrib/init/upstart/docker.conf</a>的配置文件替换<code>/etc/init/docker.conf</code>, 重新启动docker即可(<code>sudo service docker restart</code>).</p>
-              <h3 id="warning-no-swap-limit-support"><span class="header-section-number">2.1.3</span> WARNING: No swap limit support</h3>
-              <p>安装完成后，通过<code>docker info</code>查看信息的时候，会报类似&quot;WARNING: No swap limit support&quot;的警告，参考官方文档中memory swap accounting部分：</p>
-              <ol style="list-style-type: decimal">
-              <li>编辑/etc/default/grub， 添加<code>GRUB_CMDLINE_LINUX_DEFAULT=&quot;cgroup_enable=memory swapaccount=1&quot;</code></li>
-              <li>然后<code>sudo grub-update &amp;&amp; sudo reboot</code></li>
-              </ol>
-              <h2 id="使用非root用户使用docker不用每次sudo"><span class="header-section-number">2.2</span> 使用非root用户使用docker(不用每次sudo)</h2>
-              <pre>
-              $ sudo groupadd docker
-              $ sudo gpasswd -a ${USER} docker  # 当前用户添加到docker group
-              $ sudo reboot  # 切记，是reboot，而不是像官方文档那样restart， 否则，用户即使在第二步添加成功，但使用`groups`命令查看用户会显示还是没有被添加
-              </pre>
-              <h2 id="升级"><span class="header-section-number">2.3</span> 升级</h2>
-              <pre>
-              $ sudo apt-get update
-              $ sudo apt-get install lxc-docker
-              </pre>
-              <hr />
-              <h1 id="使用"><span class="header-section-number">3</span> 使用</h1>
-              <h2 id="docker-daemon"><span class="header-section-number">3.1</span> docker daemon</h2>
-              <p>默认情况下， docker daemon是绑定到unix socket的，这也就意味着只能通过本机root访问； 但是如果我们通过-H命令行参数启动docker daemon的话，就可以在任何安装了docker client的机器上控制docker daemon，所以， 一般情况下，不建议以public IP的形式对外暴露docker daemon！</p>
-              <blockquote>
-              <p>注意与<code>docker run</code>命令的-p参数的功能相区分， 后者是启动的container所属的网络属性， 而<code>docker -H</code>则是docker daemon的对外服务的网络设置！</p>
-              </blockquote>
-              <h2 id="run"><span class="header-section-number">3.2</span> RUN</h2>
-              <h3 id="交互形式运行"><span class="header-section-number">3.2.1</span> 交互形式运行</h3>
-              <p>使用-i参数</p>
-              <h3 id="指定端口运行"><span class="header-section-number">3.2.2</span> 指定端口运行</h3>
-              <p>HOST跟container的网络设置之间的关系跟router和局域网中的机器类似(非确切说法，实际上是通过docker0这个linux networking bridge进行网络功能的管理)， 如果要让外部的机器能够访问hosted container， 需要做<a href="http://docs.docker.io/en/latest/use/port_redirection/">port redirection</a>。</p>
-              <p>使用-p参数:</p>
-              <p><code>$&gt; docker run –p 49200:8080 gcm http://localhost:49200</code></p>
-              <p>http://localhost:49200， 8080是private port， 49200是public port；</p>
-              或者只指定private port，由docker决定最终的public port是哪个:
-              <pre>
-              JOB=$(sudo docker run -d -p 4444 ubuntu:12.10 /bin/nc -l 4444)         //Bind port 4444 of this container, and tell netcat to listen on it
-              
-              PORT=$(sudo docker port $JOB 4444 | awk -F: '{ print $2 }')            // Which public port is NATed to my container?
-              
-              echo hello world | nc 127.0.0.1 $PORT                                  // Connect to the public port
-              
-              echo "Daemon received: $(sudo docker logs $JOB)"                       // Verify that the network connection worked
-              </pre>
-              又或者:
-              <pre>
-              // Bind to a dynamically allocated port
-              $ docker run -p 127.0.0.1::8080 --name dyn-bound <image> <cmd>
-              
-              // Lookup the actual port
-              $ docker port dyn-bound 8080
-              // 127.0.0.1:49160
-              </pre>
-              <h3 id="以deamon形式运行"><span class="header-section-number">3.2.3</span> 以deamon形式运行</h3>
-              <p>使用-d参数：</p>
-              <p><code>$&gt; docker run –d –p 127.0.0.1::8080 &lt;image&gt;</code></p>
-              <h2 id="查看运行状态"><span class="header-section-number">3.3</span> 查看运行状态</h2>
-              <p>使用<code>docker ps</code>命令。</p>
-              <p><code>docker ps -a</code>查看所有已经停止的containers;</p>
-              <p><code>docker ps -l</code>查看上一个停止的container;</p>
-              <h2 id="attach到运行的container"><span class="header-section-number">3.4</span> attach到运行的container</h2>
-              <pre>
-              CONTAINER_ID=$(sudo docker run -d ubuntu /bin/sh -c "while true; do echo hello world; sleep 1; done")
-              sudo docker logs $CONTAINER_ID                           // “docker logs” This will return the logs for a container
-              sudo docker attach -sig-proxy=false $CONTAINER_ID        // “-sig-proxy=false” Do not forward signals to the container; allows us to exit the attachment using Control-C without stopping the container.
-              </pre>
-              <h1 id="private-registry"><span class="header-section-number">4</span> Private Registry</h1>
-              <p>fast way to install/setup a private registry:</p>
-              <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">docker</span> run –p 5000 samalba/docker-registry</code></pre></div>
-              <p>then use it:</p>
-              <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">docker</span> push <span class="kw">&lt;</span>namespace<span class="kw">&gt;</span>/<span class="kw">&lt;</span>name<span class="kw">&gt;</span></code></pre></div>
-              <p>Docker uses the namespace to know where to push, if the namespace is an url, it will push on this url:</p>
-              <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="co">#push the &lt;name&gt; to your a private registry &lt;url&gt;</span>
-              $ <span class="kw">docker</span> push <span class="kw">&lt;</span>url<span class="kw">&gt;</span>/<span class="kw">&lt;</span>name<span class="kw">&gt;</span></code></pre></div>
-              <h1 id="系统细节"><span class="header-section-number">5</span> 系统细节</h1>
-              <h2 id="docker元数据存放位置"><span class="header-section-number">5.1</span> docker元数据存放位置</h2>
-              <pre>
-              The images are stored in /var/lib/docker/graph/<id>/layer.
-              
-              Note that images are just diffs from the parent image. The parent ID is stored with the image's metadata /var/lib/docker/graph/<id>/json.
-              
-              When you docker run an image. AUFS will 'merge' all layers into one usable file system.
-              </pre>
-              <p>默认路径是<code>/var/lib/docker</code>， 如果要定制， 则修改&quot;/etc/default/docker&quot;配置文件， 增加如下配置项内容: <code>DOCKER_OPTS=&quot;-g /path/to/docker/data&quot;</code>, 即&quot;use the -g option when starting the docker daemon to specify where you want /var/lib/docker to live&quot;</p>
-              <h2 id="使用data-volumes"><span class="header-section-number">5.2</span> 使用Data Volumes</h2>
-              <p>不想将应用数据存放和docker的各种元数据/系统数据混在一起？ “快使用Data Volume， 哼哼哈嘿”</p>
-              可以为container制定多个data volumes: <code>$ docker run -v /var/volume1 -v /var/volume2 busybox true</code>， 或者使用Dockerfile指定：
-              <pre>
-              // BUILD-USING:        docker build -t data .
-              // RUN-USING:          docker run -name DATA data
-              FROM          busybox
-              VOLUME        ["/var/volume1", "/var/volume2"]
-              CMD           ["/bin/true"]
-              </pre>
-              <p>我们可以使用“--volumes-from”来指定新的container可以使用之前container指定的data volumes: <code>$ docker run -t -i -rm -volumes-from DATA -name client1 ubuntu bash</code> （-rm - remove the container when it exits）</p>
-              <p>只要有container还在引用data volumes，即使rm了相应的container， data volumes将持续保存直到没有任何一个container再引用它。</p>
-              <h1 id="参考"><span class="header-section-number">6</span> 参考</h1>
-              <ol style="list-style-type: decimal">
-              <li><a href="http://crosbymichael.com/advanced-docker-volumes.html">Advanced Docker Volumes</a></li>
-              <li><a href="http://blog.thoward37.me/articles/where-are-docker-images-stored/">Where are Docker images stored?</a> *****</li>
-              <li><a href="http://traveling-railsman.com/blog/how-it-works-docker">How it works: Docker</a></li>
-              <li><a href="http://ijonas.com/devops-2/building-a-docker-based-mysql-server/">BUILDING A DOCKER-BASED MYSQL SERVER</a></li>
-              <li><a href="http://mutteringsontech.com/post/what-is-containerization">What is Containerization?</a></li>
-              <li><a href="http://panamax.io/">Panamax: Docker Management for Humans</a></li>
-              </ol>
-              
-      </div>
+
+<div class="row">
+<div id="header">
+<p class="lead">
+<h1 class="title">了解docker</h1>
+</p>
+</div>
+
+<hr>
+
+<div id="TOC">
+<ul>
+<li><a href="#docker-architecture"><span class="toc-section-number">1</span> Docker Architecture</a></li>
+<li><a href="#安装"><span class="toc-section-number">2</span> 安装</a><ul>
+<li><a href="#ubuntu13.10下安装说明"><span class="toc-section-number">2.1</span> ubuntu13.10下安装说明</a><ul>
+<li><a href="#local-dns-resovle的问题"><span class="toc-section-number">2.1.1</span> local dns resovle的问题</a></li>
+<li><a href="#error-client.go2315-error-getting-size-bad-file-descriptor问题"><span class="toc-section-number">2.1.2</span> [error] client.go:2315 Error getting size: bad file descriptor问题</a></li>
+<li><a href="#warning-no-swap-limit-support"><span class="toc-section-number">2.1.3</span> WARNING: No swap limit support</a></li>
+</ul></li>
+<li><a href="#使用非root用户使用docker不用每次sudo"><span class="toc-section-number">2.2</span> 使用非root用户使用docker(不用每次sudo)</a></li>
+<li><a href="#升级"><span class="toc-section-number">2.3</span> 升级</a></li>
+</ul></li>
+<li><a href="#使用"><span class="toc-section-number">3</span> 使用</a><ul>
+<li><a href="#docker-daemon"><span class="toc-section-number">3.1</span> docker daemon</a></li>
+<li><a href="#run"><span class="toc-section-number">3.2</span> RUN</a><ul>
+<li><a href="#交互形式运行"><span class="toc-section-number">3.2.1</span> 交互形式运行</a></li>
+<li><a href="#指定端口运行"><span class="toc-section-number">3.2.2</span> 指定端口运行</a></li>
+<li><a href="#以deamon形式运行"><span class="toc-section-number">3.2.3</span> 以deamon形式运行</a></li>
+</ul></li>
+<li><a href="#查看运行状态"><span class="toc-section-number">3.3</span> 查看运行状态</a></li>
+<li><a href="#attach到运行的container"><span class="toc-section-number">3.4</span> attach到运行的container</a></li>
+</ul></li>
+<li><a href="#private-registry"><span class="toc-section-number">4</span> Private Registry</a></li>
+<li><a href="#系统细节"><span class="toc-section-number">5</span> 系统细节</a><ul>
+<li><a href="#docker元数据存放位置"><span class="toc-section-number">5.1</span> docker元数据存放位置</a></li>
+<li><a href="#使用data-volumes"><span class="toc-section-number">5.2</span> 使用Data Volumes</a></li>
+</ul></li>
+<li><a href="#参考"><span class="toc-section-number">6</span> 参考</a></li>
+</ul>
+</div>
+<hr/>
+
+<p>Docker = versioned lightweight provisioning</p>
+<h1 id="docker-architecture"><span class="header-section-number">1</span> Docker Architecture</h1>
+<p>server : docker daemon</p>
+<p>client : docker cli</p>
+<p>lxc</p>
+<p>virtualization vs. containerization</p>
+<h1 id="安装"><span class="header-section-number">2</span> 安装</h1>
+<h2 id="ubuntu13.10下安装说明"><span class="header-section-number">2.1</span> ubuntu13.10下安装说明</h2>
+<p>ubuntu : 13.10</p>
+<p>docker : 0.9.0</p>
+<p>官方安装说明文档见<a href="http://docs.docker.io/en/latest/installation/ubuntulinux/" class="uri">http://docs.docker.io/en/latest/installation/ubuntulinux/</a></p>
+<h3 id="local-dns-resovle的问题"><span class="header-section-number">2.1.1</span> local dns resovle的问题</h3>
+<p>参照官方安装说明文档中&quot;Docker and local DNS server warnings&quot;部分的说明， 将<code>/etc/default/docker</code>配置文件中<code>DOCKER_OPTS=&quot;-dns 8.8.8.8&quot;</code>配置注释打开，并重启docker即可(如果没有，则添加此行)。</p>
+<h3 id="error-client.go2315-error-getting-size-bad-file-descriptor问题"><span class="header-section-number">2.1.2</span> [error] client.go:2315 Error getting size: bad file descriptor问题</h3>
+<p>ubuntu13.10, 按照官方文档进行(<a href="http://docs.docker.io/en/latest/installation/ubuntulinux/" class="uri">http://docs.docker.io/en/latest/installation/ubuntulinux/</a>)0.9安装之后，如果运行<code>sudo docker run -i -t ubuntu /bin/bash</code>, 会出现&quot;[error] client.go:2315 Error getting size: bad file descriptor&quot;这样的信息，只要使用<a href="https://raw.github.com/dotcloud/docker/master/contrib/init/upstart/docker.conf" class="uri">https://raw.github.com/dotcloud/docker/master/contrib/init/upstart/docker.conf</a>的配置文件替换<code>/etc/init/docker.conf</code>, 重新启动docker即可(<code>sudo service docker restart</code>).</p>
+<h3 id="warning-no-swap-limit-support"><span class="header-section-number">2.1.3</span> WARNING: No swap limit support</h3>
+<p>安装完成后，通过<code>docker info</code>查看信息的时候，会报类似&quot;WARNING: No swap limit support&quot;的警告，参考官方文档中memory swap accounting部分：</p>
+<ol style="list-style-type: decimal">
+<li>编辑/etc/default/grub， 添加<code>GRUB_CMDLINE_LINUX_DEFAULT=&quot;cgroup_enable=memory swapaccount=1&quot;</code></li>
+<li>然后<code>sudo grub-update &amp;&amp; sudo reboot</code></li>
+</ol>
+<h2 id="使用非root用户使用docker不用每次sudo"><span class="header-section-number">2.2</span> 使用非root用户使用docker(不用每次sudo)</h2>
+<pre>
+$ sudo groupadd docker
+$ sudo gpasswd -a ${USER} docker  # 当前用户添加到docker group
+$ sudo reboot  # 切记，是reboot，而不是像官方文档那样restart， 否则，用户即使在第二步添加成功，但使用`groups`命令查看用户会显示还是没有被添加
+</pre>
+<h2 id="升级"><span class="header-section-number">2.3</span> 升级</h2>
+<pre>
+$ sudo apt-get update
+$ sudo apt-get install lxc-docker
+</pre>
+<hr />
+<h1 id="使用"><span class="header-section-number">3</span> 使用</h1>
+<h2 id="docker-daemon"><span class="header-section-number">3.1</span> docker daemon</h2>
+<p>默认情况下， docker daemon是绑定到unix socket的，这也就意味着只能通过本机root访问； 但是如果我们通过-H命令行参数启动docker daemon的话，就可以在任何安装了docker client的机器上控制docker daemon，所以， 一般情况下，不建议以public IP的形式对外暴露docker daemon！</p>
+<blockquote>
+<p>注意与<code>docker run</code>命令的-p参数的功能相区分， 后者是启动的container所属的网络属性， 而<code>docker -H</code>则是docker daemon的对外服务的网络设置！</p>
+</blockquote>
+<h2 id="run"><span class="header-section-number">3.2</span> RUN</h2>
+<h3 id="交互形式运行"><span class="header-section-number">3.2.1</span> 交互形式运行</h3>
+<p>使用-i参数</p>
+<h3 id="指定端口运行"><span class="header-section-number">3.2.2</span> 指定端口运行</h3>
+<p>HOST跟container的网络设置之间的关系跟router和局域网中的机器类似(非确切说法，实际上是通过docker0这个linux networking bridge进行网络功能的管理)， 如果要让外部的机器能够访问hosted container， 需要做<a href="http://docs.docker.io/en/latest/use/port_redirection/">port redirection</a>。</p>
+<p>使用-p参数:</p>
+<p><code>$&gt; docker run –p 49200:8080 gcm http://localhost:49200</code></p>
+<p>http://localhost:49200， 8080是private port， 49200是public port；</p>
+或者只指定private port，由docker决定最终的public port是哪个:
+<pre>
+JOB=$(sudo docker run -d -p 4444 ubuntu:12.10 /bin/nc -l 4444)         //Bind port 4444 of this container, and tell netcat to listen on it
+
+PORT=$(sudo docker port $JOB 4444 | awk -F: '{ print $2 }')            // Which public port is NATed to my container?
+
+echo hello world | nc 127.0.0.1 $PORT                                  // Connect to the public port
+
+echo "Daemon received: $(sudo docker logs $JOB)"                       // Verify that the network connection worked
+</pre>
+又或者:
+<pre>
+// Bind to a dynamically allocated port
+$ docker run -p 127.0.0.1::8080 --name dyn-bound <image> <cmd>
+
+// Lookup the actual port
+$ docker port dyn-bound 8080
+// 127.0.0.1:49160
+</pre>
+<h3 id="以deamon形式运行"><span class="header-section-number">3.2.3</span> 以deamon形式运行</h3>
+<p>使用-d参数：</p>
+<p><code>$&gt; docker run –d –p 127.0.0.1::8080 &lt;image&gt;</code></p>
+<h2 id="查看运行状态"><span class="header-section-number">3.3</span> 查看运行状态</h2>
+<p>使用<code>docker ps</code>命令。</p>
+<p><code>docker ps -a</code>查看所有已经停止的containers;</p>
+<p><code>docker ps -l</code>查看上一个停止的container;</p>
+<h2 id="attach到运行的container"><span class="header-section-number">3.4</span> attach到运行的container</h2>
+<pre>
+CONTAINER_ID=$(sudo docker run -d ubuntu /bin/sh -c "while true; do echo hello world; sleep 1; done")
+sudo docker logs $CONTAINER_ID                           // “docker logs” This will return the logs for a container
+sudo docker attach -sig-proxy=false $CONTAINER_ID        // “-sig-proxy=false” Do not forward signals to the container; allows us to exit the attachment using Control-C without stopping the container.
+</pre>
+<h1 id="private-registry"><span class="header-section-number">4</span> Private Registry</h1>
+<p>fast way to install/setup a private registry:</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">docker</span> run –p 5000 samalba/docker-registry</code></pre></div>
+<p>then use it:</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">docker</span> push <span class="kw">&lt;</span>namespace<span class="kw">&gt;</span>/<span class="kw">&lt;</span>name<span class="kw">&gt;</span></code></pre></div>
+<p>Docker uses the namespace to know where to push, if the namespace is an url, it will push on this url:</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="co">#push the &lt;name&gt; to your a private registry &lt;url&gt;</span>
+$ <span class="kw">docker</span> push <span class="kw">&lt;</span>url<span class="kw">&gt;</span>/<span class="kw">&lt;</span>name<span class="kw">&gt;</span></code></pre></div>
+<h1 id="系统细节"><span class="header-section-number">5</span> 系统细节</h1>
+<h2 id="docker元数据存放位置"><span class="header-section-number">5.1</span> docker元数据存放位置</h2>
+<pre>
+The images are stored in /var/lib/docker/graph/<id>/layer.
+
+Note that images are just diffs from the parent image. The parent ID is stored with the image's metadata /var/lib/docker/graph/<id>/json.
+
+When you docker run an image. AUFS will 'merge' all layers into one usable file system.
+</pre>
+<p>默认路径是<code>/var/lib/docker</code>， 如果要定制， 则修改&quot;/etc/default/docker&quot;配置文件， 增加如下配置项内容: <code>DOCKER_OPTS=&quot;-g /path/to/docker/data&quot;</code>, 即&quot;use the -g option when starting the docker daemon to specify where you want /var/lib/docker to live&quot;</p>
+<h2 id="使用data-volumes"><span class="header-section-number">5.2</span> 使用Data Volumes</h2>
+<p>不想将应用数据存放和docker的各种元数据/系统数据混在一起？ “快使用Data Volume， 哼哼哈嘿”</p>
+可以为container制定多个data volumes: <code>$ docker run -v /var/volume1 -v /var/volume2 busybox true</code>， 或者使用Dockerfile指定：
+<pre>
+// BUILD-USING:        docker build -t data .
+// RUN-USING:          docker run -name DATA data
+FROM          busybox
+VOLUME        ["/var/volume1", "/var/volume2"]
+CMD           ["/bin/true"]
+</pre>
+<p>我们可以使用“--volumes-from”来指定新的container可以使用之前container指定的data volumes: <code>$ docker run -t -i -rm -volumes-from DATA -name client1 ubuntu bash</code> （-rm - remove the container when it exits）</p>
+<p>只要有container还在引用data volumes，即使rm了相应的container， data volumes将持续保存直到没有任何一个container再引用它。</p>
+<h1 id="参考"><span class="header-section-number">6</span> 参考</h1>
+<ol style="list-style-type: decimal">
+<li><a href="http://crosbymichael.com/advanced-docker-volumes.html">Advanced Docker Volumes</a></li>
+<li><a href="http://blog.thoward37.me/articles/where-are-docker-images-stored/">Where are Docker images stored?</a> *****</li>
+<li><a href="http://traveling-railsman.com/blog/how-it-works-docker">How it works: Docker</a></li>
+<li><a href="http://ijonas.com/devops-2/building-a-docker-based-mysql-server/">BUILDING A DOCKER-BASED MYSQL SERVER</a></li>
+<li><a href="http://mutteringsontech.com/post/what-is-containerization">What is Containerization?</a></li>
+<li><a href="http://panamax.io/">Panamax: Docker Management for Humans</a></li>
+</ol>
+
+</div>
+
       <div id="qrcode"></div>
       <div class="row">
         <div class="col-md-12 footer">

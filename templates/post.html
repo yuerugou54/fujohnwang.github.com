@@ -7,14 +7,14 @@
   <meta http-equiv="X-UA-Compatible" content="chrome=1">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="author" content="扶墙老师@afoo.me">
-
+  $if(date-meta)$
+  <meta name="date" content="$date-meta$" />
+  $endif$
   <link rel="icon" href="/favicon.ico">
 
   <title>$if(title-prefix)$$title-prefix$ - $endif$$if(pagetitle)$$pagetitle$$endif$ - 一个架构士的思考与沉淀之地</title>
 
-  $if(date-meta)$
-  <meta name="date" content="$date-meta$" />
-  $endif$
+  
 
   <link href='/font/News_Cycle/stylesheet.css' rel='stylesheet' type='text/css'>
   <link href="/css/bootstrap.min.css" rel="stylesheet">
@@ -56,44 +56,46 @@
           </a>
         </div>
     </div>
-    <div class="col-xs-12 col-md-10">
 
-          $for(include-before)$
-          $include-before$
-          $endfor$
+<div class="col-xs-12 col-md-10">
 
-          <div class="row">
-            $if(title)$
-            <div id="$idprefix$header">
-              <p class="lead">
-              <h1 class="title">$title$</h1>
-              $for(author)$
-              <small>
-                  <h3 class="author">$author$</h3>
-              </small>
-              $endfor$
-              $if(date)$
-            <h4 class="date">$date$</h4>
-                $endif$
-              </p>
-            </div>
-            $endif$
+$for(include-before)$
+$include-before$
+$endfor$
 
-              <hr>
+<div class="row">
+$if(title)$
+<div id="$idprefix$header">
+<p class="lead">
+<h1 class="title">$title$</h1>
+$for(author)$
+<small>
+<h3 class="author">$author$</h3>
+</small>
+$endfor$
+$if(date)$
+<h4 class="date">$date$</h4>
+$endif$
+</p>
+</div>
+$endif$
 
-              $if(toc)$
-              <div id="$idprefix$TOC">
-                $toc$
-              </div>
-              <hr/>
-              $endif$
+<hr>
 
-              $body$
-              $for(include-after)$
-              $include-after$
-              $endfor$
+$if(toc)$
+<div id="$idprefix$TOC">
+$toc$
+</div>
+<hr/>
+$endif$
 
-      </div>
+$body$
+$for(include-after)$
+$include-after$
+$endfor$
+
+</div>
+
       <div id="qrcode"></div>
       <div class="row">
         <div class="col-md-12 footer">

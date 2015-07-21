@@ -7,19 +7,20 @@
   <meta http-equiv="X-UA-Compatible" content="chrome=1">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="author" content="扶墙老师@afoo.me">
-
-  <link rel="icon" href="/favicon.ico">
+    <meta name="date" content="2011-09-07" />
+    <link rel="icon" href="/favicon.ico">
 
   <title>Casual Thoughts On Distributed RPC Service Framework - 一个架构士的思考与沉淀之地</title>
 
-    <meta name="date" content="2011-09-07" />
-          
-  <link href='/font/News_Cycle/stylesheet.css' rel='stylesheet' type='text/css'>
+  
 
+  <link href='/font/News_Cycle/stylesheet.css' rel='stylesheet' type='text/css'>
   <link href="/css/bootstrap.min.css" rel="stylesheet">
   <link href="/css/bootstrap-theme.min.css" rel="stylesheet">
   <link href="/css/afoo.me.css" rel="stylesheet">
 
+  <style type="text/css">code{white-space: pre;}</style>
+        
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>
@@ -39,84 +40,86 @@
           </a>
         </div>
     </div>
-    <div class="col-xs-12 col-md-10">
 
-          
-          <div class="row">
-                        <div id="header">
-              <p class="lead">
-              <h1 class="title">Casual Thoughts On Distributed RPC Service Framework</h1>
-                            <small>
-                  <h3 class="author">fujohnwang</h3>
-              </small>
-                                        <h4 class="date">2011-09-07</h4>
-                              </p>
-            </div>
-            
-              <hr>
+<div class="col-xs-12 col-md-10">
 
-                            <div id="TOC">
-                <ul>
-                <li><a href="#service-identity"><span class="toc-section-number">1</span> service identity</a></li>
-                <li><a href="#service-identity-1"><span class="toc-section-number">2</span> service identity</a></li>
-                <li><a href="#service-lookup"><span class="toc-section-number">3</span> service lookup</a></li>
-                <li><a href="#service-extensions"><span class="toc-section-number">4</span> service extensions</a></li>
-                <li><a href="#service-upgrade"><span class="toc-section-number">5</span> service upgrade</a></li>
-                <li><a href="#service-deployment"><span class="toc-section-number">6</span> service deployment</a></li>
-                <li><a href="#potential-points"><span class="toc-section-number">7</span> potential points</a></li>
-                </ul>
-              </div>
-              <hr/>
-              
-              <p><strong>author: fujohnwang</strong></p>
-              <h1 id="service-identity"><span class="header-section-number">1</span> service identity</h1>
-              <p>[artifact version] + FQname + version</p>
-              <h1 id="service-identity-1"><span class="header-section-number">2</span> service identity</h1>
-              <p>[artifact version] + FQname + version</p>
-              <h1 id="service-lookup"><span class="header-section-number">3</span> service lookup</h1>
-              <ol style="list-style-type: decimal">
-              <li>how many services exist?</li>
-              <li>what kind of details operations/services in each service?!</li>
-              <li>what's the signature of each operations?</li>
-              </ol>
-              <h1 id="service-extensions"><span class="header-section-number">4</span> service extensions</h1>
-              <ol style="list-style-type: decimal">
-              <li>can I replace the data structure serialization and deserialization?!
-              <ul>
-              <li>use custom serialization mechanism</li>
-              <li>some flag to indicate the mechanism that's used by service providers</li>
-              </ul></li>
-              <li>can I intercept service operations without service implementations' intrusion?!</li>
-              <li>can I replace default service lookup service provider?</li>
-              <li>can I hook in custom LB and failover mechanisms in the service users' side?</li>
-              <li>can I hook in audit and monitoring concerns?</li>
-              <li>can I tune the server side of the service exposion?
-              <ul>
-              <li>TcpNoDelay?!</li>
-              <li>send buffer or receive buffer size</li>
-              <li>timeout</li>
-              <li>etc.</li>
-              </ul></li>
-              <li>can I expose same service via different transports at the same time?!</li>
-              </ol>
-              <h1 id="service-upgrade"><span class="header-section-number">5</span> service upgrade</h1>
-              <ol style="list-style-type: decimal">
-              <li>service framework upgrade</li>
-              <li>service upgrade</li>
-              </ol>
-              <h1 id="service-deployment"><span class="header-section-number">6</span> service deployment</h1>
-              <ol style="list-style-type: decimal">
-              <li>how to ease the large scale service deployment?! even make it automatically?</li>
-              <li>template publication node?!</li>
-              </ol>
-              <h1 id="potential-points"><span class="header-section-number">7</span> potential points</h1>
-              <ol style="list-style-type: decimal">
-              <li>are overloaded methods allowed?!</li>
-              <li>are multiple languages inter-operations supported?!</li>
-              <li>If you want to provide OO-RPC interface for clients to use, what kind of interception mechanisms u want to use? reflection or bytecode gen? Are there some overheads in this point?</li>
-              </ol>
-              
-      </div>
+
+<div class="row">
+<div id="header">
+<p class="lead">
+<h1 class="title">Casual Thoughts On Distributed RPC Service Framework</h1>
+<small>
+<h3 class="author">fujohnwang</h3>
+</small>
+<h4 class="date">2011-09-07</h4>
+</p>
+</div>
+
+<hr>
+
+<div id="TOC">
+<ul>
+<li><a href="#service-identity"><span class="toc-section-number">1</span> service identity</a></li>
+<li><a href="#service-identity-1"><span class="toc-section-number">2</span> service identity</a></li>
+<li><a href="#service-lookup"><span class="toc-section-number">3</span> service lookup</a></li>
+<li><a href="#service-extensions"><span class="toc-section-number">4</span> service extensions</a></li>
+<li><a href="#service-upgrade"><span class="toc-section-number">5</span> service upgrade</a></li>
+<li><a href="#service-deployment"><span class="toc-section-number">6</span> service deployment</a></li>
+<li><a href="#potential-points"><span class="toc-section-number">7</span> potential points</a></li>
+</ul>
+</div>
+<hr/>
+
+<p><strong>author: fujohnwang</strong></p>
+<h1 id="service-identity"><span class="header-section-number">1</span> service identity</h1>
+<p>[artifact version] + FQname + version</p>
+<h1 id="service-identity-1"><span class="header-section-number">2</span> service identity</h1>
+<p>[artifact version] + FQname + version</p>
+<h1 id="service-lookup"><span class="header-section-number">3</span> service lookup</h1>
+<ol style="list-style-type: decimal">
+<li>how many services exist?</li>
+<li>what kind of details operations/services in each service?!</li>
+<li>what's the signature of each operations?</li>
+</ol>
+<h1 id="service-extensions"><span class="header-section-number">4</span> service extensions</h1>
+<ol style="list-style-type: decimal">
+<li>can I replace the data structure serialization and deserialization?!
+<ul>
+<li>use custom serialization mechanism</li>
+<li>some flag to indicate the mechanism that's used by service providers</li>
+</ul></li>
+<li>can I intercept service operations without service implementations' intrusion?!</li>
+<li>can I replace default service lookup service provider?</li>
+<li>can I hook in custom LB and failover mechanisms in the service users' side?</li>
+<li>can I hook in audit and monitoring concerns?</li>
+<li>can I tune the server side of the service exposion?
+<ul>
+<li>TcpNoDelay?!</li>
+<li>send buffer or receive buffer size</li>
+<li>timeout</li>
+<li>etc.</li>
+</ul></li>
+<li>can I expose same service via different transports at the same time?!</li>
+</ol>
+<h1 id="service-upgrade"><span class="header-section-number">5</span> service upgrade</h1>
+<ol style="list-style-type: decimal">
+<li>service framework upgrade</li>
+<li>service upgrade</li>
+</ol>
+<h1 id="service-deployment"><span class="header-section-number">6</span> service deployment</h1>
+<ol style="list-style-type: decimal">
+<li>how to ease the large scale service deployment?! even make it automatically?</li>
+<li>template publication node?!</li>
+</ol>
+<h1 id="potential-points"><span class="header-section-number">7</span> potential points</h1>
+<ol style="list-style-type: decimal">
+<li>are overloaded methods allowed?!</li>
+<li>are multiple languages inter-operations supported?!</li>
+<li>If you want to provide OO-RPC interface for clients to use, what kind of interception mechanisms u want to use? reflection or bytecode gen? Are there some overheads in this point?</li>
+</ol>
+
+</div>
+
       <div id="qrcode"></div>
       <div class="row">
         <div class="col-md-12 footer">

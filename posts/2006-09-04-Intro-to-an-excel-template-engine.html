@@ -7,18 +7,19 @@
   <meta http-equiv="X-UA-Compatible" content="chrome=1">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="author" content="扶墙老师@afoo.me">
-
-  <link rel="icon" href="/favicon.ico">
+    <link rel="icon" href="/favicon.ico">
 
   <title>Introduction 2 an excel template engine - 一个架构士的思考与沉淀之地</title>
 
-          
-  <link href='/font/News_Cycle/stylesheet.css' rel='stylesheet' type='text/css'>
+  
 
+  <link href='/font/News_Cycle/stylesheet.css' rel='stylesheet' type='text/css'>
   <link href="/css/bootstrap.min.css" rel="stylesheet">
   <link href="/css/bootstrap-theme.min.css" rel="stylesheet">
   <link href="/css/afoo.me.css" rel="stylesheet">
 
+  <style type="text/css">code{white-space: pre;}</style>
+        
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>
@@ -38,50 +39,52 @@
           </a>
         </div>
     </div>
-    <div class="col-xs-12 col-md-10">
 
-          
-          <div class="row">
-                        <div id="header">
-              <p class="lead">
-              <h1 class="title">Introduction 2 an excel template engine</h1>
-                            <small>
-                  <h3 class="author">FuqiangWang</h3>
-              </small>
-                                          </p>
-            </div>
-            
-              <hr>
+<div class="col-xs-12 col-md-10">
 
-              
-              <blockquote>
-              <p>2014年从msn space存档中重新恢复出来！</p>
-              </blockquote>
-              <p>今天在浏览Javaeye论坛时候无意间发现一个Excel模板引擎的实现---jXLS（http://jxls.sourceforge.net/），才想起其实早些时候自己也想过写这么一个东西，但是后来考虑到全面支持的复杂性，觉得不是一朝一夕可以搞定的，所以就转而求其次了，只是写一个简单的Template Method实现类，根据具体报表实现其相应的渲染部分。</p>
-              <p>因为如果说不用考虑太多的话，一个excel引擎很容易搞定，无非就是为excel的模版提供一种简单的expression,然后engine根据scan到的expression从数据context中抓取数据并填充expression所在位置，但是如果报表复杂性提高的话，实现这个engine就不那么容易了，比如loop logic的处理，数据显示的格式化如何关联，scan实现算法的选择等等，不过好在这些现在有人帮我们实现了（that's jXLS)，可以帮助我们剩下很多Money（Time is Money，呵呵）...</p>
-              <p><strong>Main Features</strong></p>
-              <ul>
-              <li>Using SQL queries directly in XLS templates</li>
-              <li>Simple property access notation</li>
-              <li>Full expression language support</li>
-              <li>Complex object graph export</li>
-              <li>Flexible collection export</li>
-              <li>Flow-Control Tags support</li>
-              <li>Dynamic grouping of data</li>
-              <li>Export of a single collection into multiple worksheets</li>
-              <li>Adjacent tables support!</li>
-              <li>Complex formulas support</li>
-              <li>Charts, Macros and many other Excel features in XLS template</li>
-              <li>Dynamic Outlines</li>
-              <li>Dynamic Columns Hiding</li>
-              <li>Dynamic Cell Style processing through custom Processors</li>
-              <li>JDBC ResultSet export</li>
-              <li>Merged Cells support</li>
-              <li>Multiple bean properties in a single cell</li>
-              </ul>
-              <p>有了jXLS的支持加上原来的实现方式，现在你可以根据具体场景随心所欲的驰骋excel report field啦..</p>
-              
-      </div>
+
+<div class="row">
+<div id="header">
+<p class="lead">
+<h1 class="title">Introduction 2 an excel template engine</h1>
+<small>
+<h3 class="author">FuqiangWang</h3>
+</small>
+</p>
+</div>
+
+<hr>
+
+
+<blockquote>
+<p>2014年从msn space存档中重新恢复出来！</p>
+</blockquote>
+<p>今天在浏览Javaeye论坛时候无意间发现一个Excel模板引擎的实现---jXLS（http://jxls.sourceforge.net/），才想起其实早些时候自己也想过写这么一个东西，但是后来考虑到全面支持的复杂性，觉得不是一朝一夕可以搞定的，所以就转而求其次了，只是写一个简单的Template Method实现类，根据具体报表实现其相应的渲染部分。</p>
+<p>因为如果说不用考虑太多的话，一个excel引擎很容易搞定，无非就是为excel的模版提供一种简单的expression,然后engine根据scan到的expression从数据context中抓取数据并填充expression所在位置，但是如果报表复杂性提高的话，实现这个engine就不那么容易了，比如loop logic的处理，数据显示的格式化如何关联，scan实现算法的选择等等，不过好在这些现在有人帮我们实现了（that's jXLS)，可以帮助我们剩下很多Money（Time is Money，呵呵）...</p>
+<p><strong>Main Features</strong></p>
+<ul>
+<li>Using SQL queries directly in XLS templates</li>
+<li>Simple property access notation</li>
+<li>Full expression language support</li>
+<li>Complex object graph export</li>
+<li>Flexible collection export</li>
+<li>Flow-Control Tags support</li>
+<li>Dynamic grouping of data</li>
+<li>Export of a single collection into multiple worksheets</li>
+<li>Adjacent tables support!</li>
+<li>Complex formulas support</li>
+<li>Charts, Macros and many other Excel features in XLS template</li>
+<li>Dynamic Outlines</li>
+<li>Dynamic Columns Hiding</li>
+<li>Dynamic Cell Style processing through custom Processors</li>
+<li>JDBC ResultSet export</li>
+<li>Merged Cells support</li>
+<li>Multiple bean properties in a single cell</li>
+</ul>
+<p>有了jXLS的支持加上原来的实现方式，现在你可以根据具体场景随心所欲的驰骋excel report field啦..</p>
+
+</div>
+
       <div id="qrcode"></div>
       <div class="row">
         <div class="col-md-12 footer">

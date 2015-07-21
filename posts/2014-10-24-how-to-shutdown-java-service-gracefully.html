@@ -7,12 +7,19 @@
   <meta http-equiv="X-UA-Compatible" content="chrome=1">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="author" content="扶墙老师@afoo.me">
-
-  <link rel="icon" href="/favicon.ico">
+    <link rel="icon" href="/favicon.ico">
 
   <title>How To Shutdown Java Service Gracefully [Tutorial] - 一个架构士的思考与沉淀之地</title>
 
-      <style type="text/css">
+  
+
+  <link href='/font/News_Cycle/stylesheet.css' rel='stylesheet' type='text/css'>
+  <link href="/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/css/bootstrap-theme.min.css" rel="stylesheet">
+  <link href="/css/afoo.me.css" rel="stylesheet">
+
+  <style type="text/css">code{white-space: pre;}</style>
+    <style type="text/css">
     div.sourceCode { overflow-x: auto; }
     table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
       margin: 0; padding: 0; vertical-align: baseline; border: none; }
@@ -33,12 +40,6 @@
     code > span.er { color: #ff0000; font-weight: bold; }
   </style>
         
-  <link href='/font/News_Cycle/stylesheet.css' rel='stylesheet' type='text/css'>
-
-  <link href="/css/bootstrap.min.css" rel="stylesheet">
-  <link href="/css/bootstrap-theme.min.css" rel="stylesheet">
-  <link href="/css/afoo.me.css" rel="stylesheet">
-
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>
@@ -58,185 +59,187 @@
           </a>
         </div>
     </div>
-    <div class="col-xs-12 col-md-10">
 
-          
-          <div class="row">
-                        <div id="header">
-              <p class="lead">
-              <h1 class="title">How To Shutdown Java Service Gracefully [Tutorial]</h1>
-                            <small>
-                  <h3 class="author">FuqiangWang</h3>
-              </small>
-                                          </p>
-            </div>
-            
-              <hr>
+<div class="col-xs-12 col-md-10">
 
-              
-              <p>I will just talk about in my way, I don't care your tricky ways like <code>kill</code> something.</p>
-              <p>First of all, Let's define <code>Service</code>, U can refer to google guava's one, but Let's make it simple, A Service can be started and stopped, sometimes, we would like to see the status of a service, so a <code>running</code> status will be exposed too.</p>
-              <p>So A simple service looks like:</p>
-              <div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="kw">class</span> MyService{
-                  <span class="kw">private</span> <span class="kw">volatile</span> <span class="dt">boolean</span> running = <span class="kw">false</span>;
-                  <span class="kw">public</span> <span class="dt">void</span> <span class="fu">start</span>(){
-                      ....
-                      running = <span class="kw">true</span>;
-                      <span class="kw">while</span>(running){
-                          ...
-                      }
-                  }
-                  
-                  <span class="kw">public</span> <span class="dt">boolean</span> <span class="fu">isRunning</span>() {<span class="kw">return</span> running;}
-                  
-                  <span class="kw">public</span> <span class="dt">void</span> <span class="fu">shutdown</span>(){
-                      running = <span class="kw">false</span>;
-                  }
-              }</code></pre></div>
-              <p>If we run this service in main thread, we don't have a chance to call shutdown(), so we expose this Service via jmx, say , with springframework:</p>
-              <div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="fu">@ManagedResource</span>(...)
-              <span class="kw">class</span> MyService{
-                  ...
-                  
-                  <span class="fu">@ManagedOperation</span>
-                  <span class="kw">public</span> <span class="dt">void</span> <span class="fu">shutdown</span>(){
-                      running = <span class="kw">false</span>;
-                  }
-              }</code></pre></div>
-              <p>and configure spring to expose it:</p>
-              <div class="sourceCode"><pre class="sourceCode xml"><code class="sourceCode xml"><span class="kw">&lt;?xml</span> version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;<span class="kw">?&gt;</span>
-              <span class="kw">&lt;beans</span><span class="ot"> xmlns=</span><span class="st">&quot;http://www.springframework.org/schema/beans&quot;</span>
-              <span class="ot">       xmlns:xsi=</span><span class="st">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span>
-              <span class="ot">       xmlns:context=</span><span class="st">&quot;http://www.springframework.org/schema/context&quot;</span>
-              <span class="ot">       xmlns:p=</span><span class="st">&quot;http://www.springframework.org/schema/p&quot;</span>
-              <span class="ot">       xmlns:c=</span><span class="st">&quot;http://www.springframework.org/schema/c&quot;</span>
-              <span class="ot">       xsi:schemaLocation=</span><span class="st">&quot;http://www.springframework.org/schema/beans</span>
-              <span class="st">        http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd&quot;</span><span class="kw">&gt;</span>
-              
-                  <span class="kw">&lt;context:mbean-export/&gt;</span>
-              
-              <span class="kw">&lt;/beans&gt;</span></code></pre></div>
-              <p>then, when we would like to shut it down, we call the shutdown() method via jmx.</p>
-              <p>To make things simple, we usually will give a stop.sh under bin directory for ops, such a stop.sh can call this shutdown() method via jmx with the help of attach API and management-agent.jar, as long as we wrap these functions into a helper main class:</p>
-              <div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="kw">import com.sun.tools.attach.AgentInitializationException;</span>
-              <span class="kw">import com.sun.tools.attach.AgentLoadException;</span>
-              <span class="kw">import com.sun.tools.attach.AttachNotSupportedException;</span>
-              <span class="kw">import com.sun.tools.attach.VirtualMachine;</span>
-              
-              <span class="kw">import javax.management.MBeanServerConnection;</span>
-              <span class="kw">import javax.management.ObjectName;</span>
-              <span class="kw">import javax.management.remote.JMXConnector;</span>
-              <span class="kw">import javax.management.remote.JMXConnectorFactory;</span>
-              <span class="kw">import javax.management.remote.JMXServiceURL;</span>
-              <span class="kw">import java.io.File;</span>
-              <span class="kw">import java.io.IOException;</span>
-              
-              <span class="co">/**</span>
-              <span class="co"> * A Tool you can use to stop your service process gracefully via JMX locally and safely.</span>
-              <span class="co"> *</span>
-              <span class="co"> * Shutdown needs tools.jar in classpath, so to run this class, assign the path of tools.jar in your system in the shell script, it&#39;s a must prerequisite!</span>
-              <span class="co"> *</span>
-              <span class="co"> * </span><span class="kw">@author </span><span class="co">yunshi@wacai.com</span>
-              <span class="co"> * </span><span class="kw">@since </span><span class="co">2014-10-24</span>
-              <span class="co"> */</span>
-              <span class="kw">public</span> <span class="kw">class</span> Shutdown {
-                  <span class="kw">public</span> <span class="dt">static</span> <span class="dt">final</span> String LOCAL_CONNECTOR_ADDRESS_URL = <span class="st">&quot;com.sun.management.jmxremote.localConnectorAddress&quot;</span>;
-              
-                  <span class="co">/**</span>
-              <span class="co">     * current process&#39;s pid</span>
-              <span class="co">     */</span>
-                  <span class="kw">private</span> String pid;
-                  <span class="co">/**</span>
-              <span class="co">     * the managed bean&#39;s name of the top service that we will stop</span>
-              <span class="co">     */</span>
-                  <span class="kw">private</span> String mbeanName;
-                  <span class="co">/**</span>
-              <span class="co">     * the operation name of the managed bean, usually named &quot;stop&quot;, &quot;shutdown&quot;, &quot;destroy&quot; without any parameters.</span>
-              <span class="co">     */</span>
-                  <span class="kw">private</span> String mbeanMethodName;
-              
-                  <span class="kw">protected</span> JMXServiceURL <span class="fu">getConnectorAddressAsPerPid</span>(String pid) <span class="kw">throws</span> IOException, AttachNotSupportedException, AgentLoadException, AgentInitializationException {
-                      VirtualMachine vm = VirtualMachine.<span class="fu">attach</span>(pid);
-                      String connectorAddress = vm.<span class="fu">getAgentProperties</span>().<span class="fu">getProperty</span>(LOCAL_CONNECTOR_ADDRESS_URL);
-                      <span class="kw">if</span> (connectorAddress == <span class="kw">null</span>) {
-                          String agent = vm.<span class="fu">getSystemProperties</span>().<span class="fu">getProperty</span>(<span class="st">&quot;java.home&quot;</span>) + File.<span class="fu">separator</span> + <span class="st">&quot;lib&quot;</span> + File.<span class="fu">separator</span> + <span class="st">&quot;management-agent.jar&quot;</span>;
-                          vm.<span class="fu">loadAgent</span>(agent);
-                          connectorAddress = vm.<span class="fu">getAgentProperties</span>().<span class="fu">getProperty</span>(LOCAL_CONNECTOR_ADDRESS_URL);
-                      }
-                      <span class="kw">return</span> <span class="kw">new</span> JMXServiceURL(connectorAddress);
-                  }
-              
-                  <span class="kw">public</span> Object <span class="fu">execute</span>() <span class="kw">throws</span> Throwable {
-                      <span class="fu">validate</span>(pid, <span class="st">&quot;pid&quot;</span>);
-                      <span class="fu">validate</span>(mbeanName, <span class="st">&quot;mbeanName&quot;</span>);
-                      <span class="fu">validate</span>(mbeanMethodName, <span class="st">&quot;mbeanMethodName&quot;</span>);
-              
-                      JMXConnector jmxConnector = JMXConnectorFactory.<span class="fu">newJMXConnector</span>(<span class="fu">getConnectorAddressAsPerPid</span>(<span class="fu">getPid</span>()), <span class="kw">null</span>);
-                      jmxConnector.<span class="fu">connect</span>();
-                      <span class="kw">try</span> {
-                          MBeanServerConnection connection = jmxConnector.<span class="fu">getMBeanServerConnection</span>();
-                          <span class="kw">return</span> connection.<span class="fu">invoke</span>(ObjectName.<span class="fu">getInstance</span>(<span class="fu">getMbeanName</span>()), <span class="fu">getMbeanMethodName</span>(), <span class="kw">null</span>, <span class="kw">null</span>);
-                      } <span class="kw">finally</span> {
-                          jmxConnector.<span class="fu">close</span>();
-                      }
-                  }
-              
-                  <span class="kw">protected</span> <span class="dt">void</span> <span class="fu">validate</span>(String property, String propertyName) {
-                      <span class="kw">if</span> (property == <span class="kw">null</span> || property.<span class="fu">trim</span>().<span class="fu">isEmpty</span>())
-                          <span class="kw">throw</span> <span class="kw">new</span> IllegalStateException(<span class="st">&quot;[&quot;</span> + propertyName + <span class="st">&quot;] must be set&quot;</span>);
-                  }
-              
-                  <span class="kw">public</span> String <span class="fu">getPid</span>() {
-                      <span class="kw">return</span> pid;
-                  }
-              
-                  <span class="kw">public</span> <span class="dt">void</span> <span class="fu">setPid</span>(String pid) {
-                      <span class="kw">this</span>.<span class="fu">pid</span> = pid;
-                  }
-              
-                  <span class="kw">public</span> String <span class="fu">getMbeanName</span>() {
-                      <span class="kw">return</span> mbeanName;
-                  }
-              
-                  <span class="kw">public</span> <span class="dt">void</span> <span class="fu">setMbeanName</span>(String mbeanName) {
-                      <span class="kw">this</span>.<span class="fu">mbeanName</span> = mbeanName;
-                  }
-              
-                  <span class="kw">public</span> String <span class="fu">getMbeanMethodName</span>() {
-                      <span class="kw">return</span> mbeanMethodName;
-                  }
-              
-                  <span class="kw">public</span> <span class="dt">void</span> <span class="fu">setMbeanMethodName</span>(String mbeanMethodName) {
-                      <span class="kw">this</span>.<span class="fu">mbeanMethodName</span> = mbeanMethodName;
-                  }
-              
-                  <span class="co">/**</span>
-              <span class="co">     * Shutdown shutdown = new Shutdown();</span>
-              <span class="co">     * shutdown.setPid(&quot;7198&quot;);</span>
-              <span class="co">     * shutdown.setMbeanName(&quot;com.sun.management:type=DiagnosticCommand&quot;);</span>
-              <span class="co">     * shutdown.setMbeanMethodName(&quot;vmSystemProperties&quot;);</span>
-              <span class="co">     * System.out.println(shutdown.execute());</span>
-              <span class="co">     */</span>
-                  <span class="kw">public</span> <span class="dt">static</span> <span class="dt">void</span> <span class="fu">main</span>(String[] args) <span class="kw">throws</span> Throwable {
-                      <span class="kw">if</span> (args.<span class="fu">length</span> != <span class="dv">3</span>) {
-                          <span class="kw">throw</span> <span class="kw">new</span> Exception(<span class="st">&quot;usage: java ... Shutdown [pid] [mbean name] [mbean operation]&quot;</span>);
-                      }
-              
-                      Shutdown shutdown = <span class="kw">new</span> <span class="fu">Shutdown</span>();
-                      shutdown.<span class="fu">setPid</span>(args[<span class="dv">0</span>]);
-                      shutdown.<span class="fu">setMbeanName</span>(args[<span class="dv">1</span>]);
-                      shutdown.<span class="fu">setMbeanMethodName</span>(args[<span class="dv">2</span>]);
-                      shutdown.<span class="fu">execute</span>();
-                  }
-              }</code></pre></div>
-              <p>then in the stop.sh, you can simple write:</p>
-              <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="co">#! /usr/bin/env bash</span>
-              
-              <span class="kw">java</span> -cp tools.jar:... com.wacai.csw.scheduler.controls.Shutdown [pid] [service mbean name] [shutdown method]</code></pre></div>
-              <p>since the tools.jar is platform dependent, just point it to the location under your platform in the shell.</p>
-              <p>OK, now everything works perfectly and seamlessly.</p>
-              
-      </div>
+
+<div class="row">
+<div id="header">
+<p class="lead">
+<h1 class="title">How To Shutdown Java Service Gracefully [Tutorial]</h1>
+<small>
+<h3 class="author">FuqiangWang</h3>
+</small>
+</p>
+</div>
+
+<hr>
+
+
+<p>I will just talk about in my way, I don't care your tricky ways like <code>kill</code> something.</p>
+<p>First of all, Let's define <code>Service</code>, U can refer to google guava's one, but Let's make it simple, A Service can be started and stopped, sometimes, we would like to see the status of a service, so a <code>running</code> status will be exposed too.</p>
+<p>So A simple service looks like:</p>
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="kw">class</span> MyService{
+    <span class="kw">private</span> <span class="kw">volatile</span> <span class="dt">boolean</span> running = <span class="kw">false</span>;
+    <span class="kw">public</span> <span class="dt">void</span> <span class="fu">start</span>(){
+        ....
+        running = <span class="kw">true</span>;
+        <span class="kw">while</span>(running){
+            ...
+        }
+    }
+    
+    <span class="kw">public</span> <span class="dt">boolean</span> <span class="fu">isRunning</span>() {<span class="kw">return</span> running;}
+    
+    <span class="kw">public</span> <span class="dt">void</span> <span class="fu">shutdown</span>(){
+        running = <span class="kw">false</span>;
+    }
+}</code></pre></div>
+<p>If we run this service in main thread, we don't have a chance to call shutdown(), so we expose this Service via jmx, say , with springframework:</p>
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="fu">@ManagedResource</span>(...)
+<span class="kw">class</span> MyService{
+    ...
+    
+    <span class="fu">@ManagedOperation</span>
+    <span class="kw">public</span> <span class="dt">void</span> <span class="fu">shutdown</span>(){
+        running = <span class="kw">false</span>;
+    }
+}</code></pre></div>
+<p>and configure spring to expose it:</p>
+<div class="sourceCode"><pre class="sourceCode xml"><code class="sourceCode xml"><span class="kw">&lt;?xml</span> version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;<span class="kw">?&gt;</span>
+<span class="kw">&lt;beans</span><span class="ot"> xmlns=</span><span class="st">&quot;http://www.springframework.org/schema/beans&quot;</span>
+<span class="ot">       xmlns:xsi=</span><span class="st">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span>
+<span class="ot">       xmlns:context=</span><span class="st">&quot;http://www.springframework.org/schema/context&quot;</span>
+<span class="ot">       xmlns:p=</span><span class="st">&quot;http://www.springframework.org/schema/p&quot;</span>
+<span class="ot">       xmlns:c=</span><span class="st">&quot;http://www.springframework.org/schema/c&quot;</span>
+<span class="ot">       xsi:schemaLocation=</span><span class="st">&quot;http://www.springframework.org/schema/beans</span>
+<span class="st">        http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd&quot;</span><span class="kw">&gt;</span>
+
+    <span class="kw">&lt;context:mbean-export/&gt;</span>
+
+<span class="kw">&lt;/beans&gt;</span></code></pre></div>
+<p>then, when we would like to shut it down, we call the shutdown() method via jmx.</p>
+<p>To make things simple, we usually will give a stop.sh under bin directory for ops, such a stop.sh can call this shutdown() method via jmx with the help of attach API and management-agent.jar, as long as we wrap these functions into a helper main class:</p>
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="kw">import com.sun.tools.attach.AgentInitializationException;</span>
+<span class="kw">import com.sun.tools.attach.AgentLoadException;</span>
+<span class="kw">import com.sun.tools.attach.AttachNotSupportedException;</span>
+<span class="kw">import com.sun.tools.attach.VirtualMachine;</span>
+
+<span class="kw">import javax.management.MBeanServerConnection;</span>
+<span class="kw">import javax.management.ObjectName;</span>
+<span class="kw">import javax.management.remote.JMXConnector;</span>
+<span class="kw">import javax.management.remote.JMXConnectorFactory;</span>
+<span class="kw">import javax.management.remote.JMXServiceURL;</span>
+<span class="kw">import java.io.File;</span>
+<span class="kw">import java.io.IOException;</span>
+
+<span class="co">/**</span>
+<span class="co"> * A Tool you can use to stop your service process gracefully via JMX locally and safely.</span>
+<span class="co"> *</span>
+<span class="co"> * Shutdown needs tools.jar in classpath, so to run this class, assign the path of tools.jar in your system in the shell script, it&#39;s a must prerequisite!</span>
+<span class="co"> *</span>
+<span class="co"> * </span><span class="kw">@author </span><span class="co">yunshi@wacai.com</span>
+<span class="co"> * </span><span class="kw">@since </span><span class="co">2014-10-24</span>
+<span class="co"> */</span>
+<span class="kw">public</span> <span class="kw">class</span> Shutdown {
+    <span class="kw">public</span> <span class="dt">static</span> <span class="dt">final</span> String LOCAL_CONNECTOR_ADDRESS_URL = <span class="st">&quot;com.sun.management.jmxremote.localConnectorAddress&quot;</span>;
+
+    <span class="co">/**</span>
+<span class="co">     * current process&#39;s pid</span>
+<span class="co">     */</span>
+    <span class="kw">private</span> String pid;
+    <span class="co">/**</span>
+<span class="co">     * the managed bean&#39;s name of the top service that we will stop</span>
+<span class="co">     */</span>
+    <span class="kw">private</span> String mbeanName;
+    <span class="co">/**</span>
+<span class="co">     * the operation name of the managed bean, usually named &quot;stop&quot;, &quot;shutdown&quot;, &quot;destroy&quot; without any parameters.</span>
+<span class="co">     */</span>
+    <span class="kw">private</span> String mbeanMethodName;
+
+    <span class="kw">protected</span> JMXServiceURL <span class="fu">getConnectorAddressAsPerPid</span>(String pid) <span class="kw">throws</span> IOException, AttachNotSupportedException, AgentLoadException, AgentInitializationException {
+        VirtualMachine vm = VirtualMachine.<span class="fu">attach</span>(pid);
+        String connectorAddress = vm.<span class="fu">getAgentProperties</span>().<span class="fu">getProperty</span>(LOCAL_CONNECTOR_ADDRESS_URL);
+        <span class="kw">if</span> (connectorAddress == <span class="kw">null</span>) {
+            String agent = vm.<span class="fu">getSystemProperties</span>().<span class="fu">getProperty</span>(<span class="st">&quot;java.home&quot;</span>) + File.<span class="fu">separator</span> + <span class="st">&quot;lib&quot;</span> + File.<span class="fu">separator</span> + <span class="st">&quot;management-agent.jar&quot;</span>;
+            vm.<span class="fu">loadAgent</span>(agent);
+            connectorAddress = vm.<span class="fu">getAgentProperties</span>().<span class="fu">getProperty</span>(LOCAL_CONNECTOR_ADDRESS_URL);
+        }
+        <span class="kw">return</span> <span class="kw">new</span> JMXServiceURL(connectorAddress);
+    }
+
+    <span class="kw">public</span> Object <span class="fu">execute</span>() <span class="kw">throws</span> Throwable {
+        <span class="fu">validate</span>(pid, <span class="st">&quot;pid&quot;</span>);
+        <span class="fu">validate</span>(mbeanName, <span class="st">&quot;mbeanName&quot;</span>);
+        <span class="fu">validate</span>(mbeanMethodName, <span class="st">&quot;mbeanMethodName&quot;</span>);
+
+        JMXConnector jmxConnector = JMXConnectorFactory.<span class="fu">newJMXConnector</span>(<span class="fu">getConnectorAddressAsPerPid</span>(<span class="fu">getPid</span>()), <span class="kw">null</span>);
+        jmxConnector.<span class="fu">connect</span>();
+        <span class="kw">try</span> {
+            MBeanServerConnection connection = jmxConnector.<span class="fu">getMBeanServerConnection</span>();
+            <span class="kw">return</span> connection.<span class="fu">invoke</span>(ObjectName.<span class="fu">getInstance</span>(<span class="fu">getMbeanName</span>()), <span class="fu">getMbeanMethodName</span>(), <span class="kw">null</span>, <span class="kw">null</span>);
+        } <span class="kw">finally</span> {
+            jmxConnector.<span class="fu">close</span>();
+        }
+    }
+
+    <span class="kw">protected</span> <span class="dt">void</span> <span class="fu">validate</span>(String property, String propertyName) {
+        <span class="kw">if</span> (property == <span class="kw">null</span> || property.<span class="fu">trim</span>().<span class="fu">isEmpty</span>())
+            <span class="kw">throw</span> <span class="kw">new</span> IllegalStateException(<span class="st">&quot;[&quot;</span> + propertyName + <span class="st">&quot;] must be set&quot;</span>);
+    }
+
+    <span class="kw">public</span> String <span class="fu">getPid</span>() {
+        <span class="kw">return</span> pid;
+    }
+
+    <span class="kw">public</span> <span class="dt">void</span> <span class="fu">setPid</span>(String pid) {
+        <span class="kw">this</span>.<span class="fu">pid</span> = pid;
+    }
+
+    <span class="kw">public</span> String <span class="fu">getMbeanName</span>() {
+        <span class="kw">return</span> mbeanName;
+    }
+
+    <span class="kw">public</span> <span class="dt">void</span> <span class="fu">setMbeanName</span>(String mbeanName) {
+        <span class="kw">this</span>.<span class="fu">mbeanName</span> = mbeanName;
+    }
+
+    <span class="kw">public</span> String <span class="fu">getMbeanMethodName</span>() {
+        <span class="kw">return</span> mbeanMethodName;
+    }
+
+    <span class="kw">public</span> <span class="dt">void</span> <span class="fu">setMbeanMethodName</span>(String mbeanMethodName) {
+        <span class="kw">this</span>.<span class="fu">mbeanMethodName</span> = mbeanMethodName;
+    }
+
+    <span class="co">/**</span>
+<span class="co">     * Shutdown shutdown = new Shutdown();</span>
+<span class="co">     * shutdown.setPid(&quot;7198&quot;);</span>
+<span class="co">     * shutdown.setMbeanName(&quot;com.sun.management:type=DiagnosticCommand&quot;);</span>
+<span class="co">     * shutdown.setMbeanMethodName(&quot;vmSystemProperties&quot;);</span>
+<span class="co">     * System.out.println(shutdown.execute());</span>
+<span class="co">     */</span>
+    <span class="kw">public</span> <span class="dt">static</span> <span class="dt">void</span> <span class="fu">main</span>(String[] args) <span class="kw">throws</span> Throwable {
+        <span class="kw">if</span> (args.<span class="fu">length</span> != <span class="dv">3</span>) {
+            <span class="kw">throw</span> <span class="kw">new</span> Exception(<span class="st">&quot;usage: java ... Shutdown [pid] [mbean name] [mbean operation]&quot;</span>);
+        }
+
+        Shutdown shutdown = <span class="kw">new</span> <span class="fu">Shutdown</span>();
+        shutdown.<span class="fu">setPid</span>(args[<span class="dv">0</span>]);
+        shutdown.<span class="fu">setMbeanName</span>(args[<span class="dv">1</span>]);
+        shutdown.<span class="fu">setMbeanMethodName</span>(args[<span class="dv">2</span>]);
+        shutdown.<span class="fu">execute</span>();
+    }
+}</code></pre></div>
+<p>then in the stop.sh, you can simple write:</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="co">#! /usr/bin/env bash</span>
+
+<span class="kw">java</span> -cp tools.jar:... com.wacai.csw.scheduler.controls.Shutdown [pid] [service mbean name] [shutdown method]</code></pre></div>
+<p>since the tools.jar is platform dependent, just point it to the location under your platform in the shell.</p>
+<p>OK, now everything works perfectly and seamlessly.</p>
+
+</div>
+
       <div id="qrcode"></div>
       <div class="row">
         <div class="col-md-12 footer">

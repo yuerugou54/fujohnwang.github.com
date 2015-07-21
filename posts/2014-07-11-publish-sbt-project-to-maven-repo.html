@@ -7,18 +7,19 @@
   <meta http-equiv="X-UA-Compatible" content="chrome=1">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="author" content="扶墙老师@afoo.me">
-
-  <link rel="icon" href="/favicon.ico">
+    <link rel="icon" href="/favicon.ico">
 
   <title>Publish SBT project to Maven repo(Nexus?) - 一个架构士的思考与沉淀之地</title>
 
-          
-  <link href='/font/News_Cycle/stylesheet.css' rel='stylesheet' type='text/css'>
+  
 
+  <link href='/font/News_Cycle/stylesheet.css' rel='stylesheet' type='text/css'>
   <link href="/css/bootstrap.min.css" rel="stylesheet">
   <link href="/css/bootstrap-theme.min.css" rel="stylesheet">
   <link href="/css/afoo.me.css" rel="stylesheet">
 
+  <style type="text/css">code{white-space: pre;}</style>
+        
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>
@@ -38,73 +39,75 @@
           </a>
         </div>
     </div>
-    <div class="col-xs-12 col-md-10">
 
-          
-          <div class="row">
-                        <div id="header">
-              <p class="lead">
-              <h1 class="title">Publish SBT project to Maven repo(Nexus?)</h1>
-                            <small>
-                  <h3 class="author">WangFuqiang</h3>
-              </small>
-                                          </p>
-            </div>
-            
-              <hr>
+<div class="col-xs-12 col-md-10">
 
-                            <div id="TOC">
-                <ul>
-                <li><a href="#准备配置内容"><span class="toc-section-number">1</span> 准备配置内容</a></li>
-                <li><a href="#本地测试"><span class="toc-section-number">2</span> 本地测试</a></li>
-                <li><a href="#正式发布"><span class="toc-section-number">3</span> 正式发布</a></li>
-                <li><a href="#关于credentials"><span class="toc-section-number">4</span> 关于Credentials</a></li>
-                <li><a href="#其它参考"><span class="toc-section-number">5</span> 其它参考</a></li>
-                </ul>
-              </div>
-              <hr/>
-              
-              <p>--阶段性反刍--</p>
-              <h1 id="准备配置内容"><span class="header-section-number">1</span> 准备配置内容</h1>
-              build.sbt中需要添加发布到maven相应配置：
-              <pre>
-              publishMavenStyle := true
-              
-              publishTo := {
-                val nexus = "http://192.168.1.248:9111/nexus/content/repositories/"
-                if (version.value.trim.endsWith("SNAPSHOT"))
-                  Some("snapshots" at nexus + "snapshots")
-                else
-                  Some("releases"  at nexus + "releases")
-              }
-              
-              credentials += Credentials("${realm}", "${host}", "${username}", "${password}")
-              </pre>
-              <p>对于Nexus来说，默认的realm是“Sonatype Nexus Repository Manager”，如果不确定的话， 可以通过命令<code>curl -X POST http://${port}:${port}/nexus/content/repositories/releases -v</code>来获得，或者直接不写username和password，待报错的时候获得相应信息，因为sbt使用WWW-AUthenticate这个header来确定basic auth的realm。</p>
-              <p>host参数只写IP或者域名，不需要添加port！</p>
-              <h1 id="本地测试"><span class="header-section-number">2</span> 本地测试</h1>
-              <p>可以通过<code>sbt publish-local</code>先本地测试一下， 发布到本地maven库中并检查是否有遗漏或者错误</p>
-              <h1 id="正式发布"><span class="header-section-number">3</span> 正式发布</h1>
-              <p>运行<code>sbt publish</code>, 等待结果...</p>
-              <h1 id="关于credentials"><span class="header-section-number">4</span> 关于Credentials</h1>
-              <p>直接写到project的build文件当然可以，但还是放到独立的一台发布机上比较靠谱一些，所以，我们可以在project的build文件里只声明credential文件的位置：</p>
-              <pre>
-                    credentials += Credentials(Path.userHome / ".ivy2" / ".credentials_busymachines_snapshots"),
-                    credentials += Credentials(Path.userHome / ".ivy2" / ".credentials_busymachines_releases")      
-              </pre>
-              <p>然后在相应的credentials文件中在存放相应的credential信息：</p>
-              <pre>
-              realm=Repository Archiva Managed snapshots Repository
-              host=archiva.busymachines.com
-              user=myuser
-              password=mypass
-              </pre>
-              <h1 id="其它参考"><span class="header-section-number">5</span> 其它参考</h1>
-              <ol style="list-style-type: decimal">
-              <li><a href="http://www.cakesolutions.net/teamblogs/publishing-artefacts-to-oss-sonatype-nexus-using-sbt-and-travis-ci-here...">Publishing artefacts to OSS Sonatype Nexus using SBT and Travis CI Here...</a></li>
-              </ol>
-              
-      </div>
+
+<div class="row">
+<div id="header">
+<p class="lead">
+<h1 class="title">Publish SBT project to Maven repo(Nexus?)</h1>
+<small>
+<h3 class="author">WangFuqiang</h3>
+</small>
+</p>
+</div>
+
+<hr>
+
+<div id="TOC">
+<ul>
+<li><a href="#准备配置内容"><span class="toc-section-number">1</span> 准备配置内容</a></li>
+<li><a href="#本地测试"><span class="toc-section-number">2</span> 本地测试</a></li>
+<li><a href="#正式发布"><span class="toc-section-number">3</span> 正式发布</a></li>
+<li><a href="#关于credentials"><span class="toc-section-number">4</span> 关于Credentials</a></li>
+<li><a href="#其它参考"><span class="toc-section-number">5</span> 其它参考</a></li>
+</ul>
+</div>
+<hr/>
+
+<p>--阶段性反刍--</p>
+<h1 id="准备配置内容"><span class="header-section-number">1</span> 准备配置内容</h1>
+build.sbt中需要添加发布到maven相应配置：
+<pre>
+publishMavenStyle := true
+
+publishTo := {
+  val nexus = "http://192.168.1.248:9111/nexus/content/repositories/"
+  if (version.value.trim.endsWith("SNAPSHOT"))
+    Some("snapshots" at nexus + "snapshots")
+  else
+    Some("releases"  at nexus + "releases")
+}
+
+credentials += Credentials("${realm}", "${host}", "${username}", "${password}")
+</pre>
+<p>对于Nexus来说，默认的realm是“Sonatype Nexus Repository Manager”，如果不确定的话， 可以通过命令<code>curl -X POST http://${port}:${port}/nexus/content/repositories/releases -v</code>来获得，或者直接不写username和password，待报错的时候获得相应信息，因为sbt使用WWW-AUthenticate这个header来确定basic auth的realm。</p>
+<p>host参数只写IP或者域名，不需要添加port！</p>
+<h1 id="本地测试"><span class="header-section-number">2</span> 本地测试</h1>
+<p>可以通过<code>sbt publish-local</code>先本地测试一下， 发布到本地maven库中并检查是否有遗漏或者错误</p>
+<h1 id="正式发布"><span class="header-section-number">3</span> 正式发布</h1>
+<p>运行<code>sbt publish</code>, 等待结果...</p>
+<h1 id="关于credentials"><span class="header-section-number">4</span> 关于Credentials</h1>
+<p>直接写到project的build文件当然可以，但还是放到独立的一台发布机上比较靠谱一些，所以，我们可以在project的build文件里只声明credential文件的位置：</p>
+<pre>
+      credentials += Credentials(Path.userHome / ".ivy2" / ".credentials_busymachines_snapshots"),
+      credentials += Credentials(Path.userHome / ".ivy2" / ".credentials_busymachines_releases")      
+</pre>
+<p>然后在相应的credentials文件中在存放相应的credential信息：</p>
+<pre>
+realm=Repository Archiva Managed snapshots Repository
+host=archiva.busymachines.com
+user=myuser
+password=mypass
+</pre>
+<h1 id="其它参考"><span class="header-section-number">5</span> 其它参考</h1>
+<ol style="list-style-type: decimal">
+<li><a href="http://www.cakesolutions.net/teamblogs/publishing-artefacts-to-oss-sonatype-nexus-using-sbt-and-travis-ci-here...">Publishing artefacts to OSS Sonatype Nexus using SBT and Travis CI Here...</a></li>
+</ol>
+
+</div>
+
       <div id="qrcode"></div>
       <div class="row">
         <div class="col-md-12 footer">

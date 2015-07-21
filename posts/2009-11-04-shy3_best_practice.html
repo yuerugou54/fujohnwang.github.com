@@ -7,19 +7,20 @@
   <meta http-equiv="X-UA-Compatible" content="chrome=1">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="author" content="扶墙老师@afoo.me">
-
-  <link rel="icon" href="/favicon.ico">
+    <meta name="date" content="2009-11-04" />
+    <link rel="icon" href="/favicon.ico">
 
   <title>关于钱磊在Shy3框架中使用的“动态URL”功能的小记 - 一个架构士的思考与沉淀之地</title>
 
-    <meta name="date" content="2009-11-04" />
-          
-  <link href='/font/News_Cycle/stylesheet.css' rel='stylesheet' type='text/css'>
+  
 
+  <link href='/font/News_Cycle/stylesheet.css' rel='stylesheet' type='text/css'>
   <link href="/css/bootstrap.min.css" rel="stylesheet">
   <link href="/css/bootstrap-theme.min.css" rel="stylesheet">
   <link href="/css/afoo.me.css" rel="stylesheet">
 
+  <style type="text/css">code{white-space: pre;}</style>
+        
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>
@@ -39,59 +40,61 @@
           </a>
         </div>
     </div>
-    <div class="col-xs-12 col-md-10">
 
-          
-          <div class="row">
-                        <div id="header">
-              <p class="lead">
-              <h1 class="title">关于钱磊在Shy3框架中使用的“动态URL”功能的小记</h1>
-                            <small>
-                  <h3 class="author">fujohnwang</h3>
-              </small>
-                                        <h4 class="date">2009-11-04</h4>
-                              </p>
-            </div>
-            
-              <hr>
+<div class="col-xs-12 col-md-10">
 
-              
-              <p><strong>author: fujohnwang</strong></p>
-              <p>关于钱磊在Shy3框架中使用的“动态URL”功能的小记</p>
-              <ol style="list-style-type: decimal">
-              <li>数据状态存储和传递；
-              <ul>
-              <li>stateless, easy horizontal scale</li>
-              </ul></li>
-              <li>加密，解密；
-              <ul>
-              <li>security， attack-proof.</li>
-              </ul></li>
-              <li>压缩 192, 2k，&gt; 2k
-              <ul>
-              <li>经验值， 小于192的时候， 压缩反而适得其反；</li>
-              <li>192 - 2k范围内压缩效果明显；</li>
-              <li>大于2k的范围， 写入secure cookie；</li>
-              </ul></li>
-              </ol>
-              <pre>
-              ------------------------以下摘自wikipedia-----------------------------
-              
-              Query String Compatibility issues 
-              
-              According to the HTTP specification: 
-              
-                  Servers should be cautious about depending on URI (which includes URLs) lengths above 255 bytes, because some older client or proxy implementations may not properly support these lengths.[1] 
-              
-              The HTML 3 specification declares that any attribute value (e.g. url in <a href="url">) cannot have more than 1024 characters[2] However, the HTML 4 specification omits this restriction.[3] 
-              
-              he specification does not dictate a minimum or maximum URL length, but implementation varies by browser and version. For example, Internet Explorer does not support URLs that have more than 2083 characters.[4][5] There is no limit on the number of parameters in a URL; only the raw (as opposed to URL encoded) character length of the URL matters. Web servers may also impose limits on the length of the query string, depending on how the URL and query string is stored. 
-              
-              The common workaround for these problems is to use POST instead of GET and store the parameters in the request body. The length limits on request bodies are typically much higher than those on URL length. For example, the limit on POST size, by default, is 2 MB on IIS 4.0 and 128 KB on IIS 5.0.[6] 
-              [edit]
-              </pre>
-              
-      </div>
+
+<div class="row">
+<div id="header">
+<p class="lead">
+<h1 class="title">关于钱磊在Shy3框架中使用的“动态URL”功能的小记</h1>
+<small>
+<h3 class="author">fujohnwang</h3>
+</small>
+<h4 class="date">2009-11-04</h4>
+</p>
+</div>
+
+<hr>
+
+
+<p><strong>author: fujohnwang</strong></p>
+<p>关于钱磊在Shy3框架中使用的“动态URL”功能的小记</p>
+<ol style="list-style-type: decimal">
+<li>数据状态存储和传递；
+<ul>
+<li>stateless, easy horizontal scale</li>
+</ul></li>
+<li>加密，解密；
+<ul>
+<li>security， attack-proof.</li>
+</ul></li>
+<li>压缩 192, 2k，&gt; 2k
+<ul>
+<li>经验值， 小于192的时候， 压缩反而适得其反；</li>
+<li>192 - 2k范围内压缩效果明显；</li>
+<li>大于2k的范围， 写入secure cookie；</li>
+</ul></li>
+</ol>
+<pre>
+------------------------以下摘自wikipedia-----------------------------
+
+Query String Compatibility issues 
+
+According to the HTTP specification: 
+
+    Servers should be cautious about depending on URI (which includes URLs) lengths above 255 bytes, because some older client or proxy implementations may not properly support these lengths.[1] 
+
+The HTML 3 specification declares that any attribute value (e.g. url in <a href="url">) cannot have more than 1024 characters[2] However, the HTML 4 specification omits this restriction.[3] 
+
+he specification does not dictate a minimum or maximum URL length, but implementation varies by browser and version. For example, Internet Explorer does not support URLs that have more than 2083 characters.[4][5] There is no limit on the number of parameters in a URL; only the raw (as opposed to URL encoded) character length of the URL matters. Web servers may also impose limits on the length of the query string, depending on how the URL and query string is stored. 
+
+The common workaround for these problems is to use POST instead of GET and store the parameters in the request body. The length limits on request bodies are typically much higher than those on URL length. For example, the limit on POST size, by default, is 2 MB on IIS 4.0 and 128 KB on IIS 5.0.[6] 
+[edit]
+</pre>
+
+</div>
+
       <div id="qrcode"></div>
       <div class="row">
         <div class="col-md-12 footer">

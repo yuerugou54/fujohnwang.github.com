@@ -7,19 +7,20 @@
   <meta http-equiv="X-UA-Compatible" content="chrome=1">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="author" content="扶墙老师@afoo.me">
-
-  <link rel="icon" href="/favicon.ico">
+    <meta name="date" content="2012-02-03" />
+    <link rel="icon" href="/favicon.ico">
 
   <title>&quot;Linkedin Search-Related Projects Rough Notes&quot; - 一个架构士的思考与沉淀之地</title>
 
-    <meta name="date" content="2012-02-03" />
-          
-  <link href='/font/News_Cycle/stylesheet.css' rel='stylesheet' type='text/css'>
+  
 
+  <link href='/font/News_Cycle/stylesheet.css' rel='stylesheet' type='text/css'>
   <link href="/css/bootstrap.min.css" rel="stylesheet">
   <link href="/css/bootstrap-theme.min.css" rel="stylesheet">
   <link href="/css/afoo.me.css" rel="stylesheet">
 
+  <style type="text/css">code{white-space: pre;}</style>
+        
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>
@@ -39,68 +40,70 @@
           </a>
         </div>
     </div>
-    <div class="col-xs-12 col-md-10">
 
-          
-          <div class="row">
-                        <div id="header">
-              <p class="lead">
-              <h1 class="title">&quot;Linkedin Search-Related Projects Rough Notes&quot;</h1>
-                            <small>
-                  <h3 class="author">fujohnwang</h3>
-              </small>
-                                        <h4 class="date">2012-02-03</h4>
-                              </p>
-            </div>
-            
-              <hr>
+<div class="col-xs-12 col-md-10">
 
-                            <div id="TOC">
-                <ul>
-                <li><a href="#solr"><span class="toc-section-number">1</span> solr</a></li>
-                <li><a href="#bobo"><span class="toc-section-number">2</span> <a href="http://sna-projects.com/bobo/">bobo</a></a></li>
-                <li><a href="#zoie"><span class="toc-section-number">3</span> <a href="http://javasoze.github.com/zoie/">zoie</a></a></li>
-                <li><a href="#cleo"><span class="toc-section-number">4</span> <a href="http://sna-projects.com/cleo/">cleo</a></a></li>
-                <li><a href="#senseidb"><span class="toc-section-number">5</span> <a href="http://sna-projects.com/sensei">senseidb</a></a></li>
-                <li><a href="#in-conclusion"><span class="toc-section-number">6</span> In conclusion</a></li>
-                </ul>
-              </div>
-              <hr/>
-              
-              <h1 id="solr"><span class="header-section-number">1</span> solr</h1>
-              <ul>
-              <li>References
-              <ul>
-              <li><a href="http://codeascraft.etsy.com/2012/01/23/solr-bittorrent-index-replication/" class="uri">http://codeascraft.etsy.com/2012/01/23/solr-bittorrent-index-replication/</a></li>
-              <li><a href="http://blog.sematext.com/2012/02/01/solrcloud-distributed-realtime-search/">The New SolrCloud: Overview</a></li>
-              </ul></li>
-              </ul>
-              <h1 id="bobo"><span class="header-section-number">2</span> <a href="http://sna-projects.com/bobo/">bobo</a></h1>
-              <ul>
-              <li>a Faceted Search implementation written purely in Java, an extension of Apache Lucene.</li>
-              <li><a href="http://cdc.tencent.com/?p=1401" class="uri">http://cdc.tencent.com/?p=1401</a></li>
-              <li>complement unstructured data set (in lucene) with semi- or full-structured data set, that's, we can search all of the kinds of data sets</li>
-              </ul>
-              <h1 id="zoie"><span class="header-section-number">3</span> <a href="http://javasoze.github.com/zoie/">zoie</a></h1>
-              <ul>
-              <li>a real-time search and indexing system built on Apache Lucene</li>
-              <li>sub-system of sensidb or backbone?!</li>
-              <li>data provider -&gt; indexs(ram or disk based) -&gt; index reader factory -&gt; query clients</li>
-              </ul>
-              <h1 id="cleo"><span class="header-section-number">4</span> <a href="http://sna-projects.com/cleo/">cleo</a></h1>
-              <ul>
-              <li>real-time typeahead and autocomplete services</li>
-              <li>front tier(cache, web) + aggregator(1..1) + searching services(1..*)</li>
-              </ul>
-              <h1 id="senseidb"><span class="header-section-number">5</span> <a href="http://sna-projects.com/sensei">senseidb</a></h1>
-              <pre><code>data sources -&gt; gateways -{indexing}-&gt; sensi node(s) -{load balancing}-&gt; broker(s)-&gt; query clients</code></pre>
-              <ul>
-              <li><a href="http://engineering.linkedin.com/open-source/introducing-senseidb-10-open-source-distributed-realtime-semi-structured-database" class="uri">http://engineering.linkedin.com/open-source/introducing-senseidb-10-open-source-distributed-realtime-semi-structured-database</a></li>
-              </ul>
-              <h1 id="in-conclusion"><span class="header-section-number">6</span> In conclusion</h1>
-              <pre><code>zoie -{make it clustered}-&gt; sensidb -{make it SOA}-&gt; cleo </code></pre>
-              
-      </div>
+
+<div class="row">
+<div id="header">
+<p class="lead">
+<h1 class="title">&quot;Linkedin Search-Related Projects Rough Notes&quot;</h1>
+<small>
+<h3 class="author">fujohnwang</h3>
+</small>
+<h4 class="date">2012-02-03</h4>
+</p>
+</div>
+
+<hr>
+
+<div id="TOC">
+<ul>
+<li><a href="#solr"><span class="toc-section-number">1</span> solr</a></li>
+<li><a href="#bobo"><span class="toc-section-number">2</span> <a href="http://sna-projects.com/bobo/">bobo</a></a></li>
+<li><a href="#zoie"><span class="toc-section-number">3</span> <a href="http://javasoze.github.com/zoie/">zoie</a></a></li>
+<li><a href="#cleo"><span class="toc-section-number">4</span> <a href="http://sna-projects.com/cleo/">cleo</a></a></li>
+<li><a href="#senseidb"><span class="toc-section-number">5</span> <a href="http://sna-projects.com/sensei">senseidb</a></a></li>
+<li><a href="#in-conclusion"><span class="toc-section-number">6</span> In conclusion</a></li>
+</ul>
+</div>
+<hr/>
+
+<h1 id="solr"><span class="header-section-number">1</span> solr</h1>
+<ul>
+<li>References
+<ul>
+<li><a href="http://codeascraft.etsy.com/2012/01/23/solr-bittorrent-index-replication/" class="uri">http://codeascraft.etsy.com/2012/01/23/solr-bittorrent-index-replication/</a></li>
+<li><a href="http://blog.sematext.com/2012/02/01/solrcloud-distributed-realtime-search/">The New SolrCloud: Overview</a></li>
+</ul></li>
+</ul>
+<h1 id="bobo"><span class="header-section-number">2</span> <a href="http://sna-projects.com/bobo/">bobo</a></h1>
+<ul>
+<li>a Faceted Search implementation written purely in Java, an extension of Apache Lucene.</li>
+<li><a href="http://cdc.tencent.com/?p=1401" class="uri">http://cdc.tencent.com/?p=1401</a></li>
+<li>complement unstructured data set (in lucene) with semi- or full-structured data set, that's, we can search all of the kinds of data sets</li>
+</ul>
+<h1 id="zoie"><span class="header-section-number">3</span> <a href="http://javasoze.github.com/zoie/">zoie</a></h1>
+<ul>
+<li>a real-time search and indexing system built on Apache Lucene</li>
+<li>sub-system of sensidb or backbone?!</li>
+<li>data provider -&gt; indexs(ram or disk based) -&gt; index reader factory -&gt; query clients</li>
+</ul>
+<h1 id="cleo"><span class="header-section-number">4</span> <a href="http://sna-projects.com/cleo/">cleo</a></h1>
+<ul>
+<li>real-time typeahead and autocomplete services</li>
+<li>front tier(cache, web) + aggregator(1..1) + searching services(1..*)</li>
+</ul>
+<h1 id="senseidb"><span class="header-section-number">5</span> <a href="http://sna-projects.com/sensei">senseidb</a></h1>
+<pre><code>data sources -&gt; gateways -{indexing}-&gt; sensi node(s) -{load balancing}-&gt; broker(s)-&gt; query clients</code></pre>
+<ul>
+<li><a href="http://engineering.linkedin.com/open-source/introducing-senseidb-10-open-source-distributed-realtime-semi-structured-database" class="uri">http://engineering.linkedin.com/open-source/introducing-senseidb-10-open-source-distributed-realtime-semi-structured-database</a></li>
+</ul>
+<h1 id="in-conclusion"><span class="header-section-number">6</span> In conclusion</h1>
+<pre><code>zoie -{make it clustered}-&gt; sensidb -{make it SOA}-&gt; cleo </code></pre>
+
+</div>
+
       <div id="qrcode"></div>
       <div class="row">
         <div class="col-md-12 footer">

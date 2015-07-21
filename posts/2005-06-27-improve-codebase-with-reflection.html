@@ -7,12 +7,19 @@
   <meta http-equiv="X-UA-Compatible" content="chrome=1">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="author" content="扶墙老师@afoo.me">
-
-  <link rel="icon" href="/favicon.ico">
+    <link rel="icon" href="/favicon.ico">
 
   <title>使用反射（Reflection）改进项目代码架构 - 一个架构士的思考与沉淀之地</title>
 
-      <style type="text/css">
+  
+
+  <link href='/font/News_Cycle/stylesheet.css' rel='stylesheet' type='text/css'>
+  <link href="/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/css/bootstrap-theme.min.css" rel="stylesheet">
+  <link href="/css/afoo.me.css" rel="stylesheet">
+
+  <style type="text/css">code{white-space: pre;}</style>
+    <style type="text/css">
     div.sourceCode { overflow-x: auto; }
     table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
       margin: 0; padding: 0; vertical-align: baseline; border: none; }
@@ -33,12 +40,6 @@
     code > span.er { color: #ff0000; font-weight: bold; }
   </style>
         
-  <link href='/font/News_Cycle/stylesheet.css' rel='stylesheet' type='text/css'>
-
-  <link href="/css/bootstrap.min.css" rel="stylesheet">
-  <link href="/css/bootstrap-theme.min.css" rel="stylesheet">
-  <link href="/css/afoo.me.css" rel="stylesheet">
-
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>
@@ -58,159 +59,161 @@
           </a>
         </div>
     </div>
-    <div class="col-xs-12 col-md-10">
 
-          
-          <div class="row">
-                        <div id="header">
-              <p class="lead">
-              <h1 class="title">使用反射（Reflection）改进项目代码架构</h1>
-                                          </p>
-            </div>
-            
-              <hr>
+<div class="col-xs-12 col-md-10">
 
-              
-              <blockquote>
-              <p>2014年从msn space存档中重新恢复出来！</p>
-              </blockquote>
-              <p>前几天为了测试条形码的扫描，需要为他人提供一个生成的条形码图片，故此，在barbecue的基础上使用swt为项目组实现了一个简单的条形码生成GUI程序，其中使用了反射机制极大的简化和改进了代码结构，其后同时联想到报表部分的实现，感觉自己当时的实现十分的丑陋，故此，一并做一反思，以鉴后人。</p>
-              <p>OK，先从这个SWT的GUI程序说起，界面上我们提供1个文本编辑框作为要生成的条形码的输入，一个combo列表框显示所有的barbecue支持的条形码类型，最后当然是一个button，点击后生成条形码图片并给出提示信息。在界面初始化的时候，我们需要为列表框赋值使之可以提示用户要生产的条码类型，当然，最常见的实现就是直接一行一行的为期添加值，比如我们知道有Code128的条码，有EAN128的条码，有Code39的条码等等，那么就可以直接以cmbType.add(“Code124); cmbType.add(“EAN128”);…的方式实现我们的代码，当然大同小异的，我们也可以直接将所有的值先添加到一个List中，最后循环这个List为列表框赋值，以此来使代码更清晰，但是，其实这样并不是最好的实现，虽然简单，但是依然有改进的余地，因为首先，我们发现BarcodeFactory类里，针对不同的条码类型，它都会有一个createXXX()形式的方法与之对应，所以，我们可以直接使用反射来取得这些方法，并截取条码名称部分就可以了，而不需要hard code条码名称到代码中，以下是简单的实现片断：</p>
-              <div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="co">// combo Init</span>
-              
-              Matcher matcher = Pattern.<span class="fu">compile</span>(<span class="st">&quot;^create(.*)$&quot;</span>).<span class="fu">matcher</span>(<span class="st">&quot;&quot;</span>);
-              
-              Class clazz = BarcodeFactory.<span class="fu">class</span>;
-              
-              Method[] methods = clazz.<span class="fu">getMethods</span>();
-              
-              <span class="kw">for</span>(<span class="dt">int</span> i=<span class="dv">0</span>;i&lt;methods.<span class="fu">length</span>;i++)
-              
-              {
-              
-                     matcher.<span class="fu">reset</span>(methods[i].<span class="fu">getName</span>());
-              
-                     <span class="kw">if</span>(matcher.<span class="fu">matches</span>())
-              
-                     {
-              
-                            <span class="kw">this</span>.<span class="fu">cmbType</span>.<span class="fu">add</span>(matcher.<span class="fu">group</span>(<span class="dv">1</span>));
-              
-                     }
-              
-              }</code></pre></div>
-              <p>界面初始化完成之后，最主要的就是按钮的事件处理。检验等暂且不提，我先说我的实现思路，从Text中提取输入，从列表框中提取条码类型名称，然后根据条码名称判断应该调用BarcodeFactory的什么方法，最后生成条码图片并输出。不知道大家是否想过，即使知道了条码类型名称，那么如何调用BarcodeFactory的相应方法那？！（对于guru来说固然小儿科，但是以上只是为了提供思路，问题固然简单，依然需要表达清楚，不是吗？！）OK，答案就是反射（Reflection）。 我们通过循环便利BarcodeFactory的所有方法，在循环中会根据正则表达式来判断那个方面名称中可以find到条码类型名称形式的pattern，如果find（）方法返回true，我们就可以直接调用，进行后继处理后直接返回了，请看如下代码片断：</p>
-              <div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java">Class clazz = BarcodeFactory.<span class="fu">class</span>;
-              
-              Method[] methods = clazz.<span class="fu">getMethods</span>();
-              
-              <span class="kw">for</span>(<span class="dt">int</span> i=<span class="dv">0</span>;i&lt;methods.<span class="fu">length</span>;i++){
-                  Method m = methods[i];
-              
-                  Matcher matcher = Pattern.<span class="fu">compile</span>(type+<span class="st">&quot;$&quot;</span>).<span class="fu">matcher</span>(m.<span class="fu">getName</span>());
-              
-                  <span class="kw">if</span>(matcher.<span class="fu">find</span>()){
-              
-                      StringBuffer filename = <span class="kw">new</span> StringBuffer();
-                      filename.<span class="fu">append</span>(System.<span class="fu">getProperty</span>(<span class="st">&quot;user.dir&quot;</span>));
-                      filename.<span class="fu">append</span>(File.<span class="fu">separator</span>);
-                      filename.<span class="fu">append</span>(<span class="st">&quot;data&quot;</span>);
-                      filename.<span class="fu">append</span>(File.<span class="fu">separator</span>);
-                      filename.<span class="fu">append</span>(type);
-                      filename.<span class="fu">append</span>(<span class="st">&quot;.jpg&quot;</span>);
-              
-                      Barcode barcode = (Barcode)m.<span class="fu">invoke</span>(clazz,<span class="kw">new</span> Object[]{input});
-                      out = <span class="kw">new</span> FileOutputStream(filename.<span class="fu">toString</span>());
-                      BarcodeImageHandler.<span class="fu">outputBarcodeAsJPEGImage</span>(barcode, out);
-              
-                      MessageBox msg = <span class="kw">new</span> <span class="fu">MessageBox</span>(BarCodeGenerator.<span class="fu">this</span>.<span class="fu">getShell</span>(),SWT.<span class="fu">APPLICATION_MODAL</span>|SWT.<span class="fu">ICON_INFORMATION</span>);
-                      msg.<span class="fu">setText</span>(<span class="st">&quot;Message&quot;</span>);
-                      msg.<span class="fu">setMessage</span>(<span class="st">&quot;Barcode generated Successfully into data directory!</span><span class="ch">\n</span><span class="st">[&quot;</span>+filename.<span class="fu">toString</span>()+<span class="st">&quot;]&quot;</span>);
-                      msg.<span class="fu">open</span>();
-              
-                      <span class="kw">return</span>;
-                  }
-              }</code></pre></div>
-              <p>OK，以上就是条码生产程序的说明，以此为基点，我想自我检讨一下，因为相对于上面的实现来说，我为报表模块所做的最终集成实在是太糟糕了（因为牵扯到目前开发的系统，所以此处略去不相关的内容，只对技术点进行说明）</p>
-              <p>首先，报表有许多种，20甚至30种都有可能，然后根据不同的类型，调用不同的对话框，最终根据输入的条件生成excel报表。刚开始我给出了一个接口，不如IReportGenerator,该接口给出了一个generate（）的通用方法以及setXXX（）方法（用来设置报表生成条件），然后告知大家在自己的报表实现类中implements这个接口；同时，我也给出了一个类型安全的枚举类，比如EReportType，用来保存和区分报表类型。在此基础上，用户选择了要生产的报表类型之后，我就可以调用条件输入对话框，传入相应的枚举类，然后在用户点击OK之后，就会判断枚举类的类型，然后根据这个类型来初始化相应的IReportGenerator实现类，最终直接调用generator.generate()方法就可以了。</p>
-              <p>现在，看我的实现，你就会发现最ugly的实现是什么样子的，呵呵</p>
-              <div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java">EReportType type;
-              
-              IReportGenerator generator;
-              <span class="co">// Other jobs to do</span>
-              …
-              If（EReportType. TYPE1 == type）{
-                      generator = <span class="kw">new</span> <span class="fu">SampleGenerator1</span>();
-              }<span class="kw">else</span> <span class="kw">if</span>(EReportType. TYPE2 == type){
-                      generator = <span class="kw">new</span> <span class="fu">SampleGenerator2</span>();
-              }<span class="kw">else</span> <span class="kw">if</span>(EReportType.<span class="fu">TYPE3</span> == type){
-                      generator = <span class="kw">new</span> <span class="fu">SampleGenerator3</span>();
-              }<span class="kw">else</span> <span class="kw">if</span>(…){
-              
-              }
-              
-              …<span class="co">// other operations</span>
-              
-              generator.<span class="fu">generate</span>();
-              
-              …<span class="co">// left operations</span></code></pre></div>
-              <p>怎么样，是不是有同感那？！呵呵，OK，知耻而后勇，让我们重构这段实现吧！</p>
-              <p>为了可以更清楚地说明我的意图，我将分2步来实施这次重构：</p>
-              <p>第一步，我们将不同IReportGenerato接口的实现类移出来，放到一个Map中，Map的key暂时定为EReportType的所有枚举值，而相应的value就直接是key所指定的枚举类的报表实现的class name。</p>
-              <div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java">rptMapping.<span class="fu">put</span>(EReportType.<span class="fu">TYPE1</span>,com.<span class="fu">darrenstudio</span>.<span class="fu">report</span>.<span class="fu">SampleReport1</span>.<span class="fu">class</span>);
-              …<span class="co">// others</span></code></pre></div>
-              <p>(Map实现可以参考使用commons collection提供的实现类)</p>
-              <p>这样，所有的映射都放到了这个Map之中，在我们的对话框OK按钮按下之后，我们就可以直接以这样的方式来实现：</p>
-              <div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java">EReportType type;
-              
-              IReportGenerator generator;
-              
-              <span class="co">// Other jobs to do</span>
-              
-              …
-              
-              Class clazz = (Class)<span class="fu">getReportMapping</span>().<span class="fu">get</span>(type);
-              
-              generator = (IReportGenerator)clazz.<span class="fu">newInstance</span>();
-              
-              generator.<span class="fu">generate</span>();
-              
-              …<span class="co">// left works</span></code></pre></div>
-              <p>怎么样？！这样是不是简洁多了那？！并且可维护性也有所提高，添加新的报表类型的时候，只要在Mapping的Map中添加新的key-value就可以了。但是这还不能算最好的结构，因为，在添加新的key-value的时候，我们需要修改代码！所以让我们更进一步！！！</p>
-              <p>第二步，我们把上面的映射拿出来，放到一个properties映射文件中，</p>
-              <div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java">EReportType.<span class="fu">TYPE1</span> = com.<span class="fu">darrenstudio</span>.<span class="fu">report</span>.<span class="fu">SampleReport1</span>.<span class="fu">class</span>
-              EReportType.<span class="fu">TYPE2</span> = com.<span class="fu">darrenstudio</span>.<span class="fu">report</span>.<span class="fu">SampleReport2</span>.<span class="fu">class</span>
-              …</code></pre></div>
-              <p>之后，我们把配置文件的内容读进来：</p>
-              <div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java">Properties prop = <span class="kw">new</span> Properties();
-              
-              InputStream ins = XXX.<span class="fu">class</span>.<span class="fu">getResourceAsStream</span>(“xx.<span class="fu">properties</span>”);
-              
-              prop.<span class="fu">load</span>(ins);</code></pre></div>
-              <p>万事俱备之后，以下的重构后的代码就出现了：</p>
-              <div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java">EReportType type;
-              
-              IReportGenerator generator;
-              
-              <span class="co">// Other jobs to do</span>
-              
-              …
-              
-              String clazzName = prop.<span class="fu">getProperty</span>(“type的class name”);
-              
-              Class clazz = Class.<span class="fu">forName</span>（clazzName）;
-              
-              generator = (IReportGenerator)clazz.<span class="fu">newInstance</span>();
-              
-              generator.<span class="fu">generate</span>();
-              
-              …<span class="co">// left works</span></code></pre></div>
-              <p>(以上事例中的异常处理全部已经略去)</p>
-              <p>至此，我们的重构才可以算是公德圆满，既很好的改良了代码结构，而且也极大地改进了系统的可维护性和可扩展性，比如如果有新的报表类型，我们只要在配置文件中添加新的枚举类和新的实现类的映射就可以了！！！</p>
-              <p>综上，如果在系统的实现中适当的使用java语言的反射（Reflection）机制，我们可以极大改进代码架构。但是，因为反射本身的原因，其使用的场合在使用的时候也需权衡。</p>
-              <p>王福强(Darren.Wang)于2005年6月27日</p>
-              
-      </div>
+
+<div class="row">
+<div id="header">
+<p class="lead">
+<h1 class="title">使用反射（Reflection）改进项目代码架构</h1>
+</p>
+</div>
+
+<hr>
+
+
+<blockquote>
+<p>2014年从msn space存档中重新恢复出来！</p>
+</blockquote>
+<p>前几天为了测试条形码的扫描，需要为他人提供一个生成的条形码图片，故此，在barbecue的基础上使用swt为项目组实现了一个简单的条形码生成GUI程序，其中使用了反射机制极大的简化和改进了代码结构，其后同时联想到报表部分的实现，感觉自己当时的实现十分的丑陋，故此，一并做一反思，以鉴后人。</p>
+<p>OK，先从这个SWT的GUI程序说起，界面上我们提供1个文本编辑框作为要生成的条形码的输入，一个combo列表框显示所有的barbecue支持的条形码类型，最后当然是一个button，点击后生成条形码图片并给出提示信息。在界面初始化的时候，我们需要为列表框赋值使之可以提示用户要生产的条码类型，当然，最常见的实现就是直接一行一行的为期添加值，比如我们知道有Code128的条码，有EAN128的条码，有Code39的条码等等，那么就可以直接以cmbType.add(“Code124); cmbType.add(“EAN128”);…的方式实现我们的代码，当然大同小异的，我们也可以直接将所有的值先添加到一个List中，最后循环这个List为列表框赋值，以此来使代码更清晰，但是，其实这样并不是最好的实现，虽然简单，但是依然有改进的余地，因为首先，我们发现BarcodeFactory类里，针对不同的条码类型，它都会有一个createXXX()形式的方法与之对应，所以，我们可以直接使用反射来取得这些方法，并截取条码名称部分就可以了，而不需要hard code条码名称到代码中，以下是简单的实现片断：</p>
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="co">// combo Init</span>
+
+Matcher matcher = Pattern.<span class="fu">compile</span>(<span class="st">&quot;^create(.*)$&quot;</span>).<span class="fu">matcher</span>(<span class="st">&quot;&quot;</span>);
+
+Class clazz = BarcodeFactory.<span class="fu">class</span>;
+
+Method[] methods = clazz.<span class="fu">getMethods</span>();
+
+<span class="kw">for</span>(<span class="dt">int</span> i=<span class="dv">0</span>;i&lt;methods.<span class="fu">length</span>;i++)
+
+{
+
+       matcher.<span class="fu">reset</span>(methods[i].<span class="fu">getName</span>());
+
+       <span class="kw">if</span>(matcher.<span class="fu">matches</span>())
+
+       {
+
+              <span class="kw">this</span>.<span class="fu">cmbType</span>.<span class="fu">add</span>(matcher.<span class="fu">group</span>(<span class="dv">1</span>));
+
+       }
+
+}</code></pre></div>
+<p>界面初始化完成之后，最主要的就是按钮的事件处理。检验等暂且不提，我先说我的实现思路，从Text中提取输入，从列表框中提取条码类型名称，然后根据条码名称判断应该调用BarcodeFactory的什么方法，最后生成条码图片并输出。不知道大家是否想过，即使知道了条码类型名称，那么如何调用BarcodeFactory的相应方法那？！（对于guru来说固然小儿科，但是以上只是为了提供思路，问题固然简单，依然需要表达清楚，不是吗？！）OK，答案就是反射（Reflection）。 我们通过循环便利BarcodeFactory的所有方法，在循环中会根据正则表达式来判断那个方面名称中可以find到条码类型名称形式的pattern，如果find（）方法返回true，我们就可以直接调用，进行后继处理后直接返回了，请看如下代码片断：</p>
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java">Class clazz = BarcodeFactory.<span class="fu">class</span>;
+
+Method[] methods = clazz.<span class="fu">getMethods</span>();
+
+<span class="kw">for</span>(<span class="dt">int</span> i=<span class="dv">0</span>;i&lt;methods.<span class="fu">length</span>;i++){
+    Method m = methods[i];
+
+    Matcher matcher = Pattern.<span class="fu">compile</span>(type+<span class="st">&quot;$&quot;</span>).<span class="fu">matcher</span>(m.<span class="fu">getName</span>());
+
+    <span class="kw">if</span>(matcher.<span class="fu">find</span>()){
+
+        StringBuffer filename = <span class="kw">new</span> StringBuffer();
+        filename.<span class="fu">append</span>(System.<span class="fu">getProperty</span>(<span class="st">&quot;user.dir&quot;</span>));
+        filename.<span class="fu">append</span>(File.<span class="fu">separator</span>);
+        filename.<span class="fu">append</span>(<span class="st">&quot;data&quot;</span>);
+        filename.<span class="fu">append</span>(File.<span class="fu">separator</span>);
+        filename.<span class="fu">append</span>(type);
+        filename.<span class="fu">append</span>(<span class="st">&quot;.jpg&quot;</span>);
+
+        Barcode barcode = (Barcode)m.<span class="fu">invoke</span>(clazz,<span class="kw">new</span> Object[]{input});
+        out = <span class="kw">new</span> FileOutputStream(filename.<span class="fu">toString</span>());
+        BarcodeImageHandler.<span class="fu">outputBarcodeAsJPEGImage</span>(barcode, out);
+
+        MessageBox msg = <span class="kw">new</span> <span class="fu">MessageBox</span>(BarCodeGenerator.<span class="fu">this</span>.<span class="fu">getShell</span>(),SWT.<span class="fu">APPLICATION_MODAL</span>|SWT.<span class="fu">ICON_INFORMATION</span>);
+        msg.<span class="fu">setText</span>(<span class="st">&quot;Message&quot;</span>);
+        msg.<span class="fu">setMessage</span>(<span class="st">&quot;Barcode generated Successfully into data directory!</span><span class="ch">\n</span><span class="st">[&quot;</span>+filename.<span class="fu">toString</span>()+<span class="st">&quot;]&quot;</span>);
+        msg.<span class="fu">open</span>();
+
+        <span class="kw">return</span>;
+    }
+}</code></pre></div>
+<p>OK，以上就是条码生产程序的说明，以此为基点，我想自我检讨一下，因为相对于上面的实现来说，我为报表模块所做的最终集成实在是太糟糕了（因为牵扯到目前开发的系统，所以此处略去不相关的内容，只对技术点进行说明）</p>
+<p>首先，报表有许多种，20甚至30种都有可能，然后根据不同的类型，调用不同的对话框，最终根据输入的条件生成excel报表。刚开始我给出了一个接口，不如IReportGenerator,该接口给出了一个generate（）的通用方法以及setXXX（）方法（用来设置报表生成条件），然后告知大家在自己的报表实现类中implements这个接口；同时，我也给出了一个类型安全的枚举类，比如EReportType，用来保存和区分报表类型。在此基础上，用户选择了要生产的报表类型之后，我就可以调用条件输入对话框，传入相应的枚举类，然后在用户点击OK之后，就会判断枚举类的类型，然后根据这个类型来初始化相应的IReportGenerator实现类，最终直接调用generator.generate()方法就可以了。</p>
+<p>现在，看我的实现，你就会发现最ugly的实现是什么样子的，呵呵</p>
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java">EReportType type;
+
+IReportGenerator generator;
+<span class="co">// Other jobs to do</span>
+…
+If（EReportType. TYPE1 == type）{
+        generator = <span class="kw">new</span> <span class="fu">SampleGenerator1</span>();
+}<span class="kw">else</span> <span class="kw">if</span>(EReportType. TYPE2 == type){
+        generator = <span class="kw">new</span> <span class="fu">SampleGenerator2</span>();
+}<span class="kw">else</span> <span class="kw">if</span>(EReportType.<span class="fu">TYPE3</span> == type){
+        generator = <span class="kw">new</span> <span class="fu">SampleGenerator3</span>();
+}<span class="kw">else</span> <span class="kw">if</span>(…){
+
+}
+
+…<span class="co">// other operations</span>
+
+generator.<span class="fu">generate</span>();
+
+…<span class="co">// left operations</span></code></pre></div>
+<p>怎么样，是不是有同感那？！呵呵，OK，知耻而后勇，让我们重构这段实现吧！</p>
+<p>为了可以更清楚地说明我的意图，我将分2步来实施这次重构：</p>
+<p>第一步，我们将不同IReportGenerato接口的实现类移出来，放到一个Map中，Map的key暂时定为EReportType的所有枚举值，而相应的value就直接是key所指定的枚举类的报表实现的class name。</p>
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java">rptMapping.<span class="fu">put</span>(EReportType.<span class="fu">TYPE1</span>,com.<span class="fu">darrenstudio</span>.<span class="fu">report</span>.<span class="fu">SampleReport1</span>.<span class="fu">class</span>);
+…<span class="co">// others</span></code></pre></div>
+<p>(Map实现可以参考使用commons collection提供的实现类)</p>
+<p>这样，所有的映射都放到了这个Map之中，在我们的对话框OK按钮按下之后，我们就可以直接以这样的方式来实现：</p>
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java">EReportType type;
+
+IReportGenerator generator;
+
+<span class="co">// Other jobs to do</span>
+
+…
+
+Class clazz = (Class)<span class="fu">getReportMapping</span>().<span class="fu">get</span>(type);
+
+generator = (IReportGenerator)clazz.<span class="fu">newInstance</span>();
+
+generator.<span class="fu">generate</span>();
+
+…<span class="co">// left works</span></code></pre></div>
+<p>怎么样？！这样是不是简洁多了那？！并且可维护性也有所提高，添加新的报表类型的时候，只要在Mapping的Map中添加新的key-value就可以了。但是这还不能算最好的结构，因为，在添加新的key-value的时候，我们需要修改代码！所以让我们更进一步！！！</p>
+<p>第二步，我们把上面的映射拿出来，放到一个properties映射文件中，</p>
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java">EReportType.<span class="fu">TYPE1</span> = com.<span class="fu">darrenstudio</span>.<span class="fu">report</span>.<span class="fu">SampleReport1</span>.<span class="fu">class</span>
+EReportType.<span class="fu">TYPE2</span> = com.<span class="fu">darrenstudio</span>.<span class="fu">report</span>.<span class="fu">SampleReport2</span>.<span class="fu">class</span>
+…</code></pre></div>
+<p>之后，我们把配置文件的内容读进来：</p>
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java">Properties prop = <span class="kw">new</span> Properties();
+
+InputStream ins = XXX.<span class="fu">class</span>.<span class="fu">getResourceAsStream</span>(“xx.<span class="fu">properties</span>”);
+
+prop.<span class="fu">load</span>(ins);</code></pre></div>
+<p>万事俱备之后，以下的重构后的代码就出现了：</p>
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java">EReportType type;
+
+IReportGenerator generator;
+
+<span class="co">// Other jobs to do</span>
+
+…
+
+String clazzName = prop.<span class="fu">getProperty</span>(“type的class name”);
+
+Class clazz = Class.<span class="fu">forName</span>（clazzName）;
+
+generator = (IReportGenerator)clazz.<span class="fu">newInstance</span>();
+
+generator.<span class="fu">generate</span>();
+
+…<span class="co">// left works</span></code></pre></div>
+<p>(以上事例中的异常处理全部已经略去)</p>
+<p>至此，我们的重构才可以算是公德圆满，既很好的改良了代码结构，而且也极大地改进了系统的可维护性和可扩展性，比如如果有新的报表类型，我们只要在配置文件中添加新的枚举类和新的实现类的映射就可以了！！！</p>
+<p>综上，如果在系统的实现中适当的使用java语言的反射（Reflection）机制，我们可以极大改进代码架构。但是，因为反射本身的原因，其使用的场合在使用的时候也需权衡。</p>
+<p>王福强(Darren.Wang)于2005年6月27日</p>
+
+</div>
+
       <div id="qrcode"></div>
       <div class="row">
         <div class="col-md-12 footer">

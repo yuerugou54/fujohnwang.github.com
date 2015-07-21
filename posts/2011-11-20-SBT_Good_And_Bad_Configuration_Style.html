@@ -7,13 +7,20 @@
   <meta http-equiv="X-UA-Compatible" content="chrome=1">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="author" content="扶墙老师@afoo.me">
-
-  <link rel="icon" href="/favicon.ico">
+    <meta name="date" content="2011-11-20" />
+    <link rel="icon" href="/favicon.ico">
 
   <title>SBT 0.11.x Good And Bad Configuration Style - 一个架构士的思考与沉淀之地</title>
 
-    <meta name="date" content="2011-11-20" />
-      <style type="text/css">
+  
+
+  <link href='/font/News_Cycle/stylesheet.css' rel='stylesheet' type='text/css'>
+  <link href="/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/css/bootstrap-theme.min.css" rel="stylesheet">
+  <link href="/css/afoo.me.css" rel="stylesheet">
+
+  <style type="text/css">code{white-space: pre;}</style>
+    <style type="text/css">
     div.sourceCode { overflow-x: auto; }
     table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
       margin: 0; padding: 0; vertical-align: baseline; border: none; }
@@ -34,12 +41,6 @@
     code > span.er { color: #ff0000; font-weight: bold; }
   </style>
         
-  <link href='/font/News_Cycle/stylesheet.css' rel='stylesheet' type='text/css'>
-
-  <link href="/css/bootstrap.min.css" rel="stylesheet">
-  <link href="/css/bootstrap-theme.min.css" rel="stylesheet">
-  <link href="/css/afoo.me.css" rel="stylesheet">
-
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>
@@ -59,31 +60,33 @@
           </a>
         </div>
     </div>
-    <div class="col-xs-12 col-md-10">
 
-          
-          <div class="row">
-                        <div id="header">
-              <p class="lead">
-              <h1 class="title">SBT 0.11.x Good And Bad Configuration Style</h1>
-                            <small>
-                  <h3 class="author">fujohnwang</h3>
-              </small>
-                                        <h4 class="date">2011-11-20</h4>
-                              </p>
-            </div>
-            
-              <hr>
+<div class="col-xs-12 col-md-10">
 
-              
-              <div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">object</span> Bad <span class="kw">extends</span> Build { 
-                  libraryDependencies += <span class="st">&quot;junit&quot;</span> % <span class="st">&quot;junit&quot;</span> % <span class="st">&quot;4.8&quot;</span> % <span class="st">&quot;test&quot;</span>
-              }</code></pre></div>
-              <div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">object</span> Good <span class="kw">extends</span> Build{ 
-                  <span class="kw">lazy</span> <span class="kw">val</span> root = <span class="fu">Project</span>(<span class="st">&quot;root&quot;</span>, <span class="fu">file</span>(<span class="st">&quot;.&quot;</span>)) <span class="fu">settings</span>( libraryDependencies += <span class="st">&quot;junit&quot;</span> % <span class="st">&quot;junit&quot;</span> % <span class="st">&quot;4.8&quot;</span> % <span class="st">&quot;test&quot;</span> )
-              }</code></pre></div>
-              
-      </div>
+
+<div class="row">
+<div id="header">
+<p class="lead">
+<h1 class="title">SBT 0.11.x Good And Bad Configuration Style</h1>
+<small>
+<h3 class="author">fujohnwang</h3>
+</small>
+<h4 class="date">2011-11-20</h4>
+</p>
+</div>
+
+<hr>
+
+
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">object</span> Bad <span class="kw">extends</span> Build { 
+    libraryDependencies += <span class="st">&quot;junit&quot;</span> % <span class="st">&quot;junit&quot;</span> % <span class="st">&quot;4.8&quot;</span> % <span class="st">&quot;test&quot;</span>
+}</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">object</span> Good <span class="kw">extends</span> Build{ 
+    <span class="kw">lazy</span> <span class="kw">val</span> root = <span class="fu">Project</span>(<span class="st">&quot;root&quot;</span>, <span class="fu">file</span>(<span class="st">&quot;.&quot;</span>)) <span class="fu">settings</span>( libraryDependencies += <span class="st">&quot;junit&quot;</span> % <span class="st">&quot;junit&quot;</span> % <span class="st">&quot;4.8&quot;</span> % <span class="st">&quot;test&quot;</span> )
+}</code></pre></div>
+
+</div>
+
       <div id="qrcode"></div>
       <div class="row">
         <div class="col-md-12 footer">

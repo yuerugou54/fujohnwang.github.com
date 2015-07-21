@@ -7,12 +7,19 @@
   <meta http-equiv="X-UA-Compatible" content="chrome=1">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="author" content="扶墙老师@afoo.me">
-
-  <link rel="icon" href="/favicon.ico">
+    <link rel="icon" href="/favicon.ico">
 
   <title>在spring中发信的时候 - 一个架构士的思考与沉淀之地</title>
 
-      <style type="text/css">
+  
+
+  <link href='/font/News_Cycle/stylesheet.css' rel='stylesheet' type='text/css'>
+  <link href="/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/css/bootstrap-theme.min.css" rel="stylesheet">
+  <link href="/css/afoo.me.css" rel="stylesheet">
+
+  <style type="text/css">code{white-space: pre;}</style>
+    <style type="text/css">
     div.sourceCode { overflow-x: auto; }
     table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
       margin: 0; padding: 0; vertical-align: baseline; border: none; }
@@ -33,12 +40,6 @@
     code > span.er { color: #ff0000; font-weight: bold; }
   </style>
         
-  <link href='/font/News_Cycle/stylesheet.css' rel='stylesheet' type='text/css'>
-
-  <link href="/css/bootstrap.min.css" rel="stylesheet">
-  <link href="/css/bootstrap-theme.min.css" rel="stylesheet">
-  <link href="/css/afoo.me.css" rel="stylesheet">
-
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>
@@ -58,47 +59,49 @@
           </a>
         </div>
     </div>
-    <div class="col-xs-12 col-md-10">
 
-          
-          <div class="row">
-                        <div id="header">
-              <p class="lead">
-              <h1 class="title">在spring中发信的时候</h1>
-                            <small>
-                  <h3 class="author">FuqiangWang</h3>
-              </small>
-                                          </p>
-            </div>
-            
-              <hr>
+<div class="col-xs-12 col-md-10">
 
-              
-              <blockquote>
-              <p>2014年从msn space存档中重新恢复出来！</p>
-              </blockquote>
-              <p>以前使用spring发信的时候，只是简单的为MailSender设置host,username和password属性就OK，但是今天却遇到了发信失败异常的一个553ReturnCode，而且日志中主要的信息也都是tmd的问号，搞得我很郁闷，不知道问题出在什么地方。后来问过系统部是否在MailServer上加了什么限制，系统部说只是添加了一个smtp认证，原来如此啊！所以，在MailSender的配置属性中加入了一个properties属性搞定。</p>
-              <div class="sourceCode"><pre class="sourceCode xml"><code class="sourceCode xml"><span class="kw">&lt;bean</span><span class="ot"> id=</span><span class="st">&quot;mailSender&quot;</span><span class="ot"> class=</span><span class="st">&quot;org.springframework.mail.javamail.JavaMailSenderImpl&quot;</span><span class="kw">&gt;</span>
-              <span class="kw">&lt;property</span><span class="ot"> name=</span><span class="st">&quot;host&quot;</span><span class="kw">&gt;</span>
-              <span class="kw">&lt;value&gt;</span>mail.livedoor.cn<span class="kw">&lt;/value&gt;</span>
-              <span class="kw">&lt;/property&gt;</span>
-              <span class="kw">&lt;property</span><span class="ot"> name=</span><span class="st">&quot;username&quot;</span><span class="kw">&gt;</span>
-              <span class="kw">&lt;value&gt;</span>XXX<span class="kw">&lt;/value&gt;</span>
-              <span class="kw">&lt;/property&gt;</span>
-              <span class="kw">&lt;property</span><span class="ot"> name=</span><span class="st">&quot;password&quot;</span><span class="kw">&gt;</span>
-              <span class="kw">&lt;value&gt;</span>XXX<span class="kw">&lt;/value&gt;</span>
-              <span class="kw">&lt;/property&gt;</span>
-              <span class="kw">&lt;property</span><span class="ot"> name=</span><span class="st">&quot;port&quot;</span><span class="kw">&gt;</span>
-              <span class="kw">&lt;value&gt;</span>25<span class="kw">&lt;/value&gt;</span>
-              <span class="kw">&lt;/property&gt;</span>
-              <span class="kw">&lt;property</span><span class="ot"> name=</span><span class="st">&quot;javaMailProperties&quot;</span><span class="kw">&gt;</span>
-              <span class="kw">&lt;props&gt;</span>
-              <span class="kw">&lt;prop</span><span class="ot"> key=</span><span class="st">&quot;mail.smtp.auth&quot;</span><span class="kw">&gt;</span>true<span class="kw">&lt;/prop&gt;</span>
-              <span class="kw">&lt;/props&gt;</span>
-              <span class="kw">&lt;/property&gt;</span>
-              <span class="kw">&lt;/bean&gt;</span></code></pre></div>
-              
-      </div>
+
+<div class="row">
+<div id="header">
+<p class="lead">
+<h1 class="title">在spring中发信的时候</h1>
+<small>
+<h3 class="author">FuqiangWang</h3>
+</small>
+</p>
+</div>
+
+<hr>
+
+
+<blockquote>
+<p>2014年从msn space存档中重新恢复出来！</p>
+</blockquote>
+<p>以前使用spring发信的时候，只是简单的为MailSender设置host,username和password属性就OK，但是今天却遇到了发信失败异常的一个553ReturnCode，而且日志中主要的信息也都是tmd的问号，搞得我很郁闷，不知道问题出在什么地方。后来问过系统部是否在MailServer上加了什么限制，系统部说只是添加了一个smtp认证，原来如此啊！所以，在MailSender的配置属性中加入了一个properties属性搞定。</p>
+<div class="sourceCode"><pre class="sourceCode xml"><code class="sourceCode xml"><span class="kw">&lt;bean</span><span class="ot"> id=</span><span class="st">&quot;mailSender&quot;</span><span class="ot"> class=</span><span class="st">&quot;org.springframework.mail.javamail.JavaMailSenderImpl&quot;</span><span class="kw">&gt;</span>
+<span class="kw">&lt;property</span><span class="ot"> name=</span><span class="st">&quot;host&quot;</span><span class="kw">&gt;</span>
+<span class="kw">&lt;value&gt;</span>mail.livedoor.cn<span class="kw">&lt;/value&gt;</span>
+<span class="kw">&lt;/property&gt;</span>
+<span class="kw">&lt;property</span><span class="ot"> name=</span><span class="st">&quot;username&quot;</span><span class="kw">&gt;</span>
+<span class="kw">&lt;value&gt;</span>XXX<span class="kw">&lt;/value&gt;</span>
+<span class="kw">&lt;/property&gt;</span>
+<span class="kw">&lt;property</span><span class="ot"> name=</span><span class="st">&quot;password&quot;</span><span class="kw">&gt;</span>
+<span class="kw">&lt;value&gt;</span>XXX<span class="kw">&lt;/value&gt;</span>
+<span class="kw">&lt;/property&gt;</span>
+<span class="kw">&lt;property</span><span class="ot"> name=</span><span class="st">&quot;port&quot;</span><span class="kw">&gt;</span>
+<span class="kw">&lt;value&gt;</span>25<span class="kw">&lt;/value&gt;</span>
+<span class="kw">&lt;/property&gt;</span>
+<span class="kw">&lt;property</span><span class="ot"> name=</span><span class="st">&quot;javaMailProperties&quot;</span><span class="kw">&gt;</span>
+<span class="kw">&lt;props&gt;</span>
+<span class="kw">&lt;prop</span><span class="ot"> key=</span><span class="st">&quot;mail.smtp.auth&quot;</span><span class="kw">&gt;</span>true<span class="kw">&lt;/prop&gt;</span>
+<span class="kw">&lt;/props&gt;</span>
+<span class="kw">&lt;/property&gt;</span>
+<span class="kw">&lt;/bean&gt;</span></code></pre></div>
+
+</div>
+
       <div id="qrcode"></div>
       <div class="row">
         <div class="col-md-12 footer">

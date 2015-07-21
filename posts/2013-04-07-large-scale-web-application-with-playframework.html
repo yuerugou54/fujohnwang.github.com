@@ -7,18 +7,19 @@
   <meta http-equiv="X-UA-Compatible" content="chrome=1">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="author" content="扶墙老师@afoo.me">
-
-  <link rel="icon" href="/favicon.ico">
+    <link rel="icon" href="/favicon.ico">
 
   <title>How to &quot;Play&quot; Big - 记Playframework在大型网站架构下的实践探索 - 一个架构士的思考与沉淀之地</title>
 
-          
-  <link href='/font/News_Cycle/stylesheet.css' rel='stylesheet' type='text/css'>
+  
 
+  <link href='/font/News_Cycle/stylesheet.css' rel='stylesheet' type='text/css'>
   <link href="/css/bootstrap.min.css" rel="stylesheet">
   <link href="/css/bootstrap-theme.min.css" rel="stylesheet">
   <link href="/css/afoo.me.css" rel="stylesheet">
 
+  <style type="text/css">code{white-space: pre;}</style>
+        
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>
@@ -38,61 +39,63 @@
           </a>
         </div>
     </div>
-    <div class="col-xs-12 col-md-10">
 
-          
-          <div class="row">
-                        <div id="header">
-              <p class="lead">
-              <h1 class="title">How to &quot;Play&quot; Big - 记Playframework在大型网站架构下的实践探索</h1>
-                            <small>
-                  <h3 class="author">王福强</h3>
-              </small>
-                                          </p>
-            </div>
-            
-              <hr>
+<div class="col-xs-12 col-md-10">
 
-              
-              <ol style="list-style-type: decimal">
-              <li>部署与发布
-              <ul>
-              <li>mechinisms
-              <ul>
-              <li>git
-              <ul>
-              <li>生产环境每个节点上各scala应用共享maven本地库</li>
-              <li>只需要pull必要指定的版本进行部署，可以及时回滚</li>
-              </ul></li>
-              <li>rsync
-              <ul>
-              <li>单台发布机进行checkout和编译， 不必要的传输量， 回滚需要重新传输同步</li>
-              </ul></li>
-              </ul></li>
-              <li>deployment web app
-              <ul>
-              <li>incremental deployment and rollback</li>
-              </ul></li>
-              <li>Port Forwarding
-              <ul>
-              <li>使用iptables， 不建议play使用1024以下端口，需要root权限</li>
-              </ul></li>
-              </ul></li>
-              <li>CDN in another way?!
-              <ul>
-              <li>Pros and cons of playframeowrk</li>
-              <li>play with netty inside is necessary, not enough
-              <ul>
-              <li>async is good</li>
-              <li>one-stack-for-all is not good for large scale deployment</li>
-              <li>防盗链/防攻击</li>
-              <li>流量统计</li>
-              <li>缓存调度</li>
-              </ul></li>
-              </ul></li>
-              </ol>
-              
-      </div>
+
+<div class="row">
+<div id="header">
+<p class="lead">
+<h1 class="title">How to &quot;Play&quot; Big - 记Playframework在大型网站架构下的实践探索</h1>
+<small>
+<h3 class="author">王福强</h3>
+</small>
+</p>
+</div>
+
+<hr>
+
+
+<ol style="list-style-type: decimal">
+<li>部署与发布
+<ul>
+<li>mechinisms
+<ul>
+<li>git
+<ul>
+<li>生产环境每个节点上各scala应用共享maven本地库</li>
+<li>只需要pull必要指定的版本进行部署，可以及时回滚</li>
+</ul></li>
+<li>rsync
+<ul>
+<li>单台发布机进行checkout和编译， 不必要的传输量， 回滚需要重新传输同步</li>
+</ul></li>
+</ul></li>
+<li>deployment web app
+<ul>
+<li>incremental deployment and rollback</li>
+</ul></li>
+<li>Port Forwarding
+<ul>
+<li>使用iptables， 不建议play使用1024以下端口，需要root权限</li>
+</ul></li>
+</ul></li>
+<li>CDN in another way?!
+<ul>
+<li>Pros and cons of playframeowrk</li>
+<li>play with netty inside is necessary, not enough
+<ul>
+<li>async is good</li>
+<li>one-stack-for-all is not good for large scale deployment</li>
+<li>防盗链/防攻击</li>
+<li>流量统计</li>
+<li>缓存调度</li>
+</ul></li>
+</ul></li>
+</ol>
+
+</div>
+
       <div id="qrcode"></div>
       <div class="row">
         <div class="col-md-12 footer">

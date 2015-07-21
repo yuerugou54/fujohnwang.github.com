@@ -7,12 +7,19 @@
   <meta http-equiv="X-UA-Compatible" content="chrome=1">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="author" content="扶墙老师@afoo.me">
-
-  <link rel="icon" href="/favicon.ico">
+    <link rel="icon" href="/favicon.ico">
 
   <title>How to use SSH in Java Programmatically - 一个架构士的思考与沉淀之地</title>
 
-      <style type="text/css">
+  
+
+  <link href='/font/News_Cycle/stylesheet.css' rel='stylesheet' type='text/css'>
+  <link href="/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/css/bootstrap-theme.min.css" rel="stylesheet">
+  <link href="/css/afoo.me.css" rel="stylesheet">
+
+  <style type="text/css">code{white-space: pre;}</style>
+    <style type="text/css">
     div.sourceCode { overflow-x: auto; }
     table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
       margin: 0; padding: 0; vertical-align: baseline; border: none; }
@@ -33,12 +40,6 @@
     code > span.er { color: #ff0000; font-weight: bold; }
   </style>
         
-  <link href='/font/News_Cycle/stylesheet.css' rel='stylesheet' type='text/css'>
-
-  <link href="/css/bootstrap.min.css" rel="stylesheet">
-  <link href="/css/bootstrap-theme.min.css" rel="stylesheet">
-  <link href="/css/afoo.me.css" rel="stylesheet">
-
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>
@@ -58,325 +59,327 @@
           </a>
         </div>
     </div>
-    <div class="col-xs-12 col-md-10">
 
-          
-          <div class="row">
-                        <div id="header">
-              <p class="lead">
-              <h1 class="title">How to use SSH in Java Programmatically</h1>
-                            <small>
-                  <h3 class="author">FuqiangWang</h3>
-              </small>
-                                          </p>
-            </div>
-            
-              <hr>
+<div class="col-xs-12 col-md-10">
 
-              
-              <blockquote>
-              <p>2014年从msn space存档中重新恢复出来！</p>
-              </blockquote>
-              <p>在Java程序中使用SSH（How to use SSH in Java Programmatically)</p>
-              <p>---by Darren.Wang</p>
-              <p>这个标题不知道能不能表达我的意思，实际上我只是想总结一下可以通过哪些方式或者途径来达到在Java程序中使用SSH相关功能（任务）的目的。前几天有更多free time，所以，为了简化credit的管理工具正式版的发布上传过程，简单实现了一个基于SWT界面的上传应用程序，要完成的功能其实也很简单，但是为了提高上传速度和数据传输的安全性，所以，上传分成几个阶段同时使用SSH来保证上传过程的安全性，之于说上传的阶段等细节不属于我今天要描述的重点，重点是如何在Java中使用SSH，尤其是远程登录到Linux，并执行Shell命令。</p>
-              <p>现从同事的一个需求说起，他手头的任务中包括检查某台Linux机器的磁盘空间等情况，并随同Email发送。当然别人也给他提出了多种解决方法，不能说不好，但在我看了与程序的集成性上面差一些，所以我觉得给他写一个Utility（坐我旁边，不帮都不行，呵呵）。</p>
-              <p>实际上，实现原理很简单，直接SSH登录那台Linux机器执行df命令就可以了，其他信息，像当前目录拥有的文件列表等，运行ls -ls命令，这些我想大家都很清楚，那么在Java中我们是如何实现类似功能的那？！</p>
-              <p>可能有人以前做过类似功能，那他一定听说过JSch或者说OpenSSH（当然，我们会用他的Java实现安ganymed），对，我们也只是为JSch提供了一个简单的Wrapper而已。</p>
-              <p>先来看看这个Wrapper是什么样子的吧，然后我再详细说一下这个程序的设计和实现细节：</p>
-              <div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="kw">package org.darrenstudio.ssh;</span>
-              
-              <span class="kw">import java.io.InputStream;</span>
-              <span class="kw">import java.util.Properties;</span>
-              
-              <span class="kw">import org.apache.commons.lang.Validate;</span>
-              <span class="kw">import org.darrenstudio.ssh.callback.SSHExecCallback;</span>
-              
-              <span class="kw">import com.jcraft.jsch.Channel;</span>
-              <span class="kw">import com.jcraft.jsch.ChannelExec;</span>
-              <span class="kw">import com.jcraft.jsch.JSch;</span>
-              <span class="kw">import com.jcraft.jsch.Session;</span>
-              
-              <span class="kw">public</span> <span class="kw">class</span> SSHExecutor {
-              <span class="kw">private</span> JSch jsch;
-              <span class="kw">private</span> Session session;
-              <span class="kw">private</span> <span class="dt">boolean</span> login;
-              
-              <span class="kw">public</span> <span class="kw">synchronized</span> <span class="dt">void</span> <span class="fu">login</span>(SSHLoginOptions options) <span class="kw">throws</span> SSHExecException
-              {
-              <span class="kw">try</span>
-              {
-              <span class="kw">if</span>(jsch == <span class="kw">null</span>)
-              jsch =<span class="kw">new</span> <span class="fu">JSch</span>();
-              session = jsch.<span class="fu">getSession</span>(options.<span class="fu">getUsername</span>(),options.<span class="fu">getHost</span>(),options.<span class="fu">getPort</span>());
-              session.<span class="fu">setPassword</span>(options.<span class="fu">getPassword</span>());
-              Properties prop = <span class="kw">new</span> Properties();
-              prop.<span class="fu">setProperty</span>(<span class="st">&quot;StrictHostKeyChecking&quot;</span>,<span class="st">&quot;no&quot;</span>);<span class="co">//StrictHostKeyChecking: ask | yes | no</span>
-              session.<span class="fu">setConfig</span>(prop);
-              session.<span class="fu">connect</span>();
-              login = <span class="kw">true</span>;
-              }
-              <span class="kw">catch</span>(Exception e)
-              {
-              <span class="kw">throw</span> <span class="kw">new</span> <span class="fu">SSHExecException</span>(e);
-              }
-              }
-              
-              <span class="kw">public</span> <span class="kw">synchronized</span> <span class="dt">void</span> <span class="fu">execute</span>(String command,SSHExecCallback callback) <span class="kw">throws</span> SSHExecException
-              {
-              <span class="kw">if</span>(!login)
-              <span class="kw">throw</span> <span class="kw">new</span> <span class="fu">SSHExecException</span>(<span class="st">&quot;login first before executing the remote command!&quot;</span>);
-              Validate.<span class="fu">notEmpty</span>(command);
-              Channel channel = <span class="kw">null</span>;
-              <span class="kw">try</span>
-              {
-              channel =session.<span class="fu">openChannel</span>(<span class="st">&quot;exec&quot;</span>);
-              ((ChannelExec)channel).<span class="fu">setCommand</span>(command);
-              InputStream in=channel.<span class="fu">getInputStream</span>();
-              <span class="co">// OutputStream out=channel.getOutputStream();</span>
-              InputStream err = ((ChannelExec)channel).<span class="fu">getErrStream</span>();
-              
-              <span class="co">// to retrieve the interactive password request information, this pty is a must</span>
-              ((ChannelExec)channel).<span class="fu">setPty</span>(<span class="kw">true</span>);
-              
-              channel.<span class="fu">connect</span>();
-              
-              <span class="dt">byte</span>[] tmp=<span class="kw">new</span> <span class="dt">byte</span>[<span class="dv">2048</span>];
-              <span class="kw">while</span>(<span class="kw">true</span>)
-              {
-              <span class="kw">while</span>(in.<span class="fu">available</span>() &gt; <span class="dv">0</span>)
-              {
-              <span class="dt">int</span> i=in.<span class="fu">read</span>(tmp, <span class="dv">0</span>, <span class="dv">2048</span>);
-              String line = <span class="kw">new</span> String(tmp, <span class="dv">0</span>, i);
-              callback.<span class="fu">dumpConsole</span>(line);
-              }
-              
-              <span class="kw">while</span>(err.<span class="fu">available</span>() &gt; <span class="dv">0</span>)
-              {
-              <span class="dt">int</span> size = err.<span class="fu">read</span>(tmp,<span class="dv">0</span>,<span class="dv">2048</span>);
-              String line = <span class="kw">new</span> String(tmp,<span class="dv">0</span>,size);
-              callback.<span class="fu">dumpErrStream</span>(line);
-              }
-              
-              <span class="kw">if</span>(channel.<span class="fu">isClosed</span>())
-              {
-              <span class="dt">int</span> exitStatus = channel.<span class="fu">getExitStatus</span>();
-              <span class="kw">if</span>(exitStatus != <span class="dv">0</span>)
-              <span class="kw">throw</span> <span class="kw">new</span> <span class="fu">SSHExecException</span>(<span class="st">&quot;Error Exit Status with Value:&quot;</span>+exitStatus);
-              <span class="kw">break</span>;
-              }
-              <span class="kw">try</span>{Thread.<span class="fu">sleep</span>(<span class="dv">1000</span>);}<span class="kw">catch</span>(Exception ee){}
-              }
-              }
-              <span class="kw">catch</span>(Exception e)
-              {
-              <span class="kw">throw</span> <span class="kw">new</span> <span class="fu">SSHExecException</span>(e);
-              }
-              <span class="kw">finally</span>
-              {
-              <span class="kw">if</span>(channel != <span class="kw">null</span>)
-              {
-              channel.<span class="fu">disconnect</span>();
-              channel = <span class="kw">null</span>;
-              }
-              }
-              
-              }
-              
-              <span class="kw">public</span> <span class="kw">synchronized</span> <span class="dt">void</span> <span class="fu">dispose</span>()
-              {
-              <span class="kw">if</span>(session != <span class="kw">null</span>)
-              {
-              session.<span class="fu">disconnect</span>();
-              session = <span class="kw">null</span>;
-              }
-              login = <span class="kw">false</span>;
-              }
-              }</code></pre></div>
-              <p>我们给出一个Executor，他负责为我们执行Shell命令，他首先要求我们登录到要执行命令的Linux机器（即login方法），然后，如果登录成功，client端就可以调用execute方法来执行相应的shell命令，执行后，在finally中dispose掉该Executor。</p>
-              <p>对于login方法来说，因为需要提供login相关信息，而且这些信息参数较多，3－4个，当然，相对来说也不是很多，但是，我们还是采用将他们归并到一个参数类的做法（我想Effective Java大家都读过），这就有了我们的SSHLoginOptions类：</p>
-              <div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="kw">public</span> <span class="kw">class</span> SSHLoginOptions <span class="kw">implements</span> Serializable {
-              
-              <span class="kw">private</span> <span class="dt">static</span> <span class="dt">final</span> <span class="dt">long</span> serialVersionUID = -8018206086412607771L;
-              
-              <span class="kw">private</span> String host;
-              <span class="kw">private</span> String username;
-              <span class="kw">private</span> String password;
-              <span class="kw">private</span> <span class="dt">int</span> port = <span class="dv">22</span>;
-              
-              <span class="kw">public</span> <span class="fu">SSHLoginOptions</span>(String host,String username,String password)
-              {
-              <span class="kw">this</span>(host,username,password,<span class="dv">22</span>);
-              }
-              <span class="kw">public</span> <span class="fu">SSHLoginOptions</span>(String host,String username,String password,<span class="dt">int</span> port)
-              {
-              <span class="kw">this</span>.<span class="fu">host</span> = host;
-              <span class="kw">this</span>.<span class="fu">username</span> = username;
-              <span class="kw">this</span>.<span class="fu">password</span> = password;
-              <span class="kw">this</span>.<span class="fu">port</span> = port;
-              }
-              
-              <span class="kw">public</span> String <span class="fu">getHost</span>() {
-              <span class="kw">return</span> host;
-              }
-              
-              <span class="kw">public</span> <span class="dt">void</span> <span class="fu">setHost</span>(String host) {
-              <span class="kw">this</span>.<span class="fu">host</span> = host;
-              }
-              
-              <span class="kw">public</span> String <span class="fu">getPassword</span>() {
-              <span class="kw">return</span> password;
-              }
-              
-              <span class="kw">public</span> <span class="dt">void</span> <span class="fu">setPassword</span>(String password) {
-              <span class="kw">this</span>.<span class="fu">password</span> = password;
-              }
-              
-              <span class="kw">public</span> <span class="dt">int</span> <span class="fu">getPort</span>() {
-              <span class="kw">return</span> port;
-              }
-              
-              <span class="kw">public</span> <span class="dt">void</span> <span class="fu">setPort</span>(<span class="dt">int</span> port) {
-              <span class="kw">this</span>.<span class="fu">port</span> = port;
-              }
-              
-              <span class="kw">public</span> String <span class="fu">getUsername</span>() {
-              <span class="kw">return</span> username;
-              }
-              
-              <span class="kw">public</span> <span class="dt">void</span> <span class="fu">setUsername</span>(String username) {
-              <span class="kw">this</span>.<span class="fu">username</span> = username;
-              }
-              
-              <span class="kw">public</span> String <span class="fu">toString</span>() {
-              <span class="kw">return</span> <span class="kw">new</span> <span class="fu">ToStringBuilder</span>(<span class="kw">this</span>).<span class="fu">append</span>(<span class="st">&quot;host&quot;</span>, host).<span class="fu">append</span>(
-              <span class="st">&quot;username&quot;</span>, username).<span class="fu">append</span>(<span class="st">&quot;password&quot;</span>, password).<span class="fu">append</span>(
-              <span class="st">&quot;port&quot;</span>, port).<span class="fu">toString</span>();
-              }
-              }</code></pre></div>
-              <p>如果登录不成功的话(可能因为网络不通等原因），我们需要抛出一个异常以便告诉Client端该事件，并终止以下步骤，所以，我们采用抛出自定义的SSHExecException：</p>
-              <div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="kw">public</span> <span class="kw">class</span> SSHExecException <span class="kw">extends</span> NestableException {
-              
-              <span class="kw">private</span> <span class="dt">static</span> <span class="dt">final</span> <span class="dt">long</span> serialVersionUID = -2804917566444475128L;
-              
-              <span class="kw">public</span> <span class="fu">SSHExecException</span>(String cause)
-              {
-              <span class="kw">super</span>(cause);
-              }
-              <span class="kw">public</span> <span class="fu">SSHExecException</span>(Throwable t)
-              {
-              <span class="kw">super</span>(t);
-              }
-              <span class="kw">public</span> <span class="fu">SSHExecException</span>(String cause,Throwable t)
-              {
-              <span class="kw">super</span>(cause,t);
-              }
-              }</code></pre></div>
-              <p>（这里定义为一个Checked异常，实际上，感觉定义为unchecked异常更恰当一些，因为如果失败，Client端也做不了什么）</p>
-              <p>登录成功后，login标志被置为true，这样execute方法才可以被调用。</p>
-              <p>execute方法有两个参数，第一个参数为String类型，表示将被执行Shell命令；第二个参数较为特殊，他是我们自己定义的一个接口：</p>
-              <div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="kw">public</span> <span class="kw">interface</span> SSHExecCallback {
-                  <span class="dt">void</span> <span class="fu">dumpConsole</span>(String line);
-                  <span class="dt">void</span> <span class="fu">dumpErrStream</span>(String errline);
-              }</code></pre></div>
-              <p>这个接口的实现负责处理Linux的正常输出和Error输出，至于说如何处理这些输出，你可以按照自己的需要给出自己的实现，比如，只是简单的打印到控制台：</p>
-              <div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="kw">public</span> <span class="kw">class</span> DefaultSSHExecCallback <span class="kw">implements</span> SSHExecCallback {
-              
-                  <span class="kw">public</span> <span class="dt">void</span> <span class="fu">dumpConsole</span>(String line) {
-                  System.<span class="fu">out</span>.<span class="fu">println</span>(line);
-                  }
-              
-                  <span class="kw">public</span> <span class="dt">void</span> <span class="fu">dumpErrStream</span>(String errline) {
-                  System.<span class="fu">err</span>.<span class="fu">println</span>(errline);
-                  }
-              ｝</code></pre></div>
-              <p>在execute方法一开始，我们会检查是否登录成功，如果没有，那同样会抛出SSHExecException，以示说该类没有为Shell命令的执行准备好相应的状态，从而阻止随后的不安全操作。 之后，我们会打开一个Exec Channel，通过这个Channel来执行Shell命令，这可以很容易的从Executor的源码中看出来，如果执行过程中出现异常，我们会抛给Client端我们的自定义异常，当然，不管执行成功或者失败与否，我们都会关掉该Channel以释放连接，否则，主程序会挂在那里。在execute方法中，唯一需要关注的一个地方就是((ChannelExec)channel).setPty(true);这一句，如果没有他，那你的控制台将什么东西都没有，你将得不到任何想要的信息。</p>
-              <p>为了说命令执行完成后释放资源，我们给出一个dispose方法，这也是很自然的，这里不再赘述。</p>
-              <p>下面是该类的一个TestCase，大家可以很容易看出该类的使用，很简单。</p>
-              <div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="kw">public</span> <span class="kw">class</span> SSHExecutorTest <span class="kw">extends</span> TestCase {
-              
-                  <span class="kw">private</span> SSHExecutor executor;
-              
-                  <span class="kw">public</span> <span class="dt">static</span> <span class="dt">void</span> <span class="fu">main</span>(String[] args) {
-                  junit.<span class="fu">textui</span>.<span class="fu">TestRunner</span>.<span class="fu">run</span>(SSHExecutorTest.<span class="fu">class</span>);
-                  }
-              
-                  <span class="kw">protected</span> <span class="dt">void</span> <span class="fu">setUp</span>() <span class="kw">throws</span> Exception {
-                  <span class="kw">super</span>.<span class="fu">setUp</span>();
-                  executor = <span class="kw">new</span> <span class="fu">SSHExecutor</span>();
-                  SSHLoginOptions loginOptions = <span class="kw">new</span> <span class="fu">SSHLoginOptions</span>(<span class="st">&quot;m.livedoor.cn&quot;</span>,<span class="st">&quot;root&quot;</span>,<span class="st">&quot;zxcv1234&quot;</span>);
-                  executor.<span class="fu">login</span>(loginOptions);
-                  }
-              
-                  <span class="kw">protected</span> <span class="dt">void</span> <span class="fu">tearDown</span>() <span class="kw">throws</span> Exception {
-                  <span class="kw">super</span>.<span class="fu">tearDown</span>();
-                  executor.<span class="fu">dispose</span>();
-                  executor = <span class="kw">null</span>;
-                  }
-              
-                  <span class="kw">public</span> <span class="dt">void</span> <span class="fu">testExecuteWithCommandUname</span>() <span class="kw">throws</span> SSHExecException
-                  {
-                  String command = <span class="st">&quot;uname&quot;</span>;
-                  GenericSSHExecCallback callback = <span class="kw">new</span> <span class="fu">GenericSSHExecCallback</span>();
-                  executor.<span class="fu">execute</span>(command,callback);
-                  <span class="fu">assertEquals</span>(<span class="st">&quot;The Operating System of m.livedoor.cn should be Linux&quot;</span>,<span class="st">&quot;Linux&quot;</span>,StringUtils.<span class="fu">trimToEmpty</span>(callback.<span class="fu">getOutput</span>()));
-                  }
-              }</code></pre></div>
-              <p>至此，我们的Wrapper类就算完成了，让我们回过头来看看，我们能归纳出什么东西。</p>
-              <p>到目前为止，我所可以提供的相关信息有两类，一类就是执行Scp相关操作，一类就是基于SSH的Shell命令的执行，那么要完成这两类功能，现在有什么东西可以让我们避免去重新发明轮子那？！</p>
-              <p>对于Scp相关任务来说，除了前面blog曾经提到过的通过Ant来实现外，你也可以通过JSch来完成，不要忘了，Ant的Scp Task也是通过JSch完成的，除此之外，OpenSSH的Java实现---ganymed也可以很容易的实现scp功能，而且，代码也看起来很简洁：</p>
-              <div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="co">/**</span>
-              <span class="co">* </span><span class="kw">@author </span><span class="co">darrenwang</span>
-              <span class="co">* </span><span class="kw">@since </span><span class="co">1.0</span>
-              <span class="co">*/</span>
-              <span class="kw">public</span> <span class="kw">class</span> SCPExecutor {
-                  <span class="kw">private</span> Connection connection;
-                  <span class="kw">private</span> <span class="dt">boolean</span> login;
-              
-                  <span class="kw">public</span> <span class="kw">synchronized</span> <span class="dt">void</span> <span class="fu">login</span>(SSHLoginOptions options) <span class="kw">throws</span> SSHExecException
-                  {
-                      <span class="kw">try</span>
-                      {
-                          connection = <span class="kw">new</span> Connection(options.<span class="fu">getHost</span>());
-                          connection.<span class="fu">connect</span>();
-                          login = connection.<span class="fu">authenticateWithPassword</span>(options.<span class="fu">getUsername</span>(),options.<span class="fu">getPassword</span>());
-                          <span class="kw">if</span>(!login)
-                          <span class="kw">throw</span> <span class="kw">new</span> <span class="fu">SSHExecException</span>(<span class="st">&quot;Authentication failed.&quot;</span>);
-                      }
-                      <span class="kw">catch</span>(Exception e)
-                      {
-                          <span class="kw">throw</span> <span class="kw">new</span> <span class="fu">SSHExecException</span>(e);
-                      }
-                  }
-              
-                  <span class="kw">public</span> <span class="kw">synchronized</span> <span class="dt">void</span> <span class="fu">doScp</span>(File file, String todir) <span class="kw">throws</span> SSHExecException
-                  {
-                      <span class="kw">if</span>(!login)
-                          <span class="kw">throw</span> <span class="kw">new</span> <span class="fu">SSHExecException</span>(<span class="st">&quot;login() first before executing the scp task!&quot;</span>);
-                      <span class="kw">try</span>
-                      {
-                          SCPClient client = connection.<span class="fu">createSCPClient</span>();
-                          client.<span class="fu">put</span>(file.<span class="fu">getAbsolutePath</span>(),todir);
-                      }
-                      <span class="kw">catch</span>(Exception e)
-                      {
-                          <span class="kw">throw</span> <span class="kw">new</span> <span class="fu">SSHExecException</span>(e);
-                      }
-                  }
-                  <span class="kw">public</span> <span class="kw">synchronized</span> <span class="dt">void</span> <span class="fu">dispose</span>()
-                  {
-                      <span class="kw">if</span>(connection != <span class="kw">null</span>)
-                      {
-                          connection.<span class="fu">close</span>();
-                          connection = <span class="kw">null</span>;
-                      }
-                      login = <span class="kw">false</span>;
-                  }
-              }</code></pre></div>
-              <p>除了Scp，那剩下很大一部分任务可能都是基于SSH的Shell命令执行啦，这个同样，你可以通过Ant，JSch和ganymed来实现，这里就不做赘述了，因为通过上面的SSHExecutor和以前的blog，你可以很容易的给出实现。</p>
-              <p>OK，今天就写这些了，《地海传说》，我来啦...</p>
-              
-      </div>
+
+<div class="row">
+<div id="header">
+<p class="lead">
+<h1 class="title">How to use SSH in Java Programmatically</h1>
+<small>
+<h3 class="author">FuqiangWang</h3>
+</small>
+</p>
+</div>
+
+<hr>
+
+
+<blockquote>
+<p>2014年从msn space存档中重新恢复出来！</p>
+</blockquote>
+<p>在Java程序中使用SSH（How to use SSH in Java Programmatically)</p>
+<p>---by Darren.Wang</p>
+<p>这个标题不知道能不能表达我的意思，实际上我只是想总结一下可以通过哪些方式或者途径来达到在Java程序中使用SSH相关功能（任务）的目的。前几天有更多free time，所以，为了简化credit的管理工具正式版的发布上传过程，简单实现了一个基于SWT界面的上传应用程序，要完成的功能其实也很简单，但是为了提高上传速度和数据传输的安全性，所以，上传分成几个阶段同时使用SSH来保证上传过程的安全性，之于说上传的阶段等细节不属于我今天要描述的重点，重点是如何在Java中使用SSH，尤其是远程登录到Linux，并执行Shell命令。</p>
+<p>现从同事的一个需求说起，他手头的任务中包括检查某台Linux机器的磁盘空间等情况，并随同Email发送。当然别人也给他提出了多种解决方法，不能说不好，但在我看了与程序的集成性上面差一些，所以我觉得给他写一个Utility（坐我旁边，不帮都不行，呵呵）。</p>
+<p>实际上，实现原理很简单，直接SSH登录那台Linux机器执行df命令就可以了，其他信息，像当前目录拥有的文件列表等，运行ls -ls命令，这些我想大家都很清楚，那么在Java中我们是如何实现类似功能的那？！</p>
+<p>可能有人以前做过类似功能，那他一定听说过JSch或者说OpenSSH（当然，我们会用他的Java实现安ganymed），对，我们也只是为JSch提供了一个简单的Wrapper而已。</p>
+<p>先来看看这个Wrapper是什么样子的吧，然后我再详细说一下这个程序的设计和实现细节：</p>
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="kw">package org.darrenstudio.ssh;</span>
+
+<span class="kw">import java.io.InputStream;</span>
+<span class="kw">import java.util.Properties;</span>
+
+<span class="kw">import org.apache.commons.lang.Validate;</span>
+<span class="kw">import org.darrenstudio.ssh.callback.SSHExecCallback;</span>
+
+<span class="kw">import com.jcraft.jsch.Channel;</span>
+<span class="kw">import com.jcraft.jsch.ChannelExec;</span>
+<span class="kw">import com.jcraft.jsch.JSch;</span>
+<span class="kw">import com.jcraft.jsch.Session;</span>
+
+<span class="kw">public</span> <span class="kw">class</span> SSHExecutor {
+<span class="kw">private</span> JSch jsch;
+<span class="kw">private</span> Session session;
+<span class="kw">private</span> <span class="dt">boolean</span> login;
+
+<span class="kw">public</span> <span class="kw">synchronized</span> <span class="dt">void</span> <span class="fu">login</span>(SSHLoginOptions options) <span class="kw">throws</span> SSHExecException
+{
+<span class="kw">try</span>
+{
+<span class="kw">if</span>(jsch == <span class="kw">null</span>)
+jsch =<span class="kw">new</span> <span class="fu">JSch</span>();
+session = jsch.<span class="fu">getSession</span>(options.<span class="fu">getUsername</span>(),options.<span class="fu">getHost</span>(),options.<span class="fu">getPort</span>());
+session.<span class="fu">setPassword</span>(options.<span class="fu">getPassword</span>());
+Properties prop = <span class="kw">new</span> Properties();
+prop.<span class="fu">setProperty</span>(<span class="st">&quot;StrictHostKeyChecking&quot;</span>,<span class="st">&quot;no&quot;</span>);<span class="co">//StrictHostKeyChecking: ask | yes | no</span>
+session.<span class="fu">setConfig</span>(prop);
+session.<span class="fu">connect</span>();
+login = <span class="kw">true</span>;
+}
+<span class="kw">catch</span>(Exception e)
+{
+<span class="kw">throw</span> <span class="kw">new</span> <span class="fu">SSHExecException</span>(e);
+}
+}
+
+<span class="kw">public</span> <span class="kw">synchronized</span> <span class="dt">void</span> <span class="fu">execute</span>(String command,SSHExecCallback callback) <span class="kw">throws</span> SSHExecException
+{
+<span class="kw">if</span>(!login)
+<span class="kw">throw</span> <span class="kw">new</span> <span class="fu">SSHExecException</span>(<span class="st">&quot;login first before executing the remote command!&quot;</span>);
+Validate.<span class="fu">notEmpty</span>(command);
+Channel channel = <span class="kw">null</span>;
+<span class="kw">try</span>
+{
+channel =session.<span class="fu">openChannel</span>(<span class="st">&quot;exec&quot;</span>);
+((ChannelExec)channel).<span class="fu">setCommand</span>(command);
+InputStream in=channel.<span class="fu">getInputStream</span>();
+<span class="co">// OutputStream out=channel.getOutputStream();</span>
+InputStream err = ((ChannelExec)channel).<span class="fu">getErrStream</span>();
+
+<span class="co">// to retrieve the interactive password request information, this pty is a must</span>
+((ChannelExec)channel).<span class="fu">setPty</span>(<span class="kw">true</span>);
+
+channel.<span class="fu">connect</span>();
+
+<span class="dt">byte</span>[] tmp=<span class="kw">new</span> <span class="dt">byte</span>[<span class="dv">2048</span>];
+<span class="kw">while</span>(<span class="kw">true</span>)
+{
+<span class="kw">while</span>(in.<span class="fu">available</span>() &gt; <span class="dv">0</span>)
+{
+<span class="dt">int</span> i=in.<span class="fu">read</span>(tmp, <span class="dv">0</span>, <span class="dv">2048</span>);
+String line = <span class="kw">new</span> String(tmp, <span class="dv">0</span>, i);
+callback.<span class="fu">dumpConsole</span>(line);
+}
+
+<span class="kw">while</span>(err.<span class="fu">available</span>() &gt; <span class="dv">0</span>)
+{
+<span class="dt">int</span> size = err.<span class="fu">read</span>(tmp,<span class="dv">0</span>,<span class="dv">2048</span>);
+String line = <span class="kw">new</span> String(tmp,<span class="dv">0</span>,size);
+callback.<span class="fu">dumpErrStream</span>(line);
+}
+
+<span class="kw">if</span>(channel.<span class="fu">isClosed</span>())
+{
+<span class="dt">int</span> exitStatus = channel.<span class="fu">getExitStatus</span>();
+<span class="kw">if</span>(exitStatus != <span class="dv">0</span>)
+<span class="kw">throw</span> <span class="kw">new</span> <span class="fu">SSHExecException</span>(<span class="st">&quot;Error Exit Status with Value:&quot;</span>+exitStatus);
+<span class="kw">break</span>;
+}
+<span class="kw">try</span>{Thread.<span class="fu">sleep</span>(<span class="dv">1000</span>);}<span class="kw">catch</span>(Exception ee){}
+}
+}
+<span class="kw">catch</span>(Exception e)
+{
+<span class="kw">throw</span> <span class="kw">new</span> <span class="fu">SSHExecException</span>(e);
+}
+<span class="kw">finally</span>
+{
+<span class="kw">if</span>(channel != <span class="kw">null</span>)
+{
+channel.<span class="fu">disconnect</span>();
+channel = <span class="kw">null</span>;
+}
+}
+
+}
+
+<span class="kw">public</span> <span class="kw">synchronized</span> <span class="dt">void</span> <span class="fu">dispose</span>()
+{
+<span class="kw">if</span>(session != <span class="kw">null</span>)
+{
+session.<span class="fu">disconnect</span>();
+session = <span class="kw">null</span>;
+}
+login = <span class="kw">false</span>;
+}
+}</code></pre></div>
+<p>我们给出一个Executor，他负责为我们执行Shell命令，他首先要求我们登录到要执行命令的Linux机器（即login方法），然后，如果登录成功，client端就可以调用execute方法来执行相应的shell命令，执行后，在finally中dispose掉该Executor。</p>
+<p>对于login方法来说，因为需要提供login相关信息，而且这些信息参数较多，3－4个，当然，相对来说也不是很多，但是，我们还是采用将他们归并到一个参数类的做法（我想Effective Java大家都读过），这就有了我们的SSHLoginOptions类：</p>
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="kw">public</span> <span class="kw">class</span> SSHLoginOptions <span class="kw">implements</span> Serializable {
+
+<span class="kw">private</span> <span class="dt">static</span> <span class="dt">final</span> <span class="dt">long</span> serialVersionUID = -8018206086412607771L;
+
+<span class="kw">private</span> String host;
+<span class="kw">private</span> String username;
+<span class="kw">private</span> String password;
+<span class="kw">private</span> <span class="dt">int</span> port = <span class="dv">22</span>;
+
+<span class="kw">public</span> <span class="fu">SSHLoginOptions</span>(String host,String username,String password)
+{
+<span class="kw">this</span>(host,username,password,<span class="dv">22</span>);
+}
+<span class="kw">public</span> <span class="fu">SSHLoginOptions</span>(String host,String username,String password,<span class="dt">int</span> port)
+{
+<span class="kw">this</span>.<span class="fu">host</span> = host;
+<span class="kw">this</span>.<span class="fu">username</span> = username;
+<span class="kw">this</span>.<span class="fu">password</span> = password;
+<span class="kw">this</span>.<span class="fu">port</span> = port;
+}
+
+<span class="kw">public</span> String <span class="fu">getHost</span>() {
+<span class="kw">return</span> host;
+}
+
+<span class="kw">public</span> <span class="dt">void</span> <span class="fu">setHost</span>(String host) {
+<span class="kw">this</span>.<span class="fu">host</span> = host;
+}
+
+<span class="kw">public</span> String <span class="fu">getPassword</span>() {
+<span class="kw">return</span> password;
+}
+
+<span class="kw">public</span> <span class="dt">void</span> <span class="fu">setPassword</span>(String password) {
+<span class="kw">this</span>.<span class="fu">password</span> = password;
+}
+
+<span class="kw">public</span> <span class="dt">int</span> <span class="fu">getPort</span>() {
+<span class="kw">return</span> port;
+}
+
+<span class="kw">public</span> <span class="dt">void</span> <span class="fu">setPort</span>(<span class="dt">int</span> port) {
+<span class="kw">this</span>.<span class="fu">port</span> = port;
+}
+
+<span class="kw">public</span> String <span class="fu">getUsername</span>() {
+<span class="kw">return</span> username;
+}
+
+<span class="kw">public</span> <span class="dt">void</span> <span class="fu">setUsername</span>(String username) {
+<span class="kw">this</span>.<span class="fu">username</span> = username;
+}
+
+<span class="kw">public</span> String <span class="fu">toString</span>() {
+<span class="kw">return</span> <span class="kw">new</span> <span class="fu">ToStringBuilder</span>(<span class="kw">this</span>).<span class="fu">append</span>(<span class="st">&quot;host&quot;</span>, host).<span class="fu">append</span>(
+<span class="st">&quot;username&quot;</span>, username).<span class="fu">append</span>(<span class="st">&quot;password&quot;</span>, password).<span class="fu">append</span>(
+<span class="st">&quot;port&quot;</span>, port).<span class="fu">toString</span>();
+}
+}</code></pre></div>
+<p>如果登录不成功的话(可能因为网络不通等原因），我们需要抛出一个异常以便告诉Client端该事件，并终止以下步骤，所以，我们采用抛出自定义的SSHExecException：</p>
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="kw">public</span> <span class="kw">class</span> SSHExecException <span class="kw">extends</span> NestableException {
+
+<span class="kw">private</span> <span class="dt">static</span> <span class="dt">final</span> <span class="dt">long</span> serialVersionUID = -2804917566444475128L;
+
+<span class="kw">public</span> <span class="fu">SSHExecException</span>(String cause)
+{
+<span class="kw">super</span>(cause);
+}
+<span class="kw">public</span> <span class="fu">SSHExecException</span>(Throwable t)
+{
+<span class="kw">super</span>(t);
+}
+<span class="kw">public</span> <span class="fu">SSHExecException</span>(String cause,Throwable t)
+{
+<span class="kw">super</span>(cause,t);
+}
+}</code></pre></div>
+<p>（这里定义为一个Checked异常，实际上，感觉定义为unchecked异常更恰当一些，因为如果失败，Client端也做不了什么）</p>
+<p>登录成功后，login标志被置为true，这样execute方法才可以被调用。</p>
+<p>execute方法有两个参数，第一个参数为String类型，表示将被执行Shell命令；第二个参数较为特殊，他是我们自己定义的一个接口：</p>
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="kw">public</span> <span class="kw">interface</span> SSHExecCallback {
+    <span class="dt">void</span> <span class="fu">dumpConsole</span>(String line);
+    <span class="dt">void</span> <span class="fu">dumpErrStream</span>(String errline);
+}</code></pre></div>
+<p>这个接口的实现负责处理Linux的正常输出和Error输出，至于说如何处理这些输出，你可以按照自己的需要给出自己的实现，比如，只是简单的打印到控制台：</p>
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="kw">public</span> <span class="kw">class</span> DefaultSSHExecCallback <span class="kw">implements</span> SSHExecCallback {
+
+    <span class="kw">public</span> <span class="dt">void</span> <span class="fu">dumpConsole</span>(String line) {
+    System.<span class="fu">out</span>.<span class="fu">println</span>(line);
+    }
+
+    <span class="kw">public</span> <span class="dt">void</span> <span class="fu">dumpErrStream</span>(String errline) {
+    System.<span class="fu">err</span>.<span class="fu">println</span>(errline);
+    }
+｝</code></pre></div>
+<p>在execute方法一开始，我们会检查是否登录成功，如果没有，那同样会抛出SSHExecException，以示说该类没有为Shell命令的执行准备好相应的状态，从而阻止随后的不安全操作。 之后，我们会打开一个Exec Channel，通过这个Channel来执行Shell命令，这可以很容易的从Executor的源码中看出来，如果执行过程中出现异常，我们会抛给Client端我们的自定义异常，当然，不管执行成功或者失败与否，我们都会关掉该Channel以释放连接，否则，主程序会挂在那里。在execute方法中，唯一需要关注的一个地方就是((ChannelExec)channel).setPty(true);这一句，如果没有他，那你的控制台将什么东西都没有，你将得不到任何想要的信息。</p>
+<p>为了说命令执行完成后释放资源，我们给出一个dispose方法，这也是很自然的，这里不再赘述。</p>
+<p>下面是该类的一个TestCase，大家可以很容易看出该类的使用，很简单。</p>
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="kw">public</span> <span class="kw">class</span> SSHExecutorTest <span class="kw">extends</span> TestCase {
+
+    <span class="kw">private</span> SSHExecutor executor;
+
+    <span class="kw">public</span> <span class="dt">static</span> <span class="dt">void</span> <span class="fu">main</span>(String[] args) {
+    junit.<span class="fu">textui</span>.<span class="fu">TestRunner</span>.<span class="fu">run</span>(SSHExecutorTest.<span class="fu">class</span>);
+    }
+
+    <span class="kw">protected</span> <span class="dt">void</span> <span class="fu">setUp</span>() <span class="kw">throws</span> Exception {
+    <span class="kw">super</span>.<span class="fu">setUp</span>();
+    executor = <span class="kw">new</span> <span class="fu">SSHExecutor</span>();
+    SSHLoginOptions loginOptions = <span class="kw">new</span> <span class="fu">SSHLoginOptions</span>(<span class="st">&quot;m.livedoor.cn&quot;</span>,<span class="st">&quot;root&quot;</span>,<span class="st">&quot;zxcv1234&quot;</span>);
+    executor.<span class="fu">login</span>(loginOptions);
+    }
+
+    <span class="kw">protected</span> <span class="dt">void</span> <span class="fu">tearDown</span>() <span class="kw">throws</span> Exception {
+    <span class="kw">super</span>.<span class="fu">tearDown</span>();
+    executor.<span class="fu">dispose</span>();
+    executor = <span class="kw">null</span>;
+    }
+
+    <span class="kw">public</span> <span class="dt">void</span> <span class="fu">testExecuteWithCommandUname</span>() <span class="kw">throws</span> SSHExecException
+    {
+    String command = <span class="st">&quot;uname&quot;</span>;
+    GenericSSHExecCallback callback = <span class="kw">new</span> <span class="fu">GenericSSHExecCallback</span>();
+    executor.<span class="fu">execute</span>(command,callback);
+    <span class="fu">assertEquals</span>(<span class="st">&quot;The Operating System of m.livedoor.cn should be Linux&quot;</span>,<span class="st">&quot;Linux&quot;</span>,StringUtils.<span class="fu">trimToEmpty</span>(callback.<span class="fu">getOutput</span>()));
+    }
+}</code></pre></div>
+<p>至此，我们的Wrapper类就算完成了，让我们回过头来看看，我们能归纳出什么东西。</p>
+<p>到目前为止，我所可以提供的相关信息有两类，一类就是执行Scp相关操作，一类就是基于SSH的Shell命令的执行，那么要完成这两类功能，现在有什么东西可以让我们避免去重新发明轮子那？！</p>
+<p>对于Scp相关任务来说，除了前面blog曾经提到过的通过Ant来实现外，你也可以通过JSch来完成，不要忘了，Ant的Scp Task也是通过JSch完成的，除此之外，OpenSSH的Java实现---ganymed也可以很容易的实现scp功能，而且，代码也看起来很简洁：</p>
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="co">/**</span>
+<span class="co">* </span><span class="kw">@author </span><span class="co">darrenwang</span>
+<span class="co">* </span><span class="kw">@since </span><span class="co">1.0</span>
+<span class="co">*/</span>
+<span class="kw">public</span> <span class="kw">class</span> SCPExecutor {
+    <span class="kw">private</span> Connection connection;
+    <span class="kw">private</span> <span class="dt">boolean</span> login;
+
+    <span class="kw">public</span> <span class="kw">synchronized</span> <span class="dt">void</span> <span class="fu">login</span>(SSHLoginOptions options) <span class="kw">throws</span> SSHExecException
+    {
+        <span class="kw">try</span>
+        {
+            connection = <span class="kw">new</span> Connection(options.<span class="fu">getHost</span>());
+            connection.<span class="fu">connect</span>();
+            login = connection.<span class="fu">authenticateWithPassword</span>(options.<span class="fu">getUsername</span>(),options.<span class="fu">getPassword</span>());
+            <span class="kw">if</span>(!login)
+            <span class="kw">throw</span> <span class="kw">new</span> <span class="fu">SSHExecException</span>(<span class="st">&quot;Authentication failed.&quot;</span>);
+        }
+        <span class="kw">catch</span>(Exception e)
+        {
+            <span class="kw">throw</span> <span class="kw">new</span> <span class="fu">SSHExecException</span>(e);
+        }
+    }
+
+    <span class="kw">public</span> <span class="kw">synchronized</span> <span class="dt">void</span> <span class="fu">doScp</span>(File file, String todir) <span class="kw">throws</span> SSHExecException
+    {
+        <span class="kw">if</span>(!login)
+            <span class="kw">throw</span> <span class="kw">new</span> <span class="fu">SSHExecException</span>(<span class="st">&quot;login() first before executing the scp task!&quot;</span>);
+        <span class="kw">try</span>
+        {
+            SCPClient client = connection.<span class="fu">createSCPClient</span>();
+            client.<span class="fu">put</span>(file.<span class="fu">getAbsolutePath</span>(),todir);
+        }
+        <span class="kw">catch</span>(Exception e)
+        {
+            <span class="kw">throw</span> <span class="kw">new</span> <span class="fu">SSHExecException</span>(e);
+        }
+    }
+    <span class="kw">public</span> <span class="kw">synchronized</span> <span class="dt">void</span> <span class="fu">dispose</span>()
+    {
+        <span class="kw">if</span>(connection != <span class="kw">null</span>)
+        {
+            connection.<span class="fu">close</span>();
+            connection = <span class="kw">null</span>;
+        }
+        login = <span class="kw">false</span>;
+    }
+}</code></pre></div>
+<p>除了Scp，那剩下很大一部分任务可能都是基于SSH的Shell命令执行啦，这个同样，你可以通过Ant，JSch和ganymed来实现，这里就不做赘述了，因为通过上面的SSHExecutor和以前的blog，你可以很容易的给出实现。</p>
+<p>OK，今天就写这些了，《地海传说》，我来啦...</p>
+
+</div>
+
       <div id="qrcode"></div>
       <div class="row">
         <div class="col-md-12 footer">

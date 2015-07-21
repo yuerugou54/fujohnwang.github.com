@@ -7,18 +7,19 @@
   <meta http-equiv="X-UA-Compatible" content="chrome=1">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="author" content="扶墙老师@afoo.me">
-
-  <link rel="icon" href="/favicon.ico">
+    <link rel="icon" href="/favicon.ico">
 
   <title>Mysql Integer Types - 一个架构士的思考与沉淀之地</title>
 
-          
-  <link href='/font/News_Cycle/stylesheet.css' rel='stylesheet' type='text/css'>
+  
 
+  <link href='/font/News_Cycle/stylesheet.css' rel='stylesheet' type='text/css'>
   <link href="/css/bootstrap.min.css" rel="stylesheet">
   <link href="/css/bootstrap-theme.min.css" rel="stylesheet">
   <link href="/css/afoo.me.css" rel="stylesheet">
 
+  <style type="text/css">code{white-space: pre;}</style>
+        
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>
@@ -38,70 +39,72 @@
           </a>
         </div>
     </div>
-    <div class="col-xs-12 col-md-10">
 
-          
-          <div class="row">
-                        <div id="header">
-              <p class="lead">
-              <h1 class="title">Mysql Integer Types</h1>
-                                          </p>
-            </div>
-            
-              <hr>
+<div class="col-xs-12 col-md-10">
 
-              
-              <table>
-              <caption>类似Int(10)这样的定义， 10表示的是display length，不是byte length。</caption>
-              <colgroup>
-              <col width="16%" />
-              <col width="12%" />
-              <col width="31%" />
-              <col width="34%" />
-              </colgroup>
-              <thead>
-              <tr class="header">
-              <th align="center">Type</th>
-              <th align="left">Storage</th>
-              <th align="left">Minimum Value (Signed/Unsigned)</th>
-              <th align="left">Maximum Value (Signed/Unsigned)</th>
-              </tr>
-              </thead>
-              <tbody>
-              <tr class="odd">
-              <td align="center">TINYINT</td>
-              <td align="left">1</td>
-              <td align="left">-128/0</td>
-              <td align="left">127/255</td>
-              </tr>
-              <tr class="even">
-              <td align="center">SMALLINT</td>
-              <td align="left">2</td>
-              <td align="left">-32768/0</td>
-              <td align="left">32767/65535</td>
-              </tr>
-              <tr class="odd">
-              <td align="center">MEDIUMINT</td>
-              <td align="left">3</td>
-              <td align="left">-8388608/0</td>
-              <td align="left">8388607/16777215</td>
-              </tr>
-              <tr class="even">
-              <td align="center">INT</td>
-              <td align="left">4</td>
-              <td align="left">-2147483648/0</td>
-              <td align="left">2147483647/4294967295</td>
-              </tr>
-              <tr class="odd">
-              <td align="center">BIGINT</td>
-              <td align="left">8</td>
-              <td align="left">-9223372036854775808/0</td>
-              <td align="left">9223372036854775807/18446744073709551615</td>
-              </tr>
-              </tbody>
-              </table>
-              
-      </div>
+
+<div class="row">
+<div id="header">
+<p class="lead">
+<h1 class="title">Mysql Integer Types</h1>
+</p>
+</div>
+
+<hr>
+
+
+<table>
+<caption>类似Int(10)这样的定义， 10表示的是display length，不是byte length。</caption>
+<colgroup>
+<col width="16%" />
+<col width="12%" />
+<col width="31%" />
+<col width="34%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="center">Type</th>
+<th align="left">Storage</th>
+<th align="left">Minimum Value (Signed/Unsigned)</th>
+<th align="left">Maximum Value (Signed/Unsigned)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">TINYINT</td>
+<td align="left">1</td>
+<td align="left">-128/0</td>
+<td align="left">127/255</td>
+</tr>
+<tr class="even">
+<td align="center">SMALLINT</td>
+<td align="left">2</td>
+<td align="left">-32768/0</td>
+<td align="left">32767/65535</td>
+</tr>
+<tr class="odd">
+<td align="center">MEDIUMINT</td>
+<td align="left">3</td>
+<td align="left">-8388608/0</td>
+<td align="left">8388607/16777215</td>
+</tr>
+<tr class="even">
+<td align="center">INT</td>
+<td align="left">4</td>
+<td align="left">-2147483648/0</td>
+<td align="left">2147483647/4294967295</td>
+</tr>
+<tr class="odd">
+<td align="center">BIGINT</td>
+<td align="left">8</td>
+<td align="left">-9223372036854775808/0</td>
+<td align="left">9223372036854775807/18446744073709551615</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+
       <div id="qrcode"></div>
       <div class="row">
         <div class="col-md-12 footer">

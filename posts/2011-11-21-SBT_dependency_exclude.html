@@ -7,13 +7,20 @@
   <meta http-equiv="X-UA-Compatible" content="chrome=1">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="author" content="扶墙老师@afoo.me">
-
-  <link rel="icon" href="/favicon.ico">
+    <meta name="date" content="2011-11-21" />
+    <link rel="icon" href="/favicon.ico">
 
   <title>SBT Dependencies Exlusion Gotchas - 一个架构士的思考与沉淀之地</title>
 
-    <meta name="date" content="2011-11-21" />
-      <style type="text/css">
+  
+
+  <link href='/font/News_Cycle/stylesheet.css' rel='stylesheet' type='text/css'>
+  <link href="/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/css/bootstrap-theme.min.css" rel="stylesheet">
+  <link href="/css/afoo.me.css" rel="stylesheet">
+
+  <style type="text/css">code{white-space: pre;}</style>
+    <style type="text/css">
     div.sourceCode { overflow-x: auto; }
     table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
       margin: 0; padding: 0; vertical-align: baseline; border: none; }
@@ -34,12 +41,6 @@
     code > span.er { color: #ff0000; font-weight: bold; }
   </style>
         
-  <link href='/font/News_Cycle/stylesheet.css' rel='stylesheet' type='text/css'>
-
-  <link href="/css/bootstrap.min.css" rel="stylesheet">
-  <link href="/css/bootstrap-theme.min.css" rel="stylesheet">
-  <link href="/css/afoo.me.css" rel="stylesheet">
-
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>
@@ -59,61 +60,63 @@
           </a>
         </div>
     </div>
-    <div class="col-xs-12 col-md-10">
 
-          
-          <div class="row">
-                        <div id="header">
-              <p class="lead">
-              <h1 class="title">SBT Dependencies Exlusion Gotchas</h1>
-                            <small>
-                  <h3 class="author">fujohnwang</h3>
-              </small>
-                                        <h4 class="date">2011-11-21</h4>
-                              </p>
-            </div>
-            
-              <hr>
+<div class="col-xs-12 col-md-10">
 
-              
-              <p>在SBT的<a href="https://github.com/harrah/xsbt/wiki/Quick-Configuration-Examples">Quick Configuration Examples</a>最末尾发现个小惊喜：</p>
-              <div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="co">// Exclude transitive dependencies, e.g., include log4j without including logging via jdmk, jmx, or jms.</span>
-              libraryDependencies +=
-              <span class="st">&quot;log4j&quot;</span> % <span class="st">&quot;log4j&quot;</span> % <span class="st">&quot;1.2.15&quot;</span> <span class="fu">excludeAll</span>(
-                  <span class="fu">ExclusionRule</span>(organization = <span class="st">&quot;com.sun.jdmk&quot;</span>),
-                  <span class="fu">ExclusionRule</span>(organization = <span class="st">&quot;com.sun.jmx&quot;</span>),
-                  <span class="fu">ExclusionRule</span>(organization = <span class="st">&quot;javax.jms&quot;</span>)
-              )</code></pre></div>
-              <p>称其为小惊喜是因为，这个功能可以帮我去掉看起来比较丑陋的inline ivy xml配置：</p>
-              <pre>
-              ivyXML :=
-              &lt;dependencies>
-              &lt;exclude module="junit"/>
-              &lt;exclude module="activation"/>
-              &lt;exclude module="jmxri"/>
-              &lt;exclude module="jmxtools"/>
-              &lt;exclude module="jms"/>
-              &lt;exclude module="mail"/>
-              &lt;/dependencies>
-              </pre>
-              <p>但试过时候发现，不行，老报ModuleId没有exclude或者excludeAll方法，我就纳闷了。查了0.10.x的代码，确实没有，　但我用的是0.11.0啊，查了代码，明明是有呀，擦，先不管，升级SBT到0.11.1再说，升级之后，果然OK，我了个去，查了github上代码的history，发现了证据：</p>
-              <pre>   
-              Sep 09, 2011
-               
-              Support for simple exclusion rules in inline dependencies 
-              …
-              This support excluding a library from the dependency tree for a given
-              set of `ExclusionRule`s. There are two ways to achieve this:
-              
-              - Using `organization` and `name` pairs:
-              val dep = "org" % "name" % "version" exclude("commons-codec", "commons-codec") exclude("org.slf4j", "slf4j-log4j")
-              
-              - Using `ExclusionRule`:
-              val dep = "org" % "name" % "version" excludeAll(ExclusionRule("commons-codec", "commons-codec"), ExclusionRule("org.slf4j", "slf4j-log4j"))
-              </pre>
-              <p>好吧，就是这样子，大家想用特定于ModuleId的依赖排除，记得升级到0.11.1吧！</p>
-              
-      </div>
+
+<div class="row">
+<div id="header">
+<p class="lead">
+<h1 class="title">SBT Dependencies Exlusion Gotchas</h1>
+<small>
+<h3 class="author">fujohnwang</h3>
+</small>
+<h4 class="date">2011-11-21</h4>
+</p>
+</div>
+
+<hr>
+
+
+<p>在SBT的<a href="https://github.com/harrah/xsbt/wiki/Quick-Configuration-Examples">Quick Configuration Examples</a>最末尾发现个小惊喜：</p>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="co">// Exclude transitive dependencies, e.g., include log4j without including logging via jdmk, jmx, or jms.</span>
+libraryDependencies +=
+<span class="st">&quot;log4j&quot;</span> % <span class="st">&quot;log4j&quot;</span> % <span class="st">&quot;1.2.15&quot;</span> <span class="fu">excludeAll</span>(
+    <span class="fu">ExclusionRule</span>(organization = <span class="st">&quot;com.sun.jdmk&quot;</span>),
+    <span class="fu">ExclusionRule</span>(organization = <span class="st">&quot;com.sun.jmx&quot;</span>),
+    <span class="fu">ExclusionRule</span>(organization = <span class="st">&quot;javax.jms&quot;</span>)
+)</code></pre></div>
+<p>称其为小惊喜是因为，这个功能可以帮我去掉看起来比较丑陋的inline ivy xml配置：</p>
+<pre>
+ivyXML :=
+&lt;dependencies>
+&lt;exclude module="junit"/>
+&lt;exclude module="activation"/>
+&lt;exclude module="jmxri"/>
+&lt;exclude module="jmxtools"/>
+&lt;exclude module="jms"/>
+&lt;exclude module="mail"/>
+&lt;/dependencies>
+</pre>
+<p>但试过时候发现，不行，老报ModuleId没有exclude或者excludeAll方法，我就纳闷了。查了0.10.x的代码，确实没有，　但我用的是0.11.0啊，查了代码，明明是有呀，擦，先不管，升级SBT到0.11.1再说，升级之后，果然OK，我了个去，查了github上代码的history，发现了证据：</p>
+<pre>   
+Sep 09, 2011
+ 
+Support for simple exclusion rules in inline dependencies 
+…
+This support excluding a library from the dependency tree for a given
+set of `ExclusionRule`s. There are two ways to achieve this:
+
+- Using `organization` and `name` pairs:
+val dep = "org" % "name" % "version" exclude("commons-codec", "commons-codec") exclude("org.slf4j", "slf4j-log4j")
+
+- Using `ExclusionRule`:
+val dep = "org" % "name" % "version" excludeAll(ExclusionRule("commons-codec", "commons-codec"), ExclusionRule("org.slf4j", "slf4j-log4j"))
+</pre>
+<p>好吧，就是这样子，大家想用特定于ModuleId的依赖排除，记得升级到0.11.1吧！</p>
+
+</div>
+
       <div id="qrcode"></div>
       <div class="row">
         <div class="col-md-12 footer">

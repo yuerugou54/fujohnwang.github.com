@@ -7,18 +7,19 @@
   <meta http-equiv="X-UA-Compatible" content="chrome=1">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="author" content="扶墙老师@afoo.me">
-
-  <link rel="icon" href="/favicon.ico">
+    <link rel="icon" href="/favicon.ico">
 
   <title>Practice Advices On Design and Impl. with Actor Model - 一个架构士的思考与沉淀之地</title>
 
-          
-  <link href='/font/News_Cycle/stylesheet.css' rel='stylesheet' type='text/css'>
+  
 
+  <link href='/font/News_Cycle/stylesheet.css' rel='stylesheet' type='text/css'>
   <link href="/css/bootstrap.min.css" rel="stylesheet">
   <link href="/css/bootstrap-theme.min.css" rel="stylesheet">
   <link href="/css/afoo.me.css" rel="stylesheet">
 
+  <style type="text/css">code{white-space: pre;}</style>
+        
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>
@@ -38,39 +39,41 @@
           </a>
         </div>
     </div>
-    <div class="col-xs-12 col-md-10">
 
-          
-          <div class="row">
-                        <div id="header">
-              <p class="lead">
-              <h1 class="title">Practice Advices On Design and Impl. with Actor Model</h1>
-                            <small>
-                  <h3 class="author">王福强</h3>
-              </small>
-                                        <h4 class="date">2015.02.17</h4>
-                              </p>
-            </div>
-            
-              <hr>
+<div class="col-xs-12 col-md-10">
 
-                            <div id="TOC">
-                <ul>
-                <li><a href="#understand-the-single-direction-message-flow-essential-of-actor-model"><span class="toc-section-number">1</span> Understand The Single-Direction-Message-Flow Essential Of Actor Model</a></li>
-                <li><a href="#seperate-the-read-and-the-writesingle-responsibility-request-repository"><span class="toc-section-number">2</span> Seperate The Read And The Write(Single Responsibility Request Repository)</a></li>
-                </ul>
-              </div>
-              <hr/>
-              
-              <h1 id="understand-the-single-direction-message-flow-essential-of-actor-model"><span class="header-section-number">1</span> Understand The Single-Direction-Message-Flow Essential Of Actor Model</h1>
-              <h1 id="seperate-the-read-and-the-writesingle-responsibility-request-repository"><span class="header-section-number">2</span> Seperate The Read And The Write(Single Responsibility Request Repository)</h1>
-              <ol style="list-style-type: decimal">
-              <li>Never mix read and write request into one actor!</li>
-              <li>Reader Actor with OffHeap State as Query Service;</li>
-              <li>Writer Actor as Computation unit or processor with only transient states for internal use;</li>
-              </ol>
-              
-      </div>
+
+<div class="row">
+<div id="header">
+<p class="lead">
+<h1 class="title">Practice Advices On Design and Impl. with Actor Model</h1>
+<small>
+<h3 class="author">王福强</h3>
+</small>
+<h4 class="date">2015.02.17</h4>
+</p>
+</div>
+
+<hr>
+
+<div id="TOC">
+<ul>
+<li><a href="#understand-the-single-direction-message-flow-essential-of-actor-model"><span class="toc-section-number">1</span> Understand The Single-Direction-Message-Flow Essential Of Actor Model</a></li>
+<li><a href="#seperate-the-read-and-the-writesingle-responsibility-request-repository"><span class="toc-section-number">2</span> Seperate The Read And The Write(Single Responsibility Request Repository)</a></li>
+</ul>
+</div>
+<hr/>
+
+<h1 id="understand-the-single-direction-message-flow-essential-of-actor-model"><span class="header-section-number">1</span> Understand The Single-Direction-Message-Flow Essential Of Actor Model</h1>
+<h1 id="seperate-the-read-and-the-writesingle-responsibility-request-repository"><span class="header-section-number">2</span> Seperate The Read And The Write(Single Responsibility Request Repository)</h1>
+<ol style="list-style-type: decimal">
+<li>Never mix read and write request into one actor!</li>
+<li>Reader Actor with OffHeap State as Query Service;</li>
+<li>Writer Actor as Computation unit or processor with only transient states for internal use;</li>
+</ol>
+
+</div>
+
       <div id="qrcode"></div>
       <div class="row">
         <div class="col-md-12 footer">

@@ -7,12 +7,19 @@
   <meta http-equiv="X-UA-Compatible" content="chrome=1">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="author" content="扶墙老师@afoo.me">
-
-  <link rel="icon" href="/favicon.ico">
+    <link rel="icon" href="/favicon.ico">
 
   <title>《打开量化投资的黑箱》读书笔记 - 一个架构士的思考与沉淀之地</title>
 
-      <style type="text/css">
+  
+
+  <link href='/font/News_Cycle/stylesheet.css' rel='stylesheet' type='text/css'>
+  <link href="/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/css/bootstrap-theme.min.css" rel="stylesheet">
+  <link href="/css/afoo.me.css" rel="stylesheet">
+
+  <style type="text/css">code{white-space: pre;}</style>
+    <style type="text/css">
     div.sourceCode { overflow-x: auto; }
     table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
       margin: 0; padding: 0; vertical-align: baseline; border: none; }
@@ -33,12 +40,6 @@
     code > span.er { color: #ff0000; font-weight: bold; }
   </style>
         
-  <link href='/font/News_Cycle/stylesheet.css' rel='stylesheet' type='text/css'>
-
-  <link href="/css/bootstrap.min.css" rel="stylesheet">
-  <link href="/css/bootstrap-theme.min.css" rel="stylesheet">
-  <link href="/css/afoo.me.css" rel="stylesheet">
-
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>
@@ -58,490 +59,492 @@
           </a>
         </div>
     </div>
-    <div class="col-xs-12 col-md-10">
 
-          
-          <div class="row">
-                        <div id="header">
-              <p class="lead">
-              <h1 class="title">《打开量化投资的黑箱》读书笔记</h1>
-                            <small>
-                  <h3 class="author">王福强</h3>
-              </small>
-                                          </p>
-            </div>
-            
-              <hr>
+<div class="col-xs-12 col-md-10">
 
-                            <div id="TOC">
-                <ul>
-                <li><a href="#个人感受"><span class="toc-section-number">1</span> 个人感受</a></li>
-                <li><a href="#量化交易模型big-picture"><span class="toc-section-number">2</span> 量化交易模型Big Picture</a></li>
-                <li><a href="#alpha模型类别"><span class="toc-section-number">3</span> alpha模型类别</a></li>
-                <li><a href="#策略的实施"><span class="toc-section-number">4</span> 策略的实施</a></li>
-                <li><a href="#风险控制模型"><span class="toc-section-number">5</span> 风险控制模型</a><ul>
-                <li><a href="#限制风险的大小"><span class="toc-section-number">5.1</span> 限制风险的大小</a></li>
-                <li><a href="#限制风险的类型"><span class="toc-section-number">5.2</span> 限制风险的类型</a></li>
-                </ul></li>
-                <li><a href="#交易成本模型"><span class="toc-section-number">6</span> 交易成本模型</a><ul>
-                <li><a href="#交易成本定义"><span class="toc-section-number">6.1</span> 交易成本定义</a></li>
-                <li><a href="#交易成本模型的类型"><span class="toc-section-number">6.2</span> 交易成本模型的类型</a></li>
-                </ul></li>
-                <li><a href="#投资组合构建模型portfolio-construction-model"><span class="toc-section-number">7</span> 投资组合构建模型(portfolio construction model)</a><ul>
-                <li><a href="#基于规则的投资组合构建模型"><span class="toc-section-number">7.1</span> 基于规则的投资组合构建模型</a></li>
-                <li><a href="#基于最优化工具的投资组合构建模型"><span class="toc-section-number">7.2</span> 基于最优化工具的投资组合构建模型</a><ul>
-                <li><a href="#最优化工具的输入"><span class="toc-section-number">7.2.1</span> 最优化工具的输入</a></li>
-                <li><a href="#最优化技术"><span class="toc-section-number">7.2.2</span> 最优化技术</a></li>
-                </ul></li>
-                </ul></li>
-                <li><a href="#执行模型"><span class="toc-section-number">8</span> 执行模型</a><ul>
-                <li><a href="#交易方式"><span class="toc-section-number">8.1</span> 交易方式</a></li>
-                <li><a href="#订单执行算法"><span class="toc-section-number">8.2</span> 订单执行算法</a></li>
-                <li><a href="#高频交易"><span class="toc-section-number">8.3</span> 高频交易</a></li>
-                <li><a href="#交易基础设施"><span class="toc-section-number">8.4</span> 交易基础设施</a></li>
-                </ul></li>
-                <li><a href="#数据"><span class="toc-section-number">9</span> 数据</a></li>
-                <li><a href="#研究"><span class="toc-section-number">10</span> 研究</a></li>
-                <li><a href="#量化交易策略的固有风险"><span class="toc-section-number">11</span> 量化交易策略的固有风险</a><ul>
-                <li><a href="#风险检测工具"><span class="toc-section-number">11.1</span> 风险检测工具</a></li>
-                </ul></li>
-                <li><a href="#有关宽客的批评评价展望"><span class="toc-section-number">12</span> 有关宽客的批评，评价，展望</a></li>
-                <li><a href="#术语"><span class="toc-section-number">13</span> 术语</a></li>
-                </ul>
-              </div>
-              <hr/>
-              
-              <p>英文名: inside the black box - the simple truth about quantitative trading</p>
-              <h1 id="个人感受"><span class="header-section-number">1</span> 个人感受</h1>
-              <ol style="list-style-type: decimal">
-              <li>对alpha模型，风控模型和成本模型三者的关系，采用乐观主义者，悲观主义者和精打细算的会计来类比，很不错；</li>
-              <li>整书的提纲挈领做的很好， Have a nice big picture；</li>
-              <li>内容深浅适度，挺适合我这种人读 ：）</li>
-              <li>仅仅可用来作为入门和了解的书籍，要真正落实，则还有很长的一段路要走!</li>
-              <li>量化建模也尤其有限的特别适合的场景，超出这些场景或者用错场景，极有可能招致灾难；</li>
-              </ol>
-              <h1 id="量化交易模型big-picture"><span class="header-section-number">2</span> 量化交易模型Big Picture</h1>
-              <div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala">((alpha model, risk model, transaction cost model) =&gt; portfolio construction model) &lt;=&gt; execution model</code></pre></div>
-              <h1 id="alpha模型类别"><span class="header-section-number">3</span> alpha模型类别</h1>
-              <ol style="list-style-type: decimal">
-              <li>理论驱动型
-              <ul>
-              <li>基于价格相关数据的策略
-              <ul>
-              <li>趋势(跟随)策略</li>
-              <li>均值回复策略(即趋势反转型)</li>
-              </ul></li>
-              <li>基于基本面数据的策略
-              <ul>
-              <li>价值型/收益型策略</li>
-              <li>成长型策略</li>
-              <li>品质型策略</li>
-              </ul></li>
-              </ul></li>
-              <li>数据驱动型</li>
-              <li>混合型
-              <ul>
-              <li>线性模型
-              <ul>
-              <li>等权重模型(&quot;既然无法预测和分派确切的权重，那就全都一样就好了&quot;)</li>
-              </ul></li>
-              <li>非线性模型
-              <ul>
-              <li>条件模型(conditional model)
-              <ul>
-              <li>根据决策条件来触发交易行为</li>
-              </ul></li>
-              <li>旋转模型(rotation model)
-              <ul>
-              <li>根据模型收益等因素实时迭代计算并重新调整各权重指标</li>
-              </ul></li>
-              </ul></li>
-              <li>机器学习模型</li>
-              </ul></li>
-              </ol>
-              <h1 id="策略的实施"><span class="header-section-number">4</span> 策略的实施</h1>
-              <ol style="list-style-type: decimal">
-              <li>预测目标
-              <ul>
-              <li>方向</li>
-              <li>幅度</li>
-              <li>运动的持续时间</li>
-              <li>预测的置信度</li>
-              <li>概率</li>
-              </ul></li>
-              <li>投资期限
-              <ul>
-              <li>high frequency (&lt; day)</li>
-              <li>short term (day - weeks)</li>
-              <li>medium term (weeks - months)</li>
-              <li>long term (&gt; months)</li>
-              </ul></li>
-              <li>投注结构
-              <ul>
-              <li>单一</li>
-              <li>多元</li>
-              </ul></li>
-              <li>投资范围
-              <ul>
-              <li>地域(geography)</li>
-              <li>资产类别(asset class)</li>
-              <li>金融产品类别(instrument class)
-              <ul>
-              <li>流动性特征</li>
-              <li>市场参与者特征</li>
-              </ul></li>
-              </ul></li>
-              <li>模型设置</li>
-              <li>运行频率</li>
-              </ol>
-              <h1 id="风险控制模型"><span class="header-section-number">5</span> 风险控制模型</h1>
-              <blockquote>
-              风险管理并不只是规避风险或者减少损失，它是为了提高回报的质量和持续性， 而面对敞口(exposure)实施有目的的选择和规模控制。
-              </blockquote>
-              <h2 id="限制风险的大小"><span class="header-section-number">5.1</span> 限制风险的大小</h2>
-              <ol style="list-style-type: decimal">
-              <li>通过严格的约束条件和惩罚机制来限制头寸的大小
-              <ul>
-              <li>投资标准基线， 超出部分激活惩罚机制， 离基线越远， 增加额外规模则越困难</li>
-              </ul></li>
-              <li>如何度量风险的大小
-              <ul>
-              <li>通过投资组合回报的标准差体现的“波动率”指标度量来衡量</li>
-              <li>离散/相似性
-              <ul>
-              <li>相似性越高， 风险越大</li>
-              </ul></li>
-              </ul></li>
-              <li>限制措施应用的场景和范围
-              <ul>
-              <li>单一或者组合头寸</li>
-              <li>不同类型风险敞口规模
-              <ul>
-              <li>市场因素</li>
-              <li>市值因素</li>
-              </ul></li>
-              </ul></li>
-              <li>调整杠杆
-              <ul>
-              <li>VaR模型(Value at Risk) - 根据波动率来调整杠杆比率</li>
-              </ul></li>
-              </ol>
-              <h2 id="限制风险的类型"><span class="header-section-number">5.2</span> 限制风险的类型</h2>
-              <ol style="list-style-type: decimal">
-              <li>理论驱动型风控模型
-              <ul>
-              <li>“通常关注__已知__名称的或者系统性的风险因素”</li>
-              </ul></li>
-              <li>经验性风控模型
-              <ul>
-              <li>历史数据=&gt; 统计技术 =&gt; 主成份分析法(PCA) =&gt; 不知名的但与现实相对应的系统性风险</li>
-              <li>Cons
-              <ul>
-              <li>对结构变化的时机捕捉不及时</li>
-              <li>需要大量历史样本数据来强化统计的解释力</li>
-              </ul></li>
-              </ul></li>
-              <li>结合两种模型</li>
-              </ol>
-              <h1 id="交易成本模型"><span class="header-section-number">6</span> 交易成本模型</h1>
-              <blockquote>
-              奢难达富， 俭不致贫 - 萨缪尔.约翰逊
-              </blockquote>
-              <p>交易成本模型背后的思想是， 任何交易都要花费成本。</p>
-              <h2 id="交易成本定义"><span class="header-section-number">6.1</span> 交易成本定义</h2>
-              <ol style="list-style-type: decimal">
-              <li>佣金和费用
-              <ul>
-              <li>清算和结算费用，有时候可能包含到佣金中</li>
-              </ul></li>
-              <li>滑点(slippage)
-              <ul>
-              <li>指提交订单到订单被执行这段时间内价格的变化</li>
-              </ul></li>
-              <li>市场冲击
-              <ul>
-              <li>自身订单进入交易池后对市场的影响，一般用市场订单进入交易所和交易被实际执行两个时间之间的价格差来定义</li>
-              </ul></li>
-              </ol>
-              <h2 id="交易成本模型的类型"><span class="header-section-number">6.2</span> 交易成本模型的类型</h2>
-              <p>y = f(x), y为交易成本， x为交易规模</p>
-              <ol style="list-style-type: decimal">
-              <li>常数交易成本模型
-              <ul>
-              <li>基本不现实，只有一点与实际成本曲线相交/拟合</li>
-              </ul></li>
-              <li>线性交易成本模型
-              <ul>
-              <li>建模简单，拟合性不好（2个点相交/拟合）</li>
-              </ul></li>
-              <li>分段线性交易成本模型
-              <ul>
-              <li>与实际交易成本曲线拟合性很好，计算量适中</li>
-              </ul></li>
-              <li>二次型交易成本模型
-              <ul>
-              <li>拟合性更好，但计算量大</li>
-              </ul></li>
-              </ol>
-              <h1 id="投资组合构建模型portfolio-construction-model"><span class="header-section-number">7</span> 投资组合构建模型(portfolio construction model)</h1>
-              <div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala">投资组合构建模型 =&gt; 投资组合</code></pre></div>
-              <h2 id="基于规则的投资组合构建模型"><span class="header-section-number">7.1</span> 基于规则的投资组合构建模型</h2>
-              <p>基于直觉</p>
-              <ol style="list-style-type: decimal">
-              <li>相等头寸权重</li>
-              <li>相等风险权重
-              <ul>
-              <li>根据头寸波动率反向调整头寸规模， 或者使用其他风险度量，比如下跌幅度</li>
-              </ul></li>
-              <li>阿尔法驱动的权重
-              <ul>
-              <li>根据阿尔法模型的输入来决定头寸规模</li>
-              <li>这种模型下，预警很重要（因为历史数据带来的延迟效果反馈可能导致问题）</li>
-              </ul></li>
-              <li>决策树权重
-              <ul>
-              <li>组合多种模型输入并采用决策树来构建投资组合</li>
-              </ul></li>
-              </ol>
-              <h2 id="基于最优化工具的投资组合构建模型"><span class="header-section-number">7.2</span> 基于最优化工具的投资组合构建模型</h2>
-              <p>基于现代投资组合理论的逻辑思路</p>
-              <h3 id="最优化工具的输入"><span class="header-section-number">7.2.1</span> 最优化工具的输入</h3>
-              <ol style="list-style-type: decimal">
-              <li>期望回报</li>
-              <li>期望波动率</li>
-              <li>期望相关性</li>
-              </ol>
-              <h3 id="最优化技术"><span class="header-section-number">7.2.2</span> 最优化技术</h3>
-              <ol style="list-style-type: decimal">
-              <li>无约束条件的最优化</li>
-              <li>有约束条件的最优化</li>
-              <li>布莱克-莱特曼最优化方法
-              <ul>
-              <li>引入投资者对涉及的不同金融产品的回报预测因素</li>
-              </ul></li>
-              <li>格里诺德-卡恩方法
-              <ul>
-              <li>因素投资组合最优化</li>
-              </ul></li>
-              <li>基于数据挖掘的最优化方法</li>
-              </ol>
-              <h1 id="执行模型"><span class="header-section-number">8</span> 执行模型</h1>
-              <p>简单来讲，就是将订单通过相应的交易通道，投递到相应的流动性订单池</p>
-              <h2 id="交易方式"><span class="header-section-number">8.1</span> 交易方式</h2>
-              <ol style="list-style-type: decimal">
-              <li>电子化交易</li>
-              <li>通过人工中介交易（比如经纪商）
-              <ul>
-              <li>实际上是人工输入电子化交易系统，最终都是电子化交易</li>
-              </ul></li>
-              </ol>
-              <h2 id="订单执行算法"><span class="header-section-number">8.2</span> 订单执行算法</h2>
-              <p>根据订单类型， 订单执行策略（主动还是被动），订单大小，订单的明暗以及下订单的流动性池子， 订单的撤销与重置等因素来自己开发算法或者购买和使用经纪商或者第三方算法和软件</p>
-              <blockquote>
-              通过订单的撤销等手段来探测市场对流动性深度的反应，从而为依赖反应模式而获利提供有效信息
-              </blockquote>
-              <h2 id="高频交易"><span class="header-section-number">8.3</span> 高频交易</h2>
-              <p>适合小规模资产，大规模的高频交易会大幅度的改变市场，以至于预测价格与最终执行价格非常接近，无多少利润空间。</p>
-              <p>“鲨鱼”算法， 跟踪和依附“冰山”暗订单之上/前， 借助于“冰山”推高价格的同时盈利。</p>
-              <h2 id="交易基础设施"><span class="header-section-number">8.4</span> 交易基础设施</h2>
-              <ol style="list-style-type: decimal">
-              <li>硬件
-              <ul>
-              <li>定制芯片</li>
-              </ul></li>
-              <li>软件
-              <ul>
-              <li>操作系统</li>
-              <li>交易软件</li>
-              </ul></li>
-              <li>协议
-              <ul>
-              <li>FIX</li>
-              <li>自定义FIX Engine(尤其对于对性能追求卓越，且资金规模雄厚的宽客)</li>
-              <li>socket</li>
-              <li>direct database access</li>
-              </ul></li>
-              <li>交易通道
-              <ul>
-              <li>DMA(direct market access)- 毫秒级别</li>
-              <li>colocation(同地机房) - 微妙级别(1/4毫秒)</li>
-              <li>sponsored access</li>
-              </ul></li>
-              </ol>
-              <h1 id="数据"><span class="header-section-number">9</span> 数据</h1>
-              <ol style="list-style-type: decimal">
-              <li>数据的重要性
-              <ul>
-              <li>输入 =&gt; 输出</li>
-              <li>搞错输入，即使函数模型等再正确也是枉然， 所谓的garbage in, garbage out效应</li>
-              </ul></li>
-              <li>数据的类型
-              <ul>
-              <li>价格相关的数据</li>
-              <li>基本面数据</li>
-              </ul></li>
-              <li>数据来源
-              <ul>
-              <li>交易商</li>
-              <li>监管者</li>
-              <li>政府</li>
-              <li>公司</li>
-              <li>新闻机构</li>
-              <li>专门的数据提供商</li>
-              </ul></li>
-              <li>数据的整理
-              <ul>
-              <li>处理缺失的数据
-              <ul>
-              <li>识别</li>
-              <li>填补缺省默认值</li>
-              </ul></li>
-              <li>处理可能的错误数据
-              <ul>
-              <li>spike filter</li>
-              <li>bad print - 坏点</li>
-              </ul></li>
-              </ul></li>
-              <li>数据存储
-              <ul>
-              <li>flat file</li>
-              <li>indexed flat file</li>
-              <li>RDBMS
-              <ul>
-              <li>data cube</li>
-              </ul></li>
-              </ul></li>
-              </ol>
-              <h1 id="研究"><span class="header-section-number">10</span> 研究</h1>
-              <p>主要讨论了方法， 思想来源， 检验和假设相关内容</p>
-              <p>思想来源可以归纳为如下四种：</p>
-              <ol style="list-style-type: decimal">
-              <li>市场观察</li>
-              <li>学术文献</li>
-              <li>挖掘其他量化交易机构的交易者并向其学习</li>
-              <li>主观判断型交易者的教训</li>
-              </ol>
-              <p>检验的话则通过样本内数据和样本外数据以及各种指标进行， 指标详情就不列了。</p>
-              整个过程倾向于遵循爱因斯坦的这句：
-              <blockquote>
-              每件事都应力求简单，而又不能过于简单。
-              </blockquote>
-              <h1 id="量化交易策略的固有风险"><span class="header-section-number">11</span> 量化交易策略的固有风险</h1>
-              <ol style="list-style-type: decimal">
-              <li>模型风险(model risk)
-              <ul>
-              <li>建模的不适宜性(the inapplicability of modeling)</li>
-              <li>模型的错误设置(misspecification)
-              <ul>
-              <li>马鞍套在牛身上 ：）</li>
-              </ul></li>
-              <li>执行错误(implementation errors)
-              <ul>
-              <li>比如手贱输错交易指令，系统重启而忽略了依赖关系的先后顺序，等等</li>
-              </ul></li>
-              </ul></li>
-              <li>市场逻辑变更风险
-              <ul>
-              <li>市场风向突变等小概率事件</li>
-              </ul></li>
-              <li>外部冲击风险(exogenous shock)
-              <ul>
-              <li>战争， 恐怖袭击，etc.</li>
-              </ul></li>
-              <li>扩散风险或者说同质投资者风险
-              <ul>
-              <li>一窝蜂的往一处钻，结果[出了事儿]，谁也跑不掉 ：）</li>
-              <li>crowded trade</li>
-              </ul></li>
-              </ol>
-              <h2 id="风险检测工具"><span class="header-section-number">11.1</span> 风险检测工具</h2>
-              <ol style="list-style-type: decimal">
-              <li>敞口检测工具</li>
-              <li>盈利和亏损检测工具</li>
-              <li>执行检测工具
-              <ul>
-              <li>auditing</li>
-              </ul></li>
-              <li>系统性能检测工具</li>
-              </ol>
-              <h1 id="有关宽客的批评评价展望"><span class="header-section-number">12</span> 有关宽客的批评，评价，展望</h1>
-              <p>后面几章大体上没有啥要有条理的记录的，唯一印象深刻的是拷问诚信的内容，作者引用了《审问者》这本书里提到的一些技巧和准则以及在具体场景下的案例，感觉很有意思，或许可以进一步挖掘。 不过，对于那种信口雌黄的主儿，这些技巧和准则可能就没有什么作用了。 比如“好的问题和好的回答比业务记录重要的多”，以及“（在发生了如此多的丑闻之后），名声和业务记录对于判断基金经理是否诚信往往都是不够的”。</p>
-              <p>另外， 作者提到“一些小的公司长期疲于奔命， 很少与其他人有任何接触”， 这一点其实落到人和某些群体上，所见，所闻，所感同身受，窃以为如此。</p>
-              <h1 id="术语"><span class="header-section-number">13</span> 术语</h1>
-              <ol style="list-style-type: decimal">
-              <li>quantative trading strategies - 量化交易策略</li>
-              <li>quants - 量化交易者， 俗称宽客</li>
-              <li>high frequency trading - 高频交易</li>
-              <li>algorithmic trading engines</li>
-              <li>携带交易(carry trade)
-              <ul>
-              <li>携带所得(carry)</li>
-              </ul></li>
-              <li>量化多空策略(quant long/short, QLS)</li>
-              <li>移动平均线(moving average)</li>
-              <li>市盈率(price to earnings) - P/E
-              <ul>
-              <li>指某一上市公司的股票市价(price)与过去一年中每股盈利(earning)的比率</li>
-              </ul></li>
-              <li>市净率
-              <ul>
-              <li>市净率指的是市价(price)与每股净资产(book value)之间的比值，市净率=股票市价/每股净资产,比值越低意味着风险越低</li>
-              </ul></li>
-              <li>帐面价值(Book Value)
-              <ul>
-              <li>帐面价值指的是股票实际的资产价值，也就是公司的总资产净值除以发行股数的後所得出的值</li>
-              </ul></li>
-              <li>flight-to-quality策略
-              <ul>
-              <li>寻求本金安全的一种策略</li>
-              </ul></li>
-              <li>敞口(exposure)</li>
-              <li>系统性风险
-              <ul>
-              <li>即无法被分散的风险，如汇率风险，部门风险因素和市值风险因素（大市值or小市值）</li>
-              </ul></li>
-              <li>订单簿深度(Depth of Book)
-              <ul>
-              <li>or 价格深度</li>
-              </ul></li>
-              <li>做市商(Market Maker)</li>
-              <li>电子通信网络(Electronic Communication Networks, ECN)</li>
-              <li>流动性提供者(Liquidity Providers)</li>
-              <li>逆向选择偏误(adverse selection bias)
-              <ul>
-              <li>&quot;压路机前捡硬币&quot;，这个比喻很生动形象</li>
-              </ul></li>
-              <li>均值方差优化模型(mean variance optimization)</li>
-              <li>现代投资组合原理(modern portfolio theory, MPT)
-              <ul>
-              <li>核心含义是因为投资者本能的规避风险， 所以如果两项资产的风险程度不同但是具有同样的回报，那么投资者将会选择风险较低的资产。</li>
-              </ul></li>
-              <li>明订单(visible orders)/暗订单(hidden orders)
-              <ul>
-              <li>&quot;冰山一角“(iceberging), 一种暗订单交易技术，即将大订单切割成许多小订单，然后投递到orderbook中</li>
-              </ul></li>
-              <li>stop loss policy/止损策略
-              <ul>
-              <li>“截断亏损，让利润奔跑”</li>
-              </ul></li>
-              <li>凹凸度(lumpiness)
-              <ul>
-              <li>该指标是回报率显著高于平均值那段时间的回报在策略总回报中所占的比例</li>
-              </ul></li>
-              <li>奥卡姆剃刀原理(Occam's Razor)
-              <ul>
-              <li>如无必要，勿增实体 - Entities must not be multiplied beyond necessity.</li>
-              </ul></li>
-              <li>卖空限制列表(hard-to-borrow list)
-              <ul>
-              <li>在这个单子里的股票，一般是经纪商限制做空的，可能原因是准备卖空的股票在经纪商手里并不足够多，而裸空在美国又是违法的。</li>
-              </ul></li>
-              <li>相互持有(cross-ownership)</li>
-              <li>交叉抵押(cross-collateraling)</li>
-              <li>关键时点交易(breakout trading)</li>
-              </ol>
-              
-      </div>
+
+<div class="row">
+<div id="header">
+<p class="lead">
+<h1 class="title">《打开量化投资的黑箱》读书笔记</h1>
+<small>
+<h3 class="author">王福强</h3>
+</small>
+</p>
+</div>
+
+<hr>
+
+<div id="TOC">
+<ul>
+<li><a href="#个人感受"><span class="toc-section-number">1</span> 个人感受</a></li>
+<li><a href="#量化交易模型big-picture"><span class="toc-section-number">2</span> 量化交易模型Big Picture</a></li>
+<li><a href="#alpha模型类别"><span class="toc-section-number">3</span> alpha模型类别</a></li>
+<li><a href="#策略的实施"><span class="toc-section-number">4</span> 策略的实施</a></li>
+<li><a href="#风险控制模型"><span class="toc-section-number">5</span> 风险控制模型</a><ul>
+<li><a href="#限制风险的大小"><span class="toc-section-number">5.1</span> 限制风险的大小</a></li>
+<li><a href="#限制风险的类型"><span class="toc-section-number">5.2</span> 限制风险的类型</a></li>
+</ul></li>
+<li><a href="#交易成本模型"><span class="toc-section-number">6</span> 交易成本模型</a><ul>
+<li><a href="#交易成本定义"><span class="toc-section-number">6.1</span> 交易成本定义</a></li>
+<li><a href="#交易成本模型的类型"><span class="toc-section-number">6.2</span> 交易成本模型的类型</a></li>
+</ul></li>
+<li><a href="#投资组合构建模型portfolio-construction-model"><span class="toc-section-number">7</span> 投资组合构建模型(portfolio construction model)</a><ul>
+<li><a href="#基于规则的投资组合构建模型"><span class="toc-section-number">7.1</span> 基于规则的投资组合构建模型</a></li>
+<li><a href="#基于最优化工具的投资组合构建模型"><span class="toc-section-number">7.2</span> 基于最优化工具的投资组合构建模型</a><ul>
+<li><a href="#最优化工具的输入"><span class="toc-section-number">7.2.1</span> 最优化工具的输入</a></li>
+<li><a href="#最优化技术"><span class="toc-section-number">7.2.2</span> 最优化技术</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#执行模型"><span class="toc-section-number">8</span> 执行模型</a><ul>
+<li><a href="#交易方式"><span class="toc-section-number">8.1</span> 交易方式</a></li>
+<li><a href="#订单执行算法"><span class="toc-section-number">8.2</span> 订单执行算法</a></li>
+<li><a href="#高频交易"><span class="toc-section-number">8.3</span> 高频交易</a></li>
+<li><a href="#交易基础设施"><span class="toc-section-number">8.4</span> 交易基础设施</a></li>
+</ul></li>
+<li><a href="#数据"><span class="toc-section-number">9</span> 数据</a></li>
+<li><a href="#研究"><span class="toc-section-number">10</span> 研究</a></li>
+<li><a href="#量化交易策略的固有风险"><span class="toc-section-number">11</span> 量化交易策略的固有风险</a><ul>
+<li><a href="#风险检测工具"><span class="toc-section-number">11.1</span> 风险检测工具</a></li>
+</ul></li>
+<li><a href="#有关宽客的批评评价展望"><span class="toc-section-number">12</span> 有关宽客的批评，评价，展望</a></li>
+<li><a href="#术语"><span class="toc-section-number">13</span> 术语</a></li>
+</ul>
+</div>
+<hr/>
+
+<p>英文名: inside the black box - the simple truth about quantitative trading</p>
+<h1 id="个人感受"><span class="header-section-number">1</span> 个人感受</h1>
+<ol style="list-style-type: decimal">
+<li>对alpha模型，风控模型和成本模型三者的关系，采用乐观主义者，悲观主义者和精打细算的会计来类比，很不错；</li>
+<li>整书的提纲挈领做的很好， Have a nice big picture；</li>
+<li>内容深浅适度，挺适合我这种人读 ：）</li>
+<li>仅仅可用来作为入门和了解的书籍，要真正落实，则还有很长的一段路要走!</li>
+<li>量化建模也尤其有限的特别适合的场景，超出这些场景或者用错场景，极有可能招致灾难；</li>
+</ol>
+<h1 id="量化交易模型big-picture"><span class="header-section-number">2</span> 量化交易模型Big Picture</h1>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala">((alpha model, risk model, transaction cost model) =&gt; portfolio construction model) &lt;=&gt; execution model</code></pre></div>
+<h1 id="alpha模型类别"><span class="header-section-number">3</span> alpha模型类别</h1>
+<ol style="list-style-type: decimal">
+<li>理论驱动型
+<ul>
+<li>基于价格相关数据的策略
+<ul>
+<li>趋势(跟随)策略</li>
+<li>均值回复策略(即趋势反转型)</li>
+</ul></li>
+<li>基于基本面数据的策略
+<ul>
+<li>价值型/收益型策略</li>
+<li>成长型策略</li>
+<li>品质型策略</li>
+</ul></li>
+</ul></li>
+<li>数据驱动型</li>
+<li>混合型
+<ul>
+<li>线性模型
+<ul>
+<li>等权重模型(&quot;既然无法预测和分派确切的权重，那就全都一样就好了&quot;)</li>
+</ul></li>
+<li>非线性模型
+<ul>
+<li>条件模型(conditional model)
+<ul>
+<li>根据决策条件来触发交易行为</li>
+</ul></li>
+<li>旋转模型(rotation model)
+<ul>
+<li>根据模型收益等因素实时迭代计算并重新调整各权重指标</li>
+</ul></li>
+</ul></li>
+<li>机器学习模型</li>
+</ul></li>
+</ol>
+<h1 id="策略的实施"><span class="header-section-number">4</span> 策略的实施</h1>
+<ol style="list-style-type: decimal">
+<li>预测目标
+<ul>
+<li>方向</li>
+<li>幅度</li>
+<li>运动的持续时间</li>
+<li>预测的置信度</li>
+<li>概率</li>
+</ul></li>
+<li>投资期限
+<ul>
+<li>high frequency (&lt; day)</li>
+<li>short term (day - weeks)</li>
+<li>medium term (weeks - months)</li>
+<li>long term (&gt; months)</li>
+</ul></li>
+<li>投注结构
+<ul>
+<li>单一</li>
+<li>多元</li>
+</ul></li>
+<li>投资范围
+<ul>
+<li>地域(geography)</li>
+<li>资产类别(asset class)</li>
+<li>金融产品类别(instrument class)
+<ul>
+<li>流动性特征</li>
+<li>市场参与者特征</li>
+</ul></li>
+</ul></li>
+<li>模型设置</li>
+<li>运行频率</li>
+</ol>
+<h1 id="风险控制模型"><span class="header-section-number">5</span> 风险控制模型</h1>
+<blockquote>
+风险管理并不只是规避风险或者减少损失，它是为了提高回报的质量和持续性， 而面对敞口(exposure)实施有目的的选择和规模控制。
+</blockquote>
+<h2 id="限制风险的大小"><span class="header-section-number">5.1</span> 限制风险的大小</h2>
+<ol style="list-style-type: decimal">
+<li>通过严格的约束条件和惩罚机制来限制头寸的大小
+<ul>
+<li>投资标准基线， 超出部分激活惩罚机制， 离基线越远， 增加额外规模则越困难</li>
+</ul></li>
+<li>如何度量风险的大小
+<ul>
+<li>通过投资组合回报的标准差体现的“波动率”指标度量来衡量</li>
+<li>离散/相似性
+<ul>
+<li>相似性越高， 风险越大</li>
+</ul></li>
+</ul></li>
+<li>限制措施应用的场景和范围
+<ul>
+<li>单一或者组合头寸</li>
+<li>不同类型风险敞口规模
+<ul>
+<li>市场因素</li>
+<li>市值因素</li>
+</ul></li>
+</ul></li>
+<li>调整杠杆
+<ul>
+<li>VaR模型(Value at Risk) - 根据波动率来调整杠杆比率</li>
+</ul></li>
+</ol>
+<h2 id="限制风险的类型"><span class="header-section-number">5.2</span> 限制风险的类型</h2>
+<ol style="list-style-type: decimal">
+<li>理论驱动型风控模型
+<ul>
+<li>“通常关注__已知__名称的或者系统性的风险因素”</li>
+</ul></li>
+<li>经验性风控模型
+<ul>
+<li>历史数据=&gt; 统计技术 =&gt; 主成份分析法(PCA) =&gt; 不知名的但与现实相对应的系统性风险</li>
+<li>Cons
+<ul>
+<li>对结构变化的时机捕捉不及时</li>
+<li>需要大量历史样本数据来强化统计的解释力</li>
+</ul></li>
+</ul></li>
+<li>结合两种模型</li>
+</ol>
+<h1 id="交易成本模型"><span class="header-section-number">6</span> 交易成本模型</h1>
+<blockquote>
+奢难达富， 俭不致贫 - 萨缪尔.约翰逊
+</blockquote>
+<p>交易成本模型背后的思想是， 任何交易都要花费成本。</p>
+<h2 id="交易成本定义"><span class="header-section-number">6.1</span> 交易成本定义</h2>
+<ol style="list-style-type: decimal">
+<li>佣金和费用
+<ul>
+<li>清算和结算费用，有时候可能包含到佣金中</li>
+</ul></li>
+<li>滑点(slippage)
+<ul>
+<li>指提交订单到订单被执行这段时间内价格的变化</li>
+</ul></li>
+<li>市场冲击
+<ul>
+<li>自身订单进入交易池后对市场的影响，一般用市场订单进入交易所和交易被实际执行两个时间之间的价格差来定义</li>
+</ul></li>
+</ol>
+<h2 id="交易成本模型的类型"><span class="header-section-number">6.2</span> 交易成本模型的类型</h2>
+<p>y = f(x), y为交易成本， x为交易规模</p>
+<ol style="list-style-type: decimal">
+<li>常数交易成本模型
+<ul>
+<li>基本不现实，只有一点与实际成本曲线相交/拟合</li>
+</ul></li>
+<li>线性交易成本模型
+<ul>
+<li>建模简单，拟合性不好（2个点相交/拟合）</li>
+</ul></li>
+<li>分段线性交易成本模型
+<ul>
+<li>与实际交易成本曲线拟合性很好，计算量适中</li>
+</ul></li>
+<li>二次型交易成本模型
+<ul>
+<li>拟合性更好，但计算量大</li>
+</ul></li>
+</ol>
+<h1 id="投资组合构建模型portfolio-construction-model"><span class="header-section-number">7</span> 投资组合构建模型(portfolio construction model)</h1>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala">投资组合构建模型 =&gt; 投资组合</code></pre></div>
+<h2 id="基于规则的投资组合构建模型"><span class="header-section-number">7.1</span> 基于规则的投资组合构建模型</h2>
+<p>基于直觉</p>
+<ol style="list-style-type: decimal">
+<li>相等头寸权重</li>
+<li>相等风险权重
+<ul>
+<li>根据头寸波动率反向调整头寸规模， 或者使用其他风险度量，比如下跌幅度</li>
+</ul></li>
+<li>阿尔法驱动的权重
+<ul>
+<li>根据阿尔法模型的输入来决定头寸规模</li>
+<li>这种模型下，预警很重要（因为历史数据带来的延迟效果反馈可能导致问题）</li>
+</ul></li>
+<li>决策树权重
+<ul>
+<li>组合多种模型输入并采用决策树来构建投资组合</li>
+</ul></li>
+</ol>
+<h2 id="基于最优化工具的投资组合构建模型"><span class="header-section-number">7.2</span> 基于最优化工具的投资组合构建模型</h2>
+<p>基于现代投资组合理论的逻辑思路</p>
+<h3 id="最优化工具的输入"><span class="header-section-number">7.2.1</span> 最优化工具的输入</h3>
+<ol style="list-style-type: decimal">
+<li>期望回报</li>
+<li>期望波动率</li>
+<li>期望相关性</li>
+</ol>
+<h3 id="最优化技术"><span class="header-section-number">7.2.2</span> 最优化技术</h3>
+<ol style="list-style-type: decimal">
+<li>无约束条件的最优化</li>
+<li>有约束条件的最优化</li>
+<li>布莱克-莱特曼最优化方法
+<ul>
+<li>引入投资者对涉及的不同金融产品的回报预测因素</li>
+</ul></li>
+<li>格里诺德-卡恩方法
+<ul>
+<li>因素投资组合最优化</li>
+</ul></li>
+<li>基于数据挖掘的最优化方法</li>
+</ol>
+<h1 id="执行模型"><span class="header-section-number">8</span> 执行模型</h1>
+<p>简单来讲，就是将订单通过相应的交易通道，投递到相应的流动性订单池</p>
+<h2 id="交易方式"><span class="header-section-number">8.1</span> 交易方式</h2>
+<ol style="list-style-type: decimal">
+<li>电子化交易</li>
+<li>通过人工中介交易（比如经纪商）
+<ul>
+<li>实际上是人工输入电子化交易系统，最终都是电子化交易</li>
+</ul></li>
+</ol>
+<h2 id="订单执行算法"><span class="header-section-number">8.2</span> 订单执行算法</h2>
+<p>根据订单类型， 订单执行策略（主动还是被动），订单大小，订单的明暗以及下订单的流动性池子， 订单的撤销与重置等因素来自己开发算法或者购买和使用经纪商或者第三方算法和软件</p>
+<blockquote>
+通过订单的撤销等手段来探测市场对流动性深度的反应，从而为依赖反应模式而获利提供有效信息
+</blockquote>
+<h2 id="高频交易"><span class="header-section-number">8.3</span> 高频交易</h2>
+<p>适合小规模资产，大规模的高频交易会大幅度的改变市场，以至于预测价格与最终执行价格非常接近，无多少利润空间。</p>
+<p>“鲨鱼”算法， 跟踪和依附“冰山”暗订单之上/前， 借助于“冰山”推高价格的同时盈利。</p>
+<h2 id="交易基础设施"><span class="header-section-number">8.4</span> 交易基础设施</h2>
+<ol style="list-style-type: decimal">
+<li>硬件
+<ul>
+<li>定制芯片</li>
+</ul></li>
+<li>软件
+<ul>
+<li>操作系统</li>
+<li>交易软件</li>
+</ul></li>
+<li>协议
+<ul>
+<li>FIX</li>
+<li>自定义FIX Engine(尤其对于对性能追求卓越，且资金规模雄厚的宽客)</li>
+<li>socket</li>
+<li>direct database access</li>
+</ul></li>
+<li>交易通道
+<ul>
+<li>DMA(direct market access)- 毫秒级别</li>
+<li>colocation(同地机房) - 微妙级别(1/4毫秒)</li>
+<li>sponsored access</li>
+</ul></li>
+</ol>
+<h1 id="数据"><span class="header-section-number">9</span> 数据</h1>
+<ol style="list-style-type: decimal">
+<li>数据的重要性
+<ul>
+<li>输入 =&gt; 输出</li>
+<li>搞错输入，即使函数模型等再正确也是枉然， 所谓的garbage in, garbage out效应</li>
+</ul></li>
+<li>数据的类型
+<ul>
+<li>价格相关的数据</li>
+<li>基本面数据</li>
+</ul></li>
+<li>数据来源
+<ul>
+<li>交易商</li>
+<li>监管者</li>
+<li>政府</li>
+<li>公司</li>
+<li>新闻机构</li>
+<li>专门的数据提供商</li>
+</ul></li>
+<li>数据的整理
+<ul>
+<li>处理缺失的数据
+<ul>
+<li>识别</li>
+<li>填补缺省默认值</li>
+</ul></li>
+<li>处理可能的错误数据
+<ul>
+<li>spike filter</li>
+<li>bad print - 坏点</li>
+</ul></li>
+</ul></li>
+<li>数据存储
+<ul>
+<li>flat file</li>
+<li>indexed flat file</li>
+<li>RDBMS
+<ul>
+<li>data cube</li>
+</ul></li>
+</ul></li>
+</ol>
+<h1 id="研究"><span class="header-section-number">10</span> 研究</h1>
+<p>主要讨论了方法， 思想来源， 检验和假设相关内容</p>
+<p>思想来源可以归纳为如下四种：</p>
+<ol style="list-style-type: decimal">
+<li>市场观察</li>
+<li>学术文献</li>
+<li>挖掘其他量化交易机构的交易者并向其学习</li>
+<li>主观判断型交易者的教训</li>
+</ol>
+<p>检验的话则通过样本内数据和样本外数据以及各种指标进行， 指标详情就不列了。</p>
+整个过程倾向于遵循爱因斯坦的这句：
+<blockquote>
+每件事都应力求简单，而又不能过于简单。
+</blockquote>
+<h1 id="量化交易策略的固有风险"><span class="header-section-number">11</span> 量化交易策略的固有风险</h1>
+<ol style="list-style-type: decimal">
+<li>模型风险(model risk)
+<ul>
+<li>建模的不适宜性(the inapplicability of modeling)</li>
+<li>模型的错误设置(misspecification)
+<ul>
+<li>马鞍套在牛身上 ：）</li>
+</ul></li>
+<li>执行错误(implementation errors)
+<ul>
+<li>比如手贱输错交易指令，系统重启而忽略了依赖关系的先后顺序，等等</li>
+</ul></li>
+</ul></li>
+<li>市场逻辑变更风险
+<ul>
+<li>市场风向突变等小概率事件</li>
+</ul></li>
+<li>外部冲击风险(exogenous shock)
+<ul>
+<li>战争， 恐怖袭击，etc.</li>
+</ul></li>
+<li>扩散风险或者说同质投资者风险
+<ul>
+<li>一窝蜂的往一处钻，结果[出了事儿]，谁也跑不掉 ：）</li>
+<li>crowded trade</li>
+</ul></li>
+</ol>
+<h2 id="风险检测工具"><span class="header-section-number">11.1</span> 风险检测工具</h2>
+<ol style="list-style-type: decimal">
+<li>敞口检测工具</li>
+<li>盈利和亏损检测工具</li>
+<li>执行检测工具
+<ul>
+<li>auditing</li>
+</ul></li>
+<li>系统性能检测工具</li>
+</ol>
+<h1 id="有关宽客的批评评价展望"><span class="header-section-number">12</span> 有关宽客的批评，评价，展望</h1>
+<p>后面几章大体上没有啥要有条理的记录的，唯一印象深刻的是拷问诚信的内容，作者引用了《审问者》这本书里提到的一些技巧和准则以及在具体场景下的案例，感觉很有意思，或许可以进一步挖掘。 不过，对于那种信口雌黄的主儿，这些技巧和准则可能就没有什么作用了。 比如“好的问题和好的回答比业务记录重要的多”，以及“（在发生了如此多的丑闻之后），名声和业务记录对于判断基金经理是否诚信往往都是不够的”。</p>
+<p>另外， 作者提到“一些小的公司长期疲于奔命， 很少与其他人有任何接触”， 这一点其实落到人和某些群体上，所见，所闻，所感同身受，窃以为如此。</p>
+<h1 id="术语"><span class="header-section-number">13</span> 术语</h1>
+<ol style="list-style-type: decimal">
+<li>quantative trading strategies - 量化交易策略</li>
+<li>quants - 量化交易者， 俗称宽客</li>
+<li>high frequency trading - 高频交易</li>
+<li>algorithmic trading engines</li>
+<li>携带交易(carry trade)
+<ul>
+<li>携带所得(carry)</li>
+</ul></li>
+<li>量化多空策略(quant long/short, QLS)</li>
+<li>移动平均线(moving average)</li>
+<li>市盈率(price to earnings) - P/E
+<ul>
+<li>指某一上市公司的股票市价(price)与过去一年中每股盈利(earning)的比率</li>
+</ul></li>
+<li>市净率
+<ul>
+<li>市净率指的是市价(price)与每股净资产(book value)之间的比值，市净率=股票市价/每股净资产,比值越低意味着风险越低</li>
+</ul></li>
+<li>帐面价值(Book Value)
+<ul>
+<li>帐面价值指的是股票实际的资产价值，也就是公司的总资产净值除以发行股数的後所得出的值</li>
+</ul></li>
+<li>flight-to-quality策略
+<ul>
+<li>寻求本金安全的一种策略</li>
+</ul></li>
+<li>敞口(exposure)</li>
+<li>系统性风险
+<ul>
+<li>即无法被分散的风险，如汇率风险，部门风险因素和市值风险因素（大市值or小市值）</li>
+</ul></li>
+<li>订单簿深度(Depth of Book)
+<ul>
+<li>or 价格深度</li>
+</ul></li>
+<li>做市商(Market Maker)</li>
+<li>电子通信网络(Electronic Communication Networks, ECN)</li>
+<li>流动性提供者(Liquidity Providers)</li>
+<li>逆向选择偏误(adverse selection bias)
+<ul>
+<li>&quot;压路机前捡硬币&quot;，这个比喻很生动形象</li>
+</ul></li>
+<li>均值方差优化模型(mean variance optimization)</li>
+<li>现代投资组合原理(modern portfolio theory, MPT)
+<ul>
+<li>核心含义是因为投资者本能的规避风险， 所以如果两项资产的风险程度不同但是具有同样的回报，那么投资者将会选择风险较低的资产。</li>
+</ul></li>
+<li>明订单(visible orders)/暗订单(hidden orders)
+<ul>
+<li>&quot;冰山一角“(iceberging), 一种暗订单交易技术，即将大订单切割成许多小订单，然后投递到orderbook中</li>
+</ul></li>
+<li>stop loss policy/止损策略
+<ul>
+<li>“截断亏损，让利润奔跑”</li>
+</ul></li>
+<li>凹凸度(lumpiness)
+<ul>
+<li>该指标是回报率显著高于平均值那段时间的回报在策略总回报中所占的比例</li>
+</ul></li>
+<li>奥卡姆剃刀原理(Occam's Razor)
+<ul>
+<li>如无必要，勿增实体 - Entities must not be multiplied beyond necessity.</li>
+</ul></li>
+<li>卖空限制列表(hard-to-borrow list)
+<ul>
+<li>在这个单子里的股票，一般是经纪商限制做空的，可能原因是准备卖空的股票在经纪商手里并不足够多，而裸空在美国又是违法的。</li>
+</ul></li>
+<li>相互持有(cross-ownership)</li>
+<li>交叉抵押(cross-collateraling)</li>
+<li>关键时点交易(breakout trading)</li>
+</ol>
+
+</div>
+
       <div id="qrcode"></div>
       <div class="row">
         <div class="col-md-12 footer">

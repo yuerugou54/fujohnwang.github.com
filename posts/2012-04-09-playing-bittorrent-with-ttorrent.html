@@ -7,19 +7,20 @@
   <meta http-equiv="X-UA-Compatible" content="chrome=1">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="author" content="扶墙老师@afoo.me">
-
-  <link rel="icon" href="/favicon.ico">
+    <meta name="date" content="2012-04-09" />
+    <link rel="icon" href="/favicon.ico">
 
   <title>&quot;Playing BitTorrent with ttorrent&quot; - 一个架构士的思考与沉淀之地</title>
 
-    <meta name="date" content="2012-04-09" />
-          
-  <link href='/font/News_Cycle/stylesheet.css' rel='stylesheet' type='text/css'>
+  
 
+  <link href='/font/News_Cycle/stylesheet.css' rel='stylesheet' type='text/css'>
   <link href="/css/bootstrap.min.css" rel="stylesheet">
   <link href="/css/bootstrap-theme.min.css" rel="stylesheet">
   <link href="/css/afoo.me.css" rel="stylesheet">
 
+  <style type="text/css">code{white-space: pre;}</style>
+        
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>
@@ -39,145 +40,147 @@
           </a>
         </div>
     </div>
-    <div class="col-xs-12 col-md-10">
 
-          
-          <div class="row">
-                        <div id="header">
-              <p class="lead">
-              <h1 class="title">&quot;Playing BitTorrent with ttorrent&quot;</h1>
-                            <small>
-                  <h3 class="author">fujohnwang</h3>
-              </small>
-                                        <h4 class="date">2012-04-09</h4>
-                              </p>
-            </div>
-            
-              <hr>
+<div class="col-xs-12 col-md-10">
 
-                            <div id="TOC">
-                <ul>
-                <li><a href="#a-bigpicture-of-bittorrent"><span class="toc-section-number">1</span> A BigPicture Of BitTorrent</a></li>
-                <li><a href="#ttorrent-explained"><span class="toc-section-number">2</span> TTorrent Explained</a></li>
-                <li><a href="#hello-world-ttorrent"><span class="toc-section-number">3</span> Hello, <del>World</del> ttorrent</a></li>
-                <li><a href="#why-bt-matters"><span class="toc-section-number">4</span> Why BT matters?</a></li>
-                <li><a href="#references"><span class="toc-section-number">5</span> References</a></li>
-                </ul>
-              </div>
-              <hr/>
-              
-              <p><em>Author: fujohnwang, 2012-04-10</em></p>
-              <p>Before we get our hands dirty with the code, we need to know something basic to BitTorrent...</p>
-              <h1 id="a-bigpicture-of-bittorrent"><span class="header-section-number">1</span> A BigPicture Of BitTorrent</h1>
-              <p>I will first show u a flow chart to demenstrate how BitTorrent works: <img src="../images/ttorrent/BT-Process-Flow.png" alt="BitTorrent Process Flow" /></p>
-              <p>First, we need to generate a .torrent metainfo file from the source file(s), in this step, the souce file(s) will be split into pieces with size of 512K-1M, and hashed with SHA-1, these hashes, the tracker, the file name(s) and other information will be collected into the generated .torrent file.</p>
-              <p>After we get a .torrent metainfo file, we need to distribute it to others so that they can download and share source files as per the metainfo in .torrent file. There are many ways to distribute the .torrrent file, like sending via email, hosted on a web server, etc. Most of the time, we will publish the .torrent file to some web server so that other peers can download it by clicking the link.</p>
-              <p>When some peer get the .torrent file, it can start to download or upload(sharing) the source files as per metainfo in the .torrent file, each peer needs to connect to the tracker(whose address can be retrieved from .torrent file) to get available peers to interact with, they send handshake, messages, and other packets to tracker to notify and receive corresponding states or events from each peer, more details can be found in the Reference part, I will not elaborate it here.</p>
-              <p>In the big picture of bit torrent, several roles you should pay attention to:</p>
-              <ol style="list-style-type: decimal">
-              <li><strong>tracker</strong>
-              <ul>
-              <li>the tracker is the central part of the whole ecosystem of bit torrent, it will coordinate the peers in the swarm(that's, the peer group).</li>
-              </ul></li>
-              <li><strong>initial seeder</strong>
-              <ul>
-              <li>each bit torrent sharing should be initialized by some peer, this peer has the whole piece of the source file and will generate .torrent metainfo file and publish it, this peer is called the initial seeder.</li>
-              </ul></li>
-              <li><strong>peers</strong>
-              <ul>
-              <li><strong>seeder</strong> (the peers who has a complete source file, that's, it has completed the download and only offering upload to other peers)</li>
-              <li><strong>lecher</strong> (the peers who don't have some complate source file and need to download from other peers)</li>
-              </ul>
-              <p>NOTE: a seeder can be a lecher, and a lecher can be a seeder, maybe just for different source file(s)</p></li>
-              <li><strong>.torrent publisher</strong>
-              <ul>
-              <li>usually a web server which hosts the download service of the .torrent files</li>
-              </ul></li>
-              </ol>
-              <p>So we have know some basic thing about bit torrent, let's get to the real...</p>
-              <h1 id="ttorrent-explained"><span class="header-section-number">2</span> TTorrent Explained</h1>
-              <p>TURN's ttorrent is a java library which can be embeded in our java applications so that we can use bit torrent to do something cool. I heard about it from esty team's blog(you can find the blog in the Reference part).</p>
-              <p>ttorrent is hosted at <a href="https://github.com/turn/ttorrent" class="uri">https://github.com/turn/ttorrent</a>, you can 'git clone' it to your local and browse its code to get the idea how it works.</p>
-              <p>Generally, ttorrent hide all of the trivial and complicated protocol things behind several components/classes. The codebase of ttorent is simple, just 4 top source packages:</p>
-              <ol style="list-style-type: decimal">
-              <li><strong>bcodec</strong>, responsible for encoding/decoding of data types</li>
-              <li><strong>client</strong>, peer client which hide communication protocols behind to offer better use API</li>
-              <li><strong>common</strong>, .torrent metainfo object abstraction and peer abstraction</li>
-              <li><strong>tracker</strong>, provide tracker service use simple framework to serve http requests.</li>
-              </ol>
-              <h1 id="hello-world-ttorrent"><span class="header-section-number">3</span> Hello, <del>World</del> ttorrent</h1>
-              <p>We have talked too much, it's time to get our hands dirty with some code, here we go.</p>
-              <p>```scala val parent = new File(&quot;/Users/XXX/Movies/Fightings/&quot;) val tracker = new Tracker(InetAddress.getLocalHost, &quot;version-1&quot;) tracker.start() println(&quot;ttorrent tracker is running...&quot;) try { println(&quot;create new .torrent metainfo file...&quot;) val sharedFile = &quot;/Users/XXX/Movies/Fightings/RoK-FrontKick.asf&quot; val torrent = Torrent.create(new File(sharedFile), tracker.getAnnounceUrl, &quot;createdByDarren&quot;)</p>
-              <pre><code>  println(&quot;save .torrent to file...&quot;)
-                torrent.save(new File(&quot;seed.torrent&quot;))
-              
-                println(&quot;announce new .torrent available...&quot;)
-                tracker.announce(torrent)
-              
-                println(&quot;kick off seeder to share...&quot;)
-                val seeder = new Client(InetAddress.getLocalHost, new SharedTorrent(torrent, parent, true))
-                seeder.share()
-                try {
-                  if (!ClientState.ERROR.equals(seeder.getState())) {
-                    val reader = new BufferedReader(new InputStreamReader(System.in))
-                    try {
-                      reader.readLine()
-                    } finally {
-                      reader.close()
-                    }
-                  }
-                } finally {
-                  seeder.stop()
-                }
-              } finally {
-                tracker.stop()
-              }```</code></pre>
-              <p>We start a Tracker at localhost first, then we decide to publish a movie, so we use Torrent class to create a .torrent metainfo file to the movie and announce it to the tracker. After that, we need to start a Client(which works as a peer) which will serve as the initial seeder to share the movie. To make a Client to work as the initial seeder, we need to use SharedTorrent(torrent, parent, seeder) constructor and make seeder=true to create a SharedTorrent instance for Client to use. At the end, call seeder.share to kick off the sharing.</p>
-              <p>Since we have the tracker and initial seeder started, let's add a new peer to the swarm to download the movie, the code listed below:</p>
-              <p>```scala import util.control.Breaks._ val client = new Client(InetAddress.getLocalHost, SharedTorrent.fromFile(new File(&quot;seed.torrent&quot;), new File(&quot;.&quot;))) try { println(&quot;start to download...&quot;) client.share() // SEEDING for completion signal // client.download() // DONE for completion signal</p>
-              <pre><code>  breakable {
-                  while (!ClientState.SEEDING.equals(client.getState)) {
-                    if (ClientState.ERROR.equals(client.getState())) {
-                      throw new Exception(&quot;ttorrent client Error State&quot;)
-                    }
-                    TimeUnit.SECONDS.sleep(1)
-                  }
-                  println(&quot;download completed.&quot;)
-                }
-              } finally {
-                println(&quot;stop client.&quot;)
-                client.stop()
-              }```</code></pre>
-              <p>we will run the new peer at local host too, and since we have saved the .torrent into 'seed.torrent' file before, we can just loaded it here, but with different parent when create the SharedTorrent instance, suppose, we just want to download the movie into the folder where the 'seed.torrent' file resides.</p>
-              <p>The new peer's job is simple, just download/share the movie with the .torrent, as the code speaks, create a Client and call share method, then we are done. The left code just for proper cleanups.</p>
-              <p>If you just want the new peer to download and exit, you can call download method of the Client instead of share, but it's not a recommended way, since BT is better that other P2P solutions with its &quot;tit-for-tat&quot; principle.</p>
-              <p>So that's all, when we start the tracker, the initial seeder and then the new peer, we can see that the movie is donwloaded successfully, try to add more peers to gain more benefits :-)</p>
-              <pre><code>Trick: 
-                  1. SharedTorrent&#39;s constructor needs a parent parameter(type of java.io.File), If you want to use the result SharedTorrent with the initial seeder, try to point this parent location to the path where your source files(the movies, for example) reside; For other peers, point the parent to the location where you would like to download the source files to. 
-                  2. You can create .torrent metainfo file for single source file or a collection of source files with Torrent class&#39;s helper methods.
-                  3. Tracker, Seeder, Common Peers are all linked together with the .torrent file, so to get better understanding of bit torrent, read more about .torrent stucture or specification :-)</code></pre>
-              <h1 id="why-bt-matters"><span class="header-section-number">4</span> Why BT matters?</h1>
-              <p>I know maybe you have used BT to share your audio/video with your friends every day, but as a software engineer, you may would like to escalate the usage scenarios of BT, just like esty, facebook or twitter do:</p>
-              <ol style="list-style-type: decimal">
-              <li>etsy uses BT to replicate their Solr index;</li>
-              <li>facebook and twitter use BT to do software artifacts distribution and deployment.</li>
-              </ol>
-              <p>Can we explore further?</p>
-              <ul>
-              <li>large clusters' ops automation</li>
-              <li>large distributed system state replication</li>
-              <li>infrustructure maintainance and sync up?!</li>
-              <li>...</li>
-              </ul>
-              <h1 id="references"><span class="header-section-number">5</span> References</h1>
-              <ol style="list-style-type: decimal">
-              <li><a href="http://en.wikipedia.org/wiki/BitTorrent_(protocol)">BitTorrent (protocol)</a></li>
-              <li><a href="http://turn.github.com/ttorrent/">Ttorrent-Turn's BitTorrent library</a></li>
-              <li><a href="http://codeascraft.etsy.com/2012/01/23/solr-bittorrent-index-replication/">Turbocharging Solr Index Replication with BitTorrent</a></li>
-              <li><a href="http://wiki.theory.org/BitTorrentSpecification">Bittorrent Protocol Specification v1.0</a></li>
-              </ol>
-              
-      </div>
+
+<div class="row">
+<div id="header">
+<p class="lead">
+<h1 class="title">&quot;Playing BitTorrent with ttorrent&quot;</h1>
+<small>
+<h3 class="author">fujohnwang</h3>
+</small>
+<h4 class="date">2012-04-09</h4>
+</p>
+</div>
+
+<hr>
+
+<div id="TOC">
+<ul>
+<li><a href="#a-bigpicture-of-bittorrent"><span class="toc-section-number">1</span> A BigPicture Of BitTorrent</a></li>
+<li><a href="#ttorrent-explained"><span class="toc-section-number">2</span> TTorrent Explained</a></li>
+<li><a href="#hello-world-ttorrent"><span class="toc-section-number">3</span> Hello, <del>World</del> ttorrent</a></li>
+<li><a href="#why-bt-matters"><span class="toc-section-number">4</span> Why BT matters?</a></li>
+<li><a href="#references"><span class="toc-section-number">5</span> References</a></li>
+</ul>
+</div>
+<hr/>
+
+<p><em>Author: fujohnwang, 2012-04-10</em></p>
+<p>Before we get our hands dirty with the code, we need to know something basic to BitTorrent...</p>
+<h1 id="a-bigpicture-of-bittorrent"><span class="header-section-number">1</span> A BigPicture Of BitTorrent</h1>
+<p>I will first show u a flow chart to demenstrate how BitTorrent works: <img src="../images/ttorrent/BT-Process-Flow.png" alt="BitTorrent Process Flow" /></p>
+<p>First, we need to generate a .torrent metainfo file from the source file(s), in this step, the souce file(s) will be split into pieces with size of 512K-1M, and hashed with SHA-1, these hashes, the tracker, the file name(s) and other information will be collected into the generated .torrent file.</p>
+<p>After we get a .torrent metainfo file, we need to distribute it to others so that they can download and share source files as per the metainfo in .torrent file. There are many ways to distribute the .torrrent file, like sending via email, hosted on a web server, etc. Most of the time, we will publish the .torrent file to some web server so that other peers can download it by clicking the link.</p>
+<p>When some peer get the .torrent file, it can start to download or upload(sharing) the source files as per metainfo in the .torrent file, each peer needs to connect to the tracker(whose address can be retrieved from .torrent file) to get available peers to interact with, they send handshake, messages, and other packets to tracker to notify and receive corresponding states or events from each peer, more details can be found in the Reference part, I will not elaborate it here.</p>
+<p>In the big picture of bit torrent, several roles you should pay attention to:</p>
+<ol style="list-style-type: decimal">
+<li><strong>tracker</strong>
+<ul>
+<li>the tracker is the central part of the whole ecosystem of bit torrent, it will coordinate the peers in the swarm(that's, the peer group).</li>
+</ul></li>
+<li><strong>initial seeder</strong>
+<ul>
+<li>each bit torrent sharing should be initialized by some peer, this peer has the whole piece of the source file and will generate .torrent metainfo file and publish it, this peer is called the initial seeder.</li>
+</ul></li>
+<li><strong>peers</strong>
+<ul>
+<li><strong>seeder</strong> (the peers who has a complete source file, that's, it has completed the download and only offering upload to other peers)</li>
+<li><strong>lecher</strong> (the peers who don't have some complate source file and need to download from other peers)</li>
+</ul>
+<p>NOTE: a seeder can be a lecher, and a lecher can be a seeder, maybe just for different source file(s)</p></li>
+<li><strong>.torrent publisher</strong>
+<ul>
+<li>usually a web server which hosts the download service of the .torrent files</li>
+</ul></li>
+</ol>
+<p>So we have know some basic thing about bit torrent, let's get to the real...</p>
+<h1 id="ttorrent-explained"><span class="header-section-number">2</span> TTorrent Explained</h1>
+<p>TURN's ttorrent is a java library which can be embeded in our java applications so that we can use bit torrent to do something cool. I heard about it from esty team's blog(you can find the blog in the Reference part).</p>
+<p>ttorrent is hosted at <a href="https://github.com/turn/ttorrent" class="uri">https://github.com/turn/ttorrent</a>, you can 'git clone' it to your local and browse its code to get the idea how it works.</p>
+<p>Generally, ttorrent hide all of the trivial and complicated protocol things behind several components/classes. The codebase of ttorent is simple, just 4 top source packages:</p>
+<ol style="list-style-type: decimal">
+<li><strong>bcodec</strong>, responsible for encoding/decoding of data types</li>
+<li><strong>client</strong>, peer client which hide communication protocols behind to offer better use API</li>
+<li><strong>common</strong>, .torrent metainfo object abstraction and peer abstraction</li>
+<li><strong>tracker</strong>, provide tracker service use simple framework to serve http requests.</li>
+</ol>
+<h1 id="hello-world-ttorrent"><span class="header-section-number">3</span> Hello, <del>World</del> ttorrent</h1>
+<p>We have talked too much, it's time to get our hands dirty with some code, here we go.</p>
+<p>```scala val parent = new File(&quot;/Users/XXX/Movies/Fightings/&quot;) val tracker = new Tracker(InetAddress.getLocalHost, &quot;version-1&quot;) tracker.start() println(&quot;ttorrent tracker is running...&quot;) try { println(&quot;create new .torrent metainfo file...&quot;) val sharedFile = &quot;/Users/XXX/Movies/Fightings/RoK-FrontKick.asf&quot; val torrent = Torrent.create(new File(sharedFile), tracker.getAnnounceUrl, &quot;createdByDarren&quot;)</p>
+<pre><code>  println(&quot;save .torrent to file...&quot;)
+  torrent.save(new File(&quot;seed.torrent&quot;))
+
+  println(&quot;announce new .torrent available...&quot;)
+  tracker.announce(torrent)
+
+  println(&quot;kick off seeder to share...&quot;)
+  val seeder = new Client(InetAddress.getLocalHost, new SharedTorrent(torrent, parent, true))
+  seeder.share()
+  try {
+    if (!ClientState.ERROR.equals(seeder.getState())) {
+      val reader = new BufferedReader(new InputStreamReader(System.in))
+      try {
+        reader.readLine()
+      } finally {
+        reader.close()
+      }
+    }
+  } finally {
+    seeder.stop()
+  }
+} finally {
+  tracker.stop()
+}```</code></pre>
+<p>We start a Tracker at localhost first, then we decide to publish a movie, so we use Torrent class to create a .torrent metainfo file to the movie and announce it to the tracker. After that, we need to start a Client(which works as a peer) which will serve as the initial seeder to share the movie. To make a Client to work as the initial seeder, we need to use SharedTorrent(torrent, parent, seeder) constructor and make seeder=true to create a SharedTorrent instance for Client to use. At the end, call seeder.share to kick off the sharing.</p>
+<p>Since we have the tracker and initial seeder started, let's add a new peer to the swarm to download the movie, the code listed below:</p>
+<p>```scala import util.control.Breaks._ val client = new Client(InetAddress.getLocalHost, SharedTorrent.fromFile(new File(&quot;seed.torrent&quot;), new File(&quot;.&quot;))) try { println(&quot;start to download...&quot;) client.share() // SEEDING for completion signal // client.download() // DONE for completion signal</p>
+<pre><code>  breakable {
+    while (!ClientState.SEEDING.equals(client.getState)) {
+      if (ClientState.ERROR.equals(client.getState())) {
+        throw new Exception(&quot;ttorrent client Error State&quot;)
+      }
+      TimeUnit.SECONDS.sleep(1)
+    }
+    println(&quot;download completed.&quot;)
+  }
+} finally {
+  println(&quot;stop client.&quot;)
+  client.stop()
+}```</code></pre>
+<p>we will run the new peer at local host too, and since we have saved the .torrent into 'seed.torrent' file before, we can just loaded it here, but with different parent when create the SharedTorrent instance, suppose, we just want to download the movie into the folder where the 'seed.torrent' file resides.</p>
+<p>The new peer's job is simple, just download/share the movie with the .torrent, as the code speaks, create a Client and call share method, then we are done. The left code just for proper cleanups.</p>
+<p>If you just want the new peer to download and exit, you can call download method of the Client instead of share, but it's not a recommended way, since BT is better that other P2P solutions with its &quot;tit-for-tat&quot; principle.</p>
+<p>So that's all, when we start the tracker, the initial seeder and then the new peer, we can see that the movie is donwloaded successfully, try to add more peers to gain more benefits :-)</p>
+<pre><code>Trick: 
+    1. SharedTorrent&#39;s constructor needs a parent parameter(type of java.io.File), If you want to use the result SharedTorrent with the initial seeder, try to point this parent location to the path where your source files(the movies, for example) reside; For other peers, point the parent to the location where you would like to download the source files to. 
+    2. You can create .torrent metainfo file for single source file or a collection of source files with Torrent class&#39;s helper methods.
+    3. Tracker, Seeder, Common Peers are all linked together with the .torrent file, so to get better understanding of bit torrent, read more about .torrent stucture or specification :-)</code></pre>
+<h1 id="why-bt-matters"><span class="header-section-number">4</span> Why BT matters?</h1>
+<p>I know maybe you have used BT to share your audio/video with your friends every day, but as a software engineer, you may would like to escalate the usage scenarios of BT, just like esty, facebook or twitter do:</p>
+<ol style="list-style-type: decimal">
+<li>etsy uses BT to replicate their Solr index;</li>
+<li>facebook and twitter use BT to do software artifacts distribution and deployment.</li>
+</ol>
+<p>Can we explore further?</p>
+<ul>
+<li>large clusters' ops automation</li>
+<li>large distributed system state replication</li>
+<li>infrustructure maintainance and sync up?!</li>
+<li>...</li>
+</ul>
+<h1 id="references"><span class="header-section-number">5</span> References</h1>
+<ol style="list-style-type: decimal">
+<li><a href="http://en.wikipedia.org/wiki/BitTorrent_(protocol)">BitTorrent (protocol)</a></li>
+<li><a href="http://turn.github.com/ttorrent/">Ttorrent-Turn's BitTorrent library</a></li>
+<li><a href="http://codeascraft.etsy.com/2012/01/23/solr-bittorrent-index-replication/">Turbocharging Solr Index Replication with BitTorrent</a></li>
+<li><a href="http://wiki.theory.org/BitTorrentSpecification">Bittorrent Protocol Specification v1.0</a></li>
+</ol>
+
+</div>
+
       <div id="qrcode"></div>
       <div class="row">
         <div class="col-md-12 footer">

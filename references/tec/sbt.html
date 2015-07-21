@@ -7,18 +7,19 @@
   <meta http-equiv="X-UA-Compatible" content="chrome=1">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="author" content="扶墙老师@afoo.me">
-
-  <link rel="icon" href="/favicon.ico">
+    <link rel="icon" href="/favicon.ico">
 
   <title>SBT释疑 - 一个架构士的思考与沉淀之地</title>
 
-          
-  <link href='/font/News_Cycle/stylesheet.css' rel='stylesheet' type='text/css'>
+  
 
+  <link href='/font/News_Cycle/stylesheet.css' rel='stylesheet' type='text/css'>
   <link href="/css/bootstrap.min.css" rel="stylesheet">
   <link href="/css/bootstrap-theme.min.css" rel="stylesheet">
   <link href="/css/afoo.me.css" rel="stylesheet">
 
+  <style type="text/css">code{white-space: pre;}</style>
+        
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>
@@ -38,37 +39,39 @@
           </a>
         </div>
     </div>
-    <div class="col-xs-12 col-md-10">
 
-          
-          <div class="row">
-                        <div id="header">
-              <p class="lead">
-              <h1 class="title">SBT释疑</h1>
-                            <small>
-                  <h3 class="author">王福强</h3>
-              </small>
-                                          </p>
-            </div>
-            
-              <hr>
+<div class="col-xs-12 col-md-10">
 
-                            <div id="TOC">
-                <ul>
-                <li><a href="#project子目录与当前项目目录的关系"><span class="toc-section-number">1</span> project子目录与当前项目目录的关系</a></li>
-                </ul>
-              </div>
-              <hr/>
-              
-              <h1 id="project子目录与当前项目目录的关系"><span class="header-section-number">1</span> project子目录与当前项目目录的关系</h1>
-              <blockquote>
-              <p>In sbt, any .scala file in the project/ directory can be used as a library in your build.</p>
-              </blockquote>
-              <p>可以简单认为当前项目目录下的project目录是一个lib目录，这个project目录下任何*.scala文件定义的东西，都是当前项目的build.sbt中可以依赖使用的。</p>
-              <p>即build.sbt ---dependsOn---&gt; project/*.scala，所以， 很多build.sbt中如果定义之后感觉混乱的东西，可以抽取到这些文件中定义然后引用。</p>
-              <p>project目录内可以再嵌套project， 相当于俄罗斯娃娃那样， 每一个都是合法的sbt项目。</p>
-              
-      </div>
+
+<div class="row">
+<div id="header">
+<p class="lead">
+<h1 class="title">SBT释疑</h1>
+<small>
+<h3 class="author">王福强</h3>
+</small>
+</p>
+</div>
+
+<hr>
+
+<div id="TOC">
+<ul>
+<li><a href="#project子目录与当前项目目录的关系"><span class="toc-section-number">1</span> project子目录与当前项目目录的关系</a></li>
+</ul>
+</div>
+<hr/>
+
+<h1 id="project子目录与当前项目目录的关系"><span class="header-section-number">1</span> project子目录与当前项目目录的关系</h1>
+<blockquote>
+<p>In sbt, any .scala file in the project/ directory can be used as a library in your build.</p>
+</blockquote>
+<p>可以简单认为当前项目目录下的project目录是一个lib目录，这个project目录下任何*.scala文件定义的东西，都是当前项目的build.sbt中可以依赖使用的。</p>
+<p>即build.sbt ---dependsOn---&gt; project/*.scala，所以， 很多build.sbt中如果定义之后感觉混乱的东西，可以抽取到这些文件中定义然后引用。</p>
+<p>project目录内可以再嵌套project， 相当于俄罗斯娃娃那样， 每一个都是合法的sbt项目。</p>
+
+</div>
+
       <div id="qrcode"></div>
       <div class="row">
         <div class="col-md-12 footer">

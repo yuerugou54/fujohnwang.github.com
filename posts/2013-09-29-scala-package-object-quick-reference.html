@@ -7,12 +7,19 @@
   <meta http-equiv="X-UA-Compatible" content="chrome=1">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="author" content="扶墙老师@afoo.me">
-
-  <link rel="icon" href="/favicon.ico">
+    <link rel="icon" href="/favicon.ico">
 
   <title>scala package object quick reference - 一个架构士的思考与沉淀之地</title>
 
-      <style type="text/css">
+  
+
+  <link href='/font/News_Cycle/stylesheet.css' rel='stylesheet' type='text/css'>
+  <link href="/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/css/bootstrap-theme.min.css" rel="stylesheet">
+  <link href="/css/afoo.me.css" rel="stylesheet">
+
+  <style type="text/css">code{white-space: pre;}</style>
+    <style type="text/css">
     div.sourceCode { overflow-x: auto; }
     table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
       margin: 0; padding: 0; vertical-align: baseline; border: none; }
@@ -33,12 +40,6 @@
     code > span.er { color: #ff0000; font-weight: bold; }
   </style>
         
-  <link href='/font/News_Cycle/stylesheet.css' rel='stylesheet' type='text/css'>
-
-  <link href="/css/bootstrap.min.css" rel="stylesheet">
-  <link href="/css/bootstrap-theme.min.css" rel="stylesheet">
-  <link href="/css/afoo.me.css" rel="stylesheet">
-
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>
@@ -58,51 +59,53 @@
           </a>
         </div>
     </div>
-    <div class="col-xs-12 col-md-10">
 
-          
-          <div class="row">
-                        <div id="header">
-              <p class="lead">
-              <h1 class="title">scala package object quick reference</h1>
-                            <small>
-                  <h3 class="author">王福强</h3>
-              </small>
-                                          </p>
-            </div>
-            
-              <hr>
+<div class="col-xs-12 col-md-10">
 
-                            <div id="TOC">
-                <ul>
-                <li><a href="#功效"><span class="toc-section-number">1</span> 功效</a></li>
-                <li><a href="#步骤"><span class="toc-section-number">2</span> 步骤</a><ul>
-                <li><a href="#第一步-确定文件位置"><span class="toc-section-number">2.1</span> 第一步: 确定文件位置</a></li>
-                <li><a href="#第二步确定文件内容"><span class="toc-section-number">2.2</span> 第二步：确定文件内容</a></li>
-                <li><a href="#第三步-使用"><span class="toc-section-number">2.3</span> 第三步： 使用</a></li>
-                </ul></li>
-                </ul>
-              </div>
-              <hr/>
-              
-              <h1 id="功效"><span class="header-section-number">1</span> 功效</h1>
-              <p>定义在package object中的变量，方法，函数等都可以被这个package下所有的类定义所用！</p>
-              <h1 id="步骤"><span class="header-section-number">2</span> 步骤</h1>
-              <p>假设我们想定义com.github.fujohnwang.demo这个package对应的package object，那么，我们可以：</p>
-              <h2 id="第一步-确定文件位置"><span class="header-section-number">2.1</span> 第一步: 确定文件位置</h2>
-              <p>在目录com/github/fujohnwang/demo下新建package.scala文件；</p>
-              <h2 id="第二步确定文件内容"><span class="header-section-number">2.2</span> 第二步：确定文件内容</h2>
-              <p>文件定义中，前面的声明如下:</p>
-              <div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">package</span> com.<span class="fu">github</span>.<span class="fu">fujohnwang</span>;
-              
-              <span class="kw">package</span> <span class="kw">object</span> demo{
-                <span class="co">// ...</span>
-              }</code></pre></div>
-              <p>即package object的名称为当前包的名字(demo)， 而声明在放到上一级package中（这里为什么容易混淆，就是因为，实际上，当前的定义文件package.scala不是放在文件开头的package声明对应的目录下，而是当前package目录下）</p>
-              <h2 id="第三步-使用"><span class="header-section-number">2.3</span> 第三步： 使用</h2>
-              <p>在要使用package object中定义的变量，方法或者函数之前， <code>import com.github.fujohnwang.demo._</code>即可。</p>
-              
-      </div>
+
+<div class="row">
+<div id="header">
+<p class="lead">
+<h1 class="title">scala package object quick reference</h1>
+<small>
+<h3 class="author">王福强</h3>
+</small>
+</p>
+</div>
+
+<hr>
+
+<div id="TOC">
+<ul>
+<li><a href="#功效"><span class="toc-section-number">1</span> 功效</a></li>
+<li><a href="#步骤"><span class="toc-section-number">2</span> 步骤</a><ul>
+<li><a href="#第一步-确定文件位置"><span class="toc-section-number">2.1</span> 第一步: 确定文件位置</a></li>
+<li><a href="#第二步确定文件内容"><span class="toc-section-number">2.2</span> 第二步：确定文件内容</a></li>
+<li><a href="#第三步-使用"><span class="toc-section-number">2.3</span> 第三步： 使用</a></li>
+</ul></li>
+</ul>
+</div>
+<hr/>
+
+<h1 id="功效"><span class="header-section-number">1</span> 功效</h1>
+<p>定义在package object中的变量，方法，函数等都可以被这个package下所有的类定义所用！</p>
+<h1 id="步骤"><span class="header-section-number">2</span> 步骤</h1>
+<p>假设我们想定义com.github.fujohnwang.demo这个package对应的package object，那么，我们可以：</p>
+<h2 id="第一步-确定文件位置"><span class="header-section-number">2.1</span> 第一步: 确定文件位置</h2>
+<p>在目录com/github/fujohnwang/demo下新建package.scala文件；</p>
+<h2 id="第二步确定文件内容"><span class="header-section-number">2.2</span> 第二步：确定文件内容</h2>
+<p>文件定义中，前面的声明如下:</p>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">package</span> com.<span class="fu">github</span>.<span class="fu">fujohnwang</span>;
+
+<span class="kw">package</span> <span class="kw">object</span> demo{
+  <span class="co">// ...</span>
+}</code></pre></div>
+<p>即package object的名称为当前包的名字(demo)， 而声明在放到上一级package中（这里为什么容易混淆，就是因为，实际上，当前的定义文件package.scala不是放在文件开头的package声明对应的目录下，而是当前package目录下）</p>
+<h2 id="第三步-使用"><span class="header-section-number">2.3</span> 第三步： 使用</h2>
+<p>在要使用package object中定义的变量，方法或者函数之前， <code>import com.github.fujohnwang.demo._</code>即可。</p>
+
+</div>
+
       <div id="qrcode"></div>
       <div class="row">
         <div class="col-md-12 footer">

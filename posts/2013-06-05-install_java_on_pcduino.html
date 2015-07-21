@@ -7,12 +7,19 @@
   <meta http-equiv="X-UA-Compatible" content="chrome=1">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="author" content="扶墙老师@afoo.me">
-
-  <link rel="icon" href="/favicon.ico">
+    <link rel="icon" href="/favicon.ico">
 
   <title>pcDuino上安装Java运行环境 - 一个架构士的思考与沉淀之地</title>
 
-      <style type="text/css">
+  
+
+  <link href='/font/News_Cycle/stylesheet.css' rel='stylesheet' type='text/css'>
+  <link href="/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/css/bootstrap-theme.min.css" rel="stylesheet">
+  <link href="/css/afoo.me.css" rel="stylesheet">
+
+  <style type="text/css">code{white-space: pre;}</style>
+    <style type="text/css">
     div.sourceCode { overflow-x: auto; }
     table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
       margin: 0; padding: 0; vertical-align: baseline; border: none; }
@@ -33,12 +40,6 @@
     code > span.er { color: #ff0000; font-weight: bold; }
   </style>
         
-  <link href='/font/News_Cycle/stylesheet.css' rel='stylesheet' type='text/css'>
-
-  <link href="/css/bootstrap.min.css" rel="stylesheet">
-  <link href="/css/bootstrap-theme.min.css" rel="stylesheet">
-  <link href="/css/afoo.me.css" rel="stylesheet">
-
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>
@@ -58,62 +59,64 @@
           </a>
         </div>
     </div>
-    <div class="col-xs-12 col-md-10">
 
-          
-          <div class="row">
-                        <div id="header">
-              <p class="lead">
-              <h1 class="title">pcDuino上安装Java运行环境</h1>
-                            <small>
-                  <h3 class="author">王福强</h3>
-              </small>
-                                          </p>
-            </div>
-            
-              <hr>
+<div class="col-xs-12 col-md-10">
 
-                            <div id="TOC">
-                <ul>
-                <li><a href="#how-to..."><span class="toc-section-number">1</span> How to...</a></li>
-                <li><a href="#references"><span class="toc-section-number">2</span> References</a></li>
-                </ul>
-              </div>
-              <hr/>
-              
-              <p>之前pcDuino刚拿到手的时候装过，经历了很多的曲折，昨天重新装了Kernal和ubuntu的系统更新，真tmd顺，这还不是最爽的，最爽的是，装Java运行环境也tmd很顺，人品真好，哈哈</p>
-              <h1 id="how-to..."><span class="header-section-number">1</span> How to...</h1>
-              <p>新的ubuntu更新之后默认安装了OpenJDK，而且是6，不爽，所以，决定重新安装Oracle的， 因为是卡片电脑，所以需要装<a href="http://www.oracle.com/technetwork/java/embedded/index.html">Java Embedded</a>版本的jre，遂下载ejre-7u21-fcs-b11-linux-arm-vfp-server_headless-04_apr_2013.gz， 随便找个目录解压：</p>
-              <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">tar</span> xvf ejre-7u21-fcs-b11-linux-arm-vfp-server_headless-04_apr_2013.gz</code></pre></div>
-              <blockquote>
-              <p>$ sudo apt-get install -y libc6-armel libsfgcc1</p>
-              这一步不知道是否必须，反正我是运行了
-              </blockquote>
-              <p>之后，<strong>重启</strong>！！！</p>
-              <p>成果展示:</p>
-              <pre>
-              ubuntu@ubuntu:~$ ./java/ejre1.7.0_21/bin/java -version
-              java version "1.7.0_21"
-              Java(TM) SE Embedded Runtime Environment (build 1.7.0_21-b11, headless)
-              Java HotSpot(TM) Embedded Server VM (build 23.21-b01, mixed mode)
-              </pre>
-              <p>当然了，也可以将安装路径添加到bash的配置文件里：</p>
-              <pre>
-              ubuntu@ubuntu:~$ cat .bash_profile
-              export JAVA_HOME=~/java/ejre1.7.0_21
-              export PATH=$JAVA_HOME/bin:$PATH
-              </pre>
-              <p>至此，基本搞定， 后面可以开始玩动态DNS绑定，并部署个Play应用玩玩了...</p>
-              <blockquote>
-              BTW. 如果闲麻烦，可以直接运行apt-get install arduino最简单，只可惜安装的是openjdk6, :)
-              </blockquote>
-              <h1 id="references"><span class="header-section-number">2</span> References</h1>
-              <ol style="list-style-type: decimal">
-              <li><a href="https://github.com/cjdaly/napkin/wiki/Server-on-pcduino" class="uri">https://github.com/cjdaly/napkin/wiki/Server-on-pcduino</a></li>
-              <li><a href="http://bradsmc.blogspot.com/2013/04/installing-java-runtime-environment-on.html" class="uri">http://bradsmc.blogspot.com/2013/04/installing-java-runtime-environment-on.html</a></li>
-              </ol>
-              
-      </div>
+
+<div class="row">
+<div id="header">
+<p class="lead">
+<h1 class="title">pcDuino上安装Java运行环境</h1>
+<small>
+<h3 class="author">王福强</h3>
+</small>
+</p>
+</div>
+
+<hr>
+
+<div id="TOC">
+<ul>
+<li><a href="#how-to..."><span class="toc-section-number">1</span> How to...</a></li>
+<li><a href="#references"><span class="toc-section-number">2</span> References</a></li>
+</ul>
+</div>
+<hr/>
+
+<p>之前pcDuino刚拿到手的时候装过，经历了很多的曲折，昨天重新装了Kernal和ubuntu的系统更新，真tmd顺，这还不是最爽的，最爽的是，装Java运行环境也tmd很顺，人品真好，哈哈</p>
+<h1 id="how-to..."><span class="header-section-number">1</span> How to...</h1>
+<p>新的ubuntu更新之后默认安装了OpenJDK，而且是6，不爽，所以，决定重新安装Oracle的， 因为是卡片电脑，所以需要装<a href="http://www.oracle.com/technetwork/java/embedded/index.html">Java Embedded</a>版本的jre，遂下载ejre-7u21-fcs-b11-linux-arm-vfp-server_headless-04_apr_2013.gz， 随便找个目录解压：</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">tar</span> xvf ejre-7u21-fcs-b11-linux-arm-vfp-server_headless-04_apr_2013.gz</code></pre></div>
+<blockquote>
+<p>$ sudo apt-get install -y libc6-armel libsfgcc1</p>
+这一步不知道是否必须，反正我是运行了
+</blockquote>
+<p>之后，<strong>重启</strong>！！！</p>
+<p>成果展示:</p>
+<pre>
+ubuntu@ubuntu:~$ ./java/ejre1.7.0_21/bin/java -version
+java version "1.7.0_21"
+Java(TM) SE Embedded Runtime Environment (build 1.7.0_21-b11, headless)
+Java HotSpot(TM) Embedded Server VM (build 23.21-b01, mixed mode)
+</pre>
+<p>当然了，也可以将安装路径添加到bash的配置文件里：</p>
+<pre>
+ubuntu@ubuntu:~$ cat .bash_profile
+export JAVA_HOME=~/java/ejre1.7.0_21
+export PATH=$JAVA_HOME/bin:$PATH
+</pre>
+<p>至此，基本搞定， 后面可以开始玩动态DNS绑定，并部署个Play应用玩玩了...</p>
+<blockquote>
+BTW. 如果闲麻烦，可以直接运行apt-get install arduino最简单，只可惜安装的是openjdk6, :)
+</blockquote>
+<h1 id="references"><span class="header-section-number">2</span> References</h1>
+<ol style="list-style-type: decimal">
+<li><a href="https://github.com/cjdaly/napkin/wiki/Server-on-pcduino" class="uri">https://github.com/cjdaly/napkin/wiki/Server-on-pcduino</a></li>
+<li><a href="http://bradsmc.blogspot.com/2013/04/installing-java-runtime-environment-on.html" class="uri">http://bradsmc.blogspot.com/2013/04/installing-java-runtime-environment-on.html</a></li>
+</ol>
+
+</div>
+
       <div id="qrcode"></div>
       <div class="row">
         <div class="col-md-12 footer">

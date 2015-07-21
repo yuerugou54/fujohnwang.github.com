@@ -7,12 +7,19 @@
   <meta http-equiv="X-UA-Compatible" content="chrome=1">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="author" content="扶墙老师@afoo.me">
-
-  <link rel="icon" href="/favicon.ico">
+    <link rel="icon" href="/favicon.ico">
 
   <title>Valang Validator under the hood - 一个架构士的思考与沉淀之地</title>
 
-      <style type="text/css">
+  
+
+  <link href='/font/News_Cycle/stylesheet.css' rel='stylesheet' type='text/css'>
+  <link href="/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/css/bootstrap-theme.min.css" rel="stylesheet">
+  <link href="/css/afoo.me.css" rel="stylesheet">
+
+  <style type="text/css">code{white-space: pre;}</style>
+    <style type="text/css">
     div.sourceCode { overflow-x: auto; }
     table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
       margin: 0; padding: 0; vertical-align: baseline; border: none; }
@@ -33,12 +40,6 @@
     code > span.er { color: #ff0000; font-weight: bold; }
   </style>
         
-  <link href='/font/News_Cycle/stylesheet.css' rel='stylesheet' type='text/css'>
-
-  <link href="/css/bootstrap.min.css" rel="stylesheet">
-  <link href="/css/bootstrap-theme.min.css" rel="stylesheet">
-  <link href="/css/afoo.me.css" rel="stylesheet">
-
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>
@@ -58,87 +59,89 @@
           </a>
         </div>
     </div>
-    <div class="col-xs-12 col-md-10">
 
-          
-          <div class="row">
-                        <div id="header">
-              <p class="lead">
-              <h1 class="title">Valang Validator under the hood</h1>
-                                          </p>
-            </div>
-            
-              <hr>
+<div class="col-xs-12 col-md-10">
 
-                            <div id="TOC">
-                <ul>
-                <li><a href="#valang-validator-under-the-hood"><span class="toc-section-number">1</span> Valang Validator under the hood</a><ul>
-                <li><a href="#how-to-convert-valang-syntax-expression-into-validationrule-object-model"><span class="toc-section-number">1.1</span> How to Convert Valang syntax Expression into ValidationRule Object model?</a></li>
-                <li><a href="#custom-valangvalidator-or-validationrule"><span class="toc-section-number">1.2</span> Custom ValangValidator or ValidationRule</a></li>
-                </ul></li>
-                </ul>
-              </div>
-              <hr/>
-              
-              <h1 id="valang-validator-under-the-hood"><span class="header-section-number">1</span> Valang Validator under the hood</h1>
-              <h2 id="how-to-convert-valang-syntax-expression-into-validationrule-object-model"><span class="header-section-number">1.1</span> How to Convert Valang syntax Expression into ValidationRule Object model?</h2>
-              <p>org.springmodules.validation.valang.parser.ValangParser is the key class that will help on this task.</p>
-              <p>If you are able to construct a valid valang-syntax expression from some other sources, you can use ValangParser to parse these kinds of expressions into Valang's Object model. for example:</p>
-              <div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java">Errors errors = ...;
-              Object target = ...;
-                              
-              ValangParser parser = <span class="kw">new</span> <span class="fu">ValangParser</span>(<span class="st">&quot;{ &lt;key&gt; : &lt;expression&gt; : &lt;error_message&gt; [ : &lt;error_key&gt; [ : &lt;error_args&gt; ] ]}&quot;</span>);
-              <span class="kw">try</span> {
-                  Collection&lt;ValidationRule&gt; rules = parser.<span class="fu">parseValidation</span>();
-                  <span class="kw">if</span>(CollectionUtils.<span class="fu">isNotEmpty</span>(rules))
-                  {
-                      Iterator&lt;ValidationRule&gt; iter = rules.<span class="fu">iterator</span>();
-                      <span class="kw">while</span>(iter.<span class="fu">hasNext</span>()){
-                          ValidationRule rule = iter.<span class="fu">next</span>();
-                          rule.<span class="fu">validate</span>(target, errors);
-                      }
-                  }
-              } <span class="kw">catch</span> (ParseException e) {
-                  <span class="co">// handle exception here.</span>
-              }</code></pre></div>
-              <p>with sample code above, I think you can figure out how the ValangValidator class do its work.</p>
-              <p>Since you can “setValang(String valang) ”, you can “setCustomFunctions(..) ”, in the “validate(Object target, Errors errors) ” method, the ValangValidator only need use ValangParser to parse the expression set via “setValang(String) ” method. After a collection of ValidationRule is available, the left things is almost the same like code above.</p>
-              <p>Of course, since ValangValidator use ValangParser to do the parsing things, you can use ValangValidator or its super class, that's, org.springmodules.validation.valang.parser.SimpleValangBased , to do the same thing. I mean, to parse the valang expression.</p>
-              <h2 id="custom-valangvalidator-or-validationrule"><span class="header-section-number">1.2</span> Custom ValangValidator or ValidationRule</h2>
-              <p>when I want to add GlobalError support for ROMA framework, I found that as if Valang doesn't support such GlobalError expression things, so I have to find another way.</p>
-              <p>In a valang-syntax expression, the first token is the <key>, it's mandatory. But for a global error, it's meaningless. so even we provide a dummy <key> value, and make the expression-parsing pass, when we invoke the “#validate(target, errors) ” method of ValidationRule, an exception will still be raised, because, the ValidationRule can't find a property on the target object. In order to fix this, we have to break down the “#validate(target, errors) ” method's logic. Here is what I will do.</p>
-              <p>If we inspect the type of the ValidationRule returned from “parser.parseValidation() ”, we will find that it's type is org.springmodules.validation.valang.predicates.BasicValidationRule . This is the default value object that hold every part of the parsed Valang expression. Since we can get everything with it, we then can filter the returned collection of ValidationRule. The code seems like:</p>
-              <div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java">ValangValidator validator = <span class="kw">new</span> <span class="fu">ValangValidator</span>();
-                      validator.<span class="fu">setValang</span>(<span class="st">&quot;&quot;</span>);
-                      <span class="fu">@SuppressWarnings</span>(<span class="st">&quot;unchecked&quot;</span>)
-                      Collection&lt;ValidationRule&gt; rules = validator.<span class="fu">getRules</span>();
-                      <span class="fu">@SuppressWarnings</span>(<span class="st">&quot;unchecked&quot;</span>)
-                      Collection&lt;ValidationRule&gt; globalErrorRules = CollectionUtils.<span class="fu">transformedCollection</span>(rules, <span class="kw">new</span> Transformer() {
-                          <span class="kw">public</span> Object <span class="fu">transform</span>(Object arg) {
-                              <span class="dt">final</span> BasicValidationRule rule = (BasicValidationRule)arg;
-                              <span class="kw">return</span> <span class="kw">new</span> <span class="fu">ValidationRule</span>() {
-                                  <span class="kw">public</span> <span class="dt">void</span> <span class="fu">validate</span>(Object target, org.<span class="fu">springframework</span>.<span class="fu">validation</span>.<span class="fu">Errors</span> errors) {
-                                      String errorKey = rule.<span class="fu">getErrorKey</span>();
-                                      String message = rule.<span class="fu">getErrorMessage</span>();
-                                      <span class="fu">@SuppressWarnings</span>(<span class="st">&quot;unchecked&quot;</span>)
-                                      Collection args = rule.<span class="fu">getErrorArgs</span>();
-                                      <span class="kw">if</span>(CollectionUtils.<span class="fu">isEmpty</span>(args))
-                                      {
-                                          errors.<span class="fu">reject</span>(errorKey, message);
-                                      }
-                                      <span class="kw">else</span>
-                                      {
-                                          <span class="fu">@SuppressWarnings</span>(<span class="st">&quot;unchecked&quot;</span>)
-                                          Object[] argArray = args.<span class="fu">toArray</span>(<span class="kw">new</span> Object[args.<span class="fu">size</span>()]);
-                                          errors.<span class="fu">reject</span>(errorKey, argArray, message);
-                                      }
-                                  }
-                              };
-                          }
-                      });</code></pre></div>
-              <p>since FiledError is added with “#rejectValue(..) ”, we use “#reject(..) ” to fill GlobalError to Errors . After these rules are applied to the target object, the corresponding global errors will be available. You can pull them in you view via spring's RequestContext or other way you resort to.</p>
-              
-      </div>
+
+<div class="row">
+<div id="header">
+<p class="lead">
+<h1 class="title">Valang Validator under the hood</h1>
+</p>
+</div>
+
+<hr>
+
+<div id="TOC">
+<ul>
+<li><a href="#valang-validator-under-the-hood"><span class="toc-section-number">1</span> Valang Validator under the hood</a><ul>
+<li><a href="#how-to-convert-valang-syntax-expression-into-validationrule-object-model"><span class="toc-section-number">1.1</span> How to Convert Valang syntax Expression into ValidationRule Object model?</a></li>
+<li><a href="#custom-valangvalidator-or-validationrule"><span class="toc-section-number">1.2</span> Custom ValangValidator or ValidationRule</a></li>
+</ul></li>
+</ul>
+</div>
+<hr/>
+
+<h1 id="valang-validator-under-the-hood"><span class="header-section-number">1</span> Valang Validator under the hood</h1>
+<h2 id="how-to-convert-valang-syntax-expression-into-validationrule-object-model"><span class="header-section-number">1.1</span> How to Convert Valang syntax Expression into ValidationRule Object model?</h2>
+<p>org.springmodules.validation.valang.parser.ValangParser is the key class that will help on this task.</p>
+<p>If you are able to construct a valid valang-syntax expression from some other sources, you can use ValangParser to parse these kinds of expressions into Valang's Object model. for example:</p>
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java">Errors errors = ...;
+Object target = ...;
+                
+ValangParser parser = <span class="kw">new</span> <span class="fu">ValangParser</span>(<span class="st">&quot;{ &lt;key&gt; : &lt;expression&gt; : &lt;error_message&gt; [ : &lt;error_key&gt; [ : &lt;error_args&gt; ] ]}&quot;</span>);
+<span class="kw">try</span> {
+    Collection&lt;ValidationRule&gt; rules = parser.<span class="fu">parseValidation</span>();
+    <span class="kw">if</span>(CollectionUtils.<span class="fu">isNotEmpty</span>(rules))
+    {
+        Iterator&lt;ValidationRule&gt; iter = rules.<span class="fu">iterator</span>();
+        <span class="kw">while</span>(iter.<span class="fu">hasNext</span>()){
+            ValidationRule rule = iter.<span class="fu">next</span>();
+            rule.<span class="fu">validate</span>(target, errors);
+        }
+    }
+} <span class="kw">catch</span> (ParseException e) {
+    <span class="co">// handle exception here.</span>
+}</code></pre></div>
+<p>with sample code above, I think you can figure out how the ValangValidator class do its work.</p>
+<p>Since you can “setValang(String valang) ”, you can “setCustomFunctions(..) ”, in the “validate(Object target, Errors errors) ” method, the ValangValidator only need use ValangParser to parse the expression set via “setValang(String) ” method. After a collection of ValidationRule is available, the left things is almost the same like code above.</p>
+<p>Of course, since ValangValidator use ValangParser to do the parsing things, you can use ValangValidator or its super class, that's, org.springmodules.validation.valang.parser.SimpleValangBased , to do the same thing. I mean, to parse the valang expression.</p>
+<h2 id="custom-valangvalidator-or-validationrule"><span class="header-section-number">1.2</span> Custom ValangValidator or ValidationRule</h2>
+<p>when I want to add GlobalError support for ROMA framework, I found that as if Valang doesn't support such GlobalError expression things, so I have to find another way.</p>
+<p>In a valang-syntax expression, the first token is the <key>, it's mandatory. But for a global error, it's meaningless. so even we provide a dummy <key> value, and make the expression-parsing pass, when we invoke the “#validate(target, errors) ” method of ValidationRule, an exception will still be raised, because, the ValidationRule can't find a property on the target object. In order to fix this, we have to break down the “#validate(target, errors) ” method's logic. Here is what I will do.</p>
+<p>If we inspect the type of the ValidationRule returned from “parser.parseValidation() ”, we will find that it's type is org.springmodules.validation.valang.predicates.BasicValidationRule . This is the default value object that hold every part of the parsed Valang expression. Since we can get everything with it, we then can filter the returned collection of ValidationRule. The code seems like:</p>
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java">ValangValidator validator = <span class="kw">new</span> <span class="fu">ValangValidator</span>();
+        validator.<span class="fu">setValang</span>(<span class="st">&quot;&quot;</span>);
+        <span class="fu">@SuppressWarnings</span>(<span class="st">&quot;unchecked&quot;</span>)
+        Collection&lt;ValidationRule&gt; rules = validator.<span class="fu">getRules</span>();
+        <span class="fu">@SuppressWarnings</span>(<span class="st">&quot;unchecked&quot;</span>)
+        Collection&lt;ValidationRule&gt; globalErrorRules = CollectionUtils.<span class="fu">transformedCollection</span>(rules, <span class="kw">new</span> Transformer() {
+            <span class="kw">public</span> Object <span class="fu">transform</span>(Object arg) {
+                <span class="dt">final</span> BasicValidationRule rule = (BasicValidationRule)arg;
+                <span class="kw">return</span> <span class="kw">new</span> <span class="fu">ValidationRule</span>() {
+                    <span class="kw">public</span> <span class="dt">void</span> <span class="fu">validate</span>(Object target, org.<span class="fu">springframework</span>.<span class="fu">validation</span>.<span class="fu">Errors</span> errors) {
+                        String errorKey = rule.<span class="fu">getErrorKey</span>();
+                        String message = rule.<span class="fu">getErrorMessage</span>();
+                        <span class="fu">@SuppressWarnings</span>(<span class="st">&quot;unchecked&quot;</span>)
+                        Collection args = rule.<span class="fu">getErrorArgs</span>();
+                        <span class="kw">if</span>(CollectionUtils.<span class="fu">isEmpty</span>(args))
+                        {
+                            errors.<span class="fu">reject</span>(errorKey, message);
+                        }
+                        <span class="kw">else</span>
+                        {
+                            <span class="fu">@SuppressWarnings</span>(<span class="st">&quot;unchecked&quot;</span>)
+                            Object[] argArray = args.<span class="fu">toArray</span>(<span class="kw">new</span> Object[args.<span class="fu">size</span>()]);
+                            errors.<span class="fu">reject</span>(errorKey, argArray, message);
+                        }
+                    }
+                };
+            }
+        });</code></pre></div>
+<p>since FiledError is added with “#rejectValue(..) ”, we use “#reject(..) ” to fill GlobalError to Errors . After these rules are applied to the target object, the corresponding global errors will be available. You can pull them in you view via spring's RequestContext or other way you resort to.</p>
+
+</div>
+
       <div id="qrcode"></div>
       <div class="row">
         <div class="col-md-12 footer">

@@ -7,12 +7,19 @@
   <meta http-equiv="X-UA-Compatible" content="chrome=1">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="author" content="扶墙老师@afoo.me">
-
-  <link rel="icon" href="/favicon.ico">
+    <link rel="icon" href="/favicon.ico">
 
   <title>使用nc或者结合tar进行文件传输 - 一个架构士的思考与沉淀之地</title>
 
-      <style type="text/css">
+  
+
+  <link href='/font/News_Cycle/stylesheet.css' rel='stylesheet' type='text/css'>
+  <link href="/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/css/bootstrap-theme.min.css" rel="stylesheet">
+  <link href="/css/afoo.me.css" rel="stylesheet">
+
+  <style type="text/css">code{white-space: pre;}</style>
+    <style type="text/css">
     div.sourceCode { overflow-x: auto; }
     table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
       margin: 0; padding: 0; vertical-align: baseline; border: none; }
@@ -33,12 +40,6 @@
     code > span.er { color: #ff0000; font-weight: bold; }
   </style>
         
-  <link href='/font/News_Cycle/stylesheet.css' rel='stylesheet' type='text/css'>
-
-  <link href="/css/bootstrap.min.css" rel="stylesheet">
-  <link href="/css/bootstrap-theme.min.css" rel="stylesheet">
-  <link href="/css/afoo.me.css" rel="stylesheet">
-
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>
@@ -58,56 +59,58 @@
           </a>
         </div>
     </div>
-    <div class="col-xs-12 col-md-10">
 
-          
-          <div class="row">
-                        <div id="header">
-              <p class="lead">
-              <h1 class="title">使用nc或者结合tar进行文件传输</h1>
-                            <small>
-                  <h3 class="author">王福强</h3>
-              </small>
-                                          </p>
-            </div>
-            
-              <hr>
+<div class="col-xs-12 col-md-10">
 
-                            <div id="TOC">
-                <ul>
-                <li><a href="#单纯使用nc进行文件传输"><span class="toc-section-number">1</span> 单纯使用nc进行文件传输</a></li>
-                <li><a href="#结合tar使用"><span class="toc-section-number">2</span> 结合tar使用</a></li>
-                <li><a href="#参考资料"><span class="toc-section-number">3</span> 参考资料</a></li>
-                </ul>
-              </div>
-              <hr/>
-              
-              <p>相对于scp来说， 使用nc进行文件传输牵扯步骤要繁琐一些，但可以换取可观的传输速度，对于大文件或者大量文件的传输来说，尤其可取！</p>
-              <h1 id="单纯使用nc进行文件传输"><span class="header-section-number">1</span> 单纯使用nc进行文件传输</h1>
-              <ol style="list-style-type: decimal">
-              <li>在目标机器上执行监听并将接受到的数据重定向到文件<code>nc -l 6969 &gt; targetfile</code></li>
-              <li>在文件源端机器上使用nc连接目标机器并执行文件传输: <code>nc host 6969 &lt; sourcefile</code></li>
-              </ol>
-              <h1 id="结合tar使用"><span class="header-section-number">2</span> 结合tar使用</h1>
-              <p>依然首先在目标机器上执行:</p>
-              <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">nc</span> -l -p 6969 <span class="kw">|</span> <span class="kw">tar</span> xf – -C /tmp/</code></pre></div>
-              <p>之后，在源端机器上执行：</p>
-              <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">tar</span> cf – dir <span class="kw">|</span> <span class="kw">nc</span> -w1 hostB 6969</code></pre></div>
-              <blockquote>
-              If the name of the tarfile is '-', tar writes to the standard output or reads from the standard input, whichever is appropriate.
-              </blockquote>
-              <blockquote>
-              <p>-C directory file</p>
-              Performs a chdir (see cd(1)) operation on directory and performs the c (create) or r (replace) operation on file . Use short relative path names for file . If file is `.', archive all files in directory. This option enables archiving files from multiple directories not related by a close common parent.
-              </blockquote>
-              <h1 id="参考资料"><span class="header-section-number">3</span> 参考资料</h1>
-              <ol style="list-style-type: decimal">
-              <li><a href="http://www.spikelab.org/transfer-largedata-scp-tarssh-tarnc-compared/">Transferring large amount of data over the network: scp, tar | ssh, tar | nc compared</a></li>
-              <li><a href="http://oreilly.com/pub/h/1058">netcat file transfers</a></li>
-              <li>man NC(1)</li>
-              </ol>
-              
-      </div>
+
+<div class="row">
+<div id="header">
+<p class="lead">
+<h1 class="title">使用nc或者结合tar进行文件传输</h1>
+<small>
+<h3 class="author">王福强</h3>
+</small>
+</p>
+</div>
+
+<hr>
+
+<div id="TOC">
+<ul>
+<li><a href="#单纯使用nc进行文件传输"><span class="toc-section-number">1</span> 单纯使用nc进行文件传输</a></li>
+<li><a href="#结合tar使用"><span class="toc-section-number">2</span> 结合tar使用</a></li>
+<li><a href="#参考资料"><span class="toc-section-number">3</span> 参考资料</a></li>
+</ul>
+</div>
+<hr/>
+
+<p>相对于scp来说， 使用nc进行文件传输牵扯步骤要繁琐一些，但可以换取可观的传输速度，对于大文件或者大量文件的传输来说，尤其可取！</p>
+<h1 id="单纯使用nc进行文件传输"><span class="header-section-number">1</span> 单纯使用nc进行文件传输</h1>
+<ol style="list-style-type: decimal">
+<li>在目标机器上执行监听并将接受到的数据重定向到文件<code>nc -l 6969 &gt; targetfile</code></li>
+<li>在文件源端机器上使用nc连接目标机器并执行文件传输: <code>nc host 6969 &lt; sourcefile</code></li>
+</ol>
+<h1 id="结合tar使用"><span class="header-section-number">2</span> 结合tar使用</h1>
+<p>依然首先在目标机器上执行:</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">nc</span> -l -p 6969 <span class="kw">|</span> <span class="kw">tar</span> xf – -C /tmp/</code></pre></div>
+<p>之后，在源端机器上执行：</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">tar</span> cf – dir <span class="kw">|</span> <span class="kw">nc</span> -w1 hostB 6969</code></pre></div>
+<blockquote>
+If the name of the tarfile is '-', tar writes to the standard output or reads from the standard input, whichever is appropriate.
+</blockquote>
+<blockquote>
+<p>-C directory file</p>
+Performs a chdir (see cd(1)) operation on directory and performs the c (create) or r (replace) operation on file . Use short relative path names for file . If file is `.', archive all files in directory. This option enables archiving files from multiple directories not related by a close common parent.
+</blockquote>
+<h1 id="参考资料"><span class="header-section-number">3</span> 参考资料</h1>
+<ol style="list-style-type: decimal">
+<li><a href="http://www.spikelab.org/transfer-largedata-scp-tarssh-tarnc-compared/">Transferring large amount of data over the network: scp, tar | ssh, tar | nc compared</a></li>
+<li><a href="http://oreilly.com/pub/h/1058">netcat file transfers</a></li>
+<li>man NC(1)</li>
+</ol>
+
+</div>
+
       <div id="qrcode"></div>
       <div class="row">
         <div class="col-md-12 footer">

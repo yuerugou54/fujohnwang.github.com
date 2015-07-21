@@ -7,13 +7,20 @@
   <meta http-equiv="X-UA-Compatible" content="chrome=1">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="author" content="扶墙老师@afoo.me">
-
-  <link rel="icon" href="/favicon.ico">
+    <meta name="date" content="2011-10-05" />
+    <link rel="icon" href="/favicon.ico">
 
   <title>How to write a SBT 0.10+ plugin? - 一个架构士的思考与沉淀之地</title>
 
-    <meta name="date" content="2011-10-05" />
-      <style type="text/css">
+  
+
+  <link href='/font/News_Cycle/stylesheet.css' rel='stylesheet' type='text/css'>
+  <link href="/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/css/bootstrap-theme.min.css" rel="stylesheet">
+  <link href="/css/afoo.me.css" rel="stylesheet">
+
+  <style type="text/css">code{white-space: pre;}</style>
+    <style type="text/css">
     div.sourceCode { overflow-x: auto; }
     table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
       margin: 0; padding: 0; vertical-align: baseline; border: none; }
@@ -34,12 +41,6 @@
     code > span.er { color: #ff0000; font-weight: bold; }
   </style>
         
-  <link href='/font/News_Cycle/stylesheet.css' rel='stylesheet' type='text/css'>
-
-  <link href="/css/bootstrap.min.css" rel="stylesheet">
-  <link href="/css/bootstrap-theme.min.css" rel="stylesheet">
-  <link href="/css/afoo.me.css" rel="stylesheet">
-
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>
@@ -59,112 +60,114 @@
           </a>
         </div>
     </div>
-    <div class="col-xs-12 col-md-10">
 
-          
-          <div class="row">
-                        <div id="header">
-              <p class="lead">
-              <h1 class="title">How to write a SBT 0.10+ plugin?</h1>
-                            <small>
-                  <h3 class="author">fujohnwang</h3>
-              </small>
-                                        <h4 class="date">2011-10-05</h4>
-                              </p>
-            </div>
-            
-              <hr>
+<div class="col-xs-12 col-md-10">
 
-                            <div id="TOC">
-                <ul>
-                <li><a href="#the-build-file-of-the-plugin-sample-build.sbt-under-project-root"><span class="toc-section-number">1</span> the build file of the plugin sample (build.sbt under project root)</a></li>
-                <li><a href="#the-definition-file-of-the-plugin-samplesrcmainscala.scala"><span class="toc-section-number">2</span> the definition file of the plugin sample(src/main/scala/*.scala)</a></li>
-                <li><a href="#last-mile---how-to-use-the-plugin-u-have-just-finished"><span class="toc-section-number">3</span> Last Mile - How to use the plugin u have just finished?</a></li>
-                <li><a href="#what-u-can-learn-from-the-experience-of-writing-a-plugin"><span class="toc-section-number">4</span> What U can learn from the experience of writing a plugin?</a></li>
-                <li><a href="#references"><span class="toc-section-number">5</span> References:</a></li>
-                </ul>
-              </div>
-              <hr/>
-              
-              <p><strong>author: fujohnwang</strong></p>
-              <p>To draft a SBT 0.10+ plugin, TWO parts should be taken into consideration:</p>
-              <ol style="list-style-type: decimal">
-              <li><p>the build file of the plugin;</p></li>
-              <li><p>the source code file or the definition files of the plugin;</p></li>
-              </ol>
-              <h1 id="the-build-file-of-the-plugin-sample-build.sbt-under-project-root"><span class="header-section-number">1</span> the build file of the plugin sample (build.sbt under project root)</h1>
-              <pre>
-              sbtPlugin := true
-              
-              name := "aspectj_sbt_plugin"
-              
-              version := "0.0.1"
-              
-              organization := "name.fujohnwang"
-              
-              publishMavenStyle := true
-              
-              scalacOptions := Seq("-deprecation", "-unchecked")
-              
-              resolvers += "Typesafe Repo" at "http://repo.typesafe.com/typesafe/releases/"
-              
-              libraryDependencies ++= Seq("org.aspectj" % "aspectjtools" % "1.6.11.RELEASE", "org.aspectj" % "aspectjrt" % "1.6.11.RELEASE","org.aspectj" % "aspectjweaver" % "1.6.11.RELEASE")
-              </pre>
-              <h1 id="the-definition-file-of-the-plugin-samplesrcmainscala.scala"><span class="header-section-number">2</span> the definition file of the plugin sample(src/main/scala/*.scala)</h1>
-              <div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala">
-              <span class="kw">import</span> sbt.<span class="fu">_</span>
-              <span class="kw">import</span> Keys.<span class="fu">_</span>
-              
-              <span class="kw">object</span> MyPlugin <span class="kw">extends</span> Plugin {
-              
-               <span class="kw">val</span> MyConfiguration = <span class="fu">config</span>(<span class="st">&quot;myconf&quot;</span>)
-              
-               <span class="kw">val</span> mySetting = SettingKey[String](<span class="st">&quot;my-setting&quot;</span>)
-              
-               <span class="kw">val</span> myTask = TaskKey[Unit](<span class="st">&quot;my-task&quot;</span>, <span class="st">&quot;task description&quot;</span>)
-              
-               <span class="kw">override</span> <span class="kw">lazy</span> <span class="kw">val</span> settings = <span class="fu">inConfig</span>(MyConfiguration)(Seq(
-              
-               mySetting := <span class="st">&quot;initial value for my-setting&quot;</span>,
-              
-               myTask &lt;&lt;= (streams, mySetting, …) map{
-              
-               (s, ms, …)=&gt; 
-              
-               <span class="co">// do what u want to do with the arguments</span>
-              
-               },
-              
-               <span class="co">// other settings </span>
-              
-               ))
-              
-              }</code></pre></div>
-              <p>Note: U refer to each setting via their key and refer to their values via map from key.</p>
-              <h1 id="last-mile---how-to-use-the-plugin-u-have-just-finished"><span class="header-section-number">3</span> Last Mile - How to use the plugin u have just finished?</h1>
-              <p>in your project, 2 places should be taken care about:</p>
-              1- the &quot;project/plugins.sbt&quot;
-              <pre>
-               resolvers += yourResolver   // help sbt to find out where your plugin is
-              
-               addSbtPlugin("name.fujohnwang" % "aspectj_sbt_plugin" % "0.0.1")   // declare to use your plugin
-              </pre>
-              <p>2- build.sbt under the root path of your project(light configuration) or project/Build.scala(full configuration)</p>
-              <p>usually, you can customize the settings of the plugin or add necessary dependencies in your build file(s), this is variable as per your usage scenarios. If default values are ok for you, nothing about plugin is needed to add to your build file.</p>
-              <h1 id="what-u-can-learn-from-the-experience-of-writing-a-plugin"><span class="header-section-number">4</span> What U can learn from the experience of writing a plugin?</h1>
-              <p>1- declare custom Configuration to enhance the modularity;</p>
-              <p>2- declare necessary SettingKey(s) to make your plugin flexible(which allows your users to customize the plugin)</p>
-              <p>3- each Keys(Setting or Task) can be initialized or implemented by &lt;&lt;= with other Key(s)</p>
-              <h1 id="references"><span class="header-section-number">5</span> References:</h1>
-              <ol style="list-style-type: decimal">
-              <li><a href="https://github.com/harrah/xsbt/wiki/Plugins-Best-Practices" class="uri">https://github.com/harrah/xsbt/wiki/Plugins-Best-Practices</a></li>
-              <li><a href="https://github.com/harrah/xsbt/wiki/sbt-0.10-plugins-list" class="uri">https://github.com/harrah/xsbt/wiki/sbt-0.10-plugins-list</a></li>
-              <li><a href="http://eed3si9n.com/sbt-010-guide" class="uri">http://eed3si9n.com/sbt-010-guide</a></li>
-              <li>The AspectJ compiler API</li>
-              <li>typesafehub-sbt-aspectj plugin</li>
-              </ol>
-              
-      </div>
+
+<div class="row">
+<div id="header">
+<p class="lead">
+<h1 class="title">How to write a SBT 0.10+ plugin?</h1>
+<small>
+<h3 class="author">fujohnwang</h3>
+</small>
+<h4 class="date">2011-10-05</h4>
+</p>
+</div>
+
+<hr>
+
+<div id="TOC">
+<ul>
+<li><a href="#the-build-file-of-the-plugin-sample-build.sbt-under-project-root"><span class="toc-section-number">1</span> the build file of the plugin sample (build.sbt under project root)</a></li>
+<li><a href="#the-definition-file-of-the-plugin-samplesrcmainscala.scala"><span class="toc-section-number">2</span> the definition file of the plugin sample(src/main/scala/*.scala)</a></li>
+<li><a href="#last-mile---how-to-use-the-plugin-u-have-just-finished"><span class="toc-section-number">3</span> Last Mile - How to use the plugin u have just finished?</a></li>
+<li><a href="#what-u-can-learn-from-the-experience-of-writing-a-plugin"><span class="toc-section-number">4</span> What U can learn from the experience of writing a plugin?</a></li>
+<li><a href="#references"><span class="toc-section-number">5</span> References:</a></li>
+</ul>
+</div>
+<hr/>
+
+<p><strong>author: fujohnwang</strong></p>
+<p>To draft a SBT 0.10+ plugin, TWO parts should be taken into consideration:</p>
+<ol style="list-style-type: decimal">
+<li><p>the build file of the plugin;</p></li>
+<li><p>the source code file or the definition files of the plugin;</p></li>
+</ol>
+<h1 id="the-build-file-of-the-plugin-sample-build.sbt-under-project-root"><span class="header-section-number">1</span> the build file of the plugin sample (build.sbt under project root)</h1>
+<pre>
+sbtPlugin := true
+
+name := "aspectj_sbt_plugin"
+
+version := "0.0.1"
+
+organization := "name.fujohnwang"
+
+publishMavenStyle := true
+
+scalacOptions := Seq("-deprecation", "-unchecked")
+
+resolvers += "Typesafe Repo" at "http://repo.typesafe.com/typesafe/releases/"
+
+libraryDependencies ++= Seq("org.aspectj" % "aspectjtools" % "1.6.11.RELEASE", "org.aspectj" % "aspectjrt" % "1.6.11.RELEASE","org.aspectj" % "aspectjweaver" % "1.6.11.RELEASE")
+</pre>
+<h1 id="the-definition-file-of-the-plugin-samplesrcmainscala.scala"><span class="header-section-number">2</span> the definition file of the plugin sample(src/main/scala/*.scala)</h1>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala">
+<span class="kw">import</span> sbt.<span class="fu">_</span>
+<span class="kw">import</span> Keys.<span class="fu">_</span>
+
+<span class="kw">object</span> MyPlugin <span class="kw">extends</span> Plugin {
+
+ <span class="kw">val</span> MyConfiguration = <span class="fu">config</span>(<span class="st">&quot;myconf&quot;</span>)
+
+ <span class="kw">val</span> mySetting = SettingKey[String](<span class="st">&quot;my-setting&quot;</span>)
+
+ <span class="kw">val</span> myTask = TaskKey[Unit](<span class="st">&quot;my-task&quot;</span>, <span class="st">&quot;task description&quot;</span>)
+
+ <span class="kw">override</span> <span class="kw">lazy</span> <span class="kw">val</span> settings = <span class="fu">inConfig</span>(MyConfiguration)(Seq(
+
+ mySetting := <span class="st">&quot;initial value for my-setting&quot;</span>,
+
+ myTask &lt;&lt;= (streams, mySetting, …) map{
+
+ (s, ms, …)=&gt; 
+
+ <span class="co">// do what u want to do with the arguments</span>
+
+ },
+
+ <span class="co">// other settings </span>
+
+ ))
+
+}</code></pre></div>
+<p>Note: U refer to each setting via their key and refer to their values via map from key.</p>
+<h1 id="last-mile---how-to-use-the-plugin-u-have-just-finished"><span class="header-section-number">3</span> Last Mile - How to use the plugin u have just finished?</h1>
+<p>in your project, 2 places should be taken care about:</p>
+1- the &quot;project/plugins.sbt&quot;
+<pre>
+ resolvers += yourResolver   // help sbt to find out where your plugin is
+
+ addSbtPlugin("name.fujohnwang" % "aspectj_sbt_plugin" % "0.0.1")   // declare to use your plugin
+</pre>
+<p>2- build.sbt under the root path of your project(light configuration) or project/Build.scala(full configuration)</p>
+<p>usually, you can customize the settings of the plugin or add necessary dependencies in your build file(s), this is variable as per your usage scenarios. If default values are ok for you, nothing about plugin is needed to add to your build file.</p>
+<h1 id="what-u-can-learn-from-the-experience-of-writing-a-plugin"><span class="header-section-number">4</span> What U can learn from the experience of writing a plugin?</h1>
+<p>1- declare custom Configuration to enhance the modularity;</p>
+<p>2- declare necessary SettingKey(s) to make your plugin flexible(which allows your users to customize the plugin)</p>
+<p>3- each Keys(Setting or Task) can be initialized or implemented by &lt;&lt;= with other Key(s)</p>
+<h1 id="references"><span class="header-section-number">5</span> References:</h1>
+<ol style="list-style-type: decimal">
+<li><a href="https://github.com/harrah/xsbt/wiki/Plugins-Best-Practices" class="uri">https://github.com/harrah/xsbt/wiki/Plugins-Best-Practices</a></li>
+<li><a href="https://github.com/harrah/xsbt/wiki/sbt-0.10-plugins-list" class="uri">https://github.com/harrah/xsbt/wiki/sbt-0.10-plugins-list</a></li>
+<li><a href="http://eed3si9n.com/sbt-010-guide" class="uri">http://eed3si9n.com/sbt-010-guide</a></li>
+<li>The AspectJ compiler API</li>
+<li>typesafehub-sbt-aspectj plugin</li>
+</ol>
+
+</div>
+
       <div id="qrcode"></div>
       <div class="row">
         <div class="col-md-12 footer">

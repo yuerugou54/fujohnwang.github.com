@@ -7,12 +7,19 @@
   <meta http-equiv="X-UA-Compatible" content="chrome=1">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="author" content="扶墙老师@afoo.me">
-
-  <link rel="icon" href="/favicon.ico">
+    <link rel="icon" href="/favicon.ico">
 
   <title>Netty Framework Tips And Gotchas - 一个架构士的思考与沉淀之地</title>
 
-      <style type="text/css">
+  
+
+  <link href='/font/News_Cycle/stylesheet.css' rel='stylesheet' type='text/css'>
+  <link href="/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/css/bootstrap-theme.min.css" rel="stylesheet">
+  <link href="/css/afoo.me.css" rel="stylesheet">
+
+  <style type="text/css">code{white-space: pre;}</style>
+    <style type="text/css">
     div.sourceCode { overflow-x: auto; }
     table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
       margin: 0; padding: 0; vertical-align: baseline; border: none; }
@@ -33,12 +40,6 @@
     code > span.er { color: #ff0000; font-weight: bold; }
   </style>
         
-  <link href='/font/News_Cycle/stylesheet.css' rel='stylesheet' type='text/css'>
-
-  <link href="/css/bootstrap.min.css" rel="stylesheet">
-  <link href="/css/bootstrap-theme.min.css" rel="stylesheet">
-  <link href="/css/afoo.me.css" rel="stylesheet">
-
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>
@@ -58,72 +59,74 @@
           </a>
         </div>
     </div>
-    <div class="col-xs-12 col-md-10">
 
-          
-          <div class="row">
-                        <div id="header">
-              <p class="lead">
-              <h1 class="title">Netty Framework Tips And Gotchas</h1>
-                                          </p>
-            </div>
-            
-              <hr>
+<div class="col-xs-12 col-md-10">
 
-                            <div id="TOC">
-                <ul>
-                <li><a href="#tips-of-netty"><span class="toc-section-number">1</span> Tips of Netty</a></li>
-                <li><a href="#gotchas-of-netty"><span class="toc-section-number">2</span> Gotchas of Netty</a></li>
-                </ul>
-              </div>
-              <hr/>
-              
-              <p><em>target on netty 3.x</em></p>
-              <h1 id="tips-of-netty"><span class="header-section-number">1</span> Tips of Netty</h1>
-              <ol style="list-style-type: decimal">
-              <li>annotation doesn't effect anything, pipeline factory do!</li>
-              <li>always provide your own PipelineFactory so that others can see your pipeline overview; add java doc(<span class="citation">@see</span>) in your ChannelHandler to point to the PipelineFactory definition class for further documentation;</li>
-              <li>prevent re-invent the wheels that has been available;(Since Netty has provided lot of available ChannelHandler implementations we can use.)</li>
-              <li>pay attention to event-driven attribute of Netty, simply put, the &quot;messageReceived&quot; method will be invoked multiple times, so take care of the state of your data carefully.</li>
-              <li>use LoggingHandler to debug.
-              <ul>
-              <li>LoggingHandler use JDK logging as default logging facility. If we want to change to use other ones, we need invoke InternalLoggingFactory.setDefaultFactory(..) before any netty classes are loaded. for example, if we want to use slf4j logging facility: <code>InternalLoggingFactory.setDefaultFactory(new Slf4JLoggingFactory();</code></li>
-              </ul></li>
-              <li>You have to invoke channel.close() in another thread other than the IOWorker thread.</li>
-              </ol>
-              <div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="kw">public</span> <span class="dt">void</span> <span class="fu">exceptionCaught</span>(<span class="dt">final</span> ChannelHandlerContext ctx, ExceptionEvent e) <span class="kw">throws</span> Exception {  
-                          <span class="kw">new</span> Thread(){  
-                              <span class="kw">public</span> <span class="dt">void</span> <span class="fu">run</span>(){  
-                                  ctx.<span class="fu">getChannel</span>().<span class="fu">close</span>().<span class="fu">addListener</span>(<span class="kw">new</span> <span class="fu">ChannelFutureListener</span>() {  
-                                      <span class="kw">public</span> <span class="dt">void</span> <span class="fu">operationComplete</span>(ChannelFuture future) <span class="kw">throws</span> Exception {  
-                                          future.<span class="fu">awaitUninterruptibly</span>();  
-                                          <span class="fu">getBoostrap</span>().<span class="fu">releaseExternalResources</span>();  
-                                          logger.<span class="fu">debug</span>(<span class="st">&quot;shutdown&quot;</span>);  
-                                      }  
-                                  });  
-                              }  
-                          }.<span class="fu">start</span>();  
-                  }  </code></pre></div>
-              <ol start="7" style="list-style-type: decimal">
-              <li>use IdleStateHandler and IdleStateAwareChannelHandler together to achieve some functionalities like connection status checking, long-push server mocks, etc.
-              <ul>
-              <li>NOTE: use a global Timer to share between all of you IdleStateHandlers instead of creating each for them. A Timer can suffice because of its implementation mechanism(TimerWheel).</li>
-              </ul></li>
-              <li>always set “connectTimeoutMillis” connection option to achieve timeout return. without this option, future.awaitUninterruptibly(timeoutValue) means less.</li>
-              <li>More...</li>
-              </ol>
-              <h1 id="gotchas-of-netty"><span class="header-section-number">2</span> Gotchas of Netty</h1>
-              <ol style="list-style-type: decimal">
-              <li>在使用ChannelBuffer的readBytes和getBytes的时候要注意index的意义不同.
-              <ul>
-              <li>例 如: 当前ChannelBuffer中有10个byte, 你通过readBytes读取了4个, 然后, 想查看一下下一个byte的值, 那么,你可以通过readByte()方法, 然后resetReaderIndex(); 或者, 你可以通过getByte(4)来peek这个值, 这里要注意的就是, getByte传入的index是最初的ChannelBuffer开始位置进行计算, 而不是剩余的bytes的位置进行计算. 即不是getByte(0).</li>
-              </ul></li>
-              <li><span class="citation">@ChannelPipelineCoverage</span>(&quot;one&quot;) Annotation doesn’t mean too much. It only works as a tip, nothing more. If you think you mark a ChannelHandler with “one” and Netty will use the ChannelHandler as a prototype, then you are wrong. It’s still your responsibility to ensure the scope semantics of singleton and prototype.</li>
-              <li>在ChannelHandler中， 通过exceptionCaught方法再次将异常抛出以期望更上层来处理是没有前途的。 因为这种情况下抛出的异常将只是由DefaultChannelPipeline记录一条warning的日志，仅此而已， 你无法进一步插足该异常的处理。另选方案可能是， 在exceptionCaught方法中将要抛出以交给其他对象处理的异常放入某个共享状态中， 比如某个queue， 然后， 对这些异常感兴趣的对象可以对该队列进行轮询以处理之。</li>
-              <li>More...</li>
-              </ol>
-              
-      </div>
+
+<div class="row">
+<div id="header">
+<p class="lead">
+<h1 class="title">Netty Framework Tips And Gotchas</h1>
+</p>
+</div>
+
+<hr>
+
+<div id="TOC">
+<ul>
+<li><a href="#tips-of-netty"><span class="toc-section-number">1</span> Tips of Netty</a></li>
+<li><a href="#gotchas-of-netty"><span class="toc-section-number">2</span> Gotchas of Netty</a></li>
+</ul>
+</div>
+<hr/>
+
+<p><em>target on netty 3.x</em></p>
+<h1 id="tips-of-netty"><span class="header-section-number">1</span> Tips of Netty</h1>
+<ol style="list-style-type: decimal">
+<li>annotation doesn't effect anything, pipeline factory do!</li>
+<li>always provide your own PipelineFactory so that others can see your pipeline overview; add java doc(<span class="citation">@see</span>) in your ChannelHandler to point to the PipelineFactory definition class for further documentation;</li>
+<li>prevent re-invent the wheels that has been available;(Since Netty has provided lot of available ChannelHandler implementations we can use.)</li>
+<li>pay attention to event-driven attribute of Netty, simply put, the &quot;messageReceived&quot; method will be invoked multiple times, so take care of the state of your data carefully.</li>
+<li>use LoggingHandler to debug.
+<ul>
+<li>LoggingHandler use JDK logging as default logging facility. If we want to change to use other ones, we need invoke InternalLoggingFactory.setDefaultFactory(..) before any netty classes are loaded. for example, if we want to use slf4j logging facility: <code>InternalLoggingFactory.setDefaultFactory(new Slf4JLoggingFactory();</code></li>
+</ul></li>
+<li>You have to invoke channel.close() in another thread other than the IOWorker thread.</li>
+</ol>
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="kw">public</span> <span class="dt">void</span> <span class="fu">exceptionCaught</span>(<span class="dt">final</span> ChannelHandlerContext ctx, ExceptionEvent e) <span class="kw">throws</span> Exception {  
+            <span class="kw">new</span> Thread(){  
+                <span class="kw">public</span> <span class="dt">void</span> <span class="fu">run</span>(){  
+                    ctx.<span class="fu">getChannel</span>().<span class="fu">close</span>().<span class="fu">addListener</span>(<span class="kw">new</span> <span class="fu">ChannelFutureListener</span>() {  
+                        <span class="kw">public</span> <span class="dt">void</span> <span class="fu">operationComplete</span>(ChannelFuture future) <span class="kw">throws</span> Exception {  
+                            future.<span class="fu">awaitUninterruptibly</span>();  
+                            <span class="fu">getBoostrap</span>().<span class="fu">releaseExternalResources</span>();  
+                            logger.<span class="fu">debug</span>(<span class="st">&quot;shutdown&quot;</span>);  
+                        }  
+                    });  
+                }  
+            }.<span class="fu">start</span>();  
+    }  </code></pre></div>
+<ol start="7" style="list-style-type: decimal">
+<li>use IdleStateHandler and IdleStateAwareChannelHandler together to achieve some functionalities like connection status checking, long-push server mocks, etc.
+<ul>
+<li>NOTE: use a global Timer to share between all of you IdleStateHandlers instead of creating each for them. A Timer can suffice because of its implementation mechanism(TimerWheel).</li>
+</ul></li>
+<li>always set “connectTimeoutMillis” connection option to achieve timeout return. without this option, future.awaitUninterruptibly(timeoutValue) means less.</li>
+<li>More...</li>
+</ol>
+<h1 id="gotchas-of-netty"><span class="header-section-number">2</span> Gotchas of Netty</h1>
+<ol style="list-style-type: decimal">
+<li>在使用ChannelBuffer的readBytes和getBytes的时候要注意index的意义不同.
+<ul>
+<li>例 如: 当前ChannelBuffer中有10个byte, 你通过readBytes读取了4个, 然后, 想查看一下下一个byte的值, 那么,你可以通过readByte()方法, 然后resetReaderIndex(); 或者, 你可以通过getByte(4)来peek这个值, 这里要注意的就是, getByte传入的index是最初的ChannelBuffer开始位置进行计算, 而不是剩余的bytes的位置进行计算. 即不是getByte(0).</li>
+</ul></li>
+<li><span class="citation">@ChannelPipelineCoverage</span>(&quot;one&quot;) Annotation doesn’t mean too much. It only works as a tip, nothing more. If you think you mark a ChannelHandler with “one” and Netty will use the ChannelHandler as a prototype, then you are wrong. It’s still your responsibility to ensure the scope semantics of singleton and prototype.</li>
+<li>在ChannelHandler中， 通过exceptionCaught方法再次将异常抛出以期望更上层来处理是没有前途的。 因为这种情况下抛出的异常将只是由DefaultChannelPipeline记录一条warning的日志，仅此而已， 你无法进一步插足该异常的处理。另选方案可能是， 在exceptionCaught方法中将要抛出以交给其他对象处理的异常放入某个共享状态中， 比如某个queue， 然后， 对这些异常感兴趣的对象可以对该队列进行轮询以处理之。</li>
+<li>More...</li>
+</ol>
+
+</div>
+
       <div id="qrcode"></div>
       <div class="row">
         <div class="col-md-12 footer">

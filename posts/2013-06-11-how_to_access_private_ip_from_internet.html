@@ -7,18 +7,19 @@
   <meta http-equiv="X-UA-Compatible" content="chrome=1">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="author" content="扶墙老师@afoo.me">
-
-  <link rel="icon" href="/favicon.ico">
+    <link rel="icon" href="/favicon.ico">
 
   <title>教你如何使用卡片电脑对外提供网络服务 - 一个架构士的思考与沉淀之地</title>
 
-          
-  <link href='/font/News_Cycle/stylesheet.css' rel='stylesheet' type='text/css'>
+  
 
+  <link href='/font/News_Cycle/stylesheet.css' rel='stylesheet' type='text/css'>
   <link href="/css/bootstrap.min.css" rel="stylesheet">
   <link href="/css/bootstrap-theme.min.css" rel="stylesheet">
   <link href="/css/afoo.me.css" rel="stylesheet">
 
+  <style type="text/css">code{white-space: pre;}</style>
+        
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>
@@ -38,90 +39,92 @@
           </a>
         </div>
     </div>
-    <div class="col-xs-12 col-md-10">
 
-          
-          <div class="row">
-                        <div id="header">
-              <p class="lead">
-              <h1 class="title">教你如何使用卡片电脑对外提供网络服务</h1>
-                            <small>
-                  <h3 class="author">王福强</h3>
-              </small>
-                                          </p>
-            </div>
-            
-              <hr>
+<div class="col-xs-12 col-md-10">
 
-                            <div id="TOC">
-                <ul>
-                <li><a href="#私有ip的壁垒"><span class="toc-section-number">1</span> 私有IP的壁垒</a></li>
-                <li><a href="#public-ip的巧取豪夺"><span class="toc-section-number">2</span> Public IP的巧取豪夺</a></li>
-                <li><a href="#命名服务让生活更美好"><span class="toc-section-number">3</span> 命名服务让生活更美好</a></li>
-                <li><a href="#dynamic-ip之痒"><span class="toc-section-number">4</span> Dynamic IP之痒</a></li>
-                <li><a href="#路由器我们不能失去你"><span class="toc-section-number">5</span> 路由器，我们不能失去你～</a></li>
-                <li><a href="#the-final-picture"><span class="toc-section-number">6</span> The Final Picture</a></li>
-                <li><a href="#references"><span class="toc-section-number">7</span> References</a></li>
-                <li><a href="#相关项目"><span class="toc-section-number">8</span> 相关项目</a></li>
-                </ul>
-              </div>
-              <hr/>
-              
-              <p><strong>Tags</strong>: 私有IP(Private IP), DHCP, NAT, Router, 动态IP(Dynamic IP), DNS, Dynamic DNS</p>
-              <p>买个卡片电脑总得让它排上点儿用场，对吧？ 耗电低，当个服务器挂着对外提供点儿web服务啥的是个比较普通又能够快速想到的用途，挂个博客或者小站啥的，还是比较可行的嘛，所以，开工～</p>
-              <h1 id="私有ip的壁垒"><span class="header-section-number">1</span> 私有IP的壁垒</h1>
-              <p>假设家里的网络结构是这样的：</p>
-              <pre>
-              猫 -> 路由器(router) -> (pc, laptop, card computer, ipad, smartphone...)
-              </pre>
-              <p>那么，不出意外的话，我们的卡片电脑会被分配一个私有IP(遵循RFC1918)， 这个私有IP的边界被限定在路由器后面，从而外部网络实际上是无法访问到我们的卡片电脑的， 我们遇到第一个障碍 ：（</p>
-              <blockquote>
-              <p>外延</p>
-              本地家庭网络内各个设备的本地私有IP实际上是路由器根据DHCP自动分配的， 通常是动态的IP， 我们也可以手动配置静态IP。
-              </blockquote>
-              <h1 id="public-ip的巧取豪夺"><span class="header-section-number">2</span> Public IP的巧取豪夺</h1>
-              <p>既然我们的卡片电脑获得的私有IP无法被外部访问并对外进行服务，那么我们能不能给它搞一个Public IP那？ 实际上，ISP本来就分配了一个Public IP给我们，只是在我们的本地网络拓扑中，被路由器(router)使用了，如果我们不用路由器，直接让卡片电脑通过猫猫来联网的话，外部就可以通过ISP分配给我们的Public IP访问我们的卡片电脑了，所以，问题解决了。</p>
-              <h1 id="命名服务让生活更美好"><span class="header-section-number">3</span> 命名服务让生活更美好</h1>
-              <p>你是愿意让外部的访问者（甚至包括你自己）每次记住IP地址的数字串来访问卡片电脑，还是更愿意只记住一个容易记住的名字？ 我想，大多数人会选择后者吧！</p>
-              <p>我们可以为我们的卡片电脑配置hostname，但是，hostname的机制太狭隘了，没法从更大范围上通过它来访问目标机器，所以，我们需要求助DNS， 这tmd才是global的那！</p>
-              <p>注册一个域名(Domain Name), 在域名服务商的name server上将域名和卡片电脑使用的Public IP的映射关系进行配置，搞定之后，等合适的时间间隔之后(域名记录的分发需要时间，你懂的，对吧？！)， 我们就可以直接让外部通过域名访问我们的卡片电脑啦～</p>
-              <h1 id="dynamic-ip之痒"><span class="header-section-number">4</span> Dynamic IP之痒</h1>
-              <p>Shit Happens～</p>
-              <p>某一时刻，或许是其他访问者告诉我们，通过域名无法访问我们的卡片电脑了，或者也可能是我们自己发现无法访问的， 到底是哪里出了问题那？</p>
-              <p>我们从DNS的name server开始查，发现name server没事儿； 那是我们自己的卡片电脑挂了？ 也没事儿啊！ 那么，是映射记录被人改了？ 我擦， 怎么卡片电脑的Public IP跟原来配置的不一样了那？！</p>
-              <p>原来， ISP分配给我们的Public IP是有租期(lease)的，过了租期，ISP可能让我们继续续租（即让我们继续持有原来的IP），也可能给我们换一个IP, 这种情况下，我们通过域名访问的就是原来的IP啦，而我们的卡片电脑现在持有的却是另一个IP，当然就访问不到咯！</p>
-              <p>那么咋整那？！使用动态DNS服务(Dynamic DNS, DDNS)呗！</p>
-              <p>偶的域名是godaddy注册的，但没稀的用他家的name server，改用了<a href="https://www.dnspod.cn/">DNSPod</a>， 所以，可以通过API来更改域名记录， 大体上，这个过程是这样的：卡片电脑上部署一个daemon程序， 该程序定期检查Public IP，如果发现跟原来持有的不同，则通过DNSPod的API接口更新对应域名的A记录，这样， 不管Public IP怎么变，我们都可以及时的更新域名记录，从而保证通过域名访问畅通无阻！</p>
-              <blockquote>
-              当然啦， 域名记录的更新间隔，以及域名记录的分发时间，都会多少影响服务访问的可用性，这显然不是啥大问题，俺们又不是在搞啥商业高可用网站，是吧？
-              </blockquote>
-              <h1 id="路由器我们不能失去你"><span class="header-section-number">5</span> 路由器，我们不能失去你～</h1>
-              <p>卡片电脑直接通过猫猫联网倒是解决了自己的生存出路，可是，其他设备咋活啊？ 人家的pc啦， laptop啦， ipad啦，也都需要上网啊，总得给人家条活路不是？ 群众的呼声是不能忽视的，我们还得把路由器接回来！</p>
-              <p>将路由器接回来之后， 路由器就持有了ISP分配给我们的Public IP， 而为我们的所有本地设备分配了相应的Private IP，出路的问题解决了，我们需要继续解决卡片电脑的访客通道问题， 这个时候，就该让NAT (<a href="https://en.wikipedia.org/wiki/Network_address_translation">Network Address Translation</a>)出场了！</p>
-              <p>NAT简单来讲就是把内部的Private IP跟外部的Public IP做一层关系映射，映射关系的确定可以是通过端口，也可以通过IP或者其它多种方式， 一般的路由器现在都有NAT软件和相应的功能， 只要设置一下就可以了，具体如何设置可以参考自己的路由器说明书，这里不做赘述。</p>
-              <p>NAT配置好之后，就剩下一个问题了，即Public IP的获取。 我们用来获取Public IP的daemon程序是部署在卡片电脑上的，而卡片电脑现在分配到的是本地私有IP，<code>ifconfig</code>在这里是帮不了什么忙的， 不过有几种思路供参考：</p>
-              <ol style="list-style-type: decimal">
-              <li>通过查找本地路由表信息，然后解析出相应的路由记录中的Public IP信息: <code>netstat -nr</code></li>
-              <li>访问相应的显示IP信息的web站点，然后提取，比如<a href="http://ip.chinaz.com/">Chinaz站长工具中的IP查询功能</a></li>
-              <li>我最中意的方法， <code>nc ns1.dnspod.net 6666</code>, DNSPod Rocks!</li>
-              </ol>
-              <p>使用第三种方式，就可以维持原有基础设置不变，而又能够提供DDNS记录的更新啦，哈，基本搞定！</p>
-              <h1 id="the-final-picture"><span class="header-section-number">6</span> The Final Picture</h1>
-              <p>在整个pipeline中，几个关键设备或者角色是需要我们着重关注的：</p>
-              <ol style="list-style-type: decimal">
-              <li>路由器+NAT, 保证可以让外部访问者可以访问到内部的服务；</li>
-              <li>DNS和DDNS， 保证以统一的命名来访问同一服务， 不管服务器的IP如何变化</li>
-              <li>本地的daemon程序， 这个是无论动态IP如何变化，我们都能对外提供服务的基础关键组件，虽然简单，但不可或缺。</li>
-              </ol>
-              <h1 id="references"><span class="header-section-number">7</span> References</h1>
-              <p>其实参考了很多资料，也咨询了些人(比如李晓波同学)， 但过去了这么长时间，才想起这个东西该落实到文字记录一下，所以，之前参考了哪些资料不可考了，这里就不罗列了，不过，要是想简单了解一下NAT和路由器，可以参考这篇<a href="http://networking.nitecruzr.net/2005/05/what-is-nat-router.html">What Is A NAT Router?</a></p>
-              <h1 id="相关项目"><span class="header-section-number">8</span> 相关项目</h1>
-              <ol style="list-style-type: decimal">
-              <li><a href="http://xip.io/">xip.io</a></li>
-              <li><a href="https://ngrok.com/">ngrok</a></li>
-              </ol>
-              
-      </div>
+
+<div class="row">
+<div id="header">
+<p class="lead">
+<h1 class="title">教你如何使用卡片电脑对外提供网络服务</h1>
+<small>
+<h3 class="author">王福强</h3>
+</small>
+</p>
+</div>
+
+<hr>
+
+<div id="TOC">
+<ul>
+<li><a href="#私有ip的壁垒"><span class="toc-section-number">1</span> 私有IP的壁垒</a></li>
+<li><a href="#public-ip的巧取豪夺"><span class="toc-section-number">2</span> Public IP的巧取豪夺</a></li>
+<li><a href="#命名服务让生活更美好"><span class="toc-section-number">3</span> 命名服务让生活更美好</a></li>
+<li><a href="#dynamic-ip之痒"><span class="toc-section-number">4</span> Dynamic IP之痒</a></li>
+<li><a href="#路由器我们不能失去你"><span class="toc-section-number">5</span> 路由器，我们不能失去你～</a></li>
+<li><a href="#the-final-picture"><span class="toc-section-number">6</span> The Final Picture</a></li>
+<li><a href="#references"><span class="toc-section-number">7</span> References</a></li>
+<li><a href="#相关项目"><span class="toc-section-number">8</span> 相关项目</a></li>
+</ul>
+</div>
+<hr/>
+
+<p><strong>Tags</strong>: 私有IP(Private IP), DHCP, NAT, Router, 动态IP(Dynamic IP), DNS, Dynamic DNS</p>
+<p>买个卡片电脑总得让它排上点儿用场，对吧？ 耗电低，当个服务器挂着对外提供点儿web服务啥的是个比较普通又能够快速想到的用途，挂个博客或者小站啥的，还是比较可行的嘛，所以，开工～</p>
+<h1 id="私有ip的壁垒"><span class="header-section-number">1</span> 私有IP的壁垒</h1>
+<p>假设家里的网络结构是这样的：</p>
+<pre>
+猫 -> 路由器(router) -> (pc, laptop, card computer, ipad, smartphone...)
+</pre>
+<p>那么，不出意外的话，我们的卡片电脑会被分配一个私有IP(遵循RFC1918)， 这个私有IP的边界被限定在路由器后面，从而外部网络实际上是无法访问到我们的卡片电脑的， 我们遇到第一个障碍 ：（</p>
+<blockquote>
+<p>外延</p>
+本地家庭网络内各个设备的本地私有IP实际上是路由器根据DHCP自动分配的， 通常是动态的IP， 我们也可以手动配置静态IP。
+</blockquote>
+<h1 id="public-ip的巧取豪夺"><span class="header-section-number">2</span> Public IP的巧取豪夺</h1>
+<p>既然我们的卡片电脑获得的私有IP无法被外部访问并对外进行服务，那么我们能不能给它搞一个Public IP那？ 实际上，ISP本来就分配了一个Public IP给我们，只是在我们的本地网络拓扑中，被路由器(router)使用了，如果我们不用路由器，直接让卡片电脑通过猫猫来联网的话，外部就可以通过ISP分配给我们的Public IP访问我们的卡片电脑了，所以，问题解决了。</p>
+<h1 id="命名服务让生活更美好"><span class="header-section-number">3</span> 命名服务让生活更美好</h1>
+<p>你是愿意让外部的访问者（甚至包括你自己）每次记住IP地址的数字串来访问卡片电脑，还是更愿意只记住一个容易记住的名字？ 我想，大多数人会选择后者吧！</p>
+<p>我们可以为我们的卡片电脑配置hostname，但是，hostname的机制太狭隘了，没法从更大范围上通过它来访问目标机器，所以，我们需要求助DNS， 这tmd才是global的那！</p>
+<p>注册一个域名(Domain Name), 在域名服务商的name server上将域名和卡片电脑使用的Public IP的映射关系进行配置，搞定之后，等合适的时间间隔之后(域名记录的分发需要时间，你懂的，对吧？！)， 我们就可以直接让外部通过域名访问我们的卡片电脑啦～</p>
+<h1 id="dynamic-ip之痒"><span class="header-section-number">4</span> Dynamic IP之痒</h1>
+<p>Shit Happens～</p>
+<p>某一时刻，或许是其他访问者告诉我们，通过域名无法访问我们的卡片电脑了，或者也可能是我们自己发现无法访问的， 到底是哪里出了问题那？</p>
+<p>我们从DNS的name server开始查，发现name server没事儿； 那是我们自己的卡片电脑挂了？ 也没事儿啊！ 那么，是映射记录被人改了？ 我擦， 怎么卡片电脑的Public IP跟原来配置的不一样了那？！</p>
+<p>原来， ISP分配给我们的Public IP是有租期(lease)的，过了租期，ISP可能让我们继续续租（即让我们继续持有原来的IP），也可能给我们换一个IP, 这种情况下，我们通过域名访问的就是原来的IP啦，而我们的卡片电脑现在持有的却是另一个IP，当然就访问不到咯！</p>
+<p>那么咋整那？！使用动态DNS服务(Dynamic DNS, DDNS)呗！</p>
+<p>偶的域名是godaddy注册的，但没稀的用他家的name server，改用了<a href="https://www.dnspod.cn/">DNSPod</a>， 所以，可以通过API来更改域名记录， 大体上，这个过程是这样的：卡片电脑上部署一个daemon程序， 该程序定期检查Public IP，如果发现跟原来持有的不同，则通过DNSPod的API接口更新对应域名的A记录，这样， 不管Public IP怎么变，我们都可以及时的更新域名记录，从而保证通过域名访问畅通无阻！</p>
+<blockquote>
+当然啦， 域名记录的更新间隔，以及域名记录的分发时间，都会多少影响服务访问的可用性，这显然不是啥大问题，俺们又不是在搞啥商业高可用网站，是吧？
+</blockquote>
+<h1 id="路由器我们不能失去你"><span class="header-section-number">5</span> 路由器，我们不能失去你～</h1>
+<p>卡片电脑直接通过猫猫联网倒是解决了自己的生存出路，可是，其他设备咋活啊？ 人家的pc啦， laptop啦， ipad啦，也都需要上网啊，总得给人家条活路不是？ 群众的呼声是不能忽视的，我们还得把路由器接回来！</p>
+<p>将路由器接回来之后， 路由器就持有了ISP分配给我们的Public IP， 而为我们的所有本地设备分配了相应的Private IP，出路的问题解决了，我们需要继续解决卡片电脑的访客通道问题， 这个时候，就该让NAT (<a href="https://en.wikipedia.org/wiki/Network_address_translation">Network Address Translation</a>)出场了！</p>
+<p>NAT简单来讲就是把内部的Private IP跟外部的Public IP做一层关系映射，映射关系的确定可以是通过端口，也可以通过IP或者其它多种方式， 一般的路由器现在都有NAT软件和相应的功能， 只要设置一下就可以了，具体如何设置可以参考自己的路由器说明书，这里不做赘述。</p>
+<p>NAT配置好之后，就剩下一个问题了，即Public IP的获取。 我们用来获取Public IP的daemon程序是部署在卡片电脑上的，而卡片电脑现在分配到的是本地私有IP，<code>ifconfig</code>在这里是帮不了什么忙的， 不过有几种思路供参考：</p>
+<ol style="list-style-type: decimal">
+<li>通过查找本地路由表信息，然后解析出相应的路由记录中的Public IP信息: <code>netstat -nr</code></li>
+<li>访问相应的显示IP信息的web站点，然后提取，比如<a href="http://ip.chinaz.com/">Chinaz站长工具中的IP查询功能</a></li>
+<li>我最中意的方法， <code>nc ns1.dnspod.net 6666</code>, DNSPod Rocks!</li>
+</ol>
+<p>使用第三种方式，就可以维持原有基础设置不变，而又能够提供DDNS记录的更新啦，哈，基本搞定！</p>
+<h1 id="the-final-picture"><span class="header-section-number">6</span> The Final Picture</h1>
+<p>在整个pipeline中，几个关键设备或者角色是需要我们着重关注的：</p>
+<ol style="list-style-type: decimal">
+<li>路由器+NAT, 保证可以让外部访问者可以访问到内部的服务；</li>
+<li>DNS和DDNS， 保证以统一的命名来访问同一服务， 不管服务器的IP如何变化</li>
+<li>本地的daemon程序， 这个是无论动态IP如何变化，我们都能对外提供服务的基础关键组件，虽然简单，但不可或缺。</li>
+</ol>
+<h1 id="references"><span class="header-section-number">7</span> References</h1>
+<p>其实参考了很多资料，也咨询了些人(比如李晓波同学)， 但过去了这么长时间，才想起这个东西该落实到文字记录一下，所以，之前参考了哪些资料不可考了，这里就不罗列了，不过，要是想简单了解一下NAT和路由器，可以参考这篇<a href="http://networking.nitecruzr.net/2005/05/what-is-nat-router.html">What Is A NAT Router?</a></p>
+<h1 id="相关项目"><span class="header-section-number">8</span> 相关项目</h1>
+<ol style="list-style-type: decimal">
+<li><a href="http://xip.io/">xip.io</a></li>
+<li><a href="https://ngrok.com/">ngrok</a></li>
+</ol>
+
+</div>
+
       <div id="qrcode"></div>
       <div class="row">
         <div class="col-md-12 footer">

@@ -7,12 +7,19 @@
   <meta http-equiv="X-UA-Compatible" content="chrome=1">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="author" content="扶墙老师@afoo.me">
-
-  <link rel="icon" href="/favicon.ico">
+    <link rel="icon" href="/favicon.ico">
 
   <title>在程序中动态配置log4j(configure Log4j Programmatically) - 一个架构士的思考与沉淀之地</title>
 
-      <style type="text/css">
+  
+
+  <link href='/font/News_Cycle/stylesheet.css' rel='stylesheet' type='text/css'>
+  <link href="/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/css/bootstrap-theme.min.css" rel="stylesheet">
+  <link href="/css/afoo.me.css" rel="stylesheet">
+
+  <style type="text/css">code{white-space: pre;}</style>
+    <style type="text/css">
     div.sourceCode { overflow-x: auto; }
     table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
       margin: 0; padding: 0; vertical-align: baseline; border: none; }
@@ -33,12 +40,6 @@
     code > span.er { color: #ff0000; font-weight: bold; }
   </style>
         
-  <link href='/font/News_Cycle/stylesheet.css' rel='stylesheet' type='text/css'>
-
-  <link href="/css/bootstrap.min.css" rel="stylesheet">
-  <link href="/css/bootstrap-theme.min.css" rel="stylesheet">
-  <link href="/css/afoo.me.css" rel="stylesheet">
-
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>
@@ -58,50 +59,52 @@
           </a>
         </div>
     </div>
-    <div class="col-xs-12 col-md-10">
 
-          
-          <div class="row">
-                        <div id="header">
-              <p class="lead">
-              <h1 class="title">在程序中动态配置log4j(configure Log4j Programmatically)</h1>
-                            <small>
-                  <h3 class="author">FuqiangWang</h3>
-              </small>
-                                          </p>
-            </div>
-            
-              <hr>
+<div class="col-xs-12 col-md-10">
 
-              
-              <blockquote>
-              <p>2014年从msn space存档中重新恢复出来！</p>
-              </blockquote>
-              <p>很简单的一个小技巧，之所以贴出来是因为期间碰到一个很有味道的细节陷阱...</p>
-              <p>某种需求下，需要根据程序启动后所处的环境来初始化log4j，比如根据不同的环境配置将log4j的日志文件生成到指定的不同地方，这个时候，你如果使用xml或者properties文件将这些写死的话，无疑没有办法完成这样的需求，所以，我们需要寻求更具灵活性的方法。</p>
-              <p>通常你可以只要以下2行代码就可以完成log4j的初始化：</p>
-              <div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java">URL resourceURL = ResourceManager.<span class="fu">getResource</span>(<span class="st">&quot;config/log4j.xml&quot;</span>);
-              DOMConfigurator.<span class="fu">configure</span>(w3cDocument.<span class="fu">getDocumentElement</span>());</code></pre></div>
-              <p>但是，这样的话，你的log文件生成位置就写死到log4j.xml中了，为了能够在程序中动态变更这个位置，或者其他配置信息，我们可以采取以下方式：</p>
-              <div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java">URL resourceURL = ResourceManager.<span class="fu">getResource</span>(<span class="st">&quot;config/log4j.xml&quot;</span>);
-              SAXBuilder saxBuilder = <span class="kw">new</span> <span class="fu">SAXBuilder</span>();
-              Document jdomDocument =    saxBuilder.<span class="fu">build</span>(resourceURL);
-              XPath xpath = XPath.<span class="fu">newInstance</span>(<span class="st">&quot;/log4j:configuration/appender[@name=&#39;file&#39;]/param[@name=&#39;File&#39;]/@value&quot;</span>);
-              Attribute valueAttr = (Attribute)xpath.<span class="fu">selectSingleNode</span>(jdomDocument);
-              String winPath = <span class="kw">new</span> StringBuffer().<span class="fu">append</span>(Admin.<span class="fu">getCreditPathUtils</span>().<span class="fu">getLogDirPath</span>()).<span class="fu">append</span>(<span class="st">&quot;terminal.log&quot;</span>).<span class="fu">toString</span>();
-              <span class="co">// If you set this platform independent path into jdom without any process, the File.Seperator will cause some problem.</span>
-              valueAttr.<span class="fu">setValue</span>(FilenameUtils.<span class="fu">separatorsToUnix</span>(winPath));
-              DOMOutputter outputter = <span class="kw">new</span>  <span class="fu">DOMOutputter</span>();
-              org.<span class="fu">w3c</span>.<span class="fu">dom</span>.<span class="fu">Document</span> w3cDocument = outputter.<span class="fu">output</span>(jdomDocument);
-              DOMConfigurator.<span class="fu">configure</span>(w3cDocument.<span class="fu">getDocumentElement</span>());</code></pre></div>
-              <p>也就是，通过DOM来加载配置，这样在配置之前就可以使用xpath查询相应位置并更改相应值。</p>
-              <p>it's just a piece of cake, but gotchas still there.</p>
-              <p>只所以要对winPath进行处理是因为，如果你直接将文件路径pass进去的话，在DomConfigurator配置的时候就会抛出异常，因为你的路径已经不是你传进去的那个路径了，所以，之前需要对路径进行预处理，比如将window平台的File.separator － “”替换为“/”，不这样，你就等着Exception吧，哈哈</p>
-              <p>这里牵扯出一个细节，如果你不注意的话，就会掉进去，其实你可以不用Commons IO里的这个FilenameUtils类，完全可以直接用String来替换掉“”就可以，不过，如果你选择不对的话，Exception又会给你好看了，呵呵...</p>
-              <p>String提供了2个适用于我们现在场景的替换方法:String.replace和String.replaceAll，前者不使用Regex进行替换，所以，对于我们这里可以直接winpath.replace(&quot;\&quot;,&quot;/&quot;)就可以；但是，如果要使用String.replaceAll的话，你就要小心了，必须winPath.replaceAll(&quot;\\&quot;,&quot;/&quot;),也就是说，他是用Regex来进行替换的，相当于<code>Pattern.compile(regex).matcher(str).replaceAll(repl)</code></p>
-              <p>而如果你还像replace那样传入“\“，那么，sorry，俺不干，呵呵，虽然是经常用的String类，不过，不注意依然让你难堪...</p>
-              
-      </div>
+
+<div class="row">
+<div id="header">
+<p class="lead">
+<h1 class="title">在程序中动态配置log4j(configure Log4j Programmatically)</h1>
+<small>
+<h3 class="author">FuqiangWang</h3>
+</small>
+</p>
+</div>
+
+<hr>
+
+
+<blockquote>
+<p>2014年从msn space存档中重新恢复出来！</p>
+</blockquote>
+<p>很简单的一个小技巧，之所以贴出来是因为期间碰到一个很有味道的细节陷阱...</p>
+<p>某种需求下，需要根据程序启动后所处的环境来初始化log4j，比如根据不同的环境配置将log4j的日志文件生成到指定的不同地方，这个时候，你如果使用xml或者properties文件将这些写死的话，无疑没有办法完成这样的需求，所以，我们需要寻求更具灵活性的方法。</p>
+<p>通常你可以只要以下2行代码就可以完成log4j的初始化：</p>
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java">URL resourceURL = ResourceManager.<span class="fu">getResource</span>(<span class="st">&quot;config/log4j.xml&quot;</span>);
+DOMConfigurator.<span class="fu">configure</span>(w3cDocument.<span class="fu">getDocumentElement</span>());</code></pre></div>
+<p>但是，这样的话，你的log文件生成位置就写死到log4j.xml中了，为了能够在程序中动态变更这个位置，或者其他配置信息，我们可以采取以下方式：</p>
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java">URL resourceURL = ResourceManager.<span class="fu">getResource</span>(<span class="st">&quot;config/log4j.xml&quot;</span>);
+SAXBuilder saxBuilder = <span class="kw">new</span> <span class="fu">SAXBuilder</span>();
+Document jdomDocument =    saxBuilder.<span class="fu">build</span>(resourceURL);
+XPath xpath = XPath.<span class="fu">newInstance</span>(<span class="st">&quot;/log4j:configuration/appender[@name=&#39;file&#39;]/param[@name=&#39;File&#39;]/@value&quot;</span>);
+Attribute valueAttr = (Attribute)xpath.<span class="fu">selectSingleNode</span>(jdomDocument);
+String winPath = <span class="kw">new</span> StringBuffer().<span class="fu">append</span>(Admin.<span class="fu">getCreditPathUtils</span>().<span class="fu">getLogDirPath</span>()).<span class="fu">append</span>(<span class="st">&quot;terminal.log&quot;</span>).<span class="fu">toString</span>();
+<span class="co">// If you set this platform independent path into jdom without any process, the File.Seperator will cause some problem.</span>
+valueAttr.<span class="fu">setValue</span>(FilenameUtils.<span class="fu">separatorsToUnix</span>(winPath));
+DOMOutputter outputter = <span class="kw">new</span>  <span class="fu">DOMOutputter</span>();
+org.<span class="fu">w3c</span>.<span class="fu">dom</span>.<span class="fu">Document</span> w3cDocument = outputter.<span class="fu">output</span>(jdomDocument);
+DOMConfigurator.<span class="fu">configure</span>(w3cDocument.<span class="fu">getDocumentElement</span>());</code></pre></div>
+<p>也就是，通过DOM来加载配置，这样在配置之前就可以使用xpath查询相应位置并更改相应值。</p>
+<p>it's just a piece of cake, but gotchas still there.</p>
+<p>只所以要对winPath进行处理是因为，如果你直接将文件路径pass进去的话，在DomConfigurator配置的时候就会抛出异常，因为你的路径已经不是你传进去的那个路径了，所以，之前需要对路径进行预处理，比如将window平台的File.separator － “”替换为“/”，不这样，你就等着Exception吧，哈哈</p>
+<p>这里牵扯出一个细节，如果你不注意的话，就会掉进去，其实你可以不用Commons IO里的这个FilenameUtils类，完全可以直接用String来替换掉“”就可以，不过，如果你选择不对的话，Exception又会给你好看了，呵呵...</p>
+<p>String提供了2个适用于我们现在场景的替换方法:String.replace和String.replaceAll，前者不使用Regex进行替换，所以，对于我们这里可以直接winpath.replace(&quot;\&quot;,&quot;/&quot;)就可以；但是，如果要使用String.replaceAll的话，你就要小心了，必须winPath.replaceAll(&quot;\\&quot;,&quot;/&quot;),也就是说，他是用Regex来进行替换的，相当于<code>Pattern.compile(regex).matcher(str).replaceAll(repl)</code></p>
+<p>而如果你还像replace那样传入“\“，那么，sorry，俺不干，呵呵，虽然是经常用的String类，不过，不注意依然让你难堪...</p>
+
+</div>
+
       <div id="qrcode"></div>
       <div class="row">
         <div class="col-md-12 footer">

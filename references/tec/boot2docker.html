@@ -7,19 +7,20 @@
   <meta http-equiv="X-UA-Compatible" content="chrome=1">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="author" content="扶墙老师@afoo.me">
-
-  <link rel="icon" href="/favicon.ico">
+    <meta name="date" content="2015-04-23" />
+    <link rel="icon" href="/favicon.ico">
 
   <title>Docker with boot2Docker on Mac - 一个架构士的思考与沉淀之地</title>
 
-    <meta name="date" content="2015-04-23" />
-          
-  <link href='/font/News_Cycle/stylesheet.css' rel='stylesheet' type='text/css'>
+  
 
+  <link href='/font/News_Cycle/stylesheet.css' rel='stylesheet' type='text/css'>
   <link href="/css/bootstrap.min.css" rel="stylesheet">
   <link href="/css/bootstrap-theme.min.css" rel="stylesheet">
   <link href="/css/afoo.me.css" rel="stylesheet">
 
+  <style type="text/css">code{white-space: pre;}</style>
+        
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>
@@ -39,77 +40,79 @@
           </a>
         </div>
     </div>
-    <div class="col-xs-12 col-md-10">
 
-          
-          <div class="row">
-                        <div id="header">
-              <p class="lead">
-              <h1 class="title">Docker with boot2Docker on Mac</h1>
-                            <small>
-                  <h3 class="author">陨石 - yunshi AT wacai DOTA com</h3>
-              </small>
-                                        <h4 class="date">2015-04-23</h4>
-                              </p>
-            </div>
-            
-              <hr>
+<div class="col-xs-12 col-md-10">
 
-                            <div id="TOC">
-                <ul>
-                <li><a href="#准备与运行"><span class="toc-section-number">1</span> 准备与运行</a></li>
-                <li><a href="#常用命令说明"><span class="toc-section-number">2</span> 常用命令说明</a><ul>
-                <li><a href="#升级boot2docker"><span class="toc-section-number">2.1</span> 升级boot2docker</a></li>
-                <li><a href="#升级docker"><span class="toc-section-number">2.2</span> 升级docker</a></li>
-                <li><a href="#下载最新的boot2docker-iso"><span class="toc-section-number">2.3</span> 下载最新的boot2docker iso</a></li>
-                <li><a href="#删除虚拟机景象"><span class="toc-section-number">2.4</span> 删除虚拟机景象</a></li>
-                </ul></li>
-                <li><a href="#gotchas"><span class="toc-section-number">3</span> Gotchas</a></li>
-                <li><a href="#references"><span class="toc-section-number">4</span> References</a></li>
-                </ul>
-              </div>
-              <hr/>
-              
-              <h1 id="准备与运行"><span class="header-section-number">1</span> 准备与运行</h1>
-              <ol start="0" style="list-style-type: decimal">
-              <li>先装<a href="https://www.virtualbox.org/wiki/Downloads">virtualbox</a>, boot2docker需要它！</li>
-              <li><a href="https://github.com/boot2docker/osx-installer/releases">download</a> and install
-              <ul>
-              <li>更简单的做法：<code>brew update</code> &amp; <code>brew install boot2docker</code></li>
-              </ul></li>
-              <li><p><code>boot2docker init</code> to download vm iso and create it in virtual box;</p>
-              <pre><code>➜  ~  boot2docker init
-              Latest release for boot2docker/boot2docker is v1.6.0
-              Downloading boot2docker ISO image...</code></pre></li>
-              <li><code>boot2docker start</code>
-              <ul>
-              <li>返回信息中会提示你设置环境变量，不用手动设置， 直接执行第4步的命令即可。</li>
-              </ul></li>
-              <li><code>boot2docker shellinit</code> - 设置相关环境变量</li>
-              <li></li>
-              </ol>
-              <h1 id="常用命令说明"><span class="header-section-number">2</span> 常用命令说明</h1>
-              <h2 id="升级boot2docker"><span class="header-section-number">2.1</span> 升级boot2docker</h2>
-              <p>下载最新的boot2docker安装包并安装即可。</p>
-              <h2 id="升级docker"><span class="header-section-number">2.2</span> 升级docker</h2>
-              <p>运行<code>boot2docker download</code></p>
-              <h2 id="下载最新的boot2docker-iso"><span class="header-section-number">2.3</span> 下载最新的boot2docker iso</h2>
-              <p><code>boot2docker download</code></p>
-              <h2 id="删除虚拟机景象"><span class="header-section-number">2.4</span> 删除虚拟机景象</h2>
-              <p><code>boot2docker delete</code></p>
-              <h1 id="gotchas"><span class="header-section-number">3</span> Gotchas</h1>
-              <p>哥黑苹果， BIOS有的项目禁止了， 所以up不起来，fuck~</p>
-              <h1 id="references"><span class="header-section-number">4</span> References</h1>
-              <ol style="list-style-type: decimal">
-              <li><a href="http://docs.docker.com/installation/mac/" class="uri">http://docs.docker.com/installation/mac/</a></li>
-              <li><a href="https://www.gitbook.com/book/yeasy/docker_practice/details">Docker —— 从入门到实践</a>
-              <ul>
-              <li><a href="http://yeasy.gitbooks.io/docker_practice/content/dockerfile/basic_structure.html" class="uri">http://yeasy.gitbooks.io/docker_practice/content/dockerfile/basic_structure.html</a> - Dockerfile基础结构</li>
-              </ul></li>
-              <li><a href="http://www.luiselizondo.net/a-production-ready-docker-workflow/">A production ready Docker workflow</a></li>
-              </ol>
-              
-      </div>
+
+<div class="row">
+<div id="header">
+<p class="lead">
+<h1 class="title">Docker with boot2Docker on Mac</h1>
+<small>
+<h3 class="author">陨石 - yunshi AT wacai DOTA com</h3>
+</small>
+<h4 class="date">2015-04-23</h4>
+</p>
+</div>
+
+<hr>
+
+<div id="TOC">
+<ul>
+<li><a href="#准备与运行"><span class="toc-section-number">1</span> 准备与运行</a></li>
+<li><a href="#常用命令说明"><span class="toc-section-number">2</span> 常用命令说明</a><ul>
+<li><a href="#升级boot2docker"><span class="toc-section-number">2.1</span> 升级boot2docker</a></li>
+<li><a href="#升级docker"><span class="toc-section-number">2.2</span> 升级docker</a></li>
+<li><a href="#下载最新的boot2docker-iso"><span class="toc-section-number">2.3</span> 下载最新的boot2docker iso</a></li>
+<li><a href="#删除虚拟机景象"><span class="toc-section-number">2.4</span> 删除虚拟机景象</a></li>
+</ul></li>
+<li><a href="#gotchas"><span class="toc-section-number">3</span> Gotchas</a></li>
+<li><a href="#references"><span class="toc-section-number">4</span> References</a></li>
+</ul>
+</div>
+<hr/>
+
+<h1 id="准备与运行"><span class="header-section-number">1</span> 准备与运行</h1>
+<ol start="0" style="list-style-type: decimal">
+<li>先装<a href="https://www.virtualbox.org/wiki/Downloads">virtualbox</a>, boot2docker需要它！</li>
+<li><a href="https://github.com/boot2docker/osx-installer/releases">download</a> and install
+<ul>
+<li>更简单的做法：<code>brew update</code> &amp; <code>brew install boot2docker</code></li>
+</ul></li>
+<li><p><code>boot2docker init</code> to download vm iso and create it in virtual box;</p>
+<pre><code>➜  ~  boot2docker init
+Latest release for boot2docker/boot2docker is v1.6.0
+Downloading boot2docker ISO image...</code></pre></li>
+<li><code>boot2docker start</code>
+<ul>
+<li>返回信息中会提示你设置环境变量，不用手动设置， 直接执行第4步的命令即可。</li>
+</ul></li>
+<li><code>boot2docker shellinit</code> - 设置相关环境变量</li>
+<li></li>
+</ol>
+<h1 id="常用命令说明"><span class="header-section-number">2</span> 常用命令说明</h1>
+<h2 id="升级boot2docker"><span class="header-section-number">2.1</span> 升级boot2docker</h2>
+<p>下载最新的boot2docker安装包并安装即可。</p>
+<h2 id="升级docker"><span class="header-section-number">2.2</span> 升级docker</h2>
+<p>运行<code>boot2docker download</code></p>
+<h2 id="下载最新的boot2docker-iso"><span class="header-section-number">2.3</span> 下载最新的boot2docker iso</h2>
+<p><code>boot2docker download</code></p>
+<h2 id="删除虚拟机景象"><span class="header-section-number">2.4</span> 删除虚拟机景象</h2>
+<p><code>boot2docker delete</code></p>
+<h1 id="gotchas"><span class="header-section-number">3</span> Gotchas</h1>
+<p>哥黑苹果， BIOS有的项目禁止了， 所以up不起来，fuck~</p>
+<h1 id="references"><span class="header-section-number">4</span> References</h1>
+<ol style="list-style-type: decimal">
+<li><a href="http://docs.docker.com/installation/mac/" class="uri">http://docs.docker.com/installation/mac/</a></li>
+<li><a href="https://www.gitbook.com/book/yeasy/docker_practice/details">Docker —— 从入门到实践</a>
+<ul>
+<li><a href="http://yeasy.gitbooks.io/docker_practice/content/dockerfile/basic_structure.html" class="uri">http://yeasy.gitbooks.io/docker_practice/content/dockerfile/basic_structure.html</a> - Dockerfile基础结构</li>
+</ul></li>
+<li><a href="http://www.luiselizondo.net/a-production-ready-docker-workflow/">A production ready Docker workflow</a></li>
+</ol>
+
+</div>
+
       <div id="qrcode"></div>
       <div class="row">
         <div class="col-md-12 footer">

@@ -7,12 +7,19 @@
   <meta http-equiv="X-UA-Compatible" content="chrome=1">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="author" content="扶墙老师@afoo.me">
-
-  <link rel="icon" href="/favicon.ico">
+    <link rel="icon" href="/favicon.ico">
 
   <title>Maven项目发布到公司内部Repository(Nexus) #阶段性反刍# - 一个架构士的思考与沉淀之地</title>
 
-      <style type="text/css">
+  
+
+  <link href='/font/News_Cycle/stylesheet.css' rel='stylesheet' type='text/css'>
+  <link href="/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/css/bootstrap-theme.min.css" rel="stylesheet">
+  <link href="/css/afoo.me.css" rel="stylesheet">
+
+  <style type="text/css">code{white-space: pre;}</style>
+    <style type="text/css">
     div.sourceCode { overflow-x: auto; }
     table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
       margin: 0; padding: 0; vertical-align: baseline; border: none; }
@@ -33,12 +40,6 @@
     code > span.er { color: #ff0000; font-weight: bold; }
   </style>
         
-  <link href='/font/News_Cycle/stylesheet.css' rel='stylesheet' type='text/css'>
-
-  <link href="/css/bootstrap.min.css" rel="stylesheet">
-  <link href="/css/bootstrap-theme.min.css" rel="stylesheet">
-  <link href="/css/afoo.me.css" rel="stylesheet">
-
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>
@@ -58,107 +59,109 @@
           </a>
         </div>
     </div>
-    <div class="col-xs-12 col-md-10">
 
-          
-          <div class="row">
-                        <div id="header">
-              <p class="lead">
-              <h1 class="title">Maven项目发布到公司内部Repository(Nexus) #阶段性反刍#</h1>
-                            <small>
-                  <h3 class="author">FuqiangWang</h3>
-              </small>
-                                          </p>
-            </div>
-            
-              <hr>
+<div class="col-xs-12 col-md-10">
 
-                            <div id="TOC">
-                <ul>
-                <li><a href="#配置结构关系"><span class="toc-section-number">1</span> 配置结构关系</a><ul>
-                <li><a href="#项目pom.xml配置"><span class="toc-section-number">1.1</span> 项目pom.xml配置</a></li>
-                <li><a href="#settings.xml配置"><span class="toc-section-number">1.2</span> settings.xml配置</a></li>
-                </ul></li>
-                <li><a href="#执行发布部署"><span class="toc-section-number">2</span> 执行发布/部署</a></li>
-                </ul>
-              </div>
-              <hr/>
-              
-              <h1 id="配置结构关系"><span class="header-section-number">1</span> 配置结构关系</h1>
-              <h2 id="项目pom.xml配置"><span class="header-section-number">1.1</span> 项目pom.xml配置</h2>
-              <p>第一， 先配置发布到哪个repository相关信息:</p>
-              <div class="sourceCode"><pre class="sourceCode xml"><code class="sourceCode xml">    <span class="kw">&lt;distributionManagement&gt;</span>
-                      <span class="kw">&lt;repository&gt;</span>
-                          <span class="kw">&lt;id&gt;</span>deployment<span class="kw">&lt;/id&gt;</span>
-                          <span class="kw">&lt;name&gt;</span>internal repository for releases<span class="kw">&lt;/name&gt;</span>
-                          <span class="kw">&lt;url&gt;</span>http://192.168.1.248:9111/nexus/content/repositories/releases<span class="kw">&lt;/url&gt;</span>
-                      <span class="kw">&lt;/repository&gt;</span>
-                      <span class="kw">&lt;snapshotRepository&gt;</span>
-                          <span class="kw">&lt;id&gt;</span>deployment<span class="kw">&lt;/id&gt;</span>
-                          <span class="kw">&lt;name&gt;</span>internal repository for snapshots<span class="kw">&lt;/name&gt;</span>
-                          <span class="kw">&lt;url&gt;</span>http://192.168.1.248:9111/nexus/content/repositories/snapshots<span class="kw">&lt;/url&gt;</span>
-                      <span class="kw">&lt;/snapshotRepository&gt;</span>
-                  <span class="kw">&lt;/distributionManagement&gt;</span></code></pre></div>
-              <p>第二， 配置deploy插件：</p>
-              <div class="sourceCode"><pre class="sourceCode xml"><code class="sourceCode xml">        <span class="kw">&lt;plugins&gt;</span>
-                          <span class="kw">&lt;plugin&gt;</span>
-                              <span class="kw">&lt;artifactId&gt;</span>maven-deploy-plugin<span class="kw">&lt;/artifactId&gt;</span>
-                          <span class="kw">&lt;/plugin&gt;</span>
-                      <span class="kw">&lt;/plugins&gt;</span></code></pre></div>
-              <p>顺便把这些plugin一起配置，这样可以jar， source jar， javadoc jar一起发布：</p>
-              <div class="sourceCode"><pre class="sourceCode xml"><code class="sourceCode xml">            <span class="kw">&lt;plugin&gt;</span>
-                              <span class="kw">&lt;groupId&gt;</span>org.apache.maven.plugins<span class="kw">&lt;/groupId&gt;</span>
-                              <span class="kw">&lt;artifactId&gt;</span>maven-compiler-plugin<span class="kw">&lt;/artifactId&gt;</span>
-                              <span class="kw">&lt;configuration&gt;</span>
-                                  <span class="kw">&lt;source&gt;</span>${java_source_version}<span class="kw">&lt;/source&gt;</span>
-                                  <span class="kw">&lt;target&gt;</span>${java_target_version}<span class="kw">&lt;/target&gt;</span>
-                                  <span class="kw">&lt;encoding&gt;</span>${file_encoding}<span class="kw">&lt;/encoding&gt;</span>
-                              <span class="kw">&lt;/configuration&gt;</span>
-                          <span class="kw">&lt;/plugin&gt;</span>
-                          <span class="kw">&lt;plugin&gt;</span>
-                              <span class="kw">&lt;groupId&gt;</span>org.apache.maven.plugins<span class="kw">&lt;/groupId&gt;</span>
-                              <span class="kw">&lt;artifactId&gt;</span>maven-source-plugin<span class="kw">&lt;/artifactId&gt;</span>
-                              <span class="kw">&lt;executions&gt;</span>
-                                  <span class="kw">&lt;execution&gt;</span>
-                                      <span class="kw">&lt;id&gt;</span>attach-sources<span class="kw">&lt;/id&gt;</span>
-                                      <span class="kw">&lt;goals&gt;</span>
-                                          <span class="kw">&lt;goal&gt;</span>jar<span class="kw">&lt;/goal&gt;</span>
-                                      <span class="kw">&lt;/goals&gt;</span>
-                                  <span class="kw">&lt;/execution&gt;</span>
-                              <span class="kw">&lt;/executions&gt;</span>
-                          <span class="kw">&lt;/plugin&gt;</span>
-                          <span class="kw">&lt;plugin&gt;</span>
-                              <span class="kw">&lt;groupId&gt;</span>org.apache.maven.plugins<span class="kw">&lt;/groupId&gt;</span>
-                              <span class="kw">&lt;artifactId&gt;</span>maven-javadoc-plugin<span class="kw">&lt;/artifactId&gt;</span>
-                              <span class="kw">&lt;configuration&gt;</span>
-                                  <span class="kw">&lt;charset&gt;</span>${file_encoding}<span class="kw">&lt;/charset&gt;</span>
-                                  <span class="kw">&lt;encoding&gt;</span>${file_encoding}<span class="kw">&lt;/encoding&gt;</span>
-                              <span class="kw">&lt;/configuration&gt;</span>
-                              <span class="kw">&lt;executions&gt;</span>
-                                  <span class="kw">&lt;execution&gt;</span>
-                                      <span class="kw">&lt;id&gt;</span>attach-javadocs<span class="kw">&lt;/id&gt;</span>
-                                      <span class="kw">&lt;goals&gt;</span>
-                                          <span class="kw">&lt;goal&gt;</span>jar<span class="kw">&lt;/goal&gt;</span>
-                                      <span class="kw">&lt;/goals&gt;</span>
-                                  <span class="kw">&lt;/execution&gt;</span>
-                              <span class="kw">&lt;/executions&gt;</span>
-                          <span class="kw">&lt;/plugin&gt;</span></code></pre></div>
-              <h2 id="settings.xml配置"><span class="header-section-number">1.2</span> settings.xml配置</h2>
-              <p>Nexus通常会设置认证， 只允许指定的credentials可以发布artifacts到nexus， 而这些认证信息就配置在settings.xml中：</p>
-              <div class="sourceCode"><pre class="sourceCode xml"><code class="sourceCode xml">    <span class="kw">&lt;servers&gt;</span>
-                      <span class="kw">&lt;server&gt;</span>
-                          <span class="kw">&lt;id&gt;</span>deployment<span class="kw">&lt;/id&gt;</span>
-                          <span class="kw">&lt;username&gt;</span>deployment<span class="kw">&lt;/username&gt;</span>
-                          <span class="kw">&lt;password&gt;</span>${password}<span class="kw">&lt;/password&gt;</span>
-                      <span class="kw">&lt;/server&gt;</span>
-                  <span class="kw">&lt;/servers&gt;</span></code></pre></div>
-              <blockquote>
-              <p>注意： server的id值需要跟pom.xml中每一个repository的id值相对应！！！ （因为我们是为这些distributionManagement的repository提供认证信息）</p>
-              </blockquote>
-              <h1 id="执行发布部署"><span class="header-section-number">2</span> 执行发布/部署</h1>
-              <p>在当前项目目录下执行<code>mvn deploy</code>坐等发布成功！</p>
-              
-      </div>
+
+<div class="row">
+<div id="header">
+<p class="lead">
+<h1 class="title">Maven项目发布到公司内部Repository(Nexus) #阶段性反刍#</h1>
+<small>
+<h3 class="author">FuqiangWang</h3>
+</small>
+</p>
+</div>
+
+<hr>
+
+<div id="TOC">
+<ul>
+<li><a href="#配置结构关系"><span class="toc-section-number">1</span> 配置结构关系</a><ul>
+<li><a href="#项目pom.xml配置"><span class="toc-section-number">1.1</span> 项目pom.xml配置</a></li>
+<li><a href="#settings.xml配置"><span class="toc-section-number">1.2</span> settings.xml配置</a></li>
+</ul></li>
+<li><a href="#执行发布部署"><span class="toc-section-number">2</span> 执行发布/部署</a></li>
+</ul>
+</div>
+<hr/>
+
+<h1 id="配置结构关系"><span class="header-section-number">1</span> 配置结构关系</h1>
+<h2 id="项目pom.xml配置"><span class="header-section-number">1.1</span> 项目pom.xml配置</h2>
+<p>第一， 先配置发布到哪个repository相关信息:</p>
+<div class="sourceCode"><pre class="sourceCode xml"><code class="sourceCode xml">    <span class="kw">&lt;distributionManagement&gt;</span>
+        <span class="kw">&lt;repository&gt;</span>
+            <span class="kw">&lt;id&gt;</span>deployment<span class="kw">&lt;/id&gt;</span>
+            <span class="kw">&lt;name&gt;</span>internal repository for releases<span class="kw">&lt;/name&gt;</span>
+            <span class="kw">&lt;url&gt;</span>http://192.168.1.248:9111/nexus/content/repositories/releases<span class="kw">&lt;/url&gt;</span>
+        <span class="kw">&lt;/repository&gt;</span>
+        <span class="kw">&lt;snapshotRepository&gt;</span>
+            <span class="kw">&lt;id&gt;</span>deployment<span class="kw">&lt;/id&gt;</span>
+            <span class="kw">&lt;name&gt;</span>internal repository for snapshots<span class="kw">&lt;/name&gt;</span>
+            <span class="kw">&lt;url&gt;</span>http://192.168.1.248:9111/nexus/content/repositories/snapshots<span class="kw">&lt;/url&gt;</span>
+        <span class="kw">&lt;/snapshotRepository&gt;</span>
+    <span class="kw">&lt;/distributionManagement&gt;</span></code></pre></div>
+<p>第二， 配置deploy插件：</p>
+<div class="sourceCode"><pre class="sourceCode xml"><code class="sourceCode xml">        <span class="kw">&lt;plugins&gt;</span>
+            <span class="kw">&lt;plugin&gt;</span>
+                <span class="kw">&lt;artifactId&gt;</span>maven-deploy-plugin<span class="kw">&lt;/artifactId&gt;</span>
+            <span class="kw">&lt;/plugin&gt;</span>
+        <span class="kw">&lt;/plugins&gt;</span></code></pre></div>
+<p>顺便把这些plugin一起配置，这样可以jar， source jar， javadoc jar一起发布：</p>
+<div class="sourceCode"><pre class="sourceCode xml"><code class="sourceCode xml">            <span class="kw">&lt;plugin&gt;</span>
+                <span class="kw">&lt;groupId&gt;</span>org.apache.maven.plugins<span class="kw">&lt;/groupId&gt;</span>
+                <span class="kw">&lt;artifactId&gt;</span>maven-compiler-plugin<span class="kw">&lt;/artifactId&gt;</span>
+                <span class="kw">&lt;configuration&gt;</span>
+                    <span class="kw">&lt;source&gt;</span>${java_source_version}<span class="kw">&lt;/source&gt;</span>
+                    <span class="kw">&lt;target&gt;</span>${java_target_version}<span class="kw">&lt;/target&gt;</span>
+                    <span class="kw">&lt;encoding&gt;</span>${file_encoding}<span class="kw">&lt;/encoding&gt;</span>
+                <span class="kw">&lt;/configuration&gt;</span>
+            <span class="kw">&lt;/plugin&gt;</span>
+            <span class="kw">&lt;plugin&gt;</span>
+                <span class="kw">&lt;groupId&gt;</span>org.apache.maven.plugins<span class="kw">&lt;/groupId&gt;</span>
+                <span class="kw">&lt;artifactId&gt;</span>maven-source-plugin<span class="kw">&lt;/artifactId&gt;</span>
+                <span class="kw">&lt;executions&gt;</span>
+                    <span class="kw">&lt;execution&gt;</span>
+                        <span class="kw">&lt;id&gt;</span>attach-sources<span class="kw">&lt;/id&gt;</span>
+                        <span class="kw">&lt;goals&gt;</span>
+                            <span class="kw">&lt;goal&gt;</span>jar<span class="kw">&lt;/goal&gt;</span>
+                        <span class="kw">&lt;/goals&gt;</span>
+                    <span class="kw">&lt;/execution&gt;</span>
+                <span class="kw">&lt;/executions&gt;</span>
+            <span class="kw">&lt;/plugin&gt;</span>
+            <span class="kw">&lt;plugin&gt;</span>
+                <span class="kw">&lt;groupId&gt;</span>org.apache.maven.plugins<span class="kw">&lt;/groupId&gt;</span>
+                <span class="kw">&lt;artifactId&gt;</span>maven-javadoc-plugin<span class="kw">&lt;/artifactId&gt;</span>
+                <span class="kw">&lt;configuration&gt;</span>
+                    <span class="kw">&lt;charset&gt;</span>${file_encoding}<span class="kw">&lt;/charset&gt;</span>
+                    <span class="kw">&lt;encoding&gt;</span>${file_encoding}<span class="kw">&lt;/encoding&gt;</span>
+                <span class="kw">&lt;/configuration&gt;</span>
+                <span class="kw">&lt;executions&gt;</span>
+                    <span class="kw">&lt;execution&gt;</span>
+                        <span class="kw">&lt;id&gt;</span>attach-javadocs<span class="kw">&lt;/id&gt;</span>
+                        <span class="kw">&lt;goals&gt;</span>
+                            <span class="kw">&lt;goal&gt;</span>jar<span class="kw">&lt;/goal&gt;</span>
+                        <span class="kw">&lt;/goals&gt;</span>
+                    <span class="kw">&lt;/execution&gt;</span>
+                <span class="kw">&lt;/executions&gt;</span>
+            <span class="kw">&lt;/plugin&gt;</span></code></pre></div>
+<h2 id="settings.xml配置"><span class="header-section-number">1.2</span> settings.xml配置</h2>
+<p>Nexus通常会设置认证， 只允许指定的credentials可以发布artifacts到nexus， 而这些认证信息就配置在settings.xml中：</p>
+<div class="sourceCode"><pre class="sourceCode xml"><code class="sourceCode xml">    <span class="kw">&lt;servers&gt;</span>
+        <span class="kw">&lt;server&gt;</span>
+            <span class="kw">&lt;id&gt;</span>deployment<span class="kw">&lt;/id&gt;</span>
+            <span class="kw">&lt;username&gt;</span>deployment<span class="kw">&lt;/username&gt;</span>
+            <span class="kw">&lt;password&gt;</span>${password}<span class="kw">&lt;/password&gt;</span>
+        <span class="kw">&lt;/server&gt;</span>
+    <span class="kw">&lt;/servers&gt;</span></code></pre></div>
+<blockquote>
+<p>注意： server的id值需要跟pom.xml中每一个repository的id值相对应！！！ （因为我们是为这些distributionManagement的repository提供认证信息）</p>
+</blockquote>
+<h1 id="执行发布部署"><span class="header-section-number">2</span> 执行发布/部署</h1>
+<p>在当前项目目录下执行<code>mvn deploy</code>坐等发布成功！</p>
+
+</div>
+
       <div id="qrcode"></div>
       <div class="row">
         <div class="col-md-12 footer">

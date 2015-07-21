@@ -7,12 +7,19 @@
   <meta http-equiv="X-UA-Compatible" content="chrome=1">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="author" content="扶墙老师@afoo.me">
-
-  <link rel="icon" href="/favicon.ico">
+    <link rel="icon" href="/favicon.ico">
 
   <title>Excel-Printing With Jacob - 一个架构士的思考与沉淀之地</title>
 
-      <style type="text/css">
+  
+
+  <link href='/font/News_Cycle/stylesheet.css' rel='stylesheet' type='text/css'>
+  <link href="/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/css/bootstrap-theme.min.css" rel="stylesheet">
+  <link href="/css/afoo.me.css" rel="stylesheet">
+
+  <style type="text/css">code{white-space: pre;}</style>
+    <style type="text/css">
     div.sourceCode { overflow-x: auto; }
     table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
       margin: 0; padding: 0; vertical-align: baseline; border: none; }
@@ -33,12 +40,6 @@
     code > span.er { color: #ff0000; font-weight: bold; }
   </style>
         
-  <link href='/font/News_Cycle/stylesheet.css' rel='stylesheet' type='text/css'>
-
-  <link href="/css/bootstrap.min.css" rel="stylesheet">
-  <link href="/css/bootstrap-theme.min.css" rel="stylesheet">
-  <link href="/css/afoo.me.css" rel="stylesheet">
-
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>
@@ -58,82 +59,84 @@
           </a>
         </div>
     </div>
-    <div class="col-xs-12 col-md-10">
 
-          
-          <div class="row">
-                        <div id="header">
-              <p class="lead">
-              <h1 class="title">Excel-Printing With Jacob</h1>
-                            <small>
-                  <h3 class="author">FuqiangWang</h3>
-              </small>
-                                          </p>
-            </div>
-            
-              <hr>
+<div class="col-xs-12 col-md-10">
 
-              
-              <blockquote>
-              <p>2014年从msn space存档中重新恢复出来！</p>
-              </blockquote>
-              <p>在Java程序中直接对指定的excel文件进行打印，而不是打开excel后手动的进行打印，不知道有没有人遇到此种窘境？！首先Java1.4的JPS连PDF的打印好像都不太可能，其次，好像搜遍整个net也没有找到个好用的lib(以上观点或许有所偏颇，因为不经没有太多时间进行更深入的翻阅相关资料)，这就是促使偶继续求助于jacob的原因了，因为偶发现有人给出过用VB写exe，Java调用的类似解决思路。</p>
-              <p>其实以前就因为excel的问题求助于Samir有关Jacob的问题，而且也给出了一个圆满的解决。现在偶实在不好意思再次劳烦，所以，自己在以前的代码之上拼凑出了以下代码，呵呵，it works!</p>
-              <div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="kw">public</span> <span class="kw">class</span> JacobExcelPrinter {
-              
-                  <span class="kw">private</span> ActiveXComponent excel;
-                  <span class="co">// excel workbooks </span>
-                  <span class="kw">private</span> Dispatch workbooks;
-                  <span class="co">// excel file varient</span>
-                  <span class="kw">private</span> Variant workbook;
-              
-                  <span class="kw">public</span> <span class="fu">JacobExcelPrinter</span>()
-                  {
-              
-                  }
-                  <span class="co">/*</span>
-              <span class="co">    * non-thread-safe</span>
-              <span class="co">    */</span>
-                  <span class="kw">public</span> <span class="dt">void</span> <span class="fu">print</span>(String filename)
-                  {
-                  <span class="kw">try</span>
-                  {
-                  <span class="co">// start the Excel </span>
-                  excel = <span class="kw">new</span> <span class="fu">ActiveXComponent</span>(<span class="st">&quot;Excel.Application&quot;</span>);
-                  <span class="co">// first time, we need set the excel to be invisible</span>
-                  excel.<span class="fu">setProperty</span>(<span class="st">&quot;Visible&quot;</span>,<span class="kw">new</span> <span class="fu">Variant</span>(<span class="kw">false</span>));
-                  <span class="co">// get workbooks</span>
-                  workbooks = excel.<span class="fu">getProperty</span>(<span class="st">&quot;WorkBooks&quot;</span>).<span class="fu">toDispatch</span>();
-                  workbook = Dispatch.<span class="fu">callN</span>(workbooks,<span class="st">&quot;Open&quot;</span>,<span class="kw">new</span> Object[]{filename});
-              
-                  <span class="co">// Dispatch.call(Dispatch.get(workbook.toDispatch(),&quot;ActiveSheet&quot;).toDispatch(),&quot;PrintOut&quot;);</span>
-                  Dispatch.<span class="fu">call</span>(Dispatch.<span class="fu">get</span>(workbook.<span class="fu">toDispatch</span>(),<span class="st">&quot;Worksheets&quot;</span>).<span class="fu">toDispatch</span>(),<span class="st">&quot;PrintOut&quot;</span>);
-                  }
-                  <span class="kw">finally</span>
-                  {
-                  <span class="co">// quit the excel application</span>
-                  excel.<span class="fu">invoke</span>(<span class="st">&quot;Quit&quot;</span>,<span class="kw">new</span> Variant[]{});
-                  <span class="co">// invoke the method to count down the numbers of the reference,</span>
-                  <span class="co">// and release them one by one to kill the excel process finally.</span>
-                  ComThread.<span class="fu">Release</span>();
-                  }
-              
-                  }
-              
-                  <span class="co">/**</span>
-              <span class="co">    * </span><span class="kw">@param args</span>
-              <span class="co">    */</span>
-                  <span class="kw">public</span> <span class="dt">static</span> <span class="dt">void</span> <span class="fu">main</span>(String[] args) {
-                  JacobExcelPrinter printer = <span class="kw">new</span> <span class="fu">JacobExcelPrinter</span>();
-                  printer.<span class="fu">print</span>(<span class="st">&quot;c:/xx.xls&quot;</span>);
-                  }
-              
-              }
-              </code></pre></div>
-              <p>通过上面的ｕｔｉｌ类就可以直接发送某个文件到打印机打印了，应该不是唯一的解决方法，但是我的，呵呵，如果哪位有更好的解决方法，还望在网上与大家分享！！！</p>
-              <p>by Darren.Wang (2005-07-12)</p>
-              
-      </div>
+
+<div class="row">
+<div id="header">
+<p class="lead">
+<h1 class="title">Excel-Printing With Jacob</h1>
+<small>
+<h3 class="author">FuqiangWang</h3>
+</small>
+</p>
+</div>
+
+<hr>
+
+
+<blockquote>
+<p>2014年从msn space存档中重新恢复出来！</p>
+</blockquote>
+<p>在Java程序中直接对指定的excel文件进行打印，而不是打开excel后手动的进行打印，不知道有没有人遇到此种窘境？！首先Java1.4的JPS连PDF的打印好像都不太可能，其次，好像搜遍整个net也没有找到个好用的lib(以上观点或许有所偏颇，因为不经没有太多时间进行更深入的翻阅相关资料)，这就是促使偶继续求助于jacob的原因了，因为偶发现有人给出过用VB写exe，Java调用的类似解决思路。</p>
+<p>其实以前就因为excel的问题求助于Samir有关Jacob的问题，而且也给出了一个圆满的解决。现在偶实在不好意思再次劳烦，所以，自己在以前的代码之上拼凑出了以下代码，呵呵，it works!</p>
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="kw">public</span> <span class="kw">class</span> JacobExcelPrinter {
+
+    <span class="kw">private</span> ActiveXComponent excel;
+    <span class="co">// excel workbooks </span>
+    <span class="kw">private</span> Dispatch workbooks;
+    <span class="co">// excel file varient</span>
+    <span class="kw">private</span> Variant workbook;
+
+    <span class="kw">public</span> <span class="fu">JacobExcelPrinter</span>()
+    {
+
+    }
+    <span class="co">/*</span>
+<span class="co">    * non-thread-safe</span>
+<span class="co">    */</span>
+    <span class="kw">public</span> <span class="dt">void</span> <span class="fu">print</span>(String filename)
+    {
+    <span class="kw">try</span>
+    {
+    <span class="co">// start the Excel </span>
+    excel = <span class="kw">new</span> <span class="fu">ActiveXComponent</span>(<span class="st">&quot;Excel.Application&quot;</span>);
+    <span class="co">// first time, we need set the excel to be invisible</span>
+    excel.<span class="fu">setProperty</span>(<span class="st">&quot;Visible&quot;</span>,<span class="kw">new</span> <span class="fu">Variant</span>(<span class="kw">false</span>));
+    <span class="co">// get workbooks</span>
+    workbooks = excel.<span class="fu">getProperty</span>(<span class="st">&quot;WorkBooks&quot;</span>).<span class="fu">toDispatch</span>();
+    workbook = Dispatch.<span class="fu">callN</span>(workbooks,<span class="st">&quot;Open&quot;</span>,<span class="kw">new</span> Object[]{filename});
+
+    <span class="co">// Dispatch.call(Dispatch.get(workbook.toDispatch(),&quot;ActiveSheet&quot;).toDispatch(),&quot;PrintOut&quot;);</span>
+    Dispatch.<span class="fu">call</span>(Dispatch.<span class="fu">get</span>(workbook.<span class="fu">toDispatch</span>(),<span class="st">&quot;Worksheets&quot;</span>).<span class="fu">toDispatch</span>(),<span class="st">&quot;PrintOut&quot;</span>);
+    }
+    <span class="kw">finally</span>
+    {
+    <span class="co">// quit the excel application</span>
+    excel.<span class="fu">invoke</span>(<span class="st">&quot;Quit&quot;</span>,<span class="kw">new</span> Variant[]{});
+    <span class="co">// invoke the method to count down the numbers of the reference,</span>
+    <span class="co">// and release them one by one to kill the excel process finally.</span>
+    ComThread.<span class="fu">Release</span>();
+    }
+
+    }
+
+    <span class="co">/**</span>
+<span class="co">    * </span><span class="kw">@param args</span>
+<span class="co">    */</span>
+    <span class="kw">public</span> <span class="dt">static</span> <span class="dt">void</span> <span class="fu">main</span>(String[] args) {
+    JacobExcelPrinter printer = <span class="kw">new</span> <span class="fu">JacobExcelPrinter</span>();
+    printer.<span class="fu">print</span>(<span class="st">&quot;c:/xx.xls&quot;</span>);
+    }
+
+}
+</code></pre></div>
+<p>通过上面的ｕｔｉｌ类就可以直接发送某个文件到打印机打印了，应该不是唯一的解决方法，但是我的，呵呵，如果哪位有更好的解决方法，还望在网上与大家分享！！！</p>
+<p>by Darren.Wang (2005-07-12)</p>
+
+</div>
+
       <div id="qrcode"></div>
       <div class="row">
         <div class="col-md-12 footer">

@@ -7,12 +7,19 @@
   <meta http-equiv="X-UA-Compatible" content="chrome=1">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="author" content="扶墙老师@afoo.me">
-
-  <link rel="icon" href="/favicon.ico">
+    <link rel="icon" href="/favicon.ico">
 
   <title>我的Git参考手册 - 一个架构士的思考与沉淀之地</title>
 
-      <style type="text/css">
+  
+
+  <link href='/font/News_Cycle/stylesheet.css' rel='stylesheet' type='text/css'>
+  <link href="/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/css/bootstrap-theme.min.css" rel="stylesheet">
+  <link href="/css/afoo.me.css" rel="stylesheet">
+
+  <style type="text/css">code{white-space: pre;}</style>
+    <style type="text/css">
     div.sourceCode { overflow-x: auto; }
     table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
       margin: 0; padding: 0; vertical-align: baseline; border: none; }
@@ -33,12 +40,6 @@
     code > span.er { color: #ff0000; font-weight: bold; }
   </style>
         
-  <link href='/font/News_Cycle/stylesheet.css' rel='stylesheet' type='text/css'>
-
-  <link href="/css/bootstrap.min.css" rel="stylesheet">
-  <link href="/css/bootstrap-theme.min.css" rel="stylesheet">
-  <link href="/css/afoo.me.css" rel="stylesheet">
-
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>
@@ -58,43 +59,45 @@
           </a>
         </div>
     </div>
-    <div class="col-xs-12 col-md-10">
 
-          
-          <div class="row">
-                        <div id="header">
-              <p class="lead">
-              <h1 class="title">我的Git参考手册</h1>
-                            <small>
-                  <h3 class="author">FuqiangWang</h3>
-              </small>
-                                          </p>
-            </div>
-            
-              <hr>
+<div class="col-xs-12 col-md-10">
 
-                            <div id="TOC">
-                <ul>
-                <li><a href="#舍弃所有本地变更-回滚到最后提交状态"><span class="toc-section-number">1</span> 舍弃所有本地变更， 回滚到最后提交状态</a></li>
-                <li><a href="#打包指定版本的文件"><span class="toc-section-number">2</span> 打包指定版本的文件</a></li>
-                <li><a href="#remote-branch"><span class="toc-section-number">3</span> Remote Branch</a></li>
-                </ul>
-              </div>
-              <hr/>
-              
-              <h1 id="舍弃所有本地变更-回滚到最后提交状态"><span class="header-section-number">1</span> 舍弃所有本地变更， 回滚到最后提交状态</h1>
-              <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">git</span> commit -a -m <span class="st">&quot;Saving my work, just in case&quot;</span>
-              <span class="kw">git</span> branch my-saved-work
-              
-              <span class="kw">git</span> fetch origin
-              <span class="kw">git</span> reset --hard origin/master</code></pre></div>
-              <h1 id="打包指定版本的文件"><span class="header-section-number">2</span> 打包指定版本的文件</h1>
-              <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">git</span> archive -o docs.zip v2.2.0 <span class="st">&#39;Documentation/*.html&#39;</span></code></pre></div>
-              <p>git版本2.2.0</p>
-              <h1 id="remote-branch"><span class="header-section-number">3</span> Remote Branch</h1>
-              <p><a href="http://git-scm.com/book/en/v2/Git-Branching-Remote-Branches" class="uri">http://git-scm.com/book/en/v2/Git-Branching-Remote-Branches</a></p>
-              
-      </div>
+
+<div class="row">
+<div id="header">
+<p class="lead">
+<h1 class="title">我的Git参考手册</h1>
+<small>
+<h3 class="author">FuqiangWang</h3>
+</small>
+</p>
+</div>
+
+<hr>
+
+<div id="TOC">
+<ul>
+<li><a href="#舍弃所有本地变更-回滚到最后提交状态"><span class="toc-section-number">1</span> 舍弃所有本地变更， 回滚到最后提交状态</a></li>
+<li><a href="#打包指定版本的文件"><span class="toc-section-number">2</span> 打包指定版本的文件</a></li>
+<li><a href="#remote-branch"><span class="toc-section-number">3</span> Remote Branch</a></li>
+</ul>
+</div>
+<hr/>
+
+<h1 id="舍弃所有本地变更-回滚到最后提交状态"><span class="header-section-number">1</span> 舍弃所有本地变更， 回滚到最后提交状态</h1>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">git</span> commit -a -m <span class="st">&quot;Saving my work, just in case&quot;</span>
+<span class="kw">git</span> branch my-saved-work
+
+<span class="kw">git</span> fetch origin
+<span class="kw">git</span> reset --hard origin/master</code></pre></div>
+<h1 id="打包指定版本的文件"><span class="header-section-number">2</span> 打包指定版本的文件</h1>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">git</span> archive -o docs.zip v2.2.0 <span class="st">&#39;Documentation/*.html&#39;</span></code></pre></div>
+<p>git版本2.2.0</p>
+<h1 id="remote-branch"><span class="header-section-number">3</span> Remote Branch</h1>
+<p><a href="http://git-scm.com/book/en/v2/Git-Branching-Remote-Branches" class="uri">http://git-scm.com/book/en/v2/Git-Branching-Remote-Branches</a></p>
+
+</div>
+
       <div id="qrcode"></div>
       <div class="row">
         <div class="col-md-12 footer">

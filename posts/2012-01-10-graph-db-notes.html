@@ -7,19 +7,20 @@
   <meta http-equiv="X-UA-Compatible" content="chrome=1">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="author" content="扶墙老师@afoo.me">
-
-  <link rel="icon" href="/favicon.ico">
+    <meta name="date" content="2012-01-10" />
+    <link rel="icon" href="/favicon.ico">
 
   <title>&quot;Notes Of GraphDBs&quot; - 一个架构士的思考与沉淀之地</title>
 
-    <meta name="date" content="2012-01-10" />
-          
-  <link href='/font/News_Cycle/stylesheet.css' rel='stylesheet' type='text/css'>
+  
 
+  <link href='/font/News_Cycle/stylesheet.css' rel='stylesheet' type='text/css'>
   <link href="/css/bootstrap.min.css" rel="stylesheet">
   <link href="/css/bootstrap-theme.min.css" rel="stylesheet">
   <link href="/css/afoo.me.css" rel="stylesheet">
 
+  <style type="text/css">code{white-space: pre;}</style>
+        
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>
@@ -39,295 +40,297 @@
           </a>
         </div>
     </div>
-    <div class="col-xs-12 col-md-10">
 
-          
-          <div class="row">
-                        <div id="header">
-              <p class="lead">
-              <h1 class="title">&quot;Notes Of GraphDBs&quot;</h1>
-                            <small>
-                  <h3 class="author">fujohnwang</h3>
-              </small>
-                                        <h4 class="date">2012-01-10</h4>
-                              </p>
-            </div>
-            
-              <hr>
+<div class="col-xs-12 col-md-10">
 
-                            <div id="TOC">
-                <ul>
-                <li><a href="#basic-concepts"><span class="toc-section-number">1</span> Basic Concepts</a><ul>
-                <li><a href="#graph-types"><span class="toc-section-number">1.1</span> Graph Types</a></li>
-                <li><a href="#basic-operations"><span class="toc-section-number">1.2</span> Basic Operations</a></li>
-                <li><a href="#graph-theoretic-data-structures"><span class="toc-section-number">1.3</span> Graph-theoretic data structures</a></li>
-                <li><a href="#图论应用场景"><span class="toc-section-number">1.4</span> 图论应用场景</a></li>
-                </ul></li>
-                <li><a href="#typical-products"><span class="toc-section-number">2</span> Typical Products</a><ul>
-                <li><a href="#neo4j"><span class="toc-section-number">2.1</span> <a href="http://neo4j.org/">Neo4J</a></a></li>
-                <li><a href="#orientdb"><span class="toc-section-number">2.2</span> <a href="http://www.orientechnologies.com/orient-db.htm">OrientDB</a></a></li>
-                <li><a href="#flockdb"><span class="toc-section-number">2.3</span> <a href="https://github.com/twitter/flockdb">FlockDB</a></a></li>
-                <li><a href="#dex"><span class="toc-section-number">2.4</span> <a href="http://www.sparsity-technologies.com/dex">DEX</a></a><ul>
-                <li><a href="#scenarios-for-dex"><span class="toc-section-number">2.4.1</span> Scenarios for DEX</a></li>
-                </ul></li>
-                <li><a href="#infogrid"><span class="toc-section-number">2.5</span> <a href="http://infogrid.org/">Infogrid</a></a></li>
-                <li><a href="#other-ones"><span class="toc-section-number">2.6</span> Other Ones…</a></li>
-                </ul></li>
-                <li><a href="#tools-support"><span class="toc-section-number">3</span> Tools &amp; Support</a></li>
-                <li><a href="#关于graphdb的一些个人想法"><span class="toc-section-number">4</span> 关于GraphDB的一些个人想法</a><ul>
-                <li><a href="#存储结构抽象和引申"><span class="toc-section-number">4.1</span> 存储结构抽象和引申</a></li>
-                <li><a href="#值得关注的点"><span class="toc-section-number">4.2</span> 值得关注的点</a></li>
-                <li><a href="#使用场景分析"><span class="toc-section-number">4.3</span> 使用场景分析</a><ul>
-                <li><a href="#适合的场景"><span class="toc-section-number">4.3.1</span> 适合的场景</a></li>
-                </ul></li>
-                </ul></li>
-                <li><a href="#references"><span class="toc-section-number">5</span> References</a></li>
-                </ul>
-              </div>
-              <hr/>
-              
-              <h1 id="basic-concepts"><span class="header-section-number">1</span> Basic Concepts</h1>
-              <p>图存储 + 图运算 引申出一套生态系统， GraphDB属于存储序列， 图计算则以<a href="http://www.slideshare.net/shatteredNirvana/pregel-a-system-for-largescale-graph-processing?from=ss_embed">google的pregel</a>为典型代表（使用BSP计算模型），还包括了<a href="http://incubator.apache.org/hama/">Hama</a>，<a href="http://incubator.apache.org/giraph/">Giraph</a>等图计算框架。本Note主要侧重GraphDB相关内容， 包括基本概念， 基本操作和访问， 存储结构等等。</p>
-              <p>A graph is composed of Nodes(Vertices) [with Properties] and Edges [with Labels]. <img src="http://upload.wikimedia.org/wikipedia/en/3/3a/GraphDatabase_PropertyGraph.png" alt="graph sample picture from wikipedia" /></p>
-              <h2 id="graph-types"><span class="header-section-number">1.1</span> Graph Types</h2>
-              <ol style="list-style-type: decimal">
-              <li>directed graph（有向图） -&gt; flow network <img src="http://techportal.ibuildings.com/wp-content/uploads/2009/09/graph2.png" /></li>
-              <li><p>undirected graph</p>
-              <img src="http://techportal.ibuildings.com/wp-content/uploads/2009/09/graph1.png" /></li>
-              <li>Mixed Graph(单向，双向， 无向边混合)</li>
-              <li>Multigraph (多边)</li>
-              <li>Weighted Graph(加权)</li>
-              <li>Property Graph
-              <ul>
-              <li>对于Property Graph类型， 每个node和edge都可以有多组k-v形式的properties来附加更多信息， 另外， 每个edge可以有label， 用来表示不同类型的edge，这应该通常多见于multigraph中，即两个node之间存在多个edge的情形，而多个edge可以是不同类型的edge，比如like， follows等。 label和properties对于edge来说是不同的属性， 不要混淆。</li>
-              </ul></li>
-              </ol>
-              <h2 id="basic-operations"><span class="header-section-number">1.2</span> Basic Operations</h2>
-              <p>The basic operations provided by a graph data structure G usually include:</p>
-              <ul>
-              <li><strong>adjacent(G, x, y)</strong>: tests whether there is an edge from node x to node y.</li>
-              <li><strong>neighbors(G, x)</strong>: lists all nodes y such that there is an edge from x to y.</li>
-              <li><strong>add(G, x, y)</strong>: adds to G the edge from x to y, if it is not there.</li>
-              <li><strong>delete(G, x, y)</strong>: removes the edge from x to y, if it is there.</li>
-              <li><strong>get_node_value(G, x)</strong>: returns the value associated with the node x.</li>
-              <li><strong>set_node_value(G, x, a)</strong>: sets the value associated with the node x to a.</li>
-              </ul>
-              <p>Structures that associate values to the edges usually also provide:</p>
-              <ul>
-              <li><strong>get_edge_value(G, x, y)</strong>: returns the value associated to the edge (x,y).</li>
-              <li><strong>set_edge_value(G, x, y, v)</strong>: sets the value associated to the edge (x,y) to v.</li>
-              </ul>
-              <h2 id="graph-theoretic-data-structures"><span class="header-section-number">1.3</span> Graph-theoretic data structures</h2>
-              <ol style="list-style-type: decimal">
-              <li>List structures
-              <ul>
-              <li>Incidence list</li>
-              <li>Adjacency list</li>
-              </ul></li>
-              <li>Matrix structures
-              <ul>
-              <li>Incidence matrix</li>
-              <li>Adjacency matrix</li>
-              <li>Laplacian matrix or &quot;Kirchhoff matrix&quot; or &quot;Admittance matrix&quot;</li>
-              <li>Distance matrix</li>
-              </ul></li>
-              </ol>
-              <div class="figure">
-              <img src="http://www.parallellabs.com/wp-content/uploads/2011/12/%E7%A8%80%E7%96%8F%E5%9B%BE%E5%92%8C%E7%A8%A0%E5%AF%86%E5%9B%BE%E7%9A%84%E9%82%BB%E6%8E%A5%E8%A1%A8%E4%B8%8E%E9%82%BB%E6%8E%A5%E7%9F%A9%E9%98%B5%E5%BD%A2%E5%BC%8F.bmp" alt="邻接矩阵OR邻接表" />
-              <p class="caption">邻接矩阵OR邻接表</p>
-              </div>
-              <h2 id="图论应用场景"><span class="header-section-number">1.4</span> 图论应用场景</h2>
-              <ul>
-              <li>Task planning</li>
-              <li>Scheduling</li>
-              <li>Process assignation</li>
-              <li>Routing</li>
-              <li>Logistics</li>
-              <li>League planning</li>
-              <li>Pattern Recognition</li>
-              <li>Dependency analysis</li>
-              <li>Impact analysis</li>
-              <li>Network flow – Traffic analysis and optimization – Delivery optimization</li>
-              <li>Optimization of tasks</li>
-              </ul>
-              <p>更多参考<a href="http://www.slideshare.net/purbon/graph-t-6162024?from=ss_embed" class="uri">http://www.slideshare.net/purbon/graph-t-6162024?from=ss_embed</a></p>
-              <h1 id="typical-products"><span class="header-section-number">2</span> Typical Products</h1>
-              <h2 id="neo4j"><span class="header-section-number">2.1</span> <a href="http://neo4j.org/">Neo4J</a></h2>
-              <p>Graph DB, AGPL3 license(<em>Sucks, I think</em>), java made, ACID, HA, M-S Caching Shards, Domain-specific, embeddable, REST, etc.</p>
-              <p>Neo4j的授权协议包括商业性质的授权和开源协议的授权，但开源协议授权是基于AGPL， 意味着如果要用neo4j，那你的产品也要开源，这对许多公司的产品来说是不可接受的， 另外， 许多高级特性只在商业版中才有，比如HA， backup等，没有了这些高级特性， neo4j也就剩下玩玩的资本了。</p>
-              <p>所以， 不再对neo4j做更多了解和涉猎， 只罗列部分资料，如果有人感兴趣可以看下：</p>
-              <ol style="list-style-type: decimal">
-              <li><a href="http://www.slideshare.net/slideshow/embed_code/9600796#">An Introductionto Neo4j</a> Slide</li>
-              <li><a href="http://www.slideshare.net/peterneubauer/gdm-2011-neo4j-and-real-world-apps?from=ss_embed">Neo4j and real world apps</a></li>
-              </ol>
-              <h2 id="orientdb"><span class="header-section-number">2.2</span> <a href="http://www.orientechnologies.com/orient-db.htm">OrientDB</a></h2>
-              <p><a href="http://www.orientechnologies.com/orient-graphdb.htm" class="uri">http://www.orientechnologies.com/orient-graphdb.htm</a></p>
-              <p>Document-Graph DB, Apache2 License, Java Made, ACID Support, HA via replication, embeddable, REST&amp;SQL-like access.</p>
-              <p>OrientDB实际上不是一个纯的GraphDB， 它是构建在DocumentDB的模型之上。 除了GraphDB， OrientDB还在基础的DocumentDB基础模型之上构建了KV, OO等类型的DB。</p>
-              <p><strong>References Of OrientDB</strong>:</p>
-              <ol style="list-style-type: decimal">
-              <li><a href="http://www.slideshare.net/lvca/orientdb-nosqlday?from=ss_embed">OrientDB for real &amp; Web App development</a></li>
-              <li><a href="http://www.snoopal.com/documents/xO8QatV3gPyTAkWNXO1X57/OrientDB-the-database-for-the-Web">OrientDB the database for the Web</a></li>
-              <li><a href="http://code.google.com/p/orient/wiki/GraphDatabase" class="uri">http://code.google.com/p/orient/wiki/GraphDatabase</a></li>
-              <li><a href="http://code.google.com/p/orient/wiki/GraphEdTutorial" class="uri">http://code.google.com/p/orient/wiki/GraphEdTutorial</a></li>
-              </ol>
-              <h2 id="flockdb"><span class="header-section-number">2.3</span> <a href="https://github.com/twitter/flockdb">FlockDB</a></h2>
-              <p>twitter特定场景下的graphed产品， 并非力图实现所有的features，而只关注twitter自身或者网站常见的一些问题， 比如在twitter内部只用flockdb存储用户关系图以及二级索引等信息。</p>
-              <p>flocked存储采用node+edge一起存储的策略，而且针对一个edge，会按照forward和backward分别存储2条， 这种策略内聚性不错，但是否耦合性太紧，不便于扩展那？！（<strong>更深层次的edge关联不好管理，尤其是引入分布式存储结构之后！</strong>）</p>
-              <p>flockdb底层使用mysql作为存储， 使用twitter的gizzard分布式数据访问层来管理mysql分区集群， 在这之上， 才是实现的重头戏， 成为flapps服务集群， flapps是stateless的， 所以可以很容易的横向扩展，而m底层的mysql存储层在gizzard的帮助下也可以横向扩展，所以总的来说， flockdb的横向扩展能力是没啥问题的。</p>
-              <div class="figure">
-              <img src="https://github.com/twitter/flockdb/raw/master/doc/flockdb-layout.png" alt="https://github.com/twitter/flockdb/raw/master/doc/flockdb-layout.png" />
-              <p class="caption">https://github.com/twitter/flockdb/raw/master/doc/flockdb-layout.png</p>
-              </div>
-              <p>从使用场景上来看， flockdb更适合浅层次的遍历和查询(少于2个层次？！)， 而深层次的遍历估计会因为同时牵扯index的查询和数据的查询而性能急剧下降。（个人猜测）从这个角度来看， flockdb还真是一个twitter特定的产品，跟一般意义上的graphdb有很大的差异，即traversal能力的强弱。</p>
-              <p>flockdb使用thrift暴露远程服务，所以， 客户端可以使用多种语言实现，包括ruby， java， c/c++等， twitter内部应该用的是gizzmo（ruby客户端）。</p>
-              <p>结论： flockdb虽然速度和横向扩展能力不错，但graph模型和处理能力太弱，不一定适合“来往”的业务模型。</p>
-              <p><strong>References</strong></p>
-              <ol style="list-style-type: decimal">
-              <li><a href="http://engineering.twitter.com/2010/05/introducing-flockdb.html">Introducing FlockDB</a></li>
-              <li><a href="http://groups.google.com/group/flockdb">Google Group of FlockDB</a></li>
-              <li><a href="http://www.infotales.com/twitters-database-flockdb/">Twitter’s Database FlockDB</a></li>
-              <li><a href="http://nosql.mypopescu.com/post/4423840717/flockdb-and-graph-databases">FlockDB and Graph Databases</a></li>
-              <li><a href="http://stackoverflow.com/questions/2629372/flockdb-what-is-it-and-best-cases-for-it-uses">FlockDB - What is it? And best cases for it uses</a></li>
-              <li><a href="http://newsicare.wordpress.com/2010/10/10/flockdb-twitters-powerful-weapon/">Flockdb: Twitter’s powerful weapon</a></li>
-              </ol>
-              <h2 id="dex"><span class="header-section-number">2.4</span> <a href="http://www.sparsity-technologies.com/dex">DEX</a></h2>
-              <p>C++ core, Java, .Net API, dual Personal-evaluation or Commercial license</p>
-              <p><strong>Labeled, Directed And Attributed Multigraph Model</strong></p>
-              <h3 id="scenarios-for-dex"><span class="header-section-number">2.4.1</span> Scenarios for DEX</h3>
-              <ul>
-              <li>Social Networks
-              <ul>
-              <li>Twitter, Facebook, Linkedin, Flickr, Delicious, MySpace</li>
-              </ul></li>
-              <li>Information Networks
-              <ul>
-              <li>Bibliographical databases, Wikipedia, IMDB</li>
-              </ul></li>
-              <li>Security Networks &amp; fraud detection
-              <ul>
-              <li>Economic transactions analysis</li>
-              </ul></li>
-              <li>Recommendation
-              <ul>
-              <li>ecommerce</li>
-              </ul></li>
-              <li>Media Analysis
-              <ul>
-              <li>Audiovisual content recommendation</li>
-              </ul></li>
-              <li>Physical Netorks
-              <ul>
-              <li>Logistics, Transport, Electrical, Telecom Networks</li>
-              </ul></li>
-              <li>Biological Networks</li>
-              </ul>
-              <p><strong>Curiosity</strong></p>
-              <ol style="list-style-type: decimal">
-              <li><strong>基于磁盘的高容量存储是怎么做的？！</strong></li>
-              <li>存储结构是什么样儿的？自定义？</li>
-              <li>横向扩展能力如何？</li>
-              </ol>
-              <p><strong>References</strong></p>
-              <ol style="list-style-type: decimal">
-              <li><a href="http://www.sparsity-technologies.com/downloads/dex_brochure.pdf" class="uri">http://www.sparsity-technologies.com/downloads/dex_brochure.pdf</a></li>
-              <li><a href="http://sparsity-technologies.com/blog/?p=97">DEX 3.0 features: Graph algorithms</a></li>
-              <li><a href="http://www.slideshare.net/SparsityTechnologies/dex-introduction?from=ss_embed">Dex: Introduction</a></li>
-              <li><a href="http://www.slideshare.net/SparsityTechnologies/dex-seminar-tutorial?from=ss_embed">DEX: Seminar Tutorial</a></li>
-              </ol>
-              <h2 id="infogrid"><span class="header-section-number">2.5</span> <a href="http://infogrid.org/">Infogrid</a></h2>
-              <p>MeshNetg公司开源产品， MeshNet提供商业支持。产品整体按照不同的关注点分为不同的子项目， 包括核心的graphdb， 关注cluster的grid， 关注存储的stores以及展现和工具支持，可以使用不同的存储方案， 包括mysql， FS， HDFS等。</p>
-              <p><strong>References</strong></p>
-              <ol style="list-style-type: decimal">
-              <li><a href="http://www.slideshare.net/infogrid/info-grid-core-ideas">InfoGrid Core Ideas</a></li>
-              <li><a href="http://www.slideshare.net/infogrid/a-taste-of-infogrid-1688328">A Taste Of InfoGrid</a></li>
-              <li><a href="http://www.slideshare.net/infogrid/the-infogrid-graph-database">The InfoGrid Graph DataBase</a></li>
-              </ol>
-              <h2 id="other-ones"><span class="header-section-number">2.6</span> Other Ones…</h2>
-              <ol style="list-style-type: decimal">
-              <li>InfiniteGraph
-              <ul>
-              <li><a href="http://www.slideshare.net/infinitegraph/gluecon-infinite-graph-public-presentation">Gluecon InfiniteGraph Presentation: Scaling the Social Graph in the Cloud</a></li>
-              </ul></li>
-              <li><a href="http://www.kobrix.com/hgdb.jsp">HypergraphDB</a>
-              <ul>
-              <li>LGPL, Java Made ,ACID, P2P distribution and replication, storage on BDB</li>
-              <li><a href="http://strangeloop2010.com/talk/presentation_file/14445/Iordanov-HyperGraphDB.pdf">HyperGraphDB:Data Management for Complex Systems</a></li>
-              </ul></li>
-              <li><a href="https://github.com/tinkerpop/blueprints/wiki/TinkerGraph">TinkerGraph</a> - In-Memory Graph, Not for production.</li>
-              </ol>
-              <h1 id="tools-support"><span class="header-section-number">3</span> Tools &amp; Support</h1>
-              <p>TinkerPop公司在这个领域显然做到工作很出色！</p>
-              <ol style="list-style-type: decimal">
-              <li><a href="https://github.com/tinkerpop/blueprints">Blueprints</a> <img src="https://github.com/tinkerpop/rexster/raw/master/doc/images/rexster-system-arch.png" alt="rexster-system-arch" /></li>
-              <li><a href="https://github.com/tinkerpop/gremlin">Gremlin</a>
-              <ul>
-              <li><a href="http://www.slideshare.net/slidarko/the-pathology-of-graph-databases?from=ss_embed">The Pathology of Graph Databases</a> - Gremlin Graph Language</li>
-              </ul></li>
-              <li><a href="http://rexster.tinkerpop.com/">reXster</a></li>
-              <li><a href="http://prefuse.org/">Prefuse</a> - visualization tool</li>
-              </ol>
-              <h1 id="关于graphdb的一些个人想法"><span class="header-section-number">4</span> 关于GraphDB的一些个人想法</h1>
-              <p>个人感觉，GraphDB的服务层可以独立于存储层，只要对存储层做合理的抽象， 现在的许多存储方案都可以使用，包括常见的RDBMS，以及各种KV啦，ColumnOrientedDB啦，等等。 但数据的组织，应该参考GraphDB的服务层设计， 尽量贴近服务层，规避特定存储层在GraphDB的访问模式下的各种弊端，比如“索引的空间和时间消耗”.</p>
-              <p>GraphDB强调索引的Vertices Adjacency能力， 即通过Vertex可以直接获得临近的Vertices，而不用像在RDBMS那样， 去B-Tree等索引中先查看索引，再做join的方式来获取相关vertices， 换句话说， 当前vertex本身已经是临近的vertices的索引。</p>
-              <p>当然， GraphDB并不排斥其它索引形式，比如完全可以通过B-Tree, B+Tree或者lucency等手段对vertices或者edge的properties进行索引或者对root vertices set进行索引，以加快graph其它相关信息的检索和访问。</p>
-              <h2 id="存储结构抽象和引申"><span class="header-section-number">4.1</span> 存储结构抽象和引申</h2>
-              <p>首先， graph中核心元素的存储可以分开， 比如分为：</p>
-              <ol style="list-style-type: decimal">
-              <li>node存储（适合使用索引的存储）</li>
-              <li>edge存储（组合索引？！）</li>
-              <li>properties存储（比较适合用KV存储）</li>
-              </ol>
-              <p>分开的好处是， 不同元素的存储方案选择比较灵活， 另外分区扩展也很容易，但也有弊端，比如构建索引的空间开销，以及搜索期间跨越不同存储的时间开销等。为了规避弊端， 可以根据某些指标（比如子图）将核心元素的存储分区做locality， 不过，这又进一步会引入跨分区遍历的开销…</p>
-              <p>反过来， 几种核心元素一起存储又会怎样？！ 想自然语言的语句似的将所有信息都包含进一个单元（比如句子）当然可以，绝对高内聚，但使用的适合可能就不太方便， 要做多级索引才能提高查询和计算速度，而索引增多，随着查找层次的加深，又会进一步降低性能，所以完全的高内聚的一起存储所有信息显然不是啥太明智的做法。</p>
-              <p>SNS的关系网络原则上并非十分密集，所以，采用相邻列表(Adjacency list)的结构来存储应该比较合适。 而使用相邻列表(Adjacency list)的话， node以及其关联的edge就可以一同存储了。 在这种情况下，即使node和edge的properties单独存储，也是很容易切割和扩展的。</p>
-              <h2 id="值得关注的点"><span class="header-section-number">4.2</span> 值得关注的点</h2>
-              <ol style="list-style-type: decimal">
-              <li>横向扩展能力</li>
-              <li>高可用性
-              <ul>
-              <li>备份</li>
-              <li>复制</li>
-              <li>服务降级</li>
-              <li>其它</li>
-              </ul></li>
-              <li>有哪些现成的图算法可用</li>
-              <li>运维复杂度</li>
-              </ol>
-              <h2 id="使用场景分析"><span class="header-section-number">4.3</span> 使用场景分析</h2>
-              <h3 id="适合的场景"><span class="header-section-number">4.3.1</span> 适合的场景</h3>
-              <p>pending ### 不适合的场景 pending</p>
-              <h1 id="references"><span class="header-section-number">5</span> References</h1>
-              <ol style="list-style-type: decimal">
-              <li><a href="http://en.wikipedia.org/wiki/Graph_database" class="uri">http://en.wikipedia.org/wiki/Graph_database</a></li>
-              <li><a href="http://en.wikipedia.org/wiki/Graph_(data_structure)" class="uri">http://en.wikipedia.org/wiki/Graph_(data_structure)</a></li>
-              <li><a href="http://en.wikipedia.org/wiki/Graph_theory" class="uri">http://en.wikipedia.org/wiki/Graph_theory</a></li>
-              <li><strong><a href="http://www.graph-database.org/" class="uri">http://www.graph-database.org/</a></strong></li>
-              <li><a href="http://blog.directededge.com/2009/02/27/on-building-a-stupidly-fast-graph-database/">On Building a Stupidly Fast Graph Database</a></li>
-              <li><a href="http://blog.neo4j.org/2009/09/social-networks-in-database-using-graph.html">Social networks in the database: using a graph database</a></li>
-              <li><a href="http://techportal.ibuildings.com/2009/09/07/graphs-in-the-database-sql-meets-social-networks/">Graphs in the database: SQL meets social networks</a> *****</li>
-              <li><a href="http://www.cs.ucsb.edu/~gilbert/talks/ParLab15sep2011.pdf">A Toolbox for High-Performance Graph Computation</a></li>
-              <li><a href="http://www.slideshare.net/slideshow/embed_code/9600743#">The Deﬁnition ofGraphDB</a> Slide</li>
-              <li><a href="http://www.slideshare.net/doryokujin/largescale-graph-processingintroduction?from=ss_embed">Large Scale Graph Processing</a> Slide</li>
-              <li><a href="http://www.slideshare.net/slideshow/embed_code/8525113#">Giraph:Large-scalegraphprocessinginfrastructureonHadoop</a></li>
-              <li><a href="http://www.slideshare.net/andres_taylor/graph-database-super-star-8079303?from=ss_embed">Graph database super star</a></li>
-              <li><a href="http://www.slideshare.net/slideshow/embed_code/7656845#">Key-Key-ValueStoresforEfficientlyProcessingGraphDataintheCloud</a></li>
-              <li><a href="http://www.slideshare.net/samehmi/gdm-2011-talk?from=ss_embed">Online Query Execution on Large Distributed Graphs</a></li>
-              <li><a href="http://www.slideshare.net/slideshow/embed_code/7649477#">AHigh-PerformanceGraphDatabaseManagementSystem</a></li>
-              <li><a href="http://www.slideshare.net/purbon/graph-databases-introduction-to-rugb?from=ss_embed">Graph Databases introduction to rug-b</a></li>
-              <li><a href="http://www.slideshare.net/ClaudioMartella/presentation-7398682?from=ss_embed">NoSQL with Graphs</a></li>
-              <li><a href="http://www.slideshare.net/ahzf/1st-uimgdb-connections-to-the-real-world?from=ss_embed">Connections to the Real World:Graph Databases and Applications</a></li>
-              <li><a href="http://research.microsoft.com/pubs/147063/Tutorial%20-%2020110328-final.pdf">Ranking on Large-Scale Graphs with Rich Metadata</a></li>
-              <li><a href="http://www.slideshare.net/purbon/graph-databases-the-web-of-data-storage-engines?from=ss_embed">Graph Databases: The Web of Data Storage Engines</a></li>
-              <li><a href="http://www.slideshare.net/purbon/graph-t-6162024?from=ss_embed">Graph Theory and Databases</a></li>
-              <li><a href="http://www.slideshare.net/shatteredNirvana/pregel-a-system-for-largescale-graph-processing?from=ss_embed">Pregel: A System for Large-Scale Graph Processing</a> - 归属于图计算范畴</li>
-              <li><a href="http://www.readwriteweb.com/cloud/2011/04/5-graph-databases-to-consider.php">5 Graph Databases to Consider</a></li>
-              <li><a href="http://en.wikipedia.org/wiki/GraphML">GraphML</a></li>
-              <li><a href="http://www.slideshare.net/slidarko/graph-windycitydb2010?src=related_normal&amp;rel=5213756">The Graph Traversal Programming Pattern</a> ****</li>
-              <li><a href="http://engineering.twitter.com/2012/03/cassovary-big-graph-processing-library.html">Cassovary</a> ***** twitter new open sourced graph-processing library written in Scala</li>
-              </ol>
-              
-      </div>
+
+<div class="row">
+<div id="header">
+<p class="lead">
+<h1 class="title">&quot;Notes Of GraphDBs&quot;</h1>
+<small>
+<h3 class="author">fujohnwang</h3>
+</small>
+<h4 class="date">2012-01-10</h4>
+</p>
+</div>
+
+<hr>
+
+<div id="TOC">
+<ul>
+<li><a href="#basic-concepts"><span class="toc-section-number">1</span> Basic Concepts</a><ul>
+<li><a href="#graph-types"><span class="toc-section-number">1.1</span> Graph Types</a></li>
+<li><a href="#basic-operations"><span class="toc-section-number">1.2</span> Basic Operations</a></li>
+<li><a href="#graph-theoretic-data-structures"><span class="toc-section-number">1.3</span> Graph-theoretic data structures</a></li>
+<li><a href="#图论应用场景"><span class="toc-section-number">1.4</span> 图论应用场景</a></li>
+</ul></li>
+<li><a href="#typical-products"><span class="toc-section-number">2</span> Typical Products</a><ul>
+<li><a href="#neo4j"><span class="toc-section-number">2.1</span> <a href="http://neo4j.org/">Neo4J</a></a></li>
+<li><a href="#orientdb"><span class="toc-section-number">2.2</span> <a href="http://www.orientechnologies.com/orient-db.htm">OrientDB</a></a></li>
+<li><a href="#flockdb"><span class="toc-section-number">2.3</span> <a href="https://github.com/twitter/flockdb">FlockDB</a></a></li>
+<li><a href="#dex"><span class="toc-section-number">2.4</span> <a href="http://www.sparsity-technologies.com/dex">DEX</a></a><ul>
+<li><a href="#scenarios-for-dex"><span class="toc-section-number">2.4.1</span> Scenarios for DEX</a></li>
+</ul></li>
+<li><a href="#infogrid"><span class="toc-section-number">2.5</span> <a href="http://infogrid.org/">Infogrid</a></a></li>
+<li><a href="#other-ones"><span class="toc-section-number">2.6</span> Other Ones…</a></li>
+</ul></li>
+<li><a href="#tools-support"><span class="toc-section-number">3</span> Tools &amp; Support</a></li>
+<li><a href="#关于graphdb的一些个人想法"><span class="toc-section-number">4</span> 关于GraphDB的一些个人想法</a><ul>
+<li><a href="#存储结构抽象和引申"><span class="toc-section-number">4.1</span> 存储结构抽象和引申</a></li>
+<li><a href="#值得关注的点"><span class="toc-section-number">4.2</span> 值得关注的点</a></li>
+<li><a href="#使用场景分析"><span class="toc-section-number">4.3</span> 使用场景分析</a><ul>
+<li><a href="#适合的场景"><span class="toc-section-number">4.3.1</span> 适合的场景</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#references"><span class="toc-section-number">5</span> References</a></li>
+</ul>
+</div>
+<hr/>
+
+<h1 id="basic-concepts"><span class="header-section-number">1</span> Basic Concepts</h1>
+<p>图存储 + 图运算 引申出一套生态系统， GraphDB属于存储序列， 图计算则以<a href="http://www.slideshare.net/shatteredNirvana/pregel-a-system-for-largescale-graph-processing?from=ss_embed">google的pregel</a>为典型代表（使用BSP计算模型），还包括了<a href="http://incubator.apache.org/hama/">Hama</a>，<a href="http://incubator.apache.org/giraph/">Giraph</a>等图计算框架。本Note主要侧重GraphDB相关内容， 包括基本概念， 基本操作和访问， 存储结构等等。</p>
+<p>A graph is composed of Nodes(Vertices) [with Properties] and Edges [with Labels]. <img src="http://upload.wikimedia.org/wikipedia/en/3/3a/GraphDatabase_PropertyGraph.png" alt="graph sample picture from wikipedia" /></p>
+<h2 id="graph-types"><span class="header-section-number">1.1</span> Graph Types</h2>
+<ol style="list-style-type: decimal">
+<li>directed graph（有向图） -&gt; flow network <img src="http://techportal.ibuildings.com/wp-content/uploads/2009/09/graph2.png" /></li>
+<li><p>undirected graph</p>
+<img src="http://techportal.ibuildings.com/wp-content/uploads/2009/09/graph1.png" /></li>
+<li>Mixed Graph(单向，双向， 无向边混合)</li>
+<li>Multigraph (多边)</li>
+<li>Weighted Graph(加权)</li>
+<li>Property Graph
+<ul>
+<li>对于Property Graph类型， 每个node和edge都可以有多组k-v形式的properties来附加更多信息， 另外， 每个edge可以有label， 用来表示不同类型的edge，这应该通常多见于multigraph中，即两个node之间存在多个edge的情形，而多个edge可以是不同类型的edge，比如like， follows等。 label和properties对于edge来说是不同的属性， 不要混淆。</li>
+</ul></li>
+</ol>
+<h2 id="basic-operations"><span class="header-section-number">1.2</span> Basic Operations</h2>
+<p>The basic operations provided by a graph data structure G usually include:</p>
+<ul>
+<li><strong>adjacent(G, x, y)</strong>: tests whether there is an edge from node x to node y.</li>
+<li><strong>neighbors(G, x)</strong>: lists all nodes y such that there is an edge from x to y.</li>
+<li><strong>add(G, x, y)</strong>: adds to G the edge from x to y, if it is not there.</li>
+<li><strong>delete(G, x, y)</strong>: removes the edge from x to y, if it is there.</li>
+<li><strong>get_node_value(G, x)</strong>: returns the value associated with the node x.</li>
+<li><strong>set_node_value(G, x, a)</strong>: sets the value associated with the node x to a.</li>
+</ul>
+<p>Structures that associate values to the edges usually also provide:</p>
+<ul>
+<li><strong>get_edge_value(G, x, y)</strong>: returns the value associated to the edge (x,y).</li>
+<li><strong>set_edge_value(G, x, y, v)</strong>: sets the value associated to the edge (x,y) to v.</li>
+</ul>
+<h2 id="graph-theoretic-data-structures"><span class="header-section-number">1.3</span> Graph-theoretic data structures</h2>
+<ol style="list-style-type: decimal">
+<li>List structures
+<ul>
+<li>Incidence list</li>
+<li>Adjacency list</li>
+</ul></li>
+<li>Matrix structures
+<ul>
+<li>Incidence matrix</li>
+<li>Adjacency matrix</li>
+<li>Laplacian matrix or &quot;Kirchhoff matrix&quot; or &quot;Admittance matrix&quot;</li>
+<li>Distance matrix</li>
+</ul></li>
+</ol>
+<div class="figure">
+<img src="http://www.parallellabs.com/wp-content/uploads/2011/12/%E7%A8%80%E7%96%8F%E5%9B%BE%E5%92%8C%E7%A8%A0%E5%AF%86%E5%9B%BE%E7%9A%84%E9%82%BB%E6%8E%A5%E8%A1%A8%E4%B8%8E%E9%82%BB%E6%8E%A5%E7%9F%A9%E9%98%B5%E5%BD%A2%E5%BC%8F.bmp" alt="邻接矩阵OR邻接表" />
+<p class="caption">邻接矩阵OR邻接表</p>
+</div>
+<h2 id="图论应用场景"><span class="header-section-number">1.4</span> 图论应用场景</h2>
+<ul>
+<li>Task planning</li>
+<li>Scheduling</li>
+<li>Process assignation</li>
+<li>Routing</li>
+<li>Logistics</li>
+<li>League planning</li>
+<li>Pattern Recognition</li>
+<li>Dependency analysis</li>
+<li>Impact analysis</li>
+<li>Network flow – Traffic analysis and optimization – Delivery optimization</li>
+<li>Optimization of tasks</li>
+</ul>
+<p>更多参考<a href="http://www.slideshare.net/purbon/graph-t-6162024?from=ss_embed" class="uri">http://www.slideshare.net/purbon/graph-t-6162024?from=ss_embed</a></p>
+<h1 id="typical-products"><span class="header-section-number">2</span> Typical Products</h1>
+<h2 id="neo4j"><span class="header-section-number">2.1</span> <a href="http://neo4j.org/">Neo4J</a></h2>
+<p>Graph DB, AGPL3 license(<em>Sucks, I think</em>), java made, ACID, HA, M-S Caching Shards, Domain-specific, embeddable, REST, etc.</p>
+<p>Neo4j的授权协议包括商业性质的授权和开源协议的授权，但开源协议授权是基于AGPL， 意味着如果要用neo4j，那你的产品也要开源，这对许多公司的产品来说是不可接受的， 另外， 许多高级特性只在商业版中才有，比如HA， backup等，没有了这些高级特性， neo4j也就剩下玩玩的资本了。</p>
+<p>所以， 不再对neo4j做更多了解和涉猎， 只罗列部分资料，如果有人感兴趣可以看下：</p>
+<ol style="list-style-type: decimal">
+<li><a href="http://www.slideshare.net/slideshow/embed_code/9600796#">An Introductionto Neo4j</a> Slide</li>
+<li><a href="http://www.slideshare.net/peterneubauer/gdm-2011-neo4j-and-real-world-apps?from=ss_embed">Neo4j and real world apps</a></li>
+</ol>
+<h2 id="orientdb"><span class="header-section-number">2.2</span> <a href="http://www.orientechnologies.com/orient-db.htm">OrientDB</a></h2>
+<p><a href="http://www.orientechnologies.com/orient-graphdb.htm" class="uri">http://www.orientechnologies.com/orient-graphdb.htm</a></p>
+<p>Document-Graph DB, Apache2 License, Java Made, ACID Support, HA via replication, embeddable, REST&amp;SQL-like access.</p>
+<p>OrientDB实际上不是一个纯的GraphDB， 它是构建在DocumentDB的模型之上。 除了GraphDB， OrientDB还在基础的DocumentDB基础模型之上构建了KV, OO等类型的DB。</p>
+<p><strong>References Of OrientDB</strong>:</p>
+<ol style="list-style-type: decimal">
+<li><a href="http://www.slideshare.net/lvca/orientdb-nosqlday?from=ss_embed">OrientDB for real &amp; Web App development</a></li>
+<li><a href="http://www.snoopal.com/documents/xO8QatV3gPyTAkWNXO1X57/OrientDB-the-database-for-the-Web">OrientDB the database for the Web</a></li>
+<li><a href="http://code.google.com/p/orient/wiki/GraphDatabase" class="uri">http://code.google.com/p/orient/wiki/GraphDatabase</a></li>
+<li><a href="http://code.google.com/p/orient/wiki/GraphEdTutorial" class="uri">http://code.google.com/p/orient/wiki/GraphEdTutorial</a></li>
+</ol>
+<h2 id="flockdb"><span class="header-section-number">2.3</span> <a href="https://github.com/twitter/flockdb">FlockDB</a></h2>
+<p>twitter特定场景下的graphed产品， 并非力图实现所有的features，而只关注twitter自身或者网站常见的一些问题， 比如在twitter内部只用flockdb存储用户关系图以及二级索引等信息。</p>
+<p>flocked存储采用node+edge一起存储的策略，而且针对一个edge，会按照forward和backward分别存储2条， 这种策略内聚性不错，但是否耦合性太紧，不便于扩展那？！（<strong>更深层次的edge关联不好管理，尤其是引入分布式存储结构之后！</strong>）</p>
+<p>flockdb底层使用mysql作为存储， 使用twitter的gizzard分布式数据访问层来管理mysql分区集群， 在这之上， 才是实现的重头戏， 成为flapps服务集群， flapps是stateless的， 所以可以很容易的横向扩展，而m底层的mysql存储层在gizzard的帮助下也可以横向扩展，所以总的来说， flockdb的横向扩展能力是没啥问题的。</p>
+<div class="figure">
+<img src="https://github.com/twitter/flockdb/raw/master/doc/flockdb-layout.png" alt="https://github.com/twitter/flockdb/raw/master/doc/flockdb-layout.png" />
+<p class="caption">https://github.com/twitter/flockdb/raw/master/doc/flockdb-layout.png</p>
+</div>
+<p>从使用场景上来看， flockdb更适合浅层次的遍历和查询(少于2个层次？！)， 而深层次的遍历估计会因为同时牵扯index的查询和数据的查询而性能急剧下降。（个人猜测）从这个角度来看， flockdb还真是一个twitter特定的产品，跟一般意义上的graphdb有很大的差异，即traversal能力的强弱。</p>
+<p>flockdb使用thrift暴露远程服务，所以， 客户端可以使用多种语言实现，包括ruby， java， c/c++等， twitter内部应该用的是gizzmo（ruby客户端）。</p>
+<p>结论： flockdb虽然速度和横向扩展能力不错，但graph模型和处理能力太弱，不一定适合“来往”的业务模型。</p>
+<p><strong>References</strong></p>
+<ol style="list-style-type: decimal">
+<li><a href="http://engineering.twitter.com/2010/05/introducing-flockdb.html">Introducing FlockDB</a></li>
+<li><a href="http://groups.google.com/group/flockdb">Google Group of FlockDB</a></li>
+<li><a href="http://www.infotales.com/twitters-database-flockdb/">Twitter’s Database FlockDB</a></li>
+<li><a href="http://nosql.mypopescu.com/post/4423840717/flockdb-and-graph-databases">FlockDB and Graph Databases</a></li>
+<li><a href="http://stackoverflow.com/questions/2629372/flockdb-what-is-it-and-best-cases-for-it-uses">FlockDB - What is it? And best cases for it uses</a></li>
+<li><a href="http://newsicare.wordpress.com/2010/10/10/flockdb-twitters-powerful-weapon/">Flockdb: Twitter’s powerful weapon</a></li>
+</ol>
+<h2 id="dex"><span class="header-section-number">2.4</span> <a href="http://www.sparsity-technologies.com/dex">DEX</a></h2>
+<p>C++ core, Java, .Net API, dual Personal-evaluation or Commercial license</p>
+<p><strong>Labeled, Directed And Attributed Multigraph Model</strong></p>
+<h3 id="scenarios-for-dex"><span class="header-section-number">2.4.1</span> Scenarios for DEX</h3>
+<ul>
+<li>Social Networks
+<ul>
+<li>Twitter, Facebook, Linkedin, Flickr, Delicious, MySpace</li>
+</ul></li>
+<li>Information Networks
+<ul>
+<li>Bibliographical databases, Wikipedia, IMDB</li>
+</ul></li>
+<li>Security Networks &amp; fraud detection
+<ul>
+<li>Economic transactions analysis</li>
+</ul></li>
+<li>Recommendation
+<ul>
+<li>ecommerce</li>
+</ul></li>
+<li>Media Analysis
+<ul>
+<li>Audiovisual content recommendation</li>
+</ul></li>
+<li>Physical Netorks
+<ul>
+<li>Logistics, Transport, Electrical, Telecom Networks</li>
+</ul></li>
+<li>Biological Networks</li>
+</ul>
+<p><strong>Curiosity</strong></p>
+<ol style="list-style-type: decimal">
+<li><strong>基于磁盘的高容量存储是怎么做的？！</strong></li>
+<li>存储结构是什么样儿的？自定义？</li>
+<li>横向扩展能力如何？</li>
+</ol>
+<p><strong>References</strong></p>
+<ol style="list-style-type: decimal">
+<li><a href="http://www.sparsity-technologies.com/downloads/dex_brochure.pdf" class="uri">http://www.sparsity-technologies.com/downloads/dex_brochure.pdf</a></li>
+<li><a href="http://sparsity-technologies.com/blog/?p=97">DEX 3.0 features: Graph algorithms</a></li>
+<li><a href="http://www.slideshare.net/SparsityTechnologies/dex-introduction?from=ss_embed">Dex: Introduction</a></li>
+<li><a href="http://www.slideshare.net/SparsityTechnologies/dex-seminar-tutorial?from=ss_embed">DEX: Seminar Tutorial</a></li>
+</ol>
+<h2 id="infogrid"><span class="header-section-number">2.5</span> <a href="http://infogrid.org/">Infogrid</a></h2>
+<p>MeshNetg公司开源产品， MeshNet提供商业支持。产品整体按照不同的关注点分为不同的子项目， 包括核心的graphdb， 关注cluster的grid， 关注存储的stores以及展现和工具支持，可以使用不同的存储方案， 包括mysql， FS， HDFS等。</p>
+<p><strong>References</strong></p>
+<ol style="list-style-type: decimal">
+<li><a href="http://www.slideshare.net/infogrid/info-grid-core-ideas">InfoGrid Core Ideas</a></li>
+<li><a href="http://www.slideshare.net/infogrid/a-taste-of-infogrid-1688328">A Taste Of InfoGrid</a></li>
+<li><a href="http://www.slideshare.net/infogrid/the-infogrid-graph-database">The InfoGrid Graph DataBase</a></li>
+</ol>
+<h2 id="other-ones"><span class="header-section-number">2.6</span> Other Ones…</h2>
+<ol style="list-style-type: decimal">
+<li>InfiniteGraph
+<ul>
+<li><a href="http://www.slideshare.net/infinitegraph/gluecon-infinite-graph-public-presentation">Gluecon InfiniteGraph Presentation: Scaling the Social Graph in the Cloud</a></li>
+</ul></li>
+<li><a href="http://www.kobrix.com/hgdb.jsp">HypergraphDB</a>
+<ul>
+<li>LGPL, Java Made ,ACID, P2P distribution and replication, storage on BDB</li>
+<li><a href="http://strangeloop2010.com/talk/presentation_file/14445/Iordanov-HyperGraphDB.pdf">HyperGraphDB:Data Management for Complex Systems</a></li>
+</ul></li>
+<li><a href="https://github.com/tinkerpop/blueprints/wiki/TinkerGraph">TinkerGraph</a> - In-Memory Graph, Not for production.</li>
+</ol>
+<h1 id="tools-support"><span class="header-section-number">3</span> Tools &amp; Support</h1>
+<p>TinkerPop公司在这个领域显然做到工作很出色！</p>
+<ol style="list-style-type: decimal">
+<li><a href="https://github.com/tinkerpop/blueprints">Blueprints</a> <img src="https://github.com/tinkerpop/rexster/raw/master/doc/images/rexster-system-arch.png" alt="rexster-system-arch" /></li>
+<li><a href="https://github.com/tinkerpop/gremlin">Gremlin</a>
+<ul>
+<li><a href="http://www.slideshare.net/slidarko/the-pathology-of-graph-databases?from=ss_embed">The Pathology of Graph Databases</a> - Gremlin Graph Language</li>
+</ul></li>
+<li><a href="http://rexster.tinkerpop.com/">reXster</a></li>
+<li><a href="http://prefuse.org/">Prefuse</a> - visualization tool</li>
+</ol>
+<h1 id="关于graphdb的一些个人想法"><span class="header-section-number">4</span> 关于GraphDB的一些个人想法</h1>
+<p>个人感觉，GraphDB的服务层可以独立于存储层，只要对存储层做合理的抽象， 现在的许多存储方案都可以使用，包括常见的RDBMS，以及各种KV啦，ColumnOrientedDB啦，等等。 但数据的组织，应该参考GraphDB的服务层设计， 尽量贴近服务层，规避特定存储层在GraphDB的访问模式下的各种弊端，比如“索引的空间和时间消耗”.</p>
+<p>GraphDB强调索引的Vertices Adjacency能力， 即通过Vertex可以直接获得临近的Vertices，而不用像在RDBMS那样， 去B-Tree等索引中先查看索引，再做join的方式来获取相关vertices， 换句话说， 当前vertex本身已经是临近的vertices的索引。</p>
+<p>当然， GraphDB并不排斥其它索引形式，比如完全可以通过B-Tree, B+Tree或者lucency等手段对vertices或者edge的properties进行索引或者对root vertices set进行索引，以加快graph其它相关信息的检索和访问。</p>
+<h2 id="存储结构抽象和引申"><span class="header-section-number">4.1</span> 存储结构抽象和引申</h2>
+<p>首先， graph中核心元素的存储可以分开， 比如分为：</p>
+<ol style="list-style-type: decimal">
+<li>node存储（适合使用索引的存储）</li>
+<li>edge存储（组合索引？！）</li>
+<li>properties存储（比较适合用KV存储）</li>
+</ol>
+<p>分开的好处是， 不同元素的存储方案选择比较灵活， 另外分区扩展也很容易，但也有弊端，比如构建索引的空间开销，以及搜索期间跨越不同存储的时间开销等。为了规避弊端， 可以根据某些指标（比如子图）将核心元素的存储分区做locality， 不过，这又进一步会引入跨分区遍历的开销…</p>
+<p>反过来， 几种核心元素一起存储又会怎样？！ 想自然语言的语句似的将所有信息都包含进一个单元（比如句子）当然可以，绝对高内聚，但使用的适合可能就不太方便， 要做多级索引才能提高查询和计算速度，而索引增多，随着查找层次的加深，又会进一步降低性能，所以完全的高内聚的一起存储所有信息显然不是啥太明智的做法。</p>
+<p>SNS的关系网络原则上并非十分密集，所以，采用相邻列表(Adjacency list)的结构来存储应该比较合适。 而使用相邻列表(Adjacency list)的话， node以及其关联的edge就可以一同存储了。 在这种情况下，即使node和edge的properties单独存储，也是很容易切割和扩展的。</p>
+<h2 id="值得关注的点"><span class="header-section-number">4.2</span> 值得关注的点</h2>
+<ol style="list-style-type: decimal">
+<li>横向扩展能力</li>
+<li>高可用性
+<ul>
+<li>备份</li>
+<li>复制</li>
+<li>服务降级</li>
+<li>其它</li>
+</ul></li>
+<li>有哪些现成的图算法可用</li>
+<li>运维复杂度</li>
+</ol>
+<h2 id="使用场景分析"><span class="header-section-number">4.3</span> 使用场景分析</h2>
+<h3 id="适合的场景"><span class="header-section-number">4.3.1</span> 适合的场景</h3>
+<p>pending ### 不适合的场景 pending</p>
+<h1 id="references"><span class="header-section-number">5</span> References</h1>
+<ol style="list-style-type: decimal">
+<li><a href="http://en.wikipedia.org/wiki/Graph_database" class="uri">http://en.wikipedia.org/wiki/Graph_database</a></li>
+<li><a href="http://en.wikipedia.org/wiki/Graph_(data_structure)" class="uri">http://en.wikipedia.org/wiki/Graph_(data_structure)</a></li>
+<li><a href="http://en.wikipedia.org/wiki/Graph_theory" class="uri">http://en.wikipedia.org/wiki/Graph_theory</a></li>
+<li><strong><a href="http://www.graph-database.org/" class="uri">http://www.graph-database.org/</a></strong></li>
+<li><a href="http://blog.directededge.com/2009/02/27/on-building-a-stupidly-fast-graph-database/">On Building a Stupidly Fast Graph Database</a></li>
+<li><a href="http://blog.neo4j.org/2009/09/social-networks-in-database-using-graph.html">Social networks in the database: using a graph database</a></li>
+<li><a href="http://techportal.ibuildings.com/2009/09/07/graphs-in-the-database-sql-meets-social-networks/">Graphs in the database: SQL meets social networks</a> *****</li>
+<li><a href="http://www.cs.ucsb.edu/~gilbert/talks/ParLab15sep2011.pdf">A Toolbox for High-Performance Graph Computation</a></li>
+<li><a href="http://www.slideshare.net/slideshow/embed_code/9600743#">The Deﬁnition ofGraphDB</a> Slide</li>
+<li><a href="http://www.slideshare.net/doryokujin/largescale-graph-processingintroduction?from=ss_embed">Large Scale Graph Processing</a> Slide</li>
+<li><a href="http://www.slideshare.net/slideshow/embed_code/8525113#">Giraph:Large-scalegraphprocessinginfrastructureonHadoop</a></li>
+<li><a href="http://www.slideshare.net/andres_taylor/graph-database-super-star-8079303?from=ss_embed">Graph database super star</a></li>
+<li><a href="http://www.slideshare.net/slideshow/embed_code/7656845#">Key-Key-ValueStoresforEfficientlyProcessingGraphDataintheCloud</a></li>
+<li><a href="http://www.slideshare.net/samehmi/gdm-2011-talk?from=ss_embed">Online Query Execution on Large Distributed Graphs</a></li>
+<li><a href="http://www.slideshare.net/slideshow/embed_code/7649477#">AHigh-PerformanceGraphDatabaseManagementSystem</a></li>
+<li><a href="http://www.slideshare.net/purbon/graph-databases-introduction-to-rugb?from=ss_embed">Graph Databases introduction to rug-b</a></li>
+<li><a href="http://www.slideshare.net/ClaudioMartella/presentation-7398682?from=ss_embed">NoSQL with Graphs</a></li>
+<li><a href="http://www.slideshare.net/ahzf/1st-uimgdb-connections-to-the-real-world?from=ss_embed">Connections to the Real World:Graph Databases and Applications</a></li>
+<li><a href="http://research.microsoft.com/pubs/147063/Tutorial%20-%2020110328-final.pdf">Ranking on Large-Scale Graphs with Rich Metadata</a></li>
+<li><a href="http://www.slideshare.net/purbon/graph-databases-the-web-of-data-storage-engines?from=ss_embed">Graph Databases: The Web of Data Storage Engines</a></li>
+<li><a href="http://www.slideshare.net/purbon/graph-t-6162024?from=ss_embed">Graph Theory and Databases</a></li>
+<li><a href="http://www.slideshare.net/shatteredNirvana/pregel-a-system-for-largescale-graph-processing?from=ss_embed">Pregel: A System for Large-Scale Graph Processing</a> - 归属于图计算范畴</li>
+<li><a href="http://www.readwriteweb.com/cloud/2011/04/5-graph-databases-to-consider.php">5 Graph Databases to Consider</a></li>
+<li><a href="http://en.wikipedia.org/wiki/GraphML">GraphML</a></li>
+<li><a href="http://www.slideshare.net/slidarko/graph-windycitydb2010?src=related_normal&amp;rel=5213756">The Graph Traversal Programming Pattern</a> ****</li>
+<li><a href="http://engineering.twitter.com/2012/03/cassovary-big-graph-processing-library.html">Cassovary</a> ***** twitter new open sourced graph-processing library written in Scala</li>
+</ol>
+
+</div>
+
       <div id="qrcode"></div>
       <div class="row">
         <div class="col-md-12 footer">

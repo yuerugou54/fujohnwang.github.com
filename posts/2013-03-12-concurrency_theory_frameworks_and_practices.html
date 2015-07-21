@@ -7,18 +7,19 @@
   <meta http-equiv="X-UA-Compatible" content="chrome=1">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="author" content="扶墙老师@afoo.me">
-
-  <link rel="icon" href="/favicon.ico">
+    <link rel="icon" href="/favicon.ico">
 
   <title>并发编程： 理论，框架与实践 - 一个架构士的思考与沉淀之地</title>
 
-          
-  <link href='/font/News_Cycle/stylesheet.css' rel='stylesheet' type='text/css'>
+  
 
+  <link href='/font/News_Cycle/stylesheet.css' rel='stylesheet' type='text/css'>
   <link href="/css/bootstrap.min.css" rel="stylesheet">
   <link href="/css/bootstrap-theme.min.css" rel="stylesheet">
   <link href="/css/afoo.me.css" rel="stylesheet">
 
+  <style type="text/css">code{white-space: pre;}</style>
+        
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>
@@ -38,88 +39,90 @@
           </a>
         </div>
     </div>
-    <div class="col-xs-12 col-md-10">
 
-          
-          <div class="row">
-                        <div id="header">
-              <p class="lead">
-              <h1 class="title">并发编程： 理论，框架与实践</h1>
-                            <small>
-                  <h3 class="author">王福强</h3>
-              </small>
-                                          </p>
-            </div>
-            
-              <hr>
+<div class="col-xs-12 col-md-10">
 
-              
-              <p><em>应在宽邀请为其团队分享该topic</em></p>
-              <ol style="list-style-type: decimal">
-              <li>为什么需要并发， 又为什么需要并发控制？
-              <ul>
-              <li>充分利用某些资源</li>
-              <li>避免状态破坏</li>
-              <li>more？！</li>
-              </ul></li>
-              <li>资源并发访问的策略
-              <ul>
-              <li>悲观策略
-              <ul>
-              <li>lock based concurrency(theory)</li>
-              <li>java.util.concurrent (framework)</li>
-              <li>锁还是不锁，这是个问题， 锁多还是锁少，也是个问题(practice)</li>
-              </ul></li>
-              <li>乐观策略
-              <ul>
-              <li>lock free concurrency(theory) : CAS</li>
-              <li>disruptor (framework)</li>
-              <li>并发度高，还是并发度低的时候使用，这是个问题(practice)</li>
-              </ul></li>
-              </ul></li>
-              <li>我拆我拆我拆拆拆
-              <ul>
-              <li>task-based concurrency (theory)
-              <ul>
-              <li>Runnable | Callable(model)</li>
-              <li>Executor|ExecutorService(framework)</li>
-              </ul></li>
-              <li>data-based concurrency(theory)
-              <ul>
-              <li>Actor (model)</li>
-              <li>Akka(framework)</li>
-              </ul></li>
-              </ul></li>
-              <li>从个人到群体，从单机到分布式
-              <ul>
-              <li>divide and conquer
-              <ul>
-              <li>map reduce pattern</li>
-              <li>master-worker pattern</li>
-              </ul></li>
-              <li>swarm framework(move computation instead of data)</li>
-              </ul></li>
-              <li>从软件到硬件
-              <ul>
-              <li>GPU
-              <ul>
-              <li>CUDA, jcuda, scuda</li>
-              <li>floating point computation, e.g. image reader and processing</li>
-              </ul></li>
-              <li>PPU
-              <ul>
-              <li>物理计算</li>
-              </ul></li>
-              </ul></li>
-              <li>want to know more ?
-              <ul>
-              <li>agent</li>
-              <li>STM</li>
-              <li>data flow</li>
-              </ul></li>
-              </ol>
-              
-      </div>
+
+<div class="row">
+<div id="header">
+<p class="lead">
+<h1 class="title">并发编程： 理论，框架与实践</h1>
+<small>
+<h3 class="author">王福强</h3>
+</small>
+</p>
+</div>
+
+<hr>
+
+
+<p><em>应在宽邀请为其团队分享该topic</em></p>
+<ol style="list-style-type: decimal">
+<li>为什么需要并发， 又为什么需要并发控制？
+<ul>
+<li>充分利用某些资源</li>
+<li>避免状态破坏</li>
+<li>more？！</li>
+</ul></li>
+<li>资源并发访问的策略
+<ul>
+<li>悲观策略
+<ul>
+<li>lock based concurrency(theory)</li>
+<li>java.util.concurrent (framework)</li>
+<li>锁还是不锁，这是个问题， 锁多还是锁少，也是个问题(practice)</li>
+</ul></li>
+<li>乐观策略
+<ul>
+<li>lock free concurrency(theory) : CAS</li>
+<li>disruptor (framework)</li>
+<li>并发度高，还是并发度低的时候使用，这是个问题(practice)</li>
+</ul></li>
+</ul></li>
+<li>我拆我拆我拆拆拆
+<ul>
+<li>task-based concurrency (theory)
+<ul>
+<li>Runnable | Callable(model)</li>
+<li>Executor|ExecutorService(framework)</li>
+</ul></li>
+<li>data-based concurrency(theory)
+<ul>
+<li>Actor (model)</li>
+<li>Akka(framework)</li>
+</ul></li>
+</ul></li>
+<li>从个人到群体，从单机到分布式
+<ul>
+<li>divide and conquer
+<ul>
+<li>map reduce pattern</li>
+<li>master-worker pattern</li>
+</ul></li>
+<li>swarm framework(move computation instead of data)</li>
+</ul></li>
+<li>从软件到硬件
+<ul>
+<li>GPU
+<ul>
+<li>CUDA, jcuda, scuda</li>
+<li>floating point computation, e.g. image reader and processing</li>
+</ul></li>
+<li>PPU
+<ul>
+<li>物理计算</li>
+</ul></li>
+</ul></li>
+<li>want to know more ?
+<ul>
+<li>agent</li>
+<li>STM</li>
+<li>data flow</li>
+</ul></li>
+</ol>
+
+</div>
+
       <div id="qrcode"></div>
       <div class="row">
         <div class="col-md-12 footer">

@@ -7,12 +7,19 @@
   <meta http-equiv="X-UA-Compatible" content="chrome=1">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="author" content="扶墙老师@afoo.me">
-
-  <link rel="icon" href="/favicon.ico">
+    <link rel="icon" href="/favicon.ico">
 
   <title>有关POI中对货币格式化的支持问题 - 一个架构士的思考与沉淀之地</title>
 
-      <style type="text/css">
+  
+
+  <link href='/font/News_Cycle/stylesheet.css' rel='stylesheet' type='text/css'>
+  <link href="/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/css/bootstrap-theme.min.css" rel="stylesheet">
+  <link href="/css/afoo.me.css" rel="stylesheet">
+
+  <style type="text/css">code{white-space: pre;}</style>
+    <style type="text/css">
     div.sourceCode { overflow-x: auto; }
     table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
       margin: 0; padding: 0; vertical-align: baseline; border: none; }
@@ -33,12 +40,6 @@
     code > span.er { color: #ff0000; font-weight: bold; }
   </style>
         
-  <link href='/font/News_Cycle/stylesheet.css' rel='stylesheet' type='text/css'>
-
-  <link href="/css/bootstrap.min.css" rel="stylesheet">
-  <link href="/css/bootstrap-theme.min.css" rel="stylesheet">
-  <link href="/css/afoo.me.css" rel="stylesheet">
-
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>
@@ -58,53 +59,55 @@
           </a>
         </div>
     </div>
-    <div class="col-xs-12 col-md-10">
 
-          
-          <div class="row">
-                        <div id="header">
-              <p class="lead">
-              <h1 class="title">有关POI中对货币格式化的支持问题</h1>
-                            <small>
-                  <h3 class="author">FuqiangWang</h3>
-              </small>
-                                          </p>
-            </div>
-            
-              <hr>
+<div class="col-xs-12 col-md-10">
 
-                            <div id="TOC">
-                <ul>
-                <li><a href="#tip1"><span class="toc-section-number">1</span> tip1</a></li>
-                <li><a href="#tip2"><span class="toc-section-number">2</span> tip2</a></li>
-                <li><a href="#tip3"><span class="toc-section-number">3</span> tip3</a></li>
-                </ul>
-              </div>
-              <hr/>
-              
-              <blockquote>
-              <p>2014年从msn space存档中重新恢复出来！</p>
-              </blockquote>
-              <p>这几天一直带人使用POI做excel部分的实现，所以，有些小的tips可以写写，以便自己或者大家以后可以借鉴一下。</p>
-              <h1 id="tip1"><span class="header-section-number">1</span> tip1</h1>
-              <p>先说前几天的那个打印设置里面工作表tab里的顶端标题行的问题，当时让老迟给大家讲的时候，估计他没有完全搞透，所以，针对这个例子也就没有说出什么，其实也很简单，POI的quick guide里面那个Repeating Rows的例子就是列举这个问题。只需要调用HSSFWorkbook的setRepeatingRowsAndColumns()方法进行设置就可以了，其中：</p>
-              <p>参数1： 表示要对哪一个sheet进行设置；</p>
-              <p>参数2和3：表示要repeat的起始列和结束列；</p>
-              <p>参数4和5：表示要repeat的起始行和结束行。</p>
-              <p>参数2，3，4，5如果指定为－1的话，表示任意列或者行。</p>
-              <p>比如，要想让第9和第10行在打印的时候，能够在超出一页的时候可以依然保持标题行，可以像这样调用该方法：wb.setRepeatingRowsAndColumns(0,-1,-1,8,9);</p>
-              <h1 id="tip2"><span class="header-section-number">2</span> tip2</h1>
-              <p>如果不制定是横向打印还是竖向打印的话，excel会默认以竖向Vertical的形式打印，而我们却向横向打印，这个时候，可以使用HSSFPrintSetup类。假定要对yourSheet设置打印模式为横向打印，直接调用yourSheet.getPrintSetup().setLandscape(true);就可以了。呵呵，easy，right？其他情况类似处理。</p>
-              <h1 id="tip3"><span class="header-section-number">3</span> tip3</h1>
-              <p>今天遇到的问题。中午询问大家工作量的时候，发现所有人在金额统计的栏中都是以美元符来表示金额的，但是这种情况让日本人看到肯定不行，应该用日元符来格式化金额，所以，今天下午在修改完顾客和申请检索部分的bug之后，对该问题进行了调研。结果就是POI的内置格式化中没有提供日元Currency的格式化格式，需要用custom的格式，但是，这个格式如何指定那？且看下面代码：</p>
-              <div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java">     HSSFCellStyle style = workbook.<span class="fu">createCellStyle</span>();
-                   style.<span class="fu">setDataFormat</span>(workbook.<span class="fu">createDataFormat</span>().<span class="fu">getFormat</span>(customFormat));</code></pre></div>
-              <p>其中，customFormat需要指定为类似于这样形式的字符串：[0a5]#,##0.00</p>
-              <p>另外需要注意的是，必须使用workbook.createDataFormat().getFormat(customFormat)这样的代码生成DataFormat，而不能直接调用HSSFDataFormat.getBuildinFormat(customFormat)的形式，因为后者是取得DataFormat的内置格式化格式，而以上形式则不是。</p>
-              <p>还有就是，以上形式目前只是针对日元符有用，对于其他Currency是否依然有效则不可知，比如，我在查找资料的时候，发现有人使用类似格式格式化欧元符的时候就好用。</p>
-              <p>Ok，就这么些了，其他的都是很common的东西，查一般的文档都可以找到。就此打住。</p>
-              
-      </div>
+
+<div class="row">
+<div id="header">
+<p class="lead">
+<h1 class="title">有关POI中对货币格式化的支持问题</h1>
+<small>
+<h3 class="author">FuqiangWang</h3>
+</small>
+</p>
+</div>
+
+<hr>
+
+<div id="TOC">
+<ul>
+<li><a href="#tip1"><span class="toc-section-number">1</span> tip1</a></li>
+<li><a href="#tip2"><span class="toc-section-number">2</span> tip2</a></li>
+<li><a href="#tip3"><span class="toc-section-number">3</span> tip3</a></li>
+</ul>
+</div>
+<hr/>
+
+<blockquote>
+<p>2014年从msn space存档中重新恢复出来！</p>
+</blockquote>
+<p>这几天一直带人使用POI做excel部分的实现，所以，有些小的tips可以写写，以便自己或者大家以后可以借鉴一下。</p>
+<h1 id="tip1"><span class="header-section-number">1</span> tip1</h1>
+<p>先说前几天的那个打印设置里面工作表tab里的顶端标题行的问题，当时让老迟给大家讲的时候，估计他没有完全搞透，所以，针对这个例子也就没有说出什么，其实也很简单，POI的quick guide里面那个Repeating Rows的例子就是列举这个问题。只需要调用HSSFWorkbook的setRepeatingRowsAndColumns()方法进行设置就可以了，其中：</p>
+<p>参数1： 表示要对哪一个sheet进行设置；</p>
+<p>参数2和3：表示要repeat的起始列和结束列；</p>
+<p>参数4和5：表示要repeat的起始行和结束行。</p>
+<p>参数2，3，4，5如果指定为－1的话，表示任意列或者行。</p>
+<p>比如，要想让第9和第10行在打印的时候，能够在超出一页的时候可以依然保持标题行，可以像这样调用该方法：wb.setRepeatingRowsAndColumns(0,-1,-1,8,9);</p>
+<h1 id="tip2"><span class="header-section-number">2</span> tip2</h1>
+<p>如果不制定是横向打印还是竖向打印的话，excel会默认以竖向Vertical的形式打印，而我们却向横向打印，这个时候，可以使用HSSFPrintSetup类。假定要对yourSheet设置打印模式为横向打印，直接调用yourSheet.getPrintSetup().setLandscape(true);就可以了。呵呵，easy，right？其他情况类似处理。</p>
+<h1 id="tip3"><span class="header-section-number">3</span> tip3</h1>
+<p>今天遇到的问题。中午询问大家工作量的时候，发现所有人在金额统计的栏中都是以美元符来表示金额的，但是这种情况让日本人看到肯定不行，应该用日元符来格式化金额，所以，今天下午在修改完顾客和申请检索部分的bug之后，对该问题进行了调研。结果就是POI的内置格式化中没有提供日元Currency的格式化格式，需要用custom的格式，但是，这个格式如何指定那？且看下面代码：</p>
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java">     HSSFCellStyle style = workbook.<span class="fu">createCellStyle</span>();
+     style.<span class="fu">setDataFormat</span>(workbook.<span class="fu">createDataFormat</span>().<span class="fu">getFormat</span>(customFormat));</code></pre></div>
+<p>其中，customFormat需要指定为类似于这样形式的字符串：[0a5]#,##0.00</p>
+<p>另外需要注意的是，必须使用workbook.createDataFormat().getFormat(customFormat)这样的代码生成DataFormat，而不能直接调用HSSFDataFormat.getBuildinFormat(customFormat)的形式，因为后者是取得DataFormat的内置格式化格式，而以上形式则不是。</p>
+<p>还有就是，以上形式目前只是针对日元符有用，对于其他Currency是否依然有效则不可知，比如，我在查找资料的时候，发现有人使用类似格式格式化欧元符的时候就好用。</p>
+<p>Ok，就这么些了，其他的都是很common的东西，查一般的文档都可以找到。就此打住。</p>
+
+</div>
+
       <div id="qrcode"></div>
       <div class="row">
         <div class="col-md-12 footer">
