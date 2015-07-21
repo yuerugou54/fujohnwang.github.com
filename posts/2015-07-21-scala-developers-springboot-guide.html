@@ -10,8 +10,9 @@
 
   <link rel="icon" href="/favicon.ico">
 
-  <title> - 一个架构士的思考与沉淀之地</title>
+  <title>Scala开发者的SpringBoot快速入门指南 - 一个架构士的思考与沉淀之地</title>
 
+    <meta name="date" content="2015-07-21" />
   
   <link href='/font/News_Cycle/stylesheet.css' rel='stylesheet' type='text/css'>
   <link href="/css/bootstrap.min.css" rel="stylesheet">
@@ -19,6 +20,26 @@
   <link href="/css/afoo.me.css" rel="stylesheet">
 
   <style type="text/css">code{white-space: pre;}</style>
+    <style type="text/css">
+    div.sourceCode { overflow-x: auto; }
+    table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+      margin: 0; padding: 0; vertical-align: baseline; border: none; }
+    table.sourceCode { width: 100%; line-height: 100%; }
+    td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+    td.sourceCode { padding-left: 5px; }
+    code > span.kw { color: #007020; font-weight: bold; }
+    code > span.dt { color: #902000; }
+    code > span.dv { color: #40a070; }
+    code > span.bn { color: #40a070; }
+    code > span.fl { color: #40a070; }
+    code > span.ch { color: #4070a0; }
+    code > span.st { color: #4070a0; }
+    code > span.co { color: #60a0b0; font-style: italic; }
+    code > span.ot { color: #007020; }
+    code > span.al { color: #ff0000; font-weight: bold; }
+    code > span.fu { color: #06287e; }
+    code > span.er { color: #ff0000; font-weight: bold; }
+  </style>
         
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -43,11 +64,271 @@
 
           
           <div class="row">
+                        <div id="header">
+              <p class="lead">
+              <h1 class="title">Scala开发者的SpringBoot快速入门指南</h1>
+                            <small>
+                  <h3 class="author">王福强 - fujohnwang AT gmail DOTA com</h3>
+              </small>
+                                        <h4 class="date">2015-07-21</h4>
+                              </p>
+            </div>
             
               <hr>
 
+                            <div id="TOC">
+                <ul>
+                <li><a href="#使用maven构建scala开发的springboot应用"><span class="toc-section-number">1</span> 使用Maven构建Scala开发的SpringBoot应用</a></li>
+                <li><a href="#使用sbt构建scala开发的springboot应用"><span class="toc-section-number">2</span> 使用SBT构建Scala开发的SpringBoot应用</a><ul>
+                <li><a href="#基于sbt的springboot应用的发布"><span class="toc-section-number">2.1</span> 基于SBT的SpringBoot应用的发布</a></li>
+                </ul></li>
+                </ul>
+              </div>
+              <hr/>
+              
+              <p>使用Scala开发SpringBoot应用， 采用Maven作为构建工具，基本可以从Java开发SpringBoot应用的模式中平滑地迁移过来， 但如果使用SBT作为构建工具，那么多少需要一些定制...</p>
+              <h1 id="使用maven构建scala开发的springboot应用"><span class="header-section-number">1</span> 使用Maven构建Scala开发的SpringBoot应用</h1>
+              <p>访问<a href="http://start.spring.io/" class="uri">http://start.spring.io/</a>， 填写必要的项目信息并选择必要的选项， 点击“Generate Project”下载预先生成的项目模板， 因为我只选择了web和actuator两个模块的依赖以及以jar的形式发布，所以得到如下的pom定义：</p>
+              <div class="sourceCode"><pre class="sourceCode xml"><code class="sourceCode xml"><span class="kw">&lt;?xml</span> version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;<span class="kw">?&gt;</span>
+              <span class="kw">&lt;project</span><span class="ot"> xmlns=</span><span class="st">&quot;http://maven.apache.org/POM/4.0.0&quot;</span><span class="ot"> xmlns:xsi=</span><span class="st">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span>
+              <span class="ot">    xsi:schemaLocation=</span><span class="st">&quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&quot;</span><span class="kw">&gt;</span>
+                  <span class="kw">&lt;modelVersion&gt;</span>4.0.0<span class="kw">&lt;/modelVersion&gt;</span>
+              
+                  <span class="kw">&lt;groupId&gt;</span>org.test<span class="kw">&lt;/groupId&gt;</span>
+                  <span class="kw">&lt;artifactId&gt;</span>demo<span class="kw">&lt;/artifactId&gt;</span>
+                  <span class="kw">&lt;version&gt;</span>0.0.1-SNAPSHOT<span class="kw">&lt;/version&gt;</span>
+                  <span class="kw">&lt;packaging&gt;</span>jar<span class="kw">&lt;/packaging&gt;</span>
+              
+                  <span class="kw">&lt;name&gt;</span>demo<span class="kw">&lt;/name&gt;</span>
+                  <span class="kw">&lt;description&gt;</span>Demo project for Spring Boot<span class="kw">&lt;/description&gt;</span>
+              
+                  <span class="kw">&lt;parent&gt;</span>
+                      <span class="kw">&lt;groupId&gt;</span>org.springframework.boot<span class="kw">&lt;/groupId&gt;</span>
+                      <span class="kw">&lt;artifactId&gt;</span>spring-boot-starter-parent<span class="kw">&lt;/artifactId&gt;</span>
+                      <span class="kw">&lt;version&gt;</span>1.2.5.RELEASE<span class="kw">&lt;/version&gt;</span>
+                      <span class="kw">&lt;relativePath/&gt;</span> <span class="co">&lt;!-- lookup parent from repository --&gt;</span>
+                  <span class="kw">&lt;/parent&gt;</span>
+              
+                  <span class="kw">&lt;properties&gt;</span>
+                      <span class="kw">&lt;project.build.sourceEncoding&gt;</span>UTF-8<span class="kw">&lt;/project.build.sourceEncoding&gt;</span>
+                      <span class="kw">&lt;java.version&gt;</span>1.8<span class="kw">&lt;/java.version&gt;</span>
+                  <span class="kw">&lt;/properties&gt;</span>
+              
+                  <span class="kw">&lt;dependencies&gt;</span>
+                      <span class="kw">&lt;dependency&gt;</span>
+                          <span class="kw">&lt;groupId&gt;</span>org.springframework.boot<span class="kw">&lt;/groupId&gt;</span>
+                          <span class="kw">&lt;artifactId&gt;</span>spring-boot-starter-actuator<span class="kw">&lt;/artifactId&gt;</span>
+                      <span class="kw">&lt;/dependency&gt;</span>
+                      <span class="kw">&lt;dependency&gt;</span>
+                          <span class="kw">&lt;groupId&gt;</span>org.springframework.boot<span class="kw">&lt;/groupId&gt;</span>
+                          <span class="kw">&lt;artifactId&gt;</span>spring-boot-starter-web<span class="kw">&lt;/artifactId&gt;</span>
+                      <span class="kw">&lt;/dependency&gt;</span>
+                      
+                      <span class="kw">&lt;dependency&gt;</span>
+                          <span class="kw">&lt;groupId&gt;</span>org.springframework.boot<span class="kw">&lt;/groupId&gt;</span>
+                          <span class="kw">&lt;artifactId&gt;</span>spring-boot-starter-test<span class="kw">&lt;/artifactId&gt;</span>
+                          <span class="kw">&lt;scope&gt;</span>test<span class="kw">&lt;/scope&gt;</span>
+                      <span class="kw">&lt;/dependency&gt;</span>
+                  <span class="kw">&lt;/dependencies&gt;</span>
+                  
+                  <span class="kw">&lt;build&gt;</span>
+                      <span class="kw">&lt;plugins&gt;</span>
+                          <span class="kw">&lt;plugin&gt;</span>
+                              <span class="kw">&lt;groupId&gt;</span>org.springframework.boot<span class="kw">&lt;/groupId&gt;</span>
+                              <span class="kw">&lt;artifactId&gt;</span>spring-boot-maven-plugin<span class="kw">&lt;/artifactId&gt;</span>
+                          <span class="kw">&lt;/plugin&gt;</span>
+                      <span class="kw">&lt;/plugins&gt;</span>
+                  <span class="kw">&lt;/build&gt;</span>
+                  
+              
+              <span class="kw">&lt;/project&gt;</span></code></pre></div>
+              <p>这是为Java项目准备的， 要使用Scala在这个项目模板的基础上进行开发，我们需要在pom中再添加点儿“佐料” ...</p>
+              <p>首先， 使用Scala进行开发，自然需要能够对Scala代码进行编译啦，所以，我们需要添加一个Maven的Scala编译插件：</p>
+              <div class="sourceCode"><pre class="sourceCode xml"><code class="sourceCode xml">            <span class="kw">&lt;plugin&gt;</span>
+                              <span class="kw">&lt;groupId&gt;</span>net.alchim31.maven<span class="kw">&lt;/groupId&gt;</span>
+                              <span class="kw">&lt;artifactId&gt;</span>scala-maven-plugin<span class="kw">&lt;/artifactId&gt;</span>
+                              <span class="kw">&lt;version&gt;</span>3.2.1<span class="kw">&lt;/version&gt;</span>
+                              <span class="kw">&lt;executions&gt;</span>
+                                  <span class="kw">&lt;execution&gt;</span>
+                                      <span class="kw">&lt;id&gt;</span>compile-scala<span class="kw">&lt;/id&gt;</span>
+                                      <span class="kw">&lt;phase&gt;</span>compile<span class="kw">&lt;/phase&gt;</span>
+                                      <span class="kw">&lt;goals&gt;</span>
+                                          <span class="kw">&lt;goal&gt;</span>add-source<span class="kw">&lt;/goal&gt;</span>
+                                          <span class="kw">&lt;goal&gt;</span>compile<span class="kw">&lt;/goal&gt;</span>
+                                      <span class="kw">&lt;/goals&gt;</span>
+                                  <span class="kw">&lt;/execution&gt;</span>
+                                  <span class="kw">&lt;execution&gt;</span>
+                                      <span class="kw">&lt;id&gt;</span>test-compile-scala<span class="kw">&lt;/id&gt;</span>
+                                      <span class="kw">&lt;phase&gt;</span>test-compile<span class="kw">&lt;/phase&gt;</span>
+                                      <span class="kw">&lt;goals&gt;</span>
+                                          <span class="kw">&lt;goal&gt;</span>add-source<span class="kw">&lt;/goal&gt;</span>
+                                          <span class="kw">&lt;goal&gt;</span>testCompile<span class="kw">&lt;/goal&gt;</span>
+                                      <span class="kw">&lt;/goals&gt;</span>
+                                  <span class="kw">&lt;/execution&gt;</span>
+                              <span class="kw">&lt;/executions&gt;</span>
+                              <span class="kw">&lt;configuration&gt;</span>
+                                  <span class="kw">&lt;recompileMode&gt;</span>incremental<span class="kw">&lt;/recompileMode&gt;</span>
+                                  <span class="kw">&lt;scalaVersion&gt;</span>${scala.version}<span class="kw">&lt;/scalaVersion&gt;</span>
+                                  <span class="kw">&lt;args&gt;</span>
+                                      <span class="kw">&lt;arg&gt;</span>-deprecation<span class="kw">&lt;/arg&gt;</span>
+                                  <span class="kw">&lt;/args&gt;</span>
+                                  <span class="kw">&lt;jvmArgs&gt;</span>
+                                      <span class="kw">&lt;jvmArg&gt;</span>-Xms64m<span class="kw">&lt;/jvmArg&gt;</span>
+                                      <span class="kw">&lt;jvmArg&gt;</span>-Xmx1024m<span class="kw">&lt;/jvmArg&gt;</span>
+                                  <span class="kw">&lt;/jvmArgs&gt;</span>
+                              <span class="kw">&lt;/configuration&gt;</span>
+                          <span class="kw">&lt;/plugin&gt;</span></code></pre></div>
+              <p>其次，我们需要添加Scala的相关依赖，所以， pom中还需要添加至少如下配置：</p>
+              <div class="sourceCode"><pre class="sourceCode xml"><code class="sourceCode xml">        <span class="kw">&lt;dependency&gt;</span>
+                          <span class="kw">&lt;groupId&gt;</span>org.scala-lang<span class="kw">&lt;/groupId&gt;</span>
+                          <span class="kw">&lt;artifactId&gt;</span>scala-library<span class="kw">&lt;/artifactId&gt;</span>
+                          <span class="kw">&lt;version&gt;</span>${scala.version}<span class="kw">&lt;/version&gt;</span>
+                      <span class="kw">&lt;/dependency&gt;</span>
+                      <span class="kw">&lt;dependency&gt;</span>
+                          <span class="kw">&lt;groupId&gt;</span>org.scala-lang<span class="kw">&lt;/groupId&gt;</span>
+                          <span class="kw">&lt;artifactId&gt;</span>scala-compiler<span class="kw">&lt;/artifactId&gt;</span>
+                          <span class="kw">&lt;version&gt;</span>${scala.version}<span class="kw">&lt;/version&gt;</span>
+                      <span class="kw">&lt;/dependency&gt;</span></code></pre></div>
+              <p>至此， 就可以在src/main/scala下添加相应的Scala代码进行SpringBoot应用的开发了， so easy~</p>
+              <h1 id="使用sbt构建scala开发的springboot应用"><span class="header-section-number">2</span> 使用SBT构建Scala开发的SpringBoot应用</h1>
+              <p>SpringBoot团队预先为Maven的用户提供了很多现成的支持，这大大降低了SpringBoot的入门门槛， 比如你只要继承spring-boot-starter-parent， 然后添加必要的module就可以开始一个SpringBoot项目，但是，如果我们不用Maven作为构建工具，那么， 就得自己稍微折腾一下了...</p>
+              <p>我们发现， spring-boot-starter-parent的pom定义中它的parent是spring-boot-dependencies， 不过spring-boot-dependencies只是定义了一堆的dependencyManagement和pluginManagement, 这显然只是为了Maven项目的依赖声明和管理的方便，所以，我们可以先暂时忽略spring-boot-dependencies的pom内容（回头其实还是会来参考它定义了哪些依赖）， 还是回去看spring-boot-starter-parent的pom定义。</p>
+              <p>在构建过程中， spring-boot-starter-parent会过滤src/main/resources下的yml和properties配置文件， 这里我们可以先忽略(而且也不指望把配置放在这个位置，起码偶不建议这么做)。</p>
+              <p>总得看下来， spring-boot-starter-parent也没有什么有用的东西， 所以， 没办法， 既然所有的SpringBoot应用都从某个starter项目开始， 那我们从最基础的spring-boot-starter项目的pom定义开始挖掘吧！</p>
+              <p>这个时候，我们就可以发现一些端倪了， 通常情况下， 一个SpringBoot项目一定是需要依赖如下artifacts的：</p>
+              <div class="sourceCode"><pre class="sourceCode xml"><code class="sourceCode xml">        <span class="kw">&lt;dependency&gt;</span>
+                          <span class="kw">&lt;groupId&gt;</span>org.springframework.boot<span class="kw">&lt;/groupId&gt;</span>
+                          <span class="kw">&lt;artifactId&gt;</span>spring-boot<span class="kw">&lt;/artifactId&gt;</span>
+                      <span class="kw">&lt;/dependency&gt;</span>
+                      <span class="kw">&lt;dependency&gt;</span>
+                          <span class="kw">&lt;groupId&gt;</span>org.springframework.boot<span class="kw">&lt;/groupId&gt;</span>
+                          <span class="kw">&lt;artifactId&gt;</span>spring-boot-autoconfigure<span class="kw">&lt;/artifactId&gt;</span>
+                      <span class="kw">&lt;/dependency&gt;</span>
+                      <span class="kw">&lt;dependency&gt;</span>
+                          <span class="kw">&lt;groupId&gt;</span>org.springframework.boot<span class="kw">&lt;/groupId&gt;</span>
+                          <span class="kw">&lt;artifactId&gt;</span>spring-boot-starter-logging<span class="kw">&lt;/artifactId&gt;</span>
+                      <span class="kw">&lt;/dependency&gt;</span>
+                      <span class="kw">&lt;dependency&gt;</span>
+                          <span class="kw">&lt;groupId&gt;</span>org.springframework<span class="kw">&lt;/groupId&gt;</span>
+                          <span class="kw">&lt;artifactId&gt;</span>spring-core<span class="kw">&lt;/artifactId&gt;</span>
+                          <span class="kw">&lt;exclusions&gt;</span>
+                              <span class="kw">&lt;exclusion&gt;</span>
+                                  <span class="kw">&lt;groupId&gt;</span>commons-logging<span class="kw">&lt;/groupId&gt;</span>
+                                  <span class="kw">&lt;artifactId&gt;</span>commons-logging<span class="kw">&lt;/artifactId&gt;</span>
+                              <span class="kw">&lt;/exclusion&gt;</span>
+                          <span class="kw">&lt;/exclusions&gt;</span>
+                      <span class="kw">&lt;/dependency&gt;</span>
+                      <span class="kw">&lt;dependency&gt;</span>
+                          <span class="kw">&lt;groupId&gt;</span>org.yaml<span class="kw">&lt;/groupId&gt;</span>
+                          <span class="kw">&lt;artifactId&gt;</span>snakeyaml<span class="kw">&lt;/artifactId&gt;</span>
+                          <span class="kw">&lt;scope&gt;</span>runtime<span class="kw">&lt;/scope&gt;</span>
+                      <span class="kw">&lt;/dependency&gt;</span></code></pre></div>
+              <p>其中， spring-core和spring-boot很好理解， SpringBoot应用嘛， 肯定需要对spring-boot的依赖，而spring-boot又依赖于spring-core即spring框架本身， 为了SpringBoot应用发挥其快捷的特性， spring-boot-autoconfigure自然也是不应该少的。</p>
+              <p>剩下的logging啦， yaml啦， 就可以根据情况来了，虽然logging一般也不能少。</p>
+              <p>为了验证我们的猜测和推断，我们再来看看spring-boot-starter-web和spring-boot-starter-actuator等一系列其它的starter modules， 就会发现， spring-boot-starter是最小子集，所以，哗啦， 整个事情就明朗了。</p>
+              <p>要使用SBT来构建SpringBoot应用，只要依照spring-boot-starter来添加必要的依赖就可以了！ 剩下的其它依赖，只要根据情况添加即可！</p>
+              <div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala">
+              libraryDependencies += <span class="st">&quot;org.springframework&quot;</span> % <span class="st">&quot;spring-core&quot;</span> % <span class="st">&quot;4.1.6.RELEASE&quot;</span> <span class="fu">exclude</span>(<span class="st">&quot;commons-logging&quot;</span>, <span class="st">&quot;commons-logging&quot;</span>)
+              
+              libraryDependencies += <span class="st">&quot;org.springframework.boot&quot;</span> % <span class="st">&quot;spring-boot&quot;</span> % <span class="st">&quot;1.2.4.RELEASE&quot;</span>
+              
+              libraryDependencies += <span class="st">&quot;org.springframework.boot&quot;</span> % <span class="st">&quot;spring-boot-autoconfigure&quot;</span> % <span class="st">&quot;1.2.4.RELEASE&quot;</span>
+              
+              libraryDependencies += <span class="st">&quot;org.springframework.boot&quot;</span> % <span class="st">&quot;spring-boot-starter-logging&quot;</span> % <span class="st">&quot;1.2.4.RELEASE&quot;</span>
+              
+              libraryDependencies += <span class="st">&quot;org.yaml&quot;</span> % <span class="st">&quot;snakeyaml&quot;</span> % <span class="st">&quot;1.14&quot;</span></code></pre></div>
+              <p>之后，我们只要用Scala来写相应的Controller以及服务啦</p>
+              <div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">class</span> Message {
+                @BeanProperty
+                <span class="kw">var</span> value: String = _
+              }
               
               
+              @RestController
+              <span class="kw">class</span> HelloController {
+              
+                @<span class="fu">Value</span>(<span class="st">&quot;${hello.message}&quot;</span>)
+                @BeanProperty
+                <span class="kw">var</span> helloMessage: String = _
+              
+                @<span class="fu">RequestMapping</span>(value = Array(<span class="st">&quot;/hello&quot;</span>), method = Array(RequestMethod.<span class="fu">GET</span>))
+                @ResponseBody
+                <span class="kw">def</span> <span class="fu">hello</span>(): Message = {
+                  <span class="kw">val</span> message = <span class="kw">new</span> Message
+                  message.<span class="fu">value</span> = helloMessage
+                  message
+                }
+              }</code></pre></div>
+              <blockquote>
+              <p>NOTE</p>
+              <p>上面的消息类我们也可以使用case class, 但注意也要添加@BeanProperty以便json的序列化可以正常完成： <code>case class Messsage(@BeanProperty var value:String)</code></p>
+              </blockquote>
+              <h2 id="基于sbt的springboot应用的发布"><span class="header-section-number">2.1</span> 基于SBT的SpringBoot应用的发布</h2>
+              <p>SpringBoot提供了一个插件spring-boot-maven-plugin用来将SpringBoot应用打包为按照一定格式组织的可执行的jar包， 这个功能很赞！</p>
+              <p>BUT， 哥比较懒，虽然我也可以把那个逻辑剥离出来弄成一个SBT插件， 但哥决定还是变通一下， 将当前SpringBoot项目直接使用<a href="https://github.com/sbt/sbt-native-packager">sbt-native-packager</a>打包发布好了， 启停脚本也可以自动生成。</p>
+              <p>所以，我们的build.sbt配置文件中还会再多添加几行配置：</p>
+              <div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala">mainClass := Some(<span class="st">&quot;com.example.Hello&quot;</span>)
+              
+              mappings in Universal += <span class="fu">file</span>(<span class="st">&quot;LICENSE&quot;</span>) -&gt; <span class="st">&quot;LICENSE&quot;</span>
+              
+              mappings in Universal ++= <span class="fu">directory</span>(<span class="st">&quot;config&quot;</span>)</code></pre></div>
+              <p>最终，一个完整的SBT项目build.sbt示例性配置文件如下：</p>
+              <div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">import</span> sbt.<span class="fu">_</span>
+              <span class="kw">import</span> com.<span class="fu">typesafe</span>.<span class="fu">sbt</span>.<span class="fu">packager</span>.<span class="fu">universal</span>.<span class="fu">UniversalPlugin</span>.<span class="fu">autoImport</span>.<span class="fu">_</span>
+              <span class="kw">import</span> com.<span class="fu">typesafe</span>.<span class="fu">sbt</span>.<span class="fu">packager</span>.<span class="fu">MappingsHelper</span>.<span class="fu">_</span>
+              
+              <span class="kw">lazy</span> <span class="kw">val</span> root = project in <span class="fu">file</span>(<span class="st">&quot;.&quot;</span>) <span class="fu">enablePlugins</span>(JavaAppPackaging) <span class="fu">settings</span>(net.<span class="fu">virtualvoid</span>.<span class="fu">sbt</span>.<span class="fu">graph</span>.<span class="fu">Plugin</span>.<span class="fu">graphSettings</span>: _*)
+              
+              name := <span class="st">&quot;springboot-scala-with-sbt&quot;</span>
+              
+              organization := <span class="st">&quot;com.github.fujohnwang&quot;</span>
+              
+              version := <span class="st">&quot;0.0.1-SNAPSHOT&quot;</span>
+              
+              publishMavenStyle := <span class="kw">true</span>
+              
+              publishTo := Some(Resolver.<span class="fu">file</span>(<span class="st">&quot;local .m2 repository&quot;</span>,  <span class="kw">new</span> File(Path.<span class="fu">userHome</span>.<span class="fu">absolutePath</span>+<span class="st">&quot;/.m2/repository&quot;</span>)))
+              
+              resolvers += <span class="st">&quot;Local Maven Repository&quot;</span> at <span class="st">&quot;file://&quot;</span>+Path.<span class="fu">userHome</span>.<span class="fu">absolutePath</span>+<span class="st">&quot;/.m2/repository&quot;</span>
+              
+              resolvers += <span class="st">&quot;Central Maven Repository&quot;</span> at <span class="st">&quot;http://repo1.maven.org/maven2/&quot;</span>
+              
+              scalacOptions := Seq(<span class="st">&quot;-deprecation&quot;</span>, <span class="st">&quot;-unchecked&quot;</span>,<span class="st">&quot;-optimise&quot;</span>)
+              
+              javacOptions ++= Seq(<span class="st">&quot;-source&quot;</span>, <span class="st">&quot;1.8&quot;</span>, <span class="st">&quot;-target&quot;</span>, <span class="st">&quot;1.8&quot;</span>)
+              
+              scalaVersion := <span class="st">&quot;2.11.7&quot;</span>
+              
+              libraryDependencies += <span class="st">&quot;ch.qos.logback&quot;</span> % <span class="st">&quot;logback-core&quot;</span> % <span class="st">&quot;1.1.2&quot;</span>
+              
+              libraryDependencies += <span class="st">&quot;ch.qos.logback&quot;</span> % <span class="st">&quot;logback-classic&quot;</span> % <span class="st">&quot;1.1.2&quot;</span>
+              
+              libraryDependencies += <span class="st">&quot;org.slf4j&quot;</span> % <span class="st">&quot;jcl-over-slf4j&quot;</span> % <span class="st">&quot;1.7.12&quot;</span>
+              
+              libraryDependencies += <span class="st">&quot;org.slf4j&quot;</span> % <span class="st">&quot;log4j-over-slf4j&quot;</span> % <span class="st">&quot;1.7.12&quot;</span>
+              
+              libraryDependencies += <span class="st">&quot;io.dropwizard.metrics&quot;</span> % <span class="st">&quot;metrics-core&quot;</span> % <span class="st">&quot;3.1.2&quot;</span>
+              
+              libraryDependencies += <span class="st">&quot;org.springframework&quot;</span> % <span class="st">&quot;spring-core&quot;</span> % <span class="st">&quot;4.1.6.RELEASE&quot;</span> <span class="fu">exclude</span>(<span class="st">&quot;commons-logging&quot;</span>, <span class="st">&quot;commons-logging&quot;</span>)
+              
+              libraryDependencies += <span class="st">&quot;org.springframework.boot&quot;</span> % <span class="st">&quot;spring-boot&quot;</span> % <span class="st">&quot;1.2.4.RELEASE&quot;</span>
+              
+              libraryDependencies += <span class="st">&quot;org.springframework.boot&quot;</span> % <span class="st">&quot;spring-boot-autoconfigure&quot;</span> % <span class="st">&quot;1.2.4.RELEASE&quot;</span>
+              
+              libraryDependencies += <span class="st">&quot;org.springframework.boot&quot;</span> % <span class="st">&quot;spring-boot-starter-logging&quot;</span> % <span class="st">&quot;1.2.4.RELEASE&quot;</span>
+              
+              libraryDependencies += <span class="st">&quot;org.yaml&quot;</span> % <span class="st">&quot;snakeyaml&quot;</span> % <span class="st">&quot;1.14&quot;</span>
+              
+              libraryDependencies += <span class="st">&quot;org.springframework.boot&quot;</span> % <span class="st">&quot;spring-boot-starter-actuator&quot;</span> % <span class="st">&quot;1.2.4.RELEASE&quot;</span>
+              
+              libraryDependencies += <span class="st">&quot;org.springframework.boot&quot;</span> % <span class="st">&quot;spring-boot-starter-web&quot;</span> % <span class="st">&quot;1.2.4.RELEASE&quot;</span>
+              
+              mainClass := Some(<span class="st">&quot;com.example.Hello&quot;</span>)
+              
+              mappings in Universal += <span class="fu">file</span>(<span class="st">&quot;LICENSE&quot;</span>) -&gt; <span class="st">&quot;LICENSE&quot;</span>
+              
+              mappings in Universal ++= <span class="fu">directory</span>(<span class="st">&quot;conf&quot;</span>)</code></pre></div>
+              <p>OK，that's it, happy hacking spring boot with scala and sbt!</p>
               
       </div>
       <div id="qrcode"></div>
