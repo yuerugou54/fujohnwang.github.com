@@ -10,7 +10,7 @@
     <meta name="date" content="2015-07-23" />
     <link rel="icon" href="/favicon.ico">
 
-  <title>Gitlab的Server端Hook使用手册 - 一个架构士的思考与沉淀之地</title>
+  <title>gitlab的server端hook简要使用说明 - 一个架构士的思考与沉淀之地</title>
 
   
 
@@ -67,7 +67,7 @@
 <div class="row">
 <div id="header">
 <p class="lead">
-<h1 class="title">Gitlab的Server端Hook使用手册</h1>
+<h1 class="title">gitlab的server端hook简要使用说明</h1>
 <small>
 <h3 class="author">王福强 - fujohnwang AT gmail DOTA com</h3>
 </small>
@@ -84,7 +84,7 @@
 </div>
 <hr/>
 
-<p>我们<a href="http://www.wacai.com">挖财</a>内部所有的研发围绕着gitlab为起点而进行(gitlab as genesis)， 包括code， issues, wiki等， 大部分情况下， wiki是开放编辑的，但少部分项目牵扯到内容的review，所以，需要对这部分wiki进行一定时间窗口的“截留”， 比如，我们的架构规范， 一定是需要先提交初稿， 经过架构委员会review并通过之后，才可以正式发布， 但gitlab集成的wiki系统比较弱，所以，我们适当的进行了变通， 即wiki的编写和提交按照代码项目一样的流程， 新的架构规范提交后，需要提交merge request， review通过后再merge到项目的master， 这个时候，我们希望可以触发某个动作，来发布新的内容到wiki， 这里，就用到了gitlab的server端hook支持，整个流程大体上如下图所示：</p>
+<p>我们<a href="http://www.wacai.com">挖财</a>内部所有的研发围绕着<a href="https://about.gitlab.com/">gitlab</a>为起点而进行(gitlab as genesis)， 包括code， issues, wiki等， 大部分情况下， wiki是开放编辑的，但少部分项目牵扯到内容的review，所以，需要对这部分wiki进行一定时间窗口的“截留”， 比如，我们的架构规范， 一定是需要先提交初稿， 经过架构委员会review并通过之后，才可以正式发布， 但gitlab集成的wiki系统比较弱，所以，我们适当的进行了变通， 即wiki的编写和提交按照代码项目一样的流程， 新的架构规范提交后，需要提交merge request， review通过后再merge到项目的master， 这个时候，我们希望可以触发某个动作，来发布新的内容到wiki， 这里，就用到了gitlab的server端hook支持，整个流程大体上如下图所示：</p>
 <div class="figure">
 <img src="images/gitlab-server-hook-workflow.png" />
 
@@ -107,8 +107,8 @@
 
 <span class="ot">SCRIPT_DIR=</span><span class="st">&quot;</span><span class="ot">$(</span> <span class="kw">cd</span> <span class="st">&quot;</span><span class="ot">$(</span> <span class="kw">dirname</span> <span class="st">&quot;</span><span class="ot">${BASH_SOURCE[0]}</span><span class="st">&quot;</span> <span class="ot">)</span><span class="st">&quot;</span> <span class="kw">&amp;&amp;</span> <span class="kw">pwd</span> <span class="ot">)</span><span class="st">&quot;</span>
 
-<span class="ot">SRC_DIR=${SCRIPT_DIR}</span>/../../arch.git
-<span class="ot">DEST_DIR=${SCRIPT_DIR}</span>/../../arch.wiki.git
+<span class="ot">SRC_DIR=${SCRIPT_DIR}</span>/../../architecture.git
+<span class="ot">DEST_DIR=${SCRIPT_DIR}</span>/../../architecture.wiki.git
 
 <span class="kw">/usr/bin/rsync</span> -avz --delete <span class="ot">$SRC_DIR</span>/ <span class="ot">$DEST_DIR</span>/</code></pre></div>
 <h1 id="参考资料"><span class="header-section-number">1</span> 参考资料</h1>

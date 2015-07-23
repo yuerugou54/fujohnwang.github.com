@@ -1,9 +1,9 @@
-% Gitlab的Server端Hook使用手册
+% gitlab的server端hook简要使用说明
 % 王福强 - fujohnwang AT gmail DOTA com
 % 2015-07-23
 
 
-我们[挖财](http://www.wacai.com)内部所有的研发围绕着gitlab为起点而进行(gitlab as genesis)， 包括code， issues, wiki等， 大部分情况下， wiki是开放编辑的，但少部分项目牵扯到内容的review，所以，需要对这部分wiki进行一定时间窗口的“截留”， 比如，我们的架构规范， 一定是需要先提交初稿， 经过架构委员会review并通过之后，才可以正式发布， 但gitlab集成的wiki系统比较弱，所以，我们适当的进行了变通， 即wiki的编写和提交按照代码项目一样的流程， 新的架构规范提交后，需要提交merge request， review通过后再merge到项目的master， 这个时候，我们希望可以触发某个动作，来发布新的内容到wiki， 这里，就用到了gitlab的server端hook支持，整个流程大体上如下图所示：
+我们[挖财](http://www.wacai.com)内部所有的研发围绕着[gitlab](https://about.gitlab.com/)为起点而进行(gitlab as genesis)， 包括code， issues, wiki等， 大部分情况下， wiki是开放编辑的，但少部分项目牵扯到内容的review，所以，需要对这部分wiki进行一定时间窗口的“截留”， 比如，我们的架构规范， 一定是需要先提交初稿， 经过架构委员会review并通过之后，才可以正式发布， 但gitlab集成的wiki系统比较弱，所以，我们适当的进行了变通， 即wiki的编写和提交按照代码项目一样的流程， 新的架构规范提交后，需要提交merge request， review通过后再merge到项目的master， 这个时候，我们希望可以触发某个动作，来发布新的内容到wiki， 这里，就用到了gitlab的server端hook支持，整个流程大体上如下图所示：
 
 ![](images/gitlab-server-hook-workflow.png)
 
@@ -23,8 +23,8 @@ gitlab的server端hook配置大体步骤是这样的：
 
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
-SRC_DIR=${SCRIPT_DIR}/../../arch.git
-DEST_DIR=${SCRIPT_DIR}/../../arch.wiki.git
+SRC_DIR=${SCRIPT_DIR}/../../architecture.git
+DEST_DIR=${SCRIPT_DIR}/../../architecture.wiki.git
 
 /usr/bin/rsync -avz --delete $SRC_DIR/ $DEST_DIR/
 ~~~~~~~
