@@ -266,7 +266,7 @@ libraryDependencies += <span class="st">&quot;org.yaml&quot;</span> % <span clas
 </blockquote>
 <h2 id="基于sbt的springboot应用的发布"><span class="header-section-number">2.1</span> 基于SBT的SpringBoot应用的发布</h2>
 <p>SpringBoot提供了一个插件spring-boot-maven-plugin用来将SpringBoot应用打包为按照一定格式组织的可执行的jar包， 这个功能很赞！</p>
-<p>BUT， 哥比较懒，虽然我也可以把那个逻辑剥离出来弄成一个SBT插件， 但哥决定还是变通一下， 将当前SpringBoot项目直接使用<a href="https://github.com/sbt/sbt-native-packager">sbt-native-packager</a>打包发布好了， 启停脚本也可以自动生成。</p>
+<p>BUT， 哥比较懒，虽然我也可以把那个逻辑剥离出来弄成一个SBT插件 <a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a>， 但哥决定还是变通一下， 将当前SpringBoot项目直接使用<a href="https://github.com/sbt/sbt-native-packager">sbt-native-packager</a>打包发布好了， 启停脚本也可以自动生成。</p>
 <p>所以，我们的build.sbt配置文件中还会再多添加几行配置：</p>
 <div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala">mainClass := Some(<span class="st">&quot;com.example.Hello&quot;</span>)
 
@@ -330,6 +330,12 @@ mappings in Universal += <span class="fu">file</span>(<span class="st">&quot;LIC
 
 mappings in Universal ++= <span class="fu">directory</span>(<span class="st">&quot;conf&quot;</span>)</code></pre></div>
 <p>OK，that's it, happy hacking spring boot with scala and sbt!</p>
+<div class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p>参考SpringBoot的Reference文档的60. Supporting other build systems一章， 自定义一个Repackager<a href="#fnref1">↩</a></p></li>
+</ol>
+</div>
 
 </div>
 

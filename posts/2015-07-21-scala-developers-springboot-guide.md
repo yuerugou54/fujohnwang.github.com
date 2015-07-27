@@ -235,7 +235,7 @@ class HelloController {
 
 SpringBoot提供了一个插件spring-boot-maven-plugin用来将SpringBoot应用打包为按照一定格式组织的可执行的jar包， 这个功能很赞！
 
-BUT， 哥比较懒，虽然我也可以把那个逻辑剥离出来弄成一个SBT插件， 但哥决定还是变通一下， 将当前SpringBoot项目直接使用[sbt-native-packager](https://github.com/sbt/sbt-native-packager)打包发布好了， 启停脚本也可以自动生成。
+BUT， 哥比较懒，虽然我也可以把那个逻辑剥离出来弄成一个SBT插件 ^[参考SpringBoot的Reference文档的60. Supporting other build systems一章， 自定义一个Repackager]， 但哥决定还是变通一下， 将当前SpringBoot项目直接使用[sbt-native-packager](https://github.com/sbt/sbt-native-packager)打包发布好了， 启停脚本也可以自动生成。
 
 所以，我们的build.sbt配置文件中还会再多添加几行配置：
 
