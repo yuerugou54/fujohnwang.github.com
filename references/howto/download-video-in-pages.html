@@ -27,18 +27,35 @@
     table.sourceCode { width: 100%; line-height: 100%; }
     td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
     td.sourceCode { padding-left: 5px; }
-    code > span.kw { color: #007020; font-weight: bold; }
-    code > span.dt { color: #902000; }
-    code > span.dv { color: #40a070; }
-    code > span.bn { color: #40a070; }
-    code > span.fl { color: #40a070; }
-    code > span.ch { color: #4070a0; }
-    code > span.st { color: #4070a0; }
-    code > span.co { color: #60a0b0; font-style: italic; }
-    code > span.ot { color: #007020; }
-    code > span.al { color: #ff0000; font-weight: bold; }
-    code > span.fu { color: #06287e; }
-    code > span.er { color: #ff0000; font-weight: bold; }
+    code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code > span.dt { color: #902000; } /* DataType */
+    code > span.dv { color: #40a070; } /* DecVal */
+    code > span.bn { color: #40a070; } /* BaseN */
+    code > span.fl { color: #40a070; } /* Float */
+    code > span.ch { color: #4070a0; } /* Char */
+    code > span.st { color: #4070a0; } /* String */
+    code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code > span.ot { color: #007020; } /* Other */
+    code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code > span.fu { color: #06287e; } /* Function */
+    code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+    code > span.cn { color: #880000; } /* Constant */
+    code > span.sc { color: #4070a0; } /* SpecialChar */
+    code > span.vs { color: #4070a0; } /* VerbatimString */
+    code > span.ss { color: #bb6688; } /* SpecialString */
+    code > span.im { } /* Import */
+    code > span.va { color: #19177c; } /* Variable */
+    code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code > span.op { color: #666666; } /* Operator */
+    code > span.bu { } /* BuiltIn */
+    code > span.ex { } /* Extension */
+    code > span.pp { color: #bc7a00; } /* Preprocessor */
+    code > span.at { color: #7d9029; } /* Attribute */
+    code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
   </style>
         
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -88,12 +105,12 @@
 <h1 id="分析页面资源下载法"><span class="header-section-number">1</span> 分析页面资源下载法</h1>
 <p>预备工作要在Safari的偏好设置中打开开发菜单。一切的操作都要建立于“开发”菜单下的“显示页面资源”功能。</p>
 <div class="figure">
-<img src="images/enable-safari-develop-menu.png" />
+<img src="images/enable-safari-develop-menu.png" alt="" />
 
 </div>
 <p>打开一个视频资源页面，点击菜单栏上“开发”(Develop)选项，并在下拉菜单中点击“显示页面资源”（Show Page Resources）, 整个网页的一切资源——图片、音频、视频等等都会出现在新打开的页面资源框中。</p>
 <div class="figure">
-<img src="images/video-in-safari.png" />
+<img src="images/video-in-safari.png" alt="" />
 
 </div>
 <p>选择网页对应的页面(player.html)并展开，选择Other子目录并展开，应该可以发现对应的视频资源， 到右边的Layout中寻找其对应的地址，然后就可以下载啦：</p>

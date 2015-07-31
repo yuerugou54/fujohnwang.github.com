@@ -5,7 +5,14 @@
     <link>http://afoo.me</link>
     <description>扶墙老师的博客 - 一个架构士的思考与实践之地</description>
     <item>
-      <title>Gitlab的Server端Hook使用手册</title>
+      <title>扶墙老师谈微服务(Microservices Essential)</title>
+      <link>http://afoo.me/posts/2015-07-31-microservices-essential.html</link>
+      <pubDate>Thu, 30 Jul 2015 16:00:00 GMT</pubDate>
+      <guid>http://afoo.me/posts/2015-07-31-microservices-essential.html</guid>
+      <dc:date>2015-07-30T16:00:00Z</dc:date>
+    </item>
+    <item>
+      <title>gitlab的server端hook简要使用说明</title>
       <link>http://afoo.me/posts/2015-07-23-gitlab-server-side-hook-how-to.html</link>
       <pubDate>Wed, 22 Jul 2015 16:00:00 GMT</pubDate>
       <guid>http://afoo.me/posts/2015-07-23-gitlab-server-side-hook-how-to.html</guid>
@@ -73,13 +80,6 @@
       <pubDate>Mon, 23 Mar 2015 16:00:00 GMT</pubDate>
       <guid>http://afoo.me/posts/2015-03-24-java-scala-project-type-choice-principle.html</guid>
       <dc:date>2015-03-23T16:00:00Z</dc:date>
-    </item>
-    <item>
-      <title>API Design And Documentation</title>
-      <link>http://afoo.me/posts/2015-03-17-api-design-and-documentation.html</link>
-      <pubDate>Mon, 16 Mar 2015 16:00:00 GMT</pubDate>
-      <guid>http://afoo.me/posts/2015-03-17-api-design-and-documentation.html</guid>
-      <dc:date>2015-03-16T16:00:00Z</dc:date>
     </item>
   </channel>
 </rss>

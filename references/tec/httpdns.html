@@ -85,7 +85,7 @@
 <h2 id="域名缓存"><span class="header-section-number">1.1</span> 域名缓存</h2>
 <p>域名缓存很好理解，就是LocalDNS缓存了腾讯的域名的解析结果，不向腾讯权威DNS发起递归，示意图如下：</p>
 <div class="figure">
-<img src="images/dnscache.png" />
+<img src="images/dnscache.png" alt="" />
 
 </div>
 <p>为何LocalDNS要把域名解析结果进行缓存呢？原因有以下几个：</p>
@@ -101,19 +101,19 @@
 <h2 id="解析转发"><span class="header-section-number">1.2</span> 解析转发</h2>
 <p>除了域名缓存以外，运营商的LocalDNS还存在解析转发的现象。解析转发是指运营商自身不进行域名递归解析，而是把域名解析请求转发到其它运营商的递归DNS上的行为。正常的LocalDNS递归解析过程是这样的：</p>
 <div class="figure">
-<img src="images/localdns.png" />
+<img src="images/localdns.png" alt="" />
 
 </div>
 <p>而部分小运营商为了节省资源，就直接将解析请求转发到了其它运营的递归LocalDNS上去了：</p>
 <div class="figure">
-<img src="images/localdns-recursive.png" />
+<img src="images/localdns-recursive.png" alt="" />
 
 </div>
 <p>这样的直接后果就是腾讯权威DNS收到的域名解析请求的来源IP就成了其它运营商的IP，最终导致用户流量被导向了错误的IDC，用户访问变慢。</p>
 <h2 id="localdns递归出口nat"><span class="header-section-number">1.3</span> LocalDNS递归出口NAT</h2>
 <p>LocalDNS递归出口NAT指的是运营商的LocalDNS按照标准的DNS协议进行递归，但是因为在网络上存在多出口且配置了目标路由NAT，结果导致LocalDNS最终进行递归解析的时候的出口IP就有概率不为本网的IP地址：</p>
 <div class="figure">
-<img src="images/localdns-nat.png" />
+<img src="images/localdns-nat.png" alt="" />
 
 </div>
 <p>这样的直接后果就是GSLB DNS收到的域名解析请求的来源IP还是成了其它运营商的IP，最终导致用户流量被导向了错误的IDC，用户访问变慢。</p>
@@ -133,7 +133,7 @@
 <p>既然上面的方案都存在那么多的问题，那有没有一种调度精准、成本低廉、配置方便的基于域名的流量调度系统呢？答案是肯定的。腾讯公司的GSLB 团队推出了一种全新的域名解析调度系统：HttpDNS。HttpDNS是为移动客户端量身定做的基于Http协议和域名解析的流量调度解决方案，专治LocalDNS解析异常以及流量调度不准。详细介绍如下：</p>
 <h2 id="httpdns基本原理"><span class="header-section-number">3.1</span> HttpDNS基本原理</h2>
 <div class="figure">
-<img src="images/httpdns.png" />
+<img src="images/httpdns.png" alt="" />
 
 </div>
 <p>HttpDNS的原理非常简单，主要有两步：</p>
