@@ -27,18 +27,35 @@
     table.sourceCode { width: 100%; line-height: 100%; }
     td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
     td.sourceCode { padding-left: 5px; }
-    code > span.kw { color: #007020; font-weight: bold; }
-    code > span.dt { color: #902000; }
-    code > span.dv { color: #40a070; }
-    code > span.bn { color: #40a070; }
-    code > span.fl { color: #40a070; }
-    code > span.ch { color: #4070a0; }
-    code > span.st { color: #4070a0; }
-    code > span.co { color: #60a0b0; font-style: italic; }
-    code > span.ot { color: #007020; }
-    code > span.al { color: #ff0000; font-weight: bold; }
-    code > span.fu { color: #06287e; }
-    code > span.er { color: #ff0000; font-weight: bold; }
+    code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code > span.dt { color: #902000; } /* DataType */
+    code > span.dv { color: #40a070; } /* DecVal */
+    code > span.bn { color: #40a070; } /* BaseN */
+    code > span.fl { color: #40a070; } /* Float */
+    code > span.ch { color: #4070a0; } /* Char */
+    code > span.st { color: #4070a0; } /* String */
+    code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code > span.ot { color: #007020; } /* Other */
+    code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code > span.fu { color: #06287e; } /* Function */
+    code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+    code > span.cn { color: #880000; } /* Constant */
+    code > span.sc { color: #4070a0; } /* SpecialChar */
+    code > span.vs { color: #4070a0; } /* VerbatimString */
+    code > span.ss { color: #bb6688; } /* SpecialString */
+    code > span.im { } /* Import */
+    code > span.va { color: #19177c; } /* Variable */
+    code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code > span.op { color: #666666; } /* Operator */
+    code > span.bu { } /* BuiltIn */
+    code > span.ex { } /* Extension */
+    code > span.pp { color: #bc7a00; } /* Preprocessor */
+    code > span.at { color: #7d9029; } /* Attribute */
+    code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
   </style>
         
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -101,7 +118,7 @@
 <li>安装giter8 (<a href="https://github.com/n8han/giter8" class="uri">https://github.com/n8han/giter8</a>)， 如何安装参考该项目的README，有详细的介绍，这里不做赘述；</li>
 <li>执行<code>g8 harrah/command-line-app</code>命令，构建scaffold工程，该giter8模板功能是sbt作者harrah构建的，所有命令行应用可以使用这个模板工程作为起点；</li>
 <li>如果本地没有安装sbt(<a href="https://github.com/harrah/xsbt" class="uri">https://github.com/harrah/xsbt</a>)，首先安装sbt， 在mac下，直接<code>brew install sbt</code>就可以搞定，其他环境参考sbt wiki说明<a href="https://github.com/harrah/xsbt/wiki/Getting-Started-Setup" class="uri">https://github.com/harrah/xsbt/wiki/Getting-Started-Setup</a>；</li>
-<li><code>cd $command-line-app$</code>, 因为项目的group id和artifact id等可以定制，这里使用__<span class="math"><em>c</em><em>o</em><em>m</em><em>m</em><em>a</em><em>n</em><em>d</em> − <em>l</em><em>i</em><em>n</em><em>e</em> − <em>a</em><em>p</em><em>p</em></span>__作为本地scaffold项目目录;</li>
+<li><code>cd $command-line-app$</code>, 因为项目的group id和artifact id等可以定制，这里使用__<span class="math inline"><em>c</em><em>o</em><em>m</em><em>m</em><em>a</em><em>n</em><em>d</em> − <em>l</em><em>i</em><em>n</em><em>e</em> − <em>a</em><em>p</em><em>p</em></span>__作为本地scaffold项目目录;</li>
 <li><code>sbt publish-local</code>, 发布该项目到本地repo；</li>
 <li><code>sbt @$command-line-app$/src/main/conscript/command-line-application/launchconfig</code></li>
 </ol>
@@ -202,24 +219,34 @@
 <p>以上实现类看起来纷繁复杂，其实很简单，基本原则就是： 1. 实现xsbt.AppMain的run方法； 2. 添加自定的commands</p>
 <p>至于其他细节，都是可以暂时忽略的。</p>
 <p>在上例中，只添加了一个自定的命令 - hello:</p>
-<p>```scalaval commandDefinitions = hello +: BasicCommands.allBasicCommands …</p>
-<p>def hello = Command(&quot;hello&quot;)(state =&gt; helloParser)( helloAction )</p>
-<p>def helloParser: Parser[String] = token(Space) ~&gt; token(NotSpace, &quot;<name>&quot;)</p>
-<p>def helloAction(state: State, name: String): State = { state.log.info( &quot;Hello %s!&quot;.format(name) ) state }```</p>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">val</span> commandDefinitions = hello +: BasicCommands.<span class="fu">allBasicCommands</span>
+…
+
+<span class="kw">def</span> hello = <span class="fu">Command</span>(<span class="st">&quot;hello&quot;</span>)(state =&gt; helloParser)( helloAction )
+
+<span class="kw">def</span> helloParser: Parser[String] = <span class="fu">token</span>(Space) ~&gt; <span class="fu">token</span>(NotSpace, <span class="st">&quot;&lt;name&gt;&quot;</span>)
+
+<span class="kw">def</span> <span class="fu">helloAction</span>(state: State, name: String): State = {
+  state.<span class="fu">log</span>.<span class="fu">info</span>( <span class="st">&quot;Hello %s!&quot;</span><span class="fu">.format</span>(name) )
+  state
+}</code></pre></div>
 <p>下面我们来看每一个命令(command)是如何定义的吧！</p>
 <h1 id="sbt-command定义详解"><span class="header-section-number">4</span> SBT Command定义详解</h1>
 <p>原则上， SBT Command 定义<a href="https://github.com/harrah/xsbt/wiki/Commands">这里</a>有详细的介绍，我只简单说一下。</p>
 <p>一个命令定义由三部分组成(非严格意义上的，严格定义见sbt的wiki)： 1. 命令的名称，比如hello； 2. 命令使用的parser，用来验证命令语法以及转换命令数据到合适的数据结构； 3. 命令执行的action，用来定义具体的执行逻辑；</p>
 <p>有了这个前提，再来看hello命令的定义就比较容易理解了吧？ <code>def hello = Command(&quot;hello&quot;)(state =&gt; helloParser)( helloAction )</code></p>
 <p>command的action定义接收parser转换的结果，然后执行相应的逻辑， 其定义为<code>(State, T) =&gt; State</code>, 对于hello的action定义来讲，就是<code>(State, String)=&gt; State</code>：</p>
-<p><code>scaladef helloAction(state: State, name: String): State = {   state.log.info( &quot;Hello %s!&quot;.format(name) )   state }</code></p>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> <span class="fu">helloAction</span>(state: State, name: String): State = {
+  state.<span class="fu">log</span>.<span class="fu">info</span>( <span class="st">&quot;Hello %s!&quot;</span><span class="fu">.format</span>(name) )
+  state
+}</code></pre></div>
 <p>一个command，可以没有参数， 接收一个参数，或者接收多个参数， Command对象提供了相应的工厂方法， 具体参考<a href="https://github.com/harrah/xsbt/wiki/Commands">这里</a>。</p>
 <p>那么， 这个Command的action中，T或者说hello action的String参数是从哪里来的那？ 这其实就是parser combinator的功劳了。</p>
 <h1 id="sbt-parser-combinator详解"><span class="header-section-number">5</span> SBT Parser Combinator详解</h1>
 <p>Parser Combinator允许将一个个小的Parser组装成一个或者多个大的Parser， command的定义中，第二部分接收一个<code>State =&gt; Parser[T]</code>类型的函数定义， 用来解析和验证命令的语法，并将最终的解析结果传递给对应的action使用。 tab-completion的功能，实际上就是parser的功能。</p>
 <p>有关如何解析输入，<a href="https://github.com/harrah/xsbt/wiki/Parsing-Input">wiki这里</a>有详细的介绍，读过之后就了然了。</p>
 <p>结合我们的command-line-app实例来说:</p>
-<p><code>scaladef helloParser: Parser[String] = token(Space) ~&gt; token(NotSpace, &quot;&lt;name&gt;&quot;)</code></p>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">def</span> helloParser: Parser[String] = <span class="fu">token</span>(Space) ~&gt; <span class="fu">token</span>(NotSpace, <span class="st">&quot;&lt;name&gt;&quot;</span>)</code></pre></div>
 <p>helloParser接收以空格分割的一个字符串形式的参数， token用于提示输入的格式或者需求。 complete.DefaultParsers中预先定义了许多Parser可是在定义自己的Parser的时候可以使用。</p>
 <h1 id="conclusion"><span class="header-section-number">6</span> Conclusion</h1>
 <p>简单来讲，有了Sbt的支持，构建一个可交互的命令行程序只需要做一个事情，即根据需要添加相应的Command定义到愿意支持的命令列表中，之后，发布到相应repo，然后本地使用sbt launcher来部署和执行即可。</p>
@@ -261,6 +288,8 @@
     </div> <!--main-->
   </div> <!--row-->
 </div> <!--container-->
+
+<script type="text/javascript" src="http://tajs.qq.com/stats?sId=49792102" charset="UTF-8"></script>
 
 <script src="/js/jquery-2.1.1.min.js"></script>
 <script src="/js/bootstrap.min.js"></script>

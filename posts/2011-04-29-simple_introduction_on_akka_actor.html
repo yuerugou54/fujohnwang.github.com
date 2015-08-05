@@ -27,18 +27,35 @@
     table.sourceCode { width: 100%; line-height: 100%; }
     td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
     td.sourceCode { padding-left: 5px; }
-    code > span.kw { color: #007020; font-weight: bold; }
-    code > span.dt { color: #902000; }
-    code > span.dv { color: #40a070; }
-    code > span.bn { color: #40a070; }
-    code > span.fl { color: #40a070; }
-    code > span.ch { color: #4070a0; }
-    code > span.st { color: #4070a0; }
-    code > span.co { color: #60a0b0; font-style: italic; }
-    code > span.ot { color: #007020; }
-    code > span.al { color: #ff0000; font-weight: bold; }
-    code > span.fu { color: #06287e; }
-    code > span.er { color: #ff0000; font-weight: bold; }
+    code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code > span.dt { color: #902000; } /* DataType */
+    code > span.dv { color: #40a070; } /* DecVal */
+    code > span.bn { color: #40a070; } /* BaseN */
+    code > span.fl { color: #40a070; } /* Float */
+    code > span.ch { color: #4070a0; } /* Char */
+    code > span.st { color: #4070a0; } /* String */
+    code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code > span.ot { color: #007020; } /* Other */
+    code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code > span.fu { color: #06287e; } /* Function */
+    code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+    code > span.cn { color: #880000; } /* Constant */
+    code > span.sc { color: #4070a0; } /* SpecialChar */
+    code > span.vs { color: #4070a0; } /* VerbatimString */
+    code > span.ss { color: #bb6688; } /* SpecialString */
+    code > span.im { } /* Import */
+    code > span.va { color: #19177c; } /* Variable */
+    code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code > span.op { color: #666666; } /* Operator */
+    code > span.bu { } /* BuiltIn */
+    code > span.ex { } /* Extension */
+    code > span.pp { color: #bc7a00; } /* Preprocessor */
+    code > span.at { color: #7d9029; } /* Attribute */
+    code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
   </style>
         
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -213,7 +230,7 @@ future.<span class="fu">result</span>.<span class="fu">asInstanceOf</span>[Optio
 <p>返回值为void的方法， 相当于Untyped Actor的！方法， 而有返回值的， 则相当于！！， 至于跟!!!相当的方法定义，就得返回特定的akka.dispatch.Future类型咯。</p>
 <p>Typed Actor个人没有啥喜好，所以不做赘述， 感兴趣可以参考 官方文档 。</p>
 <h1 id="dispatcher"><span class="header-section-number">3</span> Dispatcher</h1>
-所有的AkkaActor创建之后，如果没有特殊设置，都会使用Dispatchers<span class="math"><em>g</em><em>l</em><em>o</em><em>b</em><em>a</em><em>l</em><em>E</em><em>x</em><em>e</em><em>c</em><em>u</em><em>t</em><em>o</em><em>r</em><em>B</em><em>a</em><em>s</em><em>e</em><em>d</em><em>E</em><em>v</em><em>e</em><em>n</em><em>t</em><em>D</em><em>r</em><em>i</em><em>v</em><em>e</em><em>n</em><em>D</em><em>i</em><em>s</em><em>p</em><em>a</em><em>t</em><em>c</em><em>h</em><em>e</em><em>r</em></span>进行运行调度， 从运行日志就可以看出:
+所有的AkkaActor创建之后，如果没有特殊设置，都会使用Dispatchers<span class="math inline"><em>g</em><em>l</em><em>o</em><em>b</em><em>a</em><em>l</em><em>E</em><em>x</em><em>e</em><em>c</em><em>u</em><em>t</em><em>o</em><em>r</em><em>B</em><em>a</em><em>s</em><em>e</em><em>d</em><em>E</em><em>v</em><em>e</em><em>n</em><em>t</em><em>D</em><em>r</em><em>i</em><em>v</em><em>e</em><em>n</em><em>D</em><em>i</em><em>s</em><em>p</em><em>a</em><em>t</em><em>c</em><em>h</em><em>e</em><em>r</em></span>进行运行调度， 从运行日志就可以看出:
 <pre>
 14:27:19.659 [main] DEBUG a.d.Dispatchers$globalExecutorBasedEventDrivenDispatcher$ 
    - Starting up Dispatchers$globalExecutorBasedEventDrivenDispatcher$[akka:event-driven:dispatcher:global]
@@ -312,6 +329,8 @@ supervisor.<span class="fu">start</span> <span class="co">// start up all manage
     </div> <!--main-->
   </div> <!--row-->
 </div> <!--container-->
+
+<script type="text/javascript" src="http://tajs.qq.com/stats?sId=49792102" charset="UTF-8"></script>
 
 <script src="/js/jquery-2.1.1.min.js"></script>
 <script src="/js/bootstrap.min.js"></script>

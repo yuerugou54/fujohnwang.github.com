@@ -27,18 +27,35 @@
     table.sourceCode { width: 100%; line-height: 100%; }
     td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
     td.sourceCode { padding-left: 5px; }
-    code > span.kw { color: #007020; font-weight: bold; }
-    code > span.dt { color: #902000; }
-    code > span.dv { color: #40a070; }
-    code > span.bn { color: #40a070; }
-    code > span.fl { color: #40a070; }
-    code > span.ch { color: #4070a0; }
-    code > span.st { color: #4070a0; }
-    code > span.co { color: #60a0b0; font-style: italic; }
-    code > span.ot { color: #007020; }
-    code > span.al { color: #ff0000; font-weight: bold; }
-    code > span.fu { color: #06287e; }
-    code > span.er { color: #ff0000; font-weight: bold; }
+    code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code > span.dt { color: #902000; } /* DataType */
+    code > span.dv { color: #40a070; } /* DecVal */
+    code > span.bn { color: #40a070; } /* BaseN */
+    code > span.fl { color: #40a070; } /* Float */
+    code > span.ch { color: #4070a0; } /* Char */
+    code > span.st { color: #4070a0; } /* String */
+    code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code > span.ot { color: #007020; } /* Other */
+    code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code > span.fu { color: #06287e; } /* Function */
+    code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+    code > span.cn { color: #880000; } /* Constant */
+    code > span.sc { color: #4070a0; } /* SpecialChar */
+    code > span.vs { color: #4070a0; } /* VerbatimString */
+    code > span.ss { color: #bb6688; } /* SpecialString */
+    code > span.im { } /* Import */
+    code > span.va { color: #19177c; } /* Variable */
+    code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code > span.op { color: #666666; } /* Operator */
+    code > span.bu { } /* BuiltIn */
+    code > span.ex { } /* Extension */
+    code > span.pp { color: #bc7a00; } /* Preprocessor */
+    code > span.at { color: #7d9029; } /* Attribute */
+    code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
   </style>
         
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -204,8 +221,8 @@ Xml代码
 &lt;/ uri-config >   
 </pre>
 <p>当路径需要变更的时候， 只修改uri.xml文件一个地方，所以使用$uribroker生成链接地址的视图模板都会得到统一的更新。</p>
-<p>可是对照一下使用<span class="math"><em>u</em><em>r</em><em>i</em><em>b</em><em>r</em><em>o</em><em>k</em><em>e</em><em>r</em><em>表</em><em>述</em><em>的</em><em>路</em><em>径</em>，<em>和</em><em>u</em><em>r</em><em>i</em>.<em>x</em><em>m</em><em>l</em><em>中</em><em>表</em><em>述</em><em>的</em><em>内</em><em>容</em>，<em>很</em><em>容</em><em>易</em><em>发</em><em>现</em>，<em>许</em><em>多</em><em>信</em><em>息</em><em>都</em><em>是</em><em>重</em><em>复</em><em>出</em><em>现</em><em>的</em>，<em>如</em><em>果</em><em>按</em><em>照</em><em>C</em><em>O</em><em>C</em><em>的</em><em>理</em><em>念</em>，<em>这</em><em>些</em><em>相</em><em>同</em><em>的</em><em>信</em><em>息</em><em>完</em><em>全</em><em>可</em><em>以</em><em>推</em><em>导</em><em>出</em><em>来</em>，<em>而</em><em>不</em><em>用</em><em>明</em><em>确</em><em>再</em><em>去</em><em>配</em><em>置</em><em>一</em><em>遍</em>，<em>理</em><em>想</em><em>的</em><em>情</em><em>况</em><em>是</em>，<em>只</em><em>有</em><em>路</em><em>径</em><em>信</em><em>息</em><em>和</em></span>uribroker所表述的路径不一致的时候，明确在uri.xml中配置这种路径信息才是合理而有效的。</p>
-<p>那么， 是不是可以这样那？！ 当<span class="math"><em>u</em><em>r</em><em>i</em><em>b</em><em>r</em><em>o</em><em>k</em><em>e</em><em>r</em><em>生</em><em>成</em><em>路</em><em>径</em><em>信</em><em>息</em><em>的</em><em>时</em><em>候</em>，<em>首</em><em>先</em><em>去</em><em>检</em><em>查</em><em>u</em><em>r</em><em>i</em>.<em>x</em><em>m</em><em>l</em><em>中</em><em>有</em><em>没</em><em>有</em><em>对</em><em>应</em><em>当</em><em>前</em><em>路</em><em>径</em><em>的</em><em>配</em><em>置</em><em>项</em>，<em>如</em><em>果</em><em>有</em>，<em>则</em><em>使</em><em>用</em><em>之</em>，<em>如</em><em>果</em><em>没</em><em>有</em>，<em>则</em><em>把</em></span>uribroker中指定的路径作为最终输出。 这样，就可以极大减少配置量，降低开发人员的负担。实现过程中是否有困难，这里不做考虑，从为开发人员考虑，和提高生产率的角度来说，个人认为，这样的需求是合理的。</p>
+<p>可是对照一下使用<span class="math inline"><em>u</em><em>r</em><em>i</em><em>b</em><em>r</em><em>o</em><em>k</em><em>e</em><em>r</em><em>表</em><em>述</em><em>的</em><em>路</em><em>径</em>，<em>和</em><em>u</em><em>r</em><em>i</em>.<em>x</em><em>m</em><em>l</em><em>中</em><em>表</em><em>述</em><em>的</em><em>内</em><em>容</em>，<em>很</em><em>容</em><em>易</em><em>发</em><em>现</em>，<em>许</em><em>多</em><em>信</em><em>息</em><em>都</em><em>是</em><em>重</em><em>复</em><em>出</em><em>现</em><em>的</em>，<em>如</em><em>果</em><em>按</em><em>照</em><em>C</em><em>O</em><em>C</em><em>的</em><em>理</em><em>念</em>，<em>这</em><em>些</em><em>相</em><em>同</em><em>的</em><em>信</em><em>息</em><em>完</em><em>全</em><em>可</em><em>以</em><em>推</em><em>导</em><em>出</em><em>来</em>，<em>而</em><em>不</em><em>用</em><em>明</em><em>确</em><em>再</em><em>去</em><em>配</em><em>置</em><em>一</em><em>遍</em>，<em>理</em><em>想</em><em>的</em><em>情</em><em>况</em><em>是</em>，<em>只</em><em>有</em><em>路</em><em>径</em><em>信</em><em>息</em><em>和</em></span>uribroker所表述的路径不一致的时候，明确在uri.xml中配置这种路径信息才是合理而有效的。</p>
+<p>那么， 是不是可以这样那？！ 当<span class="math inline"><em>u</em><em>r</em><em>i</em><em>b</em><em>r</em><em>o</em><em>k</em><em>e</em><em>r</em><em>生</em><em>成</em><em>路</em><em>径</em><em>信</em><em>息</em><em>的</em><em>时</em><em>候</em>，<em>首</em><em>先</em><em>去</em><em>检</em><em>查</em><em>u</em><em>r</em><em>i</em>.<em>x</em><em>m</em><em>l</em><em>中</em><em>有</em><em>没</em><em>有</em><em>对</em><em>应</em><em>当</em><em>前</em><em>路</em><em>径</em><em>的</em><em>配</em><em>置</em><em>项</em>，<em>如</em><em>果</em><em>有</em>，<em>则</em><em>使</em><em>用</em><em>之</em>，<em>如</em><em>果</em><em>没</em><em>有</em>，<em>则</em><em>把</em></span>uribroker中指定的路径作为最终输出。 这样，就可以极大减少配置量，降低开发人员的负担。实现过程中是否有困难，这里不做考虑，从为开发人员考虑，和提高生产率的角度来说，个人认为，这样的需求是合理的。</p>
 
 </div>
 
@@ -219,6 +236,8 @@ Xml代码
     </div> <!--main-->
   </div> <!--row-->
 </div> <!--container-->
+
+<script type="text/javascript" src="http://tajs.qq.com/stats?sId=49792102" charset="UTF-8"></script>
 
 <script src="/js/jquery-2.1.1.min.js"></script>
 <script src="/js/bootstrap.min.js"></script>

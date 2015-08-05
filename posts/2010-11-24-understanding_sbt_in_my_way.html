@@ -27,18 +27,35 @@
     table.sourceCode { width: 100%; line-height: 100%; }
     td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
     td.sourceCode { padding-left: 5px; }
-    code > span.kw { color: #007020; font-weight: bold; }
-    code > span.dt { color: #902000; }
-    code > span.dv { color: #40a070; }
-    code > span.bn { color: #40a070; }
-    code > span.fl { color: #40a070; }
-    code > span.ch { color: #4070a0; }
-    code > span.st { color: #4070a0; }
-    code > span.co { color: #60a0b0; font-style: italic; }
-    code > span.ot { color: #007020; }
-    code > span.al { color: #ff0000; font-weight: bold; }
-    code > span.fu { color: #06287e; }
-    code > span.er { color: #ff0000; font-weight: bold; }
+    code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code > span.dt { color: #902000; } /* DataType */
+    code > span.dv { color: #40a070; } /* DecVal */
+    code > span.bn { color: #40a070; } /* BaseN */
+    code > span.fl { color: #40a070; } /* Float */
+    code > span.ch { color: #4070a0; } /* Char */
+    code > span.st { color: #4070a0; } /* String */
+    code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code > span.ot { color: #007020; } /* Other */
+    code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code > span.fu { color: #06287e; } /* Function */
+    code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+    code > span.cn { color: #880000; } /* Constant */
+    code > span.sc { color: #4070a0; } /* SpecialChar */
+    code > span.vs { color: #4070a0; } /* VerbatimString */
+    code > span.ss { color: #bb6688; } /* SpecialString */
+    code > span.im { } /* Import */
+    code > span.va { color: #19177c; } /* Variable */
+    code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code > span.op { color: #666666; } /* Operator */
+    code > span.bu { } /* BuiltIn */
+    code > span.ex { } /* Extension */
+    code > span.pp { color: #bc7a00; } /* Preprocessor */
+    code > span.at { color: #7d9029; } /* Attribute */
+    code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
   </style>
         
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -117,7 +134,7 @@ Although we have add dependencies in the build file, they are not available befo
 <p>OK, until now, I think most of the things work for us, but how SBT makes all of the things run smoothly?</p>
 <h1 id="how-sbt-works"><span class="header-section-number">2</span> How SBT works</h1>
 <p>The most interested thing about SBT is that it conforms to Scala everywhere, If you used maven before or still using it, you know the build defintion in maven is defined in xml(pom.xml) or groovy after maven3, although maven are mostly used with java projects. But since SBT is mainly for scala projects, its build files are written in scala too.</p>
-<p>SBT build artifacts are located at &quot;<span class="math"><em>y</em><em>o</em><em>u</em><em>r</em><sub><em>p</em></sub><em>r</em><em>o</em><em>j</em><em>e</em><em>c</em><em>t</em><sub><em>f</em></sub><em>o</em><em>l</em><em>d</em><em>e</em><em>r</em></span>/project&quot; folder which contains:</p>
+<p>SBT build artifacts are located at &quot;<span class="math inline"><em>y</em><em>o</em><em>u</em><em>r</em><sub><em>p</em></sub><em>r</em><em>o</em><em>j</em><em>e</em><em>c</em><em>t</em><sub><em>f</em></sub><em>o</em><em>l</em><em>d</em><em>e</em><em>r</em></span>/project&quot; folder which contains:</p>
 <ul>
 <li>build.properties // your project information and scala version information</li>
 <li>build // folder contains build file defintiion</li>
@@ -158,6 +175,8 @@ java.lang.IllegalArgumentException: requirement failed: Path component 'your pat
     </div> <!--main-->
   </div> <!--row-->
 </div> <!--container-->
+
+<script type="text/javascript" src="http://tajs.qq.com/stats?sId=49792102" charset="UTF-8"></script>
 
 <script src="/js/jquery-2.1.1.min.js"></script>
 <script src="/js/bootstrap.min.js"></script>
