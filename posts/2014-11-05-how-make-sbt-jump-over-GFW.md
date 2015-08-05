@@ -1,12 +1,40 @@
 % SBT免翻墙手册
 % FuqiangWang
 
+
+# 公司级解决方案
+
+我们在公司内部使用Squid搭建了一个透明代理， 用来代理如下repositories:
+
+1. <http://repo.typesafe.com/typesafe/ivy-releases/>
+2. <http://repo.maven.apache.org/maven2/>
+
+然后所有artifacts都缓存10年。
+
+## Gotchas
+
+我们遇到的坑儿跟大家分享一下...
+
+### HTTPS的代理
+
+实际上， 对所有repository的访问最好走HTTPS， 防止artifacts被篡改导致的安全隐患，但是， 搞HTTPS的代理实在是不太好绕，主要是证书问题（细节就不表了），所以，最终我们选择直接走HTTP。
+
+### 关于URL跳转
+
+<http://repo.typesafe.com/typesafe/ivy-releases/>实际上现在是跳转到<http://dl.bintray.com/typesafe/ivy-releases/>的, 所以做代理配置的时候，要将URL跳转的情况考虑进去，否则会造成网络环路的死循环。
+
+> 如果不在Squid等代理方案上进行URL跳转的配置，可以使用谭东同学基于Spray写的<https://github.com/woshilaiceshide/fetcher-proxy>作为artifacts的抓取方案（会自动处理掉URL的调转），然后相应的代理软件直接走fetcher-proxy就可以了。
+
+
+
+# 个人版解决方案
+
 > 罢了， 从根儿上调整实在坑儿太难趟， 还是build.sbt里加一下resolvers吧！
 
 <pre>
 resolvers += "Local Maven Repository" at "file://"+Path.userHome.absolutePath+"/.m2/repository"
 
-resolvers += "Internal Maven Repository" at "http://[internal-host]/nexus/content/groups/public/"
+resolvers += "OSChina Maven Repository" at "http://maven.oschina.net/content/groups/public/"
 
 externalResolvers := Resolver.withDefaultResolvers(resolvers.value, mavenCentral = false)
 </pre>
