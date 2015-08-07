@@ -106,6 +106,7 @@ $endfor$
 </div>
       <div id="qrcode"></div>
       <div class="row">
+        <hr>
         <div  class="col-md-12">
           <nav>
             <ul class="nav nav-pills pull-left">
@@ -113,14 +114,9 @@ $endfor$
               <li><a href="/columns.html">专栏文章</a></li>
               <li><a href="/dashboard.html">金融看板</a></li>
               <li><a href="/feeds.xml">订阅RSS</a></li>
+              <li>Powered by <a href="http://johnmacfarlane.net/pandoc/">pandoc</a> and <a href="http://rometools.github.io/rome/index.html">ROME</a></li>
             </ul>
           </nav>
-        </div>
-        <hr>
-        <div class="col-md-12 footer">
-          <p>
-          Powered by <a href="http://johnmacfarlane.net/pandoc/">pandoc</a>, <a href="http://rometools.github.io/rome/index.html">ROME</a> and <a href="http://pages.github.com/">github pages</a>
-          </p>
         </div>
       </div>
     </div> <!--main-->
@@ -130,10 +126,11 @@ $endfor$
 <script src="/js/jquery-2.1.1.min.js"></script>
 <script src="/js/bootstrap.min.js"></script>
 <script src="/js/qrcode.min.js"></script>
+<!--
 <script type="text/javascript">
 new QRCode(document.getElementById("qrcode"), window.location.href);
 </script>
-
+-->
 </body>
 
 </html>
