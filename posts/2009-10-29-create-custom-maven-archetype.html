@@ -208,12 +208,19 @@ $ mvn archetype:generate -DarchetypeCatalog=local
 <p>for binary files, e.g. images, we need to edit archetype.xml entry for these resources, and add &quot;filtered=&quot;false&quot;&quot; attribute to their <resource> elements. Otherwise , when create a project with this archetype, the binary files will be corrupted. Because velocity try to process it. See JIRA issure from http://jira.codehaus.org/browse/ARCHETYPE-19 for this problem.</p>
 
 </div>
-
       <div id="qrcode"></div>
       <div class="row">
-        <div class="col-md-12 footer">
+        <div  class="col-md-12">
           <hr>
-          <p>Powered by <a href="http://johnmacfarlane.net/pandoc/">pandoc</a>, <a href="http://rometools.github.io/rome/index.html">ROME</a> and <a href="http://pages.github.com/">github pages</a></p>
+          <nav>
+            <ul class="nav nav-pills pull-left">
+              <li><a href="/">查看更多扶墙老师的文章...</a></li>
+              <li><a href="/columns.html">专栏文章</a></li>
+              <li><a href="/dashboard.html">金融看板</a></li>
+              <li><a href="/feeds.xml">订阅RSS</a></li>
+              <li><a href="http://pandoc.org/">Powered By Pandoc</a></li>
+            </ul>
+          </nav>
         </div>
       </div>
     </div> <!--main-->
@@ -223,10 +230,11 @@ $ mvn archetype:generate -DarchetypeCatalog=local
 <script src="/js/jquery-2.1.1.min.js"></script>
 <script src="/js/bootstrap.min.js"></script>
 <script src="/js/qrcode.min.js"></script>
+<!--
 <script type="text/javascript">
 new QRCode(document.getElementById("qrcode"), window.location.href);
 </script>
-
+-->
 </body>
 
 </html>

@@ -353,12 +353,19 @@ ApplicationActionManager.<span class="fu">getInstance</span>().<span class="fu">
 <p>即使你不用Spring的IoC容器，或者说不想在容器启动的时候启动服务，那你也可以在应用中合适的地方，调用状态完备的TangosolCacheClient对象实例的startService或者stopService方法， 时机和地点随情况而定，但总的原则却是，在对象构建完成并处于状态完备的情况下来做这些事情（这是个人建议）。</p>
 
 </div>
-
       <div id="qrcode"></div>
       <div class="row">
-        <div class="col-md-12 footer">
+        <div  class="col-md-12">
           <hr>
-          <p>Powered by <a href="http://johnmacfarlane.net/pandoc/">pandoc</a>, <a href="http://rometools.github.io/rome/index.html">ROME</a> and <a href="http://pages.github.com/">github pages</a></p>
+          <nav>
+            <ul class="nav nav-pills pull-left">
+              <li><a href="/">查看更多扶墙老师的文章...</a></li>
+              <li><a href="/columns.html">专栏文章</a></li>
+              <li><a href="/dashboard.html">金融看板</a></li>
+              <li><a href="/feeds.xml">订阅RSS</a></li>
+              <li><a href="http://pandoc.org/">Powered By Pandoc</a></li>
+            </ul>
+          </nav>
         </div>
       </div>
     </div> <!--main-->
@@ -368,10 +375,11 @@ ApplicationActionManager.<span class="fu">getInstance</span>().<span class="fu">
 <script src="/js/jquery-2.1.1.min.js"></script>
 <script src="/js/bootstrap.min.js"></script>
 <script src="/js/qrcode.min.js"></script>
+<!--
 <script type="text/javascript">
 new QRCode(document.getElementById("qrcode"), window.location.href);
 </script>
-
+-->
 </body>
 
 </html>
