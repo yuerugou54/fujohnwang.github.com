@@ -11,6 +11,16 @@
 
 然后所有artifacts都缓存10年。
 
+然后所有项目通过在项目的根目录下添加.sbtopts元信息文件，通过`-Dsbt.repository.secure=false`配置项告知SBT使用HTTP而非HTTPS里更新和下载artifacts:
+
+~~~
+-J-Xmx2G
+-J-XX:+CMSClassUnloadingEnabled
+-J-XX:+UseConcMarkSweepGC
+-Dsbt.repository.secure=false
+~~~
+
+
 ## Gotchas
 
 我们遇到的坑儿跟大家分享一下...
