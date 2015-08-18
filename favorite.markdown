@@ -299,7 +299,7 @@ You can perform ad-hoc queries or schedule them.
 
 ## Movies(电影)
 0. [一站搜(美剧)](http://www.yizhansou.com/)
-1. [天天美剧](http://www.ttmeiju.com/)
+1. [天天美剧](http://cn163.net/)
 2. [ed2000电影](http://www.ed2000.com/FileList.asp?FileCategory=%E7%94%B5%E5%BD%B1)
 3. [阳光电影](http://www.ygdy8.com/)
 4. [电影天堂](http://www.dytt8.net)
@@ -308,6 +308,8 @@ You can perform ad-hoc queries or schedule them.
 7. [BT天堂](http://www.bttiantang.cc/)
 8. [人人影视海外版](http://yzys.tv/)
 9. [伪射手网](http://sub.makedie.me/)
+10. <http://kickass.to>
+11. <http://www.btsoso.me>
 
 ## BT Search
 0. <http://www.btbook.net/>
