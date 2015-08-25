@@ -251,6 +251,8 @@ with MapReduce](http://lintool.github.com/MapReduceAlgorithms/index.html) ^^^
 11. <http://schemaspy.sourceforge.net/> - 基于Java的图形化工具，用于分析数据库schema的关系
 12. <https://www.iconfinder.com/free_icons>  - 免费图标
 13. [https://iconverticons.com/online/](https://iconverticons.com/online/) - iConvert Icons converts and creates custom icons for Windows, Mac OS X, Linux, iOS, and Android.
+14. <http://ericandrewlewis.github.io/emoji-mosaic/>  - 图片模糊
+
 
 ## Mac OS X
 1. [How to create a bootable USB to install OS X](http://www.techrepublic.com/blog/mac/how-to-create-a-bootable-usb-to-install-os-x/2699)
