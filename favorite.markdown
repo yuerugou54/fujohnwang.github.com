@@ -262,6 +262,7 @@ with MapReduce](http://lintool.github.com/MapReduceAlgorithms/index.html) ^^^
 1. [Harden Your Web App - A developer oriented repository of attacks and defenses.](http://webapp-hardening.heroku.com/)
 2. [Fofacli 全网漏洞扫描器](http://fofa.so/fofacli)
 3. [社工库](http://www.weigongkai.com/)
+4. [密码网 - http://www.findmima.com/](http://www.findmima.com/)
 4. <http://www.273tech.com/>
 5. <https://veracrypt.codeplex.com/> - Veracrpyt, enhanced truecrypt
 6. [osquery](https://osquery.io/)
