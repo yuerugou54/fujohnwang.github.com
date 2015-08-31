@@ -251,6 +251,8 @@ with MapReduce](http://lintool.github.com/MapReduceAlgorithms/index.html) ^^^
 11. <http://schemaspy.sourceforge.net/> - 基于Java的图形化工具，用于分析数据库schema的关系
 12. <https://www.iconfinder.com/free_icons>  - 免费图标
 13. [https://iconverticons.com/online/](https://iconverticons.com/online/) - iConvert Icons converts and creates custom icons for Windows, Mac OS X, Linux, iOS, and Android.
+14. <http://ericandrewlewis.github.io/emoji-mosaic/>  - 图片模糊
+
 
 ## Mac OS X
 1. [How to create a bootable USB to install OS X](http://www.techrepublic.com/blog/mac/how-to-create-a-bootable-usb-to-install-os-x/2699)
@@ -260,6 +262,7 @@ with MapReduce](http://lintool.github.com/MapReduceAlgorithms/index.html) ^^^
 1. [Harden Your Web App - A developer oriented repository of attacks and defenses.](http://webapp-hardening.heroku.com/)
 2. [Fofacli 全网漏洞扫描器](http://fofa.so/fofacli)
 3. [社工库](http://www.weigongkai.com/)
+4. [密码网 - http://www.findmima.com/](http://www.findmima.com/)
 4. <http://www.273tech.com/>
 5. <https://veracrypt.codeplex.com/> - Veracrpyt, enhanced truecrypt
 6. [osquery](https://osquery.io/)
@@ -299,7 +302,7 @@ You can perform ad-hoc queries or schedule them.
 
 ## Movies(电影)
 0. [一站搜(美剧)](http://www.yizhansou.com/)
-1. [天天美剧](http://www.ttmeiju.com/)
+1. [天天美剧](http://cn163.net/)
 2. [ed2000电影](http://www.ed2000.com/FileList.asp?FileCategory=%E7%94%B5%E5%BD%B1)
 3. [阳光电影](http://www.ygdy8.com/)
 4. [电影天堂](http://www.dytt8.net)
@@ -308,6 +311,8 @@ You can perform ad-hoc queries or schedule them.
 7. [BT天堂](http://www.bttiantang.cc/)
 8. [人人影视海外版](http://yzys.tv/)
 9. [伪射手网](http://sub.makedie.me/)
+10. <http://kickass.to>
+11. <http://www.btsoso.me>
 
 ## BT Search
 0. <http://www.btbook.net/>
