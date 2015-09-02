@@ -313,6 +313,7 @@ You can perform ad-hoc queries or schedule them.
 9. [伪射手网](http://sub.makedie.me/)
 10. <http://kickass.to>
 11. <http://www.btsoso.me>
+12. <http://www.shinybbs.com/forum.php>
 
 ## BT Search
 0. <http://www.btbook.net/>
