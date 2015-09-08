@@ -268,7 +268,7 @@ with MapReduce](http://lintool.github.com/MapReduceAlgorithms/index.html) ^^^
 6. [osquery](https://osquery.io/)
     - osquery gives you the ability to query and log things like running processes, logged in users, password changes, usb devices, firewall exceptions, listening ports, and more. 
 You can perform ad-hoc queries or schedule them.
-
+7. <https://asecuritysite.com/encryption/shamir> 
 
 
 
