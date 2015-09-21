@@ -236,8 +236,9 @@ with MapReduce](http://lintool.github.com/MapReduceAlgorithms/index.html) ^^^
 ## Tools
 1. [Phabricator](http://phabricator.org/) created by Facebook
 	- a suite of web applications that help software companies communicate about software effectively
-2. <http://www.tagcloud-generator.com/generator.php>  *****
-	- Tag Cloud Generator
+2. Tag Cloud Generator
+	- <http://worditout.com/word-cloud/make-a-new-one>
+	- <http://www.tagcloud-generator.com/generator.php>
 3. [MockingGrid - 页面草案](https://gomockingbird.com/mockingbird/)
 4. <http://ascii.mastervb.net/> - ASCII generator
 4. [http://asciinema.org/](http://asciinema.org/)

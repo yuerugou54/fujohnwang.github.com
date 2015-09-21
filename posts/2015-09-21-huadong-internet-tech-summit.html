@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+  <meta charset='utf-8'>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="author" content="扶墙老师@afoo.me">
+    <meta name="date" content="2015-09-21" />
+    <link rel="icon" href="/favicon.ico">
+
+  <title>华东互联网+技术峰会回顾 - 一个架构士的思考与沉淀之地</title>
+
+  <!-- 百度统计 -->
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?4b0cf57d9b677da796218f27d72dbbca";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+  <link href='/font/News_Cycle/stylesheet.css' rel='stylesheet' type='text/css'>
+  <link href="/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/css/bootstrap-theme.min.css" rel="stylesheet">
+  <link href="/css/afoo.me.css" rel="stylesheet">
+
+  <style type="text/css">code{white-space: pre;}</style>
+        
+  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+  <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+  <![endif]-->
+</head>
+
+<body>
+<div class="container">
+  <div class="row">
+    
+    <div class="col-xs-12 col-md-2">
+        <div class="seal text-right">
+          <a href="http://afoo.me">
+            <img src="/images/myseal.png"/>
+          </a>
+        </div>
+    </div>
+
+<div class="col-xs-12 col-md-10">
+
+
+<div class="row">
+<div id="header">
+<p class="lead">
+<h1 class="title">华东互联网+技术峰会回顾</h1>
+<small>
+<h3 class="author">陨石 - yunshi AT wacai DOTA com</h3>
+</small>
+<h4 class="date">2015-09-21</h4>
+</p>
+</div>
+
+<hr>
+
+<div id="TOC">
+<ul>
+<li><a href="#本期峰会word-cloud"><span class="toc-section-number">1</span> 本期峰会Word Cloud</a></li>
+<li><a href="#运维发展方向"><span class="toc-section-number">2</span> 运维发展方向</a><ul>
+<li><a href="#视角与维度一"><span class="toc-section-number">2.1</span> 视角与维度一</a></li>
+<li><a href="#视角与维度二"><span class="toc-section-number">2.2</span> 视角与维度二</a></li>
+<li><a href="#视角与维度三"><span class="toc-section-number">2.3</span> 视角与维度三</a></li>
+</ul></li>
+<li><a href="#运维组织的建设与发展"><span class="toc-section-number">3</span> 运维组织的建设与发展</a></li>
+<li><a href="#运维之道"><span class="toc-section-number">4</span> 运维之道</a><ul>
+<li><a href="#制度与流程"><span class="toc-section-number">4.1</span> 制度与流程</a><ul>
+<li><a href="#运维流程实践一"><span class="toc-section-number">4.1.1</span> 运维流程实践一</a></li>
+<li><a href="#软件交付链路实践与理念"><span class="toc-section-number">4.1.2</span> 软件交付链路实践与理念</a></li>
+<li><a href="#入职考察"><span class="toc-section-number">4.1.3</span> 入职考察</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#运维之术"><span class="toc-section-number">5</span> 运维之术</a><ul>
+<li><a href="#容灾预案"><span class="toc-section-number">5.1</span> 容灾预案</a></li>
+<li><a href="#统一路由管理阿里的案例"><span class="toc-section-number">5.2</span> 统一路由管理（阿里的案例）</a></li>
+<li><a href="#网络基础数据"><span class="toc-section-number">5.3</span> 网络基础数据</a></li>
+</ul></li>
+<li><a href="#产业链"><span class="toc-section-number">6</span> 产业链</a><ul>
+<li><a href="#硬件"><span class="toc-section-number">6.1</span> 硬件</a></li>
+<li><a href="#cdn市场"><span class="toc-section-number">6.2</span> CDN市场</a></li>
+</ul></li>
+<li><a href="#运维血泪史案例分享"><span class="toc-section-number">7</span> 运维血泪史案例分享</a></li>
+<li><a href="#术语"><span class="toc-section-number">8</span> 术语</a></li>
+</ul>
+</div>
+<hr/>
+
+<blockquote>
+<p>以下文字为扶墙老师一家之言，权作参考，扶墙老师在运维方面属于菜鸟级别 ;)</p>
+</blockquote>
+<h1 id="本期峰会word-cloud"><span class="header-section-number">1</span> 本期峰会Word Cloud</h1>
+<div class="figure">
+<img src="images/zhoushan-ops-word-cloud.png" alt="" />
+
+</div>
+<h1 id="运维发展方向"><span class="header-section-number">2</span> 运维发展方向</h1>
+<h2 id="视角与维度一"><span class="header-section-number">2.1</span> 视角与维度一</h2>
+<ol style="list-style-type: decimal">
+<li>运维1.0 - 监控</li>
+<li>运维2.0 - 工具化和自动化</li>
+<li>运维3.0 - 动态变更（比如阿里的单元化 <a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a>）</li>
+</ol>
+<h2 id="视角与维度二"><span class="header-section-number">2.2</span> 视角与维度二</h2>
+<ol style="list-style-type: decimal">
+<li>Tooling &amp; Automation（工具化和自动化）</li>
+<li>Private Cloud （构建私有云）
+<ul>
+<li>所谓云计算，即ITIL + CMDB + Automation</li>
+</ul></li>
+<li>DCOS</li>
+</ol>
+<h2 id="视角与维度三"><span class="header-section-number">2.3</span> 视角与维度三</h2>
+<ol style="list-style-type: decimal">
+<li>运维自助化， 自动化</li>
+<li>场景自动化</li>
+<li>智能化（数据驱动动态变更？）</li>
+</ol>
+<h1 id="运维组织的建设与发展"><span class="header-section-number">3</span> 运维组织的建设与发展</h1>
+<pre><code>+-----------------------------+
+|          业务管理            |         IT Operation
++-----------------------------+               /\
+|  人员与组织  |  流程和制度     |      ----------|--------------
++-----------------------------+        IT Infrustracture
+|         技术和工具           |           
++-----------------------------+</code></pre>
+<h1 id="运维之道"><span class="header-section-number">4</span> 运维之道</h1>
+<p><strong>运维职能减少人为事故，但无法完全避免！！！</strong></p>
+<p><strong>边界的权衡</strong>， 比如内外网与否</p>
+<blockquote>
+<p>三分基础设施建设， 七分运维体系建设</p>
+</blockquote>
+<p><code>原子件 + 复合件</code>的思想延伸</p>
+<h2 id="制度与流程"><span class="header-section-number">4.1</span> 制度与流程</h2>
+<h3 id="运维流程实践一"><span class="header-section-number">4.1.1</span> 运维流程实践一</h3>
+<p>作业通告 -&gt; 确认单(Checklist) -&gt; 操作（人） -&gt; 检查（人）</p>
+<h3 id="软件交付链路实践与理念"><span class="header-section-number">4.1.2</span> 软件交付链路实践与理念</h3>
+<p><code>交付点 -&gt; 应用编排上线运行 -&gt; 托付</code> from DaoClound</p>
+<blockquote>
+<p>NOTE</p>
+<p>实际上，单元化也好， 透明化也罢，本质上是看你对不同粒度资源的动态调配能力。</p>
+</blockquote>
+<h3 id="入职考察"><span class="header-section-number">4.1.3</span> 入职考察</h3>
+<p>腾讯现在运维人员入职都要进行上岗考试， 通过了才可以上岗， 另外，他们入职都要进行血泪史的破冰。</p>
+<h1 id="运维之术"><span class="header-section-number">5</span> 运维之术</h1>
+<p>可视化(一图胜千言）</p>
+<p><code>服务目录管理入口</code>与<code>上帝节点</code></p>
+<p>服务注册与发现</p>
+<h2 id="容灾预案"><span class="header-section-number">5.1</span> 容灾预案</h2>
+<ol style="list-style-type: decimal">
+<li>IDC粒度</li>
+<li>单元粒度， eg. 异地多活</li>
+<li>网络层面</li>
+<li>...</li>
+</ol>
+<h2 id="统一路由管理阿里的案例"><span class="header-section-number">5.2</span> 统一路由管理（阿里的案例）</h2>
+<p>覆盖如下层面， 20秒最快更新</p>
+<ol style="list-style-type: decimal">
+<li>统一接入层（nginx）</li>
+<li>RPC框架</li>
+<li>异步消息</li>
+<li>数据层</li>
+</ol>
+<h2 id="网络基础数据"><span class="header-section-number">5.3</span> 网络基础数据</h2>
+<ol style="list-style-type: decimal">
+<li>IDC机房内(Intra-IDC)， 0.2ms</li>
+<li>城域网内（跨机房）(Intra-City)， 1ms</li>
+<li>跨城（Inter-City）， 10ms ~ 100ms</li>
+</ol>
+<h1 id="产业链"><span class="header-section-number">6</span> 产业链</h1>
+<h2 id="硬件"><span class="header-section-number">6.1</span> 硬件</h2>
+<ol style="list-style-type: decimal">
+<li>DELL VS. Inspur(浪潮)
+<ul>
+<li>服务器市场</li>
+</ul></li>
+<li>H3C
+<ul>
+<li>网络设备 <a href="#fn2" class="footnoteRef" id="fnref2"><sup>2</sup></a></li>
+</ul></li>
+</ol>
+<h2 id="cdn市场"><span class="header-section-number">6.2</span> CDN市场</h2>
+<ol start="0" style="list-style-type: decimal">
+<li>脉创</li>
+<li>阿里云</li>
+<li>腾讯云</li>
+<li>七牛</li>
+<li>upyun</li>
+<li>蓝汛</li>
+<li>迅雷</li>
+<li>...</li>
+</ol>
+<h1 id="运维血泪史案例分享"><span class="header-section-number">7</span> 运维血泪史案例分享</h1>
+<ol style="list-style-type: decimal">
+<li>交付的裸服务器被种木马 （腾讯游戏）
+<ul>
+<li>做好上线检查</li>
+</ul></li>
+<li>RAID卡电池充放电禁止cache导致服务器变慢
+<ul>
+<li>推迟充放电时间点（因为无法禁止）</li>
+</ul></li>
+<li>可以加上我们自己最近一次发生的机房内光纤故障</li>
+</ol>
+<h1 id="术语"><span class="header-section-number">8</span> 术语</h1>
+<ol style="list-style-type: decimal">
+<li>TCO = Total Cost of Ownership， 总所有成本</li>
+<li>Cloud Cube Model</li>
+<li>ITIL = IT服务管理规范，只是概念</li>
+<li>ITSM = IT Service Management， IT服务治理</li>
+</ol>
+<div class="figure">
+<img src="images/zhoushan.JPG" alt="" />
+
+</div>
+<div class="footnotes">
+<hr />
+<ol>
+<li id="fn1"><p>什么是单元化？扶墙老师的理解是， 以功能或者服务维度对支撑这个粒度的软件服务所需要的硬件资源等进行归并划分， 联动调度， 每个功能或者服务可以按需被部署和调度到指定的硬件资源单元边界内，即做到了资源的动态调度和变更， <code>服务(Software) &lt;-&gt; 单元(Hardware)</code><a href="#fnref1">↩</a></p></li>
+<li id="fn2"><p>交换机类型： 1. 核心交换机；2. 汇聚交换机； 3. 接入交换机<a href="#fnref2">↩</a></p></li>
+</ol>
+</div>
+
+</div>
+      <div id="qrcode"></div>
+      <div class="row">
+        <hr/>
+        <div class="col-sm-12">
+          <nav>
+            <ul class="nav nav-pills pull-right">
+              <li><a href="/">查看更多扶墙老师的文章...</a></li>
+              <li><a href="/columns.html">专栏文章</a></li>
+              <li><a href="/dashboard.html">金融看板</a></li>
+              <li><a href="/feeds.xml">订阅RSS</a></li>
+              <li><a href="http://pandoc.org/">Powered By Pandoc</a></li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </div> <!--main-->
+  </div> <!--row-->
+</div> <!--container-->
+
+<script src="/js/jquery-2.1.1.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<!--
+<script src="/js/qrcode.min.js"></script>
+<script type="text/javascript">
+new QRCode(document.getElementById("qrcode"), window.location.href);
+</script>
+-->
+</body>
+
+</html>
