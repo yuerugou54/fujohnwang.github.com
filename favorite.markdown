@@ -317,6 +317,7 @@ You can perform ad-hoc queries or schedule them.
 12. <http://www.shinybbs.com/forum.php>
 
 ## BT Search
+0. <http://kaopu.so/>  搜百度云盘
 0. <http://www.btbook.net/>
 1. <http://btdigg.org/>
 2. <http://www.torrentkitty.org/>
