@@ -143,7 +143,7 @@ document.write('<a h'+'ref'+'="ma'+'ilto'+':'+e+'" clas'+'s="em' + 'ail">'+e+'<\
 <p>nmap -R -sL 209.85.229.99/27 | awk ‘{if($3==”not”)print”(“$2″) no PTR”;else print$3″ is “$2}’ | grep ‘(‘</p>
 </blockquote>
 <h1 id="显示网络上共有多少台-linux-及-win-设备"><span class="header-section-number">10</span> 显示网络上共有多少台 Linux 及 Win 设备?</h1>
-<p>sudo nmap -F -O 192.168.0.1-255 | grep “Running: ” &gt; /tmp/os; echo “<span class="math inline">(<em>c</em><em>a</em><em>t</em>/<em>t</em><em>m</em><em>p</em>/<em>o</em><em>s</em>|<em>g</em><em>r</em><em>e</em><em>p</em><em>L</em><em>i</em><em>n</em><em>u</em><em>x</em>|<em>w</em><em>c</em> − <em>l</em>)<em>L</em><em>i</em><em>n</em><em>u</em><em>x</em><em>d</em><em>e</em><em>v</em><em>i</em><em>c</em><em>e</em>(<em>s</em>)” ; <em>e</em><em>c</em><em>h</em><em>o</em>“ </span>(cat /tmp/os | grep Windows | wc -l) Window(s) device”</p>
+<p>sudo nmap -F -O 192.168.0.1-255 | grep “Running: ” &gt; /tmp/os; echo “<span class="math inline">(<em>c</em><em>a</em><em>t</em>/<em>t</em><em>m</em><em>p</em>/<em>o</em><em>s</em>|<em>g</em><em>r</em><em>e</em><em>p</em><em>L</em><em>i</em><em>n</em><em>u</em><em>x</em>|<em>w</em><em>c</em> − <em>l</em>)<em>L</em><em>i</em><em>n</em><em>u</em><em>x</em><em>d</em><em>e</em><em>v</em><em>i</em><em>c</em><em>e</em>(<em>s</em>)”; <em>e</em><em>c</em><em>h</em><em>o</em>“</span>(cat /tmp/os | grep Windows | wc -l) Window(s) device”</p>
 <h1 id="扫描主机中所有的保留tcp端口"><span class="header-section-number">11</span> 扫描主机中所有的保留TCP端口</h1>
 <blockquote>
 <p>nmap -v scanme.nmap.org</p>

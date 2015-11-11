@@ -17,6 +17,7 @@
 * [http://www.cheatography.com/](http://www.cheatography.com/)  - cheatsheet search
 * [http://www.emoji-cheat-sheet.com/](http://www.emoji-cheat-sheet.com/)  - github friendly Emoji 
 * <http://www.excite.co.jp/world/chinese/>   - 多语字典翻译
+* [有字库](http://www.youziku.com/Home/Index)  - 中文webfont
 
 ## Finance
 * [中国银行外汇当日牌价](http://www.boc.cn/sourcedb/whpj/)
