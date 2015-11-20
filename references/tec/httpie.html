@@ -1,0 +1,746 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <title>HTTPie: a CLI, cURL-like tool for humans</title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+  </style>
+  <link rel="stylesheet" href="/Users/yunshi/FuqiangWorks/templates/pandoc/style.css" type="text/css" />
+</head>
+<body>
+<div id="header">
+<h1 class="title">HTTPie: a CLI, cURL-like tool for humans</h1>
+</div>
+<div id="TOC">
+<ul>
+<li><a href="#usage">Usage</a><ul>
+<li><a href="#examples">Examples</a></li>
+</ul></li>
+<li><a href="#http-method">HTTP Method</a></li>
+<li><a href="#request-url">Request URL</a></li>
+<li><a href="#request-items">Request Items</a></li>
+<li><a href="#json">JSON</a></li>
+<li><a href="#forms">Forms</a><ul>
+<li><a href="#regular-forms">Regular Forms</a></li>
+<li><a href="#file-upload-forms">File Upload Forms</a></li>
+</ul></li>
+<li><a href="#http-headers">HTTP Headers</a></li>
+<li><a href="#authentication">Authentication</a><ul>
+<li><a href="#auth-plugins">Auth Plugins</a></li>
+</ul></li>
+<li><a href="#proxies">Proxies</a></li>
+<li><a href="#https">HTTPS</a><ul>
+<li><a href="#server-ssl-certificate-verification">Server SSL certificate verification</a></li>
+<li><a href="#client-side-ssl-certificate">Client side SSL certificate</a></li>
+<li><a href="#sni-server-name-indication">SNI (Server Name Indication)</a></li>
+</ul></li>
+<li><a href="#output-options">Output Options</a><ul>
+<li><a href="#conditional-body-download">Conditional Body Download</a></li>
+</ul></li>
+<li><a href="#redirected-input">Redirected Input</a><ul>
+<li><a href="#body-data-from-a-filename">Body Data From a Filename</a></li>
+</ul></li>
+<li><a href="#terminal-output">Terminal Output</a><ul>
+<li><a href="#colors-and-formatting">Colors and Formatting</a></li>
+<li><a href="#binary-data">Binary data</a></li>
+</ul></li>
+<li><a href="#redirected-output">Redirected Output</a></li>
+<li><a href="#download-mode">Download Mode</a></li>
+<li><a href="#streamed-responses">Streamed Responses</a></li>
+<li><a href="#sessions">Sessions</a><ul>
+<li><a href="#named-sessions">Named Sessions</a></li>
+<li><a href="#anonymous-sessions">Anonymous Sessions</a></li>
+</ul></li>
+<li><a href="#config">Config</a></li>
+<li><a href="#scripting">Scripting</a></li>
+<li><a href="#interface-design">Interface Design</a></li>
+</ul>
+</div>
+<p>HTTPie (pronounced <em>aych-tee-tee-pie</em>) is a <strong>command line HTTP client</strong>. Its goal is to make CLI interaction with web services as <strong>human-friendly</strong> as possible. It provides a simple <code>http</code> command that allows for sending arbitrary HTTP requests using a simple and natural syntax, and displays colorized output. HTTPie can be used for <strong>testing, debugging</strong>, and generally <strong>interacting</strong> with HTTP servers.</p>
+<p><img src="https://raw.githubusercontent.com/jkbrzt/httpie/master/httpie.png" alt="HTTPie compared to cURL" /></p>
+<p>HTTPie is written in Python, and under the hood it uses the excellent Requests_ and Pygments_ libraries.</p>
+<h1 id="usage">Usage</h1>
+<p>Hello World:</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">http</span> httpie.org</code></pre></div>
+<p>Synopsis:</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">http</span> [flags] [METHOD] URL [ITEM [ITEM]]</code></pre></div>
+<p>See also <code>http --help</code>.</p>
+<h2 id="examples">Examples</h2>
+<p>Custom HTTP method_, HTTP headers_ and JSON_ data:</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">http</span> PUT example.org X-API-Token:123 name=John</code></pre></div>
+<p>Submitting forms_:</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">http</span> -f POST example.org hello=World</code></pre></div>
+<p>See the request that is being sent using one of the output options_:</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">http</span> -v example.org</code></pre></div>
+<p>Use Github API_ to post a comment on an <a href="https://github.com/jkbrzt/httpie/issues/83">issue</a> with authentication_:</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">http</span> -a USERNAME POST https://api.github.com/repos/jkbrzt/httpie/issues/83/comments body=<span class="st">&#39;HTTPie is awesome!&#39;</span></code></pre></div>
+<p>Upload a file using redirected input_:</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">http</span> example.org <span class="kw">&lt;</span> file.json</code></pre></div>
+<p>Download a file and save it via redirected output_:</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">http</span> example.org/file <span class="kw">&gt;</span> file</code></pre></div>
+<p>Download a file <code>wget</code> style:</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">http</span> --download example.org/file</code></pre></div>
+<p>Use named sessions_ to make certain aspects or the communication persistent between requests to the same host:</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">http</span> --session=logged-in -a username:password httpbin.org/get API-Key:123
+
+$ <span class="kw">http</span> --session=logged-in httpbin.org/headers</code></pre></div>
+<p>Set a custom <code>Host</code> header to work around missing DNS records:</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">http</span> localhost:8000 Host:example.com</code></pre></div>
+<hr />
+<p><em>What follows is a detailed documentation. It covers the command syntax, advanced usage, and also features additional examples.</em></p>
+<h1 id="http-method">HTTP Method</h1>
+<p>The name of the HTTP method comes right before the URL argument:</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">http</span> DELETE example.org/todos/7</code></pre></div>
+<p>Which looks similar to the actual <code>Request-Line</code> that is sent:</p>
+<pre class="sourceCode http"><code>DELETE /todos/7 HTTP/1.1</code></pre>
+<p>When the <code>METHOD</code> argument is <strong>omitted</strong> from the command, HTTPie defaults to either <code>GET</code> (with no request data) or <code>POST</code> (with request data).</p>
+<h1 id="request-url">Request URL</h1>
+<p>The only information HTTPie needs to perform a request is a URL. The default scheme is, somewhat unsurprisingly, <code>http://</code>, and can be omitted from the argument – <code>http example.org</code> works just fine.</p>
+<p>Additionally, curl-like shorthand for localhost is supported. This means that, for example <code>:3000</code> would expand to <code>http://localhost:3000</code> If the port is omitted, then port 80 is assumed.</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">http</span> :/foo</code></pre></div>
+<pre class="sourceCode http"><code>GET /foo HTTP/1.1
+Host: localhost</code></pre>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">http</span> :3000/bar</code></pre></div>
+<pre class="sourceCode http"><code>GET /bar HTTP/1.1
+Host: localhost:3000</code></pre>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">http</span> :</code></pre></div>
+<pre class="sourceCode http"><code>GET / HTTP/1.1
+Host: localhost</code></pre>
+<p>If you find yourself manually constructing URLs with <strong>querystring parameters</strong> on the terminal, you may appreciate the <code>param==value</code> syntax for appending URL parameters so that you don't have to worry about escaping the <code>&amp;</code> separators. To search for <code>HTTPie</code> on Google Images you could use this command:</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">http</span> GET www.google.com search==HTTPie tbm==isch</code></pre></div>
+<pre class="sourceCode http"><code>GET /?search=HTTPie&amp;tbm=isch HTTP/1.1</code></pre>
+<h1 id="request-items">Request Items</h1>
+<p>There are a few different <em>request item</em> types that provide a convenient mechanism for specifying HTTP headers, simple JSON and form data, files, and URL parameters.</p>
+<p>They are key/value pairs specified after the URL. All have in common that they become part of the actual request that is sent and that their type is distinguished only by the separator used: <code>:</code>, <code>=</code>, <code>:=</code>, <code>==</code>, <code>@</code>, <code>=@</code>, and <code>:=@</code>. The ones with an <code>@</code> expect a file path as value.</p>
+<table>
+<colgroup>
+<col width="30%" />
+<col width="69%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Item Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">HTTP Headers <code>Name:Value</code></td>
+<td align="left">Arbitrary HTTP header, e.g. <code>X-API-Token:123</code>.</td>
+</tr>
+<tr class="even">
+<td align="left">URL parameters <code>name==value</code></td>
+<td align="left">Appends the given name/value pair as a query string parameter to the URL. The <code>==</code> separator is used.</td>
+</tr>
+<tr class="odd">
+<td align="left">Data Fields <code>field=value</code>, <code>field=@file.txt</code></td>
+<td align="left">Request data fields to be serialized as a JSON object (default), or to be form-encoded (<code>--form, -f</code>).</td>
+</tr>
+<tr class="even">
+<td align="left">Raw JSON fields <code>field:=json</code>, <code>field:=@file.json</code></td>
+<td align="left">Useful when sending JSON and one or more fields need to be a <code>Boolean</code>, <code>Number</code>, nested <code>Object</code>, or an <code>Array</code>, e.g., <code>meals:='[&quot;ham&quot;,&quot;spam&quot;]'</code> or <code>pies:=[1,2,3]</code> (note the quotes).</td>
+</tr>
+<tr class="odd">
+<td align="left">Form File Fields <code>field@/dir/file</code></td>
+<td align="left">Only available with <code>--form, -f</code>. For example <code>screenshot@~/Pictures/img.png</code>. The presence of a file field results in a <code>multipart/form-data</code> request.</td>
+</tr>
+</tbody>
+</table>
+<p>You can use <code>\</code> to escape characters that shouldn't be used as separators (or parts thereof). For instance, <code>foo\==bar</code> will become a data key/value pair (<code>foo=</code> and <code>bar</code>) instead of a URL parameter.</p>
+<p>You can also quote values, e.g. <code>foo=&quot;bar baz&quot;</code>.</p>
+<p>Note that data fields aren't the only way to specify request data: Redirected input_ allows for passing arbitrary data to be sent with the request.</p>
+<h1 id="json">JSON</h1>
+<p>JSON is the <em>lingua franca</em> of modern web services and it is also the <strong>implicit content type</strong> HTTPie by default uses:</p>
+<p>If your command includes some data items, they are serialized as a JSON object by default. HTTPie also automatically sets the following headers, both of which can be overwritten:</p>
+<table>
+<tbody>
+<tr class="odd">
+<td align="left"><code>Content-Type</code></td>
+<td align="left"><code>application/json</code></td>
+</tr>
+<tr class="even">
+<td align="left"><code>Accept</code></td>
+<td align="left"><code>application/json</code></td>
+</tr>
+</tbody>
+</table>
+<p>You can use <code>--json, -j</code> to explicitly set <code>Accept</code> to <code>application/json</code> regardless of whether you are sending data (it's a shortcut for setting the header via the usual header notation – <code>http url Accept:application/json</code>).</p>
+<p>Simple example:</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">http</span> PUT example.org name=John email=john@example.org</code></pre></div>
+<pre class="sourceCode http"><code>PUT / HTTP/1.1
+Accept: application/json
+Accept-Encoding: gzip, deflate
+Content-Type: application/json
+Host: example.org
+
+{
+    &quot;name&quot;: &quot;John&quot;,
+    &quot;email&quot;: &quot;john@example.org&quot;
+}</code></pre>
+<p>Non-string fields use the <code>:=</code> separator, which allows you to embed raw JSON into the resulting object. Text and raw JSON files can also be embedded into fields using <code>=@</code> and <code>:=@</code>:</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">http</span> PUT api.example.com/person/1 \
+    name=John \
+    age:=29 married:=false hobbies:=<span class="st">&#39;[&quot;http&quot;, &quot;pies&quot;]&#39;</span> <span class="dt">\ </span> <span class="co"># Raw JSON</span>
+    <span class="ot">description=</span><span class="kw">@about-john.txt</span> <span class="dt">\ </span>  <span class="co"># Embed text file</span>
+    <span class="kw">bookmarks</span>:=@bookmarks.json      <span class="co"># Embed JSON file</span></code></pre></div>
+<pre class="sourceCode http"><code>PUT /person/1 HTTP/1.1
+Accept: application/json
+Content-Type: application/json
+Host: api.example.com
+
+{
+    &quot;age&quot;: 29,
+    &quot;hobbies&quot;: [
+        &quot;http&quot;,
+        &quot;pies&quot;
+    ],
+    &quot;description&quot;: &quot;John is a nice guy who likes pies.&quot;,
+    &quot;married&quot;: false,
+    &quot;name&quot;: &quot;John&quot;,
+    &quot;bookmarks&quot;: {
+        &quot;HTTPie&quot;: &quot;http://httpie.org&quot;,
+    }
+}</code></pre>
+<p>Send JSON data stored in a file (see redirected input_ for more examples):</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">http</span> POST api.example.com/person/1 <span class="kw">&lt;</span> person.json</code></pre></div>
+<h1 id="forms">Forms</h1>
+<p>Submitting forms is very similar to sending JSON_ requests. Often the only difference is in adding the <code>--form, -f</code> option, which ensures that data fields are serialized as, and <code>Content-Type</code> is set to, <code>application/x-www-form-urlencoded; charset=utf-8</code>.</p>
+<p>It is possible to make form data the implicit content type instead of JSON via the config_ file.</p>
+<h2 id="regular-forms">Regular Forms</h2>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">http</span> --form POST api.example.org/person/1 name=<span class="st">&#39;John Smith&#39;</span> \
+    email=john@example.org cv=@~/Documents/cv.txt</code></pre></div>
+<pre class="sourceCode http"><code>POST /person/1 HTTP/1.1
+Content-Type: application/x-www-form-urlencoded; charset=utf-8
+
+name=John+Smith&amp;email=john%40example.org&amp;cv=John&#39;s+CV+...</code></pre>
+<h2 id="file-upload-forms">File Upload Forms</h2>
+<p>If one or more file fields is present, the serialization and content type is <code>multipart/form-data</code>:</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">http</span> -f POST example.com/jobs name=<span class="st">&#39;John Smith&#39;</span> cv@~/Documents/cv.pdf</code></pre></div>
+<p>The request above is the same as if the following HTML form were submitted:</p>
+<div class="sourceCode"><pre class="sourceCode html"><code class="sourceCode html"><span class="kw">&lt;form</span><span class="ot"> enctype=</span><span class="st">&quot;multipart/form-data&quot;</span><span class="ot"> method=</span><span class="st">&quot;post&quot;</span><span class="ot"> action=</span><span class="st">&quot;http://example.com/jobs&quot;</span><span class="kw">&gt;</span>
+    <span class="kw">&lt;input</span><span class="ot"> type=</span><span class="st">&quot;text&quot;</span><span class="ot"> name=</span><span class="st">&quot;name&quot;</span> <span class="kw">/&gt;</span>
+    <span class="kw">&lt;input</span><span class="ot"> type=</span><span class="st">&quot;file&quot;</span><span class="ot"> name=</span><span class="st">&quot;cv&quot;</span> <span class="kw">/&gt;</span>
+<span class="kw">&lt;/form&gt;</span></code></pre></div>
+<p>Note that <code>@</code> is used to simulate a file upload form field, whereas <code>=@</code> just embeds the file content as a regular text field value.</p>
+<h1 id="http-headers">HTTP Headers</h1>
+<p>To set custom headers you can use the <code>Header:Value</code> notation:</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">http</span> example.org  User-Agent:Bacon/1.0  <span class="st">&#39;Cookie:valued-visitor=yes;foo=bar&#39;</span>  \
+    X-Foo:Bar  Referer:http://httpie.org/</code></pre></div>
+<pre class="sourceCode http"><code>GET / HTTP/1.1
+Accept: */*
+Accept-Encoding: gzip, deflate
+Cookie: valued-visitor=yes;foo=bar
+Host: example.org
+Referer: http://httpie.org/
+User-Agent: Bacon/1.0
+X-Foo: Bar</code></pre>
+<p>There are a couple of default headers that HTTPie sets:</p>
+<pre class="sourceCode http"><code>GET / HTTP/1.1
+Accept: */*
+Accept-Encoding: gzip, deflate
+User-Agent: HTTPie/&lt;version&gt;
+Host: &lt;taken-from-URL&gt;</code></pre>
+<p>Any of the default headers can be overwritten.</p>
+<h1 id="authentication">Authentication</h1>
+<p>The currently supported authentication schemes are Basic and Digest (see auth plugins_ for more). There are two flags that control authentication:</p>
+<table>
+<tbody>
+<tr class="odd">
+<td align="left"><code>--auth, -a</code></td>
+<td align="left">Pass a <code>username:password</code> pair as</td>
+</tr>
+<tr class="even">
+<td align="left"></td>
+<td align="left">the argument. Or, if you only specify a username</td>
+</tr>
+<tr class="odd">
+<td align="left"></td>
+<td align="left">(<code>-a username</code>), you'll be prompted for</td>
+</tr>
+<tr class="even">
+<td align="left"></td>
+<td align="left">the password before the request is sent.</td>
+</tr>
+<tr class="odd">
+<td align="left"></td>
+<td align="left">To send an empty password, pass <code>username:</code>.</td>
+</tr>
+<tr class="even">
+<td align="left"></td>
+<td align="left">The <code>username:password@hostname</code> URL syntax is</td>
+</tr>
+<tr class="odd">
+<td align="left"></td>
+<td align="left">supported as well (but credentials passed via <code>-a</code></td>
+</tr>
+<tr class="even">
+<td align="left"></td>
+<td align="left">have higher priority).</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>--auth-type</code></td>
+<td align="left">Specify the auth mechanism. Possible values are</td>
+</tr>
+<tr class="even">
+<td align="left"></td>
+<td align="left"><code>basic</code> and <code>digest</code>. The default value is</td>
+</tr>
+<tr class="odd">
+<td align="left"></td>
+<td align="left"><code>basic</code> so it can often be omitted.</td>
+</tr>
+</tbody>
+</table>
+<p>Basic auth:</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">http</span> -a username:password example.org</code></pre></div>
+<p>Digest auth:</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">http</span> --auth-type=digest -a username:password example.org</code></pre></div>
+<p>With password prompt:</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">http</span> -a username example.org</code></pre></div>
+<p>Authorization information from your <code>~/.netrc</code> file is honored as well:</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">cat</span> ~/.netrc
+<span class="kw">machine</span> httpbin.org
+<span class="kw">login</span> httpie
+<span class="kw">password</span> test
+
+$ <span class="kw">http</span> httpbin.org/basic-auth/httpie/test
+<span class="kw">HTTP/1.1</span> 200 OK
+[<span class="kw">...</span>]</code></pre></div>
+<h2 id="auth-plugins">Auth Plugins</h2>
+<ul>
+<li><a href="https://github.com/jkbrzt/httpie-oauth">httpie-oauth</a>: OAuth</li>
+<li><a href="https://github.com/jkbrzt/httpie-ntlm">httpie-ntlm</a>: NTLM (NT LAN Manager)</li>
+<li><a href="https://github.com/ndzou/httpie-negotiate">httpie-negotiate</a>: SPNEGO (GSS Negotiate)</li>
+<li><a href="https://github.com/mozilla-services/requests-hawk">requests-hawk</a>: Hawk</li>
+<li><a href="https://github.com/pd/httpie-api-auth">httpie-api-auth</a>: ApiAuth</li>
+<li><a href="https://github.com/akamai-open/httpie-edgegrid">httpie-edgegrid</a>: EdgeGrid</li>
+<li><a href="https://github.com/teracyhq/httpie-jwt-auth">httpie-jwt-auth</a>: JWTAuth (JSON Web Tokens)</li>
+</ul>
+<h1 id="proxies">Proxies</h1>
+<p>You can specify proxies to be used through the <code>--proxy</code> argument for each protocol (which is included in the value in case of redirects across protocols):</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">http</span> --proxy=http:http://10.10.1.10:3128 --proxy=https:https://10.10.1.10:1080 example.org</code></pre></div>
+<p>With Basic authentication:</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">http</span> --proxy=http:http://user:pass@10.10.1.10:3128 example.org</code></pre></div>
+<p>You can also configure proxies by environment variables <code>HTTP_PROXY</code> and <code>HTTPS_PROXY</code>, and the underlying Requests library will pick them up as well. If you want to disable proxies configured through the environment variables for certain hosts, you can specify them in <code>NO_PROXY</code>.</p>
+<p>In your <code>~/.bash_profile</code>:</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">export</span> <span class="ot">HTTP_PROXY=</span>http://10.10.1.10:3128
+<span class="kw">export</span> <span class="ot">HTTPS_PROXY=</span>https://10.10.1.10:1080
+<span class="kw">export</span> <span class="ot">NO_PROXY=</span>localhost,example.com</code></pre></div>
+<h1 id="https">HTTPS</h1>
+<h2 id="server-ssl-certificate-verification">Server SSL certificate verification</h2>
+<p>To skip the <strong>host's SSL certificate verification,</strong> you can pass <code>--verify=no</code> (default is <code>yes</code>):</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">http</span> --verify=no https://example.org</code></pre></div>
+<p>You can also use <code>--verify=&lt;CA_BUNDLE_PATH&gt;</code> to set a <strong>custom CA bundle</strong> path:</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">http</span> --verify=/ssl/custom_ca_bundle https://example.org</code></pre></div>
+<p>The path can also be configured via the environment variable <code>REQUESTS_CA_BUNDLE</code> (picked up by the underlying python-requests library):</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="ot">REQUESTS_CA_BUNDLE=</span>/ssl/custom_ca_bundle <span class="kw">http</span> https://example.org</code></pre></div>
+<h2 id="client-side-ssl-certificate">Client side SSL certificate</h2>
+<p>To use a <strong>client side certificate</strong> for the SSL communication, you can pass the path of the cert file with <code>--cert</code>:</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">http</span> --cert=client.pem https://example.org</code></pre></div>
+<p>If the <strong>private key</strong> is not contained in the cert file you may pass the path of the key file with <code>--cert-key</code>:</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">http</span> --cert=client.crt --cert-key=client.key https://example.org</code></pre></div>
+<h2 id="sni-server-name-indication">SNI (Server Name Indication)</h2>
+<p>If you use HTTPie with Python &lt; 2.7.9 (can be verified with <code>python --version</code>) and need to talk to servers that use <strong>SNI (Server Name Indication)</strong> you need to install some additional dependencies:</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">pip</span> install --upgrade pyopenssl pyasn1 ndg-httpsclient</code></pre></div>
+<p>You can use the following command to test SNI support:</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">http</span> https://sni.velox.ch</code></pre></div>
+<h1 id="output-options">Output Options</h1>
+<p>By default, HTTPie outputs the whole response message (headers as well as the body).</p>
+<p>You can control what should be printed via several options:</p>
+<table>
+<tbody>
+<tr class="odd">
+<td align="left"><code>--headers, -h</code></td>
+<td align="left">Only the response headers are printed.</td>
+</tr>
+<tr class="even">
+<td align="left"><code>--body, -b</code></td>
+<td align="left">Only the response body is printed.</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>--verbose, -v</code></td>
+<td align="left">Print the whole HTTP exchange (request and response).</td>
+</tr>
+<tr class="even">
+<td align="left"><code>--print, -p</code></td>
+<td align="left">Selects parts of the HTTP exchange.</td>
+</tr>
+</tbody>
+</table>
+<p><code>--verbose</code> can often be useful for debugging the request and generating documentation examples:</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">http</span> --verbose PUT httpbin.org/put hello=world
+<span class="kw">PUT</span> /put HTTP/1.1
+<span class="kw">Accept</span>: application/json
+<span class="kw">Accept-Encoding</span>: gzip, deflate
+<span class="kw">Content-Type</span>: application/json
+<span class="kw">Host</span>: httpbin.org
+<span class="kw">User-Agent</span>: HTTPie/0.2.7dev
+
+<span class="kw">{</span>
+    <span class="st">&quot;hello&quot;</span>: <span class="st">&quot;world&quot;</span>
+<span class="kw">}</span>
+
+
+<span class="kw">HTTP/1.1</span> 200 OK
+<span class="kw">Connection</span>: keep-alive
+<span class="kw">Content-Length</span>: 477
+<span class="kw">Content-Type</span>: application/json
+<span class="kw">Date</span>: Sun, 05 Aug 2012 00:25:23 GMT
+<span class="kw">Server</span>: gunicorn/0.13.4
+
+<span class="kw">{</span>
+    […]
+<span class="kw">}</span></code></pre></div>
+<p>All the other options are just a shortcut for <code>--print, -p</code>. It accepts a string of characters each of which represents a specific part of the HTTP exchange:</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Character</th>
+<th align="left">Stands for</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left"><code>H</code></td>
+<td align="left">Request headers.</td>
+</tr>
+<tr class="even">
+<td align="left"><code>B</code></td>
+<td align="left">Request body.</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>h</code></td>
+<td align="left">Response headers.</td>
+</tr>
+<tr class="even">
+<td align="left"><code>b</code></td>
+<td align="left">Response body.</td>
+</tr>
+</tbody>
+</table>
+<p>Print request and response headers:</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">http</span> --print=Hh PUT httpbin.org/put hello=world</code></pre></div>
+<h2 id="conditional-body-download">Conditional Body Download</h2>
+<p>As an optimization, the response body is downloaded from the server only if it's part of the output. This is similar to performing a <code>HEAD</code> request, except that it applies to any HTTP method you use.</p>
+<p>Let's say that there is an API that returns the whole resource when it is updated, but you are only interested in the response headers to see the status code after an update:</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">http</span> --headers PATCH example.org/Really-Huge-Resource name=<span class="st">&#39;New Name&#39;</span></code></pre></div>
+<p>Since we are only printing the HTTP headers here, the connection to the server is closed as soon as all the response headers have been received. Therefore, bandwidth and time isn't wasted downloading the body which you don't care about.</p>
+<p>The response headers are downloaded always, even if they are not part of the output</p>
+<h1 id="redirected-input">Redirected Input</h1>
+<p><strong>A universal method for passing request data is through redirected</strong> <code>stdin</code> (standard input). Such data is buffered and then with no further processing used as the request body. There are multiple useful ways to use piping:</p>
+<p>Redirect from a file:</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">http</span> PUT example.com/person/1 X-API-Token:123 <span class="kw">&lt;</span> person.json</code></pre></div>
+<p>Or the output of another program:</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">grep</span> <span class="st">&#39;401 Unauthorized&#39;</span> /var/log/httpd/error_log <span class="kw">|</span> <span class="kw">http</span> POST example.org/intruders</code></pre></div>
+<p>You can use <code>echo</code> for simple data:</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">echo</span> <span class="st">&#39;{&quot;name&quot;: &quot;John&quot;}&#39;</span> <span class="kw">|</span> <span class="kw">http</span> PATCH example.com/person/1 X-API-Token:123</code></pre></div>
+<p>You can even pipe web services together using HTTPie:</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">http</span> GET https://api.github.com/repos/jkbrzt/httpie <span class="kw">|</span> <span class="kw">http</span> POST httpbin.org/post</code></pre></div>
+<p>You can use <code>cat</code> to enter multiline data on the terminal:</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">cat</span> <span class="kw">|</span> <span class="kw">http</span> POST example.com
+<span class="kw">&lt;paste&gt;</span>
+^<span class="kw">D</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">cat</span> <span class="kw">|</span> <span class="kw">http</span> POST example.com/todos Content-Type:text/plain
+<span class="kw">-</span> buy milk
+<span class="kw">-</span> call parents
+^<span class="kw">D</span></code></pre></div>
+<p>On OS X, you can send the contents of the clipboard with <code>pbpaste</code>:</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">pbpaste</span> <span class="kw">|</span> <span class="kw">http</span> PUT example.com</code></pre></div>
+<p>Passing data through <code>stdin</code> cannot be combined with data fields specified on the command line:</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">echo</span> <span class="st">&#39;data&#39;</span> <span class="kw">|</span> <span class="kw">http</span> POST example.org more=data   <span class="co"># This is invalid</span></code></pre></div>
+<p>To prevent HTTPie from reading <code>stdin</code> data you can use the <code>--ignore-stdin</code> option.</p>
+<h2 id="body-data-from-a-filename">Body Data From a Filename</h2>
+<p><strong>An alternative to redirected</strong> <code>stdin</code> is specifying a filename (as <code>@/path/to/file</code>) whose content is used as if it came from <code>stdin</code>.</p>
+<p>It has the advantage that <strong>the</strong> <code>Content-Type</code> <strong>header is automatically set</strong> to the appropriate value based on the filename extension. For example, the following request sends the verbatim contents of that XML file with <code>Content-Type: application/xml</code>:</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">http</span> PUT httpbin.org/put @/data/file.xml</code></pre></div>
+<h1 id="terminal-output">Terminal Output</h1>
+<p>HTTPie does several things by default in order to make its terminal output easy to read.</p>
+<h2 id="colors-and-formatting">Colors and Formatting</h2>
+<p>Syntax highlighting is applied to HTTP headers and bodies (where it makes sense). You can choose your preferred color scheme via the <code>--style</code> option if you don't like the default one (see <code>$ http --help</code> for the possible values).</p>
+<p>Also, the following formatting is applied:</p>
+<ul>
+<li>HTTP headers are sorted by name.</li>
+<li>JSON data is indented, sorted by keys, and unicode escapes are converted to the characters they represent.</li>
+<li>XML data is indented for better readability.</li>
+</ul>
+<p>One of these options can be used to control output processing:</p>
+<table>
+<tbody>
+<tr class="odd">
+<td align="left"><code>--pretty=all</code></td>
+<td align="left">Apply both colors and formatting.</td>
+</tr>
+<tr class="even">
+<td align="left"></td>
+<td align="left">Default for terminal output.</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>--pretty=colors</code></td>
+<td align="left">Apply colors.</td>
+</tr>
+<tr class="even">
+<td align="left"><code>--pretty=format</code></td>
+<td align="left">Apply formatting.</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>--pretty=none</code></td>
+<td align="left">Disables output processing.</td>
+</tr>
+<tr class="even">
+<td align="left"></td>
+<td align="left">Default for redirected output.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="binary-data">Binary data</h2>
+<p>Binary data is suppressed for terminal output, which makes it safe to perform requests to URLs that send back binary data. Binary data is suppressed also in redirected, but prettified output. The connection is closed as soon as we know that the response body is binary,</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">http</span> example.org/Movie.mov</code></pre></div>
+<p>You will nearly instantly see something like this:</p>
+<pre class="sourceCode http"><code>HTTP/1.1 200 OK
+Accept-Ranges: bytes
+Content-Encoding: gzip
+Content-Type: video/quicktime
+Transfer-Encoding: chunked
+
++-----------------------------------------+
+| NOTE: binary data not shown in terminal |
++-----------------------------------------+</code></pre>
+<h1 id="redirected-output">Redirected Output</h1>
+<p>HTTPie uses <strong>different defaults</strong> for redirected output than for terminal output_:</p>
+<ul>
+<li>Formatting and colors aren't applied (unless <code>--pretty</code> is specified).</li>
+<li>Only the response body is printed (unless one of the output options_ is set).</li>
+<li>Also, binary data isn't suppressed.</li>
+</ul>
+<p>The reason is to make piping HTTPie's output to another programs and downloading files work with no extra flags. Most of the time, only the raw response body is of an interest when the output is redirected.</p>
+<p>Download a file:</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">http</span> example.org/Movie.mov <span class="kw">&gt;</span> Movie.mov</code></pre></div>
+<p>Download an image of Octocat, resize it using ImageMagick, upload it elsewhere:</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">http</span> octodex.github.com/images/original.jpg <span class="kw">|</span> <span class="kw">convert</span> - -resize 25% -  <span class="kw">|</span> <span class="kw">http</span> example.org/Octocats</code></pre></div>
+<p>Force colorizing and formatting, and show both the request and the response in <code>less</code> pager:</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">http</span> --pretty=all --verbose example.org <span class="kw">|</span> <span class="kw">less</span> -R</code></pre></div>
+<p>The <code>-R</code> flag tells <code>less</code> to interpret color escape sequences included HTTPie`s output.</p>
+<p>You can create a shortcut for invoking HTTPie with colorized and paged output by adding the following to your <code>~/.bash_profile</code>:</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">function</span><span class="fu"> httpless</span> <span class="kw">{</span>
+    <span class="co"># `httpless example.org&#39;</span>
+    <span class="kw">http</span> --pretty=all --print=hb <span class="st">&quot;</span><span class="ot">$@</span><span class="st">&quot;</span> <span class="kw">|</span> <span class="kw">less</span> -R<span class="kw">;</span>
+<span class="kw">}</span></code></pre></div>
+<h1 id="download-mode">Download Mode</h1>
+<p>HTTPie features a download mode in which it acts similarly to <code>wget</code>.</p>
+<p>When enabled using the <code>--download, -d</code> flag, response headers are printed to the terminal (<code>stderr</code>), and a progress bar is shown while the response body is being saved to a file.</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">http</span> --download https://github.com/jkbrzt/httpie/tarball/master</code></pre></div>
+<pre class="sourceCode http"><code>HTTP/1.1 200 OK
+Connection: keep-alive
+Content-Disposition: attachment; filename=jkbrzt-httpie-0.4.1-33-gfc4f70a.tar.gz
+Content-Length: 505530
+Content-Type: application/x-gzip
+Server: GitHub.com
+Vary: Accept-Encoding
+
+Downloading 494.89 kB to &quot;jkbrzt-httpie-0.4.1-33-gfc4f70a.tar.gz&quot;
+/  21.01% 104.00 kB   47.55 kB/s  0:00:08 ETA</code></pre>
+<p>If not provided via <code>--output, -o</code>, the output filename will be determined from <code>Content-Disposition</code> (if available), or from the URL and <code>Content-Type</code>. If the guessed filename already exists, HTTPie adds a unique suffix to it.</p>
+<p>You can also redirect the response body to another program while the response headers and progress are still shown in the terminal:</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">http</span> -d https://github.com/jkbrzt/httpie/tarball/master <span class="kw">|</span>  <span class="kw">tar</span> zxf -</code></pre></div>
+<p>If <code>--output, -o</code> is specified, you can resume a partial download using the <code>--continue, -c</code> option. This only works with servers that support <code>Range</code> requests and <code>206 Partial Content</code> responses. If the server doesn't support that, the whole file will simply be downloaded:</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">http</span> -dco file.zip example.org/file</code></pre></div>
+<p>Other notes:</p>
+<ul>
+<li>The <code>--download</code> option only changes how the response body is treated.</li>
+<li>You can still set custom headers, use sessions, <code>--verbose, -v</code>, etc.</li>
+<li><code>--download</code> always implies <code>--follow</code> (redirects are followed).</li>
+<li>HTTPie exits with status code <code>1</code> (error) if the body hasn't been fully downloaded.</li>
+<li><code>Accept-Encoding</code> cannot be set with <code>--download</code>.</li>
+</ul>
+<h1 id="streamed-responses">Streamed Responses</h1>
+<p>Responses are downloaded and printed in chunks, which allows for streaming and large file downloads without using too much RAM. However, when colors and formatting_ is applied, the whole response is buffered and only then processed at once.</p>
+<p>You can use the <code>--stream, -S</code> flag to make two things happen:</p>
+<ol style="list-style-type: decimal">
+<li>The output is flushed in <strong>much smaller chunks</strong> without any buffering, which makes HTTPie behave kind of like <code>tail -f</code> for URLs.</li>
+<li>Streaming becomes enabled even when the output is prettified: It will be applied to <strong>each line</strong> of the response and flushed immediately. This makes it possible to have a nice output for long-lived requests, such as one to the Twitter streaming API.</li>
+</ol>
+<p>Prettified streamed response:</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">http</span> --stream -f -a YOUR-TWITTER-NAME https://stream.twitter.com/1/statuses/filter.json track=<span class="st">&#39;Justin Bieber&#39;</span></code></pre></div>
+<p>Streamed output by small chunks alá <code>tail -f</code>:</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="co"># Send each new tweet (JSON object) mentioning &quot;Apple&quot; to another</span>
+<span class="co"># server as soon as it arrives from the Twitter streaming API:</span>
+$ <span class="kw">http</span> --stream -f -a YOUR-TWITTER-NAME https://stream.twitter.com/1/statuses/filter.json track=Apple \
+<span class="kw">|</span> <span class="kw">while</span> <span class="kw">read</span> <span class="ot">tweet</span>; <span class="kw">do</span> <span class="kw">echo</span> <span class="st">&quot;</span><span class="ot">$tweet</span><span class="st">&quot;</span> <span class="kw">|</span> <span class="kw">http</span> POST example.org/tweets <span class="kw">;</span> <span class="kw">done</span></code></pre></div>
+<h1 id="sessions">Sessions</h1>
+<p>By default, every request is completely independent of any previous ones. HTTPie also supports persistent sessions, where custom headers (except for the ones starting with <code>Content-</code> or <code>If-</code>), authorization, and cookies (manually specified or sent by the server) persist between requests to the same host.</p>
+<h2 id="named-sessions">Named Sessions</h2>
+<p>Create a new session named <code>user1</code> for <code>example.org</code>:</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">http</span> --session=user1 -a user1:password example.org X-Foo:Bar</code></pre></div>
+<p>Now you can refer to the session by its name, and the previously used authorization and HTTP headers will automatically be set:</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">http</span> --session=user1 example.org</code></pre></div>
+<p>To create or reuse a different session, simple specify a different name:</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">http</span> --session=user2 -a user2:password example.org X-Bar:Foo</code></pre></div>
+<p>To use a session without updating it from the request/response exchange once it is created, specify the session name via <code>--session-read-only=SESSION_NAME</code> instead.</p>
+<p>Named sessions' data is stored in JSON files in the directory <code>~/.httpie/sessions/&lt;host&gt;/&lt;name&gt;.json</code> (<code>%APPDATA%\httpie\sessions\&lt;host&gt;\&lt;name&gt;.json</code> on Windows).</p>
+<h2 id="anonymous-sessions">Anonymous Sessions</h2>
+<p>Instead of a name, you can also directly specify a path to a session file. This allows for sessions to be re-used across multiple hosts:</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">http</span> --session=/tmp/session.json example.org
+$ <span class="kw">http</span> --session=/tmp/session.json admin.example.org
+$ <span class="kw">http</span> --session=~/.httpie/sessions/another.example.org/test.json example.org
+$ <span class="kw">http</span> --session-read-only=/tmp/session.json example.org</code></pre></div>
+<p><strong>Warning:</strong> All session data, including credentials, cookie data, and custom headers are stored in plain text.</p>
+<p>Note that session files can also be created and edited manually in a text editor; they are plain JSON.</p>
+<p>See also Config_.</p>
+<h1 id="config">Config</h1>
+<p>HTTPie uses a simple configuration file that contains a JSON object with the following keys:</p>
+<table>
+<tbody>
+<tr class="odd">
+<td align="left"><code>__meta__</code></td>
+<td align="left">HTTPie automatically stores some metadata here.</td>
+</tr>
+<tr class="even">
+<td align="left"></td>
+<td align="left">Do not change.</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>implicit_content_type</code></td>
+<td align="left">A <code>String</code> specifying the implicit content type</td>
+</tr>
+<tr class="even">
+<td align="left"></td>
+<td align="left">for request data. The default value for this</td>
+</tr>
+<tr class="odd">
+<td align="left"></td>
+<td align="left">option is <code>json</code> and can be changed to</td>
+</tr>
+<tr class="even">
+<td align="left"></td>
+<td align="left"><code>form</code>.</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>default_options</code></td>
+<td align="left">An <code>Array</code> (by default empty) of options</td>
+</tr>
+<tr class="even">
+<td align="left"></td>
+<td align="left">that should be applied to every request.</td>
+</tr>
+<tr class="odd">
+<td align="left"></td>
+<td align="left">For instance, you can use this option to change</td>
+</tr>
+<tr class="even">
+<td align="left"></td>
+<td align="left">the default style and output options:</td>
+</tr>
+<tr class="odd">
+<td align="left"></td>
+<td align="left"><code>&quot;default_options&quot;: [&quot;--style=fruity&quot;, &quot;--body&quot;]</code></td>
+</tr>
+<tr class="even">
+<td align="left"></td>
+<td align="left">Another useful default option is</td>
+</tr>
+<tr class="odd">
+<td align="left"></td>
+<td align="left"><code>&quot;--session=default&quot;</code> to make HTTPie always</td>
+</tr>
+<tr class="even">
+<td align="left"></td>
+<td align="left">use sessions_.</td>
+</tr>
+<tr class="odd">
+<td align="left"></td>
+<td align="left">Default options from config file can be unset</td>
+</tr>
+<tr class="even">
+<td align="left"></td>
+<td align="left">for a particular invocation via</td>
+</tr>
+<tr class="odd">
+<td align="left"></td>
+<td align="left"><code>--no-OPTION</code> arguments passed on the</td>
+</tr>
+<tr class="even">
+<td align="left"></td>
+<td align="left">command line (e.g., <code>--no-style</code></td>
+</tr>
+<tr class="odd">
+<td align="left"></td>
+<td align="left">or <code>--no-session</code>).</td>
+</tr>
+</tbody>
+</table>
+<p>The default location of the configuration file is <code>~/.httpie/config.json</code> (or <code>%APPDATA%\httpie\config.json</code> on Windows).</p>
+<p>The config directory location can be changed by setting the <code>HTTPIE_CONFIG_DIR</code> environment variable.</p>
+<h1 id="scripting">Scripting</h1>
+<p>When using HTTPie from <strong>shell scripts</strong>, it can be handy to set the <code>--check-status</code> flag. It instructs HTTPie to exit with an error if the HTTP status is one of <code>3xx</code>, <code>4xx</code>, or <code>5xx</code>. The exit status will be <code>3</code> (unless <code>--follow</code> is set), <code>4</code>, or <code>5</code>, respectively.</p>
+<p>The <code>--ignore-stdin</code> option prevents HTTPie from reading data from <code>stdin</code>, which is usually not desirable during non-interactive invocations.</p>
+<p>Also, the <code>--timeout</code> option allows to overwrite the default 30s timeout:</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="co">#!/bin/bash</span>
+
+<span class="kw">if</span> <span class="kw">http</span> --check-status --ignore-stdin --timeout=2.5 HEAD example.org/health <span class="kw">&amp;&gt;</span> /dev/null<span class="kw">;</span> <span class="kw">then</span>
+    <span class="kw">echo</span> <span class="st">&#39;OK!&#39;</span>
+<span class="kw">else</span>
+    <span class="kw">case</span> <span class="ot">$?</span><span class="kw"> in</span>
+        2<span class="kw">)</span> <span class="kw">echo</span> <span class="st">&#39;Request timed out!&#39;</span> <span class="kw">;;</span>
+        <span class="kw">3</span>) <span class="kw">echo</span> <span class="st">&#39;Unexpected HTTP 3xx Redirection!&#39;</span> <span class="kw">;;</span>
+        <span class="kw">4</span>) <span class="kw">echo</span> <span class="st">&#39;HTTP 4xx Client Error!&#39;</span> <span class="kw">;;</span>
+        <span class="kw">5</span>) <span class="kw">echo</span> <span class="st">&#39;HTTP 5xx Server Error!&#39;</span> <span class="kw">;;</span>
+        <span class="kw">*</span>) <span class="kw">echo</span> <span class="st">&#39;Other Error!&#39;</span> <span class="kw">;;</span>
+    <span class="kw">esac</span>
+<span class="kw">fi</span></code></pre></div>
+<h1 id="interface-design">Interface Design</h1>
+<p>The syntax of the command arguments closely corresponds to the actual HTTP requests sent over the wire. It has the advantage that it's easy to remember and read. It is often possible to translate an HTTP request to an HTTPie argument list just by inlining the request elements. For example, compare this HTTP request:</p>
+<pre class="sourceCode http"><code>POST /collection HTTP/1.1
+X-API-Key: 123
+User-Agent: Bacon/1.0
+Content-Type: application/x-www-form-urlencoded
+
+name=value&amp;name2=value2</code></pre>
+<p>with the HTTPie command that sends it:</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">http</span> -f POST example.org/collection \
+  X-API-Key:123 \
+  User-Agent:Bacon/1.0 \
+  name=value \
+  name2=value2</code></pre></div>
+<p>Notice that both the order of elements and the syntax is very similar, and that only a small portion of the command is used to control HTTPie and doesn't directly correspond to any part of the request (here it's only <code>-f</code> asking HTTPie to send a form request).</p>
+<p>The two modes, <code>--pretty=all</code> (default for terminal) and <code>--pretty=none</code> (default for redirected output), allow for both user-friendly interactive use and usage from scripts, where HTTPie serves as a generic HTTP client.</p>
+<p>As HTTPie is still under heavy development, the existing command line syntax and some of the <code>--OPTIONS</code> may change slightly before HTTPie reaches its final version <code>1.0</code>. All changes are recorded in the change log_.</p>
+</body>
+</html>

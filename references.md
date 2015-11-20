@@ -2,6 +2,10 @@
 
 # 技术类
 
+## Httpie
+
+[httpie](references/tec/httpie.html)
+
 ## Jolokia
 
 [Jolokia Access Patterns](references/tec/jolokia.html)
