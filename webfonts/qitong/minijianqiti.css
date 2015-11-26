@@ -1,0 +1,10 @@
+@font-face {
+font-family: 'minijianqiti508916';
+src: url('minijianqiti.eot');
+src: url('minijianqiti.eot?#iefix') format('embedded-opentype'),
+     url('minijianqiti.woff') format('woff'),
+     url('minijianqiti.ttf') format('truetype'),
+     url('minijianqiti.svg#minijianqiti') format('svg');
+    font-weight: normal;
+    font-style: normal;
+   }

@@ -254,6 +254,7 @@ with MapReduce](http://lintool.github.com/MapReduceAlgorithms/index.html) ^^^
 12. <https://www.iconfinder.com/free_icons>  - 免费图标
 13. [https://iconverticons.com/online/](https://iconverticons.com/online/) - iConvert Icons converts and creates custom icons for Windows, Mac OS X, Linux, iOS, and Android.
 14. <http://ericandrewlewis.github.io/emoji-mosaic/>  - 图片模糊
+15. <https://infogr.am/>  - 根据数据制作报告或者报表并且分享的在线工具
 
 
 ## Mac OS X

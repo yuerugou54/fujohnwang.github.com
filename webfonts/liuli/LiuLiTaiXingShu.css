@@ -1,0 +1,10 @@
+@font-face {
+font-family: 'LiuLiTaiXingShu509003';
+src: url('LiuLiTaiXingShu.eot');
+src: url('LiuLiTaiXingShu.eot?#iefix') format('embedded-opentype'),
+     url('LiuLiTaiXingShu.woff') format('woff'),
+     url('LiuLiTaiXingShu.ttf') format('truetype'),
+     url('LiuLiTaiXingShu.svg#LiuLiTaiXingShu') format('svg');
+    font-weight: normal;
+    font-style: normal;
+   }
