@@ -1,5 +1,5 @@
 % Java/Scala项目设立原则
-% [陨石 - yunshi@wacai.com](mailto:yunshi@wacai.com)
+% 王福强
 % 2015-03-24
 
 ![project types by yunshi](images/component-vs-endpoint.png)

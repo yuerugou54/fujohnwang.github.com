@@ -85,7 +85,6 @@ import java.io.IOException;
  *
  * Shutdown needs tools.jar in classpath, so to run this class, assign the path of tools.jar in your system in the shell script, it's a must prerequisite!
  *
- * @author yunshi@wacai.com
  * @since 2014-10-24
  */
 public class Shutdown {

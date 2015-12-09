@@ -1,5 +1,5 @@
 % 构建挖财自己的日志采集和分析体系
-% [陨石 - yunshi@wacai.com](mailto:yunshi@wacai.com)
+% 王福强
 % 2015-03-12
 
 # 为什么要做日志采集？

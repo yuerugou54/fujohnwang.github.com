@@ -1,5 +1,5 @@
 % How to do an interview with an engineer
-% [陨石 - yunshi@wacai.com](mailto:yunshi@wacai.com)
+% 王福强
 % 2015-03-20
 
 > from <http://firstround.com/review/The-anatomy-of-the-perfect-technical-interview-from-a-former-Amazon-VP/>

@@ -1,5 +1,5 @@
 % CAMEL评级制度
-% [陨石 - yunshi@wacai.com](mailto:yunshi@wacai.com)
+% 王福强
 % 2015-02-10
 
 CAMEL评级制度主要围绕五项指标， 即：

@@ -1,5 +1,5 @@
 % 如何选择感冒药
-% [陨石 - yunshi@wacai.com](mailto:yunshi@wacai.com)
+% 王福强
 % 2015.03.22
 
 原文： <http://moment.douban.com/post/113915/?douban_rec=1?platform=iPhone&from=timeline&isappinstalled=0>

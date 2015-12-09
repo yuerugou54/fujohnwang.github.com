@@ -1,5 +1,5 @@
 % API Design And Documentation
-% [陨石 - yunshi@wacai.com](mailto:yunshi@wacai.com)
+% 王福强
 % 2015-03-17
 
 # Why we need API design and documentation
