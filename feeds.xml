@@ -5,6 +5,13 @@
     <link>http://afoo.me</link>
     <description>扶墙老师的博客 - 一个架构士的思考与实践之地</description>
     <item>
+      <title>Gitlab OAuth2 Application简明教程</title>
+      <link>http://afoo.me/posts/2015-12-17-create-a-gitlab-oauth2-application.html</link>
+      <pubDate>Wed, 16 Dec 2015 16:00:00 GMT</pubDate>
+      <guid>http://afoo.me/posts/2015-12-17-create-a-gitlab-oauth2-application.html</guid>
+      <dc:date>2015-12-16T16:00:00Z</dc:date>
+    </item>
+    <item>
       <title>技术人也需要有产品思维(why techies also need think the PD way)</title>
       <link>http://afoo.me/posts/2015-11-10-why-techies-also-need-think-the-PD-way.html</link>
       <pubDate>Mon, 09 Nov 2015 16:00:00 GMT</pubDate>
@@ -73,13 +80,6 @@
       <pubDate>Wed, 08 Jul 2015 16:00:00 GMT</pubDate>
       <guid>http://afoo.me/posts/2015-07-09-how-spring-boot-works.html</guid>
       <dc:date>2015-07-08T16:00:00Z</dc:date>
-    </item>
-    <item>
-      <title>在SBT中如何mvn dependency:tree</title>
-      <link>http://afoo.me/posts/2015-06-15-sbt-dependency-analysis.html</link>
-      <pubDate>Sun, 14 Jun 2015 16:00:00 GMT</pubDate>
-      <guid>http://afoo.me/posts/2015-06-15-sbt-dependency-analysis.html</guid>
-      <dc:date>2015-06-14T16:00:00Z</dc:date>
     </item>
   </channel>
 </rss>
