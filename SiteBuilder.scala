@@ -112,8 +112,11 @@ object SiteBuilder {
     val nextLink = if (currentPageNumber + 1 <= pageCount) s"/pages/p${currentPageNumber + 1}.html" else "#"
 
     s"""
-      |  <hr>
-      |  <a href="$previousLink"><span class="color-dark">前(Previous) | </span></a><a href="$nextLink"><span class="color-dark"> | 后(Next)</span></a>
+       |  <hr>
+       |  <div class="paginator">
+       |				<a href="$previousLink" class="paginate previous">前(Previous)</a>
+       |				<a href="$nextLink" class="paginate older">后(Next)</span>
+       |	</div>
     """.stripMargin
   }
 
