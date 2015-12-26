@@ -43,19 +43,28 @@ object SiteBuilder {
 
       val pageContent = tuples.foldLeft("")((index, tuple) => {
 //        index ++ s"""<h3><a href="/posts/${tuple._2}">${tuple._1}</a></h3><p>by 扶墙老师 at ${tuple._3}</p>"""
+//        val block =
+//          s"""
+//             | <article class="align-left block add-bottom-extra">
+//             |                                <a href="/posts/${tuple._2}">
+//             |                                <h1 class="in-main-heading">
+//             |                                    <span class="color-dark">${tuple._1}</span>
+//             |                                </h1>
+//             |                                </a>
+//             |                                <h3 class="in-sub-heading color-dark">
+//             |                                    <span class="color-dark">AT ${tuple._3}</span>
+//             |                                </h3>
+//             |                            </article>
+//           """.stripMargin
 
         val block =
           s"""
-             | <article class="align-left block add-bottom-extra">
-             |                                <a href="/posts/${tuple._2}">
-             |                                <h1 class="in-main-heading">
-             |                                    <span class="color-dark">${tuple._1}</span>
-             |                                </h1>
-             |                                </a>
-             |                                <h3 class="in-sub-heading color-dark">
-             |                                    <span class="color-dark">AT ${tuple._3}</span>
-             |                                </h3>
-             |                            </article>
+             |<div class="entry">
+             |	<div class="entry-content">
+             |		<h2 class="entry-title"><a href="/posts/${tuple._2}">${tuple._1}</a></h2>
+             |		<p class="entry-date">发布日期: ${tuple._3}</p>
+             |	</div>
+             |</div>
            """.stripMargin
 
         index ++ block
