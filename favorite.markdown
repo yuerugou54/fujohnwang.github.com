@@ -321,6 +321,7 @@ You can perform ad-hoc queries or schedule them.
 10. <http://kickass.to>
 11. <http://www.btsoso.me>
 12. <http://www.shinybbs.com/forum.php>
+13. <http://subhd.com/> - 字幕网站
 
 ## BT Search
 0. <http://kaopu.so/>  搜百度云盘
