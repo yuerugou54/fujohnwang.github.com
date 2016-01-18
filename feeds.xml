@@ -5,6 +5,13 @@
     <link>http://afoo.me</link>
     <description>扶墙老师的博客 - 一个架构士的思考与实践之地</description>
     <item>
+      <title>Scala</title>
+      <link>http://afoo.me/posts/2016-01-18-scala-the-good-parts.html</link>
+      <pubDate>Sun, 17 Jan 2016 16:00:00 GMT</pubDate>
+      <guid>http://afoo.me/posts/2016-01-18-scala-the-good-parts.html</guid>
+      <dc:date>2016-01-17T16:00:00Z</dc:date>
+    </item>
+    <item>
       <title>挖财平台技术保障部广发英雄帖</title>
       <link>http://afoo.me/posts/2016-01-14-wacai-pt-recruiting.html</link>
       <pubDate>Wed, 13 Jan 2016 16:00:00 GMT</pubDate>
@@ -73,13 +80,6 @@
       <pubDate>Wed, 15 Jul 2015 16:00:00 GMT</pubDate>
       <guid>http://afoo.me/posts/2015-07-16-explorer-like-the-blind-man-explore-the-elephant.html</guid>
       <dc:date>2015-07-15T16:00:00Z</dc:date>
-    </item>
-    <item>
-      <title>说说我日常把玩的小工具</title>
-      <link>http://afoo.me/posts/2015-07-13-talking-about-my-favorite-toolset.html</link>
-      <pubDate>Sun, 12 Jul 2015 16:00:00 GMT</pubDate>
-      <guid>http://afoo.me/posts/2015-07-13-talking-about-my-favorite-toolset.html</guid>
-      <dc:date>2015-07-12T16:00:00Z</dc:date>
     </item>
   </channel>
 </rss>
