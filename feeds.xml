@@ -5,7 +5,7 @@
     <link>http://afoo.me</link>
     <description>扶墙老师的博客 - 一个架构士的思考与实践之地</description>
     <item>
-      <title>Scala</title>
+      <title>Scala - The Good Parts</title>
       <link>http://afoo.me/posts/2016-01-18-scala-the-good-parts.html</link>
       <pubDate>Sun, 17 Jan 2016 16:00:00 GMT</pubDate>
       <guid>http://afoo.me/posts/2016-01-18-scala-the-good-parts.html</guid>
@@ -47,7 +47,7 @@
       <dc:date>2015-09-14T16:00:00Z</dc:date>
     </item>
     <item>
-      <title>高效写作的秘密</title>
+      <title>高效写作的秘密 - 扶墙老师的写作工具集</title>
       <link>http://afoo.me/posts/2015-08-15-my-writing-toolset.html</link>
       <pubDate>Fri, 14 Aug 2015 16:00:00 GMT</pubDate>
       <guid>http://afoo.me/posts/2015-08-15-my-writing-toolset.html</guid>

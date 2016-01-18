@@ -35,7 +35,7 @@ object SiteBuilder {
     while (postGroups.hasNext) {
       val posts = postGroups.next()
       val tuples = posts.map(postFile => {
-        val title = StringUtils.substringBefore(StringUtils.substringBetween(scala.io.Source.fromFile(postFile, encoding).getLines().mkString("\r\n"), "<title>", "</title>"), "-")
+        val title = StringUtils.substringBeforeLast(StringUtils.substringBetween(scala.io.Source.fromFile(postFile, encoding).getLines().mkString("\r\n"), "<title>", "</title>"), "-")
         val fileName = postFile.getName
         val postDate = StringUtils.substring(fileName, 0, 10)
         (title, fileName, postDate)
