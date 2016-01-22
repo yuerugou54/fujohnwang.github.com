@@ -244,6 +244,7 @@ with MapReduce](http://lintool.github.com/MapReduceAlgorithms/index.html) ^^^
 2. Tag Cloud Generator
 	- <http://worditout.com/word-cloud/make-a-new-one>
 	- <http://www.tagcloud-generator.com/generator.php>
+	- <https://tagul.com/cloud/1> ****
 3. [MockingGrid - 页面草案](https://gomockingbird.com/mockingbird/)
 4. <http://ascii.mastervb.net/> - ASCII generator
 4. [http://asciinema.org/](http://asciinema.org/)
@@ -259,6 +260,15 @@ with MapReduce](http://lintool.github.com/MapReduceAlgorithms/index.html) ^^^
 13. [https://iconverticons.com/online/](https://iconverticons.com/online/) - iConvert Icons converts and creates custom icons for Windows, Mac OS X, Linux, iOS, and Android.
 14. <http://ericandrewlewis.github.io/emoji-mosaic/>  - 图片模糊
 15. <https://infogr.am/>  - 根据数据制作报告或者报表并且分享的在线工具
+
+
+## 素材
+
+1. [https://pixabay.com/](https://pixabay.com/) - 高清
+2. [http://www.iconfont.cn/](http://www.iconfont.cn/)  - 矢量图
+
+
+
 
 
 ## Mac OS X
