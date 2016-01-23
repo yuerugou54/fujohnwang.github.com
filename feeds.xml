@@ -5,6 +5,13 @@
     <link>http://afoo.me</link>
     <description>扶墙老师的博客 - 一个架构士的思考与实践之地</description>
     <item>
+      <title>令行禁止的Amazon就是这样炼成的</title>
+      <link>http://afoo.me/posts/2016-01-23-amazon-api-and-service-rule.html</link>
+      <pubDate>Fri, 22 Jan 2016 16:00:00 GMT</pubDate>
+      <guid>http://afoo.me/posts/2016-01-23-amazon-api-and-service-rule.html</guid>
+      <dc:date>2016-01-22T16:00:00Z</dc:date>
+    </item>
+    <item>
       <title>Scala - The Good Parts</title>
       <link>http://afoo.me/posts/2016-01-18-scala-the-good-parts.html</link>
       <pubDate>Sun, 17 Jan 2016 16:00:00 GMT</pubDate>
@@ -73,13 +80,6 @@
       <pubDate>Mon, 20 Jul 2015 16:00:00 GMT</pubDate>
       <guid>http://afoo.me/posts/2015-07-21-scala-developers-springboot-guide.html</guid>
       <dc:date>2015-07-20T16:00:00Z</dc:date>
-    </item>
-    <item>
-      <title>我为什么要做瞎子摸象的践行者</title>
-      <link>http://afoo.me/posts/2015-07-16-explorer-like-the-blind-man-explore-the-elephant.html</link>
-      <pubDate>Wed, 15 Jul 2015 16:00:00 GMT</pubDate>
-      <guid>http://afoo.me/posts/2015-07-16-explorer-like-the-blind-man-explore-the-elephant.html</guid>
-      <dc:date>2015-07-15T16:00:00Z</dc:date>
     </item>
   </channel>
 </rss>
