@@ -1,56 +1,73 @@
 <!DOCTYPE html>
 <html lang="zh">
-
 <head>
-  <meta charset='utf-8'>
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta http-equiv="X-UA-Compatible" content="chrome=1">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="author" content="扶墙老师@afoo.me">
-    <link rel="icon" href="/favicon.ico">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="扶墙老师的博客， 一个架构士的思考与沉淀之地">
+    <meta name="keywords" content="architecture, book author, thinker, fighter, 架构, 思考, 技术, 武术, 哲学">
+    <meta name="author" content="扶墙老师">
+        <link rel="icon" href="/favicon.ico">
+    <title>Sometimes, Just &quot;Let it go&quot; - 一个架构士的思考与沉淀之地</title>
+    <!-- 百度统计 -->
+    <script>
+      var _hmt = _hmt || [];
+      (function() {
+          var hm = document.createElement("script");
+          hm.src = "//hm.baidu.com/hm.js?4b0cf57d9b677da796218f27d72dbbca";
+          var s = document.getElementsByTagName("script")[0];
+          s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
 
-  <title>Sometimes, Just &quot;Let it go&quot; - 一个架构士的思考与沉淀之地</title>
+	<link href="/css/custom.css" rel="stylesheet"/>
+	<link href="/css/minijianqiti.css" rel="stylesheet"/>
+	<link rel="shortcut icon" href="/favicon.ico"/>
 
-  <!-- 百度统计 -->
-  <script>
-    var _hmt = _hmt || [];
-    (function() {
-      var hm = document.createElement("script");
-      hm.src = "//hm.baidu.com/hm.js?4b0cf57d9b677da796218f27d72dbbca";
-      var s = document.getElementsByTagName("script")[0];
-      s.parentNode.insertBefore(hm, s);
-    })();
-  </script>
-
-  <link href='/font/News_Cycle/stylesheet.css' rel='stylesheet' type='text/css'>
-  <link href="/css/bootstrap.min.css" rel="stylesheet">
-  <link href="/css/bootstrap-theme.min.css" rel="stylesheet">
-  <link href="/css/afoo.me.css" rel="stylesheet">
-
-  <style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">code{white-space: pre;}</style>
         
-  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-  <!--[if lt IE 9]>
-  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-  <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-  <![endif]-->
+	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+	<!--[if lt IE 9]>
+	  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.2/html5shiv.js"></script>
+	  <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+	<![endif]-->
+
 </head>
 
 <body>
-<div class="container">
-  <div class="row">
-    
-    <div class="col-xs-12 col-md-2">
-        <div class="seal text-right">
-          <a href="http://afoo.me">
-            <img src="/images/myseal.png"/>
-          </a>
-        </div>
-    </div>
 
-<div class="col-xs-12 col-md-10">
+    <div class="masthead">
+		<h1 class="masthead-title fq">
+			<a href="/">扶墙老师</a>
+		</h1>
+		<p class="masthead-lead">瞎子摸象的践行者</p>
+	
+		<hr class="masthead-hr">
 
+	  	<ul class="masthead-nav">
+            <li class="nav-item"><a class="nav-link" href="/favorite.html">我的收藏</a></li>
+            <li class="nav-item"><a class="nav-link" href="/dashboard.html">金融看板</a></li>
+            <li class="nav-item"><a class="nav-link" href="/columns.html">专栏文章</a></li>
+            <li class="nav-item"><a class="nav-link" href="/references.html">快捷参考</a></li>
+            <li class="nav-item"><a class="nav-link" href="/whoami.html">我是何人</a></li>
+            <li class="nav-item"><a class="nav-link" href="/interlinks.html">友情链接</a></li>
+            <li class="nav-item"><a class="nav-link" href="/feeds.xml">RSS订阅</a></li>
+		</ul>
+
+		<hr class="masthead-hr">
+		
+		<img src="/images/qrcode_for_gh_4fe672b2e860_258.jpg"/>
+
+  		<hr class="masthead-hr">
+
+	  	<ul class="masthead-nav">
+            <li class="nav-item"><small>©afoo.me</small></li>
+            <li class="nav-item"><small>Powered by <a href="http://pandoc.org/">pandoc</a> and <a href="http://rometools.github.io/rome/">ROME</a></small></li>
+		</ul>
+  		
+	</div>
+
+
+    <div class="listing">
 
 <div class="row">
 <div id="header">
@@ -77,35 +94,6 @@
 <p>哥的思绪就是这么飘逸， 看，我又想到一个故事， 说有个女博士， 都成人了，可是还是有个羞于告诸人的秘密 - 尿床。 是啊， 又有谁能够想到一个成年人会有这种只有小孩子才会出现的症状那！ 如果这发生在小孩子身上， 我们完全是可以理解的，也认为是正常的现象，可是对于一个成年人来说，这就有些让人不能理解了。 可是，这位女博士到底是怎么回事那？！ 原来， 她小的时候尿床后，她的父母很愤怒， 严厉的批评加指责，说了很多狠话，比如你再尿床就如何如何之类，这姐们就很紧张， 第二天就不敢入睡，可是睡神是不会轻易饶恕某一个人的，所以最终她还是怀着紧张的情绪坠入了梦乡， 结果，第二天早上发现，自己还是尿床了，然后她那2b的父母就又是一顿数落加殴打， 又是强制其不准尿床， 然后这姐们就又进一步紧张，然后就第N个第二天早上发现又尿床，周而复始， 年复一年，知道出落成大姑娘，依然维持这种尿床的毛病。 怎么样， 是不是很相似的案例？ 又是一个抗拒导致悲剧的故事。</p>
 <p>有些时候， 对于一些符合自然规律的事情，或者本就没有好与坏之分的事物，还是该放下就放下吧， 没有必要无限放大它们不好的一面， 越是想限制，也就越助长了它的力量， 进而进入悲剧的死循环而不能自拔。 就跟那个女博士一样，后来去看了心理医生，可是连心理医生都回天乏术。 Elsa很幸运， 她小妹的英勇献身既拯救了她也拯救了自己。</p>
 <p>如果这个恶性循环没法从内部自己打破，那就寻找一下外部的力量吧。 Just Let it go可能短期内缓解症状， 可是长期来看要根除这种情绪上的心疾， 或许某种外力才是最佳的药引;)</p>
+    </div>
 
-</div>
-      <div id="qrcode"></div>
-      <div class="row">
-        <hr/>
-        <div class="col-sm-12">
-          <nav>
-            <ul class="nav nav-pills pull-right">
-              <li><a href="/">查看更多扶墙老师的文章...</a></li>
-              <li><a href="/columns.html">专栏文章</a></li>
-              <li><a href="/dashboard.html">金融看板</a></li>
-              <li><a href="/feeds.xml">订阅RSS</a></li>
-              <li><a href="http://pandoc.org/">Powered By Pandoc</a></li>
-            </ul>
-          </nav>
-        </div>
-      </div>
-    </div> <!--main-->
-  </div> <!--row-->
-</div> <!--container-->
-
-<script src="/js/jquery-2.1.1.min.js"></script>
-<script src="/js/bootstrap.min.js"></script>
-<!--
-<script src="/js/qrcode.min.js"></script>
-<script type="text/javascript">
-new QRCode(document.getElementById("qrcode"), window.location.href);
-</script>
--->
-</body>
-
-</html>
+</body></html>

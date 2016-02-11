@@ -1,57 +1,74 @@
 <!DOCTYPE html>
 <html lang="zh">
-
 <head>
-  <meta charset='utf-8'>
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta http-equiv="X-UA-Compatible" content="chrome=1">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="author" content="扶墙老师@afoo.me">
-    <meta name="date" content="2016-01-14" />
-    <link rel="icon" href="/favicon.ico">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="扶墙老师的博客， 一个架构士的思考与沉淀之地">
+    <meta name="keywords" content="architecture, book author, thinker, fighter, 架构, 思考, 技术, 武术, 哲学">
+    <meta name="author" content="扶墙老师">
+        <meta name="date" content="2016-01-14" />
+        <link rel="icon" href="/favicon.ico">
+    <title>挖财平台技术保障部广发英雄帖 - 一个架构士的思考与沉淀之地</title>
+    <!-- 百度统计 -->
+    <script>
+      var _hmt = _hmt || [];
+      (function() {
+          var hm = document.createElement("script");
+          hm.src = "//hm.baidu.com/hm.js?4b0cf57d9b677da796218f27d72dbbca";
+          var s = document.getElementsByTagName("script")[0];
+          s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
 
-  <title>挖财平台技术保障部广发英雄帖 - 一个架构士的思考与沉淀之地</title>
+	<link href="/css/custom.css" rel="stylesheet"/>
+	<link href="/css/minijianqiti.css" rel="stylesheet"/>
+	<link rel="shortcut icon" href="/favicon.ico"/>
 
-  <!-- 百度统计 -->
-  <script>
-    var _hmt = _hmt || [];
-    (function() {
-      var hm = document.createElement("script");
-      hm.src = "//hm.baidu.com/hm.js?4b0cf57d9b677da796218f27d72dbbca";
-      var s = document.getElementsByTagName("script")[0];
-      s.parentNode.insertBefore(hm, s);
-    })();
-  </script>
-
-  <link href='/font/News_Cycle/stylesheet.css' rel='stylesheet' type='text/css'>
-  <link href="/css/bootstrap.min.css" rel="stylesheet">
-  <link href="/css/bootstrap-theme.min.css" rel="stylesheet">
-  <link href="/css/afoo.me.css" rel="stylesheet">
-
-  <style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">code{white-space: pre;}</style>
         
-  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-  <!--[if lt IE 9]>
-  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-  <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-  <![endif]-->
+	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+	<!--[if lt IE 9]>
+	  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.2/html5shiv.js"></script>
+	  <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+	<![endif]-->
+
 </head>
 
 <body>
-<div class="container">
-  <div class="row">
-    
-    <div class="col-xs-12 col-md-2">
-        <div class="seal text-right">
-          <a href="http://afoo.me">
-            <img src="/images/myseal.png"/>
-          </a>
-        </div>
-    </div>
 
-<div class="col-xs-12 col-md-10">
+    <div class="masthead">
+		<h1 class="masthead-title fq">
+			<a href="/">扶墙老师</a>
+		</h1>
+		<p class="masthead-lead">瞎子摸象的践行者</p>
+	
+		<hr class="masthead-hr">
 
+	  	<ul class="masthead-nav">
+            <li class="nav-item"><a class="nav-link" href="/favorite.html">我的收藏</a></li>
+            <li class="nav-item"><a class="nav-link" href="/dashboard.html">金融看板</a></li>
+            <li class="nav-item"><a class="nav-link" href="/columns.html">专栏文章</a></li>
+            <li class="nav-item"><a class="nav-link" href="/references.html">快捷参考</a></li>
+            <li class="nav-item"><a class="nav-link" href="/whoami.html">我是何人</a></li>
+            <li class="nav-item"><a class="nav-link" href="/interlinks.html">友情链接</a></li>
+            <li class="nav-item"><a class="nav-link" href="/feeds.xml">RSS订阅</a></li>
+		</ul>
+
+		<hr class="masthead-hr">
+		
+		<img src="/images/qrcode_for_gh_4fe672b2e860_258.jpg"/>
+
+  		<hr class="masthead-hr">
+
+	  	<ul class="masthead-nav">
+            <li class="nav-item"><small>©afoo.me</small></li>
+            <li class="nav-item"><small>Powered by <a href="http://pandoc.org/">pandoc</a> and <a href="http://rometools.github.io/rome/">ROME</a></small></li>
+		</ul>
+  		
+	</div>
+
+
+    <div class="listing">
 
 <div class="row">
 <div id="header">
@@ -127,35 +144,6 @@
 </ol>
 <hr />
 <p><strong>2016, 约吗？</strong>😉</p>
+    </div>
 
-</div>
-      <div id="qrcode"></div>
-      <div class="row">
-        <hr/>
-        <div class="col-sm-12">
-          <nav>
-            <ul class="nav nav-pills pull-right">
-              <li><a href="/">查看更多扶墙老师的文章...</a></li>
-              <li><a href="/columns.html">专栏文章</a></li>
-              <li><a href="/dashboard.html">金融看板</a></li>
-              <li><a href="/feeds.xml">订阅RSS</a></li>
-              <li><a href="http://pandoc.org/">Powered By Pandoc</a></li>
-            </ul>
-          </nav>
-        </div>
-      </div>
-    </div> <!--main-->
-  </div> <!--row-->
-</div> <!--container-->
-
-<script src="/js/jquery-2.1.1.min.js"></script>
-<script src="/js/bootstrap.min.js"></script>
-<!--
-<script src="/js/qrcode.min.js"></script>
-<script type="text/javascript">
-new QRCode(document.getElementById("qrcode"), window.location.href);
-</script>
--->
-</body>
-
-</html>
+</body></html>
