@@ -12,6 +12,7 @@
  * Global resets
  */
 
+/**
 @font-face {
 font-family: 'minijianqiti508916';
 src: url('minijianqiti.eot');
@@ -34,6 +35,7 @@ src: url('minijianqiti.eot?#iefix') format('embedded-opentype'),
 	font-size: 21px;
 	font-family:minijianqiti508916;
 }
+*/
 
 html {
   font-size: 18px;
@@ -81,6 +83,7 @@ h1, h2, h3 {
   margin-bottom: .75rem;
   font-weight: 300;
   color: #563d7c;
+  text-align: center;
 }
 .masthead-lead a {
   font-weight: normal;
