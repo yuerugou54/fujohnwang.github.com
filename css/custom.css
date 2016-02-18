@@ -64,7 +64,7 @@ h1, h2, h3 {
   padding: 1.5rem;
 }
 .masthead a {
-  color: #6a6a6a;
+  color: #FF0000;
 }
 .masthead a:hover {
   color: #3a3a3a;
@@ -93,8 +93,9 @@ h1, h2, h3 {
 .masthead-nav {
   list-style: none;
   padding-left: 0;
-  margin-bottom: .75rem;
-  font-size: .75rem;
+  margin-bottom: 16px;
+  font-size: 16px;
+  text-align: center;
 }
 .nav-item {
   display: block;
