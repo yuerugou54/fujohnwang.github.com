@@ -5,6 +5,13 @@
     <link>http://afoo.me</link>
     <description>扶墙老师的博客 - 一个架构士的思考与实践之地</description>
     <item>
+      <title>架构的执念</title>
+      <link>http://afoo.me/posts/2016-02-18-the-faith-of-an-architect.html</link>
+      <pubDate>Wed, 17 Feb 2016 16:00:00 GMT</pubDate>
+      <guid>http://afoo.me/posts/2016-02-18-the-faith-of-an-architect.html</guid>
+      <dc:date>2016-02-17T16:00:00Z</dc:date>
+    </item>
+    <item>
       <title>喝药的老人</title>
       <link>http://afoo.me/posts/2016-02-08-talking-about-house-of-countryside.html</link>
       <pubDate>Sun, 07 Feb 2016 16:00:00 GMT</pubDate>
@@ -73,13 +80,6 @@
       <pubDate>Fri, 14 Aug 2015 16:00:00 GMT</pubDate>
       <guid>http://afoo.me/posts/2015-08-15-my-writing-toolset.html</guid>
       <dc:date>2015-08-14T16:00:00Z</dc:date>
-    </item>
-    <item>
-      <title>扶墙老师谈微服务(Microservices Essential)</title>
-      <link>http://afoo.me/posts/2015-07-31-microservices-essential.html</link>
-      <pubDate>Thu, 30 Jul 2015 16:00:00 GMT</pubDate>
-      <guid>http://afoo.me/posts/2015-07-31-microservices-essential.html</guid>
-      <dc:date>2015-07-30T16:00:00Z</dc:date>
     </item>
   </channel>
 </rss>
