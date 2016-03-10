@@ -316,6 +316,7 @@ You can perform ad-hoc queries or schedule them.
 1. <https://www.mlook.mobi/>
 2. <http://book.zi5.me/>
 3. [IT类电子书@itpub.net](http://www.itpub.net/forum-61-1.html)
+4. <http://it-ebooks.info/>
 
 ## Movies(电影)
 0. [一站搜(美剧)](http://www.yizhansou.com/)
