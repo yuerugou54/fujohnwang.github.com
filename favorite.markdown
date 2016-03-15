@@ -17,7 +17,6 @@
 * [http://www.cheatography.com/](http://www.cheatography.com/)  - cheatsheet search
 * [http://www.emoji-cheat-sheet.com/](http://www.emoji-cheat-sheet.com/)  - github friendly Emoji 
 * <http://www.excite.co.jp/world/chinese/>   - 多语字典翻译
-* [有字库](http://www.youziku.com/Home/Index)  - 中文webfont
 * [https://serversforhackers.com/](https://serversforhackers.com/) - Server Admin for Programmers
 
 ## Finance
@@ -353,4 +352,8 @@ You can perform ad-hoc queries or schedule them.
 1. [4*4 Magazine](http://www.4x4emag.com/)
 
 
+## 字体FONTS
+
+* [有字库](http://www.youziku.com/Home/Index)  - 中文webfont
+* [模板王字体](http://fonts.mobanwang.com/) ****
 
