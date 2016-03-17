@@ -162,6 +162,30 @@ logger.<span class="fu">info</span>(invocation.<span class="fu">getMethod</span>
 <div class="sourceCode"><pre class="sourceCode xml"><code class="sourceCode xml"><span class="kw">&lt;bean</span><span class="ot"> id=</span><span class="st">&quot;autoProxyCreator&quot;</span><span class="ot"> class=</span><span class="st">&quot;org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator&quot;</span><span class="kw">/&gt;</span></code></pre></div>
 <p>不过，该类方便是方便，但是cross-cutting的粒度却不好掌握，往往某些我们不希望应用aop的类却被proxy了，从而造成程序行为的不正常。打一个不会造成不正常行为的例子吧，就以上面的profile为例，虽然大部分dao实现我们会乐意去检测，但是，某些无关紧要的dao我们明明知道不会造成问题的，我们当然不会希望去徒劳的检测他们吧？！谁也不可否认类似情况的发生，profile还好一些，如果说牵扯到影响程序逻辑的cross-cutting行为的时候，很容易就可以造成程序的不正常行为发生。所以说，在使用该类auto proxy的时候，需要仔细考虑，谨慎使用之。为了能够更好的控制cross-cutting的粒度，完全可以使用BeanNameAutoProxyCreator，只要分情况指定targets和相应的advisors就可以了，当然了，又要多写配置了，呵呵</p>
 <p>好了，先写这么些吧，有时间的话后面在说说spring提供的metadata的支持吧！</p>
-    </div>
+
+<hr>
+
+  <!-- 多说评论框 start -->
+  <div class="ds-thread" data-thread-key="2005-00-00-springaop-simple-intro3.html" data-title="闲话SpringAOP的应用(3)">
+  </div>
+  <!-- 多说评论框 end -->
+  <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+  <script type="text/javascript">
+  var duoshuoQuery = {short_name:"afoo"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0] 
+       || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+    </script>
+  <!-- 多说公共JS代码 end -->
+
+
+</div>
+
+
 
 </body></html>

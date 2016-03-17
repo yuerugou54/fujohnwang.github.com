@@ -147,6 +147,30 @@
 <div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala">unmanagedJars in Compile &lt;+= (javaHome) <span class="fu">map</span> (jh=&gt; Attributed.<span class="fu">blank</span>(jh.<span class="fu">getOrElse</span>(<span class="fu">file</span>(System.<span class="fu">getProperty</span>(<span class="st">&quot;java.home&quot;</span>))) / <span class="st">&quot;lib&quot;</span> / <span class="st">&quot;tools.jar&quot;</span>))</code></pre></div>
 <p>复杂的东西其实并不复杂，通常都是由简单的东西组合而来（这话有哲理性，可我说的太挫了，看官见谅）。 第一版总算能independent了，可还有个问题，如果我们真的明确指定了javaHome这个设置并override了默认的编译用JDK，那第一版好像就不够严谨了，鉴于此，老衲再接再厉，终于搞出了第二版能work，又build environment independent的编译配置。</p>
 <p>嗯，基本上，还算满意，收工！</p>
-    </div>
+
+<hr>
+
+  <!-- 多说评论框 start -->
+  <div class="ds-thread" data-thread-key="2012-07-31-add-tools-jar-to-sbt-compile-path.html" data-title="将tools.jar添加到sbt编译期classpath中">
+  </div>
+  <!-- 多说评论框 end -->
+  <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+  <script type="text/javascript">
+  var duoshuoQuery = {short_name:"afoo"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0] 
+       || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+    </script>
+  <!-- 多说公共JS代码 end -->
+
+
+</div>
+
+
 
 </body></html>

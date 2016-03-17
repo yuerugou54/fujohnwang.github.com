@@ -148,6 +148,30 @@ DOMConfigurator.<span class="fu">configure</span>(w3cDocument.<span class="fu">g
 <p>这里牵扯出一个细节，如果你不注意的话，就会掉进去，其实你可以不用Commons IO里的这个FilenameUtils类，完全可以直接用String来替换掉“”就可以，不过，如果你选择不对的话，Exception又会给你好看了，呵呵...</p>
 <p>String提供了2个适用于我们现在场景的替换方法:String.replace和String.replaceAll，前者不使用Regex进行替换，所以，对于我们这里可以直接winpath.replace(&quot;\&quot;,&quot;/&quot;)就可以；但是，如果要使用String.replaceAll的话，你就要小心了，必须winPath.replaceAll(&quot;\\&quot;,&quot;/&quot;),也就是说，他是用Regex来进行替换的，相当于<code>Pattern.compile(regex).matcher(str).replaceAll(repl)</code></p>
 <p>而如果你还像replace那样传入“\“，那么，sorry，俺不干，呵呵，虽然是经常用的String类，不过，不注意依然让你难堪...</p>
-    </div>
+
+<hr>
+
+  <!-- 多说评论框 start -->
+  <div class="ds-thread" data-thread-key="2006-00-00-configure-log4j-programmatically.html" data-title="在程序中动态配置log4j(configure Log4j Programmatically)">
+  </div>
+  <!-- 多说评论框 end -->
+  <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+  <script type="text/javascript">
+  var duoshuoQuery = {short_name:"afoo"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0] 
+       || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+    </script>
+  <!-- 多说公共JS代码 end -->
+
+
+</div>
+
+
 
 </body></html>

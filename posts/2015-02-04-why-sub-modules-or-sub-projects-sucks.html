@@ -120,6 +120,30 @@
 <p>当然啦， 使用parent+modules的实践不一定非要都以同一个版本号发布所有的modules，可这就又回来到第一个概念了，你到底是把modules当成独立的实体还是某种功能关注点的组织形式？ 如果是独立的实体，那么， 使用clean folder来组织独立的project就可以了， parent+modules则没有什么太大意义。</p>
 <p>那么，是不是使用workspace下管理多个并行的project的方式就一定比parent + modules的形式更好那？ 也不尽然，起码开发期间你可能要同时在多个project之间切换，但从整个开发-测试-部署-运行的pipeline来说， 我更倾向于采用第二种项目设置结构： api和impl独立开发和发布， 依赖关系通过maven（或者sbt等工具进行版本化关联管理）， impl的更新对api的依赖者来说尽量透明，模块化的治理粒度从各个层面都有清晰的区分。</p>
 <p>嗯，就先扯这么些吧！</p>
-    </div>
+
+<hr>
+
+  <!-- 多说评论框 start -->
+  <div class="ds-thread" data-thread-key="2015-02-04-why-sub-modules-or-sub-projects-sucks.html" data-title="我为什么不喜欢子项目或者子模块的概念">
+  </div>
+  <!-- 多说评论框 end -->
+  <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+  <script type="text/javascript">
+  var duoshuoQuery = {short_name:"afoo"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0] 
+       || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+    </script>
+  <!-- 多说公共JS代码 end -->
+
+
+</div>
+
+
 
 </body></html>

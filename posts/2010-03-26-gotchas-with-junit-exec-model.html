@@ -139,6 +139,30 @@
 <p>If you have been familiar with JUnit’s execution model for a long time, you will think it’s not a big deal, BUT I should say, it make me sick for a while and still be sick with it, that’s why I have moved all of my unit tests to TestNG. If you can go back without any JUnit framework’s experience, just think about it that if we have a class definition like the unit test above, what’s the result you will expect? I think a natural reaction should be that it should fail. Otherwise, the code makes u feel unnatural, right?</p>
 <p>JUnit will create a new instance for each test method when executing the test, most of the time, you may let it go because it doesn’t bother you too much, even it does, you will resort to the best practices of JUnit and get through it. It makes sense as per JUnit’s design philosophy, but it doesn’t make sense to me. It mixes 2 concerns together and make things “dirty”. When you have to setup heavy resources, this model makes things worse, yeah, I know you would suggest to setup such things in static block, but why should I do things this way, is it the best and only way? No, even you have been fucked by GGFFWW for a long time and become to accept it, but it doesn’t mean u are treated fairly and there are no other options.</p>
 <p>If you do still want to use it, use it in proper way and avoid getting trapped by gotchas like this one.</p>
-    </div>
+
+<hr>
+
+  <!-- 多说评论框 start -->
+  <div class="ds-thread" data-thread-key="2010-03-26-gotchas-with-junit-exec-model.html" data-title="Gotchas With JUnit's Execution Model">
+  </div>
+  <!-- 多说评论框 end -->
+  <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+  <script type="text/javascript">
+  var duoshuoQuery = {short_name:"afoo"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0] 
+       || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+    </script>
+  <!-- 多说公共JS代码 end -->
+
+
+</div>
+
+
 
 </body></html>
