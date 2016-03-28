@@ -5,6 +5,13 @@
     <link>http://afoo.me</link>
     <description>扶墙老师的博客 - 一个架构士的思考与实践之地</description>
     <item>
+      <title>My Great Experience Of IDPA In Bangkok</title>
+      <link>http://afoo.me/posts/2016-03-28-IDPA-a-great-memory.html</link>
+      <pubDate>Sun, 27 Mar 2016 16:00:00 GMT</pubDate>
+      <guid>http://afoo.me/posts/2016-03-28-IDPA-a-great-memory.html</guid>
+      <dc:date>2016-03-27T16:00:00Z</dc:date>
+    </item>
+    <item>
       <title>架构的执念</title>
       <link>http://afoo.me/posts/2016-02-24-what-defines-an-archtect.html</link>
       <pubDate>Tue, 23 Feb 2016 16:00:00 GMT</pubDate>
@@ -73,13 +80,6 @@
       <pubDate>Mon, 14 Sep 2015 16:00:00 GMT</pubDate>
       <guid>http://afoo.me/posts/2015-09-15-qiang-mai-touring.html</guid>
       <dc:date>2015-09-14T16:00:00Z</dc:date>
-    </item>
-    <item>
-      <title>高效写作的秘密 - 扶墙老师的写作工具集</title>
-      <link>http://afoo.me/posts/2015-08-15-my-writing-toolset.html</link>
-      <pubDate>Fri, 14 Aug 2015 16:00:00 GMT</pubDate>
-      <guid>http://afoo.me/posts/2015-08-15-my-writing-toolset.html</guid>
-      <dc:date>2015-08-14T16:00:00Z</dc:date>
     </item>
   </channel>
 </rss>
