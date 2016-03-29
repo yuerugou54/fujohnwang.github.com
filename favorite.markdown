@@ -26,6 +26,10 @@
 * [Wireshark Display Filter Reference - Financial Information eXchange Protocol](http://www.wireshark.org/docs/dfref/f/fix.html)
 * [MBA智库百科](http://wiki.mbalib.com/wiki/%E9%A6%96%E9%A1%B5)
 
+* [投行先锋](http://www.thxflt.com/forum.php)
+* [集思录](https://www.jisilu.cn/)
+* [风控汇](http://www.fengkonghui.com/tzr)
+
 ### 美股投资
 1. [三维预测](http://www.3dfn.com/)
 

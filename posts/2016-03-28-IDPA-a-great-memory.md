@@ -20,7 +20,7 @@ here R we, the new F4, HAHA
 
 Alley and I are from HangZhou, Zhejiang Province; 
 
-Ken and Karry are from ChangZhou, Jiangsu Province.
+Zen and Karry are from ChangZhou, Jiangsu Province.
 
 We got together in Bangkok.
 
