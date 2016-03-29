@@ -50,7 +50,7 @@ I heard he taught the princess of Thailand, he taught the police officers, he ta
 
 He can figure out what goes wrong in your movements and help you fix it and improve it, he can make complicated thing be so easy to learn, that makes him a great teacher who can see the both sides of the mirror.
 
-![](images/Squeeze.JPG)
+![](images/Squeeeeze.jpg)
 
 In the above picture, I still can hear his voice after days: “**Squeeeeeeze~**”,  "慢~ 慢~ 来~"(Take it easy and slow~)
 
