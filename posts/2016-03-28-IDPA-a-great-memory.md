@@ -28,7 +28,7 @@ We have so much fun in our class, that's all because we met such wonderful guys 
 
 ## T.J.
 
-Theeradej Jui ^[I don't know how to spell the name in Thai language, So we call him T.J. for short] is our teacher. He is a funny guy, 
+[Theeradej Jui](https://www.facebook.com/theeradej.jui) ^[I don't know how to spell the name in Thai language, So we call him T.J. for short] is our teacher. He is a funny guy, 
 
 ![](images/TJ2.JPG)
 
