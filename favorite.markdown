@@ -340,7 +340,7 @@ You can perform ad-hoc queries or schedule them.
 
 ## BT Search
 0. <http://kaopu.so/>  搜百度云盘
-1. <http://s.weibo.com/> - 微博搜索
+1. <http://www.daimugua.com>  ****
 2. <http://www.jiumodiary.com/> - Jiumo Ebook Search
 0. <http://www.btbook.net/>
 1. <http://btdigg.org/>
