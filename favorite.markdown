@@ -264,7 +264,7 @@ with MapReduce](http://lintool.github.com/MapReduceAlgorithms/index.html) ^^^
 14. <http://ericandrewlewis.github.io/emoji-mosaic/>  - 图片模糊
 15. <https://infogr.am/>  - 根据数据制作报告或者报表并且分享的在线工具
 16. <https://www.typeform.com/>  - 动态表单****
-
+17. <http://crontab.guru/>  - cron表达式解释
 
 ## 素材
 
