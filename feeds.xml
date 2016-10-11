@@ -5,6 +5,13 @@
     <link>http://afoo.me</link>
     <description>扶墙老师的博客 - 一个架构士的思考与实践之地</description>
     <item>
+      <title>创业， 需要有“扎硬寨， 打死仗”的勇气！</title>
+      <link>http://afoo.me/posts/2016-10-11-hardcore-startup.html</link>
+      <pubDate>Mon, 10 Oct 2016 16:00:00 GMT</pubDate>
+      <guid>http://afoo.me/posts/2016-10-11-hardcore-startup.html</guid>
+      <dc:date>2016-10-10T16:00:00Z</dc:date>
+    </item>
+    <item>
       <title>My Great Experience Of IDPA In Bangkok</title>
       <link>http://afoo.me/posts/2016-03-28-IDPA-a-great-memory.html</link>
       <pubDate>Sun, 27 Mar 2016 16:00:00 GMT</pubDate>
@@ -73,13 +80,6 @@
       <pubDate>Sun, 20 Sep 2015 16:00:00 GMT</pubDate>
       <guid>http://afoo.me/posts/2015-09-21-huadong-internet-tech-summit.html</guid>
       <dc:date>2015-09-20T16:00:00Z</dc:date>
-    </item>
-    <item>
-      <title>清迈, 刷我滴卡</title>
-      <link>http://afoo.me/posts/2015-09-15-qiang-mai-touring.html</link>
-      <pubDate>Mon, 14 Sep 2015 16:00:00 GMT</pubDate>
-      <guid>http://afoo.me/posts/2015-09-15-qiang-mai-touring.html</guid>
-      <dc:date>2015-09-14T16:00:00Z</dc:date>
     </item>
   </channel>
 </rss>
