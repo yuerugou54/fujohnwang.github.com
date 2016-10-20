@@ -98,19 +98,19 @@
 <p>HTTP API <a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a> can't be typesafe as per the http protocol's essential， so we need to find a way so that the api providers and consumers can come to the same rendzvous point with proper constraits and clarity.</p>
 <p>HTTP协议的特性决定了基于HTTP的API属于松散类型（与强类型或者说类型安全的API相对应）， 为了能够让API的提供者和消费者可以一种双方都可以明晰且明确的方式达成共识， 我们需要找到一种方式来描述API，以便对双方进行一定的约束，从而形成一种双方都可以遵守的契约式的协议， 在某些层面增加少许工作量的同时，为双方提供便利和参考。</p>
 <div class="figure">
-<img src="images/why-api-doc.png" alt="" />
+<img src="images/why-api-doc.png" />
 
 </div>
 <h1 id="how-api-design-and-documentation-work"><span class="header-section-number">2</span> How API design and documentation work</h1>
 <p>API设计的一般的思路是，API提供者根据某种语法规范，表达和编写相应的API， 然后使用对应这种语法规范的工具解析并生成指定格式的API文档， 当然， 更进一步， API的实现代码也可以一并生成。</p>
 <p>生成的文档以及代码可以发布到版本控制系统以及相应的web站点， 然后API的使用者或者说消费者根据发布的API文档作为参考， 使用指定的API规范访问开放的API服务。</p>
 <div class="figure">
-<img src="images/api-design-flow.png" alt="" />
+<img src="images/api-design-flow.png" />
 
 </div>
 <p>或者引用一下apiary的流程：</p>
 <div class="figure">
-<img src="images/design-use-implement-flow.png" alt="" />
+<img src="images/design-use-implement-flow.png" />
 
 </div>
 <p>思路上稍微存在一些差异（即是否生成代码），但先从API设计入手，然后迭代，最终发布这样的大体流程是类似的。</p>
@@ -170,8 +170,7 @@
 </div>
 <hr>
 <div>
-<p><b>支付宝打赏， 没事儿别乱扫 ^_-</b>~</p>
-<img src="/images/dashang.jpg"/>
+<img src="/images/qrcode_for_gh_4fe672b2e860_430.jpg"/>
 </div>
 <hr>
 

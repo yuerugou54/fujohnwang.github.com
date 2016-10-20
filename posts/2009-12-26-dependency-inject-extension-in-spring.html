@@ -173,7 +173,7 @@
     <span class="kw">&lt;/property&gt;</span>  
 <span class="kw">&lt;/bean&gt;</span>  </code></pre></div>
 <p>恐怕最终得到的不是一个Map<FixtureEnum,String>类型的Map,而是一个Map<String,String>类型的Map, 小沈阳语:为什么那?</p>
-<p>Java5的Generic是Erase-Based, 这就意味着,运行期间无法获得Map的Key相关的Generic类型信息, 那么, Spring在做注入的时候,也就没法知道应该将String形式表达的依赖对象转换成什么类型, 只好保持原样啦, 所以,以通常形式表达的map注入,最终得到的就成了一个Map<String,..>类型的Map,而不是Map<Enum,..>类型的Map.那谁可能说了,那怎么其它复杂对象作为Key怎么没问题那? 原因很简单嘛, 你直接指定了对象的引用嘛,不服,你把对象类型直接写上试试?</p>
+<p>Java5的Generic是Erase-Based, 这就意味着,运行期间无法获得Map的Key相关的Generic类型信息, 那么, Spring在做注入的时候,也就没法知道应该将String形式表达的依赖对象转换成什么类型, 只好保持原样啦, 所以,以通常形式表达的map注入,最终得到的就成了一个Map&lt;String,..&gt;类型的Map,而不是Map&lt;Enum,..&gt;类型的Map.那谁可能说了,那怎么其它复杂对象作为Key怎么没问题那? 原因很简单嘛, 你直接指定了对象的引用嘛,不服,你把对象类型直接写上试试?</p>
 <p>那怎么解决这个问题那? 显然我们无法在运行期间通过反射之类的途径来获得Map的Key类型了,那么,我们就明确指定呗,如何明确指定那?可以考虑几种方式...</p>
 <h2 id="自定义factorybean"><span class="header-section-number">1.1</span> 自定义FactoryBean</h2>
 <p>我们可以自定义一个FactoryBean来“生产 ”以Enum类型作为Key的Map,通过该自定义FactoryBean的某个Property类指定Key的Enum类型是什么, 就可以在“生产 ”过程中生成或者转换出相应的Map实例, Spring默认提供了一个MapFactoryBean,我们可以在这个父类的基础上做进一步的工作,说白了,就是直接根据明确指定的Enum类型将已经注入的Key值做一下转换, 之后,Map的Key就从String变成了指定的Enum类型, 一个实例代码可以实现如下:</p>
@@ -421,8 +421,7 @@
 <p>无论是设计还是实现,都是在各种因素之间进行权衡, 没有普遍适用的设计方案,也没有普遍适用的实现方案, 因时因地而权衡吧! 经济学第一原则不是“People face tradeoffs ”嘛, 其实哪里都一样.</p>
 <hr>
 <div>
-<p><b>支付宝打赏， 没事儿别乱扫 ^_-</b>~</p>
-<img src="/images/dashang.jpg"/>
+<img src="/images/qrcode_for_gh_4fe672b2e860_430.jpg"/>
 </div>
 <hr>
 
