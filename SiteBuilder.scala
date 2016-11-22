@@ -114,11 +114,10 @@ object SiteBuilder {
     s"""
        |  <hr>
        |  <div class="paginator">
-       |				<a href="$previousLink" class="paginate previous">前(Previous)</a>
-       |				<a href="$nextLink" class="paginate older">后(Next)</span>
+       |				<a href="$previousLink" class="paginate previous">更新鲜(Newer)</a>
+       |				<a href="$nextLink" class="paginate older">更早些时候(Older)</span>
        |	</div>
     """.stripMargin
   }
 
 }
-
