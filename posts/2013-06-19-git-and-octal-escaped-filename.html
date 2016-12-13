@@ -129,6 +129,11 @@ ZeroToThree: one of
 <p>简单来讲，就是范围是<code>\0-\377</code>, 换算到十进制是<code>0-255</code>。</p>
 <p>不过Octal Escape算是C时代的遗老了，现在都加都倾向于utf8/unicode，比如<a href="http://www.marshut.com/munzm/any-interest-in-keeping-octal-escape-literals.html" class="uri">http://www.marshut.com/munzm/any-interest-in-keeping-octal-escape-literals.html</a>这里的倡议。</p>
 <p>如果想在Octal Escape字面量与字符之间互转， 在Java里做可能还会有点儿小坑爹的， 除了要做2层转换(字面量到encoding的值，encoding的值到字符)， 还要注意char在java里的存储，怎么搞？ 感兴趣的话，看官自己去折腾折腾吧～</p>
+<p>至于如何修正：</p>
+<p><code>git config --global core.quotepath false</code></p>
+<p>或者直接更改~/.gitconfig:</p>
+<pre><code>[core]
+    quotepath = false</code></pre>
 <p><strong>参考链接</strong></p>
 <ol style="list-style-type: decimal">
 <li><a href="https://code.google.com/p/msysgit/issues/detail?id=230">msysgit: Issue 230: Question: How I can add files in national character</a></li>

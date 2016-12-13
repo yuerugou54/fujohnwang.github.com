@@ -57,6 +57,17 @@ ZeroToThree: one of
 
 如果想在Octal Escape字面量与字符之间互转， 在Java里做可能还会有点儿小坑爹的， 除了要做2层转换(字面量到encoding的值，encoding的值到字符)， 还要注意char在java里的存储，怎么搞？ 感兴趣的话，看官自己去折腾折腾吧～
 
+至于如何修正：
+
+`git config --global core.quotepath false`
+
+或者直接更改~/.gitconfig:
+
+```
+[core]
+    quotepath = false
+```
+
 
 **参考链接**
 
