@@ -340,6 +340,7 @@ You can perform ad-hoc queries or schedule them.
 14. <http://www.bthave.com/> ****
 
 ## BT Search
+0. <https://www.skytorrents.in/>
 0. <http://kaopu.so/>  搜百度云盘
 1. <http://www.daimugua.com>  ****
 2. <http://www.jiumodiary.com/> - Jiumo Ebook Search
