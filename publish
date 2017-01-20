@@ -14,12 +14,6 @@ do
 	./compile $f
 done
 
-for f in `ls digests/*.m*`
-do
-	./compile $f
-done
-
-
 for f in `ls references/**/*.m*`
 do
 	./compile $f
