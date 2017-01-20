@@ -2,7 +2,7 @@
 % 王福强 - fujohnwang AT gmail DOTA com
 % 2017-01-20
 
-
+![](images/youxinren-icon.png)
 
 欢迎大家试用[“有薪人”](https://zs5s.com/taxpayer.html)， 虽然现在第一版还很粗糙，但也是倾注了我们团队心力， 脑力和体力的成果，我们将持续改进，持续将其打造成对用户有价值的产品来为大家更好的服务。
 
