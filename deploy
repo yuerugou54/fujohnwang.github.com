@@ -1,1 +1,1 @@
-ansible digitalocean -m shell -a "cd afoo.me; git pull" 
+ansible linode -m shell -a "cd /opt/afoo.me; git pull" 

@@ -1,5 +1,5 @@
 % 一个side project的原型构建过程与总结
-% i AT afoo.me
+% 王福强 - fujohnwang AT gmail DOTA com
 % 2017-02-22
 
 # 初步想法
