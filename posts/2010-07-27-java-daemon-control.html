@@ -78,8 +78,8 @@
     
     </h1>
     -->
-    <a href="/"><img src="/images/afoo.PNG"/></a>
-		<p class="masthead-lead">瞎子摸象的践行者</p>
+    <a href="/"><h1>扶墙老师说</h1></a>
+		<p class="masthead-lead">一个架构士的思考与沉淀</p>
 	
 		<hr class="masthead-hr">
 
@@ -132,8 +132,8 @@
 <h1 id="old-days-solutions"><span class="header-section-number">1</span> Old Days Solutions</h1>
 <p>Directly “kill -9 ” ? Of course, that's a way, but that's too brutal.</p>
 <p>A Java process that will be run as a server process usually will be sent to OS's background to run, that's called “daemon ” on Unix and “service ” on Windows. A Simple way to control the life-cycle of a Java daemon is to start a loop and wait for user input, like this:</p>
-<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java">BufferedReader reader = <span class="kw">new</span> BufferedReader(<span class="kw">new</span> InputStreamReader(System.<span class="fu">in</span>));  
-String line = <span class="kw">null</span>;  
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="bu">BufferedReader</span> reader = <span class="kw">new</span> <span class="bu">BufferedReader</span>(<span class="kw">new</span> <span class="bu">InputStreamReader</span>(<span class="bu">System</span>.<span class="fu">in</span>));  
+<span class="bu">String</span> line = <span class="kw">null</span>;  
 <span class="kw">do</span> {  
     line = reader.<span class="fu">readLine</span>();  
     <span class="kw">if</span> (line != <span class="kw">null</span> &amp;&amp; line.<span class="fu">equals</span>(<span class="st">&quot;quit&quot;</span>)) {  
@@ -162,9 +162,9 @@ String line = <span class="kw">null</span>;
 <h1 id="my-choice"><span class="header-section-number">3</span> My Choice</h1>
 <p>I choose to combine shell and “sun.misc.Signal ” and “sun.misc.SignalHandler ” to achieve Java daemon, because they are much simpler to me to understand them and use them. The Shell will take care of running-in-background stuff:</p>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="co">#!/bin/sh  </span>
-<span class="kw">java</span> -cp your_class_path com.domain.main_class <span class="kw">&lt;&amp;-</span> <span class="kw">&amp;</span>  
-<span class="ot">pid=$!</span>  
-<span class="kw">echo</span> <span class="ot">${pid}</span> <span class="kw">&gt;</span> mydaemon.pid  </code></pre></div>
+<span class="ex">java</span> -cp your_class_path com.domain.main_class <span class="op">&lt;</span><span class="kw">&amp;</span><span class="ex">-</span> <span class="kw">&amp;</span>  
+<span class="va">pid=$!</span>  
+<span class="bu">echo</span> <span class="va">${pid}</span> <span class="op">&gt;</span> mydaemon.pid  </code></pre></div>
 <p>And “sun.misc.Signal ” and “sun.misc.SignalHandler ” will take care of controlling the life-cycle of the program. About “sun.misc.Signal ” and “sun.misc.SignalHandler ” , you can find more information at 参考文档 , here I just simply introduce how to use them together to achieve asynchronous communication between processes or just internally in a same process.</p>
 <p>The concept of “sun.misc.Signal ” and “sun.misc.SignalHandler ” is simple</p>
 <h2 id="signal"><span class="header-section-number">3.1</span> Signal</h2>

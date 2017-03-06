@@ -79,8 +79,8 @@
     
     </h1>
     -->
-    <a href="/"><img src="/images/afoo.PNG"/></a>
-		<p class="masthead-lead">瞎子摸象的践行者</p>
+    <a href="/"><h1>扶墙老师说</h1></a>
+		<p class="masthead-lead">一个架构士的思考与沉淀</p>
 	
 		<hr class="masthead-hr">
 
@@ -206,7 +206,7 @@
     }</code></pre></div>
 <p>We start a Tracker at localhost first, then we decide to publish a movie, so we use Torrent class to create a .torrent metainfo file to the movie and announce it to the tracker. After that, we need to start a Client(which works as a peer) which will serve as the initial seeder to share the movie. To make a Client to work as the initial seeder, we need to use SharedTorrent(torrent, parent, seeder) constructor and make seeder=true to create a SharedTorrent instance for Client to use. At the end, call seeder.share to kick off the sharing.</p>
 <p>Since we have the tracker and initial seeder started, let's add a new peer to the swarm to download the movie, the code listed below:</p>
-<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala">    <span class="kw">import</span> util.<span class="fu">control</span>.<span class="fu">Breaks</span>.<span class="fu">_</span>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala">    <span class="kw">import</span> util.<span class="fu">control</span>.<span class="fu">Breaks</span>._
     <span class="kw">val</span> client = <span class="kw">new</span> <span class="fu">Client</span>(InetAddress.<span class="fu">getLocalHost</span>, SharedTorrent.<span class="fu">fromFile</span>(<span class="kw">new</span> File(<span class="st">&quot;seed.torrent&quot;</span>), <span class="kw">new</span> File(<span class="st">&quot;.&quot;</span>)))
     <span class="kw">try</span> {
       <span class="fu">println</span>(<span class="st">&quot;start to download...&quot;</span>)

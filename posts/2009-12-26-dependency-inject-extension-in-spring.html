@@ -78,8 +78,8 @@
     
     </h1>
     -->
-    <a href="/"><img src="/images/afoo.PNG"/></a>
-		<p class="masthead-lead">瞎子摸象的践行者</p>
+    <a href="/"><h1>扶墙老师说</h1></a>
+		<p class="masthead-lead">一个架构士的思考与沉淀</p>
 	
 		<hr class="masthead-hr">
 
@@ -159,8 +159,8 @@
 <p>可是,把这两个结合起来, 我们要注入以Enum作为Key的Map的话,可能默认的支持就帮不了什么大忙了, 如果我们声明一个Map依赖对象, 但它的Key是Enum类型的话:</p>
 <div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="kw">public</span> <span class="kw">class</span> InjectionTarget {  
       
-    <span class="fu">@EnumKeyType</span>(FixtureEnum.<span class="fu">class</span>)  
-    <span class="kw">private</span> Map&lt;FixtureEnum,String&gt; mapping;  
+    <span class="at">@EnumKeyType</span>(FixtureEnum.<span class="fu">class</span>)  
+    <span class="kw">private</span> <span class="bu">Map</span>&lt;FixtureEnum,<span class="bu">String</span>&gt; mapping;  
   
     <span class="kw">... </span><span class="co">// setters or getters and other things  </span>
 }  </code></pre></div>
@@ -179,18 +179,18 @@
 <p>我们可以自定义一个FactoryBean来“生产 ”以Enum类型作为Key的Map,通过该自定义FactoryBean的某个Property类指定Key的Enum类型是什么, 就可以在“生产 ”过程中生成或者转换出相应的Map实例, Spring默认提供了一个MapFactoryBean,我们可以在这个父类的基础上做进一步的工作,说白了,就是直接根据明确指定的Enum类型将已经注入的Key值做一下转换, 之后,Map的Key就从String变成了指定的Enum类型, 一个实例代码可以实现如下:</p>
 <div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="kw">public</span> <span class="kw">class</span> EnumKeyMapFactoryBean <span class="kw">extends</span> MapFactoryBean {  
       
-    <span class="kw">private</span> Class&lt;? <span class="kw">extends</span> Enum&lt;?&gt;&gt; enumType;  
+    <span class="kw">private</span> <span class="bu">Class</span>&lt;? <span class="kw">extends</span> <span class="bu">Enum</span>&lt;?&gt;&gt; enumType;  
     <span class="kw">private</span> EnumKeyConversionSupport conversionSupport = <span class="kw">new</span> <span class="fu">EnumKeyConversionSupport</span>();  
-    <span class="fu">@Override</span>  
-    <span class="kw">protected</span> Object <span class="fu">createInstance</span>() {  
+    <span class="at">@Override</span>  
+    <span class="kw">protected</span> <span class="bu">Object</span> <span class="fu">createInstance</span>() {  
         <span class="kw">return</span> conversionSupport.<span class="fu">convert</span>(<span class="kw">super</span>.<span class="fu">createInstance</span>(), enumType);  
     }  
   
-    <span class="kw">public</span> <span class="dt">void</span> <span class="fu">setEnumType</span>(Class&lt;? <span class="kw">extends</span> Enum&lt;?&gt;&gt; enumType) {  
+    <span class="kw">public</span> <span class="dt">void</span> <span class="fu">setEnumType</span>(<span class="bu">Class</span>&lt;? <span class="kw">extends</span> <span class="bu">Enum</span>&lt;?&gt;&gt; enumType) {  
         <span class="kw">this</span>.<span class="fu">enumType</span> = enumType;  
     }  
   
-    <span class="kw">public</span> Class&lt;? <span class="kw">extends</span> Enum&lt;?&gt;&gt; <span class="fu">getEnumType</span>() {  
+    <span class="kw">public</span> <span class="bu">Class</span>&lt;? <span class="kw">extends</span> <span class="bu">Enum</span>&lt;?&gt;&gt; <span class="fu">getEnumType</span>() {  
         <span class="kw">return</span> enumType;  
     }  
       
@@ -212,58 +212,58 @@
 </blockquote>
 <h2 id="自定义beanpostprocessort"><span class="header-section-number">1.2</span> 自定义BeanPostProcessort</h2>
 <p>自定义FactoryBean的形式当然可以达成目的,不过, 使用上来看,可能不是太方便,毕竟,每次遇到这样的情况都需要声明那么一个FactoryBean的bean定义, 而且,配置的形式也不是那么简洁,本着“精益求精 ”的精神,我们是不是可以想一下,还可以有更好的方法那? 要明确指定Map的Key的类型是Enum类型,不一定非要通过XML配置的形式,我们还可以使用Annotation,通过为相应的Map标注某一表明了Key的Enum类型的Annotation, 我们同样可以获得Key的Enum类型信息,例如,我们可以声明某一Annotation如下:</p>
-<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="fu">@Retention</span>(RetentionPolicy.<span class="fu">RUNTIME</span>)  
-<span class="fu">@Target</span>(ElementType.<span class="fu">FIELD</span>)  
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="at">@Retention</span>(<span class="bu">RetentionPolicy</span>.<span class="fu">RUNTIME</span>)  
+<span class="at">@Target</span>(<span class="bu">ElementType</span>.<span class="fu">FIELD</span>)  
 <span class="kw">public</span> <span class="kw">@interface</span> EnumKeyType {  
-    Class&lt;?&gt; <span class="fu">value</span>();  
+    <span class="bu">Class</span>&lt;?&gt; <span class="fu">value</span>();  
 } </code></pre></div>
 <p>然后在遇到适用Enum作为Key的Map的情况下,就可以通过这一Annotation对这样的Map进行标注:</p>
 <div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="kw">public</span> <span class="kw">class</span> InjectionTarget {  
       
-    <span class="fu">@EnumKeyType</span>(FixtureEnum.<span class="fu">class</span>)  
-    <span class="kw">private</span> Map&lt;FixtureEnum,String&gt; mapping;  
+    <span class="at">@EnumKeyType</span>(FixtureEnum.<span class="fu">class</span>)  
+    <span class="kw">private</span> <span class="bu">Map</span>&lt;FixtureEnum,<span class="bu">String</span>&gt; mapping;  
   
     <span class="kw">...   </span>
 } </code></pre></div>
 <p>这样,虽然我们无法在运行期间获得Map的Key的Generic类型信息,但可以通过Annotation来获得,不过, 光标注一下,Spring可不会聪明到马上知道你标注这么个Annotation要干嘛,我们得写点儿东西让Spring知道遇到这个 Annotation该干点儿什么事情, 所以,可以定义一个BeanPostProcessor来做这个事情,例如:</p>
 <div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="kw">public</span> <span class="kw">class</span> EnumKeyMapBeanPostProcessor <span class="kw">implements</span> BeanPostProcessor {  
   
-    <span class="kw">protected</span> <span class="dt">static</span> <span class="dt">final</span> <span class="kw">transient</span> Logger logger = LoggerFactory.<span class="fu">getLogger</span>(EnumKeyMapBeanPostProcessor.<span class="fu">class</span>);  
+    <span class="kw">protected</span> <span class="dt">static</span> <span class="dt">final</span> <span class="kw">transient</span> <span class="bu">Logger</span> logger = LoggerFactory.<span class="fu">getLogger</span>(EnumKeyMapBeanPostProcessor.<span class="fu">class</span>);  
       
     <span class="kw">private</span> EnumKeyConversionSupport conversionSupport = <span class="kw">new</span> <span class="fu">EnumKeyConversionSupport</span>();  
       
-    <span class="fu">@Override</span>  
-    <span class="kw">public</span> Object <span class="fu">postProcessAfterInitialization</span>(Object bean, String beanName)  
+    <span class="at">@Override</span>  
+    <span class="kw">public</span> <span class="bu">Object</span> <span class="fu">postProcessAfterInitialization</span>(<span class="bu">Object</span> bean, <span class="bu">String</span> beanName)  
             <span class="kw">throws</span> BeansException {  
-        Field[] fields = bean.<span class="fu">getClass</span>().<span class="fu">getDeclaredFields</span>();  
-        <span class="kw">for</span>(Field field:fields)  
+        <span class="bu">Field</span>[] fields = bean.<span class="fu">getClass</span>().<span class="fu">getDeclaredFields</span>();  
+        <span class="kw">for</span>(<span class="bu">Field</span> field:fields)  
         {  
             <span class="kw">if</span>(field.<span class="fu">isAnnotationPresent</span>(EnumKeyType.<span class="fu">class</span>))  
             {  
                 <span class="kw">try</span> {  
                     <span class="fu">convertKeyType</span>(field,bean);  
-                } <span class="kw">catch</span> (Exception e) {  
-                    logger.<span class="fu">warn</span>(<span class="st">&quot;failed to do map key convert.</span><span class="ch">\n</span><span class="st">{}&quot;</span>,e);  
+                } <span class="kw">catch</span> (<span class="bu">Exception</span> e) {  
+                    logger.<span class="fu">warn</span>(<span class="st">&quot;failed to do map key convert.</span><span class="sc">\n</span><span class="st">{}&quot;</span>,e);  
                 }  
             }  
         }  
         <span class="kw">return</span> bean;  
     }  
   
-    <span class="kw">protected</span> <span class="dt">void</span> <span class="fu">convertKeyType</span>(Field field,Object bean) <span class="kw">throws</span> Exception {  
+    <span class="kw">protected</span> <span class="dt">void</span> <span class="fu">convertKeyType</span>(<span class="bu">Field</span> field,<span class="bu">Object</span> bean) <span class="kw">throws</span> <span class="bu">Exception</span> {  
         EnumKeyType eType= field.<span class="fu">getAnnotation</span>(EnumKeyType.<span class="fu">class</span>);  
-        Class&lt;?&gt; clazz = eType.<span class="fu">value</span>();  
+        <span class="bu">Class</span>&lt;?&gt; clazz = eType.<span class="fu">value</span>();  
         field.<span class="fu">setAccessible</span>(<span class="kw">true</span>);  
-        Object map = field.<span class="fu">get</span>(bean);  
-        <span class="kw">if</span>(Map.<span class="fu">class</span>.<span class="fu">isAssignableFrom</span>(map.<span class="fu">getClass</span>()) &amp;&amp; clazz != <span class="kw">null</span>)  
+        <span class="bu">Object</span> map = field.<span class="fu">get</span>(bean);  
+        <span class="kw">if</span>(<span class="bu">Map</span>.<span class="fu">class</span>.<span class="fu">isAssignableFrom</span>(map.<span class="fu">getClass</span>()) &amp;&amp; clazz != <span class="kw">null</span>)  
         {  
-            Map&lt;Object, Object&gt; result = conversionSupport.<span class="fu">convert</span>(map, clazz);  
+            <span class="bu">Map</span>&lt;<span class="bu">Object</span>, <span class="bu">Object</span>&gt; result = conversionSupport.<span class="fu">convert</span>(map, clazz);  
             field.<span class="fu">set</span>(bean, result);  
         }  
     }  
   
-    <span class="fu">@Override</span>  
-    <span class="kw">public</span> Object <span class="fu">postProcessBeforeInitialization</span>(Object bean, String beanName)  
+    <span class="at">@Override</span>  
+    <span class="kw">public</span> <span class="bu">Object</span> <span class="fu">postProcessBeforeInitialization</span>(<span class="bu">Object</span> bean, <span class="bu">String</span> beanName)  
             <span class="kw">throws</span> BeansException {  
         <span class="kw">return</span> bean;  
     }  
@@ -276,7 +276,7 @@
 <p>默认情况下,我们可以通过Spring的XML配置文件中的<list>或者<set>等元素为某一个对象注入一组依赖对象,只要我们能够确定容器中的哪些bean定义应该纳入这组依赖对象就行,例如:</p>
 <div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="kw">public</span> <span class="kw">class</span> InjectionTarget {  
       
-    <span class="kw">private</span> List&lt;T&gt; collection;  
+    <span class="kw">private</span> <span class="bu">List</span>&lt;T&gt; collection;  
     <span class="kw">...  </span>
 } </code></pre></div>
 <div class="sourceCode"><pre class="sourceCode xml"><code class="sourceCode xml"><span class="kw">&lt;bean</span><span class="ot"> id=</span><span class="st">&quot;it&quot;</span><span class="ot"> class=</span><span class="st">&quot;...InjectionTarget&quot;</span><span class="kw">&gt;</span>  
@@ -298,40 +298,40 @@
 <div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="kw">public</span> <span class="kw">class</span> CollectionInjectionFactoryBean <span class="kw">implements</span> FactoryBean,ApplicationContextAware {  
   
     <span class="kw">private</span> ApplicationContext applicationContext;  
-    <span class="kw">private</span> Class&lt;?&gt; componentType;  
+    <span class="kw">private</span> <span class="bu">Class</span>&lt;?&gt; componentType;  
       
-    <span class="fu">@Override</span>  
-    <span class="kw">public</span> Object <span class="fu">getObject</span>() <span class="kw">throws</span> Exception {  
-        <span class="fu">@SuppressWarnings</span>(<span class="st">&quot;unchecked&quot;</span>)  
-        Map&lt;String,Object&gt; map = <span class="kw">this</span>.<span class="fu">applicationContext</span>.<span class="fu">getBeansOfType</span>(<span class="fu">getComponentType</span>());  
+    <span class="at">@Override</span>  
+    <span class="kw">public</span> <span class="bu">Object</span> <span class="fu">getObject</span>() <span class="kw">throws</span> <span class="bu">Exception</span> {  
+        <span class="at">@SuppressWarnings</span>(<span class="st">&quot;unchecked&quot;</span>)  
+        <span class="bu">Map</span>&lt;<span class="bu">String</span>,<span class="bu">Object</span>&gt; map = <span class="kw">this</span>.<span class="fu">applicationContext</span>.<span class="fu">getBeansOfType</span>(<span class="fu">getComponentType</span>());  
         <span class="kw">if</span>(map == <span class="kw">null</span> || map.<span class="fu">isEmpty</span>())  
         {  
-            <span class="kw">return</span> Collections.<span class="fu">EMPTY_LIST</span>;  
+            <span class="kw">return</span> <span class="bu">Collections</span>.<span class="fu">EMPTY_LIST</span>;  
         }  
         <span class="kw">return</span> map.<span class="fu">values</span>();  
     }  
-    <span class="fu">@SuppressWarnings</span>(<span class="st">&quot;unchecked&quot;</span>)  
-    <span class="fu">@Override</span>  
-    <span class="kw">public</span> Class <span class="fu">getObjectType</span>() {  
-        <span class="kw">return</span> Collection.<span class="fu">class</span>;  
+    <span class="at">@SuppressWarnings</span>(<span class="st">&quot;unchecked&quot;</span>)  
+    <span class="at">@Override</span>  
+    <span class="kw">public</span> <span class="bu">Class</span> <span class="fu">getObjectType</span>() {  
+        <span class="kw">return</span> <span class="bu">Collection</span>.<span class="fu">class</span>;  
     }  
   
-    <span class="fu">@Override</span>  
+    <span class="at">@Override</span>  
     <span class="kw">public</span> <span class="dt">boolean</span> <span class="fu">isSingleton</span>() {  
         <span class="kw">return</span> <span class="kw">false</span>;  
     }  
   
-    <span class="fu">@Override</span>  
+    <span class="at">@Override</span>  
     <span class="kw">public</span> <span class="dt">void</span> <span class="fu">setApplicationContext</span>(ApplicationContext arg0)  
             <span class="kw">throws</span> BeansException {  
         <span class="kw">this</span>.<span class="fu">applicationContext</span> = arg0;   
     }  
   
-    <span class="kw">public</span> <span class="dt">void</span> <span class="fu">setComponentType</span>(Class&lt;?&gt; componentType) {  
+    <span class="kw">public</span> <span class="dt">void</span> <span class="fu">setComponentType</span>(<span class="bu">Class</span>&lt;?&gt; componentType) {  
         <span class="kw">this</span>.<span class="fu">componentType</span> = componentType;  
     }  
   
-    <span class="kw">public</span> Class&lt;?&gt; <span class="fu">getComponentType</span>() {  
+    <span class="kw">public</span> <span class="bu">Class</span>&lt;?&gt; <span class="fu">getComponentType</span>() {  
         <span class="kw">return</span> componentType;  
     }  
   
@@ -347,48 +347,48 @@
 <p>如果应用里这种场景不多,那使用这种自定义FactoryBean的方式还可以将就一下,但多的话,那也依然减少不了多少配置,这个时候,可以考虑下面这种方式.</p>
 <h2 id="自定义beanpostprocessor"><span class="header-section-number">2.2</span> 自定义BeanPostProcessor</h2>
 <p>如果可能,开发人员肯定不愿在java代码与配置文件之间切换,最好是只关注Java代码文件,这也就是为啥Annotation很受开发人员欢迎的原因之一. 所以,如果某个对象的属性需要注入一组依赖对象,那么,最好的方式就是直接在Java代码中直接标注这种依赖关系,鉴于此,我们定义一用于此目的的Annotation如下:</p>
-<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="fu">@Retention</span>(RetentionPolicy.<span class="fu">RUNTIME</span>)  
-<span class="fu">@Target</span>(ElementType.<span class="fu">FIELD</span>)  
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="at">@Retention</span>(<span class="bu">RetentionPolicy</span>.<span class="fu">RUNTIME</span>)  
+<span class="at">@Target</span>(<span class="bu">ElementType</span>.<span class="fu">FIELD</span>)  
 <span class="kw">public</span> <span class="kw">@interface</span> InjectCollectionOf {  
-    Class&lt;?&gt; <span class="fu">value</span>();  
+    <span class="bu">Class</span>&lt;?&gt; <span class="fu">value</span>();  
 }  </code></pre></div>
 <p>有了该Annotation之后,我们就可以在对象中需要注入一组依赖对象的Property处标注该Annotation:</p>
 <div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="kw">public</span> <span class="kw">class</span> InjectionTarget {  
       
-    <span class="fu">@InjectCollectionOf</span>(SomeType.<span class="fu">class</span>)  
-    <span class="kw">private</span> Collection&lt;SomeType&gt; collection;  
+    <span class="at">@InjectCollectionOf</span>(SomeType.<span class="fu">class</span>)  
+    <span class="kw">private</span> <span class="bu">Collection</span>&lt;SomeType&gt; collection;  
     <span class="kw">...  </span>
 }  </code></pre></div>
 <p>为了让容器按照我们的旨意行事,我们最后需要提供一个自定义的BeanPostProcessor实现,如下所示:</p>
 <div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="kw">public</span> <span class="kw">class</span> CollectionInjectionBeanPostProcessor <span class="kw">implements</span> BeanPostProcessor,ApplicationContextAware {  
   
-    <span class="kw">private</span> <span class="dt">static</span> <span class="dt">final</span> Logger logger = LoggerFactory.<span class="fu">getLogger</span>(CollectionInjectionBeanPostProcessor.<span class="fu">class</span>);  
+    <span class="kw">private</span> <span class="dt">static</span> <span class="dt">final</span> <span class="bu">Logger</span> logger = LoggerFactory.<span class="fu">getLogger</span>(CollectionInjectionBeanPostProcessor.<span class="fu">class</span>);  
       
     <span class="kw">private</span> ApplicationContext applicationContext;  
       
-    <span class="fu">@Override</span>  
-    <span class="kw">public</span> Object <span class="fu">postProcessAfterInitialization</span>(Object bean, String beanName)  
+    <span class="at">@Override</span>  
+    <span class="kw">public</span> <span class="bu">Object</span> <span class="fu">postProcessAfterInitialization</span>(<span class="bu">Object</span> bean, <span class="bu">String</span> beanName)  
             <span class="kw">throws</span> BeansException {  
           
-        Field[] fields = bean.<span class="fu">getClass</span>().<span class="fu">getDeclaredFields</span>();  
-        <span class="kw">for</span>(Field field:fields)  
+        <span class="bu">Field</span>[] fields = bean.<span class="fu">getClass</span>().<span class="fu">getDeclaredFields</span>();  
+        <span class="kw">for</span>(<span class="bu">Field</span> field:fields)  
         {  
             <span class="kw">if</span>(field.<span class="fu">isAnnotationPresent</span>(InjectCollectionOf.<span class="fu">class</span>))  
             {  
-                Class&lt;?&gt; componentType = field.<span class="fu">getAnnotation</span>(InjectCollectionOf.<span class="fu">class</span>).<span class="fu">value</span>();  
+                <span class="bu">Class</span>&lt;?&gt; componentType = field.<span class="fu">getAnnotation</span>(InjectCollectionOf.<span class="fu">class</span>).<span class="fu">value</span>();  
                 <span class="kw">if</span>(componentType == <span class="kw">null</span>)  
                 {  
                     <span class="kw">continue</span>;  
                 }  
-                <span class="fu">@SuppressWarnings</span>(<span class="st">&quot;unchecked&quot;</span>)  
-                Map&lt;String,Object&gt; componentCandidates = <span class="kw">this</span>.<span class="fu">applicationContext</span>.<span class="fu">getBeansOfType</span>(componentType);  
+                <span class="at">@SuppressWarnings</span>(<span class="st">&quot;unchecked&quot;</span>)  
+                <span class="bu">Map</span>&lt;<span class="bu">String</span>,<span class="bu">Object</span>&gt; componentCandidates = <span class="kw">this</span>.<span class="fu">applicationContext</span>.<span class="fu">getBeansOfType</span>(componentType);  
                 <span class="kw">if</span>(componentCandidates != <span class="kw">null</span> &amp;&amp; !componentCandidates.<span class="fu">isEmpty</span>()){  
                     field.<span class="fu">setAccessible</span>(<span class="kw">true</span>);  
                     <span class="kw">try</span> {  
                         field.<span class="fu">set</span>(bean,componentCandidates.<span class="fu">values</span>());  
-                    } <span class="kw">catch</span> (IllegalArgumentException e) {  
-                        logger.<span class="fu">warn</span>(<span class="st">&quot;argument is not a collection.</span><span class="ch">\n</span><span class="st">{}&quot;</span>,ExceptionUtils.<span class="fu">getFullStackTrace</span>(e));  
-                    } <span class="kw">catch</span> (IllegalAccessException e) {  
+                    } <span class="kw">catch</span> (<span class="bu">IllegalArgumentException</span> e) {  
+                        logger.<span class="fu">warn</span>(<span class="st">&quot;argument is not a collection.</span><span class="sc">\n</span><span class="st">{}&quot;</span>,ExceptionUtils.<span class="fu">getFullStackTrace</span>(e));  
+                    } <span class="kw">catch</span> (<span class="bu">IllegalAccessException</span> e) {  
                         logger.<span class="fu">warn</span>(ExceptionUtils.<span class="fu">getFullStackTrace</span>(e));  
                     }  
                 }  
@@ -397,13 +397,13 @@
         <span class="kw">return</span> bean;  
     }  
   
-    <span class="fu">@Override</span>  
-    <span class="kw">public</span> Object <span class="fu">postProcessBeforeInitialization</span>(Object arg0, String arg1)  
+    <span class="at">@Override</span>  
+    <span class="kw">public</span> <span class="bu">Object</span> <span class="fu">postProcessBeforeInitialization</span>(<span class="bu">Object</span> arg0, <span class="bu">String</span> arg1)  
             <span class="kw">throws</span> BeansException {  
         <span class="kw">return</span> arg0;  
     }  
   
-    <span class="fu">@Override</span>  
+    <span class="at">@Override</span>  
     <span class="kw">public</span> <span class="dt">void</span> <span class="fu">setApplicationContext</span>(ApplicationContext arg0)  
             <span class="kw">throws</span> BeansException {  
         <span class="kw">this</span>.<span class="fu">applicationContext</span> = arg0;  

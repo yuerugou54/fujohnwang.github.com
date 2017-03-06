@@ -78,8 +78,8 @@
     
     </h1>
     -->
-    <a href="/"><img src="/images/afoo.PNG"/></a>
-		<p class="masthead-lead">瞎子摸象的践行者</p>
+    <a href="/"><h1>扶墙老师说</h1></a>
+		<p class="masthead-lead">一个架构士的思考与沉淀</p>
 	
 		<hr class="masthead-hr">
 
@@ -122,11 +122,11 @@
 <p>2014年从msn space存档中重新恢复出来！</p>
 </blockquote>
 <p>徐敬琪提出的这个问题，呵呵，以前没有注意到，就是为JComboBox组件添加KeyListner不起作用，我按照他说得添加了几乎所有JComboBox所支持的事件监听器都不好用，google了一下才知道，实际上，对于JComboBox设置为可编辑之后，要对他的KeyStroke进行监听，实际上是对他的editor的EditorComponent组件的KeyStroke事件进行监听（还记不记得JComboBox是由几个其他的组件组合而成的那？！事件上，这种情况下是要对JTextField组件上的KeyStroke进行监听），所以，使用类似的代码就可以正确监听到JComboBox上的KeyStroke事件了：</p>
-<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java">comboPattern.<span class="fu">getEditor</span>().<span class="fu">getEditorComponent</span>().<span class="fu">addKeyListener</span>(<span class="kw">new</span> KeyListener(){
-                            <span class="kw">public</span> <span class="dt">void</span> <span class="fu">keyPressed</span>(KeyEvent e)
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java">comboPattern.<span class="fu">getEditor</span>().<span class="fu">getEditorComponent</span>().<span class="fu">addKeyListener</span>(<span class="kw">new</span> <span class="bu">KeyListener</span>(){
+                            <span class="kw">public</span> <span class="dt">void</span> <span class="fu">keyPressed</span>(<span class="bu">KeyEvent</span> e)
                             {
                                 <span class="co">//System.out.println(&quot;keyPressed&quot;;</span>
-                                JTextField jtf = (JTextField)e.<span class="fu">getComponent</span>();
+                                <span class="bu">JTextField</span> jtf = (<span class="bu">JTextField</span>)e.<span class="fu">getComponent</span>();
                                 <span class="kw">if</span>(!(jtf.<span class="fu">getText</span>()==<span class="kw">null</span>||<span class="st">&quot;&quot;</span>.<span class="fu">equals</span>(jtf.<span class="fu">getText</span>())))
                                 {
                                     btnFind.<span class="fu">setEnabled</span>(<span class="kw">true</span>);
@@ -134,14 +134,14 @@
                                     btnReplaceAll.<span class="fu">setEnabled</span>(<span class="kw">true</span>);
                                 }
                             }
-                            <span class="kw">public</span> <span class="dt">void</span> <span class="fu">keyTyped</span>(KeyEvent e)
+                            <span class="kw">public</span> <span class="dt">void</span> <span class="fu">keyTyped</span>(<span class="bu">KeyEvent</span> e)
                             {
                                 <span class="co">//System.out.println(&quot;keyTyped&quot;;</span>
                             }
-                            <span class="kw">public</span> <span class="dt">void</span> <span class="fu">keyReleased</span>(KeyEvent e)
+                            <span class="kw">public</span> <span class="dt">void</span> <span class="fu">keyReleased</span>(<span class="bu">KeyEvent</span> e)
                             {
                                 <span class="co">//System.out.println(&quot;keyReleased&quot;;</span>
-                                JTextField jtf = (JTextField)e.<span class="fu">getComponent</span>();
+                                <span class="bu">JTextField</span> jtf = (<span class="bu">JTextField</span>)e.<span class="fu">getComponent</span>();
                                 <span class="kw">if</span>(jtf.<span class="fu">getText</span>()==<span class="kw">null</span>||<span class="st">&quot;&quot;</span>.<span class="fu">equals</span>(jtf.<span class="fu">getText</span>()))
                                 {
                                     btnFind.<span class="fu">setEnabled</span>(<span class="kw">false</span>);

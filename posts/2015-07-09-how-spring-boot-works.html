@@ -79,8 +79,8 @@
     
     </h1>
     -->
-    <a href="/"><img src="/images/afoo.PNG"/></a>
-		<p class="masthead-lead">瞎子摸象的践行者</p>
+    <a href="/"><h1>扶墙老师说</h1></a>
+		<p class="masthead-lead">一个架构士的思考与沉淀</p>
 	
 		<hr class="masthead-hr">
 
@@ -183,20 +183,20 @@
 <p>有了以上配置，我们就可以按照SpringMVC的套路添加相应的Controller实现就可以了， 比如：</p>
 <div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="co">// let&#39;s say, it is under package com.xxx.controller</span>
 
-<span class="fu">@Controller</span>
+<span class="at">@Controller</span>
 <span class="kw">public</span> <span class="kw">class</span> HelloController {
-    <span class="fu">@RequestMapping</span>(<span class="st">&quot;/&quot;</span>)
-    <span class="fu">@ResponseBody</span>
-    String <span class="fu">home</span>() {
+    <span class="at">@RequestMapping</span>(<span class="st">&quot;/&quot;</span>)
+    <span class="at">@ResponseBody</span>
+    <span class="bu">String</span> <span class="fu">home</span>() {
         <span class="kw">return</span> <span class="st">&quot;Hello SpringBoot!&quot;</span>;
     }
 }</code></pre></div>
 <p>最后，要让SpringBoot可以独立运行和部署，我们需要一个Main方法入口， 比如：</p>
 <div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="co">// let&#39;s say, it&#39;s located under package com.xxx</span>
 
-<span class="fu">@SpringBootApplication</span>
+<span class="at">@SpringBootApplication</span>
 <span class="kw">public</span> <span class="kw">class</span> HelloSpringBoot {
-    <span class="kw">public</span> <span class="dt">static</span> <span class="dt">void</span> <span class="fu">main</span>(String[] args) <span class="kw">throws</span> Exception {
+    <span class="kw">public</span> <span class="dt">static</span> <span class="dt">void</span> <span class="fu">main</span>(<span class="bu">String</span>[] args) <span class="kw">throws</span> <span class="bu">Exception</span> {
         SpringApplication.<span class="fu">run</span>(HelloSpringBoot.<span class="fu">class</span>, args);
     }
 }</code></pre></div>
@@ -231,20 +231,20 @@
 <h2 id="understanding-enableautoconfiguration"><span class="header-section-number">3.2</span> Understanding <span class="citation">@EnableAutoConfiguration</span></h2>
 <p>在本文之前提到的所有Annotation都属于SpringFramework提供的， 现在要说的这个Annotation，即@EnableAutoConfiguration， 则属于SpringBoot。</p>
 <p><span class="citation">@EnableAutoConfiguration的定义信息如下</span>：</p>
-<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="fu">@Target</span>(value=TYPE)
-<span class="fu">@Retention</span>(value=RUNTIME)
-<span class="fu">@Documented</span>
-<span class="fu">@Inherited</span>
-<span class="fu">@Import</span>(value={org.<span class="fu">springframework</span>.<span class="fu">boot</span>.<span class="fu">autoconfigure</span>.<span class="fu">EnableAutoConfigurationImportSelector</span>.<span class="fu">class</span>,org.<span class="fu">springframework</span>.<span class="fu">boot</span>.<span class="fu">autoconfigure</span>.<span class="fu">AutoConfigurationPackages</span>.<span class="fu">Registrar</span>.<span class="fu">class</span>})
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="at">@Target</span>(value=TYPE)
+<span class="at">@Retention</span>(value=RUNTIME)
+<span class="at">@Documented</span>
+<span class="at">@Inherited</span>
+<span class="at">@Import</span>(value={org.<span class="fu">springframework</span>.<span class="fu">boot</span>.<span class="fu">autoconfigure</span>.<span class="fu">EnableAutoConfigurationImportSelector</span>.<span class="fu">class</span>,org.<span class="fu">springframework</span>.<span class="fu">boot</span>.<span class="fu">autoconfigure</span>.<span class="fu">AutoConfigurationPackages</span>.<span class="fu">Registrar</span>.<span class="fu">class</span>})
 <span class="kw">public</span> <span class="kw">@interface</span> EnableAutoConfiguration</code></pre></div>
 <p>标注了这个Annotation的配置类将触发一系列动作， 也是SpringBoot“黑魔法”的核心， 魔法大体上是这样发生的： SpringBoot一旦发现@EnableAutoConfiguration， 那么就使用Spring框架提供的SpringFactoriesLoader这个特性去扫描当前应用classpath下所有<code>META-INF/spring.factories</code>元信息配置， 然后根据当前使用场景需要， 加载符合当前场景需要的配置类型并供当前或者后继流程使用， 对于@EnableAutoConfiguration的场景，就是提取以<code>org.springframework.boot.autoconfigure.EnableAutoConfiguration</code>作为key标志的一系列Java配置类，然后将这些Java配置类中的bean定义加载或者说灌入Spring容器中。</p>
 <p>当然， EnableAutoConfiguration通过SpringFactoriesLoader筛选并加载进来的这些Java配置类里面，我们其实还可以进一步对要加载到容器的bean定义进行筛选， 这就会用Spring3系列引入的@Conditional“军团”， 通过像@ConditionalOnClass， <span class="citation">@ConditionalOnMissingBean等具体的类型和条件来进一步决定加载还是不加载哪些bean定义</span>。</p>
 <h2 id="enter-main"><span class="header-section-number">3.3</span> Enter Main</h2>
 <p>有了上面的这些“前戏”， 下面我们正式进入正题了...</p>
 <p>每一个SpringBoot应用都有一个入口类，在其中定义main方法， 然后使用SpringApplication这个类来加载指定配置并运行SpringBoot应用程序， 在很多SpringBoot的介绍中，都会使用当前入口类既作为配置（标注@Configuration）又作为入口类， 比如我们的HellSpringBoot:</p>
-<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="fu">@SpringBootApplication</span>
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="at">@SpringBootApplication</span>
 <span class="kw">public</span> <span class="kw">class</span> HelloSpringBoot {
-    <span class="kw">public</span> <span class="dt">static</span> <span class="dt">void</span> <span class="fu">main</span>(String[] args) <span class="kw">throws</span> Exception {
+    <span class="kw">public</span> <span class="dt">static</span> <span class="dt">void</span> <span class="fu">main</span>(<span class="bu">String</span>[] args) <span class="kw">throws</span> <span class="bu">Exception</span> {
         SpringApplication.<span class="fu">run</span>(HelloSpringBoot.<span class="fu">class</span>, args);
     }
 }</code></pre></div>
@@ -333,14 +333,14 @@
 <p>SpringBoot提供的功能倒是蛮丰富的了，但是，你会发现，爽了的同时，整个应用也会看起笨重了些， 比如有人就抱怨说SpringBoot应用启动慢(虽然这不是什么大问题，你生产环境又不会闲着没事经常重启，服务就应该长久，哈哈)， 好在SpringBoot的设计提供了足够的灵活度，让我们可以对其进行裁剪和瘦身。</p>
 <h3 id="dubbomicroserviceautoconfiguration"><span class="header-section-number">4.2.1</span> DubboMicroServiceAutoConfiguration</h3>
 <p>很多公司在使用dubbo作为java服务的开发框架，我们也不例外， 所以， 构建基于SpringBoot和Dubbo的微服务属于比较普遍的需求， 要完成这个事情其实很简单，只要提供一个特定于dubbo的自动加载模块就可以了， 比如我们称其为DubboMicroServiceAutoConfiguration（只是举例，非实际生产代码）：</p>
-<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="fu">@Configuration</span>
-<span class="fu">@Order</span>(Ordered.<span class="fu">HIGHEST_PRECEDENCE</span>)
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="at">@Configuration</span>
+<span class="at">@Order</span>(Ordered.<span class="fu">HIGHEST_PRECEDENCE</span>)
 <span class="kw">public</span> <span class="kw">class</span> DubboMicroServiceAutoConfiguration {
 
     <span class="co">// 1. Application Bean Definition</span>
-    <span class="fu">@Bean</span>
-    <span class="fu">@ConditionalOnMissingBean</span>
-    <span class="fu">@Value</span>(${dubo.<span class="fu">application</span>.<span class="fu">name</span>})
+    <span class="at">@Bean</span>
+    <span class="at">@ConditionalOnMissingBean</span>
+    <span class="at">@Value</span>(${dubo.<span class="fu">application</span>.<span class="fu">name</span>})
     <span class="kw">public</span> <span class="dt">static</span> DubboApplication <span class="fu">dubboApp</span>() {
         <span class="kw">return</span> <span class="kw">new</span> xxx;
     }
@@ -356,8 +356,8 @@
         <span class="kw">&lt;version&gt;</span>...<span class="kw">&lt;/version&gt;</span>
     <span class="kw">&lt;/dependency&gt;</span></code></pre></div>
 <p>当然， dubbo跟哥属于一个时代，其实使用JavaConfig来配置还是有些不适应的，而且基本上大部分dubbo服务也都是通过xml形式进行配置的，不过没关系， 退一步讲， 都不需要自动配置模块， 通过convention来约定说我们所有的dubbo项目从src/main/resources/spring/*.xml这样的资源路径来加载容器的配置就可以了， 更他娘的简单！</p>
-<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="fu">@Configuration</span>
-<span class="fu">@ImportResource</span>(<span class="st">&quot;classpath*:/spring/*.xml&quot;</span>)
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="at">@Configuration</span>
+<span class="at">@ImportResource</span>(<span class="st">&quot;classpath*:/spring/*.xml&quot;</span>)
 ...
 <span class="kw">public</span> <span class="kw">class</span> Main {
     ...
@@ -384,28 +384,28 @@
 <li><p>src/main/resources目录下添加swagger-ui的相关资源(亲们，自己google大法吧~)</p></li>
 <li><p>启动类上添加相应配置</p></li>
 </ol>
-<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="fu">@Configuration</span>
-<span class="fu">@PropertySource</span>(<span class="st">&quot;file:conf/application.properties&quot;</span>)
-<span class="fu">@ImportResource</span>(<span class="st">&quot;classpath*:/spring/*.xml&quot;</span>)
-<span class="fu">@EnableAutoConfiguration</span>(exclude = {DataSourceAutoConfiguration.<span class="fu">class</span>, DataSourceTransactionManagerAutoConfiguration.<span class="fu">class</span>})
-<span class="fu">@ComponentScan</span>
-<span class="fu">@EnableSwagger</span>
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="at">@Configuration</span>
+<span class="at">@PropertySource</span>(<span class="st">&quot;file:conf/application.properties&quot;</span>)
+<span class="at">@ImportResource</span>(<span class="st">&quot;classpath*:/spring/*.xml&quot;</span>)
+<span class="at">@EnableAutoConfiguration</span>(exclude = {DataSourceAutoConfiguration.<span class="fu">class</span>, DataSourceTransactionManagerAutoConfiguration.<span class="fu">class</span>})
+<span class="at">@ComponentScan</span>
+<span class="at">@EnableSwagger</span>
 <span class="kw">public</span> <span class="kw">class</span> Main {
 
     <span class="kw">private</span> SpringSwaggerConfig springSwaggerConfig;
 
-    <span class="fu">@Autowired</span>
+    <span class="at">@Autowired</span>
     <span class="kw">public</span> <span class="dt">void</span> <span class="fu">setSpringSwaggerConfig</span>(SpringSwaggerConfig springSwaggerConfig) {
         <span class="kw">this</span>.<span class="fu">springSwaggerConfig</span> = springSwaggerConfig;
     }
 
-    <span class="fu">@Bean</span>
+    <span class="at">@Bean</span>
     <span class="kw">public</span> SwaggerSpringMvcPlugin <span class="fu">configureSwagger</span>() {
         ApiInfo apiInfo = <span class="kw">new</span> <span class="fu">ApiInfo</span>(<span class="st">&quot;sample web api&quot;</span>, <span class="st">&quot;web api project with spring boot&quot;</span>, <span class="kw">null</span>, <span class="kw">null</span>, <span class="kw">null</span>, <span class="kw">null</span>);
         <span class="kw">return</span> <span class="kw">new</span> <span class="fu">SwaggerSpringMvcPlugin</span>(<span class="kw">this</span>.<span class="fu">springSwaggerConfig</span>).<span class="fu">apiInfo</span>(apiInfo).<span class="fu">useDefaultResponseMessages</span>(<span class="kw">false</span>).<span class="fu">includePatterns</span>(<span class="st">&quot;/*&quot;</span>);
     }
 
-    <span class="kw">public</span> <span class="dt">static</span> <span class="dt">void</span> <span class="fu">main</span>(String[] args) {
+    <span class="kw">public</span> <span class="dt">static</span> <span class="dt">void</span> <span class="fu">main</span>(<span class="bu">String</span>[] args) {
         SpringApplication app = <span class="kw">new</span> <span class="fu">SpringApplication</span>(Main.<span class="fu">class</span>);
         app.<span class="fu">setShowBanner</span>(<span class="kw">false</span>);
         app.<span class="fu">run</span>(args);
@@ -419,10 +419,10 @@
 <h3 id="config-customization"><span class="header-section-number">4.3.1</span> config customization</h3>
 <p>我们的应用配置采用配置中心 <a href="#fn4" class="footnoteRef" id="fnref4"><sup>4</sup></a>进行管理， 但流程上对研发是透明的， 开发阶段配置文件按照约定放在项目根目录下的conf/目录， 发布包的结构也是同样的，配置文件名采用SpringBoot的默认application.properties即可， 唯一需要调整的配置就是配置文件的加载路径， 这可以在应用启动的时候指定命令行参数搞定：<code>--spring.config.location=file:conf/</code>, 或者：</p>
 <div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java">...
-<span class="fu">@PropertySource</span>(<span class="st">&quot;file:conf/application.properties&quot;</span>)
+<span class="at">@PropertySource</span>(<span class="st">&quot;file:conf/application.properties&quot;</span>)
 ...
 <span class="kw">public</span> <span class="kw">class</span> Main {
-    <span class="kw">public</span> <span class="dt">static</span> <span class="dt">void</span> <span class="fu">main</span>(String[] args) {
+    <span class="kw">public</span> <span class="dt">static</span> <span class="dt">void</span> <span class="fu">main</span>(<span class="bu">String</span>[] args) {
         SpringApplication app = <span class="kw">new</span> <span class="fu">SpringApplication</span>(Main.<span class="fu">class</span>);
         app.<span class="fu">setShowBanner</span>(<span class="kw">false</span>);
         app.<span class="fu">run</span>(args);

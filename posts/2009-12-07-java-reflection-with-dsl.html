@@ -78,8 +78,8 @@
     
     </h1>
     -->
-    <a href="/"><img src="/images/afoo.PNG"/></a>
-		<p class="masthead-lead">瞎子摸象的践行者</p>
+    <a href="/"><h1>扶墙老师说</h1></a>
+		<p class="masthead-lead">一个架构士的思考与沉淀</p>
 	
 		<hr class="masthead-hr">
 
@@ -116,7 +116,7 @@
 
 
 <p>I know someone must have heard or known about a library named FEST-Reflect, and maybe you are just using it. It's an interesting library that let you write code of java reflection in a DSL-like style. For example:</p>
-<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java">String name = <span class="fu">method</span>(<span class="st">&quot;get&quot;</span>).<span class="fu">withReturnType</span>(String.<span class="fu">class</span>)  
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="bu">String</span> name = <span class="fu">method</span>(<span class="st">&quot;get&quot;</span>).<span class="fu">withReturnType</span>(<span class="bu">String</span>.<span class="fu">class</span>)  
                            .<span class="fu">withParameterTypes</span>(<span class="dt">int</span>.<span class="fu">class</span>)  
                            .<span class="fu">in</span>(names)  
                            .<span class="fu">invoke</span>(<span class="dv">8</span>);  </code></pre></div>
@@ -128,90 +128,90 @@
 </ol>
 <p>So first, we have to find out which operations or methods can be used.</p>
 <p>We focus on only java reflection usage on Instance Method, since it's not a difficult thing to find out what we can do with Method, An abstraction can be given below:</p>
-<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="co">/** </span>
-<span class="co"> * method(&quot;name&quot;).on(targetobject).withArgumentTypes(...).invoke(...); </span>
-<span class="co"> *  </span>
-<span class="co"> * </span><span class="kw">@author </span><span class="co">fujohnwang </span>
-<span class="co"> * </span><span class="kw">@since </span><span class="co"> 1.0  </span>
-<span class="co"> */</span>  
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="co">/**</span> 
+ <span class="co">*</span> method<span class="co">(&quot;</span>name<span class="co">&quot;).</span>on<span class="co">(</span>targetobject<span class="co">).</span>withArgumentTypes<span class="co">(...).</span>invoke<span class="co">(...);</span> 
+ <span class="co">*</span>  
+ <span class="co">* </span><span class="kw">@author </span>fujohnwang 
+ <span class="co">*</span> <span class="kw">@since </span> <span class="co">1.0</span>  
+ <span class="co">*/</span>  
 <span class="kw">public</span> <span class="kw">interface</span> IMethodDSL {  
       
-    IMethodDSL <span class="fu">on</span>(Object target);  
+    IMethodDSL <span class="fu">on</span>(<span class="bu">Object</span> target);  
       
-    IMethodDSL <span class="fu">withArgumentTypes</span>(Class&lt;?&gt;<span class="kw">... </span>args);  
+    IMethodDSL <span class="fu">withArgumentTypes</span>(<span class="bu">Class</span>&lt;?&gt;<span class="kw">... </span>args);  
       
     IMethodDSL <span class="fu">makeAccessible</span>(<span class="dt">boolean</span> flag);  
       
-    &lt;T&gt; T <span class="fu">invoke</span>(Object<span class="kw">... </span>args) <span class="kw">throws</span> InvocationTargetException;  
+    &lt;T&gt; T <span class="fu">invoke</span>(<span class="bu">Object</span><span class="kw">... </span>args) <span class="kw">throws</span> <span class="bu">InvocationTargetException</span>;  
 }  </code></pre></div>
 <p>We express the abstraction in an Java interface, except for the last “invoke ” method, other operations have a return type of the same interface, that's, IMethodDSL itself. That's the way we implement a method chaining behavior.</p>
 <p>Since we have had the key abstraction, we can give it an implementation now, it looks like below:</p>
-<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="co">/** </span>
-<span class="er"> * Default IMethodDSL implementation.&lt;br&gt; </span>
-<span class="co"> *  </span>
-<span class="co"> * </span><span class="kw">@author </span><span class="co">fujohnwang </span>
-<span class="co"> * </span><span class="kw">@since </span><span class="co"> 1.0  </span>
-<span class="co"> * </span><span class="kw">@see    ReflectDSL </span>
-<span class="co"> * </span><span class="kw">@see    IMethodDSL </span>
-<span class="co"> */</span>  
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="co">/**</span> 
+ <span class="co">*</span> Default IMethodDSL implementation<span class="co">.</span><span class="kw">&lt;br&gt;</span> 
+ <span class="co">*</span>  
+ <span class="co">* </span><span class="kw">@author </span>fujohnwang 
+ <span class="co">*</span> <span class="kw">@since </span> <span class="co">1.0</span>  
+ <span class="co">*</span> <span class="kw">@see </span>   ReflectDSL 
+ <span class="co">*</span> <span class="kw">@see </span>   IMethodDSL 
+ <span class="co">*/</span>  
 <span class="kw">public</span> <span class="kw">class</span> MethodDSL <span class="kw">implements</span> IMethodDSL {  
   
-    <span class="kw">private</span> <span class="dt">static</span> <span class="dt">final</span> Logger logger = LoggerFactory.<span class="fu">getLogger</span>(MethodDSL.<span class="fu">class</span>);  
+    <span class="kw">private</span> <span class="dt">static</span> <span class="dt">final</span> <span class="bu">Logger</span> logger = LoggerFactory.<span class="fu">getLogger</span>(MethodDSL.<span class="fu">class</span>);  
   
-    <span class="kw">private</span> String methodName;  
-    <span class="kw">private</span> Object target;  
-    <span class="kw">private</span> Class&lt;?&gt;[] argTypes;  
+    <span class="kw">private</span> <span class="bu">String</span> methodName;  
+    <span class="kw">private</span> <span class="bu">Object</span> target;  
+    <span class="kw">private</span> <span class="bu">Class</span>&lt;?&gt;[] argTypes;  
     <span class="kw">private</span> <span class="dt">boolean</span> accessible;  
   
-    <span class="kw">public</span> <span class="fu">MethodDSL</span>(String methodName) {  
+    <span class="kw">public</span> <span class="fu">MethodDSL</span>(<span class="bu">String</span> methodName) {  
         <span class="kw">this</span>.<span class="fu">methodName</span> = methodName;  
     }  
   
-    <span class="kw">public</span> &lt;T&gt; T <span class="fu">invoke</span>(Object<span class="kw">... </span>args) <span class="kw">throws</span> InvocationTargetException {  
+    <span class="kw">public</span> &lt;T&gt; T <span class="fu">invoke</span>(<span class="bu">Object</span><span class="kw">... </span>args) <span class="kw">throws</span> <span class="bu">InvocationTargetException</span> {  
         <span class="fu">checkInvokeDependencies</span>();  
         <span class="kw">try</span> {  
-            Method method = <span class="fu">findQualifiedMethod</span>(target.<span class="fu">getClass</span>());  
+            <span class="bu">Method</span> method = <span class="fu">findQualifiedMethod</span>(target.<span class="fu">getClass</span>());  
             <span class="kw">if</span>(<span class="kw">this</span>.<span class="fu">accessible</span>)  
             {  
                 method.<span class="fu">setAccessible</span>(<span class="kw">true</span>);  
             }  
-            <span class="co">/** </span>
-<span class="co">             * usually, the caller will be required to declare proper return type of the method invocation, </span>
-<span class="co">             * so cast to the type they declared is acceptable.  </span>
-<span class="co">             * the return type the caller declared should be the returnType they have assigned. </span>
-<span class="co">             */</span>  
-            <span class="fu">@SuppressWarnings</span>(<span class="st">&quot;unchecked&quot;</span>)  
-            T result = (T)method.<span class="fu">invoke</span>(target, PreConditions.<span class="fu">nullAsEmpty</span>(args,Object.<span class="fu">class</span>));  
+            <span class="co">/**</span> 
+             <span class="co">*</span> usually<span class="co">,</span> the caller will be required to declare proper return type of the method invocation<span class="co">,</span> 
+             <span class="co">*</span> so cast to the type they declared is acceptable<span class="co">.  </span>
+             <span class="co">*</span> the return type the caller declared should be the returnType they have assigned<span class="co">.</span> 
+             <span class="co">*/</span>  
+            <span class="at">@SuppressWarnings</span>(<span class="st">&quot;unchecked&quot;</span>)  
+            T result = (T)method.<span class="fu">invoke</span>(target, PreConditions.<span class="fu">nullAsEmpty</span>(args,<span class="bu">Object</span>.<span class="fu">class</span>));  
             <span class="kw">return</span> result;  
-        } <span class="kw">catch</span> (SecurityException e) {  
-            <span class="kw">throw</span> <span class="kw">new</span> InvocationTargetException(e);  
-        } <span class="kw">catch</span> (NoSuchMethodException e) {  
-            <span class="kw">throw</span> <span class="kw">new</span> InvocationTargetException(e);  
-        } <span class="kw">catch</span> (IllegalArgumentException e) {  
-            <span class="kw">throw</span> <span class="kw">new</span> InvocationTargetException(e);  
-        } <span class="kw">catch</span> (IllegalAccessException e) {  
-            <span class="kw">throw</span> <span class="kw">new</span> InvocationTargetException(e);  
+        } <span class="kw">catch</span> (<span class="bu">SecurityException</span> e) {  
+            <span class="kw">throw</span> <span class="kw">new</span> <span class="bu">InvocationTargetException</span>(e);  
+        } <span class="kw">catch</span> (<span class="bu">NoSuchMethodException</span> e) {  
+            <span class="kw">throw</span> <span class="kw">new</span> <span class="bu">InvocationTargetException</span>(e);  
+        } <span class="kw">catch</span> (<span class="bu">IllegalArgumentException</span> e) {  
+            <span class="kw">throw</span> <span class="kw">new</span> <span class="bu">InvocationTargetException</span>(e);  
+        } <span class="kw">catch</span> (<span class="bu">IllegalAccessException</span> e) {  
+            <span class="kw">throw</span> <span class="kw">new</span> <span class="bu">InvocationTargetException</span>(e);  
         }  
     }  
   
-    <span class="kw">protected</span> Method <span class="fu">findQualifiedMethod</span>(Class&lt;?&gt; clazz) <span class="kw">throws</span> SecurityException, NoSuchMethodException {  
+    <span class="kw">protected</span> <span class="bu">Method</span> <span class="fu">findQualifiedMethod</span>(<span class="bu">Class</span>&lt;?&gt; clazz) <span class="kw">throws</span> <span class="bu">SecurityException</span>, <span class="bu">NoSuchMethodException</span> {  
         <span class="kw">if</span>(<span class="kw">this</span>.<span class="fu">argTypes</span> == <span class="kw">null</span>)  
         {  
-            Method qualifiedMethod = <span class="kw">null</span>;  
-            <span class="kw">for</span>(Method method : clazz.<span class="fu">getDeclaredMethods</span>())  
+            <span class="bu">Method</span> qualifiedMethod = <span class="kw">null</span>;  
+            <span class="kw">for</span>(<span class="bu">Method</span> method : clazz.<span class="fu">getDeclaredMethods</span>())  
             {  
                 <span class="kw">if</span>(method.<span class="fu">getName</span>().<span class="fu">equals</span>(<span class="kw">this</span>.<span class="fu">methodName</span>))  
                 {  
                     <span class="kw">if</span>(qualifiedMethod != <span class="kw">null</span>)  
                     {  
-                        <span class="kw">throw</span> <span class="kw">new</span> IllegalStateException(<span class="st">&quot;please provide arguments of method if you want to invoke on overloaded methods.&quot;</span>);  
+                        <span class="kw">throw</span> <span class="kw">new</span> <span class="bu">IllegalStateException</span>(<span class="st">&quot;please provide arguments of method if you want to invoke on overloaded methods.&quot;</span>);  
                     }  
                     qualifiedMethod = method;  
                 }  
             }  
             <span class="kw">if</span>(qualifiedMethod == <span class="kw">null</span>)  
             {  
-                <span class="kw">throw</span> <span class="kw">new</span> NoSuchMethodException();  
+                <span class="kw">throw</span> <span class="kw">new</span> <span class="bu">NoSuchMethodException</span>();  
             }  
             <span class="kw">return</span> qualifiedMethod;  
         }  
@@ -220,23 +220,23 @@
             <span class="kw">return</span> clazz.<span class="fu">getDeclaredMethod</span>(<span class="kw">this</span>.<span class="fu">methodName</span>, <span class="kw">this</span>.<span class="fu">argTypes</span>);  
         }  
     }  
-    <span class="co">/** </span>
-<span class="er">     * usually, these information like &quot;methodName&quot;, &quot;target&quot; are required, &lt;br&gt; </span>
-<span class="co">     * but in case special situations, this method is declared protected so that in those situations,  </span>
-<span class="co">     * others can override this default behavior. </span>
-<span class="co">     */</span>  
+    <span class="co">/**</span> 
+     <span class="co">*</span> usually<span class="co">,</span> these information like <span class="co">&quot;</span>methodName<span class="co">&quot;,</span> <span class="co">&quot;</span>target<span class="co">&quot;</span> are required<span class="co">,</span> <span class="kw">&lt;br&gt;</span> 
+     <span class="co">*</span> but in case special situations<span class="co">,</span> this method is declared protected so that in those situations<span class="co">,</span>  
+     <span class="co">*</span> others can override this default behavior<span class="co">. </span>
+     <span class="co">*/</span>  
     <span class="kw">protected</span> <span class="dt">void</span> <span class="fu">checkInvokeDependencies</span>() {  
         logger.<span class="fu">info</span>(<span class="st">&quot;the data is lazily bound before the real invocation of the method, check before invocation here.&quot;</span>);  
         PreConditions.<span class="fu">isNotEmpty</span>(methodName);  
         PreConditions.<span class="fu">isNotNull</span>(target);  
     }  
   
-    <span class="kw">public</span> IMethodDSL <span class="fu">on</span>(Object target) {  
+    <span class="kw">public</span> IMethodDSL <span class="fu">on</span>(<span class="bu">Object</span> target) {  
         <span class="kw">this</span>.<span class="fu">target</span> = target;  
         <span class="kw">return</span> <span class="kw">this</span>;  
     }  
   
-    <span class="kw">public</span> IMethodDSL <span class="fu">withArgumentTypes</span>(Class&lt;?&gt;<span class="kw">... </span>args) {  
+    <span class="kw">public</span> IMethodDSL <span class="fu">withArgumentTypes</span>(<span class="bu">Class</span>&lt;?&gt;<span class="kw">... </span>args) {  
         <span class="kw">this</span>.<span class="fu">argTypes</span> = args;  
         <span class="kw">return</span> <span class="kw">this</span>;  
     }  
@@ -251,14 +251,14 @@
 <p>To make API users to use this more DSL-likely, we need to offer a Factory-method for our MethodDSL, it looks like:</p>
 <div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="kw">public</span> <span class="kw">abstract</span> <span class="kw">class</span> ReflectDSL {  
       
-    <span class="kw">public</span> <span class="dt">static</span> IMethodDSL <span class="fu">method</span>(String methodName)  
+    <span class="kw">public</span> <span class="dt">static</span> IMethodDSL <span class="fu">method</span>(<span class="bu">String</span> methodName)  
     {  
         <span class="kw">return</span> <span class="kw">new</span> <span class="fu">MethodDSL</span>(methodName);  
     }  
     <span class="kw">...  </span>
 }  </code></pre></div>
 <p>With this, we can use our DSL-like Java Reflection API this way:</p>
-<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="kw">import static ..ReflectionDSL.*;</span>  
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="kw">import static</span><span class="im"> ..ReflectionDSL.*;</span>  
   
 <span class="fu">method</span>(<span class="st">&quot;methodName&quot;</span>)  
         .<span class="fu">on</span>(targetObject)  

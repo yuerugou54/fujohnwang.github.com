@@ -79,8 +79,8 @@
     
     </h1>
     -->
-    <a href="/"><img src="/images/afoo.PNG"/></a>
-		<p class="masthead-lead">瞎子摸象的践行者</p>
+    <a href="/"><h1>扶墙老师说</h1></a>
+		<p class="masthead-lead">一个架构士的思考与沉淀</p>
 	
 		<hr class="masthead-hr">
 
@@ -134,12 +134,12 @@
 </ol>
 <p>在完成了以上的工作之后，就可以将压缩文件作为附件attach到邮件之中并发送，整个流程也就这么简单。但是，简单归简单，我们依然可以做出简洁漂亮的设计并参照实现之。</p>
 <p>其实，所有的工作无非就是要发送邮件，以上的三步最终都是为发送mail做准备，至于这三步到底如何实现，我们可以不去关心，我们所关注的只是发送mail，所以，首先我们要提出一个接口，标志我们的mail发送逻辑，姑且将该接口命名为ICSVMailSender，下面是其代码：</p>
-<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="kw">package com.livedoor.finance.credit.csvmail.bo;</span>
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="kw">package</span><span class="im"> com.livedoor.finance.credit.csvmail.bo;</span>
 
 <span class="co">/**</span>
-<span class="co"> * </span><span class="kw">@author </span><span class="co">Darren.Wang</span>
-<span class="co"> * 2005-2-24 11:11:11</span>
-<span class="co"> */</span>
+ <span class="co">* </span><span class="kw">@author </span>Darren<span class="co">.</span>Wang
+ <span class="co">*</span> <span class="co">2005-2-24</span> <span class="co">11:11:11</span>
+ <span class="co">*/</span>
 <span class="kw">public</span> <span class="kw">interface</span> ICSVMailSender {
  <span class="dt">void</span> <span class="fu">sendCSV</span>();
 }</code></pre></div>
@@ -153,27 +153,27 @@
 <span class="dv">4</span>. 将加密后的csv以附件形式attach到mail中并发送
 }
  <span class="co">/**</span>
-<span class="co">  * Hook Method</span>
-<span class="co">  * do db query and generate CSV file in this method</span>
-<span class="co">  * </span><span class="kw">@return </span><span class="co">String csv data</span>
-<span class="co">  */</span>
- <span class="kw">protected</span> <span class="kw">abstract</span> String <span class="fu">createCSV</span>();
+  <span class="co">*</span> Hook Method
+  <span class="co">*</span> do db query and generate CSV file in this method
+  <span class="co">* </span><span class="kw">@return </span>String csv data
+  <span class="co">*/</span>
+ <span class="kw">protected</span> <span class="kw">abstract</span> <span class="bu">String</span> <span class="fu">createCSV</span>();
  
  <span class="co">/**</span>
-<span class="co">  * Hook Method</span>
-<span class="co">  * do encription with original string type csv data,and return encripted data</span>
-<span class="co">  * </span><span class="kw">@param originalStr</span>
-<span class="co">  * </span><span class="kw">@return </span><span class="co">byte[],encripted data in byte[] array type</span>
-<span class="co">  */</span>
- <span class="kw">protected</span> <span class="kw">abstract</span> <span class="dt">byte</span>[] <span class="fu">encryptCSV</span>(String originalStr);
+  <span class="co">*</span> Hook Method
+  <span class="co">*</span> do encription with original string type csv data<span class="co">,</span>and return encripted data
+  <span class="co">* </span><span class="kw">@param originalStr</span>
+  <span class="co">*</span> <span class="kw">@return </span>byte<span class="co">[],</span>encripted data in byte<span class="co">[]</span> array type
+  <span class="co">*/</span>
+ <span class="kw">protected</span> <span class="kw">abstract</span> <span class="dt">byte</span>[] <span class="fu">encryptCSV</span>(<span class="bu">String</span> originalStr);
  
  <span class="co">/**</span>
-<span class="co">  * Hook Method</span>
-<span class="co">  * zip the encripted csv data into a file, so that the mail can send it as an attachement</span>
-<span class="co">  * </span><span class="kw">@param encryptedData</span>
-<span class="co">  * </span><span class="kw">@return </span><span class="co">File, zipFile after zip</span>
-<span class="co">  */</span>
- <span class="kw">protected</span> <span class="kw">abstract</span> File <span class="fu">zipCSV</span>(<span class="dt">byte</span>[] encryptedData);
+  <span class="co">*</span> Hook Method
+  <span class="co">*</span> zip the encripted csv data into a file<span class="co">,</span> so that the mail can send it as an attachement
+  <span class="co">* </span><span class="kw">@param encryptedData</span>
+  <span class="co">*</span> <span class="kw">@return </span>File<span class="co">,</span> zipFile after zip
+  <span class="co">*/</span>
+ <span class="kw">protected</span> <span class="kw">abstract</span> <span class="bu">File</span> <span class="fu">zipCSV</span>(<span class="dt">byte</span>[] encryptedData);
 }</code></pre></div>
 <p>其实，对于明眼人来说，以上代码一出，则马上就会认出，呵呵，这不明显一个template模式的应用嘛，right，呵呵，就是它，在Rod的《Expert ….》一书中也着重提过该设计模式的应用，而且spring中应用该模式的例子也挺多，比如JdbcTemlate等，鉴于这次所要求的功能，我认为将template设计模式应用于此再合适不过了。在以上模板的基础上，我们可以自由实现以上三个抽象方法来提供最终的数据，你是用jdbc还是hibernate还是其他，我们不关心，这些自由选择的权利我们都下放给具体的实现者，这不是很好嘛！</p>
 <p>有了以上的基础，我们的实现也变得很简单,只要继承类并实现三个方法所要实现的业务逻辑就可以了，比如：</p>
@@ -182,19 +182,19 @@
  <span class="co">/* (non-Javadoc)</span>
 <span class="co">  * @see com.livedoor.finance.credit.csvmail.bo.AbstractCSVMailSender#createCSV()</span>
 <span class="co">  */</span>
- <span class="kw">protected</span> String <span class="fu">createCSV</span>() {
+ <span class="kw">protected</span> <span class="bu">String</span> <span class="fu">createCSV</span>() {
  …
  }
  <span class="co">/* (non-Javadoc)</span>
 <span class="co">  * @see com.livedoor.finance.credit.csvmail.bo.AbstractCSVMailSender#encryptCSV(java.lang.String)</span>
 <span class="co">  */</span>
- <span class="kw">protected</span> <span class="dt">byte</span>[] <span class="fu">encryptCSV</span>(String originalStr) {
+ <span class="kw">protected</span> <span class="dt">byte</span>[] <span class="fu">encryptCSV</span>(<span class="bu">String</span> originalStr) {
  …
  }
  <span class="co">/* (non-Javadoc)</span>
 <span class="co">  * @see com.livedoor.finance.credit.csvmail.bo.AbstractCSVMailSender#zipCSV(byte[])</span>
 <span class="co">  */</span>
- <span class="kw">protected</span> File <span class="fu">zipCSV</span>(<span class="dt">byte</span>[] encryptedData) {
+ <span class="kw">protected</span> <span class="bu">File</span> <span class="fu">zipCSV</span>(<span class="dt">byte</span>[] encryptedData) {
  …
 }
 }</code></pre></div>

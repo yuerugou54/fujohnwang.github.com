@@ -78,8 +78,8 @@
     
     </h1>
     -->
-    <a href="/"><img src="/images/afoo.PNG"/></a>
-		<p class="masthead-lead">瞎子摸象的践行者</p>
+    <a href="/"><h1>扶墙老师说</h1></a>
+		<p class="masthead-lead">一个架构士的思考与沉淀</p>
 	
 		<hr class="masthead-hr">
 
@@ -124,15 +124,15 @@
 <p>很简单的一个小技巧，之所以贴出来是因为期间碰到一个很有味道的细节陷阱...</p>
 <p>某种需求下，需要根据程序启动后所处的环境来初始化log4j，比如根据不同的环境配置将log4j的日志文件生成到指定的不同地方，这个时候，你如果使用xml或者properties文件将这些写死的话，无疑没有办法完成这样的需求，所以，我们需要寻求更具灵活性的方法。</p>
 <p>通常你可以只要以下2行代码就可以完成log4j的初始化：</p>
-<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java">URL resourceURL = ResourceManager.<span class="fu">getResource</span>(<span class="st">&quot;config/log4j.xml&quot;</span>);
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="bu">URL</span> resourceURL = ResourceManager.<span class="fu">getResource</span>(<span class="st">&quot;config/log4j.xml&quot;</span>);
 DOMConfigurator.<span class="fu">configure</span>(w3cDocument.<span class="fu">getDocumentElement</span>());</code></pre></div>
 <p>但是，这样的话，你的log文件生成位置就写死到log4j.xml中了，为了能够在程序中动态变更这个位置，或者其他配置信息，我们可以采取以下方式：</p>
-<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java">URL resourceURL = ResourceManager.<span class="fu">getResource</span>(<span class="st">&quot;config/log4j.xml&quot;</span>);
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="bu">URL</span> resourceURL = ResourceManager.<span class="fu">getResource</span>(<span class="st">&quot;config/log4j.xml&quot;</span>);
 SAXBuilder saxBuilder = <span class="kw">new</span> <span class="fu">SAXBuilder</span>();
-Document jdomDocument =    saxBuilder.<span class="fu">build</span>(resourceURL);
-XPath xpath = XPath.<span class="fu">newInstance</span>(<span class="st">&quot;/log4j:configuration/appender[@name=&#39;file&#39;]/param[@name=&#39;File&#39;]/@value&quot;</span>);
-Attribute valueAttr = (Attribute)xpath.<span class="fu">selectSingleNode</span>(jdomDocument);
-String winPath = <span class="kw">new</span> StringBuffer().<span class="fu">append</span>(Admin.<span class="fu">getCreditPathUtils</span>().<span class="fu">getLogDirPath</span>()).<span class="fu">append</span>(<span class="st">&quot;terminal.log&quot;</span>).<span class="fu">toString</span>();
+<span class="bu">Document</span> jdomDocument =    saxBuilder.<span class="fu">build</span>(resourceURL);
+<span class="bu">XPath</span> xpath = <span class="bu">XPath</span>.<span class="fu">newInstance</span>(<span class="st">&quot;/log4j:configuration/appender[@name=&#39;file&#39;]/param[@name=&#39;File&#39;]/@value&quot;</span>);
+<span class="bu">Attribute</span> valueAttr = (<span class="bu">Attribute</span>)xpath.<span class="fu">selectSingleNode</span>(jdomDocument);
+<span class="bu">String</span> winPath = <span class="kw">new</span> <span class="bu">StringBuffer</span>().<span class="fu">append</span>(Admin.<span class="fu">getCreditPathUtils</span>().<span class="fu">getLogDirPath</span>()).<span class="fu">append</span>(<span class="st">&quot;terminal.log&quot;</span>).<span class="fu">toString</span>();
 <span class="co">// If you set this platform independent path into jdom without any process, the File.Seperator will cause some problem.</span>
 valueAttr.<span class="fu">setValue</span>(FilenameUtils.<span class="fu">separatorsToUnix</span>(winPath));
 DOMOutputter outputter = <span class="kw">new</span>  <span class="fu">DOMOutputter</span>();

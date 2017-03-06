@@ -78,8 +78,8 @@
     
     </h1>
     -->
-    <a href="/"><img src="/images/afoo.PNG"/></a>
-		<p class="masthead-lead">瞎子摸象的践行者</p>
+    <a href="/"><h1>扶墙老师说</h1></a>
+		<p class="masthead-lead">一个架构士的思考与沉淀</p>
 	
 		<hr class="masthead-hr">
 
@@ -157,7 +157,7 @@ xupdate:comment Creates a new comment node in the document
    <span class="kw">&lt;/xupdate:insert-after&gt;</span>
 <span class="kw">&lt;/xupdate:modifications&gt;</span></code></pre></div>
 <p>在程序中，可以通过以下类似代码调用该XUpdate命令对文档进行更新：</p>
-<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java">String xupdate = 刚才的XUpdate命令内容；
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="bu">String</span> xupdate = 刚才的XUpdate命令内容；
 XUpdateQueryService service =(XUpdateQueryService) col.<span class="fu">getService</span>(<span class="st">&quot;XUpdateQueryService&quot;</span>, <span class="st">&quot;1.0&quot;</span>);
 service.<span class="fu">update</span>(xupdate);
 ...

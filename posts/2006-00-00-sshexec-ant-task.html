@@ -78,8 +78,8 @@
     
     </h1>
     -->
-    <a href="/"><img src="/images/afoo.PNG"/></a>
-		<p class="masthead-lead">瞎子摸象的践行者</p>
+    <a href="/"><h1>扶墙老师说</h1></a>
+		<p class="masthead-lead">一个架构士的思考与沉淀</p>
 	
 		<hr class="masthead-hr">
 
@@ -145,7 +145,7 @@
 <span class="kw">throw</span> <span class="kw">new</span> <span class="fu">BuildException</span>(<span class="st">&quot;Command is required.&quot;</span>);
 }
 Session session = <span class="kw">null</span>;
-Channel channel = <span class="kw">null</span>;
+<span class="bu">Channel</span> channel = <span class="kw">null</span>;
 <span class="kw">try</span>
 {
 session = <span class="fu">openSession</span>();
@@ -155,7 +155,7 @@ channel = session.<span class="fu">openChannel</span>(<span class="st">&quot;exe
 channel.<span class="fu">connect</span>();
 <span class="fu">executeInChannel</span>(channel);
 }
-<span class="kw">catch</span>(Exception e)
+<span class="kw">catch</span>(<span class="bu">Exception</span> e)
 {
 <span class="kw">throw</span> <span class="kw">new</span> <span class="fu">BuildException</span>(e);
 }
@@ -165,19 +165,19 @@ channel.<span class="fu">connect</span>();
 }
 }</code></pre></div>
 <p>很粗糙的实现，在<code>executeInChannel(channel)</code>方法中，我们检测输出并输入所要求的输入（哈哈，有点儿别扭，不过，相对于Channel来说，它的输入，就是我们的输出），类似于：</p>
-<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java">InputStream in = channel.<span class="fu">getInputStream</span>();
-OutputStream out = channel.<span class="fu">getOutputStream</span>();
-InputStream err = ((ChannelExec) channel).<span class="fu">getErrStream</span>();
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="bu">InputStream</span> in = channel.<span class="fu">getInputStream</span>();
+<span class="bu">OutputStream</span> out = channel.<span class="fu">getOutputStream</span>();
+<span class="bu">InputStream</span> err = ((ChannelExec) channel).<span class="fu">getErrStream</span>();
 <span class="dt">byte</span> tmp[] = <span class="kw">new</span> <span class="dt">byte</span>[<span class="dv">2048</span>];
 <span class="kw">do</span> {
 <span class="kw">while</span> (in.<span class="fu">available</span>() &gt; <span class="dv">0</span>) {
 <span class="dt">int</span> i = in.<span class="fu">read</span>(tmp, <span class="dv">0</span>, <span class="dv">2048</span>);
-String line = <span class="kw">new</span> String(tmp, <span class="dv">0</span>, i);
-<span class="fu">log</span>(line+<span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>);
+<span class="bu">String</span> line = <span class="kw">new</span> <span class="bu">String</span>(tmp, <span class="dv">0</span>, i);
+<span class="fu">log</span>(line+<span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>);
 <span class="kw">if</span>(i&gt;<span class="dv">0</span> &amp;&amp; PASSWORD_PATTERN.<span class="fu">matcher</span>(line).<span class="fu">find</span>())
 {
 out.<span class="fu">write</span>(<span class="kw">super</span>.<span class="fu">getUserInfo</span>().<span class="fu">getPassword</span>().<span class="fu">getBytes</span>());
-out.<span class="fu">write</span>(<span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>.<span class="fu">getBytes</span>());
+out.<span class="fu">write</span>(<span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>.<span class="fu">getBytes</span>());
 out.<span class="fu">flush</span>();
 <span class="kw">break</span>;
 }
@@ -185,22 +185,22 @@ out.<span class="fu">flush</span>();
 <span class="kw">while</span>(err.<span class="fu">available</span>() &gt; <span class="dv">0</span>)
 {
 <span class="dt">int</span> i = in.<span class="fu">read</span>(tmp, <span class="dv">0</span>, <span class="dv">2048</span>);
-String line = <span class="kw">new</span> String(tmp, <span class="dv">0</span>, i);
-<span class="fu">log</span>(line+<span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>);
+<span class="bu">String</span> line = <span class="kw">new</span> <span class="bu">String</span>(tmp, <span class="dv">0</span>, i);
+<span class="fu">log</span>(line+<span class="st">&quot;</span><span class="sc">\n</span><span class="st">&quot;</span>);
 }
 <span class="kw">if</span> (channel.<span class="fu">isClosed</span>()) {
 <span class="dt">int</span> exitStatus = channel.<span class="fu">getExitStatus</span>();
 <span class="kw">if</span> (exitStatus != <span class="dv">0</span>) {
-StringBuffer exp = <span class="kw">new</span> StringBuffer();
+<span class="bu">StringBuffer</span> exp = <span class="kw">new</span> <span class="bu">StringBuffer</span>();
 exp.<span class="fu">append</span>(<span class="st">&quot;Error Exit Status with Value:&quot;</span>).<span class="fu">append</span>(
-exitStatus).<span class="fu">append</span>(<span class="st">&quot;</span><span class="ch">\n\n</span><span class="st">&quot;</span>);
+exitStatus).<span class="fu">append</span>(<span class="st">&quot;</span><span class="sc">\n\n</span><span class="st">&quot;</span>);
 <span class="kw">throw</span> <span class="kw">new</span> <span class="fu">BuildException</span>(exp.<span class="fu">toString</span>());
 }
 <span class="kw">break</span>;
 }
 <span class="kw">try</span> {
-Thread.<span class="fu">sleep</span>(1000L);
-} <span class="kw">catch</span> (Exception exception) {
+<span class="bu">Thread</span>.<span class="fu">sleep</span>(1000L);
+} <span class="kw">catch</span> (<span class="bu">Exception</span> exception) {
 }
 } <span class="kw">while</span> (<span class="kw">true</span>);</code></pre></div>
 <p>呵呵，我知道代码很烂，不过将就看吧，我也不会为了这么个简单的小功能去费那个劳神子，一切OK之后，打包成jar，扔到ANT-HOME/lib下，这样你就可以使用它了：</p>

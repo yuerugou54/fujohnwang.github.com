@@ -79,8 +79,8 @@
     
     </h1>
     -->
-    <a href="/"><img src="/images/afoo.PNG"/></a>
-		<p class="masthead-lead">瞎子摸象的践行者</p>
+    <a href="/"><h1>扶墙老师说</h1></a>
+		<p class="masthead-lead">一个架构士的思考与沉淀</p>
 	
 		<hr class="masthead-hr">
 
@@ -318,7 +318,7 @@ supervisor.<span class="fu">start</span> <span class="co">// start up all manage
         <span class="kw">case</span> _ =&gt; <span class="kw">throw</span> <span class="kw">new</span> Exception(<span class="st">&quot;xxxx&quot;</span>)
       }
     }
-    <span class="kw">import</span> akka.<span class="fu">config</span>.<span class="fu">Supervision</span>.<span class="fu">_</span>
+    <span class="kw">import</span> akka.<span class="fu">config</span>.<span class="fu">Supervision</span>._
     <span class="kw">val</span> myActor: ActorRef = actorOf[MyActor].<span class="fu">start</span>
     <span class="kw">val</span> supervisor = <span class="fu">Supervisor</span>(<span class="fu">SupervisorConfig</span>(
       <span class="fu">AllForOneStrategy</span>(List(classOf[Exception]), <span class="dv">3</span>, <span class="dv">1000</span>),

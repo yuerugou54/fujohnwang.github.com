@@ -78,8 +78,8 @@
     
     </h1>
     -->
-    <a href="/"><img src="/images/afoo.PNG"/></a>
-		<p class="masthead-lead">瞎子摸象的践行者</p>
+    <a href="/"><h1>扶墙老师说</h1></a>
+		<p class="masthead-lead">一个架构士的思考与沉淀</p>
 	
 		<hr class="masthead-hr">
 
@@ -127,11 +127,11 @@
 <p>附上改动后的程序代码：</p>
 <div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="co">/**</span>
 
-<span class="co">* </span><span class="kw">@author </span><span class="co">Darren.Wang</span>
+<span class="co">* </span><span class="kw">@author </span>Darren<span class="co">.</span>Wang
 
-<span class="co">* 2005/03/17</span>
+<span class="co">*</span> <span class="co">2005/03/17</span>
 
-<span class="co">* Thanks to Samir(who is in Australia), without his help , I can&#39;t complete this work.</span>
+<span class="co">*</span> Thanks to Samir<span class="co">(</span>who is in Australia<span class="co">),</span> without his help <span class="co">,</span> I can<span class="co">&#39;</span>t complete this work<span class="co">.</span>
 
 <span class="co">*/</span>
 
@@ -164,7 +164,7 @@ excel.<span class="fu">setProperty</span>(<span class="st">&quot;Visible&quot;</
 
 <span class="co">*/</span>
 
-<span class="kw">public</span> <span class="dt">static</span> <span class="dt">void</span> <span class="fu">launch</span>(String fileName)
+<span class="kw">public</span> <span class="dt">static</span> <span class="dt">void</span> <span class="fu">launch</span>(<span class="bu">String</span> fileName)
 
 {
 
@@ -174,7 +174,7 @@ excel.<span class="fu">setProperty</span>(<span class="st">&quot;Visible&quot;</
 
 <span class="co">// open the excel file</span>
 
-Dispatch.<span class="fu">callN</span>(excel.<span class="fu">getProperty</span>(<span class="st">&quot;WorkBooks&quot;</span>).<span class="fu">toDispatch</span>(),<span class="st">&quot;Open&quot;</span>,<span class="kw">new</span> Object[]{fileName});
+<span class="bu">Dispatch</span>.<span class="fu">callN</span>(excel.<span class="fu">getProperty</span>(<span class="st">&quot;WorkBooks&quot;</span>).<span class="fu">toDispatch</span>(),<span class="st">&quot;Open&quot;</span>,<span class="kw">new</span> <span class="bu">Object</span>[]{fileName});
 
 }
 

@@ -78,8 +78,8 @@
     
     </h1>
     -->
-    <a href="/"><img src="/images/afoo.PNG"/></a>
-		<p class="masthead-lead">瞎子摸象的践行者</p>
+    <a href="/"><h1>扶墙老师说</h1></a>
+		<p class="masthead-lead">一个架构士的思考与沉淀</p>
 	
 		<hr class="masthead-hr">
 
@@ -167,12 +167,12 @@ groupId = {
   <span class="kw">def</span> entry = ((item | block) +) ^^ {
     _.<span class="fu">foldLeft</span>(Map[String, Any]()) {
       (accum, i) =&gt;
-        i.<span class="fu">_2</span> <span class="kw">match</span> {
+        i._<span class="dv">2</span> <span class="kw">match</span> {
           <span class="kw">case</span> lst: List[(String, Any)] =&gt; accum ++ lst.<span class="fu">foldLeft</span>(Map[String, Any]()) {
             (ac, it) =&gt;
-              ac + ((i.<span class="fu">_1</span> + <span class="st">&quot;.&quot;</span> + it.<span class="fu">_1</span>) -&gt; it.<span class="fu">_2</span>)
+              ac + ((i._<span class="dv">1</span> + <span class="st">&quot;.&quot;</span> + it._<span class="dv">1</span>) -&gt; it._<span class="dv">2</span>)
           }
-          <span class="kw">case</span> x =&gt; accum + (i.<span class="fu">_1</span> -&gt; x)
+          <span class="kw">case</span> x =&gt; accum + (i._<span class="dv">1</span> -&gt; x)
         }
     }
   }
@@ -191,7 +191,7 @@ groupId = {
     <span class="kw">case</span> s =&gt; s
   }
 
-  <span class="kw">def</span> string = (<span class="st">&quot;&quot;&quot;([^&quot;</span>\p{Cntrl}\\]|\\[\\/bfnrt]|\\u[a-fA-F0<span class="dv">-9</span>]{<span class="dv">4</span>})*<span class="st">&quot;&quot;&quot;).r</span>
+  <span class="kw">def</span> string = (<span class="st">&quot;&quot;&quot;([^&quot;</span>\p{Cntrl}\\]|\\[\\/bfnrt]|\\u[a-fA-F0-<span class="dv">9</span>]{<span class="dv">4</span>})*<span class="st">&quot;&quot;&quot;).r</span>
 
   <span class="kw">def</span> booleanLiteral = <span class="st">&quot;true&quot;</span> ^^^ <span class="kw">true</span> | <span class="st">&quot;false&quot;</span> ^^^ <span class="kw">false</span>
 

@@ -79,8 +79,8 @@
     
     </h1>
     -->
-    <a href="/"><img src="/images/afoo.PNG"/></a>
-		<p class="masthead-lead">瞎子摸象的践行者</p>
+    <a href="/"><h1>扶墙老师说</h1></a>
+		<p class="masthead-lead">一个架构士的思考与沉淀</p>
 	
 		<hr class="masthead-hr">
 
@@ -166,15 +166,15 @@
 <p>可是，今天， 扶墙老师却踩入了同样的一个坑儿里...</p>
 <p>作为一个技术人，最自然的行为会去考虑如何实现功能，比如一个XXClient， 我们会很自然认为，先要有如何连接，如何通信，如何关闭等功能实现，然后自然而然的，这些功能实现的想法又会反映到我们提供给用户的API上（当然，这里的用户是使用你的XXClient的开发者），从而设计出如下类似的API接口：</p>
 <div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="kw">public</span> <span class="kw">interface</span> XXClient{
-    <span class="kw">public</span> <span class="dt">void</span> <span class="fu">connect</span>() <span class="kw">throws</span> IOException;
+    <span class="kw">public</span> <span class="dt">void</span> <span class="fu">connect</span>() <span class="kw">throws</span> <span class="bu">IOException</span>;
     
-    <span class="kw">public</span> String <span class="fu">upload</span>(File payload) <span class="kw">throws</span> IOException;
+    <span class="kw">public</span> <span class="bu">String</span> <span class="fu">upload</span>(<span class="bu">File</span> payload) <span class="kw">throws</span> <span class="bu">IOException</span>;
     
-    <span class="kw">public</span> <span class="dt">void</span> <span class="fu">close</span>() <span class="kw">throws</span> IOException;
+    <span class="kw">public</span> <span class="dt">void</span> <span class="fu">close</span>() <span class="kw">throws</span> <span class="bu">IOException</span>;
 }</code></pre></div>
 <p>可是作为API的使用者来说， 他最关心的是什么？ 他最关心的其实就一个功能：</p>
 <div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="kw">public</span> <span class="kw">interface</span> XXClientLite {
-    <span class="kw">public</span> String <span class="fu">upload</span>(File payload) <span class="kw">throws</span> IOException;
+    <span class="kw">public</span> <span class="bu">String</span> <span class="fu">upload</span>(<span class="bu">File</span> payload) <span class="kw">throws</span> <span class="bu">IOException</span>;
 }
 
 <span class="co">// client.upload(file);</span></code></pre></div>
@@ -182,13 +182,13 @@
 <p>道理其实很简单， 列位估计也已经对扶墙老师就这么弱的问题还blablabla说个不停嗤之以鼻了吧？</p>
 <p>螺旋上升之路有些时候是曲折的，比如10年后，扶墙老师在这个层面上败给了&quot;当年的那个愤青&quot;...</p>
 <p>为了更好的推广Web API的规范， 扶墙老师写了一个webapi的library用于简化Web API的开发，开发者只要maven里依赖一下就可以写写SpringMVC的Controller， 从而自动享受到Web API文档的支持，享受到返回遵循挖财web api规范的Json格式响应， 享受到统一的异常处理， 但是， 也许是扶墙老师‘利欲熏心’，太要强于推广web api规范落地了，所以，硬生生的要求通过强类型的约束来编写Controller:</p>
-<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="fu">@RequestMapping</span>(value = <span class="st">&quot;/api/v1.1/{endpoint}&quot;</span>, method = RequestMethod.<span class="fu">GET</span>)
-<span class="kw">public</span> WebApiResponse&lt;String&gt; <span class="fu">endpointApi2</span>(<span class="fu">@PathVariable</span>(<span class="st">&quot;endpoint&quot;</span>) String endpoint) {
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="at">@RequestMapping</span>(value = <span class="st">&quot;/api/v1.1/{endpoint}&quot;</span>, method = RequestMethod.<span class="fu">GET</span>)
+<span class="kw">public</span> WebApiResponse&lt;<span class="bu">String</span>&gt; <span class="fu">endpointApi2</span>(<span class="at">@PathVariable</span>(<span class="st">&quot;endpoint&quot;</span>) <span class="bu">String</span> endpoint) {
    <span class="kw">return</span> WebApiResponse.<span class="fu">success</span>(<span class="st">&quot;just test payload&quot;</span>);
 }</code></pre></div>
 <p>即使是到这一步，我们也演化了很久，但实际上我们却忽略了最基本的用户体验， 对于一般的应用开发者来说，他们希望的其实就是， 直接返回相应的值对象(Value Object)类型，而不是通过WebApiResponse封装的类型， 你框架背后怎么把这些结果转化为符合web api规范的json响应，我干嘛要关心？</p>
-<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="fu">@RequestMapping</span>(value = <span class="st">&quot;/api/v1.1/{endpoint}&quot;</span>, method = RequestMethod.<span class="fu">GET</span>)
-<span class="kw">public</span> ValueObject <span class="fu">endpointApi</span>(<span class="fu">@PathVariable</span>(<span class="st">&quot;endpoint&quot;</span>) String endpoint) {
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="at">@RequestMapping</span>(value = <span class="st">&quot;/api/v1.1/{endpoint}&quot;</span>, method = RequestMethod.<span class="fu">GET</span>)
+<span class="kw">public</span> ValueObject <span class="fu">endpointApi</span>(<span class="at">@PathVariable</span>(<span class="st">&quot;endpoint&quot;</span>) <span class="bu">String</span> endpoint) {
    <span class="kw">return</span> <span class="kw">new</span> <span class="fu">ValueObject</span>();
 }</code></pre></div>
 <p>恍然一惊之后， 才发现原来之前太过于执着规范的落地了， 太过于从自己出发，反而这样简单的API设计道理都忘记了， ：（</p>

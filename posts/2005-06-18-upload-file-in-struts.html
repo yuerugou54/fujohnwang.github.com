@@ -79,8 +79,8 @@
     
     </h1>
     -->
-    <a href="/"><img src="/images/afoo.PNG"/></a>
-		<p class="masthead-lead">瞎子摸象的践行者</p>
+    <a href="/"><h1>扶墙老师说</h1></a>
+		<p class="masthead-lead">一个架构士的思考与沉淀</p>
 	
 		<hr class="masthead-hr">
 
@@ -217,18 +217,18 @@ To choose the File to be Uploaded:
 <p>以上完成后，就可以开始进行处理上传请求的Action的开发了。我们定义Action类为UploadAction，扩展自org.apache.struts.action.Action类。在该Action中，我们通过取得ActionForm，然后判断，如果是UploadForm则进行逻辑操作，从UploadForm实例中取得上传者姓名以及上传的FormFile实例。然后，通过FormFile提供的处理方法，将FormFile实例所代表的文件另存为服务器上的一个同名文件中。最后，处理完成后将页面forward到UploadResult.jsp页面，显示上传信息，如果出错，则forward到error处理页面。UploadAction的部分代码实现如下，完整代码可参照附带源码文件：</p>
 <div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="kw">if</span> (form <span class="kw">instanceof</span> UploadForm) {
 UploadForm theForm = (UploadForm) form;
-String uploader = theForm.<span class="fu">getUploader</span>();
+<span class="bu">String</span> uploader = theForm.<span class="fu">getUploader</span>();
 FormFile file = theForm.<span class="fu">getFileOne</span>();
-String BasePath = System.<span class="fu">getProperty</span>(<span class="st">&quot;user.dir&quot;</span>)+File.<span class="fu">separator</span>;
-InputStream ins = <span class="kw">null</span>;
-OutputStream out = <span class="kw">null</span>;
+<span class="bu">String</span> BasePath = <span class="bu">System</span>.<span class="fu">getProperty</span>(<span class="st">&quot;user.dir&quot;</span>)+<span class="bu">File</span>.<span class="fu">separator</span>;
+<span class="bu">InputStream</span> ins = <span class="kw">null</span>;
+<span class="bu">OutputStream</span> out = <span class="kw">null</span>;
 <span class="kw">try</span>{
 <span class="dt">byte</span>[] buffer = <span class="kw">new</span> <span class="dt">byte</span>[<span class="dv">1024</span>];
 <span class="dt">int</span> bufferRead = <span class="dv">0</span>;
 <span class="kw">if</span>(!(file.<span class="fu">getFileName</span>()==<span class="kw">null</span>||file.<span class="fu">getFileName</span>().<span class="fu">equals</span>(<span class="st">&quot;&quot;</span>)))
             {
                 ins = file.<span class="fu">getInputStream</span>();
-                out = <span class="kw">new</span> FileOutputStream(BasePath +
+                out = <span class="kw">new</span> <span class="bu">FileOutputStream</span>(BasePath +
                                            EncodingBean.<span class="fu">ISO2GBK</span>(file1.
                     <span class="fu">getFileName</span>()));
                 <span class="kw">while</span> ( (bufferRead = ins.<span class="fu">read</span>(buffer, <span class="dv">0</span>, buffer.<span class="fu">length</span>)) != -<span class="dv">1</span>) {
@@ -238,7 +238,7 @@ OutputStream out = <span class="kw">null</span>;
                 out.<span class="fu">close</span>();
             }
 file.<span class="fu">destroy</span>();
-}<span class="kw">catch</span>(Exception e)
+}<span class="kw">catch</span>(<span class="bu">Exception</span> e)
 {
      e.<span class="fu">printStackTrace</span>();
      <span class="kw">return</span> actionMapping.<span class="fu">findForward</span>(<span class="st">&quot;failure&quot;</span>);
@@ -302,7 +302,7 @@ file.<span class="fu">destroy</span>();
 <li>在ActionForm的validate（）方法中进行文件大小是否超出规定大小进行检查，那么如何知道文件是否超出规定大小那？具体实现是这样的：</li>
 </ol>
 <div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java">ActionErrors errors = <span class="kw">null</span>;
-Boolean maxLengthExceeded = (Boolean)            request.<span class="fu">getAttribute</span>(MultipartRequestHandler.<span class="fu">ATTRIBUTE_MAX_LENGTH_EXCEEDED</span>);
+<span class="bu">Boolean</span> maxLengthExceeded = (<span class="bu">Boolean</span>)            request.<span class="fu">getAttribute</span>(MultipartRequestHandler.<span class="fu">ATTRIBUTE_MAX_LENGTH_EXCEEDED</span>);
 <span class="kw">if</span> ((maxLengthExceeded != <span class="kw">null</span>) &amp;&amp; (maxLengthExceeded.<span class="fu">booleanValue</span>()))
 {
     errors = <span class="kw">new</span> <span class="fu">ActionErrors</span>();

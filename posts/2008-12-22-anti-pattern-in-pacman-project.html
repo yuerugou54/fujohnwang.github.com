@@ -78,8 +78,8 @@
     
     </h1>
     -->
-    <a href="/"><img src="/images/afoo.PNG"/></a>
-		<p class="masthead-lead">瞎子摸象的践行者</p>
+    <a href="/"><h1>扶墙老师说</h1></a>
+		<p class="masthead-lead">一个架构士的思考与沉淀</p>
 	
 		<hr class="masthead-hr">
 
@@ -186,14 +186,14 @@
 <p>我想列位应该可以猜到我要揭示的这段代码反模式长成什么样子了：</p>
 <div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="kw">public</span> <span class="kw">class</span> XXXDao <span class="kw">extends</span> HibernateDaoSupport
 {
-    <span class="kw">public</span> Object <span class="fu">dataAccessMethod</span>(...)
+    <span class="kw">public</span> <span class="bu">Object</span> <span class="fu">dataAccessMethod</span>(...)
     {
         Session session = <span class="kw">null</span>;
         <span class="kw">try</span>{
             session = <span class="fu">getSession</span>(<span class="kw">true</span>);
             ...<span class="co">// do data access with &quot;session&quot;</span>
         }
-        <span class="kw">catch</span>(Exception e)
+        <span class="kw">catch</span>(<span class="bu">Exception</span> e)
         {
             <span class="co">// process exception</span>
         }
@@ -212,7 +212,7 @@
 <p>为了避免手动管理资源的获取和释放所带来的种种问题，以及统一数据访问过程中异常处理(和其他原因)，很显然，Spring在其数据访问抽象层中为我们提供了HibernateTemplate工具类， 以次帮助我们摆脱之前的种种尴尬局面，如果你了解了这些，并且也知道HibernateDaoSupport父类提供了HibernateTemplate的支持，那么，要摆脱上面反模式的“魔咒”就易如反掌了:</p>
 <div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="kw">public</span> <span class="kw">class</span> XXXDao <span class="kw">extends</span> HibernateDaoSupport
 {
-    <span class="kw">public</span> Object <span class="fu">dataAccessMethod</span>(...)
+    <span class="kw">public</span> <span class="bu">Object</span> <span class="fu">dataAccessMethod</span>(...)
     {
         <span class="fu">getHibernateTemplate</span>().<span class="fu">anyTemplateMethodYouNeed</span>(..);
     }
@@ -225,7 +225,7 @@
 <p>做Java开发，难免要跟JavaBeans打交道，所以定义一个简单的JavaBeans对大家来说那可能是相当的惬意：</p>
 <div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="kw">public</span> <span class="kw">class</span> MockValueObject
 {
-    <span class="kw">private</span> String propertyOne;
+    <span class="kw">private</span> <span class="bu">String</span> propertyOne;
     <span class="kw">private</span> <span class="dt">int</span>    propertyTwo;
     ....
     
@@ -242,12 +242,12 @@
 <h2 id="案例展示-3"><span class="header-section-number">4.1</span> 案例展示</h2>
 <p>确切的讲，这个案例不应该算是PACMAN的，PACMAN仅仅是个“受害者”。 PACMAN中用到一个组件叫做Blotter，这个Blotter可不一般，按小蒯的说法， “那简直是所有bug的根源”，小蒯用了两年这个组件当然是感同身受了，我还没咋摸清出这个blotter的习性，所以，不做太多评论，毕竟，这个组件也早就停止开发了， 挖太多的“陈谷子烂芝麻”出来也没太大意思，就挑一个第一眼看上去就印象深刻的来说吧！</p>
 <p>Blotter说白了就是一个Swing的JTable的替代品，我不知道当时开发这个组件的Team是如何想的，或者是否真的遇到了某些问题，而必须要用一个泛泛的全局的事件管理器来管理blotter的几乎所有事件，从表格的选取到相关的一些资源释放的事件，全部使用同一个类来管理。 在Blotter中，要监听Blotter的事件，那么，用String型的key来标注事件类型，然后注册到全局的ApplicationActionManager上去:</p>
-<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java">String actionName = ...;
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="bu">String</span> actionName = ...;
 ApplicationActionManager.<span class="fu">getInstance</span>().<span class="fu">subscribeToAction</span>(actionListener, actionName);</code></pre></div>
 <p>其中， actionListener是一个ApplicationActionListener实例，在这个actionListener中，你可以根据你注册的actionName来监听自己感兴趣的事件：</p>
 <div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="kw">public</span> <span class="kw">class</span> YourActionListener <span class="kw">implements</span> ApplicationActionListener
 
-    <span class="kw">public</span> <span class="dt">void</span> <span class="fu">doAction</span>(<span class="dt">final</span> String actionName, <span class="dt">final</span> Object obj) {
+    <span class="kw">public</span> <span class="dt">void</span> <span class="fu">doAction</span>(<span class="dt">final</span> <span class="bu">String</span> actionName, <span class="dt">final</span> <span class="bu">Object</span> obj) {
         <span class="kw">if</span> (StringUtils.<span class="fu">equals</span>(actionName, Blotter.<span class="fu">SELECTION_ACTION</span>)
             &amp;&amp; (obj == settlementViewBlotter)) {
             ...
@@ -270,7 +270,7 @@ ApplicationActionManager.<span class="fu">getInstance</span>().<span class="fu">
 <p>这个话题最初是从上一个话题引申出来的，确切的来说，是从ApplicationActionListener的接口定义引伸出来的。 从ApplicationActionListener的定义中，我们发现，它定义了两个方法：</p>
 <div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="kw">public</span> <span class="kw">interface</span> ApplicationActionListener 
 {
-    <span class="dt">void</span> <span class="fu">doAction</span>(String s, Object obj);
+    <span class="dt">void</span> <span class="fu">doAction</span>(<span class="bu">String</span> s, <span class="bu">Object</span> obj);
     <span class="dt">void</span> <span class="fu">subscribeToActions</span>();
 }</code></pre></div>
 <p>对于doAction来说，没有什么好说的，而subscribeToActions方法的定义，则多少有些多余了。不能说不经过脑子，但绝对是没有进一步得去思考。纵观JDK中各种事件监听器的定义， 有谁发现哪一个Listner中定义过“强制”注册当前Listener的方法哪？！No，没有！而现在的ApplicationActionListener鼓励的是什么哪？！</p>
@@ -281,7 +281,7 @@ ApplicationActionManager.<span class="fu">getInstance</span>().<span class="fu">
         <span class="fu">subscribeToActions</span>();
     }
 
-    <span class="dt">void</span> <span class="fu">doAction</span>(String s, Object obj){...}
+    <span class="dt">void</span> <span class="fu">doAction</span>(<span class="bu">String</span> s, <span class="bu">Object</span> obj){...}
     
     <span class="dt">void</span> <span class="fu">subscribeToActions</span>(){
         ApplicationActionManager.<span class="fu">getInstance</span>().<span class="fu">subscribeToAction</span>(<span class="kw">this</span>, actionName);
@@ -292,7 +292,7 @@ ApplicationActionManager.<span class="fu">getInstance</span>().<span class="fu">
 <p>直接砍掉subscribeToActions()的方法定义，从而简化接口定义如下：</p>
 <div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="kw">public</span> <span class="kw">interface</span> ApplicationActionListener 
 {
-    <span class="dt">void</span> <span class="fu">doAction</span>(String s, Object obj);
+    <span class="dt">void</span> <span class="fu">doAction</span>(<span class="bu">String</span> s, <span class="bu">Object</span> obj);
 }</code></pre></div>
 <p>如果你还是习惯在构造方法里面注册该Listener的话，那么在构造方法里直接调用:</p>
 <div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java">ApplicationActionManager.<span class="fu">getInstance</span>().<span class="fu">subscribeToAction</span>(<span class="kw">this</span>, actionName);</code></pre></div>
@@ -302,39 +302,39 @@ ApplicationActionManager.<span class="fu">getInstance</span>().<span class="fu">
 <p>呵呵，或许是命名习惯不同，让我定义的话，我或许会将这个接口命名为IWorkflow，不过，这是次要的，主要问题在于这个接口的定义与其语义存在很大的差距，或者说，并没有很好的表现其语义。 为什么这么说那？！先看该接口的定义：</p>
 <div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="kw">public</span> <span class="kw">interface</span> WorkflowI {
 
-    <span class="kw">public</span> <span class="dt">void</span> <span class="fu">execute</span>(TransactionEntity obj) <span class="kw">throws</span> Exception;
+    <span class="kw">public</span> <span class="dt">void</span> <span class="fu">execute</span>(TransactionEntity obj) <span class="kw">throws</span> <span class="bu">Exception</span>;
 
-    <span class="fu">@SuppressWarnings</span>(<span class="st">&quot;unchecked&quot;</span>)
-    <span class="kw">public</span> List <span class="fu">validate</span>(TransactionEntity passObj) <span class="kw">throws</span> Exception;
+    <span class="at">@SuppressWarnings</span>(<span class="st">&quot;unchecked&quot;</span>)
+    <span class="kw">public</span> <span class="bu">List</span> <span class="fu">validate</span>(TransactionEntity passObj) <span class="kw">throws</span> <span class="bu">Exception</span>;
 
     <span class="co">// public void dbPersist(TransactionEntity passObj) throws Exception;</span>
-    <span class="kw">public</span> <span class="dt">void</span> <span class="fu">cachePersist</span>(TransactionEntity passObj) <span class="kw">throws</span> Exception;
+    <span class="kw">public</span> <span class="dt">void</span> <span class="fu">cachePersist</span>(TransactionEntity passObj) <span class="kw">throws</span> <span class="bu">Exception</span>;
 
-    <span class="kw">public</span> <span class="dt">void</span> <span class="fu">publish</span>(TransactionEntity passObj) <span class="kw">throws</span> Exception;
+    <span class="kw">public</span> <span class="dt">void</span> <span class="fu">publish</span>(TransactionEntity passObj) <span class="kw">throws</span> <span class="bu">Exception</span>;
 }</code></pre></div>
 <p>按理说，该接口定义是要规定一个TransactionEntity对象的处理流程，但是，很明显，虽然该接口定义了多个处理方法，但是，没有任何标志可以说明，TransactionEntity到底要以一个什么样的顺序被处理。 应该说，该接口的设计者初衷是好的，但是，并没有进一步得去完善这个接口的定义，很显然，当前的接口定义无法表现Workflow的概念。</p>
 <h3 id="如何解决-4"><span class="header-section-number">5.2.2</span> 如何解决</h3>
 <p>使用Template Method Pattern来强化Workflow的语义：</p>
 <div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="kw">public</span> <span class="kw">abstract</span> <span class="kw">class</span> AbstractWorkflow {
-    <span class="kw">public</span> <span class="dt">void</span> <span class="fu">execute</span>(TransactionEntity obj) <span class="kw">throws</span> Exception
+    <span class="kw">public</span> <span class="dt">void</span> <span class="fu">execute</span>(TransactionEntity obj) <span class="kw">throws</span> <span class="bu">Exception</span>
     {
-        List txList = <span class="fu">validate</span>(obj);
+        <span class="bu">List</span> txList = <span class="fu">validate</span>(obj);
         <span class="kw">for</span>(TransactionEntity tx:txList)
         {
             <span class="fu">cachePersist</span>(tx);
             <span class="fu">publish</span>(tx);
         }
     }
-    <span class="fu">@SuppressWarnings</span>(<span class="st">&quot;unchecked&quot;</span>)
-    <span class="kw">protected</span> <span class="kw">abstract</span> List <span class="fu">validate</span>(TransactionEntity passObj) <span class="kw">throws</span> Exception;
+    <span class="at">@SuppressWarnings</span>(<span class="st">&quot;unchecked&quot;</span>)
+    <span class="kw">protected</span> <span class="kw">abstract</span> <span class="bu">List</span> <span class="fu">validate</span>(TransactionEntity passObj) <span class="kw">throws</span> <span class="bu">Exception</span>;
 
-    <span class="kw">protected</span> <span class="kw">abstract</span> <span class="dt">void</span> <span class="fu">cachePersist</span>(TransactionEntity passObj) <span class="kw">throws</span> Exception;
+    <span class="kw">protected</span> <span class="kw">abstract</span> <span class="dt">void</span> <span class="fu">cachePersist</span>(TransactionEntity passObj) <span class="kw">throws</span> <span class="bu">Exception</span>;
 
-    <span class="kw">protected</span> <span class="kw">abstract</span> <span class="dt">void</span> <span class="fu">publish</span>(TransactionEntity passObj) <span class="kw">throws</span> Exception;
+    <span class="kw">protected</span> <span class="kw">abstract</span> <span class="dt">void</span> <span class="fu">publish</span>(TransactionEntity passObj) <span class="kw">throws</span> <span class="bu">Exception</span>;
 }</code></pre></div>
 <p>现在，我们的父类可以清晰的表现workflow的语义，子类只需要实现相应的处理方法即可，处理流程在父类中已经被强化。 当然了，execute方法内部的处理流程可以根据需要进行进一步得优化，比如添加并行处理支持等，但它的主要目的在这里是明确的。 当然了，如果出于扩展性考虑，比如，有可能Workflow的逻辑会变化，那么，声明一个更抽象的接口也是可以的，比如:</p>
 <div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="kw">public</span> <span class="kw">interface</span> IWorkflow{
-    <span class="dt">void</span> <span class="fu">execute</span>(TransactionEntity obj) <span class="kw">throws</span> Exception;
+    <span class="dt">void</span> <span class="fu">execute</span>(TransactionEntity obj) <span class="kw">throws</span> <span class="bu">Exception</span>;
 }</code></pre></div>
 <p>不过那，“如无必要，勿增实体”，还是万事开头从简单的开始吧！实在不行，咱extends现有父类还不行啊！</p>
 <h1 id="anti-pattern-6-在构造方法中调用生命周期管理方法"><span class="header-section-number">6</span> Anti-Pattern 6: 在构造方法中调用生命周期管理方法</h1>
@@ -354,7 +354,7 @@ ApplicationActionManager.<span class="fu">getInstance</span>().<span class="fu">
         ...
     }
     
-    <span class="kw">public</span> <span class="dt">void</span> <span class="fu">stopService</span>() <span class="kw">throws</span> Exception
+    <span class="kw">public</span> <span class="dt">void</span> <span class="fu">stopService</span>() <span class="kw">throws</span> <span class="bu">Exception</span>
     {
         ...
     }

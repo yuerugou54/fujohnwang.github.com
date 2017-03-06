@@ -78,8 +78,8 @@
     
     </h1>
     -->
-    <a href="/"><img src="/images/afoo.PNG"/></a>
-		<p class="masthead-lead">瞎子摸象的践行者</p>
+    <a href="/"><h1>扶墙老师说</h1></a>
+		<p class="masthead-lead">一个架构士的思考与沉淀</p>
 	
 		<hr class="masthead-hr">
 
@@ -164,9 +164,9 @@ resolvers += <span class="st">&quot;sbt-idea-repo&quot;</span> at <span class="s
 
 <span class="fu">addSbtPlugin</span>(<span class="st">&quot;de.johoop&quot;</span> % <span class="st">&quot;sbt-testng-plugin&quot;</span> % <span class="st">&quot;3.0.2&quot;</span>)</code></pre></div>
 <p>而在build.sbt中：</p>
-<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">import</span> com.<span class="fu">typesafe</span>.<span class="fu">sbt</span>.<span class="fu">SbtNativePackager</span>.<span class="fu">_</span>
-<span class="kw">import</span> NativePackagerKeys.<span class="fu">_</span>
-<span class="kw">import</span> com.<span class="fu">typesafe</span>.<span class="fu">sbt</span>.<span class="fu">packager</span>.<span class="fu">MappingsHelper</span>.<span class="fu">_</span>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">import</span> com.<span class="fu">typesafe</span>.<span class="fu">sbt</span>.<span class="fu">SbtNativePackager</span>._
+<span class="kw">import</span> NativePackagerKeys._
+<span class="kw">import</span> com.<span class="fu">typesafe</span>.<span class="fu">sbt</span>.<span class="fu">packager</span>.<span class="fu">MappingsHelper</span>._
 
 organization := <span class="st">&quot;com.github.fujohnwang&quot;</span>
 

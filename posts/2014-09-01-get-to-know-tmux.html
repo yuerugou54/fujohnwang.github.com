@@ -78,8 +78,8 @@
     
     </h1>
     -->
-    <a href="/"><img src="/images/afoo.PNG"/></a>
-		<p class="masthead-lead">瞎子摸象的践行者</p>
+    <a href="/"><h1>扶墙老师说</h1></a>
+		<p class="masthead-lead">一个架构士的思考与沉淀</p>
 	
 		<hr class="masthead-hr">
 
@@ -131,13 +131,13 @@
 <p>tmux就是一个允许我们创建多个命令行窗口的程序， 采用C/S结构， tmux server运行在后台， tmux client连接到tmux server创建多个session和window， pane等， 即使关掉tmux client的窗口， 创建的session相关进程将持续在后台的tmux server上执行，除非所有的session都关闭。</p>
 <p>对于“键盘人”来说，尤其是vim或者emacs重度用户， tmux会让他们更爽； 即使对于其它客户，当管理服务器的时候，tmux也可以让命令行窗口更具“扩展性”。</p>
 <h1 id="基本命令"><span class="header-section-number">1</span> 基本命令</h1>
-<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">tmux</span>  // 新建匿名session
-$ <span class="kw">tmux</span> new -s [session name] // 新建命名session
-$ <span class="kw">tmux</span> list-sessions
-$ <span class="kw">tmux</span> detach // 脱离当前session
-$ <span class="kw">tmux</span> attach -t [session name]  // 重新attach到某个session
-$ <span class="kw">tmux</span> kill-session -t [session]  // 杀掉某个指定的session
-$ <span class="kw">tmux</span> kill-server //杀掉后台所有session</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="ex">tmux</span>  // 新建匿名session
+$ <span class="ex">tmux</span> new -s [session name] // 新建命名session
+$ <span class="ex">tmux</span> list-sessions
+$ <span class="ex">tmux</span> detach // 脱离当前session
+$ <span class="ex">tmux</span> attach -t [session name]  // 重新attach到某个session
+$ <span class="ex">tmux</span> kill-session -t [session]  // 杀掉某个指定的session
+$ <span class="ex">tmux</span> kill-server //杀掉后台所有session</code></pre></div>
 <p>Prefix快捷键默认是Control + b， 在Mac下，我们通过更改~/.tmux.conf，将其更改为Control + a:</p>
 <pre>
 # improve colors
@@ -149,10 +149,10 @@ set -g prefix C-a
 bind-key C-a send-prefix
 </pre>
 <p>Prefix快捷键的使用是， 首先按Prefix快捷键组合，然后松开，再紧跟着按相应命令的快捷键， 比如， 新建窗口的话，我们先按Control + a, 然后再按c，则完成在当前session下创建窗口的工作， 其它窗口(Window)操作包括：</p>
-<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">Ctrl</span> + a, c   // 创建窗口
-$ <span class="kw">Ctrl</span> + a, [0 - 9] // 输入0到9任何一个数字选择相应的窗口， 相当于命令tmux select-window 
-$ <span class="kw">Ctrl</span> + a, %       // 分割split窗口为多个pane
-$ <span class="kw">Ctrl</span> + a, ← <span class="kw">|</span> →   <span class="kw">//</span> 从窗口的pane跳到左边或者右边的pane</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="ex">Ctrl</span> + a, c   // 创建窗口
+$ <span class="ex">Ctrl</span> + a, [0 - 9] // 输入0到9任何一个数字选择相应的窗口， 相当于命令tmux select-window 
+$ <span class="ex">Ctrl</span> + a, %       // 分割split窗口为多个pane
+$ <span class="ex">Ctrl</span> + a, ← <span class="kw">|</span> →   <span class="ex">//</span> 从窗口的pane跳到左边或者右边的pane</code></pre></div>
 <h1 id="拷贝模式"><span class="header-section-number">2</span> 拷贝模式</h1>
 <p><code>Ctrl + a, [</code>进入拷贝模式， 敲空格开始拷贝，回车结束拷贝， 敲<code>Ctrl + a, ]</code>退出拷贝模式。</p>
 <h1 id="say-goodbye-to-nohup"><span class="header-section-number">3</span> Say Goodbye to nohup &amp;</h1>

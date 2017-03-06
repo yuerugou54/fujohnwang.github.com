@@ -42,8 +42,8 @@
     
     </h1>
     -->
-    <a href="/"><img src="/images/afoo.PNG"/></a>
-		<p class="masthead-lead">瞎子摸象的践行者</p>
+    <a href="/"><h1>扶墙老师说</h1></a>
+		<p class="masthead-lead">一个架构士的思考与沉淀</p>
 	
 		<hr class="masthead-hr">
 
@@ -133,7 +133,7 @@
     The WAL is in HDFS in /hbase/.logs/ with subdirectories per region.</code></pre>
 <p><strong>应该需要了解region server在zk里的ephemeral node，以便在region server failover之后，eromanga也可以转到新的region server上从新的hlog开始抓取变更。</strong></p>
 <p>API - <a href="http://hbase.apache.org/apidocs/org/apache/hadoop/hbase/replication/package-summary.html#requirements" class="uri">http://hbase.apache.org/apidocs/org/apache/hadoop/hbase/replication/package-summary.html#requirements</a></p>
-<p>Once a HRegionServer starts and is opening the regions it hosts it checks if there are some left over log files and applies those all the way down in Store.doReconstructionLog(). Replaying a log is simply done by reading the log and adding the contained edits to the current MemStore. At the end an explicit flush of the MemStore (note, this is not the flush of the log!) helps writing those changes out to disk.</p>
+<div style="white-space: pre-line;">Once a HRegionServer starts and is opening the regions it hosts it checks if there are some left over log files and applies those all the way down in Store.doReconstructionLog(). Replaying a log is simply done by reading the log and adding the contained edits to the current MemStore. At the end an explicit flush of the MemStore (note, this is not the flush of the log!) helps writing those changes out to disk.</div>
 <p>|----HLog Replay</p>
 <h2 id="hbase-replication-ref"><span class="header-section-number">3.1</span> HBase Replication Ref</h2>
 <ol style="list-style-type: decimal">

@@ -78,8 +78,8 @@
     
     </h1>
     -->
-    <a href="/"><img src="/images/afoo.PNG"/></a>
-		<p class="masthead-lead">瞎子摸象的践行者</p>
+    <a href="/"><h1>扶墙老师说</h1></a>
+		<p class="masthead-lead">一个架构士的思考与沉淀</p>
 	
 		<hr class="masthead-hr">
 
@@ -151,25 +151,25 @@
     <span class="kw">private</span> <span class="dt">static</span> <span class="dt">final</span> <span class="kw">transient</span> Log logger = LogFactory.<span class="fu">getLog</span>(GenericSimpleMessageListenerContainer .<span class="fu">class</span>);
     
     <span class="kw">private</span> JndiTemplate      jndiTemplate;
-    <span class="kw">private</span> String            connectionFactoryJndiName;
-    <span class="kw">private</span> String            destinationJndiName;
+    <span class="kw">private</span> <span class="bu">String</span>            connectionFactoryJndiName;
+    <span class="kw">private</span> <span class="bu">String</span>            destinationJndiName;
     <span class="kw">private</span> ConnectionFactory connectionFactory;
-    <span class="kw">private</span> Destination       destination;
+    <span class="kw">private</span> <span class="bu">Destination</span>       destination;
     
     <span class="kw">private</span> MessageListener   messageListener;
     
-    <span class="kw">private</span> Connection        sharedConnection;
+    <span class="kw">private</span> <span class="bu">Connection</span>        sharedConnection;
     <span class="kw">private</span> Session           session;
     <span class="kw">private</span> MessageConsumer   messageConsumer;
     
     <span class="co">/*</span>
 <span class="co">     * set a non-empty durableSubscriptionName to perform durable subscription</span>
 <span class="co">     */</span>
-    <span class="kw">private</span> String            durableSubscriptionName;
+    <span class="kw">private</span> <span class="bu">String</span>            durableSubscriptionName;
     <span class="co">/*</span>
 <span class="co">     * to identify durable subscriber plus durableSubscriptionName</span>
 <span class="co">     */</span>
-    <span class="kw">private</span> String            clientId;
+    <span class="kw">private</span> <span class="bu">String</span>            clientId;
     
     <span class="kw">public</span> <span class="fu">GenericSimpleMessageListenerContainer</span>()
     {
@@ -215,7 +215,7 @@
         }
         
     } <span class="kw">catch</span> (JMSException e) {
-        logger.<span class="fu">error</span>(<span class="st">&quot;failed to start Message listener container!!!</span><span class="ch">\n</span><span class="st">&quot;</span>);
+        logger.<span class="fu">error</span>(<span class="st">&quot;failed to start Message listener container!!!</span><span class="sc">\n</span><span class="st">&quot;</span>);
                     JmsUtils.<span class="fu">closeMessageConsumer</span>(<span class="fu">getMessageConsumer</span>());
         JmsUtils.<span class="fu">closeSession</span>(<span class="fu">getSession</span>());
         JmsUtils.<span class="fu">closeConnection</span>(<span class="fu">getSharedConnection</span>());
@@ -229,7 +229,7 @@
     <span class="kw">try</span> {
         <span class="fu">getSharedConnection</span>().<span class="fu">stop</span>();
     } <span class="kw">catch</span> (JMSException e) {
-        logger.<span class="fu">warn</span>(<span class="st">&quot;failed to stop connection of delivering jms message.</span><span class="ch">\n</span><span class="st">&quot;</span>);
+        logger.<span class="fu">warn</span>(<span class="st">&quot;failed to stop connection of delivering jms message.</span><span class="sc">\n</span><span class="st">&quot;</span>);
         logger.<span class="fu">warn</span>(ExceptionUtils.<span class="fu">getFullStackTrace</span>(e));
     }
     JmsUtils.<span class="fu">closeMessageConsumer</span>(<span class="fu">getMessageConsumer</span>());
@@ -237,67 +237,67 @@
     JmsUtils.<span class="fu">closeConnection</span>(<span class="fu">getSharedConnection</span>());
     }
     <span class="co">/**</span>
-<span class="co">     * After creating connection from ConnectionFactory, </span>
-<span class="co">     * we will check whether we can set clientId for the created connection, </span>
-<span class="co">     * If a pre-configured client Id exists, we will not try to set our clientId;</span>
-<span class="co">     * otherwise we will set our custom client Id if it&#39;s not empty.&lt;br</span>&gt;
-<span class="er">     * </span>
-<span class="er">     * The try-catch(IllegalStateException) is also for checking whether the jms provider has pre-configured a client Id for the connections it creates.&lt;br&gt;</span>
-<span class="er">     * If a pre-configured client id does exist, we will let it be, so after catching such exception, we just log it in WARN level to notify us.&lt;br&gt;</span>
-<span class="er">     *  </span>
-<span class="er">     * @throws JMSException</span>
-<span class="er">     */</span>
-<span class="er">    private void setupSharedConnectionIfNecessary() throws JMSException {</span>
-<span class="er">    if (getSharedConnection() == null) </span>
-<span class="er">    {</span>
-<span class="er">        setSharedConnection(getConnectionFactory().createConnection());</span>
-<span class="er">        </span>
-<span class="er">        String preConfiguredClientId = getSharedConnection().getClientID();</span>
-<span class="er">        if(StringUtils.isEmpty(preConfiguredClientId) &amp;&amp; StringUtils.isNotEmpty(clientId))</span>
-<span class="er">        {</span>
-<span class="er">        try</span>
-<span class="er">        {</span>
-<span class="er">            getSharedConnection().setClientID(clientId);</span>
-<span class="er">            if(logger.isInfoEnabled())</span>
-<span class="er">            {</span>
-<span class="er">            logger.info(&quot;set up JMS Connection with Client Id:&quot;+clientId);</span>
-<span class="er">            }</span>
-<span class="er">        }</span>
-<span class="er">        catch(IllegalStateException e)</span>
-<span class="er">        {</span>
-<span class="er">            logger.warn(&quot;A pre-configured client id exists, durable subscriber will use this client id and ignore external setted client id.&quot;);</span>
-<span class="er">            logger.warn(&quot;pre-configured client id:&quot;+preConfiguredClientId);</span>
-<span class="er">            logger.warn(&quot;external setted client id:&quot;+clientId);</span>
-<span class="er">        }</span>
-<span class="er">        }</span>
-<span class="er">    }</span>
-<span class="er">    }</span>
-<span class="er">    private void setupDestinationIfNecessary(JndiTemplate jndiTemplate) {</span>
-<span class="er">    if(getDestination() == null)</span>
-<span class="er">    {</span>
-<span class="er">        Validate.notEmpty(getDestinationJndiName());</span>
-<span class="er">        </span>
-<span class="er">        try {</span>
-<span class="er">        setDestination((Destination)jndiTemplate.lookup(getDestinationJndiName()));</span>
-<span class="er">        } catch (NamingException e) {</span>
-<span class="er">        throw new RuntimeException(&quot;failed to lookup destination via JNDI with jndiName:&quot;+getDestinationJndiName());</span>
-<span class="er">        }</span>
-<span class="er">    }</span>
-<span class="er">    }</span>
-<span class="er">    private void setupConnectionFactoryIfNecessary(JndiTemplate jndiTemplate) {</span>
-<span class="er">    if(getConnectionFactory() == null)</span>
-<span class="er">    {</span>
-<span class="er">        Validate.notEmpty(getConnectionFactoryJndiName());</span>
-<span class="er">        </span>
-<span class="er">        try {</span>
-<span class="er">        setConnectionFactory((ConnectionFactory)jndiTemplate.lookup(getConnectionFactoryJndiName()));</span>
-<span class="er">        } catch (NamingException e) {</span>
-<span class="er">        throw new RuntimeException(&quot;failed to lookup ConnectionFactory via JNDI with jndiName:&quot;+getConnectionFactoryJndiName());</span>
-<span class="er">        }</span>
-<span class="er">    }</span>
-<span class="er">    }</span>
+     <span class="co">*</span> After creating connection from ConnectionFactory<span class="co">,</span> 
+     <span class="co">*</span> we will check whether we can set clientId for the created connection<span class="co">,</span> 
+     <span class="co">*</span> If a pre<span class="co">-</span>configured client Id exists<span class="co">,</span> we will not try to set our clientId<span class="co">;</span>
+     <span class="co">*</span> otherwise we will set our custom client Id if it<span class="co">&#39;</span>s not empty<span class="co">.</span><span class="kw">&lt;br&gt;</span>
+     <span class="co">*</span> 
+     <span class="co">*</span> The try<span class="co">-</span>catch<span class="co">(</span>IllegalStateException<span class="co">)</span> is also for checking whether the jms provider has pre<span class="co">-</span>configured a client Id for the connections it creates<span class="co">.</span><span class="kw">&lt;br&gt;</span>
+     <span class="co">*</span> If a pre<span class="co">-</span>configured client id does exist<span class="co">,</span> we will let it be<span class="co">,</span> so after catching such exception<span class="co">,</span> we just log it in WARN level to notify us<span class="co">.</span><span class="kw">&lt;br&gt;</span>
+     <span class="co">*</span>  
+     <span class="co">* </span><span class="kw">@throws JMSException</span>
+     <span class="co">*/</span>
+    <span class="kw">private</span> <span class="dt">void</span> <span class="fu">setupSharedConnectionIfNecessary</span>() <span class="kw">throws</span> JMSException {
+    <span class="kw">if</span> (<span class="fu">getSharedConnection</span>() == <span class="kw">null</span>) 
+    {
+        <span class="fu">setSharedConnection</span>(<span class="fu">getConnectionFactory</span>().<span class="fu">createConnection</span>());
+        
+        <span class="bu">String</span> preConfiguredClientId = <span class="fu">getSharedConnection</span>().<span class="fu">getClientID</span>();
+        <span class="kw">if</span>(StringUtils.<span class="fu">isEmpty</span>(preConfiguredClientId) &amp;&amp; StringUtils.<span class="fu">isNotEmpty</span>(clientId))
+        {
+        <span class="kw">try</span>
+        {
+            <span class="fu">getSharedConnection</span>().<span class="fu">setClientID</span>(clientId);
+            <span class="kw">if</span>(logger.<span class="fu">isInfoEnabled</span>())
+            {
+            logger.<span class="fu">info</span>(<span class="st">&quot;set up JMS Connection with Client Id:&quot;</span>+clientId);
+            }
+        }
+        <span class="kw">catch</span>(<span class="bu">IllegalStateException</span> e)
+        {
+            logger.<span class="fu">warn</span>(<span class="st">&quot;A pre-configured client id exists, durable subscriber will use this client id and ignore external setted client id.&quot;</span>);
+            logger.<span class="fu">warn</span>(<span class="st">&quot;pre-configured client id:&quot;</span>+preConfiguredClientId);
+            logger.<span class="fu">warn</span>(<span class="st">&quot;external setted client id:&quot;</span>+clientId);
+        }
+        }
+    }
+    }
+    <span class="kw">private</span> <span class="dt">void</span> <span class="fu">setupDestinationIfNecessary</span>(JndiTemplate jndiTemplate) {
+    <span class="kw">if</span>(<span class="fu">getDestination</span>() == <span class="kw">null</span>)
+    {
+        Validate.<span class="fu">notEmpty</span>(<span class="fu">getDestinationJndiName</span>());
+        
+        <span class="kw">try</span> {
+        <span class="fu">setDestination</span>((<span class="bu">Destination</span>)jndiTemplate.<span class="fu">lookup</span>(<span class="fu">getDestinationJndiName</span>()));
+        } <span class="kw">catch</span> (<span class="bu">NamingException</span> e) {
+        <span class="kw">throw</span> <span class="kw">new</span> <span class="bu">RuntimeException</span>(<span class="st">&quot;failed to lookup destination via JNDI with jndiName:&quot;</span>+<span class="fu">getDestinationJndiName</span>());
+        }
+    }
+    }
+    <span class="kw">private</span> <span class="dt">void</span> <span class="fu">setupConnectionFactoryIfNecessary</span>(JndiTemplate jndiTemplate) {
+    <span class="kw">if</span>(<span class="fu">getConnectionFactory</span>() == <span class="kw">null</span>)
+    {
+        Validate.<span class="fu">notEmpty</span>(<span class="fu">getConnectionFactoryJndiName</span>());
+        
+        <span class="kw">try</span> {
+        <span class="fu">setConnectionFactory</span>((ConnectionFactory)jndiTemplate.<span class="fu">lookup</span>(<span class="fu">getConnectionFactoryJndiName</span>()));
+        } <span class="kw">catch</span> (<span class="bu">NamingException</span> e) {
+        <span class="kw">throw</span> <span class="kw">new</span> <span class="bu">RuntimeException</span>(<span class="st">&quot;failed to lookup ConnectionFactory via JNDI with jndiName:&quot;</span>+<span class="fu">getConnectionFactoryJndiName</span>());
+        }
+    }
+    }
 
-<span class="er">    // getters and setters...</span>
+    <span class="co">// getters and setters...</span>
 }</code></pre></div>
 <p>如果你在使用Spring 2.x之前的版本而又不能升级，那么这个类可以“凑合”用一下(因为它的功能并不完备，比如没有添加MessageSelector以及多线程等功能支持)， 如果可能，还是建议你使用Spring 2.x之后引入的SimpleMessageListenerContainer或者DefaultMessageListenerContainer，当然了，这些属于题外话，使用JMS API进行Durable Subscription编程与通常的方式没有太多差异，只要搞清楚一下两点，剩下的基本就不会有太大问题了。</p>
 <h2 id="client-id"><span class="header-section-number">2.1</span> Client Id</h2>

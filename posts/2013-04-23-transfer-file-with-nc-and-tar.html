@@ -78,8 +78,8 @@
     
     </h1>
     -->
-    <a href="/"><img src="/images/afoo.PNG"/></a>
-		<p class="masthead-lead">瞎子摸象的践行者</p>
+    <a href="/"><h1>扶墙老师说</h1></a>
+		<p class="masthead-lead">一个架构士的思考与沉淀</p>
 	
 		<hr class="masthead-hr">
 
@@ -134,9 +134,9 @@
 </ol>
 <h1 id="结合tar使用"><span class="header-section-number">2</span> 结合tar使用</h1>
 <p>依然首先在目标机器上执行:</p>
-<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">nc</span> -l -p 6969 <span class="kw">|</span> <span class="kw">tar</span> xf – -C /tmp/</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="ex">nc</span> -l -p 6969 <span class="kw">|</span> <span class="fu">tar</span> xf – -C /tmp/</code></pre></div>
 <p>之后，在源端机器上执行：</p>
-<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">tar</span> cf – dir <span class="kw">|</span> <span class="kw">nc</span> -w1 hostB 6969</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="fu">tar</span> cf – dir <span class="kw">|</span> <span class="ex">nc</span> -w1 hostB 6969</code></pre></div>
 <blockquote>
 If the name of the tarfile is '-', tar writes to the standard output or reads from the standard input, whichever is appropriate.
 </blockquote>

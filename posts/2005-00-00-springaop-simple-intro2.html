@@ -78,8 +78,8 @@
     
     </h1>
     -->
-    <a href="/"><img src="/images/afoo.PNG"/></a>
-		<p class="masthead-lead">瞎子摸象的践行者</p>
+    <a href="/"><h1>扶墙老师说</h1></a>
+		<p class="masthead-lead">一个架构士的思考与沉淀</p>
 	
 		<hr class="masthead-hr">
 
@@ -128,9 +128,9 @@
 <p>所以，第一步，我们定义SwappableDataSource，它扩展DelegatingDataSource，可以指定当前的targetDataSource, 并且，我们为其提供primaryDataSource和色condaryDataSource的引用，而默认的targetDataSource就使用primaryDataSource。SwappableDataSource类的定义简单列举如下：</p>
 <div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="kw">public</span> <span class="kw">class</span> SwappableDataSource <span class="kw">extends</span> DelegatingDataSource {
 <span class="co">//</span>
-<span class="kw">private</span> DataSource primaryDataSource;
+<span class="kw">private</span> <span class="bu">DataSource</span> primaryDataSource;
 <span class="co">//</span>
-<span class="kw">private</span> DataSource secondaryDataSource;
+<span class="kw">private</span> <span class="bu">DataSource</span> secondaryDataSource;
 <span class="co">//</span>
 <span class="kw">private</span> <span class="dt">boolean</span> isPrimaryCrashed = <span class="kw">false</span>;
 <span class="co">// </span>
@@ -152,27 +152,27 @@ isPrimaryCrashed = !isPrimaryCrashed;
 
 
 <span class="co">/**</span>
-<span class="co">* </span><span class="kw">@return </span><span class="co">Returns the primaryDataSource.</span>
+<span class="co">* </span><span class="kw">@return </span>Returns the primaryDataSource<span class="co">.</span>
 <span class="co">*/</span>
-<span class="kw">public</span> DataSource <span class="fu">getPrimaryDataSource</span>() {
+<span class="kw">public</span> <span class="bu">DataSource</span> <span class="fu">getPrimaryDataSource</span>() {
 <span class="kw">return</span> primaryDataSource;
 }
 <span class="co">/**</span>
-<span class="co">* </span><span class="kw">@param primaryDataSource </span><span class="co">The primaryDataSource to set.</span>
+<span class="co">* </span><span class="kw">@param primaryDataSource </span>The primaryDataSource to set<span class="co">.</span>
 <span class="co">*/</span>
-<span class="kw">public</span> <span class="dt">void</span> <span class="fu">setPrimaryDataSource</span>(DataSource primaryDataSource) {
+<span class="kw">public</span> <span class="dt">void</span> <span class="fu">setPrimaryDataSource</span>(<span class="bu">DataSource</span> primaryDataSource) {
 <span class="kw">this</span>.<span class="fu">primaryDataSource</span> = primaryDataSource;
 }
 <span class="co">/**</span>
-<span class="co">* </span><span class="kw">@return </span><span class="co">Returns the secondaryDataSource.</span>
+<span class="co">* </span><span class="kw">@return </span>Returns the secondaryDataSource<span class="co">.</span>
 <span class="co">*/</span>
-<span class="kw">public</span> DataSource <span class="fu">getSecondaryDataSource</span>() {
+<span class="kw">public</span> <span class="bu">DataSource</span> <span class="fu">getSecondaryDataSource</span>() {
 <span class="kw">return</span> secondaryDataSource;
 }
 <span class="co">/**</span>
-<span class="co">* </span><span class="kw">@param secondaryDataSource </span><span class="co">The secondaryDataSource to set.</span>
+<span class="co">* </span><span class="kw">@param secondaryDataSource </span>The secondaryDataSource to set<span class="co">.</span>
 <span class="co">*/</span>
-<span class="kw">public</span> <span class="dt">void</span> <span class="fu">setSecondaryDataSource</span>(DataSource secondaryDataSource) {
+<span class="kw">public</span> <span class="dt">void</span> <span class="fu">setSecondaryDataSource</span>(<span class="bu">DataSource</span> secondaryDataSource) {
 <span class="kw">this</span>.<span class="fu">secondaryDataSource</span> = secondaryDataSource;
 }
 }</code></pre></div>
@@ -199,7 +199,7 @@ isPrimaryCrashed = !isPrimaryCrashed;
 <span class="co">* @author Darren.Wang</span>
 <span class="co">* 2005-3-18 11:15:11</span>
 <span class="co">*/</span>
-<span class="kw">public</span> <span class="dt">void</span> <span class="fu">afterThrowing</span>(Method m, Object[] args, Object target,SQLException exp)
+<span class="kw">public</span> <span class="dt">void</span> <span class="fu">afterThrowing</span>(<span class="bu">Method</span> m, <span class="bu">Object</span>[] args, <span class="bu">Object</span> target,<span class="bu">SQLException</span> exp)
 {
 logger.<span class="fu">warn</span>(<span class="st">&quot;Database crashed or can&#39;&#39;t get connection from DB!&quot;</span>,exp);
 ((SwappableDataSource)target).<span class="fu">swap</span>();

@@ -78,8 +78,8 @@
     
     </h1>
     -->
-    <a href="/"><img src="/images/afoo.PNG"/></a>
-		<p class="masthead-lead">瞎子摸象的践行者</p>
+    <a href="/"><h1>扶墙老师说</h1></a>
+		<p class="masthead-lead">一个架构士的思考与沉淀</p>
 	
 		<hr class="masthead-hr">
 
@@ -248,11 +248,11 @@
 <p>用户名和密码在一开始已经申请过了，填上即可。</p>
 <p>更详细步骤参看<a href="https://docs.sonatype.org/display/Repository/How+To+Generate+PGP+Signatures+With+Maven" class="uri">https://docs.sonatype.org/display/Repository/How+To+Generate+PGP+Signatures+With+Maven</a></p>
 <h1 id="发布snapshot版本"><span class="header-section-number">5</span> 发布SNAPSHOT版本</h1>
-<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">mvn</span> clean deploy</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="ex">mvn</span> clean deploy</code></pre></div>
 <h1 id="发布staging版本"><span class="header-section-number">6</span> 发布Staging版本</h1>
-<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">mvn</span> release:clean
-$ <span class="kw">mvn</span> release:prepare
-$ <span class="kw">mvn</span> release:perform</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="ex">mvn</span> release:clean
+$ <span class="ex">mvn</span> release:prepare
+$ <span class="ex">mvn</span> release:perform</code></pre></div>
 <p>期间会提示需要输入pgp key的passphrase，照办就是了。</p>
 哥的Ticket当天没批下来，所以，运行会告诉我没有权限上传artifacts:
 <pre>

@@ -79,8 +79,8 @@
     
     </h1>
     -->
-    <a href="/"><img src="/images/afoo.PNG"/></a>
-		<p class="masthead-lead">瞎子摸象的践行者</p>
+    <a href="/"><h1>扶墙老师说</h1></a>
+		<p class="masthead-lead">一个架构士的思考与沉淀</p>
 	
 		<hr class="masthead-hr">
 
@@ -182,24 +182,24 @@
 <p>launch specification中配置的class需要符合一定的规则，简单来讲，就是指定的类需要实现<code>xsbti.AppMain</code> trait:</p>
 <div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">package</span> org.<span class="fu">example</span>
 
-<span class="kw">import</span> sbt.<span class="fu">_</span>
-<span class="kw">import</span> complete.<span class="fu">_</span>
-<span class="kw">import</span> DefaultParsers.<span class="fu">_</span>
+<span class="kw">import</span> sbt._
+<span class="kw">import</span> complete._
+<span class="kw">import</span> DefaultParsers._
 
 <span class="kw">final</span> <span class="kw">class</span> Main <span class="kw">extends</span> xsbti.<span class="fu">AppMain</span>
 {
-   <span class="co">/** Defines the entry point for the application.</span>
-<span class="co">   * The call to `initialState` sets up the application.</span>
-<span class="co">   * The call to runLogged starts command processing.</span>
-<span class="co">   */</span>
+   <span class="co">/**</span> Defines the entry point for the application<span class="co">.</span>
+   <span class="co">*</span> The call to <span class="co">`</span>initialState<span class="co">`</span> sets up the application<span class="co">.</span>
+   <span class="co">*</span> The call to runLogged starts command processing<span class="co">.</span>
+   <span class="co">*/</span>
    <span class="kw">def</span> <span class="fu">run</span>(configuration: xsbti.<span class="fu">AppConfiguration</span>): xsbti.<span class="fu">MainResult</span> =
       MainLoop.<span class="fu">runLogged</span>( <span class="fu">initialState</span>(configuration) )
 
-   <span class="co">/** Sets up the application by constructing an initial State instance with the </span>
-<span class="co">   * supported commands and initial commands to run.</span>
-<span class="co">   *</span>
-<span class="co">   * http://harrah.github.com/xsbt/latest/api/sbt/State%24.html</span>
-<span class="co">   */</span>
+   <span class="co">/**</span> Sets up the application by constructing an initial State instance with the 
+   <span class="co">*</span> supported commands and initial commands to run<span class="co">.</span>
+   <span class="co">*</span>
+   <span class="co">*</span> http<span class="co">://</span>harrah<span class="co">.</span>github<span class="co">.</span>com<span class="co">/</span>xsbt<span class="co">/</span>latest<span class="co">/</span>api<span class="co">/</span>sbt<span class="co">/</span>State<span class="co">%24.</span>html
+   <span class="co">*/</span>
    <span class="kw">def</span> <span class="fu">initialState</span>(configuration: xsbti.<span class="fu">AppConfiguration</span>): State =
    {
          <span class="co">// These are the commands that the application supports.</span>
@@ -216,14 +216,14 @@
          AttributeMap.<span class="fu">empty</span>, initialGlobalLogging, State.<span class="fu">Continue</span> )
    }
 
-   <span class="co">/** A sample command that says hello to its argument.</span>
-<span class="co">   * The first argument to Command provides the command name.</span>
-<span class="co">   * The second is a function State =&gt; Parser[T], providing the parser+tab completion.</span>
-<span class="co">   * The third argument is a function (State, T) =&gt; State that accepts the result of parsing</span>
-<span class="co">   *  and transforms the application state (that is, it does the work).</span>
-<span class="co">   *</span>
-<span class="co">   * See also https://github.com/harrah/xsbt/wiki/Commands</span>
-<span class="co">   */</span>
+   <span class="co">/**</span> A sample command that says hello to its argument<span class="co">.</span>
+   <span class="co">*</span> The first argument to Command provides the command name<span class="co">.</span>
+   <span class="co">*</span> The second is a function State <span class="co">=&gt;</span> Parser<span class="co">[</span>T<span class="co">],</span> providing the parser<span class="co">+</span>tab completion<span class="co">.</span>
+   <span class="co">*</span> The third argument is a function <span class="co">(</span>State<span class="co">,</span> T<span class="co">)</span> <span class="co">=&gt;</span> State that accepts the result of parsing
+   <span class="co">*</span>  and transforms the application state <span class="co">(</span>that is<span class="co">,</span> it does the work<span class="co">).</span>
+   <span class="co">*</span>
+   <span class="co">*</span> See also https<span class="co">://</span>github<span class="co">.</span>com<span class="co">/</span>harrah<span class="co">/</span>xsbt<span class="co">/</span>wiki<span class="co">/</span>Commands
+   <span class="co">*/</span>
    <span class="kw">def</span> hello = <span class="fu">Command</span>(<span class="st">&quot;hello&quot;</span>)(state =&gt; helloParser)( helloAction )
 
    <span class="kw">def</span> helloParser: Parser[String] =
@@ -234,9 +234,9 @@
       state
    }
 
-   <span class="co">/** Configures logging to log to a temporary backing file as well as to the console. </span>
-<span class="co">   * An application would need to do more here to customize the logging level and</span>
-<span class="co">   * provide access to the backing file (like sbt&#39;s last command and logLevel setting).*/</span>
+   <span class="co">/**</span> Configures logging to log to a temporary backing file as well as to the console<span class="co">. </span>
+   <span class="co">*</span> An application would need to do more here to customize the logging level and
+   <span class="co">*</span> provide access to the backing file <span class="co">(</span>like sbt<span class="co">&#39;</span>s last command and logLevel setting<span class="co">).*/</span>
    <span class="kw">def</span> initialGlobalLogging: GlobalLogging =
       GlobalLogging.<span class="fu">initial</span>(MainLogging.<span class="fu">globalDefault</span> _, java.<span class="fu">io</span>.<span class="fu">File</span>.<span class="fu">createTempFile</span>(<span class="st">&quot;app&quot;</span>, <span class="st">&quot;log&quot;</span>))
 }</code></pre></div>

@@ -79,8 +79,8 @@
     
     </h1>
     -->
-    <a href="/"><img src="/images/afoo.PNG"/></a>
-		<p class="masthead-lead">瞎子摸象的践行者</p>
+    <a href="/"><h1>扶墙老师说</h1></a>
+		<p class="masthead-lead">一个架构士的思考与沉淀</p>
 	
 		<hr class="masthead-hr">
 
@@ -316,9 +316,9 @@ mappings in Universal += <span class="fu">file</span>(<span class="st">&quot;LIC
 
 mappings in Universal ++= <span class="fu">directory</span>(<span class="st">&quot;config&quot;</span>)</code></pre></div>
 <p>最终，一个完整的SBT项目build.sbt示例性配置文件如下：</p>
-<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">import</span> sbt.<span class="fu">_</span>
-<span class="kw">import</span> com.<span class="fu">typesafe</span>.<span class="fu">sbt</span>.<span class="fu">packager</span>.<span class="fu">universal</span>.<span class="fu">UniversalPlugin</span>.<span class="fu">autoImport</span>.<span class="fu">_</span>
-<span class="kw">import</span> com.<span class="fu">typesafe</span>.<span class="fu">sbt</span>.<span class="fu">packager</span>.<span class="fu">MappingsHelper</span>.<span class="fu">_</span>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">import</span> sbt._
+<span class="kw">import</span> com.<span class="fu">typesafe</span>.<span class="fu">sbt</span>.<span class="fu">packager</span>.<span class="fu">universal</span>.<span class="fu">UniversalPlugin</span>.<span class="fu">autoImport</span>._
+<span class="kw">import</span> com.<span class="fu">typesafe</span>.<span class="fu">sbt</span>.<span class="fu">packager</span>.<span class="fu">MappingsHelper</span>._
 
 <span class="kw">lazy</span> <span class="kw">val</span> root = project in <span class="fu">file</span>(<span class="st">&quot;.&quot;</span>) <span class="fu">enablePlugins</span>(JavaAppPackaging) <span class="fu">settings</span>(net.<span class="fu">virtualvoid</span>.<span class="fu">sbt</span>.<span class="fu">graph</span>.<span class="fu">Plugin</span>.<span class="fu">graphSettings</span>: _*)
 

@@ -78,8 +78,8 @@
     
     </h1>
     -->
-    <a href="/"><img src="/images/afoo.PNG"/></a>
-		<p class="masthead-lead">瞎子摸象的践行者</p>
+    <a href="/"><h1>扶墙老师说</h1></a>
+		<p class="masthead-lead">一个架构士的思考与沉淀</p>
 	
 		<hr class="masthead-hr">
 
@@ -127,7 +127,7 @@
 
     <span class="kw">private</span> ActiveXComponent excel;
     <span class="co">// excel workbooks </span>
-    <span class="kw">private</span> Dispatch workbooks;
+    <span class="kw">private</span> <span class="bu">Dispatch</span> workbooks;
     <span class="co">// excel file varient</span>
     <span class="kw">private</span> Variant workbook;
 
@@ -138,7 +138,7 @@
     <span class="co">/*</span>
 <span class="co">    * non-thread-safe</span>
 <span class="co">    */</span>
-    <span class="kw">public</span> <span class="dt">void</span> <span class="fu">print</span>(String filename)
+    <span class="kw">public</span> <span class="dt">void</span> <span class="fu">print</span>(<span class="bu">String</span> filename)
     {
     <span class="kw">try</span>
     {
@@ -148,10 +148,10 @@
     excel.<span class="fu">setProperty</span>(<span class="st">&quot;Visible&quot;</span>,<span class="kw">new</span> <span class="fu">Variant</span>(<span class="kw">false</span>));
     <span class="co">// get workbooks</span>
     workbooks = excel.<span class="fu">getProperty</span>(<span class="st">&quot;WorkBooks&quot;</span>).<span class="fu">toDispatch</span>();
-    workbook = Dispatch.<span class="fu">callN</span>(workbooks,<span class="st">&quot;Open&quot;</span>,<span class="kw">new</span> Object[]{filename});
+    workbook = <span class="bu">Dispatch</span>.<span class="fu">callN</span>(workbooks,<span class="st">&quot;Open&quot;</span>,<span class="kw">new</span> <span class="bu">Object</span>[]{filename});
 
     <span class="co">// Dispatch.call(Dispatch.get(workbook.toDispatch(),&quot;ActiveSheet&quot;).toDispatch(),&quot;PrintOut&quot;);</span>
-    Dispatch.<span class="fu">call</span>(Dispatch.<span class="fu">get</span>(workbook.<span class="fu">toDispatch</span>(),<span class="st">&quot;Worksheets&quot;</span>).<span class="fu">toDispatch</span>(),<span class="st">&quot;PrintOut&quot;</span>);
+    <span class="bu">Dispatch</span>.<span class="fu">call</span>(<span class="bu">Dispatch</span>.<span class="fu">get</span>(workbook.<span class="fu">toDispatch</span>(),<span class="st">&quot;Worksheets&quot;</span>).<span class="fu">toDispatch</span>(),<span class="st">&quot;PrintOut&quot;</span>);
     }
     <span class="kw">finally</span>
     {
@@ -165,9 +165,9 @@
     }
 
     <span class="co">/**</span>
-<span class="co">    * </span><span class="kw">@param args</span>
-<span class="co">    */</span>
-    <span class="kw">public</span> <span class="dt">static</span> <span class="dt">void</span> <span class="fu">main</span>(String[] args) {
+    <span class="co">* </span><span class="kw">@param args</span>
+    <span class="co">*/</span>
+    <span class="kw">public</span> <span class="dt">static</span> <span class="dt">void</span> <span class="fu">main</span>(<span class="bu">String</span>[] args) {
     JacobExcelPrinter printer = <span class="kw">new</span> <span class="fu">JacobExcelPrinter</span>();
     printer.<span class="fu">print</span>(<span class="st">&quot;c:/xx.xls&quot;</span>);
     }

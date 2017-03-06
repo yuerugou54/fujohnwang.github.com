@@ -78,8 +78,8 @@
     
     </h1>
     -->
-    <a href="/"><img src="/images/afoo.PNG"/></a>
-		<p class="masthead-lead">瞎子摸象的践行者</p>
+    <a href="/"><h1>扶墙老师说</h1></a>
+		<p class="masthead-lead">一个架构士的思考与沉淀</p>
 	
 		<hr class="masthead-hr">
 
@@ -122,7 +122,7 @@
 <p>但这只是说正常情况下， 相对应的，还有不正常的情况下。这些不正常的情况可能是， 不合适的对象引用的发布，或者引用了其它对象或者系统中的共享状态等。</p>
 <p>例如，以下两种Stateless对象定义就不是线程安全的：</p>
 <div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="kw">public</span> <span class="kw">class</span> StatelessOne{
-    <span class="kw">public</span> <span class="dt">void</span> <span class="fu">doSth</span>(Map ctx)
+    <span class="kw">public</span> <span class="dt">void</span> <span class="fu">doSth</span>(<span class="bu">Map</span> ctx)
     {
         <span class="co">// update ctx:Map to do something.</span>
         <span class="co">// other operations confined in method stack</span>
@@ -133,7 +133,7 @@
 <span class="kw">public</span> <span class="kw">class</span> StatelessTwo{
     <span class="kw">public</span> <span class="dt">void</span> <span class="fu">doSth</span>()
     {
-        Object someState = ref.<span class="fu">getState</span>(...);
+        <span class="bu">Object</span> someState = ref.<span class="fu">getState</span>(...);
         Singleton ref = ...;
         ref.<span class="fu">doSth</span>(someState);
         <span class="co">// other operations confined in method stack</span>
@@ -144,7 +144,7 @@
 <p>其次，一个statefull的对象就一定是线程不安全(Non-Threadsafe)的吗？</p>
 <p>正常来讲，一个stateful的对象很容易造成线程安全问题，比如， 最初设计为在单线程环境下的对象被应用到了多线程环境下， 应该同步的操作忘记同步等， 但这并不意味着一个stateful的对象就一定不是线程安全的， 它只是需要我们更多的“关心”和“呵护”而已。</p>
 <div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="kw">public</span> <span class="kw">class</span> StatefulOne{
-    <span class="kw">private</span> Map dataHolder = <span class="kw">new</span> HashMap();
+    <span class="kw">private</span> <span class="bu">Map</span> dataHolder = <span class="kw">new</span> <span class="bu">HashMap</span>();
     
     <span class="kw">public</span> <span class="fu">StatefulOne</span>()
     {
@@ -154,7 +154,7 @@
     
     <span class="kw">public</span> <span class="dt">void</span> <span class="fu">doSth</span>()
     {
-        Object value = dataHolder.<span class="fu">get</span>(..);
+        <span class="bu">Object</span> value = dataHolder.<span class="fu">get</span>(..);
         <span class="fu">doSthWithValue</span>(value);
         <span class="co">// only get/read operations with dataHolder</span>
     }

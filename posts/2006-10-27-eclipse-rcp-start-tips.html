@@ -78,8 +78,8 @@
     
     </h1>
     -->
-    <a href="/"><img src="/images/afoo.PNG"/></a>
-		<p class="masthead-lead">瞎子摸象的践行者</p>
+    <a href="/"><h1>扶墙老师说</h1></a>
+		<p class="masthead-lead">一个架构士的思考与沉淀</p>
 	
 		<hr class="masthead-hr">
 
@@ -144,18 +144,18 @@
 table.<span class="fu">setHeaderVisible</span>(<span class="kw">true</span>);
 table.<span class="fu">setLinesVisible</span>(<span class="kw">true</span>);
 table.<span class="fu">setBounds</span>(<span class="kw">new</span> org.<span class="fu">eclipse</span>.<span class="fu">swt</span>.<span class="fu">graphics</span>.<span class="fu">Rectangle</span>(<span class="dv">47</span>,<span class="dv">67</span>,<span class="dv">190</span>,<span class="dv">70</span>));
-TableColumn tableColumn = <span class="kw">new</span> TableColumn(table, SWT.<span class="fu">NONE</span>);
+<span class="bu">TableColumn</span> tableColumn = <span class="kw">new</span> <span class="bu">TableColumn</span>(table, SWT.<span class="fu">NONE</span>);
 tableColumn.<span class="fu">setWidth</span>(<span class="dv">100</span>);
 tableColumn.<span class="fu">setText</span>(<span class="st">&quot;Check Column&quot;</span>);
 
-TableColumn tableColumn1 = <span class="kw">new</span> TableColumn(table, SWT.<span class="fu">NONE</span>);
+<span class="bu">TableColumn</span> tableColumn1 = <span class="kw">new</span> <span class="bu">TableColumn</span>(table, SWT.<span class="fu">NONE</span>);
 tableColumn1.<span class="fu">setWidth</span>(<span class="dv">100</span>);
 tableColumn1.<span class="fu">setText</span>(<span class="st">&quot;Combo Column&quot;</span>);
 
 TableItem tableItem=<span class="kw">new</span> <span class="fu">TableItem</span>(table,SWT.<span class="fu">NONE</span>);
 TableEditor editor = <span class="kw">new</span> <span class="fu">TableEditor</span> (table);
 
-Button checkButton = <span class="kw">new</span> Button(table, SWT.<span class="fu">CHECK</span>);
+<span class="bu">Button</span> checkButton = <span class="kw">new</span> <span class="bu">Button</span>(table, SWT.<span class="fu">CHECK</span>);
 checkButton.<span class="fu">pack</span>();
 
 editor.<span class="fu">minimumWidth</span> = checkButton.<span class="fu">getSize</span> ().<span class="fu">x</span>;

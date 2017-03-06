@@ -78,8 +78,8 @@
     
     </h1>
     -->
-    <a href="/"><img src="/images/afoo.PNG"/></a>
-		<p class="masthead-lead">瞎子摸象的践行者</p>
+    <a href="/"><h1>扶墙老师说</h1></a>
+		<p class="masthead-lead">一个架构士的思考与沉淀</p>
 	
 		<hr class="masthead-hr">
 
@@ -130,12 +130,12 @@
 ((JavaMailSenderImpl)mailSender).<span class="fu">setPassword</span>(<span class="st">&quot;458524033931&quot;</span>);
 <span class="co">// IF your Mail Server request SMTP authentication, you must set properties below,</span>
 <span class="co">// Otherwise, mail sending will fail.</span>
-Properties prop = <span class="kw">new</span> Properties();
+<span class="bu">Properties</span> prop = <span class="kw">new</span> <span class="bu">Properties</span>();
 prop.<span class="fu">setProperty</span>(<span class="st">&quot;mail.smtp.auth&quot;</span>,<span class="st">&quot;true&quot;</span>);
 ((JavaMailSenderImpl)mailSender).<span class="fu">setJavaMailProperties</span>(prop);
 
 mailSender.<span class="fu">send</span>(<span class="kw">new</span> <span class="fu">MimeMessagePreparator</span>(){
-<span class="kw">public</span> <span class="dt">void</span> <span class="fu">prepare</span>(MimeMessage message) <span class="kw">throws</span> Exception
+<span class="kw">public</span> <span class="dt">void</span> <span class="fu">prepare</span>(MimeMessage message) <span class="kw">throws</span> <span class="bu">Exception</span>
 {
 MimeMessageHelper helper = <span class="kw">new</span> <span class="fu">MimeMessageHelper</span>(message);
 helper.<span class="fu">setTo</span>(<span class="st">&quot;wfq@livedoor.cn&quot;</span>);

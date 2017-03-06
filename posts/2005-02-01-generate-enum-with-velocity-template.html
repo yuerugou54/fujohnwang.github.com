@@ -78,8 +78,8 @@
     
     </h1>
     -->
-    <a href="/"><img src="/images/afoo.PNG"/></a>
-		<p class="masthead-lead">瞎子摸象的践行者</p>
+    <a href="/"><h1>扶墙老师说</h1></a>
+		<p class="masthead-lead">一个架构士的思考与沉淀</p>
 	
 		<hr class="masthead-hr">
 
@@ -175,12 +175,12 @@ public final class clazz extends Enum
 </ol>
 <p>好了，说了这么些废话，还是用code说话吧：</p>
 <div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="co">// 1.init Config</span>
-   InputStream ins = EnumBuilder.<span class="fu">class</span>.<span class="fu">getResourceAsStream</span>(<span class="st">&quot;v.properties&quot;</span>);
-   Properties prop = <span class="kw">new</span> Properties();
+   <span class="bu">InputStream</span> ins = EnumBuilder.<span class="fu">class</span>.<span class="fu">getResourceAsStream</span>(<span class="st">&quot;v.properties&quot;</span>);
+   <span class="bu">Properties</span> prop = <span class="kw">new</span> <span class="bu">Properties</span>();
    prop.<span class="fu">load</span>(ins);
    Velocity.<span class="fu">init</span>(prop);
    <span class="co">// 2.prepare Data</span>
-   Context context = <span class="kw">new</span> <span class="fu">VelocityContext</span>();
+   <span class="bu">Context</span> context = <span class="kw">new</span> <span class="fu">VelocityContext</span>();
    context.<span class="fu">put</span>(<span class="st">&quot;packageName&quot;</span>,pkg);
    context.<span class="fu">put</span>(<span class="st">&quot;clazz&quot;</span>,clazz);
    context.<span class="fu">put</span>(<span class="st">&quot;enums&quot;</span>,enums);
@@ -192,11 +192,11 @@ public final class clazz extends Enum
             }
             <span class="kw">catch</span>( ResourceNotFoundException rnfe )
             {
-                System.<span class="fu">out</span>.<span class="fu">println</span>(<span class="st">&quot;Example : error : cannot find template &quot;</span>);
+                <span class="bu">System</span>.<span class="fu">out</span>.<span class="fu">println</span>(<span class="st">&quot;Example : error : cannot find template &quot;</span>);
             }
             <span class="kw">catch</span>( ParseErrorException pee )
             {
-                System.<span class="fu">out</span>.<span class="fu">println</span>(<span class="st">&quot;Example : Syntax error in template &quot;</span>);
+                <span class="bu">System</span>.<span class="fu">out</span>.<span class="fu">println</span>(<span class="st">&quot;Example : Syntax error in template &quot;</span>);
             }
             
             <span class="co">// 4. merge the template and context</span>
@@ -205,20 +205,20 @@ public final class clazz extends Enum
 <p>好，以上就是所有的代码了，细节（象异常处理什么的）这里就不写了，大家都明白，是吧？！</p>
 <p>主要工作完成的差不多了，让我们调用我们的EnumBuilder看看:</p>
 <div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="co">// 1.</span>
-  String pkg = <span class="st">&quot;net.darrenwang.enum&quot;</span>;<span class="co">// Package Name of the Class</span>
-  String clazz = <span class="st">&quot;ColorEnum&quot;</span>;        <span class="co">// Enum Class Name</span>
-  List enums = <span class="kw">new</span> ArrayList();      <span class="co">// Enum Names</span>
+  <span class="bu">String</span> pkg = <span class="st">&quot;net.darrenwang.enum&quot;</span>;<span class="co">// Package Name of the Class</span>
+  <span class="bu">String</span> clazz = <span class="st">&quot;ColorEnum&quot;</span>;        <span class="co">// Enum Class Name</span>
+  <span class="bu">List</span> enums = <span class="kw">new</span> <span class="bu">ArrayList</span>();      <span class="co">// Enum Names</span>
   enums.<span class="fu">add</span>(<span class="st">&quot;Red&quot;</span>);
   enums.<span class="fu">add</span>(<span class="st">&quot;Green&quot;</span>);
   enums.<span class="fu">add</span>(<span class="st">&quot;Yellow&quot;</span>);
   enums.<span class="fu">add</span>(<span class="st">&quot;Grey&quot;</span>);
   <span class="co">// 2.</span>
-  Writer writer;
+  <span class="bu">Writer</span> writer;
   <span class="kw">try</span> {
-   writer = <span class="kw">new</span> FileWriter(<span class="st">&quot;ColorEnum.java&quot;</span>);
+   writer = <span class="kw">new</span> <span class="bu">FileWriter</span>(<span class="st">&quot;ColorEnum.java&quot;</span>);
 <span class="co">//   writer = writer = new BufferedWriter(new OutputStreamWriter(System.out));</span>
    EnumBuilder.<span class="fu">buildEnum</span>(<span class="st">&quot;net.darrenwang.enum&quot;</span>,<span class="st">&quot;ColorEnum&quot;</span>,enums,writer);
-  } <span class="kw">catch</span> (IOException e) {
+  } <span class="kw">catch</span> (<span class="bu">IOException</span> e) {
    e.<span class="fu">printStackTrace</span>();
   }</code></pre></div>
 <p>哈哈，大功告成！不过，来之不易啊，有谁知道要让这么简单的东西出来，让我浪费了多少时间啊，呵呵，经验教训还是要总结di ，hoho</p>

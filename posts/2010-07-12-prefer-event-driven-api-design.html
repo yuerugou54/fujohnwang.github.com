@@ -78,8 +78,8 @@
     
     </h1>
     -->
-    <a href="/"><img src="/images/afoo.PNG"/></a>
-		<p class="masthead-lead">瞎子摸象的践行者</p>
+    <a href="/"><h1>扶墙老师说</h1></a>
+		<p class="masthead-lead">一个架构士的思考与沉淀</p>
 	
 		<hr class="masthead-hr">
 
@@ -138,15 +138,15 @@
 <p>So what u will do with such an interface declaration to abstract proper behaviors as per the above scenario? I don't know what u will do(although I have known what someone had done), but I do design this interface this way:</p>
 <div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="kw">public</span> <span class="kw">interface</span> IEventProcessor&lt;E&gt; {  
   
-    <span class="dt">void</span> <span class="fu">onBeginEvent</span>(E event) <span class="kw">throws</span> Exception;  
+    <span class="dt">void</span> <span class="fu">onBeginEvent</span>(E event) <span class="kw">throws</span> <span class="bu">Exception</span>;  
   
-    <span class="dt">void</span> <span class="fu">onJoggingEvent</span>(E event) <span class="kw">throws</span> Exception;  
+    <span class="dt">void</span> <span class="fu">onJoggingEvent</span>(E event) <span class="kw">throws</span> <span class="bu">Exception</span>;  
   
-    <span class="dt">void</span> <span class="fu">onRunningEvent</span>(E event) <span class="kw">throws</span> Exception;  
+    <span class="dt">void</span> <span class="fu">onRunningEvent</span>(E event) <span class="kw">throws</span> <span class="bu">Exception</span>;  
   
-    <span class="dt">void</span> <span class="fu">onSomeEventWeDontCare</span>(E event) <span class="kw">throws</span> Exception;  
+    <span class="dt">void</span> <span class="fu">onSomeEventWeDontCare</span>(E event) <span class="kw">throws</span> <span class="bu">Exception</span>;  
       
-    <span class="dt">void</span> <span class="fu">onOtherEventThatPossible</span>(E event) <span class="kw">throws</span> Exception;  
+    <span class="dt">void</span> <span class="fu">onOtherEventThatPossible</span>(E event) <span class="kw">throws</span> <span class="bu">Exception</span>;  
 }</code></pre></div>
 <p>It's not a big deal u may say, but such design is a proper one as per situation we have above. Why?</p>
 <ol style="list-style-type: decimal">
@@ -159,13 +159,13 @@
 <h1 id="current-procedure-style-api-design-demonstration"><span class="header-section-number">3</span> current procedure style API design demonstration</h1>
 <p>After code review of some team member's code, I found he not only break the top implementation class, but also break the original IEventProcessor abstraction. The IEventProcessor interface had been changed to:</p>
 <div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="kw">public</span> <span class="kw">interface</span> IEventProcessor{  
-    <span class="dt">void</span> <span class="fu">onEvent</span>(<span class="dt">byte</span>[] eventData, <span class="dt">byte</span> eventType) <span class="kw">throws</span> Exception;  
+    <span class="dt">void</span> <span class="fu">onEvent</span>(<span class="dt">byte</span>[] eventData, <span class="dt">byte</span> eventType) <span class="kw">throws</span> <span class="bu">Exception</span>;  
 }  </code></pre></div>
 <p>and of course , an implementation is also given:</p>
 <div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="kw">public</span> <span class="kw">class</span> EventProcessor <span class="kw">implements</span> IEventProcessor&lt;<span class="dt">byte</span>[]&gt; {  
     <span class="co">// fields declarations  </span>
       
-    <span class="kw">public</span> <span class="dt">void</span> <span class="fu">onEvent</span>(<span class="dt">byte</span>[] eventData, <span class="dt">byte</span> eventType) <span class="kw">throws</span> Exception {  
+    <span class="kw">public</span> <span class="dt">void</span> <span class="fu">onEvent</span>(<span class="dt">byte</span>[] eventData, <span class="dt">byte</span> eventType) <span class="kw">throws</span> <span class="bu">Exception</span> {  
         <span class="co">// preconditions checking  </span>
         <span class="dt">byte</span>[] event = ArrayUtils.<span class="fu">subarray</span>(eventData, <span class="dv">1</span>, eventData.<span class="fu">length</span>);  
         <span class="kw">switch</span> (eventType) {  

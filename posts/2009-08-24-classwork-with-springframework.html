@@ -78,8 +78,8 @@
     
     </h1>
     -->
-    <a href="/"><img src="/images/afoo.PNG"/></a>
-		<p class="masthead-lead">瞎子摸象的践行者</p>
+    <a href="/"><h1>扶墙老师说</h1></a>
+		<p class="masthead-lead">一个架构士的思考与沉淀</p>
 	
 		<hr class="masthead-hr">
 
@@ -182,18 +182,18 @@ Tip
 <p>PrioritizedParameterNameDiscoverer纯粹是借助于它所持有的多个ParameterNameDiscoverer来完成方法参数名称的获取工作，它会按照顺序请求它所持有的ParameterNameDiscoverer来完成每一个ParameterNameDiscoverer本应完成的任务。</p>
 <p>AspectJAdviceParameterNameDiscoverer主要用于集成了AspectJ的SpringAOP Advice实现类， 通过它的Javadoc可以获得进一步的详细信息。</p>
 <p>以下是LocalVariableTableParameterNameDiscoverer和ParaNamer的简单使用代码示例：</p>
-<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java">Class&lt;SubscriptionServiceImpl&gt; clazz = SubscriptionServiceImpl.<span class="fu">class</span>;
-Method method = ReflectionUtils.<span class="fu">findMethod</span>(clazz, <span class="st">&quot;listAllSubscription&quot;</span>,<span class="kw">new</span> Class&lt;?&gt;[]{String.<span class="fu">class</span>, Integer.<span class="fu">class</span>,Date.<span class="fu">class</span>,Date.<span class="fu">class</span>} );
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="bu">Class</span>&lt;SubscriptionServiceImpl&gt; clazz = SubscriptionServiceImpl.<span class="fu">class</span>;
+<span class="bu">Method</span> method = ReflectionUtils.<span class="fu">findMethod</span>(clazz, <span class="st">&quot;listAllSubscription&quot;</span>,<span class="kw">new</span> <span class="bu">Class</span>&lt;?&gt;[]{<span class="bu">String</span>.<span class="fu">class</span>, <span class="bu">Integer</span>.<span class="fu">class</span>,<span class="bu">Date</span>.<span class="fu">class</span>,<span class="bu">Date</span>.<span class="fu">class</span>} );
 
 ParameterNameDiscoverer pmDiscoverer = <span class="kw">new</span> <span class="fu">LocalVariableTableParameterNameDiscoverer</span>();
-String[] parameterNames = pmDiscoverer.<span class="fu">getParameterNames</span>(method);
+<span class="bu">String</span>[] parameterNames = pmDiscoverer.<span class="fu">getParameterNames</span>(method);
 
 <span class="co">//        BytecodeReadingParanamer reader = new BytecodeReadingParanamer();</span>
 <span class="co">//        String[] parameterNames = reader.lookupParameterNames(method);</span>
 
-<span class="kw">for</span>(String parameterName : parameterNames)
+<span class="kw">for</span>(<span class="bu">String</span> parameterName : parameterNames)
 {
-    System.<span class="fu">out</span>.<span class="fu">println</span>(parameterName);
+    <span class="bu">System</span>.<span class="fu">out</span>.<span class="fu">println</span>(parameterName);
 }    </code></pre></div>
 <h1 id="classpath-auto-scanning-功能"><span class="header-section-number">3</span> classpath auto scanning 功能</h1>
 <p>我们知道，Spring2.5之后引入了类路径的自动扫描功能，Spring框架为这一功能提供了很好的扩展点，我们可以通过BeanNameGenerator或者自定义的org.springframework.core.type.filter.TypeFilter来定制自动扫描的行为， 比如：</p>
@@ -208,8 +208,8 @@ MetadataReaderFactory metadataReaderFactory = <span class="kw">new</span> <span 
 MetadataReader reader = metadataReaderFactory.<span class="fu">getMetadataReader</span>(<span class="st">&quot;cn/spring21/code/samples/spring/controller/SimpleController&quot;</span>);
 AnnotationMetadata annotationMD = reader.<span class="fu">getAnnotationMetadata</span>();
 ClassMetadata clazzMD = reader.<span class="fu">getClassMetadata</span>();
-System.<span class="fu">out</span>.<span class="fu">println</span>(annotationMD.<span class="fu">hasAnnotation</span>(<span class="st">&quot;org.springframework.stereotype.Component&quot;</span>));
-System.<span class="fu">out</span>.<span class="fu">println</span>(clazzMD.<span class="fu">getClassName</span>());</code></pre></div>
+<span class="bu">System</span>.<span class="fu">out</span>.<span class="fu">println</span>(annotationMD.<span class="fu">hasAnnotation</span>(<span class="st">&quot;org.springframework.stereotype.Component&quot;</span>));
+<span class="bu">System</span>.<span class="fu">out</span>.<span class="fu">println</span>(clazzMD.<span class="fu">getClassName</span>());</code></pre></div>
 <p>ResourcePatternResolver主要用于加载相应的Resources， 这里就是class文件， MetadataReaderFactory用于构造相应的MetadataReader，它有两个实现类，即SimpleMetadataReaderFactory和CachingMetadataReaderFactory。通过相应MetadataReaderFactory实现类获得可用的MetadataReader之后，就可以根据MetadataReader的getAnnotationMetadata()和getClassMetadata()返回的值对象来提取自己需要的信息了。</p>
 <hr>
 <div>

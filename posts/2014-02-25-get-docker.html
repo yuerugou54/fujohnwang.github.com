@@ -78,8 +78,8 @@
     
     </h1>
     -->
-    <a href="/"><img src="/images/afoo.PNG"/></a>
-		<p class="masthead-lead">瞎子摸象的践行者</p>
+    <a href="/"><h1>扶墙老师说</h1></a>
+		<p class="masthead-lead">一个架构士的思考与沉淀</p>
 	
 		<hr class="masthead-hr">
 
@@ -227,13 +227,13 @@ sudo docker attach -sig-proxy=false $CONTAINER_ID        // “-sig-proxy=false�
 </pre>
 <h1 id="private-registry"><span class="header-section-number">4</span> Private Registry</h1>
 <p>fast way to install/setup a private registry:</p>
-<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">docker</span> run –p 5000 samalba/docker-registry</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="ex">docker</span> run –p 5000 samalba/docker-registry</code></pre></div>
 <p>then use it:</p>
-<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">docker</span> push <span class="kw">&lt;</span>namespace<span class="kw">&gt;</span>/<span class="kw">&lt;</span>name<span class="kw">&gt;</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="ex">docker</span> push <span class="op">&lt;</span>namespace<span class="op">&gt;</span>/<span class="op">&lt;</span>name<span class="op">&gt;</span></code></pre></div>
 <p>Docker uses the namespace to know where to push, if the namespace is an url, it will push on this url:</p>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="co">#push the &lt;name&gt; to your a private registry &lt;url&gt;</span>
 
-$ <span class="kw">docker</span> push <span class="kw">&lt;</span>url<span class="kw">&gt;</span>/<span class="kw">&lt;</span>name<span class="kw">&gt;</span></code></pre></div>
+$ <span class="ex">docker</span> push <span class="op">&lt;</span>url<span class="op">&gt;</span>/<span class="op">&lt;</span>name<span class="op">&gt;</span></code></pre></div>
 <h1 id="系统细节"><span class="header-section-number">5</span> 系统细节</h1>
 <h2 id="docker元数据存放位置"><span class="header-section-number">5.1</span> docker元数据存放位置</h2>
 <pre>

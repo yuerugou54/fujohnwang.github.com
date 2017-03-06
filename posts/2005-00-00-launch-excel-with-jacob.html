@@ -78,8 +78,8 @@
     
     </h1>
     -->
-    <a href="/"><img src="/images/afoo.PNG"/></a>
-		<p class="masthead-lead">瞎子摸象的践行者</p>
+    <a href="/"><h1>扶墙老师说</h1></a>
+		<p class="masthead-lead">一个架构士的思考与沉淀</p>
 	
 		<hr class="masthead-hr">
 
@@ -129,29 +129,29 @@
 <p>虽然可以顺利的启动excel文件但是都不能满足日方的要求，所以，最终我还是要转到其他的方案。</p>
 <p>其实那，我在之前就发现了jacob，但是，我对于com不是很熟悉，因为我真的是一个纯粹的java developer呵呵，所以，我对他有抵触情绪，能不用尽量不用，虽然我隐约感觉道他正是我要找的东西。当然，最终，我也硬着头皮钻进去看看如何使其为我所用。</p>
 <p>我在yahoo的jacob新闻组中发了帖子，请求帮助，最终收到了Samir的答复，在这里再次谢谢Samir的帮助。他开始给我发了一个类，但是好像不是很顺利，所以，我请求他发一个完整的实例给我，他也在百忙之中给予了我帮助（他祖籍印度，现在移民澳大利亚，职位是架构师）。下面是他给我的原始类：</p>
-<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="kw">import com.jacob.activeX.ActiveXComponent;</span>
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="kw">import</span><span class="im"> com.jacob.activeX.ActiveXComponent;</span>
 
-<span class="kw">import com.jacob.com.ComThread;</span>
-<span class="kw">import com.jacob.com.Dispatch;</span>
+<span class="kw">import</span><span class="im"> com.jacob.com.ComThread;</span>
+<span class="kw">import</span><span class="im"> com.jacob.com.Dispatch;</span>
 
-<span class="kw">import com.jacob.com.Variant;</span>
+<span class="kw">import</span><span class="im"> com.jacob.com.Variant;</span>
 
  
 
 <span class="co">/**</span>
 
-<span class="co">* </span><span class="kw">@author </span><span class="co">Samir Kumar Mishra</span>
+<span class="co">* </span><span class="kw">@author </span>Samir Kumar Mishra
 
 <span class="co">*/</span>
 
 <span class="kw">public</span> <span class="kw">class</span> ExcelTest {
 
     ActiveXComponent excel;
-    Dispatch excelApp;
-    Dispatch workBooks;
+    <span class="bu">Dispatch</span> excelApp;
+    <span class="bu">Dispatch</span> workBooks;
     Variant wBooks;
 
-    <span class="kw">public</span> <span class="dt">static</span> <span class="dt">void</span> <span class="fu">main</span>(String[] args) {
+    <span class="kw">public</span> <span class="dt">static</span> <span class="dt">void</span> <span class="fu">main</span>(<span class="bu">String</span>[] args) {
         ExcelTest excelTest = <span class="kw">new</span> <span class="fu">ExcelTest</span>();
         <span class="co">//excelTest.print();</span>
       
@@ -168,8 +168,8 @@
         workBooks = excel.<span class="fu">getProperty</span>(<span class="st">&quot;WorkBooks&quot;</span>).<span class="fu">toDispatch</span>();
 
     }
-    <span class="kw">public</span> <span class="dt">void</span> <span class="fu">addWorkBook</span>(String fileName) {
-        wBooks = Dispatch.<span class="fu">callN</span>(workBooks, <span class="st">&quot;Open&quot;</span>, <span class="kw">new</span> Object[] {fileName});
+    <span class="kw">public</span> <span class="dt">void</span> <span class="fu">addWorkBook</span>(<span class="bu">String</span> fileName) {
+        wBooks = <span class="bu">Dispatch</span>.<span class="fu">callN</span>(workBooks, <span class="st">&quot;Open&quot;</span>, <span class="kw">new</span> <span class="bu">Object</span>[] {fileName});
     }
     <span class="kw">public</span> <span class="dt">void</span> <span class="fu">release</span>() {
         excel.<span class="fu">invoke</span>(<span class="st">&quot;Quit&quot;</span>, <span class="kw">new</span> Variant[] {});
@@ -177,23 +177,23 @@
 }</code></pre></div>
 <p>现在我们可以多次调用addWorkbook方法来启动多个excel文件了，完成任务了不是嘛？！呵呵，少安毋躁，怎么windows的任务管理器的进程中那个excel在java程序推出后还是没有消失那？！我问了Samir，他说现在的进程应该已经不在java的管理范围之列了，我也同意，因为现在的excel进程应该属于本地的了。但是这样交工肯定不行，而我高中同学秦春雷的提醒促使我再次钻进jacob的文档，呵呵，而最终也发现了问题的所在。</p>
 <p>下面是我对Samir的类进行改进后的成果：</p>
-<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="kw">package com.livedoor.finance.credit.admin.business.event.util;</span>
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="kw">package</span><span class="im"> com.livedoor.finance.credit.admin.business.event.util;</span>
 
-<span class="kw">import com.jacob.com.Variant;</span>
-<span class="kw">import com.jacob.com.Dispatch;</span>
-<span class="kw">import com.jacob.com.ComThread;</span>
-<span class="kw">import com.jacob.activeX.ActiveXComponent;</span>
+<span class="kw">import</span><span class="im"> com.jacob.com.Variant;</span>
+<span class="kw">import</span><span class="im"> com.jacob.com.Dispatch;</span>
+<span class="kw">import</span><span class="im"> com.jacob.com.ComThread;</span>
+<span class="kw">import</span><span class="im"> com.jacob.activeX.ActiveXComponent;</span>
 
 <span class="co">/**</span>
-<span class="co"> * </span><span class="kw">@author </span><span class="co">Darren.Wang</span>
-<span class="co"> * 2005/03/17</span>
-<span class="co"> *  Thanks to Samir(who is in Australia), without his help , I can&#39;&#39;t complete this work.</span>
-<span class="co"> */</span>
+ <span class="co">* </span><span class="kw">@author </span>Darren<span class="co">.</span>Wang
+ <span class="co">*</span> <span class="co">2005/03/17</span>
+ <span class="co">*</span>  Thanks to Samir<span class="co">(</span>who is in Australia<span class="co">),</span> without his help <span class="co">,</span> I can<span class="co">&#39;&#39;</span>t complete this work<span class="co">.</span>
+ <span class="co">*/</span>
 <span class="kw">public</span> <span class="kw">class</span> JacobExcelLauncher {
     <span class="co">// excel automation</span>
     <span class="kw">private</span> ActiveXComponent excel;
     <span class="co">// excel workbooks </span>
-    <span class="kw">private</span> Dispatch workbooks;
+    <span class="kw">private</span> <span class="bu">Dispatch</span> workbooks;
     <span class="co">// excel file varient</span>
     <span class="kw">private</span> Variant workbook;
     
@@ -215,12 +215,12 @@
 <span class="co">     *  Launch Excel file with this method, </span>
 <span class="co">     *  it can be invoked many times</span>
 <span class="co">     */</span>
-    <span class="kw">public</span> <span class="dt">void</span> <span class="fu">launch</span>(String fileName)
+    <span class="kw">public</span> <span class="dt">void</span> <span class="fu">launch</span>(<span class="bu">String</span> fileName)
     {
         <span class="co">// now make it appear</span>
         excel.<span class="fu">setProperty</span>(<span class="st">&quot;Visible&quot;</span>,<span class="kw">new</span> <span class="fu">Variant</span>(<span class="kw">true</span>));
         <span class="co">// open the excel file</span>
-        workbook = Dispatch.<span class="fu">callN</span>(workbooks,<span class="st">&quot;Open&quot;</span>,<span class="kw">new</span> Object[]{fileName});
+        workbook = <span class="bu">Dispatch</span>.<span class="fu">callN</span>(workbooks,<span class="st">&quot;Open&quot;</span>,<span class="kw">new</span> <span class="bu">Object</span>[]{fileName});
     }
     
     <span class="co">/*</span>
@@ -235,7 +235,7 @@
         ComThread.<span class="fu">Release</span>();
     }
     
-    <span class="kw">public</span> <span class="dt">static</span> <span class="dt">void</span> <span class="fu">main</span>(String[] args) {
+    <span class="kw">public</span> <span class="dt">static</span> <span class="dt">void</span> <span class="fu">main</span>(<span class="bu">String</span>[] args) {
         JacobExcelLauncher launcher = <span class="kw">new</span> <span class="fu">JacobExcelLauncher</span>();
         launcher.<span class="fu">launch</span>(<span class="st">&quot;c:/workbook.xls&quot;</span>);
         launcher.<span class="fu">launch</span>(<span class="st">&quot;c:/workbook2.xls&quot;</span>);

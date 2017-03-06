@@ -78,8 +78,8 @@
     
     </h1>
     -->
-    <a href="/"><img src="/images/afoo.PNG"/></a>
-		<p class="masthead-lead">瞎子摸象的践行者</p>
+    <a href="/"><h1>扶墙老师说</h1></a>
+		<p class="masthead-lead">一个架构士的思考与沉淀</p>
 	
 		<hr class="masthead-hr">
 
@@ -168,7 +168,7 @@
 <h1 id="操作"><span class="header-section-number">2</span> 操作</h1>
 <p>plist只是配置，要执行这些配置，需要使用<strong>launchctl</strong>命令， 它运行你罗列信息， 加载，卸载，启动和关闭agents或者daemons</p>
 <h2 id="获取信息"><span class="header-section-number">2.1</span> 获取信息</h2>
-<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">sudo</span> launchctl list</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="fu">sudo</span> launchctl list</code></pre></div>
 返回结果类似于：
 <pre>
 ...
@@ -181,8 +181,8 @@
 <p>第一列表示进程号，如果有在结果中罗列，但没有数字而只是一个横线，标志虽然已经loaded， 但没有运行；</p>
 <p>第二列是上次退出的状态号(the last exit code), 0表示成功，正数表示错误退出， 负数表示收到信号后退出。</p>
 <h2 id="加载或者卸载load-unload"><span class="header-section-number">2.2</span> 加载或者卸载(load / unload)</h2>
-<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">launchctl</span> load ~/Library/LaunchAgents/com.example.app.plist
-<span class="kw">launchctl</span> load -F ~/Library/LaunchAgents/com.example.app.plist   // 如果被disabled的话， 强制启动</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="ex">launchctl</span> load ~/Library/LaunchAgents/com.example.app.plist
+<span class="ex">launchctl</span> load -F ~/Library/LaunchAgents/com.example.app.plist   // 如果被disabled的话， 强制启动</code></pre></div>
 <p>例如Jenkins：</p>
 <ul>
 <li>Start Jenkins:
@@ -196,8 +196,8 @@
 </ul>
 <h2 id="启动或者停止startstop"><span class="header-section-number">2.3</span> 启动或者停止(start/stop)</h2>
 <p>agents或者daemons可以加载但不启动，所以，事后可以单独启动或者关闭：</p>
-<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">launchctl</span> start com.example.app
-<span class="kw">launchctl</span> stop com.example.app</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="ex">launchctl</span> start com.example.app
+<span class="ex">launchctl</span> stop com.example.app</code></pre></div>
 <h1 id="references"><span class="header-section-number">3</span> References</h1>
 <ol style="list-style-type: decimal">
 <li><a href="https://developer.apple.com/library/mac/technotes/tn2083/_index.html">Daemons and Agents</a> - 手册， 太jm详细了，就是看着挺繁琐...</li>

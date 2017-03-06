@@ -78,8 +78,8 @@
     
     </h1>
     -->
-    <a href="/"><img src="/images/afoo.PNG"/></a>
-		<p class="masthead-lead">瞎子摸象的践行者</p>
+    <a href="/"><h1>扶墙老师说</h1></a>
+		<p class="masthead-lead">一个架构士的思考与沉淀</p>
 	
 		<hr class="masthead-hr">
 
@@ -130,8 +130,8 @@
 
 <span class="co">// ---------------------------</span>
 
-<span class="fu">@Override</span>
-<span class="kw">public</span> <span class="dt">void</span> <span class="fu">finalize</span>() <span class="kw">throws</span> Throwable {
+<span class="at">@Override</span>
+<span class="kw">public</span> <span class="dt">void</span> <span class="fu">finalize</span>() <span class="kw">throws</span> <span class="bu">Throwable</span> {
     something.<span class="fu">destroy</span>();
     <span class="co">// or</span>
     something.<span class="fu">close</span>();
@@ -141,33 +141,33 @@
 <h1 id="cyclicbarrier-first"><span class="header-section-number">1</span> CyclicBarrier First</h1>
 <p>CyclicBarrier就像个栅栏（好像是废话，人家名字就说明问题了嘛），它将拦截规定数目的线程执行，正常情况下， 只有当所有线程都完成工作到达这个栅栏之后，CyclicBarrier才会放行，让后面的逻辑得以执行。 简单点儿说，其实这东西挺适合解决我们刚才假设的问题场景的。</p>
 <p>首先介绍最简单的“选手 ”，我们的BatchTask和RealtimeTask：</p>
-<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="kw">public</span> <span class="kw">class</span> BatchTask <span class="kw">implements</span> Runnable {
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="kw">public</span> <span class="kw">class</span> BatchTask <span class="kw">implements</span> <span class="bu">Runnable</span> {
 
     <span class="kw">public</span> <span class="dt">void</span> <span class="fu">run</span>() {
         <span class="co">// TODO your batch task logic</span>
     }
 }
 
-<span class="kw">public</span> <span class="kw">class</span> RealtimeTask <span class="kw">implements</span> Runnable {
+<span class="kw">public</span> <span class="kw">class</span> RealtimeTask <span class="kw">implements</span> <span class="bu">Runnable</span> {
 
     <span class="kw">public</span> <span class="dt">void</span> <span class="fu">run</span>() {
         <span class="co">// TODO your real-time task logic</span>
     }
 }</code></pre></div>
 <p>简单的不能再简单了，呵呵，别骂我哈，为啥这么简单，待会儿再说。 接下来是针对我们的假设所给出的使用CyclicBarrier的解决方案：</p>
-<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="kw">public</span> <span class="kw">class</span> CyclicBarrierTaskScheduler <span class="kw">implements</span> Runnable {
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="kw">public</span> <span class="kw">class</span> CyclicBarrierTaskScheduler <span class="kw">implements</span> <span class="bu">Runnable</span> {
     
-    <span class="kw">private</span> CyclicBarrier cyclicBarrier;
+    <span class="kw">private</span> <span class="bu">CyclicBarrier</span> cyclicBarrier;
     <span class="kw">private</span> <span class="dt">int</span>           batchTaskNumbers;
     <span class="kw">private</span> <span class="dt">int</span>           realtimeTaskNumbers;
     
     <span class="co">// you can set an ExecutorService extenally</span>
-    <span class="kw">private</span> ExecutorService executor = Executors.<span class="fu">newFixedThreadPool</span>(<span class="dv">10</span>);
+    <span class="kw">private</span> <span class="bu">ExecutorService</span> executor = <span class="bu">Executors</span>.<span class="fu">newFixedThreadPool</span>(<span class="dv">10</span>);
 
     <span class="kw">public</span> <span class="dt">void</span> <span class="fu">run</span>() {
         <span class="co">// pre-validate on states of current object</span>
         
-        cyclicBarrier = <span class="kw">new</span> CyclicBarrier(<span class="fu">getBatchTaskNumbers</span>(), <span class="kw">new</span> Runnable(){
+        cyclicBarrier = <span class="kw">new</span> <span class="bu">CyclicBarrier</span>(<span class="fu">getBatchTaskNumbers</span>(), <span class="kw">new</span> <span class="bu">Runnable</span>(){
             <span class="kw">public</span> <span class="dt">void</span> <span class="fu">run</span>() {
                 <span class="kw">for</span>(<span class="dt">int</span> i=<span class="dv">0</span>;i&lt;<span class="fu">getRealtimeTaskNumbers</span>();i++)
                 {
@@ -177,14 +177,14 @@
         
         <span class="kw">for</span>(<span class="dt">int</span> i=<span class="dv">0</span>;i&lt;<span class="fu">getBatchTaskNumbers</span>();i++)
         {
-            <span class="fu">getExecutor</span>().<span class="fu">execute</span>(<span class="kw">new</span> Runnable(){
+            <span class="fu">getExecutor</span>().<span class="fu">execute</span>(<span class="kw">new</span> <span class="bu">Runnable</span>(){
                 <span class="kw">public</span> <span class="dt">void</span> <span class="fu">run</span>() {
                     <span class="kw">new</span> <span class="fu">BatchTask</span>().<span class="fu">run</span>();
                     <span class="kw">try</span> {
                         <span class="fu">getCyclicBarrier</span>().<span class="fu">await</span>();
-                    } <span class="kw">catch</span> (InterruptedException e) {
+                    } <span class="kw">catch</span> (<span class="bu">InterruptedException</span> e) {
                         e.<span class="fu">printStackTrace</span>(); <span class="co">// process exception as per your need</span>
-                    } <span class="kw">catch</span> (BrokenBarrierException e) {
+                    } <span class="kw">catch</span> (<span class="bu">BrokenBarrierException</span> e) {
                         e.<span class="fu">printStackTrace</span>(); <span class="co">// process exception as per your need</span>
                     }
                 }});
@@ -198,14 +198,14 @@
         {
             <span class="fu">getExecutor</span>().<span class="fu">shutdown</span>();
             <span class="kw">try</span> {
-                <span class="fu">getExecutor</span>().<span class="fu">awaitTermination</span>(Integer.<span class="fu">MAX_VALUE</span>, TimeUnit.<span class="fu">SECONDS</span>);
-            } <span class="kw">catch</span> (InterruptedException e) {
+                <span class="fu">getExecutor</span>().<span class="fu">awaitTermination</span>(<span class="bu">Integer</span>.<span class="fu">MAX_VALUE</span>, <span class="bu">TimeUnit</span>.<span class="fu">SECONDS</span>);
+            } <span class="kw">catch</span> (<span class="bu">InterruptedException</span> e) {
                 e.<span class="fu">printStackTrace</span>(); <span class="co">// process exception as per your need</span>
             }
         }
     }
 
-    <span class="kw">public</span> CyclicBarrier <span class="fu">getCyclicBarrier</span>() {
+    <span class="kw">public</span> <span class="bu">CyclicBarrier</span> <span class="fu">getCyclicBarrier</span>() {
         <span class="kw">return</span> cyclicBarrier;
     }
 
@@ -225,15 +225,15 @@
         <span class="kw">this</span>.<span class="fu">realtimeTaskNumbers</span> = realtimeTaskNumbers;
     }
 
-    <span class="kw">public</span> ExecutorService <span class="fu">getExecutor</span>() {
+    <span class="kw">public</span> <span class="bu">ExecutorService</span> <span class="fu">getExecutor</span>() {
         <span class="kw">return</span> executor;
     }
 
-    <span class="kw">public</span> <span class="dt">void</span> <span class="fu">setExecutor</span>(ExecutorService executor) {
+    <span class="kw">public</span> <span class="dt">void</span> <span class="fu">setExecutor</span>(<span class="bu">ExecutorService</span> executor) {
         <span class="kw">this</span>.<span class="fu">executor</span> = executor;
     }
     
-    <span class="kw">public</span> <span class="dt">static</span> <span class="dt">void</span> <span class="fu">main</span>(String[] args)
+    <span class="kw">public</span> <span class="dt">static</span> <span class="dt">void</span> <span class="fu">main</span>(<span class="bu">String</span>[] args)
     {
         CyclicBarrierTaskScheduler taskScheduler = <span class="kw">new</span> <span class="fu">CyclicBarrierTaskScheduler</span>();
         taskScheduler.<span class="fu">setBatchTaskNumbers</span>(<span class="dv">10</span>);
@@ -259,14 +259,14 @@
 <p>有了CyclicBarrier的实例之后，我们需要通过某种方式告知这个CyclicBarrier都有哪些线程已经执行完成并到达了CyclicBarrier设定的边界（其实就是个计数）， 这个是通过CyclicBarrier的await()方法来完成的，所以也就有了接下来这段代码：</p>
 <div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="kw">for</span>(<span class="dt">int</span> i=<span class="dv">0</span>;i&lt;<span class="fu">getBatchTaskNumbers</span>();i++)
     {
-        <span class="fu">getExecutor</span>().<span class="fu">execute</span>(<span class="kw">new</span> Runnable(){
+        <span class="fu">getExecutor</span>().<span class="fu">execute</span>(<span class="kw">new</span> <span class="bu">Runnable</span>(){
             <span class="kw">public</span> <span class="dt">void</span> <span class="fu">run</span>() {
                 <span class="kw">new</span> <span class="fu">BatchTask</span>().<span class="fu">run</span>();
                 <span class="kw">try</span> {
                     <span class="fu">getCyclicBarrier</span>().<span class="fu">await</span>();
-                } <span class="kw">catch</span> (InterruptedException e) {
+                } <span class="kw">catch</span> (<span class="bu">InterruptedException</span> e) {
                     e.<span class="fu">printStackTrace</span>(); <span class="co">// process exception as per your need</span>
-                } <span class="kw">catch</span> (BrokenBarrierException e) {
+                } <span class="kw">catch</span> (<span class="bu">BrokenBarrierException</span> e) {
                     e.<span class="fu">printStackTrace</span>(); <span class="co">// process exception as per your need</span>
                 }
             }});
@@ -276,18 +276,18 @@
 <div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="kw">public</span> <span class="dt">void</span> <span class="fu">run</span>() {
         <span class="co">// pre-validate on states of current object</span>
         
-        cyclicBarrier = <span class="kw">new</span> CyclicBarrier(<span class="fu">getBatchTaskNumbers</span>()+<span class="dv">1</span>);
+        cyclicBarrier = <span class="kw">new</span> <span class="bu">CyclicBarrier</span>(<span class="fu">getBatchTaskNumbers</span>()+<span class="dv">1</span>);
         
         <span class="kw">for</span>(<span class="dt">int</span> i=<span class="dv">0</span>;i&lt;<span class="fu">getBatchTaskNumbers</span>();i++)
         {
-            <span class="fu">getExecutor</span>().<span class="fu">execute</span>(<span class="kw">new</span> Runnable(){
+            <span class="fu">getExecutor</span>().<span class="fu">execute</span>(<span class="kw">new</span> <span class="bu">Runnable</span>(){
                 <span class="kw">public</span> <span class="dt">void</span> <span class="fu">run</span>() {
                     <span class="kw">new</span> <span class="fu">BatchTask</span>().<span class="fu">run</span>();
                     <span class="kw">try</span> {
                         <span class="fu">getCyclicBarrier</span>().<span class="fu">await</span>();
-                    } <span class="kw">catch</span> (InterruptedException e) {
+                    } <span class="kw">catch</span> (<span class="bu">InterruptedException</span> e) {
                         e.<span class="fu">printStackTrace</span>(); <span class="co">// process exception as per your need</span>
-                    } <span class="kw">catch</span> (BrokenBarrierException e) {
+                    } <span class="kw">catch</span> (<span class="bu">BrokenBarrierException</span> e) {
                         e.<span class="fu">printStackTrace</span>(); <span class="co">// process exception as per your need</span>
                     }
                 }});
@@ -295,10 +295,10 @@
         
         <span class="kw">try</span> {
             cyclicBarrier.<span class="fu">await</span>();
-        } <span class="kw">catch</span> (InterruptedException e) {
+        } <span class="kw">catch</span> (<span class="bu">InterruptedException</span> e) {
             <span class="co">// process exception as per your needs</span>
             e.<span class="fu">printStackTrace</span>();
-        } <span class="kw">catch</span> (BrokenBarrierException e) {
+        } <span class="kw">catch</span> (<span class="bu">BrokenBarrierException</span> e) {
             <span class="co">// process exception as per your needs</span>
             e.<span class="fu">printStackTrace</span>();
         }
@@ -313,22 +313,22 @@
 <h1 id="countdownlatch切这有啥我也行"><span class="header-section-number">2</span> CountDownLatch:切，这有啥，我也行！</h1>
 <p>CountDownLatch，问其名，就知道它干啥的，不就个计数门闩嘛，呵呵，more or less， 这个CountDownLatch吧，跟CyclicBarrier差不多啦， 也是接收个计数，然后在某个线程里面await()住，也就是闩住这个线程的执行，之后，其他线程就可以通过countDown()来减少计数，当计数减少为0 的时候， 被闩住的那个线程就会被放行啦。</p>
 <p>拿到我们假设的那个问题场景下来说，就是，我先通过CountDownLatch的await()暂停一下，让所有batchTaskNumbers数量的Batch Task都执行完， 然后采取执行RealtimeTask，不过，为了能够让CountDownLatch的await()不会一直暂停在那里不动，我们会在每一个Batch Task执行完成华，减少CountDownLatch的计数， 用代码说话就是：</p>
-<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="kw">public</span> <span class="kw">class</span> CountDownLatchTaskScheduler <span class="kw">implements</span> Runnable {
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="kw">public</span> <span class="kw">class</span> CountDownLatchTaskScheduler <span class="kw">implements</span> <span class="bu">Runnable</span> {
     
-    <span class="kw">private</span> CountDownLatch latch;
+    <span class="kw">private</span> <span class="bu">CountDownLatch</span> latch;
     <span class="kw">private</span> <span class="dt">int</span>            batchTaskNumbers;
     <span class="kw">private</span> <span class="dt">int</span>            realtimeTaskNumbers;
     
     <span class="co">// you can set an ExecutorService extenally</span>
-    <span class="kw">private</span> ExecutorService executor = Executors.<span class="fu">newFixedThreadPool</span>(<span class="dv">10</span>);
+    <span class="kw">private</span> <span class="bu">ExecutorService</span> executor = <span class="bu">Executors</span>.<span class="fu">newFixedThreadPool</span>(<span class="dv">10</span>);
 
     <span class="kw">public</span> <span class="dt">void</span> <span class="fu">run</span>() {
         <span class="co">// pre-validate on states of current object</span>
-        latch = <span class="kw">new</span> CountDownLatch(<span class="fu">getBatchTaskNumbers</span>());
+        latch = <span class="kw">new</span> <span class="bu">CountDownLatch</span>(<span class="fu">getBatchTaskNumbers</span>());
         
         <span class="kw">for</span>(<span class="dt">int</span> i=<span class="dv">0</span>;i&lt;<span class="fu">getBatchTaskNumbers</span>();i++)
         {
-            <span class="fu">getExecutor</span>().<span class="fu">execute</span>(<span class="kw">new</span> Runnable(){
+            <span class="fu">getExecutor</span>().<span class="fu">execute</span>(<span class="kw">new</span> <span class="bu">Runnable</span>(){
                 <span class="kw">public</span> <span class="dt">void</span> <span class="fu">run</span>() {
                     <span class="kw">new</span> <span class="fu">BatchTask</span>().<span class="fu">run</span>();
                     
@@ -337,7 +337,7 @@
         }
         <span class="kw">try</span> {
             <span class="fu">getLatch</span>().<span class="fu">await</span>();
-        } <span class="kw">catch</span> (InterruptedException e) {
+        } <span class="kw">catch</span> (<span class="bu">InterruptedException</span> e) {
             <span class="co">// process exception as per your needs</span>
             e.<span class="fu">printStackTrace</span>();
         }
@@ -355,14 +355,14 @@
         {
             <span class="fu">getExecutor</span>().<span class="fu">shutdown</span>();
             <span class="kw">try</span> {
-                <span class="fu">getExecutor</span>().<span class="fu">awaitTermination</span>(Integer.<span class="fu">MAX_VALUE</span>, TimeUnit.<span class="fu">SECONDS</span>);
-            } <span class="kw">catch</span> (InterruptedException e) {
+                <span class="fu">getExecutor</span>().<span class="fu">awaitTermination</span>(<span class="bu">Integer</span>.<span class="fu">MAX_VALUE</span>, <span class="bu">TimeUnit</span>.<span class="fu">SECONDS</span>);
+            } <span class="kw">catch</span> (<span class="bu">InterruptedException</span> e) {
                 e.<span class="fu">printStackTrace</span>(); <span class="co">// process exception as per your need</span>
             }
         }
     }
 
-    <span class="kw">public</span> CountDownLatch <span class="fu">getLatch</span>() {
+    <span class="kw">public</span> <span class="bu">CountDownLatch</span> <span class="fu">getLatch</span>() {
         <span class="kw">return</span> latch;
     }
 
@@ -382,15 +382,15 @@
         <span class="kw">this</span>.<span class="fu">realtimeTaskNumbers</span> = realtimeTaskNumbers;
     }
 
-    <span class="kw">public</span> ExecutorService <span class="fu">getExecutor</span>() {
+    <span class="kw">public</span> <span class="bu">ExecutorService</span> <span class="fu">getExecutor</span>() {
         <span class="kw">return</span> executor;
     }
 
-    <span class="kw">public</span> <span class="dt">void</span> <span class="fu">setExecutor</span>(ExecutorService executor) {
+    <span class="kw">public</span> <span class="dt">void</span> <span class="fu">setExecutor</span>(<span class="bu">ExecutorService</span> executor) {
         <span class="kw">this</span>.<span class="fu">executor</span> = executor;
     }
     
-    <span class="kw">public</span> <span class="dt">static</span> <span class="dt">void</span> <span class="fu">main</span>(String[] args)
+    <span class="kw">public</span> <span class="dt">static</span> <span class="dt">void</span> <span class="fu">main</span>(<span class="bu">String</span>[] args)
     {
         CountDownLatchTaskScheduler taskScheduler = <span class="kw">new</span> <span class="fu">CountDownLatchTaskScheduler</span>();
         taskScheduler.<span class="fu">setBatchTaskNumbers</span>(<span class="dv">10</span>);
@@ -409,25 +409,25 @@
 <p>我们根据batchTaskNumbers的数量构建了一个CountDownLatch，然后提交Batch Task执行，之后，通过CountDownLatch的await()方法等待所有这些Batch Task执行完毕，然后再接着执行后面的逻辑。 至于await()如何知道什么才不await()了，当然就是当每一个Batch Task执行之后都countDown()之后啦。</p>
 <p>另外，我们还可以换一个角度来看待或者说使用CountDownLatch，当然，这个跟我们的假设场景并没啥关系了，纯粹是CountDownLatch相关的内容。 我们上面是在主要的执行线程里面await()，然后在其他执行线程里面countDown;反过来，我们也可以在主要的执行线程里面countDown，然后在执行线程里面await()， 这个时候，那些await的执行线程就好比一匹匹急欲冲出栅栏的赛马，当主要线程里countDown一声枪响之后，这些await的执行线程才会开始执行。</p>
 <p>比如，我们为新的CountDownLatchTaskScheduler再添加一个CountDownLatch，这个CountDownLatch将 负责控制RealtimeTask，只有CountDownLatch的计数减少到0之后，这些RealtimeTask才可以才是执行， 这实际上又做了一遍“代码清单 3 ”里那个CountDownLatch的工作，对我们当前假设场景没啥太大意义，不过，两个对比这看,或许也还可以:</p>
-<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="kw">public</span> <span class="kw">class</span> CountDownLatchTaskScheduler <span class="kw">implements</span> Runnable {
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="kw">public</span> <span class="kw">class</span> CountDownLatchTaskScheduler <span class="kw">implements</span> <span class="bu">Runnable</span> {
     
-    <span class="kw">private</span> CountDownLatch latch;
+    <span class="kw">private</span> <span class="bu">CountDownLatch</span> latch;
     
-    <span class="kw">private</span> CountDownLatch signalLatch = <span class="kw">new</span> CountDownLatch(<span class="dv">1</span>);
+    <span class="kw">private</span> <span class="bu">CountDownLatch</span> signalLatch = <span class="kw">new</span> <span class="bu">CountDownLatch</span>(<span class="dv">1</span>);
     
     <span class="kw">private</span> <span class="dt">int</span>            batchTaskNumbers;
     <span class="kw">private</span> <span class="dt">int</span>            realtimeTaskNumbers;
     
     <span class="co">// you can set an ExecutorService extenally</span>
-    <span class="kw">private</span> ExecutorService executor = Executors.<span class="fu">newFixedThreadPool</span>(<span class="dv">10</span>);
+    <span class="kw">private</span> <span class="bu">ExecutorService</span> executor = <span class="bu">Executors</span>.<span class="fu">newFixedThreadPool</span>(<span class="dv">10</span>);
 
     <span class="kw">public</span> <span class="dt">void</span> <span class="fu">run</span>() {
         <span class="co">// pre-validate on states of current object</span>
-        latch = <span class="kw">new</span> CountDownLatch(<span class="fu">getBatchTaskNumbers</span>());
+        latch = <span class="kw">new</span> <span class="bu">CountDownLatch</span>(<span class="fu">getBatchTaskNumbers</span>());
         
         <span class="kw">for</span>(<span class="dt">int</span> i=<span class="dv">0</span>;i&lt;<span class="fu">getBatchTaskNumbers</span>();i++)
         {
-            <span class="fu">getExecutor</span>().<span class="fu">execute</span>(<span class="kw">new</span> Runnable(){
+            <span class="fu">getExecutor</span>().<span class="fu">execute</span>(<span class="kw">new</span> <span class="bu">Runnable</span>(){
                 <span class="kw">public</span> <span class="dt">void</span> <span class="fu">run</span>() {
                     <span class="kw">new</span> <span class="fu">BatchTask</span>().<span class="fu">run</span>();
                     
@@ -437,12 +437,12 @@
         
         <span class="kw">for</span>(<span class="dt">int</span> i=<span class="dv">0</span>;i&lt;<span class="fu">getRealtimeTaskNumbers</span>();i++)
         {
-            <span class="fu">getExecutor</span>().<span class="fu">execute</span>(<span class="kw">new</span> Runnable(){
+            <span class="fu">getExecutor</span>().<span class="fu">execute</span>(<span class="kw">new</span> <span class="bu">Runnable</span>(){
 
                 <span class="kw">public</span> <span class="dt">void</span> <span class="fu">run</span>() {
                     <span class="kw">try</span> {
                         <span class="fu">getSignalLatch</span>().<span class="fu">await</span>();
-                    } <span class="kw">catch</span> (InterruptedException e) {
+                    } <span class="kw">catch</span> (<span class="bu">InterruptedException</span> e) {
                         <span class="co">// process exception as per your needs</span>
                     }
                     
@@ -454,7 +454,7 @@
         
         <span class="kw">try</span> {
             <span class="fu">getLatch</span>().<span class="fu">await</span>();
-        } <span class="kw">catch</span> (InterruptedException e) {
+        } <span class="kw">catch</span> (<span class="bu">InterruptedException</span> e) {
             <span class="co">// process exception as per your needs</span>
             e.<span class="fu">printStackTrace</span>();
         }
@@ -468,11 +468,11 @@
 <p>针对CountDownLatch就说这些。</p>
 <h1 id="最后要说的话"><span class="header-section-number">3</span> 最后要说的话</h1>
 <p>现在回过头来说BatchTask和RealtimeTask定义过于简单的问题，实际上，这样定义这两个类是想让各位看官只关注每一个Task类型本该 关心的事情， 至于这些Task如何协调调度执行，则剥离到更外层去； 另一个原因就是，我们现在看到的跟CountDownLatch和CyclicBarrier有关的Samples代码都是直接传入一个 CountDownLatch和CyclicBarrier的共享实例给每一个Task, 例如：</p>
-<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="kw">public</span> <span class="kw">class</span> BatchTask <span class="kw">implements</span> Runnable {
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="kw">public</span> <span class="kw">class</span> BatchTask <span class="kw">implements</span> <span class="bu">Runnable</span> {
 
-    <span class="kw">private</span> CyclicBarrier cyclicBarrier;
+    <span class="kw">private</span> <span class="bu">CyclicBarrier</span> cyclicBarrier;
     
-    <span class="kw">public</span> <span class="fu">BatchTask</span>(CyclicBarrier cyclicBarrier)
+    <span class="kw">public</span> <span class="fu">BatchTask</span>(<span class="bu">CyclicBarrier</span> cyclicBarrier)
     {
         <span class="kw">this</span>.<span class="fu">cyclicBarrier</span> = cyclicBarrier;
     }
@@ -482,21 +482,21 @@
         
         <span class="kw">try</span> {
             cyclicBarrier.<span class="fu">await</span>();
-        } <span class="kw">catch</span> (InterruptedException e) {
+        } <span class="kw">catch</span> (<span class="bu">InterruptedException</span> e) {
             <span class="co">// TODO Auto-generated catch block</span>
             e.<span class="fu">printStackTrace</span>();
-        } <span class="kw">catch</span> (BrokenBarrierException e) {
+        } <span class="kw">catch</span> (<span class="bu">BrokenBarrierException</span> e) {
             <span class="co">// TODO Auto-generated catch block</span>
             e.<span class="fu">printStackTrace</span>();
         }
     }
 }</code></pre></div>
 <p>那么，当我转向讲解CountDownLatch方式的时候，就得再将这个BatchTask的定义改成如下的样子：</p>
-<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="kw">public</span> <span class="kw">class</span> BatchTask <span class="kw">implements</span> Runnable {
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="kw">public</span> <span class="kw">class</span> BatchTask <span class="kw">implements</span> <span class="bu">Runnable</span> {
 
-    <span class="kw">private</span> CountDownLatch latch;
+    <span class="kw">private</span> <span class="bu">CountDownLatch</span> latch;
     
-    <span class="kw">public</span> <span class="fu">BatchTask</span>(CountDownLatch latch)
+    <span class="kw">public</span> <span class="fu">BatchTask</span>(<span class="bu">CountDownLatch</span> latch)
     {
         <span class="kw">this</span>.<span class="fu">latch</span> = latch;
     }

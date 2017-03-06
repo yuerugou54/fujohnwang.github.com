@@ -78,8 +78,8 @@
     
     </h1>
     -->
-    <a href="/"><img src="/images/afoo.PNG"/></a>
-		<p class="masthead-lead">瞎子摸象的践行者</p>
+    <a href="/"><h1>扶墙老师说</h1></a>
+		<p class="masthead-lead">一个架构士的思考与沉淀</p>
 	
 		<hr class="masthead-hr">
 
@@ -147,22 +147,22 @@ client.<span class="fu">getHostConfiguration</span>().<span class="fu">setHost</
 
 PostMethod method = <span class="kw">new</span> <span class="fu">PostMethod</span>(<span class="st">&quot;/examples/basic/servlet/UserAuthServlet&quot;</span>;
 <span class="co">//PostMethod method = new PostMethod(&quot;::URL::http://localhost:8080/examples/basic/servlet/UserAuthServlet&quot; ;</span>
-NameValuePair nameParam = <span class="kw">new</span> NameValuePair(<span class="st">&quot;username&quot;</span>,name);
-NameValuePair pwdParam = <span class="kw">new</span> NameValuePair(<span class="st">&quot;psssword&quot;</span>,pwd);
-method.<span class="fu">setRequestBody</span>(<span class="kw">new</span> NameValuePair[]{nameParam,pwdParam});
+<span class="bu">NameValuePair</span> nameParam = <span class="kw">new</span> <span class="bu">NameValuePair</span>(<span class="st">&quot;username&quot;</span>,name);
+<span class="bu">NameValuePair</span> pwdParam = <span class="kw">new</span> <span class="bu">NameValuePair</span>(<span class="st">&quot;psssword&quot;</span>,pwd);
+method.<span class="fu">setRequestBody</span>(<span class="kw">new</span> <span class="bu">NameValuePair</span>[]{nameParam,pwdParam});
 
 method.<span class="fu">setDoAuthentication</span>(<span class="kw">false</span>);
 
 <span class="dt">int</span> statusCode = client.<span class="fu">executeMethod</span>(method);
 <span class="kw">if</span>(statusCode==-<span class="dv">1</span>)
 {
-<span class="kw">throw</span> <span class="kw">new</span> Exception(<span class="st">&quot;[Post method execute Exception Failed!]&quot;</span>;
+<span class="kw">throw</span> <span class="kw">new</span> <span class="bu">Exception</span>(<span class="st">&quot;[Post method execute Exception Failed!]&quot;</span>;
 }
 <span class="co">//get Response info</span>
-InputStream ins = method.<span class="fu">getResponseBodyAsStream</span>();
-BufferedReader in = <span class="kw">new</span> BufferedReader(<span class="kw">new</span> InputStreamReader(ins));
-StringBuffer resultBuffer = <span class="kw">new</span> StringBuffer();
-String line;
+<span class="bu">InputStream</span> ins = method.<span class="fu">getResponseBodyAsStream</span>();
+<span class="bu">BufferedReader</span> in = <span class="kw">new</span> <span class="bu">BufferedReader</span>(<span class="kw">new</span> <span class="bu">InputStreamReader</span>(ins));
+<span class="bu">StringBuffer</span> resultBuffer = <span class="kw">new</span> <span class="bu">StringBuffer</span>();
+<span class="bu">String</span> line;
 <span class="kw">while</span>((line = in.<span class="fu">readLine</span>())!=<span class="kw">null</span>)
 {
 resultBuffer.<span class="fu">append</span>(line);

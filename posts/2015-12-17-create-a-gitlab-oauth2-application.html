@@ -79,8 +79,8 @@
     
     </h1>
     -->
-    <a href="/"><img src="/images/afoo.PNG"/></a>
-		<p class="masthead-lead">瞎子摸象的践行者</p>
+    <a href="/"><h1>扶墙老师说</h1></a>
+		<p class="masthead-lead">一个架构士的思考与沉淀</p>
 	
 		<hr class="masthead-hr">
 
@@ -252,39 +252,39 @@
 
 <span class="kw">&lt;/project&gt;</span></code></pre></div>
 <p>我们核心类就一个:</p>
-<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="fu">@Controller</span>
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="at">@Controller</span>
 <span class="kw">public</span> <span class="kw">class</span> IndexController {
-    <span class="kw">protected</span> <span class="kw">transient</span> <span class="dt">final</span> Logger logger = LoggerFactory.<span class="fu">getLogger</span>(<span class="fu">getClass</span>());
+    <span class="kw">protected</span> <span class="kw">transient</span> <span class="dt">final</span> <span class="bu">Logger</span> logger = LoggerFactory.<span class="fu">getLogger</span>(<span class="fu">getClass</span>());
 
-    <span class="fu">@Value</span>(<span class="st">&quot;${oauth2.server.url}&quot;</span>)
-    <span class="kw">private</span> String gitlabServerUrl;
-    <span class="fu">@Value</span>(<span class="st">&quot;${oauth2.server.url.authorize.path:/oauth/authorize}&quot;</span>)
-    <span class="kw">private</span> String authorizePath;
-    <span class="fu">@Value</span>(<span class="st">&quot;${oauth2.server.url.token.path:/oauth/token}&quot;</span>)
-    <span class="kw">private</span> String tokenPath;
+    <span class="at">@Value</span>(<span class="st">&quot;${oauth2.server.url}&quot;</span>)
+    <span class="kw">private</span> <span class="bu">String</span> gitlabServerUrl;
+    <span class="at">@Value</span>(<span class="st">&quot;${oauth2.server.url.authorize.path:/oauth/authorize}&quot;</span>)
+    <span class="kw">private</span> <span class="bu">String</span> authorizePath;
+    <span class="at">@Value</span>(<span class="st">&quot;${oauth2.server.url.token.path:/oauth/token}&quot;</span>)
+    <span class="kw">private</span> <span class="bu">String</span> tokenPath;
 
-    <span class="fu">@Value</span>(<span class="st">&quot;${oauth2.client.id:260f7b273e13b9264b22bba3c5f1db53d55c8cb86fe3d02d7c11725ea52b0fe7}&quot;</span>)
-    <span class="kw">private</span> String clientId;
-    <span class="fu">@Value</span>(<span class="st">&quot;${oauth2.client.secret:15cebdce7a671fee9a7929b5a2c2bca006bb5afa92b36352586ccb6089004765}&quot;</span>)
-    <span class="kw">private</span> String clientSecret;
-    <span class="fu">@Value</span>(<span class="st">&quot;${oauth2.client.callback.url:http://localhost:8080/callback}&quot;</span>)
-    <span class="kw">private</span> String callbackUrl;
+    <span class="at">@Value</span>(<span class="st">&quot;${oauth2.client.id:260f7b273e13b9264b22bba3c5f1db53d55c8cb86fe3d02d7c11725ea52b0fe7}&quot;</span>)
+    <span class="kw">private</span> <span class="bu">String</span> clientId;
+    <span class="at">@Value</span>(<span class="st">&quot;${oauth2.client.secret:15cebdce7a671fee9a7929b5a2c2bca006bb5afa92b36352586ccb6089004765}&quot;</span>)
+    <span class="kw">private</span> <span class="bu">String</span> clientSecret;
+    <span class="at">@Value</span>(<span class="st">&quot;${oauth2.client.callback.url:http://localhost:8080/callback}&quot;</span>)
+    <span class="kw">private</span> <span class="bu">String</span> callbackUrl;
 
-    <span class="fu">@Autowired</span>
+    <span class="at">@Autowired</span>
     TokenRepository tokenRepository;
 
     OAuthClient oAuthClient = <span class="kw">new</span> <span class="fu">OAuthClient</span>(<span class="kw">new</span> <span class="fu">URLConnectionClient</span>());
 
-    String currentUserMock = <span class="st">&quot;yunshi&quot;</span>;
+    <span class="bu">String</span> currentUserMock = <span class="st">&quot;yunshi&quot;</span>;
 
-    <span class="fu">@PreDestroy</span>
+    <span class="at">@PreDestroy</span>
     <span class="kw">public</span> <span class="dt">void</span> <span class="fu">cleanUp</span>() {
         oAuthClient.<span class="fu">shutdown</span>();
     }
 
-    <span class="fu">@RequestMapping</span>(<span class="st">&quot;/main&quot;</span>)
-    <span class="fu">@ResponseBody</span>
-    <span class="kw">public</span> String <span class="fu">main</span>() {
+    <span class="at">@RequestMapping</span>(<span class="st">&quot;/main&quot;</span>)
+    <span class="at">@ResponseBody</span>
+    <span class="kw">public</span> <span class="bu">String</span> <span class="fu">main</span>() {
         <span class="kw">if</span> (tokenRepository.<span class="fu">getTokenOf</span>(currentUserMock).<span class="fu">isPresent</span>()) {
             <span class="kw">return</span> <span class="st">&quot;authorization is done, you are good to go with access token: &quot;</span> + tokenRepository.<span class="fu">getTokenOf</span>(currentUserMock).<span class="fu">get</span>();
         } <span class="kw">else</span> {
@@ -292,8 +292,8 @@
         }
     }
 
-    <span class="fu">@RequestMapping</span>(<span class="st">&quot;/&quot;</span>)
-    <span class="kw">public</span> String <span class="fu">index</span>(HttpServletRequest req, HttpServletResponse response) <span class="kw">throws</span> Throwable {
+    <span class="at">@RequestMapping</span>(<span class="st">&quot;/&quot;</span>)
+    <span class="kw">public</span> <span class="bu">String</span> <span class="fu">index</span>(HttpServletRequest req, HttpServletResponse response) <span class="kw">throws</span> <span class="bu">Throwable</span> {
         <span class="kw">if</span> (tokenRepository.<span class="fu">getTokenOf</span>(currentUserMock).<span class="fu">isPresent</span>()) {
             logger.<span class="fu">info</span>(<span class="st">&quot;query user information with access token...&quot;</span>);
             OAuthClientRequest bearerClientRequest = <span class="kw">new</span> <span class="fu">OAuthBearerClientRequest</span>(gitlabServerUrl + <span class="st">&quot;/api/v3/user&quot;</span>).<span class="fu">setAccessToken</span>(tokenRepository.<span class="fu">getTokenOf</span>(currentUserMock).<span class="fu">get</span>()).<span class="fu">buildQueryMessage</span>();
@@ -310,7 +310,7 @@
                     .<span class="fu">setResponseType</span>(<span class="st">&quot;code&quot;</span>)
                     .<span class="fu">buildQueryMessage</span>();
 
-            String gitlabAuthUrl = request.<span class="fu">getLocationUri</span>();
+            <span class="bu">String</span> gitlabAuthUrl = request.<span class="fu">getLocationUri</span>();
 
             logger.<span class="fu">info</span>(<span class="st">&quot;redirect to : &quot;</span> + gitlabAuthUrl);
             <span class="kw">return</span> <span class="st">&quot;redirect:&quot;</span> + gitlabAuthUrl;
@@ -318,10 +318,10 @@
     }
 
 
-    <span class="fu">@RequestMapping</span>(<span class="st">&quot;/callback&quot;</span>)
-    <span class="kw">public</span> String <span class="fu">callback</span>(<span class="fu">@RequestParam</span>(value = <span class="st">&quot;code&quot;</span>, required = <span class="kw">false</span>) String code,
-                           <span class="fu">@RequestParam</span>(value = <span class="st">&quot;error&quot;</span>, required = <span class="kw">false</span>) String error,
-                           <span class="fu">@RequestParam</span>(value = <span class="st">&quot;error_description&quot;</span>, required = <span class="kw">false</span>) String errorDescription) <span class="kw">throws</span> Throwable {
+    <span class="at">@RequestMapping</span>(<span class="st">&quot;/callback&quot;</span>)
+    <span class="kw">public</span> <span class="bu">String</span> <span class="fu">callback</span>(<span class="at">@RequestParam</span>(value = <span class="st">&quot;code&quot;</span>, required = <span class="kw">false</span>) <span class="bu">String</span> code,
+                           <span class="at">@RequestParam</span>(value = <span class="st">&quot;error&quot;</span>, required = <span class="kw">false</span>) <span class="bu">String</span> error,
+                           <span class="at">@RequestParam</span>(value = <span class="st">&quot;error_description&quot;</span>, required = <span class="kw">false</span>) <span class="bu">String</span> errorDescription) <span class="kw">throws</span> <span class="bu">Throwable</span> {
 
         <span class="kw">if</span> (StringUtils.<span class="fu">hasLength</span>(error)) {
             logger.<span class="fu">error</span>(<span class="st">&quot;authorization fails with error={} and error description={}&quot;</span>, error, errorDescription);
@@ -341,7 +341,7 @@
             logger.<span class="fu">info</span>(<span class="st">&quot;build authorize request with code:{} and client secret&quot;</span>, code);
 
             OAuthJSONAccessTokenResponse response = oAuthClient.<span class="fu">accessToken</span>(request);
-            String accessToken = response.<span class="fu">getAccessToken</span>();
+            <span class="bu">String</span> accessToken = response.<span class="fu">getAccessToken</span>();
             logger.<span class="fu">info</span>(<span class="st">&quot;access token got: {}&quot;</span>, accessToken);
 
             <span class="co">// save access token for further use, then redirect user to another url in our own application.</span>

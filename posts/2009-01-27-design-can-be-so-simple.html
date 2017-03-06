@@ -78,8 +78,8 @@
     
     </h1>
     -->
-    <a href="/"><img src="/images/afoo.PNG"/></a>
-		<p class="masthead-lead">瞎子摸象的践行者</p>
+    <a href="/"><h1>扶墙老师说</h1></a>
+		<p class="masthead-lead">一个架构士的思考与沉淀</p>
 	
 		<hr class="masthead-hr">
 
@@ -142,19 +142,19 @@
 <h2 id="亲密性proximity"><span class="header-section-number">2.1</span> 亲密性(Proximity)</h2>
 <p>设计的亲密性原则强调信息的组织，相关的信息要尽可能的靠近，相反，不相关的信息，则尽可能的分离。 实际上，同样的原则，我们无时无刻不在使用，只不过，这些事物我们日常接触太多，却忽略了它们背后的东西。</p>
 <p>我是做软件的，所以，就先构建软件的代码说起吧！在过程式编程的年代，像C或者Pascal， 老师或者说教材都会告诉你为了代码复用，将某些相关的代码组织成函数(Function)或者过程(Procedure)； 而到了面向对象编程的年代，比如Java中，我们会将相关的代码组织为方法或者是对象；实际上，这些都是亲密性原则的体现。 试想，你愿意看到各种逻辑混杂的一大段代码那，还是愿意看到关注点划分清晰又组织良好的代码那？ 具体一点儿，你是愿意看到“代码清单1”中代码那，还是愿意看到“代码清单2”中的代码？</p>
-<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java">代码清单<span class="dv">1</span>
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java">代码清单1
 <span class="kw">public</span> <span class="kw">class</span> CodeStyleSample {
     <span class="kw">private</span> <span class="dt">static</span> <span class="dt">final</span> <span class="kw">transient</span> Log logger=LogFactory.<span class="fu">getLog</span>(CodeStyleSample.<span class="fu">class</span>);
-    <span class="kw">public</span> <span class="dt">static</span> <span class="dt">final</span> String CONSTANT_ONE=<span class="st">&quot;..&quot;</span>;
+    <span class="kw">public</span> <span class="dt">static</span> <span class="dt">final</span> <span class="bu">String</span> CONSTANT_ONE=<span class="st">&quot;..&quot;</span>;
     <span class="kw">public</span> <span class="dt">static</span> <span class="dt">final</span> <span class="dt">int</span> CONSTANT_TWO=<span class="dv">11</span>;
     ...
 }</code></pre></div>
-<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java">代码清单<span class="dv">2</span>
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java">代码清单2
 <span class="kw">public</span> <span class="kw">class</span> CodeStyleSample {
 
     <span class="kw">private</span> <span class="dt">static</span> <span class="dt">final</span> <span class="kw">transient</span> Log logger=LogFactory.<span class="fu">getLog</span>(CodeStyleSample.<span class="fu">class</span>);
     
-    <span class="kw">public</span> <span class="dt">static</span> <span class="dt">final</span> String CONSTANT_ONE=<span class="st">&quot;..&quot;</span>;
+    <span class="kw">public</span> <span class="dt">static</span> <span class="dt">final</span> <span class="bu">String</span> CONSTANT_ONE=<span class="st">&quot;..&quot;</span>;
     <span class="kw">public</span> <span class="dt">static</span> <span class="dt">final</span> <span class="dt">int</span> CONSTANT_TWO=<span class="dv">11</span>;
     
     ...
@@ -166,12 +166,12 @@
 <h2 id="对齐alignment"><span class="header-section-number">2.2</span> 对齐(Alignment)</h2>
 <p>对齐的概念很简单，不用我说大家也知道，在某个有限的平面空间内，通常也就“向左对齐”，“向右对齐”以及“居中对齐”， 要么说作者这本书写的简单易懂嘛，这么简单的概念，经作者一提点，你我就会发现，原来如此简单的原则，却可以构建那么不简单的效果。</p>
 <p>还是先以代码为例，我不知道大家是愿意看到“代码清单2”中的代码那，还是愿意看到“代码清单3”中的代码？！</p>
-<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java">代码清单<span class="dv">3</span>
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java">代码清单3
 <span class="kw">public</span> <span class="kw">class</span> CodeStyleSample {
 
     <span class="kw">private</span> <span class="dt">static</span> <span class="dt">final</span> <span class="kw">transient</span> Log logger=LogFactory.<span class="fu">getLog</span>(CodeStyleSample.<span class="fu">class</span>);
     
-    <span class="kw">public</span> <span class="dt">static</span> <span class="dt">final</span> String   CONSTANT_ONE=<span class="st">&quot;..&quot;</span>;
+    <span class="kw">public</span> <span class="dt">static</span> <span class="dt">final</span> <span class="bu">String</span>   CONSTANT_ONE=<span class="st">&quot;..&quot;</span>;
     <span class="kw">public</span> <span class="dt">static</span> <span class="dt">final</span> <span class="dt">int</span>      CONSTANT_TWO=<span class="dv">11</span>;   
     
     ...

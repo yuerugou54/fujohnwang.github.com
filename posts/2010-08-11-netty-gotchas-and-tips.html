@@ -78,8 +78,8 @@
     
     </h1>
     -->
-    <a href="/"><img src="/images/afoo.PNG"/></a>
-		<p class="masthead-lead">瞎子摸象的践行者</p>
+    <a href="/"><h1>扶墙老师说</h1></a>
+		<p class="masthead-lead">一个架构士的思考与沉淀</p>
 	
 		<hr class="masthead-hr">
 
@@ -135,11 +135,11 @@
 </ul></li>
 <li>You have to invoke channel.close() in another thread other than the IOWorker thread.</li>
 </ol>
-<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="kw">public</span> <span class="dt">void</span> <span class="fu">exceptionCaught</span>(<span class="dt">final</span> ChannelHandlerContext ctx, ExceptionEvent e) <span class="kw">throws</span> Exception {  
-            <span class="kw">new</span> Thread(){  
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="kw">public</span> <span class="dt">void</span> <span class="fu">exceptionCaught</span>(<span class="dt">final</span> ChannelHandlerContext ctx, ExceptionEvent e) <span class="kw">throws</span> <span class="bu">Exception</span> {  
+            <span class="kw">new</span> <span class="bu">Thread</span>(){  
                 <span class="kw">public</span> <span class="dt">void</span> <span class="fu">run</span>(){  
                     ctx.<span class="fu">getChannel</span>().<span class="fu">close</span>().<span class="fu">addListener</span>(<span class="kw">new</span> <span class="fu">ChannelFutureListener</span>() {  
-                        <span class="kw">public</span> <span class="dt">void</span> <span class="fu">operationComplete</span>(ChannelFuture future) <span class="kw">throws</span> Exception {  
+                        <span class="kw">public</span> <span class="dt">void</span> <span class="fu">operationComplete</span>(ChannelFuture future) <span class="kw">throws</span> <span class="bu">Exception</span> {  
                             future.<span class="fu">awaitUninterruptibly</span>();  
                             <span class="fu">getBoostrap</span>().<span class="fu">releaseExternalResources</span>();  
                             logger.<span class="fu">debug</span>(<span class="st">&quot;shutdown&quot;</span>);  

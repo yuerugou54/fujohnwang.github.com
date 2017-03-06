@@ -78,8 +78,8 @@
     
     </h1>
     -->
-    <a href="/"><img src="/images/afoo.PNG"/></a>
-		<p class="masthead-lead">瞎子摸象的践行者</p>
+    <a href="/"><h1>扶墙老师说</h1></a>
+		<p class="masthead-lead">一个架构士的思考与沉淀</p>
 	
 		<hr class="masthead-hr">
 
@@ -144,10 +144,10 @@
 <p>话说我们要为用户提供接口，分多步从用户那里获取输入数据，这种情况下，为用户提供一个向导式的输入界面应该说是比较自然的事情，现在，就有这样的一个场景，所以，我们决定使用jide提供的WizardDialog来实现之。</p>
 <p>《JIDE Dialogs Developer Guide》虽然对WizardDialog相关的各个类以及功能做了介绍，但是，如何在开发过程中使用它们，就得由我们来决定了，这自然就会引出不同的实践方式，下面是我从现有的codebase中移植过来的代码片段原型，我称之为“内部化”的代码实践（代码风格如何暂且不论）。</p>
 <p>首先，XAction类是一个标准的Swing Action，其定义如下：</p>
-<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java">XXXAction <span class="kw">extends</span> AbstractAction  
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java">XXXAction <span class="kw">extends</span> <span class="bu">AbstractAction</span>  
 {  
     …  
-    Public <span class="dt">void</span> <span class="fu">actionPerformed</span>(ActionEvent e)  
+    Public <span class="dt">void</span> <span class="fu">actionPerformed</span>(<span class="bu">ActionEvent</span> e)  
     {  
         <span class="co">// collect data from event object or outer references  </span>
         ByBkWizard.<span class="fu">showByBkDialog</span>(trades);  
@@ -156,18 +156,18 @@
 <p>当用户触发该Action对应的事件之后，定义的逻辑即被执行，简单点来说就是，搜集前提条件相关的数据，然后显示WizardDialog给用户，当用户输入完成之后，根据收集的输入结果进行后继处理，而这些工作，现在显然都是由这个ByBkWizard类来做了：</p>
 <div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="kw">public</span> <span class="kw">class</span> ByBkWizard  
 {  
-        <span class="kw">public</span> <span class="dt">static</span> <span class="dt">void</span> <span class="fu">showByBkDialog</span>(Collection&lt;TransactionEntity&gt; trades_) {  
+        <span class="kw">public</span> <span class="dt">static</span> <span class="dt">void</span> <span class="fu">showByBkDialog</span>(<span class="bu">Collection</span>&lt;TransactionEntity&gt; trades_) {  
             <span class="kw">new</span> <span class="fu">ByBkWizard</span>(trades_);  
         }  
   
-        <span class="kw">public</span> <span class="fu">ByBkWizard</span>(Collection&lt;TransactionEntity&gt; trades_) {  
-            _backupTrades = <span class="kw">new</span> HashMap&lt;String, TransactionEntity&gt;(trades_.<span class="fu">size</span>());  
-            _trades = <span class="kw">new</span> ArrayList&lt;TransactionEntity&gt;(trades_.<span class="fu">size</span>());  
+        <span class="kw">public</span> <span class="fu">ByBkWizard</span>(<span class="bu">Collection</span>&lt;TransactionEntity&gt; trades_) {  
+            _backupTrades = <span class="kw">new</span> <span class="bu">HashMap</span>&lt;<span class="bu">String</span>, TransactionEntity&gt;(trades_.<span class="fu">size</span>());  
+            _trades = <span class="kw">new</span> <span class="bu">ArrayList</span>&lt;TransactionEntity&gt;(trades_.<span class="fu">size</span>());  
             <span class="kw">for</span> (TransactionEntity entity : trades_) {  
             <span class="kw">try</span> {  
                 _backupTrades.<span class="fu">put</span>(<span class="fu">getTempKey</span>(entity), (TransactionEntity) entity.<span class="fu">clone</span>());  
                 _trades.<span class="fu">add</span>((TransactionEntity) entity.<span class="fu">clone</span>());  
-            } <span class="kw">catch</span> (Exception e) {  
+            } <span class="kw">catch</span> (<span class="bu">Exception</span> e) {  
                 logger.<span class="fu">error</span>(e, e);  
             }  
 <span class="fu">initWizard</span>();  
@@ -182,22 +182,22 @@
         model.<span class="fu">append</span>(editView);  
         wizard.<span class="fu">setPageList</span>(model);  
   
-        wizard.<span class="fu">addWindowListener</span>(<span class="kw">new</span> WindowAdapter() {  
-        <span class="kw">public</span> <span class="dt">void</span> <span class="fu">windowClosing</span>(<span class="dt">final</span> WindowEvent e) {  
+        wizard.<span class="fu">addWindowListener</span>(<span class="kw">new</span> <span class="bu">WindowAdapter</span>() {  
+        <span class="kw">public</span> <span class="dt">void</span> <span class="fu">windowClosing</span>(<span class="dt">final</span> <span class="bu">WindowEvent</span> e) {  
             wizard.<span class="fu">dispose</span>();  
             _tradePanel.<span class="fu">destroy</span>();  
             _tradePanel = <span class="kw">null</span>;  
         }  
         });  
-        wizard.<span class="fu">setFinishAction</span>(<span class="kw">new</span> AbstractAction(<span class="st">&quot;Send&quot;</span>) {  
+        wizard.<span class="fu">setFinishAction</span>(<span class="kw">new</span> <span class="bu">AbstractAction</span>(<span class="st">&quot;Send&quot;</span>) {  
         <span class="kw">private</span> <span class="dt">static</span> <span class="dt">final</span> <span class="dt">long</span> serialVersionUID = 1L;  
   
-        <span class="kw">public</span> <span class="dt">void</span> <span class="fu">actionPerformed</span>(<span class="dt">final</span> ActionEvent e) {  
+        <span class="kw">public</span> <span class="dt">void</span> <span class="fu">actionPerformed</span>(<span class="dt">final</span> <span class="bu">ActionEvent</span> e) {  
             <span class="kw">if</span> (wizard.<span class="fu">closeCurrentPage</span>()) {  
             <span class="kw">if</span> (! <span class="fu">checkInput</span>()) {  
                 GenericExceptionHandler.<span class="fu">showOptionDialog</span>(<span class="st">&quot;Warn&quot;</span>,  
                     <span class="st">&quot;The input is illegal for the callable trade(s)&quot;</span>,  
-                    JOptionPane.<span class="fu">WARNING_MESSAGE</span>);  
+                    <span class="bu">JOptionPane</span>.<span class="fu">WARNING_MESSAGE</span>);  
                 <span class="kw">return</span>;  
             }  
             <span class="fu">handleFinish</span>();  
@@ -208,10 +208,10 @@
             }  
         }  
         });  
-        wizard.<span class="fu">setCancelAction</span>(<span class="kw">new</span> AbstractAction(<span class="st">&quot;Cancel&quot;</span>) {  
+        wizard.<span class="fu">setCancelAction</span>(<span class="kw">new</span> <span class="bu">AbstractAction</span>(<span class="st">&quot;Cancel&quot;</span>) {  
         <span class="kw">private</span> <span class="dt">static</span> <span class="dt">final</span> <span class="dt">long</span> serialVersionUID = 1L;  
   
-        <span class="kw">public</span> <span class="dt">void</span> <span class="fu">actionPerformed</span>(<span class="dt">final</span> ActionEvent e) {  
+        <span class="kw">public</span> <span class="dt">void</span> <span class="fu">actionPerformed</span>(<span class="dt">final</span> <span class="bu">ActionEvent</span> e) {  
             <span class="kw">if</span> (wizard.<span class="fu">closeCurrentPage</span>()) {  
             wizard.<span class="fu">dispose</span>();  
             _tradePanel.<span class="fu">destroy</span>();  
@@ -221,10 +221,10 @@
         });  
           
            <span class="co">// 内部类声明  </span>
-           Class BuyBackStepOneWizardPage  
-                      State, operations;  
-           Class BuyBackStepTwoWizardPage  
-                      State, operations;  
+           <span class="bu">Class</span> BuyBackStepOneWizardPage  
+                      <span class="bu">State</span>, operations;  
+           <span class="bu">Class</span> BuyBackStepTwoWizardPage  
+                      <span class="bu">State</span>, operations;  
 }  </code></pre></div>
 <p>OK, 从功能上来说，ByBkWizard完成了预期的业务处理需求，但是，这样的ByBkWizard定义是否合适，却有值得商榷的地方（看官，如果你觉得“只要功能完成了就得了呗！”，那么就到此为止吧，下面的话其实再看就没啥意思了）：</p>
 <ol style="list-style-type: decimal">
@@ -260,12 +260,12 @@ wizard.<span class="fu">setVisible</span>(<span class="kw">true</span>); </code>
 <p>显然，除了使用的Pages不同，初始化一个WizardDialog并使用它的流程基本模式是不变的，那么我们就可以这一流程采用模板化封装，以期之后能够复用之，这也就有了如下模板类定义：</p>
 <div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="kw">public</span> <span class="kw">class</span> WizardDialogLauncher {  
       
-    <span class="kw">public</span> <span class="dt">void</span> <span class="fu">launch</span>(String title,<span class="dt">final</span> PageList pageList,<span class="dt">final</span> Runnable finishAction)  
+    <span class="kw">public</span> <span class="dt">void</span> <span class="fu">launch</span>(<span class="bu">String</span> title,<span class="dt">final</span> PageList pageList,<span class="dt">final</span> <span class="bu">Runnable</span> finishAction)  
     {  
         <span class="fu">launch</span>(title,<span class="kw">new</span> <span class="fu">IWizardDialogCustomizer</span>(){  
             <span class="kw">public</span> <span class="dt">void</span> <span class="fu">customizeWizardDialog</span>(WizardDialog dialog) {  
                 dialog.<span class="fu">setPageList</span>(pageList);  
-                                dialog.<span class="fu">setFinishAction</span>(<span class="kw">new</span> AbstractAction(<span class="st">&quot;&quot;</span>)  
+                                dialog.<span class="fu">setFinishAction</span>(<span class="kw">new</span> <span class="bu">AbstractAction</span>(<span class="st">&quot;&quot;</span>)  
                                 {  
                                     <span class="kw">...  </span>
                                     <span class="co">// finishAction.run();  </span>
@@ -274,7 +274,7 @@ wizard.<span class="fu">setVisible</span>(<span class="kw">true</span>); </code>
             }});  
     }  
       
-    <span class="kw">public</span> <span class="dt">void</span> <span class="fu">launch</span>(String title,IWizardDialogCustomizer customizer)  
+    <span class="kw">public</span> <span class="dt">void</span> <span class="fu">launch</span>(<span class="bu">String</span> title,IWizardDialogCustomizer customizer)  
     {  
         WizardDialog dialog = <span class="kw">new</span> <span class="fu">WizardDialog</span>(title);  
         customizer.<span class="fu">customizeWizardDialog</span>(dialog);  
@@ -285,10 +285,10 @@ wizard.<span class="fu">setVisible</span>(<span class="kw">true</span>); </code>
 <p>现在第一个重构目标达成，而重构的过程中我们也引出了第二个重构目标，即封装最终的数据处理逻辑。当用户走完WizardDialog给出的数据输入请求流程之后，我们就应该对最终收集到的用户输入结果进行处理了，显然，不同的WizardDialog因为会根据需求而使用不同的Page，那么，对应的最终数据处理逻辑也是各异的，所以，我们不能将这些数据处理逻辑硬编码到我们的模板类当中，所以，我们暂且以Runnable的形式抽取出来，这样，每次启动新的WizardDialog的时候，只要根据需要，传入相应的Runnable形式封装的最终数据处理逻辑即可。（当然，你也可以以其它形式来封装最终的数据处理逻辑，只要能够保证这一逻辑可以被重用，并能够灵活处理）</p>
 <p>最后一个重构的目标是要处理页面间的数据状态管理，为什么要这么做那？！每一个WizardDialog都由多个WizardPage所组成，WizardDialog将这些Page来显示每一步的具体界面给用户，我们所要做的，只不过是通过PageList将这些Page交给WizardDialog进行显示罢了，至于这些Page管理则全都交由WizardDialog来做。但是，WizardDialog主要只负责这些页面之间的显示顺序以及最后向导结束后的行为定义，至于这些Page之间的数据状态管理，比如前后页面之间的数据依赖关系和传递，无论是《JIDE Dialogs Developer Guide》和相关类的Javadoc上都是只字未提，我想这就是为什么之前提到的实践方式中要将所有的数据状态以及页面逻辑都纳入一个类来管理的原因了，因为没有什么定规嘛，不过，这并不能为“内部化”的实践方式博得多少“同情”，实际上，我们完全可以将各个Page之间的模型数据以数据链的形式进行提供，比如，声明一个PagesModel，或者如果关心进一步的结构重用并不在乎数据类型检查的话，直接使用Map结构，让整个向导期间的数据交互都直接跟PagesModel或者Map形式的数据容器打交道，而之前的实践方式则基本上是通过同一个类定义范围内的状态共享来实现的。那么，我们是否要像之前的实践方式那样，做适当的变通，将状态定义为每一个Page的状态属性那？！稍微思考一下就会发现，这并不会带来什么好处，假设第二个Page要依赖第一个Page的数据状态，那么我们是不是要在初始化第二个Page的时候将第一个Page的引用传入那？如果第三个，第四个Page也有同样地状况那？！那就会纠缠不清了，还不如一了百了，让他们都直接跟某个统一的数据容器打交道来的清爽，我们所要所得，只不过是将同一个数据容器传给它们就是了。显然，作为数据容器的PagesModel或者Map可以在每一个Page中根据需要进行数据的获取和填充，比如页面初始化的时候获取数据容器中的数据初始化界面，而页面关闭的时候将页面上的某部分数据设置回数据容器，所有这些都可以通过为每个page注册相应的PageListener来完成，而且对每个Page都是独立的。</p>
 <p>当所有这些重构目标达成之后，我们的XAction定义基本上就是如下的样子：</p>
-<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="kw">public</span> <span class="kw">class</span> XAction <span class="kw">extends</span> AbstractAction {  
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="kw">public</span> <span class="kw">class</span> XAction <span class="kw">extends</span> <span class="bu">AbstractAction</span> {  
     <span class="kw">private</span> WizardDialogLauncher launcher;  
       
-    <span class="kw">public</span> <span class="dt">void</span> <span class="fu">actionPerformed</span>(ActionEvent arg0) {  
+    <span class="kw">public</span> <span class="dt">void</span> <span class="fu">actionPerformed</span>(<span class="bu">ActionEvent</span> arg0) {  
         PagesModel model = <span class="kw">new</span> <span class="fu">PagesModel</span>();  
         model.<span class="fu">setX</span>(..);  
         <span class="kw">...  </span>
@@ -297,7 +297,7 @@ wizard.<span class="fu">setVisible</span>(<span class="kw">true</span>); </code>
         pageList.<span class="fu">append</span>(<span class="kw">new</span> <span class="fu">YourPageTwo</span>(model));  
         <span class="kw">...  </span>
   
-        Runnable finishAction = <span class="kw">new</span> <span class="fu">YourFinishAction</span>(model);  
+        <span class="bu">Runnable</span> finishAction = <span class="kw">new</span> <span class="fu">YourFinishAction</span>(model);  
           
         launcher.<span class="fu">launch</span>(pageList, finishAction);  
     }  

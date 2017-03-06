@@ -78,8 +78,8 @@
     
     </h1>
     -->
-    <a href="/"><img src="/images/afoo.PNG"/></a>
-		<p class="masthead-lead">瞎子摸象的践行者</p>
+    <a href="/"><h1>扶墙老师说</h1></a>
+		<p class="masthead-lead">一个架构士的思考与沉淀</p>
 	
 		<hr class="masthead-hr">
 
@@ -129,11 +129,11 @@
 <p>或许，给出一个实例可以更好的理解该类的功能和如何使用。</p>
 <p>假设我们的系统实现存在一个Dao层，而该层的Dao中一般都会存在更新数据库或者查询数据库的操作，那么现在因为某种原因，我们的系统在数据库交换方面存在瓶颈，我们需要知道到底问题出在什么地方，所以，我们实现了一个ProfileInterceptor用来统计方法的执行时间，下面是该类的简单实现：</p>
 <div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="kw">public</span> <span class="kw">class</span> ProfileInterceptor <span class="kw">implements</span> MethodInterceptor {
-<span class="kw">private</span> <span class="dt">static</span> <span class="dt">final</span> Logger logger = Logger.<span class="fu">getLogger</span>(ProfileInterceptor.<span class="fu">class</span>); 
-<span class="kw">public</span> Object <span class="fu">invoke</span>(MethodInvocation invocation) <span class="kw">throws</span> Throwable {
-<span class="dt">long</span> t = System.<span class="fu">currentTimeMillis</span>();
-Object o = invocation.<span class="fu">proceed</span>();
-t = System.<span class="fu">currentTimeMillis</span>() - t;
+<span class="kw">private</span> <span class="dt">static</span> <span class="dt">final</span> <span class="bu">Logger</span> logger = <span class="bu">Logger</span>.<span class="fu">getLogger</span>(ProfileInterceptor.<span class="fu">class</span>); 
+<span class="kw">public</span> <span class="bu">Object</span> <span class="fu">invoke</span>(MethodInvocation invocation) <span class="kw">throws</span> <span class="bu">Throwable</span> {
+<span class="dt">long</span> t = <span class="bu">System</span>.<span class="fu">currentTimeMillis</span>();
+<span class="bu">Object</span> o = invocation.<span class="fu">proceed</span>();
+t = <span class="bu">System</span>.<span class="fu">currentTimeMillis</span>() - t;
 logger.<span class="fu">info</span>(invocation.<span class="fu">getMethod</span>().<span class="fu">gatName</span>()+”consumed:”+t);
 <span class="kw">return</span> o;
 }</code></pre></div>

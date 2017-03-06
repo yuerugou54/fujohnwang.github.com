@@ -79,8 +79,8 @@
     
     </h1>
     -->
-    <a href="/"><img src="/images/afoo.PNG"/></a>
-		<p class="masthead-lead">瞎子摸象的践行者</p>
+    <a href="/"><h1>扶墙老师说</h1></a>
+		<p class="masthead-lead">一个架构士的思考与沉淀</p>
 	
 		<hr class="masthead-hr">
 
@@ -139,7 +139,7 @@ java -Xmx512M -jar `dirname $0`/sbt-launch-0.7.4.jar "$@"
 when create project structure with sbt, it may loss the &quot;project/build&quot; directory where you should put your build file there, so usually after running sbt to setup the default project structure, you may have to create the &quot;project/build&quot; directory and corresponding build defintion files manully.
 </blockquote>
 <p>After the project setup is done, firstly, we have to define our build file in sbt, this is done by creating a scala file under &quot;project/build&quot;, the content may be:</p>
-<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">import</span> sbt.<span class="fu">_</span>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">import</span> sbt._
 
 <span class="kw">class</span> <span class="fu">MySQLEventEmitter</span>(info:ProjectInfo) <span class="kw">extends</span> <span class="fu">DefaultProject</span>(info){
  <span class="kw">val</span> jbossRepository        = <span class="st">&quot;Jboss Repository&quot;</span> at <span class="st">&quot;http://repository.jboss.org/nexus/content/groups/public&quot;</span>

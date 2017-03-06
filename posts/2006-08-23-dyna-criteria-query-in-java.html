@@ -78,8 +78,8 @@
     
     </h1>
     -->
-    <a href="/"><img src="/images/afoo.PNG"/></a>
-		<p class="masthead-lead">瞎子摸象的践行者</p>
+    <a href="/"><h1>扶墙老师说</h1></a>
+		<p class="masthead-lead">一个架构士的思考与沉淀</p>
 	
 		<hr class="masthead-hr">
 
@@ -162,10 +162,10 @@
 <h1 id="查询需求的实现方式"><span class="header-section-number">2</span> 查询需求的实现方式</h1>
 <h2 id="sql语句的字符串拼接sql-string-concatenation"><span class="header-section-number">2.1</span> SQL语句的字符串拼接（SQL String Concatenation)</h2>
 <p>这种方式是从我大学时期做兼职时代就开始的一种实现方式，在我没有找到更好的解决方式之前，也是我解决类似问题的唯一方式，缺点自然不用多说，各种条件的判断纠缠在一起，后期维护很难；但是，如果后期不会加入太多新的查询条件的话，测试完成后就基本可以不用管了（对了，说到测试，这东西也很难测试的哦！）。 下面是对于实例画面给出的一个参考拼接结果，当然不是唯一的，仅作参考：</p>
-<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java">StringBuffer criteria = <span class="kw">new</span> StringBuffer();
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="bu">StringBuffer</span> criteria = <span class="kw">new</span> <span class="bu">StringBuffer</span>();
 criteria.<span class="fu">append</span>(<span class="st">&quot;SELECT DISTINCT CustomerID FROM Mastercustomer as cust WHERE &quot;</span>);
 <span class="dt">int</span> flag = <span class="dv">0</span>;
-String surnameKanji = model.<span class="fu">getSurNameKanji</span>();
+<span class="bu">String</span> surnameKanji = model.<span class="fu">getSurNameKanji</span>();
 <span class="kw">if</span>(!CustomerValidator.<span class="fu">isBlank</span>(surnameKanji))
 {
 <span class="kw">switch</span>(model.<span class="fu">getSurNameKanjiFlag</span>())
@@ -185,7 +185,7 @@ criteria.<span class="fu">append</span>(<span class="st">&quot;CUSTOMERNAME LIKE
 }
 flag++;
 }
-String tel = model.<span class="fu">getPhoneNum</span>();
+<span class="bu">String</span> tel = model.<span class="fu">getPhoneNum</span>();
 <span class="kw">if</span>(!CustomerValidator.<span class="fu">isBlank</span>(tel))
 {
 tel = telFormatter<span class="fu">.format</span>(tel);

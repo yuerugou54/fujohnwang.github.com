@@ -79,8 +79,8 @@
     
     </h1>
     -->
-    <a href="/"><img src="/images/afoo.PNG"/></a>
-		<p class="masthead-lead">瞎子摸象的践行者</p>
+    <a href="/"><h1>扶墙老师说</h1></a>
+		<p class="masthead-lead">一个架构士的思考与沉淀</p>
 	
 		<hr class="masthead-hr">
 
@@ -136,7 +136,7 @@
 <p>But to know only these differences between “Thread Based Actors” and “Event Based Actors” won't help too much. If we want to gain more peformance improvements from Scala Actors, we have to dive into the scheduling of scala actors to find more...</p>
 <h1 id="default-scheduler-of-scala-actor"><span class="header-section-number">1</span> Default Scheduler of Scala Actor</h1>
 <p>Usually, when we create actors as most of the code demonstrated:</p>
-<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">import</span> scala.<span class="fu">actors</span>.<span class="fu">_</span>, Actor.<span class="fu">_</span>
+<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">import</span> scala.<span class="fu">actors</span>._, Actor._
 
 <span class="kw">val</span> myActor = actor{
  ...
@@ -157,7 +157,7 @@
 <p>I hope your application is simple, so that one default scheduler will suffice, but most of the time, it's not true, for example, If I want to implement an SEDA style application with different actors stand in different staages, use only the default scheduler will not help too much. Simply put, you can't tuning each stage specifically in the point of theading pool. In such situations, we have to customize the schedulers of each scala actors specifically.</p>
 <p>We can't implement different Actors for different uses with different schedulers by override the “scheduler” method of them, here is an example:</p>
 <div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">class</span> MyActor <span class="kw">extends</span> Actor {
-  <span class="kw">import</span> scala.<span class="fu">actors</span>.<span class="fu">scheduler</span>.<span class="fu">_</span>
+  <span class="kw">import</span> scala.<span class="fu">actors</span>.<span class="fu">scheduler</span>._
 
   <span class="kw">def</span> <span class="fu">act</span>() {
     <span class="fu">println</span>(<span class="st">&quot;MyActor exit with = &quot;</span> + scheduler)

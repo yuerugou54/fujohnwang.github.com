@@ -78,8 +78,8 @@
     
     </h1>
     -->
-    <a href="/"><img src="/images/afoo.PNG"/></a>
-		<p class="masthead-lead">瞎子摸象的践行者</p>
+    <a href="/"><h1>扶墙老师说</h1></a>
+		<p class="masthead-lead">一个架构士的思考与沉淀</p>
 	
 		<hr class="masthead-hr">
 
@@ -170,8 +170,8 @@ javax.jms.JMSException: Duplicate durable subcription detected
 <h2 id="结论"><span class="header-section-number">1.2</span> 结论</h2>
 <p>生活在Spring容器中的对象， 他们的生命周期是由容器来管理的， 但是， 仅仅通过实现DisposableBean接口或者通过destroy-method配置项， 甚至通过JSR250的@PreDestroy标注， 容器并不会在程序退出的时候，自动调用这些对象销毁的回调，我们必须在程序的主入口类或者其它合适的位置明确告知Spring容器， “哥们， 我要下班了，你把那些家伙都收拾了吧！”， 之后， 你通过以上所有方式指定的对象销毁逻辑才会被调用，否则， 哼哼...</p>
 <p>用行话来说就是， 如果你使用的是BeanFactory类型的IoC容器，那么，你最好在容器构造完成后， 保险起见，顺便加上以下这样的代码片断:</p>
-<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java">Runtime.<span class="fu">getRuntime</span>().<span class="fu">addShutdownHook</span>(<span class="kw">new</span> Thread(){
-        <span class="fu">@Override</span>
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="bu">Runtime</span>.<span class="fu">getRuntime</span>().<span class="fu">addShutdownHook</span>(<span class="kw">new</span> <span class="bu">Thread</span>(){
+        <span class="at">@Override</span>
         <span class="kw">public</span> <span class="dt">void</span> <span class="fu">run</span>() {
             <span class="kw">if</span>(beanFactory != <span class="kw">null</span>){
             beanFactory.<span class="fu">destroySingletons</span>();
@@ -194,7 +194,7 @@ javax.jms.JMSException: Duplicate durable subcription detected
 <p>收到旨意之后， 你得赶快行动啊， 不然，下个release拿不到trades信息可就是你自己的问题了， 还好啦， 现在的Subscriber已经提供了这样的支持， 直接设置相应的username和pasword就行了。 不过那，如果你是通过JmsTemplate或者MessageListenerContainer来发送或者接受消息的话， 你该怎么做哪？！ 也只是通过为JmsTemplate或者MessageListenerContainer提供连接的用户名和密码设置就行了？呵呵，倒是找找看， 你是否能找到相应的setter方法吧。</p>
 <h2 id="结论-1"><span class="header-section-number">2.2</span> 结论</h2>
 <p>摘录一段别人的代码如下:</p>
-<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="kw">if</span>(String.<span class="fu">valueOf</span>(userName).<span class="fu">trim</span>().<span class="fu">length</span>()&gt;<span class="dv">0</span>) {
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="kw">if</span>(<span class="bu">String</span>.<span class="fu">valueOf</span>(userName).<span class="fu">trim</span>().<span class="fu">length</span>()&gt;<span class="dv">0</span>) {
     topicConn = connFactory.<span class="fu">createTopicConnection</span>(userName,password);
 } <span class="kw">else</span> {
     topicConn = connFactory.<span class="fu">createTopicConnection</span>();
@@ -221,13 +221,13 @@ connectionFactoryAdaptor.<span class="fu">setPassword</span>(<span class="st">&q
 
 <span class="dt">final</span> SingleConnectionFactory singleCf = <span class="kw">new</span> <span class="fu">SingleConnectionFactory</span>(connectionFactoryAdaptor); 
                                           
-    Runtime.<span class="fu">getRuntime</span>().<span class="fu">addShutdownHook</span>(<span class="kw">new</span> Thread() {
-        <span class="fu">@Override</span>
+    <span class="bu">Runtime</span>.<span class="fu">getRuntime</span>().<span class="fu">addShutdownHook</span>(<span class="kw">new</span> <span class="bu">Thread</span>() {
+        <span class="at">@Override</span>
         <span class="kw">public</span> <span class="dt">void</span> <span class="fu">run</span>() {
         <span class="kw">try</span> {
             singleCf.<span class="fu">destroy</span>();
-        } <span class="kw">catch</span> (Exception e) {
-            logger.<span class="fu">error</span>(<span class="st">&quot;failed to destroy single connection factory.</span><span class="ch">\n</span><span class="st">&quot;</span>);
+        } <span class="kw">catch</span> (<span class="bu">Exception</span> e) {
+            logger.<span class="fu">error</span>(<span class="st">&quot;failed to destroy single connection factory.</span><span class="sc">\n</span><span class="st">&quot;</span>);
             logger.<span class="fu">error</span>(ExceptionUtils.<span class="fu">getFullStackTrace</span>(e));
         }
         }

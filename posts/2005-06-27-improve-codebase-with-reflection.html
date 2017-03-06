@@ -78,8 +78,8 @@
     
     </h1>
     -->
-    <a href="/"><img src="/images/afoo.PNG"/></a>
-		<p class="masthead-lead">瞎子摸象的践行者</p>
+    <a href="/"><h1>扶墙老师说</h1></a>
+		<p class="masthead-lead">一个架构士的思考与沉淀</p>
 	
 		<hr class="masthead-hr">
 
@@ -122,11 +122,11 @@
 <p>OK，先从这个SWT的GUI程序说起，界面上我们提供1个文本编辑框作为要生成的条形码的输入，一个combo列表框显示所有的barbecue支持的条形码类型，最后当然是一个button，点击后生成条形码图片并给出提示信息。在界面初始化的时候，我们需要为列表框赋值使之可以提示用户要生产的条码类型，当然，最常见的实现就是直接一行一行的为期添加值，比如我们知道有Code128的条码，有EAN128的条码，有Code39的条码等等，那么就可以直接以cmbType.add(“Code124); cmbType.add(“EAN128”);…的方式实现我们的代码，当然大同小异的，我们也可以直接将所有的值先添加到一个List中，最后循环这个List为列表框赋值，以此来使代码更清晰，但是，其实这样并不是最好的实现，虽然简单，但是依然有改进的余地，因为首先，我们发现BarcodeFactory类里，针对不同的条码类型，它都会有一个createXXX()形式的方法与之对应，所以，我们可以直接使用反射来取得这些方法，并截取条码名称部分就可以了，而不需要hard code条码名称到代码中，以下是简单的实现片断：</p>
 <div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="co">// combo Init</span>
 
-Matcher matcher = Pattern.<span class="fu">compile</span>(<span class="st">&quot;^create(.*)$&quot;</span>).<span class="fu">matcher</span>(<span class="st">&quot;&quot;</span>);
+<span class="bu">Matcher</span> matcher = <span class="bu">Pattern</span>.<span class="fu">compile</span>(<span class="st">&quot;^create(.*)$&quot;</span>).<span class="fu">matcher</span>(<span class="st">&quot;&quot;</span>);
 
-Class clazz = BarcodeFactory.<span class="fu">class</span>;
+<span class="bu">Class</span> clazz = BarcodeFactory.<span class="fu">class</span>;
 
-Method[] methods = clazz.<span class="fu">getMethods</span>();
+<span class="bu">Method</span>[] methods = clazz.<span class="fu">getMethods</span>();
 
 <span class="kw">for</span>(<span class="dt">int</span> i=<span class="dv">0</span>;i&lt;methods.<span class="fu">length</span>;i++)
 
@@ -144,32 +144,32 @@ Method[] methods = clazz.<span class="fu">getMethods</span>();
 
 }</code></pre></div>
 <p>界面初始化完成之后，最主要的就是按钮的事件处理。检验等暂且不提，我先说我的实现思路，从Text中提取输入，从列表框中提取条码类型名称，然后根据条码名称判断应该调用BarcodeFactory的什么方法，最后生成条码图片并输出。不知道大家是否想过，即使知道了条码类型名称，那么如何调用BarcodeFactory的相应方法那？！（对于guru来说固然小儿科，但是以上只是为了提供思路，问题固然简单，依然需要表达清楚，不是吗？！）OK，答案就是反射（Reflection）。 我们通过循环便利BarcodeFactory的所有方法，在循环中会根据正则表达式来判断那个方面名称中可以find到条码类型名称形式的pattern，如果find（）方法返回true，我们就可以直接调用，进行后继处理后直接返回了，请看如下代码片断：</p>
-<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java">Class clazz = BarcodeFactory.<span class="fu">class</span>;
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="bu">Class</span> clazz = BarcodeFactory.<span class="fu">class</span>;
 
-Method[] methods = clazz.<span class="fu">getMethods</span>();
+<span class="bu">Method</span>[] methods = clazz.<span class="fu">getMethods</span>();
 
 <span class="kw">for</span>(<span class="dt">int</span> i=<span class="dv">0</span>;i&lt;methods.<span class="fu">length</span>;i++){
-    Method m = methods[i];
+    <span class="bu">Method</span> m = methods[i];
 
-    Matcher matcher = Pattern.<span class="fu">compile</span>(type+<span class="st">&quot;$&quot;</span>).<span class="fu">matcher</span>(m.<span class="fu">getName</span>());
+    <span class="bu">Matcher</span> matcher = <span class="bu">Pattern</span>.<span class="fu">compile</span>(type+<span class="st">&quot;$&quot;</span>).<span class="fu">matcher</span>(m.<span class="fu">getName</span>());
 
     <span class="kw">if</span>(matcher.<span class="fu">find</span>()){
 
-        StringBuffer filename = <span class="kw">new</span> StringBuffer();
-        filename.<span class="fu">append</span>(System.<span class="fu">getProperty</span>(<span class="st">&quot;user.dir&quot;</span>));
-        filename.<span class="fu">append</span>(File.<span class="fu">separator</span>);
+        <span class="bu">StringBuffer</span> filename = <span class="kw">new</span> <span class="bu">StringBuffer</span>();
+        filename.<span class="fu">append</span>(<span class="bu">System</span>.<span class="fu">getProperty</span>(<span class="st">&quot;user.dir&quot;</span>));
+        filename.<span class="fu">append</span>(<span class="bu">File</span>.<span class="fu">separator</span>);
         filename.<span class="fu">append</span>(<span class="st">&quot;data&quot;</span>);
-        filename.<span class="fu">append</span>(File.<span class="fu">separator</span>);
+        filename.<span class="fu">append</span>(<span class="bu">File</span>.<span class="fu">separator</span>);
         filename.<span class="fu">append</span>(type);
         filename.<span class="fu">append</span>(<span class="st">&quot;.jpg&quot;</span>);
 
-        Barcode barcode = (Barcode)m.<span class="fu">invoke</span>(clazz,<span class="kw">new</span> Object[]{input});
-        out = <span class="kw">new</span> FileOutputStream(filename.<span class="fu">toString</span>());
+        Barcode barcode = (Barcode)m.<span class="fu">invoke</span>(clazz,<span class="kw">new</span> <span class="bu">Object</span>[]{input});
+        out = <span class="kw">new</span> <span class="bu">FileOutputStream</span>(filename.<span class="fu">toString</span>());
         BarcodeImageHandler.<span class="fu">outputBarcodeAsJPEGImage</span>(barcode, out);
 
         MessageBox msg = <span class="kw">new</span> <span class="fu">MessageBox</span>(BarCodeGenerator.<span class="fu">this</span>.<span class="fu">getShell</span>(),SWT.<span class="fu">APPLICATION_MODAL</span>|SWT.<span class="fu">ICON_INFORMATION</span>);
         msg.<span class="fu">setText</span>(<span class="st">&quot;Message&quot;</span>);
-        msg.<span class="fu">setMessage</span>(<span class="st">&quot;Barcode generated Successfully into data directory!</span><span class="ch">\n</span><span class="st">[&quot;</span>+filename.<span class="fu">toString</span>()+<span class="st">&quot;]&quot;</span>);
+        msg.<span class="fu">setMessage</span>(<span class="st">&quot;Barcode generated Successfully into data directory!</span><span class="sc">\n</span><span class="st">[&quot;</span>+filename.<span class="fu">toString</span>()+<span class="st">&quot;]&quot;</span>);
         msg.<span class="fu">open</span>();
 
         <span class="kw">return</span>;
@@ -213,7 +213,7 @@ IReportGenerator generator;
 
 …
 
-Class clazz = (Class)<span class="fu">getReportMapping</span>().<span class="fu">get</span>(type);
+<span class="bu">Class</span> clazz = (<span class="bu">Class</span>)<span class="fu">getReportMapping</span>().<span class="fu">get</span>(type);
 
 generator = (IReportGenerator)clazz.<span class="fu">newInstance</span>();
 
@@ -226,9 +226,9 @@ generator.<span class="fu">generate</span>();
 EReportType.<span class="fu">TYPE2</span> = com.<span class="fu">darrenstudio</span>.<span class="fu">report</span>.<span class="fu">SampleReport2</span>.<span class="fu">class</span>
 …</code></pre></div>
 <p>之后，我们把配置文件的内容读进来：</p>
-<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java">Properties prop = <span class="kw">new</span> Properties();
+<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="bu">Properties</span> prop = <span class="kw">new</span> <span class="bu">Properties</span>();
 
-InputStream ins = XXX.<span class="fu">class</span>.<span class="fu">getResourceAsStream</span>(“xx.<span class="fu">properties</span>”);
+<span class="bu">InputStream</span> ins = XXX.<span class="fu">class</span>.<span class="fu">getResourceAsStream</span>(“xx.<span class="fu">properties</span>”);
 
 prop.<span class="fu">load</span>(ins);</code></pre></div>
 <p>万事俱备之后，以下的重构后的代码就出现了：</p>
@@ -240,9 +240,9 @@ IReportGenerator generator;
 
 …
 
-String clazzName = prop.<span class="fu">getProperty</span>(“type的class name”);
+<span class="bu">String</span> clazzName = prop.<span class="fu">getProperty</span>(“type的class name”);
 
-Class clazz = Class.<span class="fu">forName</span>（clazzName）;
+<span class="bu">Class</span> clazz = <span class="bu">Class</span>.<span class="fu">forName</span>（clazzName）;
 
 generator = (IReportGenerator)clazz.<span class="fu">newInstance</span>();
 

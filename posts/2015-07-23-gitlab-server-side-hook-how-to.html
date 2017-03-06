@@ -79,8 +79,8 @@
     
     </h1>
     -->
-    <a href="/"><img src="/images/afoo.PNG"/></a>
-		<p class="masthead-lead">瞎子摸象的践行者</p>
+    <a href="/"><h1>扶墙老师说</h1></a>
+		<p class="masthead-lead">一个架构士的思考与沉淀</p>
 	
 		<hr class="masthead-hr">
 
@@ -147,12 +147,12 @@
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="co">#!/bin/bash</span>
 
 
-<span class="ot">SCRIPT_DIR=</span><span class="st">&quot;</span><span class="ot">$(</span> <span class="kw">cd</span> <span class="st">&quot;</span><span class="ot">$(</span> <span class="kw">dirname</span> <span class="st">&quot;</span><span class="ot">${BASH_SOURCE[0]}</span><span class="st">&quot;</span> <span class="ot">)</span><span class="st">&quot;</span> <span class="kw">&amp;&amp;</span> <span class="kw">pwd</span> <span class="ot">)</span><span class="st">&quot;</span>
+<span class="va">SCRIPT_DIR=</span><span class="st">&quot;</span><span class="va">$(</span> <span class="bu">cd</span> <span class="st">&quot;</span><span class="va">$(</span> <span class="fu">dirname</span> <span class="st">&quot;</span><span class="va">${BASH_SOURCE[0]}</span><span class="st">&quot;</span> <span class="va">)</span><span class="st">&quot;</span> <span class="kw">&amp;&amp;</span> <span class="bu">pwd</span> <span class="va">)</span><span class="st">&quot;</span>
 
-<span class="ot">SRC_DIR=${SCRIPT_DIR}</span>/../../architecture.git
-<span class="ot">DEST_DIR=${SCRIPT_DIR}</span>/../../architecture.wiki.git
+<span class="va">SRC_DIR=${SCRIPT_DIR}</span>/../../architecture.git
+<span class="va">DEST_DIR=${SCRIPT_DIR}</span>/../../architecture.wiki.git
 
-<span class="kw">/usr/bin/rsync</span> -avz --delete <span class="ot">$SRC_DIR</span>/ <span class="ot">$DEST_DIR</span>/</code></pre></div>
+<span class="ex">/usr/bin/rsync</span> -avz --delete <span class="va">$SRC_DIR</span>/ <span class="va">$DEST_DIR</span>/</code></pre></div>
 <h1 id="参考资料"><span class="header-section-number">1</span> 参考资料</h1>
 <p><a href="http://doc.gitlab.com/ce/hooks/custom_hooks.html" class="uri">http://doc.gitlab.com/ce/hooks/custom_hooks.html</a></p>
 <hr>
