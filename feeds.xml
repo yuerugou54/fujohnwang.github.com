@@ -5,6 +5,13 @@
     <link>http://afoo.me</link>
     <description>扶墙老师的博客 - 一个架构士的思考与实践之地</description>
     <item>
+      <title>今天就像三妈之前跟我说的那样：“吃了苍蝇”</title>
+      <link>http://afoo.me/posts/2017-03-08-fuck-three-idiots.html</link>
+      <pubDate>Tue, 07 Mar 2017 16:00:00 GMT</pubDate>
+      <guid>http://afoo.me/posts/2017-03-08-fuck-three-idiots.html</guid>
+      <dc:date>2017-03-07T16:00:00Z</dc:date>
+    </item>
+    <item>
       <title>一个side project的原型构建过程与总结</title>
       <link>http://afoo.me/posts/2017-02-22-guoqitixing-side-project-review.html</link>
       <pubDate>Tue, 21 Feb 2017 16:00:00 GMT</pubDate>
@@ -73,13 +80,6 @@
       <pubDate>Fri, 29 Jan 2016 16:00:00 GMT</pubDate>
       <guid>http://afoo.me/posts/2016-01-30-the-team-I-would-like-to-dedicate.html</guid>
       <dc:date>2016-01-29T16:00:00Z</dc:date>
-    </item>
-    <item>
-      <title>令行禁止的Amazon就是这样炼成的</title>
-      <link>http://afoo.me/posts/2016-01-23-amazon-api-and-service-rule.html</link>
-      <pubDate>Fri, 22 Jan 2016 16:00:00 GMT</pubDate>
-      <guid>http://afoo.me/posts/2016-01-23-amazon-api-and-service-rule.html</guid>
-      <dc:date>2016-01-22T16:00:00Z</dc:date>
     </item>
   </channel>
 </rss>
