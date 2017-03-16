@@ -5,6 +5,13 @@
     <link>http://afoo.me</link>
     <description>扶墙老师的博客 - 一个架构士的思考与实践之地</description>
     <item>
+      <title>小众垂直市场永远有机会</title>
+      <link>http://afoo.me/posts/2017-03-12-cut-the-small-vertical-market.html</link>
+      <pubDate>Sat, 11 Mar 2017 16:00:00 GMT</pubDate>
+      <guid>http://afoo.me/posts/2017-03-12-cut-the-small-vertical-market.html</guid>
+      <dc:date>2017-03-11T16:00:00Z</dc:date>
+    </item>
+    <item>
       <title>今天就像三妈之前跟我说的那样：“吃了苍蝇”</title>
       <link>http://afoo.me/posts/2017-03-08-fuck-three-idiots.html</link>
       <pubDate>Tue, 07 Mar 2017 16:00:00 GMT</pubDate>
@@ -73,13 +80,6 @@
       <pubDate>Sun, 07 Feb 2016 16:00:00 GMT</pubDate>
       <guid>http://afoo.me/posts/2016-02-08-talking-about-house-of-countryside.html</guid>
       <dc:date>2016-02-07T16:00:00Z</dc:date>
-    </item>
-    <item>
-      <title>我所希望并为之奋斗的团队</title>
-      <link>http://afoo.me/posts/2016-01-30-the-team-I-would-like-to-dedicate.html</link>
-      <pubDate>Fri, 29 Jan 2016 16:00:00 GMT</pubDate>
-      <guid>http://afoo.me/posts/2016-01-30-the-team-I-would-like-to-dedicate.html</guid>
-      <dc:date>2016-01-29T16:00:00Z</dc:date>
     </item>
   </channel>
 </rss>
