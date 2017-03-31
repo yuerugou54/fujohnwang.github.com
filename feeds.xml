@@ -5,6 +5,13 @@
     <link>http://afoo.me</link>
     <description>扶墙老师的博客 - 一个架构士的思考与实践之地</description>
     <item>
+      <title>还不知道这个小密圈？！</title>
+      <link>http://afoo.me/posts/2017-03-31-know-my-xiaomiquan.html</link>
+      <pubDate>Thu, 30 Mar 2017 16:00:00 GMT</pubDate>
+      <guid>http://afoo.me/posts/2017-03-31-know-my-xiaomiquan.html</guid>
+      <dc:date>2017-03-30T16:00:00Z</dc:date>
+    </item>
+    <item>
       <title>小众垂直市场永远有机会</title>
       <link>http://afoo.me/posts/2017-03-12-cut-the-small-vertical-market.html</link>
       <pubDate>Sat, 11 Mar 2017 16:00:00 GMT</pubDate>
@@ -73,13 +80,6 @@
       <pubDate>Tue, 23 Feb 2016 16:00:00 GMT</pubDate>
       <guid>http://afoo.me/posts/2016-02-24-what-defines-an-archtect.html</guid>
       <dc:date>2016-02-23T16:00:00Z</dc:date>
-    </item>
-    <item>
-      <title>喝药的老人</title>
-      <link>http://afoo.me/posts/2016-02-08-talking-about-house-of-countryside.html</link>
-      <pubDate>Sun, 07 Feb 2016 16:00:00 GMT</pubDate>
-      <guid>http://afoo.me/posts/2016-02-08-talking-about-house-of-countryside.html</guid>
-      <dc:date>2016-02-07T16:00:00Z</dc:date>
     </item>
   </channel>
 </rss>
