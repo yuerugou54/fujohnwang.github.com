@@ -5,6 +5,13 @@
     <link>http://afoo.me</link>
     <description>扶墙老师的博客 - 一个架构士的思考与实践之地</description>
     <item>
+      <title>很多时候你不是总结的太少，而是总结的太早</title>
+      <link>http://afoo.me/posts/2017-04-07-what-u-think-may-be-not.html</link>
+      <pubDate>Thu, 06 Apr 2017 16:00:00 GMT</pubDate>
+      <guid>http://afoo.me/posts/2017-04-07-what-u-think-may-be-not.html</guid>
+      <dc:date>2017-04-06T16:00:00Z</dc:date>
+    </item>
+    <item>
       <title>还不知道这个小密圈？！</title>
       <link>http://afoo.me/posts/2017-03-31-know-my-xiaomiquan.html</link>
       <pubDate>Thu, 30 Mar 2017 16:00:00 GMT</pubDate>
@@ -73,13 +80,6 @@
       <pubDate>Sun, 27 Mar 2016 16:00:00 GMT</pubDate>
       <guid>http://afoo.me/posts/2016-03-28-IDPA-a-great-memory.html</guid>
       <dc:date>2016-03-27T16:00:00Z</dc:date>
-    </item>
-    <item>
-      <title>架构的执念</title>
-      <link>http://afoo.me/posts/2016-02-24-what-defines-an-archtect.html</link>
-      <pubDate>Tue, 23 Feb 2016 16:00:00 GMT</pubDate>
-      <guid>http://afoo.me/posts/2016-02-24-what-defines-an-archtect.html</guid>
-      <dc:date>2016-02-23T16:00:00Z</dc:date>
     </item>
   </channel>
 </rss>
