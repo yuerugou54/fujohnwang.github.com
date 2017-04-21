@@ -21,7 +21,3 @@ do
 	./compile $f
 done
 
-for f in `ls tweets/*.m*` 
-do
-	./compile $f
-done
