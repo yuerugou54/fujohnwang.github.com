@@ -5,6 +5,13 @@
     <link>http://afoo.me</link>
     <description>扶墙老师的博客 - 一个架构士的思考与实践之地</description>
     <item>
+      <title>扶墙老师说公众号要重新定位啦~</title>
+      <link>http://afoo.me/posts/2017-06-14-reposition-wechat-public-channel.html</link>
+      <pubDate>Tue, 13 Jun 2017 16:00:00 GMT</pubDate>
+      <guid>http://afoo.me/posts/2017-06-14-reposition-wechat-public-channel.html</guid>
+      <dc:date>2017-06-13T16:00:00Z</dc:date>
+    </item>
+    <item>
       <title>为什么越是情绪化的事件或者越是偏激的观点，越能做成营销热点？！</title>
       <link>http://afoo.me/posts/2017-05-06-emotion-is-more-powerful-than-rationality.html</link>
       <pubDate>Fri, 05 May 2017 16:00:00 GMT</pubDate>
@@ -73,13 +80,6 @@
       <pubDate>Tue, 21 Feb 2017 16:00:00 GMT</pubDate>
       <guid>http://afoo.me/posts/2017-02-22-guoqitixing-side-project-review.html</guid>
       <dc:date>2017-02-21T16:00:00Z</dc:date>
-    </item>
-    <item>
-      <title>开放测试个人证件过期提醒服务</title>
-      <link>http://afoo.me/posts/2017-02-08-expiry-notification-side-project.html</link>
-      <pubDate>Tue, 07 Feb 2017 16:00:00 GMT</pubDate>
-      <guid>http://afoo.me/posts/2017-02-08-expiry-notification-side-project.html</guid>
-      <dc:date>2017-02-07T16:00:00Z</dc:date>
     </item>
   </channel>
 </rss>
