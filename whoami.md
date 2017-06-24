@@ -1,7 +1,7 @@
 # 我是谁(Who Am I)
 
-王福强，**`A Writer, A Fighter, A Programmer And A Teacher`**，
-[《Spring揭秘》](http://product.china-pub.com/195969)和[《SpringBoot揭秘》](http://product.china-pub.com/4951981)作者，杭州**征数科技**技术负责人，浸淫Java平台多年，然近年更喜Scala，
+王福强，杭州福强科技CEO，**`A Writer, A Fighter, A Programmer And A Teacher`**，
+[《Spring揭秘》](http://product.china-pub.com/195969)和[《SpringBoot揭秘》](http://product.china-pub.com/4951981)作者，浸淫Java平台多年，然近年更喜Scala，
 专注于并发并行编程，HPC，分布式系统设计与实现，Big Data， 实时数据追踪与计算等领域,
 相关Web Framework, DDAL(Distributed Data Access Layer)^[<https://github.com/alibaba/cobarclient>, 原有域名阿里内部已经弃用，很多同学又很懒（人性啊~）， 所以， 我还是编译一份文档供参考吧， [中文参考文档](/references/cobarclient/zh/index.html)看这里，[英文参考文档(Reference Doc)](/references/cobarclient/en/index.html)看这里], Middleware的Product Owner/Co-owner.
 
@@ -13,7 +13,7 @@
 
 - 原挖财技术VP及首席架构师(Chief Architect)，带领技术团队走出荒蛮，将整个挖财新一代技术研发体系规划并落地；
 - 原天猫产品技术部导购部资深架构师，兼顾负责SEO/流量拓展相关工作， 规划并推动了统一投放平台的整体落地，
-即使再规划和推动"reactive tmall"的idea，也已经不会给我带来更大的满足感，所以最终选择了离开；
+  即使再规划和推动"reactive tmall"的idea，也已经不会给我带来更大的满足感，所以最终选择了离开；
 - 原阿里巴巴平台技术部海量数据部门高级技术专家，专注打造数据中间件与产品服务化；
 
 
