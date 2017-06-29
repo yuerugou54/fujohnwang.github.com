@@ -5,6 +5,13 @@
     <link>http://afoo.me</link>
     <description>扶墙老师的博客 - 一个架构士的思考与实践之地</description>
     <item>
+      <title>福强科技开始接客啦~</title>
+      <link>http://afoo.me/posts/2017-06-29-fuqiang-tech-gogogo.html</link>
+      <pubDate>Wed, 28 Jun 2017 16:00:00 GMT</pubDate>
+      <guid>http://afoo.me/posts/2017-06-29-fuqiang-tech-gogogo.html</guid>
+      <dc:date>2017-06-28T16:00:00Z</dc:date>
+    </item>
+    <item>
       <title>扶墙老师说公众号要重新定位啦~</title>
       <link>http://afoo.me/posts/2017-06-14-reposition-wechat-public-channel.html</link>
       <pubDate>Tue, 13 Jun 2017 16:00:00 GMT</pubDate>
@@ -73,13 +80,6 @@
       <pubDate>Tue, 07 Mar 2017 16:00:00 GMT</pubDate>
       <guid>http://afoo.me/posts/2017-03-08-fuck-three-idiots.html</guid>
       <dc:date>2017-03-07T16:00:00Z</dc:date>
-    </item>
-    <item>
-      <title>一个side project的原型构建过程与总结</title>
-      <link>http://afoo.me/posts/2017-02-22-guoqitixing-side-project-review.html</link>
-      <pubDate>Tue, 21 Feb 2017 16:00:00 GMT</pubDate>
-      <guid>http://afoo.me/posts/2017-02-22-guoqitixing-side-project-review.html</guid>
-      <dc:date>2017-02-21T16:00:00Z</dc:date>
     </item>
   </channel>
 </rss>
