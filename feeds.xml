@@ -5,6 +5,13 @@
     <link>http://afoo.me</link>
     <description>扶墙老师的博客 - 一个架构士的思考与实践之地</description>
     <item>
+      <title>选择了创业，你就选择了不确定性！</title>
+      <link>http://afoo.me/posts/2017-07-11-startup-uncertainty.html</link>
+      <pubDate>Mon, 10 Jul 2017 16:00:00 GMT</pubDate>
+      <guid>http://afoo.me/posts/2017-07-11-startup-uncertainty.html</guid>
+      <dc:date>2017-07-10T16:00:00Z</dc:date>
+    </item>
+    <item>
       <title>福强科技开始接客啦~</title>
       <link>http://afoo.me/posts/2017-06-29-fuqiang-tech-gogogo.html</link>
       <pubDate>Wed, 28 Jun 2017 16:00:00 GMT</pubDate>
@@ -73,13 +80,6 @@
       <pubDate>Sat, 11 Mar 2017 16:00:00 GMT</pubDate>
       <guid>http://afoo.me/posts/2017-03-12-cut-the-small-vertical-market.html</guid>
       <dc:date>2017-03-11T16:00:00Z</dc:date>
-    </item>
-    <item>
-      <title>今天就像三妈之前跟我说的那样：“吃了苍蝇”</title>
-      <link>http://afoo.me/posts/2017-03-08-fuck-three-idiots.html</link>
-      <pubDate>Tue, 07 Mar 2017 16:00:00 GMT</pubDate>
-      <guid>http://afoo.me/posts/2017-03-08-fuck-three-idiots.html</guid>
-      <dc:date>2017-03-07T16:00:00Z</dc:date>
     </item>
   </channel>
 </rss>
