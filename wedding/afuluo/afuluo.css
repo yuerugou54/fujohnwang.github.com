@@ -1,0 +1,10 @@
+.main-hero{
+    background: rgba(244,68,130,.7) url(./images/couple.jpg) no-repeat center center fixed; background-size: cover;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+}
+
+.couple{
+    background:#F7F4F4;
+}
