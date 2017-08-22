@@ -21,11 +21,13 @@
 	<link rel="stylesheet" href="./afuluo/flexslider.css" type="text/css">
 	<link rel="stylesheet" href="./afuluo/style.css">
 	<link href="./afuluo/responsive.css" rel="stylesheet">
+	<!--引用百度地图API-->
 	<style type="text/css">
-		html,body{margin:0;padding:0;}
-		.iw_poi_title {color:#CC5522;font-size:14px;font-weight:bold;overflow:hidden;padding-right:13px;white-space:nowrap}
-		.iw_poi_content {font:12px arial,sans-serif;overflow:visible;padding-top:4px;white-space:-moz-pre-wrap;word-wrap:break-word}
+	    html,body{margin:0;padding:0;}
+	    .iw_poi_title {color:#CC5522;font-size:14px;font-weight:bold;overflow:hidden;padding-right:13px;white-space:nowrap}
+	    .iw_poi_content {font:12px arial,sans-serif;overflow:visible;padding-top:4px;white-space:-moz-pre-wrap;word-wrap:break-word}
 	</style>
+	<script type="text/javascript" src="http://api.map.baidu.com/api?key=&v=1.1&services=true"></script>
 </head>
 
 <body data-spy="scroll" data-offset="55" id="page-top" class="index">
@@ -215,7 +217,8 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-6 col-xs-12">
-                    <span class="copyright">©  2017 <a href="http://www.keevol.com/">杭州福强科技有限公司</a>. All rights reserved.</span>
+                    <span class="copyright">©  2017 <a href="http://www.keevol.com/">杭州福强科技有限公司</a>. </span>
+                    <span class="copyright">All rights reserved.</span>
                 </div>
             </div>
         </div>
@@ -231,15 +234,9 @@
 
     <!-- PrettyPhoto -->
 	<script src="./afuluo/jquery.prettyPhoto.js" type="text/javascript" charset="utf-8"></script>
-	<!-- Nicescroll JavaScript -->
-	<script src="./afuluo/jquery.flexslider.js"></script>
-	<script src="./afuluo/countdown.js"></script>
 	<!-- Video Background JavaScript -->
 	<script src="./afuluo/jquery.videobackground.js"></script>
 	
-	
-	<script type="text/javascript" src="http://api.map.baidu.com/api?key=&v=1.1&services=true"></script>
-
 	<script type="text/javascript">
 		//创建和初始化地图函数：
 		function initMap(){
