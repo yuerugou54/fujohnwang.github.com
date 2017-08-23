@@ -21,19 +21,9 @@
 	<link rel="stylesheet" href="./afuluo/flexslider.css" type="text/css">
 	<link rel="stylesheet" href="./afuluo/style.css">
 	<link href="./afuluo/responsive.css" rel="stylesheet">
-	<script type="text/javascript">
-        function init() {
-            var myAudio = document.getElementById("audio");
-            myAudio.addEventListener('ended', loopAudio, false);
-        }
-        function loopAudio() {
-            var myAudio = document.getElementById("audio");
-            myAudio.play();
-        }
-    </script>
 </head>
 
-<body data-spy="scroll" data-offset="55" id="page-top" class="index" onload="init();">
+<body data-spy="scroll" data-offset="55" id="page-top" class="index">
 	<nav id="header_nav" class="navbar navbar-default navbar-fixed-top navbar-shrink">
 			<div class="container-fluid">
 				<!-- Brand and toggle get grouped for better mobile display -->
@@ -50,13 +40,6 @@
 						<img src="./afuluo/images/cover-h5.png" width="100%"/>
 					</div><!-- .row-->
 				</div><!-- .container-fluid-->
-				
-				<audio controls="controls" autoplay="autoplay" loop="loop" style="display: none;">
-						<source src="Wham-Bam-Shang-A-Lang.mp3" type="audio/mpeg">
-						<embed src="Wham-Bam-Shang-A-Lang.mp3" />
-					  Your browser does not support the audio element.
-					  </audio>
-				
 	</header>
 	
 		<div class="container-fluid">
@@ -173,37 +156,40 @@
 	    <div class="container">
 		     <div class="row">
                 <div class="col-lg-12 text-center">
-                    <div class="section-head">
 					<h2 class="section-heading">诚挚邀请您参加我们的婚礼...</h2>
+					<audio controls="controls" autoplay="autoplay" loop="loop" style="display: block;" class="text-center">
+							<source src="Wham-Bam-Shang-A-Lang.mp3" type="audio/mp3">
+							<embed src="Wham-Bam-Shang-A-Lang.mp3" />
+						  Your browser does not support the audio element.
+					</audio>
 				   </div>
                 </div>
             </div>
 		</div>
-	<div class="blog_wide_wrap two">
-		<div class="container">
-			<div class="row">
-			    <div class="col-lg-4 col-md-4 col-sm-6">
-						<h3><a href="#">婚宴日期</a></h3>
-						<p class="primary">
-							<b>2017年9月27日</b>，阴历八月初八
-							<img src="./afuluo/images/flower.png" width="100%"/>
-						</p>	
+		<div class="blog_wide_wrap two">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-4 col-md-4 col-sm-6">
+							<h3><a href="#">婚宴日期</a></h3>
+							<p class="primary">
+								<b>2017年9月27日</b>，阴历八月初八
+								<img src="./afuluo/images/flower.png" width="100%"/>
+							</p>	
+					</div>
+					<div class="col-lg-4 col-md-4 col-sm-6">
+							<h3><a href="#">婚宴地址</a></h3>
+							<p  class="info">招远市金岭镇万杰酒店（长安路与政和路口）</p>
+							<img src="./afuluo/images/wedding-location.png"/>
+					</div>
+					<div class="col-lg-4 col-md-4 col-sm-6">
+						<h3><a href="#">联系方式</a></h3>
+						<p>
+							作为新郎新娘的亲朋好友，您应该已经有双方的电话和微信等联系方式了吧？！
+						</p>
+					</div>
 				</div>
-				<div class="col-lg-4 col-md-4 col-sm-6">
-						<h3><a href="#">婚宴地址</a></h3>
-						<p  class="info">招远市金岭镇万杰酒店（长安路与政和路口）</p>
-						<img src="./afuluo/images/wedding-location.png"/>
-				</div>
-				<div class="col-lg-4 col-md-4 col-sm-6">
-					<h3><a href="#">联系方式</a></h3>
-					<p>
-						作为新郎新娘的亲朋好友，您应该已经有双方的电话和微信等联系方式了吧？！
-					</p>
-				</div>
-			    
 			</div>
 		</div>
-	</div>
 	</section>
 	<!-- Blog section End-->
 
@@ -231,4 +217,8 @@
 	<!-- Video Background JavaScript -->
 	<script src="./afuluo/jquery.videobackground.js"></script>
 
+	<script>
+		var myAudio = document.getElementById("audio");
+        myAudio.play();
+	</script>
 </body></html>
