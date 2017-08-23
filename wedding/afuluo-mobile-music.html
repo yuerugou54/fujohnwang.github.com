@@ -21,10 +21,19 @@
 	<link rel="stylesheet" href="./afuluo/flexslider.css" type="text/css">
 	<link rel="stylesheet" href="./afuluo/style.css">
 	<link href="./afuluo/responsive.css" rel="stylesheet">
-	
+	<script type="text/javascript">
+        function init() {
+            var myAudio = document.getElementById("audio");
+            myAudio.addEventListener('ended', loopAudio, false);
+        }
+        function loopAudio() {
+            var myAudio = document.getElementById("audio");
+            myAudio.play();
+        }
+    </script>
 </head>
 
-<body data-spy="scroll" data-offset="55" id="page-top" class="index">
+<body data-spy="scroll" data-offset="55" id="page-top" class="index" onload="init();">
 	<nav id="header_nav" class="navbar navbar-default navbar-fixed-top navbar-shrink">
 			<div class="container-fluid">
 				<!-- Brand and toggle get grouped for better mobile display -->
@@ -41,13 +50,13 @@
 						<img src="./afuluo/images/cover-h5.png" width="100%"/>
 					</div><!-- .row-->
 				</div><!-- .container-fluid-->
-				<!--
+				
 				<audio controls="controls" autoplay="autoplay" loop="loop" style="display: none;">
 						<source src="Wham-Bam-Shang-A-Lang.mp3" type="audio/mpeg">
 						<embed src="Wham-Bam-Shang-A-Lang.mp3" />
 					  Your browser does not support the audio element.
 					  </audio>
-					-->
+				
 	</header>
 	
 		<div class="container-fluid">
@@ -221,10 +230,5 @@
 	<script src="./afuluo/jquery.prettyPhoto.js" type="text/javascript" charset="utf-8"></script>
 	<!-- Video Background JavaScript -->
 	<script src="./afuluo/jquery.videobackground.js"></script>
-	
-	<script>
-		var audio = new Audio('Wham-Bam-Shang-A-Lang.mp3');
-		audio.play();
-	</script>
 
 </body></html>
