@@ -5,6 +5,13 @@
     <link>http://afoo.me</link>
     <description>扶墙老师的博客 - 一个架构士的思考与实践之地</description>
     <item>
+      <title>对员工好的公司到底是死是活</title>
+      <link>http://afoo.me/posts/2017-09-06-be-nice-to-your-staffs.html</link>
+      <pubDate>Tue, 05 Sep 2017 16:00:00 GMT</pubDate>
+      <guid>http://afoo.me/posts/2017-09-06-be-nice-to-your-staffs.html</guid>
+      <dc:date>2017-09-05T16:00:00Z</dc:date>
+    </item>
+    <item>
       <title>How To Run A Startup Wisely</title>
       <link>http://afoo.me/posts/2017-09-05-how-to-run-startup-wisely.html</link>
       <pubDate>Mon, 04 Sep 2017 16:00:00 GMT</pubDate>
@@ -73,13 +80,6 @@
       <pubDate>Tue, 25 Apr 2017 16:00:00 GMT</pubDate>
       <guid>http://afoo.me/posts/2017-04-26-ending-is-the-new-beginning.html</guid>
       <dc:date>2017-04-25T16:00:00Z</dc:date>
-    </item>
-    <item>
-      <title>多务实， 少炫技</title>
-      <link>http://afoo.me/posts/2017-04-17-be-pragmatic.html</link>
-      <pubDate>Sun, 16 Apr 2017 16:00:00 GMT</pubDate>
-      <guid>http://afoo.me/posts/2017-04-17-be-pragmatic.html</guid>
-      <dc:date>2017-04-16T16:00:00Z</dc:date>
     </item>
   </channel>
 </rss>
