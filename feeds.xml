@@ -5,6 +5,20 @@
     <link>http://afoo.me</link>
     <description>扶墙老师的博客 - 一个架构士的思考与实践之地</description>
     <item>
+      <title>荒诞之梦</title>
+      <link>http://afoo.me/posts/2017-09-08-ridiculous-dream-on-stock-price.html</link>
+      <pubDate>Thu, 07 Sep 2017 16:00:00 GMT</pubDate>
+      <guid>http://afoo.me/posts/2017-09-08-ridiculous-dream-on-stock-price.html</guid>
+      <dc:date>2017-09-07T16:00:00Z</dc:date>
+    </item>
+    <item>
+      <title>为什么你好心说的话，别人却不听</title>
+      <link>http://afoo.me/posts/2017-09-07-why-people-just-dont-listen.html</link>
+      <pubDate>Wed, 06 Sep 2017 16:00:00 GMT</pubDate>
+      <guid>http://afoo.me/posts/2017-09-07-why-people-just-dont-listen.html</guid>
+      <dc:date>2017-09-06T16:00:00Z</dc:date>
+    </item>
+    <item>
       <title>对员工好的公司到底是死是活</title>
       <link>http://afoo.me/posts/2017-09-06-be-nice-to-your-staffs.html</link>
       <pubDate>Tue, 05 Sep 2017 16:00:00 GMT</pubDate>
@@ -66,20 +80,6 @@
       <pubDate>Wed, 03 May 2017 16:00:00 GMT</pubDate>
       <guid>http://afoo.me/posts/2017-05-04-what-makes-an-architect.html</guid>
       <dc:date>2017-05-03T16:00:00Z</dc:date>
-    </item>
-    <item>
-      <title>哪里是阶级固化，明明就是阶级消亡</title>
-      <link>http://afoo.me/posts/2017-04-27-social-class-is-doomed.html</link>
-      <pubDate>Wed, 26 Apr 2017 16:00:00 GMT</pubDate>
-      <guid>http://afoo.me/posts/2017-04-27-social-class-is-doomed.html</guid>
-      <dc:date>2017-04-26T16:00:00Z</dc:date>
-    </item>
-    <item>
-      <title>好聚好散是最好的结局和起点</title>
-      <link>http://afoo.me/posts/2017-04-26-ending-is-the-new-beginning.html</link>
-      <pubDate>Tue, 25 Apr 2017 16:00:00 GMT</pubDate>
-      <guid>http://afoo.me/posts/2017-04-26-ending-is-the-new-beginning.html</guid>
-      <dc:date>2017-04-25T16:00:00Z</dc:date>
     </item>
   </channel>
 </rss>
