@@ -1,4 +1,6 @@
-# 结婚筹备曲
+% 结婚筹备曲
+% 王福强 - fujohnwang AT gmail DOTA com
+% 2017-09-20
 
 
 
