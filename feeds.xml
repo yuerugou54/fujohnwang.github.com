@@ -5,6 +5,13 @@
     <link>http://afoo.me</link>
     <description>扶墙老师的博客 - 一个架构士的思考与实践之地</description>
     <item>
+      <title>婚礼筹备曲续</title>
+      <link>http://afoo.me/posts/2017-09-22-wedding-journal-2.html</link>
+      <pubDate>Thu, 21 Sep 2017 16:00:00 GMT</pubDate>
+      <guid>http://afoo.me/posts/2017-09-22-wedding-journal-2.html</guid>
+      <dc:date>2017-09-21T16:00:00Z</dc:date>
+    </item>
+    <item>
       <title>结婚筹备曲</title>
       <link>http://afoo.me/posts/2017-09-20-wedding-journal.html</link>
       <pubDate>Tue, 19 Sep 2017 16:00:00 GMT</pubDate>
@@ -73,13 +80,6 @@
       <pubDate>Tue, 13 Jun 2017 16:00:00 GMT</pubDate>
       <guid>http://afoo.me/posts/2017-06-14-reposition-wechat-public-channel.html</guid>
       <dc:date>2017-06-13T16:00:00Z</dc:date>
-    </item>
-    <item>
-      <title>为什么越是情绪化的事件或者越是偏激的观点，越能做成营销热点？！</title>
-      <link>http://afoo.me/posts/2017-05-06-emotion-is-more-powerful-than-rationality.html</link>
-      <pubDate>Fri, 05 May 2017 16:00:00 GMT</pubDate>
-      <guid>http://afoo.me/posts/2017-05-06-emotion-is-more-powerful-than-rationality.html</guid>
-      <dc:date>2017-05-05T16:00:00Z</dc:date>
     </item>
   </channel>
 </rss>
