@@ -5,6 +5,13 @@
     <link>http://afoo.me</link>
     <description>扶墙老师的博客 - 一个架构士的思考与实践之地</description>
     <item>
+      <title>婚庆怪相背后的个人思考</title>
+      <link>http://afoo.me/posts/2017-09-24-traps-in-wedding-industry.html</link>
+      <pubDate>Sat, 23 Sep 2017 16:00:00 GMT</pubDate>
+      <guid>http://afoo.me/posts/2017-09-24-traps-in-wedding-industry.html</guid>
+      <dc:date>2017-09-23T16:00:00Z</dc:date>
+    </item>
+    <item>
       <title>婚礼筹备曲续</title>
       <link>http://afoo.me/posts/2017-09-22-wedding-journal-2.html</link>
       <pubDate>Thu, 21 Sep 2017 16:00:00 GMT</pubDate>
@@ -73,13 +80,6 @@
       <pubDate>Wed, 28 Jun 2017 16:00:00 GMT</pubDate>
       <guid>http://afoo.me/posts/2017-06-29-fuqiang-tech-gogogo.html</guid>
       <dc:date>2017-06-28T16:00:00Z</dc:date>
-    </item>
-    <item>
-      <title>扶墙老师说公众号要重新定位啦~</title>
-      <link>http://afoo.me/posts/2017-06-14-reposition-wechat-public-channel.html</link>
-      <pubDate>Tue, 13 Jun 2017 16:00:00 GMT</pubDate>
-      <guid>http://afoo.me/posts/2017-06-14-reposition-wechat-public-channel.html</guid>
-      <dc:date>2017-06-13T16:00:00Z</dc:date>
     </item>
   </channel>
 </rss>
