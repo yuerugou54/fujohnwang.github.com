@@ -6,7 +6,7 @@ scalaVersion := "2.12.3"
 
 scalacOptions := Seq("-deprecation", "-unchecked","-optimise")
 
-javacOptions ++= Seq("-source", "1.8", "-target", "1.9")
+javacOptions ++= Seq("--release", "9")
 
 libraryDependencies += "org.slf4j" % "slf4j-api" % "1.7.7"
 

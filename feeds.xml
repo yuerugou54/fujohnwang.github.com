@@ -5,6 +5,13 @@
     <link>http://afoo.me</link>
     <description>扶墙老师的博客 - 一个架构士的思考与实践之地</description>
     <item>
+      <title>到底应该&amp;quot;扬善于公堂，规过于私室&amp;quot;还是“扬善于私室，规过于公堂”？</title>
+      <link>http://afoo.me/posts/2017-10-14-when-to-encourage-when-to-criticize.html</link>
+      <pubDate>Fri, 13 Oct 2017 16:00:00 GMT</pubDate>
+      <guid>http://afoo.me/posts/2017-10-14-when-to-encourage-when-to-criticize.html</guid>
+      <dc:date>2017-10-13T16:00:00Z</dc:date>
+    </item>
+    <item>
       <title>扶墙老师谈管理之再说“心硬”</title>
       <link>http://afoo.me/posts/2017-10-13-will-and-hold-on.html</link>
       <pubDate>Thu, 12 Oct 2017 16:00:00 GMT</pubDate>
@@ -73,13 +80,6 @@
       <pubDate>Thu, 31 Aug 2017 16:00:00 GMT</pubDate>
       <guid>http://afoo.me/posts/2017-09-01-what-I-think-about-ICO.html</guid>
       <dc:date>2017-08-31T16:00:00Z</dc:date>
-    </item>
-    <item>
-      <title>你知道学习是怎么一回事？你确定？</title>
-      <link>http://afoo.me/posts/2017-07-20-study-is-not-what-you-think.html</link>
-      <pubDate>Wed, 19 Jul 2017 16:00:00 GMT</pubDate>
-      <guid>http://afoo.me/posts/2017-07-20-study-is-not-what-you-think.html</guid>
-      <dc:date>2017-07-19T16:00:00Z</dc:date>
     </item>
   </channel>
 </rss>
