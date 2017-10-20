@@ -5,6 +5,13 @@
     <link>http://afoo.me</link>
     <description>扶墙老师的博客 - 一个架构士的思考与实践之地</description>
     <item>
+      <title>梦想是自己的，不能假手于人</title>
+      <link>http://afoo.me/posts/2017-10-20-hold-your-dream-by-yourself.html</link>
+      <pubDate>Thu, 19 Oct 2017 16:00:00 GMT</pubDate>
+      <guid>http://afoo.me/posts/2017-10-20-hold-your-dream-by-yourself.html</guid>
+      <dc:date>2017-10-19T16:00:00Z</dc:date>
+    </item>
+    <item>
       <title>扶墙老师谈管理：到底应不应该找backup</title>
       <link>http://afoo.me/posts/2017-10-15-find-a-successor-instead-of-backup.html</link>
       <pubDate>Sat, 14 Oct 2017 16:00:00 GMT</pubDate>
@@ -73,13 +80,6 @@
       <pubDate>Tue, 05 Sep 2017 16:00:00 GMT</pubDate>
       <guid>http://afoo.me/posts/2017-09-06-be-nice-to-your-staffs.html</guid>
       <dc:date>2017-09-05T16:00:00Z</dc:date>
-    </item>
-    <item>
-      <title>How To Run A Startup Wisely</title>
-      <link>http://afoo.me/posts/2017-09-05-how-to-run-startup-wisely.html</link>
-      <pubDate>Mon, 04 Sep 2017 16:00:00 GMT</pubDate>
-      <guid>http://afoo.me/posts/2017-09-05-how-to-run-startup-wisely.html</guid>
-      <dc:date>2017-09-04T16:00:00Z</dc:date>
     </item>
   </channel>
 </rss>
