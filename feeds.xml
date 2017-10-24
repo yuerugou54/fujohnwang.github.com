@@ -5,6 +5,13 @@
     <link>http://afoo.me</link>
     <description>扶墙老师的博客 - 一个架构士的思考与实践之地</description>
     <item>
+      <title>程序员的手感</title>
+      <link>http://afoo.me/posts/2017-10-24-programmer-levels.html</link>
+      <pubDate>Mon, 23 Oct 2017 16:00:00 GMT</pubDate>
+      <guid>http://afoo.me/posts/2017-10-24-programmer-levels.html</guid>
+      <dc:date>2017-10-23T16:00:00Z</dc:date>
+    </item>
+    <item>
       <title>梦想是自己的，不能假手于人</title>
       <link>http://afoo.me/posts/2017-10-20-hold-your-dream-by-yourself.html</link>
       <pubDate>Thu, 19 Oct 2017 16:00:00 GMT</pubDate>
@@ -73,13 +80,6 @@
       <pubDate>Wed, 06 Sep 2017 16:00:00 GMT</pubDate>
       <guid>http://afoo.me/posts/2017-09-07-why-people-just-dont-listen.html</guid>
       <dc:date>2017-09-06T16:00:00Z</dc:date>
-    </item>
-    <item>
-      <title>对员工好的公司到底是死是活</title>
-      <link>http://afoo.me/posts/2017-09-06-be-nice-to-your-staffs.html</link>
-      <pubDate>Tue, 05 Sep 2017 16:00:00 GMT</pubDate>
-      <guid>http://afoo.me/posts/2017-09-06-be-nice-to-your-staffs.html</guid>
-      <dc:date>2017-09-05T16:00:00Z</dc:date>
     </item>
   </channel>
 </rss>
