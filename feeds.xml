@@ -5,6 +5,13 @@
     <link>http://afoo.me</link>
     <description>扶墙老师的博客 - 一个架构士的思考与实践之地</description>
     <item>
+      <title>我为什么要开展顾问业务</title>
+      <link>http://afoo.me/posts/2017-11-05-why-start-consulting-business.html</link>
+      <pubDate>Sat, 04 Nov 2017 16:00:00 GMT</pubDate>
+      <guid>http://afoo.me/posts/2017-11-05-why-start-consulting-business.html</guid>
+      <dc:date>2017-11-04T16:00:00Z</dc:date>
+    </item>
+    <item>
       <title>程序员的手感</title>
       <link>http://afoo.me/posts/2017-10-24-programmer-levels.html</link>
       <pubDate>Mon, 23 Oct 2017 16:00:00 GMT</pubDate>
@@ -73,13 +80,6 @@
       <pubDate>Thu, 07 Sep 2017 16:00:00 GMT</pubDate>
       <guid>http://afoo.me/posts/2017-09-08-ridiculous-dream-on-stock-price.html</guid>
       <dc:date>2017-09-07T16:00:00Z</dc:date>
-    </item>
-    <item>
-      <title>为什么你好心说的话，别人却不听</title>
-      <link>http://afoo.me/posts/2017-09-07-why-people-just-dont-listen.html</link>
-      <pubDate>Wed, 06 Sep 2017 16:00:00 GMT</pubDate>
-      <guid>http://afoo.me/posts/2017-09-07-why-people-just-dont-listen.html</guid>
-      <dc:date>2017-09-06T16:00:00Z</dc:date>
     </item>
   </channel>
 </rss>

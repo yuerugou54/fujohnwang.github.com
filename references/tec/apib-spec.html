@@ -204,7 +204,7 @@
 
  ...</code></pre>
 <blockquote>
-<p><strong>NOTE:</strong> While this specification uses &quot;atx&quot; -style headers (using <code>#</code>s) you can also use &quot;Setext&quot; <a href="https://daringfireball.net/projects/markdown/syntax#header">header syntax</a> interchangeably:</p>
+<p><strong>NOTE:</strong> While this specification uses “atx” -style headers (using <code>#</code>s) you can also use “Setext” <a href="https://daringfireball.net/projects/markdown/syntax#header">header syntax</a> interchangeably:</p>
 <pre><code>&lt;keyword&gt;
 =========
 
@@ -262,7 +262,7 @@
 <h4 id="header-keywords"><span class="header-section-number">1.4.3.1</span> Header keywords</h4>
 <ul>
 <li><code>Group</code></li>
-<li><a href="https://github.com/for-GET/know-your-http-well/blob/master/methods.md#know-your-http-methods-well">HTTP methods</a> (e.g. <code>GET, POST, PUT, DELETE</code>...)</li>
+<li><a href="https://github.com/for-GET/know-your-http-well/blob/master/methods.md#know-your-http-methods-well">HTTP methods</a> (e.g. <code>GET, POST, PUT, DELETE</code>…)</li>
 <li><a href="#def-uri-templates">URI templates</a> (e.g. <code>/resource/{id}</code>)</li>
 <li>Combinations of an HTTP method and URI Template (e.g. <code>GET /resource/{id}</code>)</li>
 </ul>
@@ -301,7 +301,7 @@
 <h3 id="nested-sections"><span class="header-section-number">1.4.6</span> 4.6 Nested sections</h3>
 <p>A section <strong>may</strong> contain another nested section(s).</p>
 <p>Depending on the nested section type, to nest a section simply increase its header level or its list item indentation. Anything between the section start and the start of following section at the same level is considered to be part of the section.</p>
-<p>What sections can be nested and where depends upon the section in case, as described in the relevant section's entry.</p>
+<p>What sections can be nested and where depends upon the section in case, as described in the relevant section’s entry.</p>
 <h4 id="example-nested-header-defined-section"><span class="header-section-number">1.4.6.1</span> Example: Nested header-defined section</h4>
 <pre><code># &lt;section definition&gt; 
 
@@ -328,7 +328,7 @@
 <p><a name="def-sections-reference"></a></p>
 <h1 id="ii.-sections-reference"><span class="header-section-number">2</span> II. Sections Reference</h1>
 <blockquote>
-<p><strong>NOTE:</strong> Sections marked as &quot;Abstract&quot; serve as a base for other sections and as such they <strong>cannot</strong> be used directly.</p>
+<p><strong>NOTE:</strong> Sections marked as “Abstract” serve as a base for other sections and as such they <strong>cannot</strong> be used directly.</p>
 </blockquote>
 <p><a name="def-named-section"></a></p>
 <h2 id="named-section"><span class="header-section-number">2.1</span> 1. Named section</h2>
@@ -394,7 +394,7 @@ This the `Section Name` description.
 <li><strong>Inherits from</strong>: <a href="#def-named-section">Named section</a></li>
 </ul>
 <h4 id="definition-2"><span class="header-section-number">2.3.0.1</span> Definition</h4>
-<p>Defined by a <a href="#def-keywords">keyword</a> in Markdown list entity. The keyword <strong>may</strong> be followed by identifier. The definition <strong>may</strong> include payload's media-type enclosed in braces.</p>
+<p>Defined by a <a href="#def-keywords">keyword</a> in Markdown list entity. The keyword <strong>may</strong> be followed by identifier. The definition <strong>may</strong> include payload’s media-type enclosed in braces.</p>
 <pre><code>+ &lt;keyword&gt; &lt;identifier&gt; (&lt;media type&gt;)</code></pre>
 <blockquote>
 <p><strong>NOTE:</strong> Refer to descendant for the particular section type definition.</p>
@@ -402,7 +402,7 @@ This the `Section Name` description.
 <h4 id="description-3"><span class="header-section-number">2.3.0.2</span> Description</h4>
 <p>Payload sections represent the information transferred as a payload of an HTTP request or response messages. A Payload consists of optional meta information in the form of HTTP headers and optional content in the form HTTP body.</p>
 <p>Furthermore, in API Blueprint context, a payload include a description and a validation schema.</p>
-<p>A payload section <strong>may</strong> have its media type associated. A payload's media type represents the metadata received or sent in the form of a HTTP <code>Content-Type</code> header. When specified a payload <strong>should</strong> include nested <a href="#def-body-section">Body section</a>.</p>
+<p>A payload section <strong>may</strong> have its media type associated. A payload’s media type represents the metadata received or sent in the form of a HTTP <code>Content-Type</code> header. When specified a payload <strong>should</strong> include nested <a href="#def-body-section">Body section</a>.</p>
 <p>This section <strong>should</strong> include at least one following nested sections:</p>
 <ul>
 <li><a href="#def-headers-section"><code>0-1</code> Headers section</a></li>
@@ -560,10 +560,10 @@ Resources in this groups are related to **ACME Blog** authors.
 <h4 id="definition-9"><span class="header-section-number">2.10.0.1</span> Definition</h4>
 <p>Defined by an <a href="#def-uri-templates">URI template</a>:</p>
 <pre><code># &lt;URI template&gt;</code></pre>
-<p><strong>-- or --</strong></p>
+<p><strong>– or –</strong></p>
 <p>Defined by a resource <a href="#def-identifier">name (identifier)</a> followed by an URI template enclosed in square brackets <code>[]</code>.</p>
 <pre><code># &lt;identifier&gt; [&lt;URI template&gt;]</code></pre>
-<p><strong>-- or --</strong></p>
+<p><strong>– or –</strong></p>
 <p>Defined by an <a href="https://github.com/for-GET/know-your-http-well/blob/master/methods.md#know-your-http-methods-well">HTTP request method</a> followed by URI template:</p>
 <pre><code># &lt;HTTP request method&gt; &lt;URI template&gt;</code></pre>
 <blockquote>
@@ -601,7 +601,7 @@ Resource representing **ACME Blog** posts.</code></pre>
 <h4 id="description-11"><span class="header-section-number">2.11.0.2</span> Description</h4>
 <p>A <a href="http://www.w3.org/TR/di-gloss/#def-resource-manifestation">resource manifestation</a> - one exemplar representation of the resource in the form of a <a href="#def-payload-section">payload</a>.</p>
 <h4 id="referencing-1"><span class="header-section-number">2.11.0.3</span> Referencing</h4>
-<p>The payload defined in this section <strong>may</strong> be referenced in any response or request section in the document using parent section's identifier. You can refer to this payload in any of the following <a href="#def-request-section">Request</a> or <a href="#def-response-section">Response</a> payload sections using the Markdown implicit <a href="http://daringfireball.net/projects/markdown/syntax#link">reference syntax</a>.</p>
+<p>The payload defined in this section <strong>may</strong> be referenced in any response or request section in the document using parent section’s identifier. You can refer to this payload in any of the following <a href="#def-request-section">Request</a> or <a href="#def-response-section">Response</a> payload sections using the Markdown implicit <a href="http://daringfireball.net/projects/markdown/syntax#link">reference syntax</a>.</p>
 <h4 id="example-10"><span class="header-section-number">2.11.0.4</span> Example</h4>
 <pre><code># My Resource [/resource]
 + Model (text/plain)
@@ -638,19 +638,19 @@ Resource representing **ACME Blog** posts.</code></pre>
         + `&lt;enumeration element N&gt;`</code></pre>
 <p>Where:</p>
 <ul>
-<li><code>&lt;parameter name&gt;</code> is the parameter name as written in <a href="#ResourceSection">Resource Section</a>'s URI (e.g. &quot;id&quot;).</li>
+<li><code>&lt;parameter name&gt;</code> is the parameter name as written in <a href="#ResourceSection">Resource Section</a>’s URI (e.g. “id”).</li>
 <li><code>&lt;description&gt;</code> is any <strong>optional</strong> Markdown-formatted description of the parameter.</li>
 <li><code>&lt;additional description&gt;</code> is any additional <strong>optional</strong> Markdown-formatted <a href="#SectionDescription">description</a> of the parameter.</li>
 <li><code>&lt;default value&gt;</code> is an <strong>optional</strong> default value of the parameter – a value that is used when no value is explicitly set (optional parameters only).</li>
 <li><code>&lt;example value&gt;</code> is an <strong>optional</strong> example value of the parameter (e.g. <code>1234</code>).</li>
-<li><code>&lt;type&gt;</code> is the <strong>optional</strong> parameter type as expected by the API (e.g. &quot;number&quot;).</li>
+<li><code>&lt;type&gt;</code> is the <strong>optional</strong> parameter type as expected by the API (e.g. “number”).</li>
 <li><code>Values</code> is the <strong>optional</strong> enumeration of possible values</li>
 <li>and <code>&lt;enumeration element n&gt;</code> represents an element of enumeration type.</li>
 <li><code>required</code> is the <strong>optional</strong> specifier of a required parameter (this is the <strong>default</strong>)</li>
 <li><code>optional</code> is the <strong>optional</strong> specifier of an optional parameter.</li>
 </ul>
 <blockquote>
-<p><strong>NOTE:</strong> This section <strong>should only</strong> contain parameters that are specified in the parents' URI template, and does not have to list every URI parameter.</p>
+<p><strong>NOTE:</strong> This section <strong>should only</strong> contain parameters that are specified in the parents’ URI template, and does not have to list every URI parameter.</p>
 </blockquote>
 <h4 id="example-11"><span class="header-section-number">2.12.0.3</span> Example</h4>
 <pre><code># GET /posts/{id}</code></pre>
@@ -683,7 +683,7 @@ Resource representing **ACME Blog** posts.</code></pre>
 <h4 id="definition-12"><span class="header-section-number">2.13.0.1</span> Definition</h4>
 <p>Defined by an <a href="https://github.com/for-GET/know-your-http-well/blob/master/methods.md#know-your-http-methods-well">HTTP request method</a>:</p>
 <pre><code>## &lt;HTTP request method&gt;</code></pre>
-<p><strong>-- or --</strong></p>
+<p><strong>– or –</strong></p>
 <p>Defined by an action <a href="#def-identifier">name (identifier)</a> followed by an <a href="https://github.com/for-GET/know-your-http-well/blob/master/methods.md#know-your-http-methods-well">HTTP request method</a> enclosed in square brackets <code>[]</code>.</p>
 <pre><code># &lt;identifier&gt; [&lt;HTTP request method&gt;]</code></pre>
 <h4 id="description-13"><span class="header-section-number">2.13.0.2</span> Description</h4>
@@ -750,8 +750,8 @@ Retrieves the list of **ACME Blog** posts.
     
         ...</code></pre>
 <blockquote>
-<p><strong>NOTE:</strong> The &quot;Multiple Transaction Examples&quot; example demonstrates three transaction examples for one given action:</p>
-<ol style="list-style-type: decimal">
+<p><strong>NOTE:</strong> The “Multiple Transaction Examples” example demonstrates three transaction examples for one given action:</p>
+<ol type="1">
 <li>1st example: request <code>A</code>, response <code>200</code></li>
 <li>2nd example: request <code>B</code>, responses <code>200</code> and <code>500</code></li>
 <li>3rd example: requests <code>C</code> and <code>D</code>, response <code>200</code></li>

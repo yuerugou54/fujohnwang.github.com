@@ -105,7 +105,7 @@
 <p>nmap -sS -P0 -sV -O <target></p>
 </blockquote>
 <p>这里的 &lt; target &gt; 可以是单一 IP, 或主机名，或域名，或子网</p>
-<ol style="list-style-type: decimal">
+<ol type="1">
 <li>-sS TCP SYN 扫描 (又称半开放,或隐身扫描)</li>
 <li>-P0 允许你关闭 ICMP pings.</li>
 <li>-sV 打开系统版本检测</li>
@@ -154,7 +154,7 @@
 <p>nmap -R -sL 209.85.229.99/27 | awk ‘{if($3==”not”)print”(“$2″) no PTR”;else print$3″ is “$2}’ | grep ‘(‘</p>
 </blockquote>
 <h1 id="显示网络上共有多少台-linux-及-win-设备"><span class="header-section-number">10</span> 显示网络上共有多少台 Linux 及 Win 设备?</h1>
-<p>sudo nmap -F -O 192.168.0.1-255 | grep “Running: ” &gt; /tmp/os; echo “<span class="math inline">(<em>c</em><em>a</em><em>t</em>/<em>t</em><em>m</em><em>p</em>/<em>o</em><em>s</em>|<em>g</em><em>r</em><em>e</em><em>p</em><em>L</em><em>i</em><em>n</em><em>u</em><em>x</em>|<em>w</em><em>c</em> − <em>l</em>)<em>L</em><em>i</em><em>n</em><em>u</em><em>x</em><em>d</em><em>e</em><em>v</em><em>i</em><em>c</em><em>e</em>(<em>s</em>)”; <em>e</em><em>c</em><em>h</em><em>o</em>“</span>(cat /tmp/os | grep Windows | wc -l) Window(s) device”</p>
+<p>sudo nmap -F -O 192.168.0.1-255 | grep “Running:” &gt; /tmp/os; echo “<span class="math inline">(<em>c</em><em>a</em><em>t</em>/<em>t</em><em>m</em><em>p</em>/<em>o</em><em>s</em>|<em>g</em><em>r</em><em>e</em><em>p</em><em>L</em><em>i</em><em>n</em><em>u</em><em>x</em>|<em>w</em><em>c</em> − <em>l</em>)<em>L</em><em>i</em><em>n</em><em>u</em><em>x</em><em>d</em><em>e</em><em>v</em><em>i</em><em>c</em><em>e</em>(<em>s</em>)”; <em>e</em><em>c</em><em>h</em><em>o</em>“</span>(cat /tmp/os | grep Windows | wc -l) Window(s) device”</p>
 <h1 id="扫描主机中所有的保留tcp端口"><span class="header-section-number">11</span> 扫描主机中所有的保留TCP端口</h1>
 <blockquote>
 <p>nmap -v scanme.nmap.org</p>
@@ -181,9 +181,9 @@
 <blockquote>
 <p>host -l company.com | cut -d -f 4 | nmap -v -iL -</p>
 </blockquote>
-<p>进行DNS区域传输，以发现company.com中的主机，然后将IP地址提供给 Nmap。上述命令用于GNU/Linux -- 其它系统进行区域传输时有不同的命令。</p>
+<p>进行DNS区域传输，以发现company.com中的主机，然后将IP地址提供给 Nmap。上述命令用于GNU/Linux – 其它系统进行区域传输时有不同的命令。</p>
 <h1 id="参考资料"><span class="header-section-number">14</span> 参考资料</h1>
-<ol style="list-style-type: decimal">
+<ol type="1">
 <li><a href="http://www.91ri.org/891.html">十条nmap常用的扫描命令</a></li>
 <li><a href="http://nmap.org/man/zh/man-examples.html" class="uri">http://nmap.org/man/zh/man-examples.html</a></li>
 </ol>
