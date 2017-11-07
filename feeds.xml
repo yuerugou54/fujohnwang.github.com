@@ -5,6 +5,13 @@
     <link>http://afoo.me</link>
     <description>扶墙老师的博客 - 一个架构士的思考与实践之地</description>
     <item>
+      <title>不提Serverless你就过时了？ Are You Kidding Me？</title>
+      <link>http://afoo.me/posts/2017-11-07-serverless-bullshit.html</link>
+      <pubDate>Mon, 06 Nov 2017 16:00:00 GMT</pubDate>
+      <guid>http://afoo.me/posts/2017-11-07-serverless-bullshit.html</guid>
+      <dc:date>2017-11-06T16:00:00Z</dc:date>
+    </item>
+    <item>
       <title>我为什么要开展顾问业务</title>
       <link>http://afoo.me/posts/2017-11-05-why-start-consulting-business.html</link>
       <pubDate>Sat, 04 Nov 2017 16:00:00 GMT</pubDate>
@@ -73,13 +80,6 @@
       <pubDate>Tue, 19 Sep 2017 16:00:00 GMT</pubDate>
       <guid>http://afoo.me/posts/2017-09-20-wedding-journal.html</guid>
       <dc:date>2017-09-19T16:00:00Z</dc:date>
-    </item>
-    <item>
-      <title>荒诞之梦</title>
-      <link>http://afoo.me/posts/2017-09-08-ridiculous-dream-on-stock-price.html</link>
-      <pubDate>Thu, 07 Sep 2017 16:00:00 GMT</pubDate>
-      <guid>http://afoo.me/posts/2017-09-08-ridiculous-dream-on-stock-price.html</guid>
-      <dc:date>2017-09-07T16:00:00Z</dc:date>
     </item>
   </channel>
 </rss>
