@@ -1,7 +1,16 @@
+% 个人介绍
+% 王福强 - fujohnwang AT gmail DOTA com
+% 2017-11-13
+
 # 我是谁(Who Am I)
 
-王福强，aka. 扶墙老师，[杭州福强科技](https://keevol.com)CEO，**`A Writer, A Fighter, A Programmer And A Teacher`**，
-[《Spring揭秘》](http://product.china-pub.com/195969)和[《SpringBoot揭秘》](http://product.china-pub.com/4951981)作者。
+王福强，aka. 扶墙老师，
+
+《Spring揭秘》和《SpringBoot揭秘》作者, 
+
+**`A Writer, A Fighter, A Programmer And A Teacher`**，
+
+跟别人合伙创过业，失败过，现在自己又搞了家互联网技术和管理咨询公司 - [杭州福强科技有限公司](https://www.keevol.com)（https://www.keevol.com）,主要服务企业用户。
 
 - 原挖财技术VP及首席架构师(Chief Architect)，带领技术团队走出荒蛮，将整个挖财新一代技术研发体系规划并落地；
 - 原天猫产品技术部导购部资深架构师，兼顾负责SEO/流量拓展相关工作， 规划并推动了统一投放平台的整体落地，
