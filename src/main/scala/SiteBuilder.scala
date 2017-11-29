@@ -1,14 +1,14 @@
+import java.io._
 import java.util
 
 import com.sun.syndication.feed.synd.{SyndEntry, SyndEntryImpl, SyndFeedImpl}
 import com.sun.syndication.io.SyndFeedOutput
 import org.apache.commons.io.FileUtils
-import java.io._
-import org.apache.commons.lang3.time.{DateUtils, DateFormatUtils}
+import org.apache.commons.lang3.StringUtils
+import org.apache.commons.lang3.time.DateUtils
 import org.slf4j.LoggerFactory
 
-import collection.JavaConversions._
-import org.apache.commons.lang3.StringUtils
+import scala.collection.JavaConverters._
 
 object SiteBuilder {
 
@@ -22,7 +22,7 @@ object SiteBuilder {
 
   def main(args: Array[String]) {
 
-    val postFiles = FileUtils.listFiles(new File("./posts"), Array("html"), false).toSeq.reverse
+    val postFiles = FileUtils.listFiles(new File("./posts"), Array("html"), false).asScala.toList.reverse
 
     logger.info("postFile count={}", postFiles.size)
 
@@ -42,21 +42,6 @@ object SiteBuilder {
       })
 
       val pageContent = tuples.foldLeft("")((index, tuple) => {
-//        index ++ s"""<h3><a href="/posts/${tuple._2}">${tuple._1}</a></h3><p>by 扶墙老师 at ${tuple._3}</p>"""
-//        val block =
-//          s"""
-//             | <article class="align-left block add-bottom-extra">
-//             |                                <a href="/posts/${tuple._2}">
-//             |                                <h1 class="in-main-heading">
-//             |                                    <span class="color-dark">${tuple._1}</span>
-//             |                                </h1>
-//             |                                </a>
-//             |                                <h3 class="in-sub-heading color-dark">
-//             |                                    <span class="color-dark">AT ${tuple._3}</span>
-//             |                                </h3>
-//             |                            </article>
-//           """.stripMargin
-
         val block =
           s"""
              |<div class="entry">
