@@ -5,81 +5,81 @@
     <link>http://afoo.me</link>
     <description>扶墙老师的博客 - 一个架构士的思考与实践之地</description>
     <item>
-      <title>什么是保理业务？</title>
-      <link>http://afoo.me/posts/2014-11-17-whats-factoring-business.html</link>
-      <pubDate>Sun, 16 Nov 2014 16:00:00 GMT</pubDate>
-      <guid>http://afoo.me/posts/2014-11-17-whats-factoring-business.html</guid>
-      <dc:date>2014-11-16T16:00:00Z</dc:date>
+      <title>战略轰炸机， 自动驾驶与高铁</title>
+      <link>http://afoo.me/posts/2017-11-29-bomber-train-and-autopilot.html</link>
+      <pubDate>Tue, 28 Nov 2017 16:00:00 GMT</pubDate>
+      <guid>http://afoo.me/posts/2017-11-29-bomber-train-and-autopilot.html</guid>
+      <dc:date>2017-11-28T16:00:00Z</dc:date>
     </item>
     <item>
-      <title>剪不断，理还乱...</title>
-      <link>http://afoo.me/posts/2009-03-22-hard-choice.html</link>
-      <pubDate>Sat, 21 Mar 2009 16:00:00 GMT</pubDate>
-      <guid>http://afoo.me/posts/2009-03-22-hard-choice.html</guid>
-      <dc:date>2009-03-21T16:00:00Z</dc:date>
+      <title>不提Serverless你就过时了？ Are You Kidding Me？</title>
+      <link>http://afoo.me/posts/2017-11-07-serverless-bullshit.html</link>
+      <pubDate>Mon, 06 Nov 2017 16:00:00 GMT</pubDate>
+      <guid>http://afoo.me/posts/2017-11-07-serverless-bullshit.html</guid>
+      <dc:date>2017-11-06T16:00:00Z</dc:date>
     </item>
     <item>
-      <title>初创公司checklist [Zero 2 One摘录]</title>
-      <link>http://afoo.me/posts/2015-02-21-startup-checklist-from-zero-to-one.html</link>
-      <pubDate>Fri, 20 Feb 2015 16:00:00 GMT</pubDate>
-      <guid>http://afoo.me/posts/2015-02-21-startup-checklist-from-zero-to-one.html</guid>
-      <dc:date>2015-02-20T16:00:00Z</dc:date>
+      <title>我为什么要开展顾问业务</title>
+      <link>http://afoo.me/posts/2017-11-05-why-start-consulting-business.html</link>
+      <pubDate>Sat, 04 Nov 2017 16:00:00 GMT</pubDate>
+      <guid>http://afoo.me/posts/2017-11-05-why-start-consulting-business.html</guid>
+      <dc:date>2017-11-04T16:00:00Z</dc:date>
     </item>
     <item>
-      <title>Explore The Scheduling of Scala Actors</title>
-      <link>http://afoo.me/posts/2010-12-25-explore_the_scheduling_of_scala_actor.html</link>
-      <pubDate>Fri, 24 Dec 2010 16:00:00 GMT</pubDate>
-      <guid>http://afoo.me/posts/2010-12-25-explore_the_scheduling_of_scala_actor.html</guid>
-      <dc:date>2010-12-24T16:00:00Z</dc:date>
+      <title>程序员的手感</title>
+      <link>http://afoo.me/posts/2017-10-24-programmer-levels.html</link>
+      <pubDate>Mon, 23 Oct 2017 16:00:00 GMT</pubDate>
+      <guid>http://afoo.me/posts/2017-10-24-programmer-levels.html</guid>
+      <dc:date>2017-10-23T16:00:00Z</dc:date>
     </item>
     <item>
-      <title>设计原本如此简单</title>
-      <link>http://afoo.me/posts/2009-01-27-design-can-be-so-simple.html</link>
-      <pubDate>Mon, 26 Jan 2009 16:00:00 GMT</pubDate>
-      <guid>http://afoo.me/posts/2009-01-27-design-can-be-so-simple.html</guid>
-      <dc:date>2009-01-26T16:00:00Z</dc:date>
+      <title>梦想是自己的，不能假手于人</title>
+      <link>http://afoo.me/posts/2017-10-20-hold-your-dream-by-yourself.html</link>
+      <pubDate>Thu, 19 Oct 2017 16:00:00 GMT</pubDate>
+      <guid>http://afoo.me/posts/2017-10-20-hold-your-dream-by-yourself.html</guid>
+      <dc:date>2017-10-19T16:00:00Z</dc:date>
     </item>
     <item>
-      <title>FIX Protocol Study Note - Part 1</title>
-      <link>http://afoo.me/posts/2013-03-02-fix-protocol-study-note-1.html</link>
-      <pubDate>Fri, 01 Mar 2013 16:00:00 GMT</pubDate>
-      <guid>http://afoo.me/posts/2013-03-02-fix-protocol-study-note-1.html</guid>
-      <dc:date>2013-03-01T16:00:00Z</dc:date>
+      <title>扶墙老师谈管理：到底应不应该找backup</title>
+      <link>http://afoo.me/posts/2017-10-15-find-a-successor-instead-of-backup.html</link>
+      <pubDate>Sat, 14 Oct 2017 16:00:00 GMT</pubDate>
+      <guid>http://afoo.me/posts/2017-10-15-find-a-successor-instead-of-backup.html</guid>
+      <dc:date>2017-10-14T16:00:00Z</dc:date>
     </item>
     <item>
-      <title>tnd， 终于解封了</title>
-      <link>http://afoo.me/posts/2009-06-09-fuck-gfw.html</link>
-      <pubDate>Mon, 08 Jun 2009 16:00:00 GMT</pubDate>
-      <guid>http://afoo.me/posts/2009-06-09-fuck-gfw.html</guid>
-      <dc:date>2009-06-08T16:00:00Z</dc:date>
+      <title>到底应该&amp;quot;扬善于公堂，规过于私室&amp;quot;还是“扬善于私室，规过于公堂”？</title>
+      <link>http://afoo.me/posts/2017-10-14-when-to-encourage-when-to-criticize.html</link>
+      <pubDate>Fri, 13 Oct 2017 16:00:00 GMT</pubDate>
+      <guid>http://afoo.me/posts/2017-10-14-when-to-encourage-when-to-criticize.html</guid>
+      <dc:date>2017-10-13T16:00:00Z</dc:date>
     </item>
     <item>
-      <title>喝药的老人</title>
-      <link>http://afoo.me/posts/2016-02-08-talking-about-house-of-countryside.html</link>
-      <pubDate>Sun, 07 Feb 2016 16:00:00 GMT</pubDate>
-      <guid>http://afoo.me/posts/2016-02-08-talking-about-house-of-countryside.html</guid>
-      <dc:date>2016-02-07T16:00:00Z</dc:date>
+      <title>扶墙老师谈管理之再说“心硬”</title>
+      <link>http://afoo.me/posts/2017-10-13-will-and-hold-on.html</link>
+      <pubDate>Thu, 12 Oct 2017 16:00:00 GMT</pubDate>
+      <guid>http://afoo.me/posts/2017-10-13-will-and-hold-on.html</guid>
+      <dc:date>2017-10-12T16:00:00Z</dc:date>
     </item>
     <item>
-      <title>About The Wedding</title>
-      <link>http://afoo.me/posts/2007-06-11-about-the-wedding-of-bro5.html</link>
-      <pubDate>Sun, 10 Jun 2007 16:00:00 GMT</pubDate>
-      <guid>http://afoo.me/posts/2007-06-11-about-the-wedding-of-bro5.html</guid>
-      <dc:date>2007-06-10T16:00:00Z</dc:date>
+      <title>你的迷茫我解答不了</title>
+      <link>http://afoo.me/posts/2017-10-08-run-your-own-way.html</link>
+      <pubDate>Sat, 07 Oct 2017 16:00:00 GMT</pubDate>
+      <guid>http://afoo.me/posts/2017-10-08-run-your-own-way.html</guid>
+      <dc:date>2017-10-07T16:00:00Z</dc:date>
     </item>
     <item>
-      <title>南京南京南京~</title>
-      <link>http://afoo.me/posts/2010-03-17-travel-to-nanjing.html</link>
-      <pubDate>Tue, 16 Mar 2010 16:00:00 GMT</pubDate>
-      <guid>http://afoo.me/posts/2010-03-17-travel-to-nanjing.html</guid>
-      <dc:date>2010-03-16T16:00:00Z</dc:date>
+      <title>婚庆怪相背后的个人思考</title>
+      <link>http://afoo.me/posts/2017-09-24-traps-in-wedding-industry.html</link>
+      <pubDate>Sat, 23 Sep 2017 16:00:00 GMT</pubDate>
+      <guid>http://afoo.me/posts/2017-09-24-traps-in-wedding-industry.html</guid>
+      <dc:date>2017-09-23T16:00:00Z</dc:date>
     </item>
     <item>
-      <title>架构师不是你想的那样</title>
-      <link>http://afoo.me/posts/2017-05-04-what-makes-an-architect.html</link>
-      <pubDate>Wed, 03 May 2017 16:00:00 GMT</pubDate>
-      <guid>http://afoo.me/posts/2017-05-04-what-makes-an-architect.html</guid>
-      <dc:date>2017-05-03T16:00:00Z</dc:date>
+      <title>婚礼筹备曲续</title>
+      <link>http://afoo.me/posts/2017-09-22-wedding-journal-2.html</link>
+      <pubDate>Thu, 21 Sep 2017 16:00:00 GMT</pubDate>
+      <guid>http://afoo.me/posts/2017-09-22-wedding-journal-2.html</guid>
+      <dc:date>2017-09-21T16:00:00Z</dc:date>
     </item>
   </channel>
 </rss>

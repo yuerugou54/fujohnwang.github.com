@@ -1,5 +1,6 @@
 import java.io._
 import java.util
+import java.util.{Collections, Comparator}
 
 import com.sun.syndication.feed.synd.{SyndEntry, SyndEntryImpl, SyndFeedImpl}
 import com.sun.syndication.io.SyndFeedOutput
@@ -22,9 +23,16 @@ object SiteBuilder {
 
   def main(args: Array[String]) {
 
-    val postFiles = FileUtils.listFiles(new File("./posts"), Array("html"), false).asScala.toList.reverse
+    var files = FileUtils.listFiles(new File("./posts"), Array("html"), false)
 
-    logger.info("postFile count={}", postFiles.size)
+    val fileList: java.util.List[File] = new util.ArrayList[File]()
+    fileList.addAll(files)
+
+    Collections.sort(fileList, (o1: File, o2: File) => o1.getName.compareTo(o2.getName))
+    logger.info("postFile count={}", fileList.size)
+
+    val postFiles = fileList.asScala.reverse
+//    postFiles.foreach(f => println(f.getName))
 
     if (!paginationDirectory.exists()) FileUtils.forceMkdir(paginationDirectory) else FileUtils.cleanDirectory(paginationDirectory)
 
@@ -71,8 +79,8 @@ object SiteBuilder {
         feed.setLink("http://afoo.me")
         feed.setDescription("扶墙老师的博客 - 一个架构士的思考与实践之地")
 
-        val feeds  = new util.ArrayList[SyndEntry]
-        for(t <- tuples){
+        val feeds = new util.ArrayList[SyndEntry]
+        for (t <- tuples) {
           val entry = new SyndEntryImpl
           entry.setTitle(t._1)
           entry.setLink(s"http://afoo.me/posts/${t._2}")
