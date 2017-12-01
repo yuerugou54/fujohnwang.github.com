@@ -5,6 +5,13 @@
     <link>http://afoo.me</link>
     <description>扶墙老师的博客 - 一个架构士的思考与实践之地</description>
     <item>
+      <title>“不主张，不主事”才是客户第一</title>
+      <link>http://afoo.me/posts/2017-12-01-let-customer-team-trial.html</link>
+      <pubDate>Thu, 30 Nov 2017 16:00:00 GMT</pubDate>
+      <guid>http://afoo.me/posts/2017-12-01-let-customer-team-trial.html</guid>
+      <dc:date>2017-11-30T16:00:00Z</dc:date>
+    </item>
+    <item>
       <title>战略轰炸机， 自动驾驶与高铁</title>
       <link>http://afoo.me/posts/2017-11-29-bomber-train-and-autopilot.html</link>
       <pubDate>Tue, 28 Nov 2017 16:00:00 GMT</pubDate>
@@ -73,13 +80,6 @@
       <pubDate>Sat, 23 Sep 2017 16:00:00 GMT</pubDate>
       <guid>http://afoo.me/posts/2017-09-24-traps-in-wedding-industry.html</guid>
       <dc:date>2017-09-23T16:00:00Z</dc:date>
-    </item>
-    <item>
-      <title>婚礼筹备曲续</title>
-      <link>http://afoo.me/posts/2017-09-22-wedding-journal-2.html</link>
-      <pubDate>Thu, 21 Sep 2017 16:00:00 GMT</pubDate>
-      <guid>http://afoo.me/posts/2017-09-22-wedding-journal-2.html</guid>
-      <dc:date>2017-09-21T16:00:00Z</dc:date>
     </item>
   </channel>
 </rss>
