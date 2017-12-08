@@ -8,7 +8,7 @@
     <meta name="author" content="王福强">
         <meta name="date" content="2011-12-20" />
         <link rel="icon" href="/favicon.ico">
-    <title>&quot;HBase&quot; - 一个架构士的思考与沉淀</title>
+    <title>“HBase” - 一个架构士的思考与沉淀</title>
     <!-- 百度统计 -->
     <script>
       var _hmt = _hmt || [];
@@ -60,9 +60,10 @@
   		<hr class="masthead-hr">
 
 	  	<ul class="masthead-nav">
+            <li class="nav-item"><image src="/images/qrcode_for_gh_4fe672b2e860_430.jpg" width="215"/></li>
             <li class="nav-item"><small>©afoo.me</small></li>
             <li class="nav-item"><small>Powered by <a href="http://pandoc.org/">pandoc</a> and <a href="http://rometools.github.io/rome/">ROME</a></small></li>
-		</ul>
+      </ul>
 
 	</div>
 
@@ -72,7 +73,7 @@
 <div class="row">
 <div id="header">
 <p class="lead">
-<h1 class="title">&quot;HBase&quot;</h1>
+<h1 class="title">“HBase”</h1>
 <small>
 <h3 class="author">fujohnwang</h3>
 </small>
@@ -106,21 +107,21 @@
 <p>Born from the idea of Google Bigtable</p>
 <h1 id="hbase的配置"><span class="header-section-number">2</span> HBase的配置</h1>
 <h2 id="依赖前提"><span class="header-section-number">2.1</span> 依赖前提</h2>
-<ol style="list-style-type: decimal">
+<ol type="1">
 <li>Java 6 or above</li>
-<li>SSH - using passwordless login (Google &quot;<em>ssh passwordless login</em>&quot;)</li>
+<li>SSH - using passwordless login (Google “<em>ssh passwordless login</em>”)</li>
 <li>DNS</li>
 <li>NTP</li>
-<li>ulimit and nproc
+<li>ulimit and nproc</li>
+</ol>
 <ul>
 <li>base需要很多文件句柄，所以系统默认的文件句柄数基本上不够，一般需要设置为1w以上</li>
-<li>&quot;upping the file descriptors and nproc for the user who is running the HBase process is an operating system configuration, not an HBase configuration.&quot;</li>
-</ul></li>
-</ol>
+<li>“upping the file descriptors and nproc for the user who is running the HBase process is an operating system configuration, not an HBase configuration.”</li>
+</ul>
 <h2 id="分布式部署"><span class="header-section-number">2.2</span> 分布式部署</h2>
 <p>Hbase的配置需要在所有结点之间同步， 可以在一台机器上编辑完，然后用rsync同步，或者，专门搞一台发布机，集中管理配置， 然后分发（puppet之类的软件应该是干这个事情的）。</p>
 <p>配置hbase的时候， 最基本的需要通过override默认的配置，告知hbase：</p>
-<ol style="list-style-type: decimal">
+<ol type="1">
 <li>使用什么FileSystem，是local的还是HDFS等；</li>
 <li>要使用的zookeeper部署位置是什么；</li>
 </ol>
@@ -133,10 +134,10 @@
     The WAL is in HDFS in /hbase/.logs/ with subdirectories per region.</code></pre>
 <p><strong>应该需要了解region server在zk里的ephemeral node，以便在region server failover之后，eromanga也可以转到新的region server上从新的hlog开始抓取变更。</strong></p>
 <p>API - <a href="http://hbase.apache.org/apidocs/org/apache/hadoop/hbase/replication/package-summary.html#requirements" class="uri">http://hbase.apache.org/apidocs/org/apache/hadoop/hbase/replication/package-summary.html#requirements</a></p>
-<div style="white-space: pre-line;">Once a HRegionServer starts and is opening the regions it hosts it checks if there are some left over log files and applies those all the way down in Store.doReconstructionLog(). Replaying a log is simply done by reading the log and adding the contained edits to the current MemStore. At the end an explicit flush of the MemStore (note, this is not the flush of the log!) helps writing those changes out to disk.</div>
-<p>|----HLog Replay</p>
+<div class="line-block">Once a HRegionServer starts and is opening the regions it hosts it checks if there are some left over log files and applies those all the way down in Store.doReconstructionLog(). Replaying a log is simply done by reading the log and adding the contained edits to the current MemStore. At the end an explicit flush of the MemStore (note, this is not the flush of the log!) helps writing those changes out to disk.</div>
+<p>|—-HLog Replay</p>
 <h2 id="hbase-replication-ref"><span class="header-section-number">3.1</span> HBase Replication Ref</h2>
-<ol style="list-style-type: decimal">
+<ol type="1">
 <li><a href="http://hbase.apache.org/replication.html" class="uri">http://hbase.apache.org/replication.html</a></li>
 <li><a href="http://hbase.apache.org/apidocs/org/apache/hadoop/hbase/regionserver/wal/HLog.html" class="uri">http://hbase.apache.org/apidocs/org/apache/hadoop/hbase/regionserver/wal/HLog.html</a></li>
 <li><a href="http://blog.sematext.com/2011/03/11/hbase-backup-options/" class="uri">http://blog.sematext.com/2011/03/11/hbase-backup-options/</a> - HBase Backup Options &gt; You might want to check out at MapR’s distro for Apache Hadoop (www.mapr.com). It has consistent point-in-time snapshots, as well the ability to mirror the snapshots to another data-center for disaster-recovery.</li>
@@ -147,35 +148,35 @@
 <li><a href="http://punishzhou.iteye.com/blog/1286230">Hbase的log管理(一)</a></li>
 <li><a href="http://punishzhou.iteye.com/blog/1288175">Hbase的log管理(二)</a></li>
 <li><a href="http://www.spnguru.com/2011/03/hbase%E5%BC%82%E5%B8%B8%E2%80%94%E2%80%94%E5%BD%93regionserver-crash%E4%B9%8B%E5%90%8E/">HBase异常——当RegionServer Crash之后</a></li>
-<li></li>
+<li>​</li>
 </ol>
 <h2 id="issues"><span class="header-section-number">3.2</span> Issues</h2>
-<ol style="list-style-type: decimal">
+<ol type="1">
 <li><a href="https://issues.apache.org/jira/browse/HBASE-2958">When hbase.hlog.split.skip.errors is set to false, we fail the split but thats it</a></li>
 <li><a href="https://issues.apache.org/jira/browse/HBASE-2643">Figure how to deal with eof splitting logs</a></li>
 <li><a href="https://issues.apache.org/jira/browse/HBASE-1295">Multi data center replication</a></li>
-<li></li>
+<li>​</li>
 </ol>
 <h1 id="schema-design"><span class="header-section-number">4</span> Schema Design</h1>
 <blockquote>
-<p>in general its best to avoid using a timestamp or a sequence (e.g. 1, 2, 3) as the row-key.</p>
+<p>in general its best to avoid using a timestamp or a sequence (e.g. 1, 2, 3) as the row-key.</p>
 </blockquote>
 <blockquote>
 <p><a href="http://ikaisays.com/2011/01/25/app-engine-datastore-tip-monotonically-increasing-values-are-bad/" class="uri">http://ikaisays.com/2011/01/25/app-engine-datastore-tip-monotonically-increasing-values-are-bad/</a></p>
 </blockquote>
 <h1 id="distributions"><span class="header-section-number">5</span> Distributions</h1>
-<ol style="list-style-type: decimal">
+<ol type="1">
 <li>Apache HBase</li>
 <li>Cloudera</li>
 <li>Others</li>
 </ol>
 <h1 id="原理"><span class="header-section-number">6</span> 原理</h1>
-<ol style="list-style-type: decimal">
+<ol type="1">
 <li><a href="http://koven2049.iteye.com/blog/974714">hbase 源码解析之master篇1</a></li>
 <li><a href="http://koven2049.iteye.com/blog/976619">hbase 源码解析之master篇2</a></li>
 </ol>
 <h1 id="references"><span class="header-section-number">7</span> References</h1>
-<ol style="list-style-type: decimal">
+<ol type="1">
 <li><a href="http://www.pigi-project.org/" class="uri">http://www.pigi-project.org/</a> - Powerful, Invincible, Great Indexing for HBase</li>
 <li>** <a href="https://db.usenix.org//events/osdi06/tech/chang/chang_html/">Bigtable: A Distributed Storage System for Structured Data</a> **</li>
 <li><a href="http://java.dzone.com/videos/hbase-schema-design-things-you">HBase Schema Design - Things you need to know</a></li>
@@ -186,11 +187,8 @@
 <li><a href="https://issues.apache.org/jira/browse/HBASE-1512">Coprocessors: Support aggregate functions</a></li>
 <li><a href="http://blog.nosqlfan.com/html/3694.html">HBase在淘宝的应用和优化小结</a></li>
 <li><a href="http://www.meetup.com/hbaseusergroup/files/" class="uri">http://www.meetup.com/hbaseusergroup/files/</a></li>
+<li><a href="https://www.guru99.com/hbase-architecture-data-flow-usecases.html" class="uri">https://www.guru99.com/hbase-architecture-data-flow-usecases.html</a> - Guru99 HBase Tutorial</li>
 </ol>
-<hr>
-<div align="center">
-<img src="/images/wechat-qrcode-footer.png"/>
-</div>
 
 </div>
 
