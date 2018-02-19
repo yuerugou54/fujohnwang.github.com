@@ -1,15 +1,17 @@
 <!DOCTYPE html>
-<html lang="zh">
-<head>
+<html>
+  <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>程序员的手感 - 一个架构士的思考与沉</title>
+        <meta name="date" content="2017-10-24" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="王福强的博客， 一个架构士的思考与沉淀">
     <meta name="keywords" content="architecture, book author, thinker, fighter, 架构, 思考, 技术, 武术, 哲学">
     <meta name="author" content="王福强">
-        <meta name="date" content="2017-10-24" />
-        <link rel="icon" href="/favicon.ico">
-    <title>程序员的手感 - 一个架构士的思考与沉淀</title>
-    <!-- 百度统计 -->
+    <link rel="stylesheet" href="/ivy.css">
+    <link rel="shortcut icon" href="/favicon.ico"/>
+    <style type="text/css">code{white-space: pre;}</style>
+            <!-- 百度统计 -->
     <script>
       var _hmt = _hmt || [];
       (function() {
@@ -19,35 +21,26 @@
           s.parentNode.insertBefore(hm, s);
       })();
     </script>
+  </head>
 
-	<link href="/css/custom.css" rel="stylesheet"/>
-	<link rel="shortcut icon" href="/favicon.ico"/>
+  <body class="node homepage">
 
-<style type="text/css">code{white-space: pre;}</style>
-        
-	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-	<!--[if lt IE 9]>
-	  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.2/html5shiv.js"></script>
-	  <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-	<![endif]-->
-
-</head>
-
-<body>
-
-    <div class="masthead">
-		<!--
-    <h1 class="masthead-title fq">
-      <a href="/">扶墙老师</a>
-
-    </h1>
-    -->
-    <a href="/"><h1>扶墙老师说</h1></a>
-		<p class="masthead-lead">一个架构士的思考与沉淀</p>
-
-		<hr class="masthead-hr">
-
-	  	<ul class="masthead-nav">
+    <header class="masthead">
+      <h1><a href="/">扶墙老师说</a></h1>
+      <p class="tagline">
+         一个架构士的思考与沉淀
+          <img src="/images/wechat-qrcode-footer.png"/>
+          扶墙老师，辨证施“知”
+      </p>
+      
+      <nav class="menu">
+        <input id="menu-check" type="checkbox"/>
+        <label id="menu-label" for="menu-check" class="unselectable">
+          <span class="icon close-icon">✕</span>
+          <span class="icon open-icon">☰</span>
+          <span class="text">展开</span>
+        </label>
+        <ul>
             <li class="nav-item"><a class="nav-link" href="/favorite.html">我的收藏</a></li>
             <li class="nav-item"><a class="nav-link" href="/dashboard.html">金融看板</a></li>
             <li class="nav-item"><a class="nav-link" href="/columns.html">专栏文章</a></li>
@@ -55,20 +48,12 @@
             <li class="nav-item"><a class="nav-link" href="/whoami.html">我是何人</a></li>
             <li class="nav-item"><a class="nav-link" href="/interlinks.html">友情链接</a></li>
             <li class="nav-item"><a class="nav-link" href="/feeds.xml">RSS订阅</a></li>
-		</ul>
+        </ul>
+      </nav>
+    </header>
 
-  		<hr class="masthead-hr">
-
-	  	<ul class="masthead-nav">
-            <li class="nav-item"><small>©afoo.me</small></li>
-            <li class="nav-item"><small>Powered by <a href="http://pandoc.org/">pandoc</a> and <a href="http://rometools.github.io/rome/">ROME</a></small></li>
-		</ul>
-
-	</div>
-
-
-    <div class="listing">
-
+    <article class="main">
+      
 <div class="row">
 <div id="header">
 <p class="lead">
@@ -88,17 +73,9 @@
 <p>今天客户谈到的就是他们核心交易系统因为性能太差，经过他们追查发现是数据库表的设计过于遵循数据库设计范式（Normalization），导致应用方处理一个事务要访问数据库70多次，压测的时候把万兆网卡都打满了。这种现象其实说明的是设计系统的程序员在水平和手感把握上的不足，其实遵循范式也好（Normalization），打破范式也罢(De-normalization)， 都不能生搬硬套，要根据具体实践场景来权衡和实施。</p>
 <p>我还记得当年去去哪儿（qunar.com）面试的时候， 当对方的技术负责人跟我说他们使用内存来缓存所有飞行航线作为搜索服务的时候，我那时候表现出来的不屑，但实际上，根据他们的场景，这种设计是最简单高效的，因为航线大部分是固定的，那么数据量也是固定的，缓存到内存是最简单高效的方法， 而如果生搬硬套， 引入binlog实时事件最终然后更新搜索引擎索引之类，就过于复杂和流于俗套了。只可惜，当年我还是中级程序员的觉悟。</p>
 <p>我想， 一个程序员的成长之路最终都要经历一个“看山是山，看山不是山，看山是山”的阶段吧， 祝所有程序员朋友们节日快乐， 征信跬步，之一不二！</p>
-<div class="figure">
-<img src="images/rainbow.png" />
+<p><img src="images/rainbow.png" /></p>
 
-</div>
-<hr>
-<div align="center">
-<img src="/images/wechat-qrcode-footer.png"/>
-</div>
+    </article>
 
-</div>
-
-
-
-</body></html>
+  </body>
+</html>

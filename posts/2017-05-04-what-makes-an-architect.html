@@ -1,15 +1,17 @@
 <!DOCTYPE html>
-<html lang="zh">
-<head>
+<html>
+  <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>架构师不是你想的那样 - 一个架构士的思考与沉</title>
+        <meta name="date" content="2017-05-04" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="王福强的博客， 一个架构士的思考与沉淀">
     <meta name="keywords" content="architecture, book author, thinker, fighter, 架构, 思考, 技术, 武术, 哲学">
     <meta name="author" content="王福强">
-        <meta name="date" content="2017-05-04" />
-        <link rel="icon" href="/favicon.ico">
-    <title>架构师不是你想的那样 - 一个架构士的思考与沉淀</title>
-    <!-- 百度统计 -->
+    <link rel="stylesheet" href="/ivy.css">
+    <link rel="shortcut icon" href="/favicon.ico"/>
+    <style type="text/css">code{white-space: pre;}</style>
+            <!-- 百度统计 -->
     <script>
       var _hmt = _hmt || [];
       (function() {
@@ -19,35 +21,26 @@
           s.parentNode.insertBefore(hm, s);
       })();
     </script>
+  </head>
 
-	<link href="/css/custom.css" rel="stylesheet"/>
-	<link rel="shortcut icon" href="/favicon.ico"/>
+  <body class="node homepage">
 
-<style type="text/css">code{white-space: pre;}</style>
-        
-	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-	<!--[if lt IE 9]>
-	  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.2/html5shiv.js"></script>
-	  <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-	<![endif]-->
-
-</head>
-
-<body>
-
-    <div class="masthead">
-		<!--
-    <h1 class="masthead-title fq">
-      <a href="/">扶墙老师</a>
-
-    </h1>
-    -->
-    <a href="/"><h1>扶墙老师说</h1></a>
-		<p class="masthead-lead">一个架构士的思考与沉淀</p>
-
-		<hr class="masthead-hr">
-
-	  	<ul class="masthead-nav">
+    <header class="masthead">
+      <h1><a href="/">扶墙老师说</a></h1>
+      <p class="tagline">
+         一个架构士的思考与沉淀
+          <img src="/images/wechat-qrcode-footer.png"/>
+          扶墙老师，辨证施“知”
+      </p>
+      
+      <nav class="menu">
+        <input id="menu-check" type="checkbox"/>
+        <label id="menu-label" for="menu-check" class="unselectable">
+          <span class="icon close-icon">✕</span>
+          <span class="icon open-icon">☰</span>
+          <span class="text">展开</span>
+        </label>
+        <ul>
             <li class="nav-item"><a class="nav-link" href="/favorite.html">我的收藏</a></li>
             <li class="nav-item"><a class="nav-link" href="/dashboard.html">金融看板</a></li>
             <li class="nav-item"><a class="nav-link" href="/columns.html">专栏文章</a></li>
@@ -55,20 +48,12 @@
             <li class="nav-item"><a class="nav-link" href="/whoami.html">我是何人</a></li>
             <li class="nav-item"><a class="nav-link" href="/interlinks.html">友情链接</a></li>
             <li class="nav-item"><a class="nav-link" href="/feeds.xml">RSS订阅</a></li>
-		</ul>
+        </ul>
+      </nav>
+    </header>
 
-  		<hr class="masthead-hr">
-
-	  	<ul class="masthead-nav">
-            <li class="nav-item"><small>©afoo.me</small></li>
-            <li class="nav-item"><small>Powered by <a href="http://pandoc.org/">pandoc</a> and <a href="http://rometools.github.io/rome/">ROME</a></small></li>
-		</ul>
-
-	</div>
-
-
-    <div class="listing">
-
+    <article class="main">
+      
 <div class="row">
 <div id="header">
 <p class="lead">
@@ -100,11 +85,11 @@
 
 <p>人人都在说架构师， 但又好像每个人的理解都不一样，任人难辨。 今天扶墙老师正好借“大咖说”的宝地， 好为人师一把， 笑侃自身的架构师经历，跟大家分享一下自己对架构师的认知，不管你是在山底，山腰亦或山顶，都希望对志在攀爬“架构师之山”的同学有所帮助。</p>
 <h1 id="我的架构师之路"><span class="header-section-number">1</span> 我的架构师之路</h1>
-<p>我职业生涯前期最典型的阶段是在英极软件（大连）， 这是一家在大连只要有人提起就会“骂娘”的公司， 因为现在互联网行业很普遍的996， 其实我在英极的时候就早已习以为常了， 那时候是2006年。 很多人都埋怨累， 我听说有的人入职之后，第二天就离职的。 我当时进英极完全是凭着一股倔强， 因为当时有个很多国人瞧不上的“小日本儿”，o， 不，是“老”日本儿， 一天只睡几个小时， 但给出的式样书详细到伪代码级别，而且基本没有错误， 当时的CTO老王跟着这个日本人对应“厮守”了好几年了，基本也是这种工作强度，我年纪轻轻的不能输啊...</p>
+<p>我职业生涯前期最典型的阶段是在英极软件（大连）， 这是一家在大连只要有人提起就会“骂娘”的公司， 因为现在互联网行业很普遍的996， 其实我在英极的时候就早已习以为常了， 那时候是2006年。 很多人都埋怨累， 我听说有的人入职之后，第二天就离职的。 我当时进英极完全是凭着一股倔强， 因为当时有个很多国人瞧不上的“小日本儿”，o， 不，是“老”日本儿， 一天只睡几个小时， 但给出的式样书详细到伪代码级别，而且基本没有错误， 当时的CTO老王跟着这个日本人对应“厮守”了好几年了，基本也是这种工作强度，我年纪轻轻的不能输啊…</p>
 <p>在英极的工作中， 处理Excel报表是很典型的一个场景，大家都是按照日本人给出的Excel报表样式，用POI直接写代码画表格并填充数据，后来，我哪天脑子“抽筋”， 就换了种工作方式， 将日本人给的报表样式文件拿过来清理后，作为模板读到程序里，然后直接通过少量代码设置数值就可以了， 效率大幅提升，后面大家就都依葫芦画瓢照着来了， 这算是我做的最小粒度的架构设计了吧。（后面进一步使用ireport，crystal report之类的方案，那就更是后话了）</p>
 <p>虽然那时候我的Title或者Level是Java程序员，但其实已经在行使架构师的职责了。</p>
 <p>2009年6月23日入职了阿里巴巴平台技术部， 先后参与并主导了ROMA Web框架， EROSA和EROMANGA中间件的设计，开发和推广工作， 职称也从高级Java工程师，变成了技术专家和高级技术专家，但其实行使的也是架构师的职能：</p>
-<ol style="list-style-type: decimal">
+<ol type="1">
 <li>ROMA是去架构一个framework粒度的程序框架，当然，很多思想是从SpringMVC打碎骨架重新拼接出来的；）</li>
 <li>Erosa处理MySQL的binlog复制， 通过考虑复制链路上下游的系统和用户， 来架构一个通用的数据产品；</li>
 <li>Eromanga是在Erosa的场景下结合最早期的Kafka思想架构的消息中间件，可以称为一个独立运行的完整的软件系统和产品；</li>
@@ -120,7 +105,7 @@
 <p>前阵子51信用卡的孙总希望我作为CEO来运营一家子公司，虽然CEO确实是我作为架构师的下一个目标， 但股权结构让我很难心理上“断奶”，所以，为了继续对自己狠一点， 我还是回绝了这个offer， 但还是很感谢孙总的信任。</p>
 <h1 id="我眼中的架构师类型"><span class="header-section-number">2</span> 我眼中的架构师类型</h1>
 <p>很多同学一定疑惑了， 我们不是在谈架构师吗？ 怎么扯到CEO上了那？ 其实，架构师只是一种职能，职位或者title与职能并不冲突。</p>
-<p>架构师其实有很多种类型， 最典型的要数支付宝的鲁肃。想当年他的一篇ppt将支付宝的整体架构演变阐述地深入浅出， 扶墙老师看了之后，简直就是膜拜有加。只可惜，当年可以跟随大咖的机会没抓住， 悔之晚矣， 而鲁肃也从当初的支付宝首席架构师变成了现在蚂蚁金付的CTO， 架构师之路上继续前行...</p>
+<p>架构师其实有很多种类型， 最典型的要数支付宝的鲁肃。想当年他的一篇ppt将支付宝的整体架构演变阐述地深入浅出， 扶墙老师看了之后，简直就是膜拜有加。只可惜，当年可以跟随大咖的机会没抓住， 悔之晚矣， 而鲁肃也从当初的支付宝首席架构师变成了现在蚂蚁金付的CTO， 架构师之路上继续前行…</p>
 <p>为什么说架构师之路上继续前行那？ 因为CTO也是架构师。</p>
 <p>作为一位不写代码的CTO， 冯大辉其实是被冤枉的。CTO负责的是整个技术部的架构， 包括但不限于团队的组织结构， 团队文化， 人员的选用育留，薪酬福利等等， 不一而足， 同时还要协调产品， 市场等不同部门的工作，所以， 写代码已经不是CTO的核心能力和评估标准了， 如何架构好技术部门并协调其它部门，从而很好的支撑公司的业务发展才是CTO作为技术部的总架构师的核心职责。 所以， 大辉兄，你受委屈了 ；）</p>
 <p>话说回来， 有些CTO偶尔写写代码，那也是一种乐趣，比如我们平台技术部的老大(当年阿里的P11)，偶尔还写写golang那，但你不能把写不写代码当帽子扣给所有的CTO啊，对吧？</p>
@@ -133,7 +118,7 @@
 <h2 id="connect-everything"><span class="header-section-number">3.1</span> connect everything</h2>
 <p>我觉得架构师的核心能力是<strong>连接一切的能力</strong>，架构师的Slogan应该是“<strong>连接创造价值</strong>”。</p>
 <p>现在网上或者书本里，更多是在推崇<strong>一万小时定律</strong>之类的理论， 你只要相信一万小时定律，你就可以成为某个领域的专家，你在职场就可以成为骨干平步青云，可是， 为什么很多CEO或者公司老板既不是专业人士，也没有勤勤恳恳打磨自己的技能，却是CEO或者公司老板？ 因为没有人会告诉你， 除了一万小时定律， 还有“<strong>连接创造价值</strong>”的架构师之路可以选择。</p>
-<ol start="3" style="list-style-type: decimal">
+<ol start="3" type="1">
 <li>图计算里的图Node固然突出，但离开了Edge， 还称得上什么图， 产生得了什么价值？</li>
 <li>电话和移动设备固然重要，但离开了电话线和光纤的连接， 也只能当摆设；</li>
 <li>人群聚集的社区和城市固然重要， 但离开了路的连接，那也只能鸡犬相闻，闭关锁国了；</li>
@@ -160,13 +145,8 @@
 <blockquote>
 <p>本文最早发布于InfoQ微信公众号<a href="http://mp.weixin.qq.com/s/W5TwBBSmRiujFQcar18gAQ" class="uri">http://mp.weixin.qq.com/s/W5TwBBSmRiujFQcar18gAQ</a></p>
 </blockquote>
-<hr>
-<div align="center">
-<img src="/images/wechat-qrcode-footer.png"/>
-</div>
 
-</div>
+    </article>
 
-
-
-</body></html>
+  </body>
+</html>

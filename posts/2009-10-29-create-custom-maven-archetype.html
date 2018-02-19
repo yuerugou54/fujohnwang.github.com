@@ -1,14 +1,81 @@
 <!DOCTYPE html>
-<html lang="zh">
-<head>
+<html>
+  <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>自定义Maven archetype的创建 - 一个架构士的思考与沉</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="王福强的博客， 一个架构士的思考与沉淀">
     <meta name="keywords" content="architecture, book author, thinker, fighter, 架构, 思考, 技术, 武术, 哲学">
     <meta name="author" content="王福强">
-        <link rel="icon" href="/favicon.ico">
-    <title>自定义Maven archetype的创建 - 一个架构士的思考与沉淀</title>
-    <!-- 百度统计 -->
+    <link rel="stylesheet" href="/ivy.css">
+    <link rel="shortcut icon" href="/favicon.ico"/>
+    <style type="text/css">code{white-space: pre;}</style>
+    <style type="text/css">
+    a.sourceLine { display: inline-block; line-height: 1.25; }
+    a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+    a.sourceLine:empty { height: 1.2em; position: absolute; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode { white-space: pre; position: relative; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    code.sourceCode { white-space: pre-wrap; }
+    a.sourceLine { text-indent: -1em; padding-left: 1em; }
+    }
+    pre.numberSource a.sourceLine
+      { position: relative; }
+    pre.numberSource a.sourceLine:empty
+      { position: absolute; }
+    pre.numberSource a.sourceLine::before
+      { content: attr(data-line-number);
+        position: absolute; left: -5em; text-align: right; vertical-align: baseline;
+        border: none; pointer-events: all;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {  }
+    @media screen {
+    a.sourceLine::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+            <!-- 百度统计 -->
     <script>
       var _hmt = _hmt || [];
       (function() {
@@ -18,72 +85,26 @@
           s.parentNode.insertBefore(hm, s);
       })();
     </script>
+  </head>
 
-	<link href="/css/custom.css" rel="stylesheet"/>
-	<link rel="shortcut icon" href="/favicon.ico"/>
+  <body class="node homepage">
 
-<style type="text/css">code{white-space: pre;}</style>
-    <style type="text/css">
-    div.sourceCode { overflow-x: auto; }
-    table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
-      margin: 0; padding: 0; vertical-align: baseline; border: none; }
-    table.sourceCode { width: 100%; line-height: 100%; }
-    td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
-    td.sourceCode { padding-left: 5px; }
-    code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
-    code > span.dt { color: #902000; } /* DataType */
-    code > span.dv { color: #40a070; } /* DecVal */
-    code > span.bn { color: #40a070; } /* BaseN */
-    code > span.fl { color: #40a070; } /* Float */
-    code > span.ch { color: #4070a0; } /* Char */
-    code > span.st { color: #4070a0; } /* String */
-    code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
-    code > span.ot { color: #007020; } /* Other */
-    code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
-    code > span.fu { color: #06287e; } /* Function */
-    code > span.er { color: #ff0000; font-weight: bold; } /* Error */
-    code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-    code > span.cn { color: #880000; } /* Constant */
-    code > span.sc { color: #4070a0; } /* SpecialChar */
-    code > span.vs { color: #4070a0; } /* VerbatimString */
-    code > span.ss { color: #bb6688; } /* SpecialString */
-    code > span.im { } /* Import */
-    code > span.va { color: #19177c; } /* Variable */
-    code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-    code > span.op { color: #666666; } /* Operator */
-    code > span.bu { } /* BuiltIn */
-    code > span.ex { } /* Extension */
-    code > span.pp { color: #bc7a00; } /* Preprocessor */
-    code > span.at { color: #7d9029; } /* Attribute */
-    code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
-    code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-    code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-    code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-  </style>
-        
-	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-	<!--[if lt IE 9]>
-	  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.2/html5shiv.js"></script>
-	  <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-	<![endif]-->
-
-</head>
-
-<body>
-
-    <div class="masthead">
-		<!--
-    <h1 class="masthead-title fq">
-      <a href="/">扶墙老师</a>
-
-    </h1>
-    -->
-    <a href="/"><h1>扶墙老师说</h1></a>
-		<p class="masthead-lead">一个架构士的思考与沉淀</p>
-
-		<hr class="masthead-hr">
-
-	  	<ul class="masthead-nav">
+    <header class="masthead">
+      <h1><a href="/">扶墙老师说</a></h1>
+      <p class="tagline">
+         一个架构士的思考与沉淀
+          <img src="/images/wechat-qrcode-footer.png"/>
+          扶墙老师，辨证施“知”
+      </p>
+      
+      <nav class="menu">
+        <input id="menu-check" type="checkbox"/>
+        <label id="menu-label" for="menu-check" class="unselectable">
+          <span class="icon close-icon">✕</span>
+          <span class="icon open-icon">☰</span>
+          <span class="text">展开</span>
+        </label>
+        <ul>
             <li class="nav-item"><a class="nav-link" href="/favorite.html">我的收藏</a></li>
             <li class="nav-item"><a class="nav-link" href="/dashboard.html">金融看板</a></li>
             <li class="nav-item"><a class="nav-link" href="/columns.html">专栏文章</a></li>
@@ -91,20 +112,12 @@
             <li class="nav-item"><a class="nav-link" href="/whoami.html">我是何人</a></li>
             <li class="nav-item"><a class="nav-link" href="/interlinks.html">友情链接</a></li>
             <li class="nav-item"><a class="nav-link" href="/feeds.xml">RSS订阅</a></li>
-		</ul>
+        </ul>
+      </nav>
+    </header>
 
-  		<hr class="masthead-hr">
-
-	  	<ul class="masthead-nav">
-            <li class="nav-item"><small>©afoo.me</small></li>
-            <li class="nav-item"><small>Powered by <a href="http://pandoc.org/">pandoc</a> and <a href="http://rometools.github.io/rome/">ROME</a></small></li>
-		</ul>
-
-	</div>
-
-
-    <div class="listing">
-
+    <article class="main">
+      
 <div class="row">
 <div id="header">
 <p class="lead">
@@ -132,22 +145,22 @@
 <p>以下只是Maven自定义Archetype创建的简单流程以及期间可能碰到的问题的一些整理性内容，大部分内容从Maven的官方站点或者相关书籍中都可以找到。</p>
 <p>关于Archetype是个什么东西，我想用过Maven的都不用说了， 没用过的也没关系， 简单来讲， 就是一堆预先设定好的项目结构文档， 有了这个东西，在新建同一类型的项目的时候，就不用又从头捣鼓一遍， 比如，从这个项目抓个log4j.xml改一下，到那个项目抓一个web.xml文件改一下等等。预先建立一个针对某种场景下使用的archetype， 用的时候只需要运行一条命令就所有东西都备齐了。就是这么个简单的东西， appfuse啦， springside啦，应该都类似于这种东西，体现形式不同而已。</p>
 <h1 id="创建maven自定义archetype一般流程"><span class="header-section-number">1</span> 创建Maven自定义Archetype一般流程</h1>
-<p>创建Maven自定义Archetype通常有两种方式， 为了便捷，我们选择create-from-project的方式，所以， 首先，我们会新建一个maven project，然后把杂七杂八的那些共用的东西都“摆放 ”在合适的位置上，这可能包括：</p>
-<ol style="list-style-type: decimal">
+<p>创建Maven自定义Archetype通常有两种方式， 为了便捷，我们选择create-from-project的方式，所以， 首先，我们会新建一个maven project，然后把杂七杂八的那些共用的东西都“摆放”在合适的位置上，这可能包括：</p>
+<ol type="1">
 <li>将某些实例用Java代码放到src/main/java目录下；</li>
 <li>某些通用的配置文件放到src/main/resources目录下；</li>
-<li>如果是为基于j2ee的web应用搭建archetype，那可能又得在src/main/webapp下创建相应的文件和目录结构，等等...</li>
+<li>如果是为基于j2ee的web应用搭建archetype，那可能又得在src/main/webapp下创建相应的文件和目录结构，等等…</li>
 </ol>
 <p>当你感觉所有这些东西都准备齐活之后，就可以开始最后的工序了。</p>
 <p>首先， 要创建archetype，当然是要先把maven的archetype plugin添加到pom.xml中啦：</p>
-<div class="sourceCode"><pre class="sourceCode xml"><code class="sourceCode xml"><span class="kw">&lt;plugins&gt;</span>  
-    <span class="kw">&lt;plugin&gt;</span>  
-        <span class="kw">&lt;groupId&gt;</span>org.apache.maven.plugins<span class="kw">&lt;groupId&gt;</span>  
-        <span class="kw">&lt;artifactId&gt;</span>maven-archetype-plugin<span class="kw">&lt;artifactId&gt;</span>  
-        <span class="kw">&lt;version&gt;</span>2.0-alpha-4<span class="kw">&lt;version&gt;</span>  
-    <span class="kw">&lt;/plugin&gt;</span>  
-...  
-<span class="kw">&lt;/plugins&gt;</span> </code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode xml"><code class="sourceCode xml"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">&lt;plugins&gt;</span>  </a>
+<a class="sourceLine" id="cb1-2" data-line-number="2">    <span class="kw">&lt;plugin&gt;</span>  </a>
+<a class="sourceLine" id="cb1-3" data-line-number="3">        <span class="kw">&lt;groupId&gt;</span>org.apache.maven.plugins<span class="kw">&lt;groupId&gt;</span>  </a>
+<a class="sourceLine" id="cb1-4" data-line-number="4">        <span class="kw">&lt;artifactId&gt;</span>maven-archetype-plugin<span class="kw">&lt;artifactId&gt;</span>  </a>
+<a class="sourceLine" id="cb1-5" data-line-number="5">        <span class="kw">&lt;version&gt;</span>2.0-alpha-4<span class="kw">&lt;version&gt;</span>  </a>
+<a class="sourceLine" id="cb1-6" data-line-number="6">    <span class="kw">&lt;/plugin&gt;</span>  </a>
+<a class="sourceLine" id="cb1-7" data-line-number="7">...  </a>
+<a class="sourceLine" id="cb1-8" data-line-number="8"><span class="kw">&lt;/plugins&gt;</span> </a></code></pre></div>
 <p>之后， 就可以开个命令行窗口，进入当前project所在目录，敲下：</p>
 <pre>
 $ mvn archetype:create-from-project 
@@ -169,21 +182,21 @@ $ mvn archetype:generate -DarchetypeCatalog=local
 <p>当archetype:create-from-project 之后， archetype中对应的文件就变成了： <code>QuickStartController</code></p>
 <p>这显然不是我们想要的结果（当然，对于不在乎这一结构的archetype来说则无所谓），为此，我们要对archetype:create-from-project 之后生成的结果文件进行定制。</p>
 <p>首先， 我们编辑文件target/generated-sources/archetype/src/main/resources/META-INF/maven/archetype.xml ，它记载了archetype里都包含哪些文件和目录结构，将如下内容：</p>
-<div class="sourceCode"><pre class="sourceCode xml"><code class="sourceCode xml"><span class="kw">&lt;sources&gt;</span>  
-  <span class="kw">&lt;source&gt;</span>src/main/java/QuickStartController.java<span class="kw">&lt;/source&gt;</span>  
-<span class="kw">&lt;/sources&gt;</span> </code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode xml"><code class="sourceCode xml"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw">&lt;sources&gt;</span>  </a>
+<a class="sourceLine" id="cb2-2" data-line-number="2">  <span class="kw">&lt;source&gt;</span>src/main/java/QuickStartController.java<span class="kw">&lt;/source&gt;</span>  </a>
+<a class="sourceLine" id="cb2-3" data-line-number="3"><span class="kw">&lt;/sources&gt;</span> </a></code></pre></div>
 <p>变更为:</p>
-<div class="sourceCode"><pre class="sourceCode xml"><code class="sourceCode xml"><span class="kw">&lt;sources&gt;</span>  
-  <span class="kw">&lt;source&gt;</span>src/main/java/cn/spring21/app/defaults/controller/QuickStartController.java<span class="kw">&lt;/source&gt;</span>  
-<span class="kw">&lt;/sources&gt;</span>  </code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode xml"><code class="sourceCode xml"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw">&lt;sources&gt;</span>  </a>
+<a class="sourceLine" id="cb3-2" data-line-number="2">  <span class="kw">&lt;source&gt;</span>src/main/java/cn/spring21/app/defaults/controller/QuickStartController.java<span class="kw">&lt;/source&gt;</span>  </a>
+<a class="sourceLine" id="cb3-3" data-line-number="3"><span class="kw">&lt;/sources&gt;</span>  </a></code></pre></div>
 <p>然后，将以上文件和目录结构创建或者Copy到如下目录：</p>
 <blockquote>
 <p>target/generated-sources/archetype/src/main/resources/archetype-resources/src/main/java</p>
 </blockquote>
 <p>所有这些做完之后，Java源代码文件结构就可以保持了。</p>
 <h3 id="note"><span class="header-section-number">2.1.1</span> NOTE</h3>
-<p>虽然想要的Java源代码目录结构可以保持住了，不过， 还会有一个烦人的地方，如果我们在使用这个archetype创建新的project的时候，不明确指定packageName ，那maven会“自作多情 ”的把groupId作为Java文件的package，前缀到原来的package前面。 比如， 如果我原来java文件对应：<code>cn/spring21/app/defaults/controller/QuickStartController.java</code></p>
-<p>而创建项目的时候， 指定“-DgroupId=cn.spring21 ”，那么，最后生成的项目中， 对应的Java文件就跑到了“cn/spring21/cn/spring21/app/defaults/controller/QuickStartController.java ”，stupid哈</p>
+<p>虽然想要的Java源代码目录结构可以保持住了，不过， 还会有一个烦人的地方，如果我们在使用这个archetype创建新的project的时候，不明确指定packageName ，那maven会“自作多情”的把groupId作为Java文件的package，前缀到原来的package前面。 比如， 如果我原来java文件对应：<code>cn/spring21/app/defaults/controller/QuickStartController.java</code></p>
+<p>而创建项目的时候， 指定“-DgroupId=cn.spring21”，那么，最后生成的项目中， 对应的Java文件就跑到了“cn/spring21/cn/spring21/app/defaults/controller/QuickStartController.java”，stupid哈</p>
 <p>要解决这个问题， 可以在使用archetype创建project的时候，明确将packageName指定为空：</p>
 <blockquote>
 <p>mvn archetype:create -DarchetypeGroupId=archetypeGroupId -DarchetypeArtifactId=archetypeArtifactId -DarchetypeVersion=0.0.2-SNAPSHOT -DgroupId=cn.spring21 -DartifactId=sample -Dversion=0.0.1-SNAPSHOT -DpackageName=</p>
@@ -193,22 +206,22 @@ $ mvn archetype:generate -DarchetypeCatalog=local
 <p>有时候， archetype:create-from-project 会把一些不必要的文件和目录结构也包含到最终的archetype中， 我们可以通过编辑文件target/generated-sources/archetype/src/main/resources/META-INF/maven/archetype-metadata.xml 来清理这些不必要包含的文件和目录结构。</p>
 <p>比方说，如果我们是使用EclipseIDE来搭建要做成archetype的project的话，一些EcilpseIDE特有的文件和目录，比 如.settings目录啦， .classpath/.project文件啦，都会被copy到archetype的目录下，这时候，我们就可以把archetype- metadata.xml文件中对应这些文件和目录的<fileset>元素删除掉来清理它们。</p>
 <h2 id="二进制文件的损坏"><span class="header-section-number">2.3</span> 二进制文件的损坏</h2>
-<p>如果某些二进制文件要包含到archetype当中， 比如， 常见的图片文件， 我们需要编辑archetype.xml文件中对应这些文件的<resource>元素配置，为这些元素添加filtered=&quot;false&quot; 的属性， 否则的话， 当使用这个archetype来创建新的工程的时候，这些二进制文件就会“废废 ”了，原因嘛，还是因为maven太“自作多情 ”，呵呵，居然把图片当Velocity模板来看待。 有关这个问题，也可以参考这个JIRA issue 来了解更多细节。</p>
+<p>如果某些二进制文件要包含到archetype当中， 比如， 常见的图片文件， 我们需要编辑archetype.xml文件中对应这些文件的<resource>元素配置，为这些元素添加filtered=“false” 的属性， 否则的话， 当使用这个archetype来创建新的工程的时候，这些二进制文件就会“废废”了，原因嘛，还是因为maven太“自作多情”，呵呵，居然把图片当Velocity模板来看待。 有关这个问题，也可以参考这个JIRA issue 来了解更多细节。</p>
 <h1 id="最初草稿"><span class="header-section-number">3</span> 最初草稿</h1>
-<p>since the &quot;archetype:create-from-project&quot; is the simplest way to create an archetype, most of the time, it's the way we will resort to , but in order to make it work for us properly, or say, to make it work as we want it to, we need to do some custom work after running the command &quot;mvn archetype:create-from-project&quot;, here is some tips you may need.</p>
+<p>since the “archetype:create-from-project” is the simplest way to create an archetype, most of the time, it’s the way we will resort to , but in order to make it work for us properly, or say, to make it work as we want it to, we need to do some custom work after running the command “mvn archetype:create-from-project”, here is some tips you may need.</p>
 <blockquote>
 <p>NOTE</p>
-<p>first of all, we should come to the same point that all of the artifacts generated locate at &quot;target/generated-sources/archetype&quot; folder after running &quot;mvn archetype:create-from-project&quot; command.</p>
+<p>first of all, we should come to the same point that all of the artifacts generated locate at “target/generated-sources/archetype” folder after running “mvn archetype:create-from-project” command.</p>
 </blockquote>
 <hr />
-<p>for java code we want to include into the archetype, the default behavior from &quot;archetype:create-from-project&quot; is that it will ignore the package structure, e.g. if we have a source folder with package structure , below: cn.spring21.app.defaults.controller.QuickStartController but with the default behavior from &quot;archetype:create-from-project&quot;, the final structure will be only java file left. that's, QuickStartController that's not what we want, we want to keep the package structure as it is. so we need to customize this. go to &quot;target/generated-sources/archetype/src/main/resources/META-INF/maven/archetype.xml&quot;, change following part:</p>
-<div class="sourceCode"><pre class="sourceCode xml"><code class="sourceCode xml"><span class="kw">&lt;sources&gt;</span>
-  <span class="kw">&lt;source&gt;</span>src/main/java/QuickStartController.java<span class="kw">&lt;/source&gt;</span>
-<span class="kw">&lt;/sources&gt;</span></code></pre></div>
+<p>for java code we want to include into the archetype, the default behavior from “archetype:create-from-project” is that it will ignore the package structure, e.g. if we have a source folder with package structure , below: cn.spring21.app.defaults.controller.QuickStartController but with the default behavior from “archetype:create-from-project”, the final structure will be only java file left. that’s, QuickStartController that’s not what we want, we want to keep the package structure as it is. so we need to customize this. go to “target/generated-sources/archetype/src/main/resources/META-INF/maven/archetype.xml”, change following part:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode xml"><code class="sourceCode xml"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="kw">&lt;sources&gt;</span></a>
+<a class="sourceLine" id="cb4-2" data-line-number="2">  <span class="kw">&lt;source&gt;</span>src/main/java/QuickStartController.java<span class="kw">&lt;/source&gt;</span></a>
+<a class="sourceLine" id="cb4-3" data-line-number="3"><span class="kw">&lt;/sources&gt;</span></a></code></pre></div>
 <p>TO:</p>
-<div class="sourceCode"><pre class="sourceCode xml"><code class="sourceCode xml"><span class="kw">&lt;sources&gt;</span>
-  <span class="kw">&lt;source&gt;</span>src/main/java/cn/spring21/app/defaults/controller/QuickStartController.java<span class="kw">&lt;/source&gt;</span>
-<span class="kw">&lt;/sources&gt;</span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode xml"><code class="sourceCode xml"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="kw">&lt;sources&gt;</span></a>
+<a class="sourceLine" id="cb5-2" data-line-number="2">  <span class="kw">&lt;source&gt;</span>src/main/java/cn/spring21/app/defaults/controller/QuickStartController.java<span class="kw">&lt;/source&gt;</span></a>
+<a class="sourceLine" id="cb5-3" data-line-number="3"><span class="kw">&lt;/sources&gt;</span></a></code></pre></div>
 <p>then, copy or create such folder structure under :</p>
 <blockquote>
 <p>target/generated-sources/archetype/src/main/resources/archetype-resources/src/main/java</p>
@@ -216,19 +229,14 @@ $ mvn archetype:generate -DarchetypeCatalog=local
 <p>after all of this, the original folder structure will be retained.</p>
 <blockquote>
 <p>NOTE</p>
-<p>when creating a project with our archetype above, in order to create a source folder with default package we assigned, the &quot;packageName&quot; environment attribute must be assigned to empty, so command seems like : <code>mvn archetype:create -DarchetypeGroupId=archetypeGroupId -DarchetypeArtifactId=archetypeArtifactId -DarchetypeVersion=0.0.2-SNAPSHOT -DgroupId=cn.spring21 -DartifactId=sample -Dversion=0.0.1-SNAPSHOT -DpackageName=</code>, pay attention to the last -DpackageName= , no value is assigned.</p>
+<p>when creating a project with our archetype above, in order to create a source folder with default package we assigned, the “packageName” environment attribute must be assigned to empty, so command seems like : <code>mvn archetype:create -DarchetypeGroupId=archetypeGroupId -DarchetypeArtifactId=archetypeArtifactId -DarchetypeVersion=0.0.2-SNAPSHOT -DgroupId=cn.spring21 -DartifactId=sample -Dversion=0.0.1-SNAPSHOT -DpackageName=</code>, pay attention to the last -DpackageName= , no value is assigned.</p>
 </blockquote>
 <hr />
-<p>sometimes, &quot;archetype:create-from-project&quot; will include other unnecessary filess into the final package, we can clean this by editing &quot;target/generated-sources/archetype/src/main/resources/META-INF/maven/archetype-metadata.xml&quot;, for example, if we set up a project for archetype in Eclipse IDE, several files specific to Eclipse IDE will be included, these files can be removed by deleting &quot;fileset&quot; elements which are setup for them.</p>
+<p>sometimes, “archetype:create-from-project” will include other unnecessary filess into the final package, we can clean this by editing “target/generated-sources/archetype/src/main/resources/META-INF/maven/archetype-metadata.xml”, for example, if we set up a project for archetype in Eclipse IDE, several files specific to Eclipse IDE will be included, these files can be removed by deleting “fileset” elements which are setup for them.</p>
 <hr />
-<p>for binary files, e.g. images, we need to edit archetype.xml entry for these resources, and add &quot;filtered=&quot;false&quot;&quot; attribute to their <resource> elements. Otherwise , when create a project with this archetype, the binary files will be corrupted. Because velocity try to process it. See JIRA issure from http://jira.codehaus.org/browse/ARCHETYPE-19 for this problem.</p>
-<hr>
-<div align="center">
-<img src="/images/wechat-qrcode-footer.png"/>
-</div>
+<p>for binary files, e.g. images, we need to edit archetype.xml entry for these resources, and add “filtered=”false“” attribute to their <resource> elements. Otherwise , when create a project with this archetype, the binary files will be corrupted. Because velocity try to process it. See JIRA issure from http://jira.codehaus.org/browse/ARCHETYPE-19 for this problem.</p>
 
-</div>
+    </article>
 
-
-
-</body></html>
+  </body>
+</html>

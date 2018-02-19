@@ -1,15 +1,82 @@
 <!DOCTYPE html>
-<html lang="zh">
-<head>
+<html>
+  <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Struts中的文件上传 - 一个架构士的思考与沉</title>
+        <meta name="date" content="2005-06-18" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="王福强的博客， 一个架构士的思考与沉淀">
     <meta name="keywords" content="architecture, book author, thinker, fighter, 架构, 思考, 技术, 武术, 哲学">
     <meta name="author" content="王福强">
-        <meta name="date" content="2005-06-18" />
-        <link rel="icon" href="/favicon.ico">
-    <title>Struts中的文件上传 - 一个架构士的思考与沉淀</title>
-    <!-- 百度统计 -->
+    <link rel="stylesheet" href="/ivy.css">
+    <link rel="shortcut icon" href="/favicon.ico"/>
+    <style type="text/css">code{white-space: pre;}</style>
+    <style type="text/css">
+    a.sourceLine { display: inline-block; line-height: 1.25; }
+    a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+    a.sourceLine:empty { height: 1.2em; position: absolute; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode { white-space: pre; position: relative; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    code.sourceCode { white-space: pre-wrap; }
+    a.sourceLine { text-indent: -1em; padding-left: 1em; }
+    }
+    pre.numberSource a.sourceLine
+      { position: relative; }
+    pre.numberSource a.sourceLine:empty
+      { position: absolute; }
+    pre.numberSource a.sourceLine::before
+      { content: attr(data-line-number);
+        position: absolute; left: -5em; text-align: right; vertical-align: baseline;
+        border: none; pointer-events: all;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {  }
+    @media screen {
+    a.sourceLine::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+            <!-- 百度统计 -->
     <script>
       var _hmt = _hmt || [];
       (function() {
@@ -19,72 +86,26 @@
           s.parentNode.insertBefore(hm, s);
       })();
     </script>
+  </head>
 
-	<link href="/css/custom.css" rel="stylesheet"/>
-	<link rel="shortcut icon" href="/favicon.ico"/>
+  <body class="node homepage">
 
-<style type="text/css">code{white-space: pre;}</style>
-    <style type="text/css">
-    div.sourceCode { overflow-x: auto; }
-    table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
-      margin: 0; padding: 0; vertical-align: baseline; border: none; }
-    table.sourceCode { width: 100%; line-height: 100%; }
-    td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
-    td.sourceCode { padding-left: 5px; }
-    code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
-    code > span.dt { color: #902000; } /* DataType */
-    code > span.dv { color: #40a070; } /* DecVal */
-    code > span.bn { color: #40a070; } /* BaseN */
-    code > span.fl { color: #40a070; } /* Float */
-    code > span.ch { color: #4070a0; } /* Char */
-    code > span.st { color: #4070a0; } /* String */
-    code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
-    code > span.ot { color: #007020; } /* Other */
-    code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
-    code > span.fu { color: #06287e; } /* Function */
-    code > span.er { color: #ff0000; font-weight: bold; } /* Error */
-    code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-    code > span.cn { color: #880000; } /* Constant */
-    code > span.sc { color: #4070a0; } /* SpecialChar */
-    code > span.vs { color: #4070a0; } /* VerbatimString */
-    code > span.ss { color: #bb6688; } /* SpecialString */
-    code > span.im { } /* Import */
-    code > span.va { color: #19177c; } /* Variable */
-    code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-    code > span.op { color: #666666; } /* Operator */
-    code > span.bu { } /* BuiltIn */
-    code > span.ex { } /* Extension */
-    code > span.pp { color: #bc7a00; } /* Preprocessor */
-    code > span.at { color: #7d9029; } /* Attribute */
-    code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
-    code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-    code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-    code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-  </style>
-        
-	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-	<!--[if lt IE 9]>
-	  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.2/html5shiv.js"></script>
-	  <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-	<![endif]-->
-
-</head>
-
-<body>
-
-    <div class="masthead">
-		<!--
-    <h1 class="masthead-title fq">
-      <a href="/">扶墙老师</a>
-
-    </h1>
-    -->
-    <a href="/"><h1>扶墙老师说</h1></a>
-		<p class="masthead-lead">一个架构士的思考与沉淀</p>
-
-		<hr class="masthead-hr">
-
-	  	<ul class="masthead-nav">
+    <header class="masthead">
+      <h1><a href="/">扶墙老师说</a></h1>
+      <p class="tagline">
+         一个架构士的思考与沉淀
+          <img src="/images/wechat-qrcode-footer.png"/>
+          扶墙老师，辨证施“知”
+      </p>
+      
+      <nav class="menu">
+        <input id="menu-check" type="checkbox"/>
+        <label id="menu-label" for="menu-check" class="unselectable">
+          <span class="icon close-icon">✕</span>
+          <span class="icon open-icon">☰</span>
+          <span class="text">展开</span>
+        </label>
+        <ul>
             <li class="nav-item"><a class="nav-link" href="/favorite.html">我的收藏</a></li>
             <li class="nav-item"><a class="nav-link" href="/dashboard.html">金融看板</a></li>
             <li class="nav-item"><a class="nav-link" href="/columns.html">专栏文章</a></li>
@@ -92,20 +113,12 @@
             <li class="nav-item"><a class="nav-link" href="/whoami.html">我是何人</a></li>
             <li class="nav-item"><a class="nav-link" href="/interlinks.html">友情链接</a></li>
             <li class="nav-item"><a class="nav-link" href="/feeds.xml">RSS订阅</a></li>
-		</ul>
+        </ul>
+      </nav>
+    </header>
 
-  		<hr class="masthead-hr">
-
-	  	<ul class="masthead-nav">
-            <li class="nav-item"><small>©afoo.me</small></li>
-            <li class="nav-item"><small>Powered by <a href="http://pandoc.org/">pandoc</a> and <a href="http://rometools.github.io/rome/">ROME</a></small></li>
-		</ul>
-
-	</div>
-
-
-    <div class="listing">
-
+    <article class="main">
+      
 <div class="row">
 <div id="header">
 <p class="lead">
@@ -143,58 +156,58 @@
 <p>下面，就让我们来领略一下他到底是一个怎么样的实现。希望在读完本文之后，读者可以充分了解struts的文件上传功能的实现流程以及原</p>
 <h1 id="技术背景"><span class="header-section-number">2</span> 技术背景</h1>
 <p>除去其他技术对于文件上传的实现技术不谈，但就java的web应用中文件上传的方式或者说实现上看，在struts提供的文件上传实现之前，一般有两种方式可以供开发者选择：</p>
-<ol style="list-style-type: decimal">
+<ol type="1">
 <li>第一种：从最底层的HTTP协议出发，使用手动编码对HTTP协议的request进行分析，根据分析所取得的协议的request内容，取得用户提交的表单中各个表单域的数据，包括普通的文本以及二进制形式的文件形式等。数据取得后，可以在服务器端进行所需要处理的操作。这种方式的缺点就是重复开发，一切编码都要从零开始，需要什么形式的上传请求，就针对该请求进行重新开发，不能保证开发效率。优点嘛，当然也有，那就是可以是开发者更加清晰的了解协议的规格以及具体实现，因为，只有清楚的了解了这些，才能开发出能对协议中request的内容进行正确解析的组件。</li>
 <li>第二种嘛，实际上只是本人所划分的，可以说成是在第一种的基础上进行的改进，特点就是，所有的上传实现都已经开发并实现为组件的形式，一般是javabeans的形式。用户只需要调用各个厂商提供的文件上传组件就可以了，其中使用最多的就是JspSmartUpload。缺点嘛，目前还不能说有什么缺点，因为这种方式将所有的实现逻辑都封装起来，可以极大的提高软件的复用度。实际上，struts提供的文件上传服务也要归到这一类。</li>
 </ol>
 <p>实际上，在Struts架构中，完全可以使用JspSmartUpload之类的组件库来实现文件上传，但是，唯一的区别就是，Struts中的文件上传功能可以与struts架构更加紧密的结合。既然选择了使用struts架构进行开发，为什么还要排斥他提供的文件上传功能那？</p>
 <h1 id="安装和配置"><span class="header-section-number">3</span> 安装和配置</h1>
 <p>要使用struts的文件上传功能，其实不用任何多余的文件安装或者是配置，只要你已经成功的配置好了struts1.1的开发环境。因为org.apache.struts.upload包已经集成到struts的类库中。下面是Struts的一般配置步骤：</p>
-<ol style="list-style-type: decimal">
+<ol type="1">
 <li>从Jakarta的官方网站下载Struts1.1的zip压缩包（当然是指windows平台下，其他平台可以下载相应的文件压缩包）</li>
 <li>拷贝压缩包中lib目录下的所有jar压缩包到欲使用Struts进行开发的web应用的-INF。同样拷贝压缩包中lib目录下的*.tld文件到web应用的-INF目录下面，这些是标签库的索引文件。如果使用IDE，比如Jbuilder等，其实只要在新建Web Application的时候选择使用Struts架构进行开发的话，这些东西都会自动添加到该web应用的相应目录下方。</li>
 <li>在web.xml部署描述符中添加一下内容：</li>
 </ol>
-<div class="sourceCode"><pre class="sourceCode xml"><code class="sourceCode xml"><span class="kw">&lt;servlet&gt;</span>
-    <span class="kw">&lt;servlet-name&gt;</span>action<span class="kw">&lt;/servlet-name&gt;</span>
-    <span class="kw">&lt;servlet-class&gt;</span>org.apache.struts.action.ActionServlet<span class="kw">&lt;/servlet-class&gt;</span>
-    <span class="kw">&lt;init-param&gt;</span>
-      <span class="kw">&lt;param-name&gt;</span>config<span class="kw">&lt;/param-name&gt;</span>
-      <span class="kw">&lt;param-value&gt;</span>/WEB-INF/struts-config.xml<span class="kw">&lt;/param-value&gt;</span>
-    <span class="kw">&lt;/init-param&gt;</span>
-    <span class="kw">&lt;init-param&gt;</span>
-      <span class="kw">&lt;param-name&gt;</span>debug<span class="kw">&lt;/param-name&gt;</span>
-      <span class="kw">&lt;param-value&gt;</span>2<span class="kw">&lt;/param-value&gt;</span>
-    <span class="kw">&lt;/init-param&gt;</span>
-    <span class="kw">&lt;init-param&gt;</span>
-      <span class="kw">&lt;param-name&gt;</span>detail<span class="kw">&lt;/param-name&gt;</span>
-      <span class="kw">&lt;param-value&gt;</span>2<span class="kw">&lt;/param-value&gt;</span>
-    <span class="kw">&lt;/init-param&gt;</span>
-    <span class="kw">&lt;load-on-startup&gt;</span>2<span class="kw">&lt;/load-on-startup&gt;</span>
-  <span class="kw">&lt;/servlet&gt;</span>
-//----------以上注册ActionServlet---------------------------------
-<span class="kw">&lt;taglib&gt;</span>
-    <span class="kw">&lt;taglib-uri&gt;</span>/tags/struts-bean<span class="kw">&lt;/taglib-uri&gt;</span>
-    <span class="kw">&lt;taglib-location&gt;</span>/WEB-INF/struts-bean.tld<span class="kw">&lt;/taglib-location&gt;</span>
-  <span class="kw">&lt;/taglib&gt;</span>
-  <span class="kw">&lt;taglib&gt;</span>
-    <span class="kw">&lt;taglib-uri&gt;</span>/tags/struts-html<span class="kw">&lt;/taglib-uri&gt;</span>
-    <span class="kw">&lt;taglib-location&gt;</span>/WEB-INF/struts-html.tld<span class="kw">&lt;/taglib-location&gt;</span>
-  <span class="kw">&lt;/taglib&gt;</span>
-  <span class="kw">&lt;taglib&gt;</span>
-    <span class="kw">&lt;taglib-uri&gt;</span>/tags/struts-logic<span class="kw">&lt;/taglib-uri&gt;</span>
-    <span class="kw">&lt;taglib-location&gt;</span>/WEB-INF/struts-logic.tld<span class="kw">&lt;/taglib-location&gt;</span>
-  <span class="kw">&lt;/taglib&gt;</span>
-  <span class="kw">&lt;taglib&gt;</span>
-    <span class="kw">&lt;taglib-uri&gt;</span>/tags/struts-nested<span class="kw">&lt;/taglib-uri&gt;</span>
-    <span class="kw">&lt;taglib-location&gt;</span>/WEB-INF/struts-nested.tld<span class="kw">&lt;/taglib-location&gt;</span>
-  <span class="kw">&lt;/taglib&gt;</span>
-  <span class="kw">&lt;taglib&gt;</span>
-    <span class="kw">&lt;taglib-uri&gt;</span>/tags/struts-tiles<span class="kw">&lt;/taglib-uri&gt;</span>
-    <span class="kw">&lt;taglib-location&gt;</span>/WEB-INF/struts-tiles.tld<span class="kw">&lt;/taglib-location&gt;</span>
-  <span class="kw">&lt;/taglib&gt;</span>
-//-------------以上注册Struts标签库------------------------</code></pre></div>
-<ol start="4" style="list-style-type: decimal">
+<div class="sourceCode" id="cb1"><pre class="sourceCode xml"><code class="sourceCode xml"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">&lt;servlet&gt;</span></a>
+<a class="sourceLine" id="cb1-2" data-line-number="2">    <span class="kw">&lt;servlet-name&gt;</span>action<span class="kw">&lt;/servlet-name&gt;</span></a>
+<a class="sourceLine" id="cb1-3" data-line-number="3">    <span class="kw">&lt;servlet-class&gt;</span>org.apache.struts.action.ActionServlet<span class="kw">&lt;/servlet-class&gt;</span></a>
+<a class="sourceLine" id="cb1-4" data-line-number="4">    <span class="kw">&lt;init-param&gt;</span></a>
+<a class="sourceLine" id="cb1-5" data-line-number="5">      <span class="kw">&lt;param-name&gt;</span>config<span class="kw">&lt;/param-name&gt;</span></a>
+<a class="sourceLine" id="cb1-6" data-line-number="6">      <span class="kw">&lt;param-value&gt;</span>/WEB-INF/struts-config.xml<span class="kw">&lt;/param-value&gt;</span></a>
+<a class="sourceLine" id="cb1-7" data-line-number="7">    <span class="kw">&lt;/init-param&gt;</span></a>
+<a class="sourceLine" id="cb1-8" data-line-number="8">    <span class="kw">&lt;init-param&gt;</span></a>
+<a class="sourceLine" id="cb1-9" data-line-number="9">      <span class="kw">&lt;param-name&gt;</span>debug<span class="kw">&lt;/param-name&gt;</span></a>
+<a class="sourceLine" id="cb1-10" data-line-number="10">      <span class="kw">&lt;param-value&gt;</span>2<span class="kw">&lt;/param-value&gt;</span></a>
+<a class="sourceLine" id="cb1-11" data-line-number="11">    <span class="kw">&lt;/init-param&gt;</span></a>
+<a class="sourceLine" id="cb1-12" data-line-number="12">    <span class="kw">&lt;init-param&gt;</span></a>
+<a class="sourceLine" id="cb1-13" data-line-number="13">      <span class="kw">&lt;param-name&gt;</span>detail<span class="kw">&lt;/param-name&gt;</span></a>
+<a class="sourceLine" id="cb1-14" data-line-number="14">      <span class="kw">&lt;param-value&gt;</span>2<span class="kw">&lt;/param-value&gt;</span></a>
+<a class="sourceLine" id="cb1-15" data-line-number="15">    <span class="kw">&lt;/init-param&gt;</span></a>
+<a class="sourceLine" id="cb1-16" data-line-number="16">    <span class="kw">&lt;load-on-startup&gt;</span>2<span class="kw">&lt;/load-on-startup&gt;</span></a>
+<a class="sourceLine" id="cb1-17" data-line-number="17">  <span class="kw">&lt;/servlet&gt;</span></a>
+<a class="sourceLine" id="cb1-18" data-line-number="18">//----------以上注册ActionServlet---------------------------------</a>
+<a class="sourceLine" id="cb1-19" data-line-number="19"><span class="kw">&lt;taglib&gt;</span></a>
+<a class="sourceLine" id="cb1-20" data-line-number="20">    <span class="kw">&lt;taglib-uri&gt;</span>/tags/struts-bean<span class="kw">&lt;/taglib-uri&gt;</span></a>
+<a class="sourceLine" id="cb1-21" data-line-number="21">    <span class="kw">&lt;taglib-location&gt;</span>/WEB-INF/struts-bean.tld<span class="kw">&lt;/taglib-location&gt;</span></a>
+<a class="sourceLine" id="cb1-22" data-line-number="22">  <span class="kw">&lt;/taglib&gt;</span></a>
+<a class="sourceLine" id="cb1-23" data-line-number="23">  <span class="kw">&lt;taglib&gt;</span></a>
+<a class="sourceLine" id="cb1-24" data-line-number="24">    <span class="kw">&lt;taglib-uri&gt;</span>/tags/struts-html<span class="kw">&lt;/taglib-uri&gt;</span></a>
+<a class="sourceLine" id="cb1-25" data-line-number="25">    <span class="kw">&lt;taglib-location&gt;</span>/WEB-INF/struts-html.tld<span class="kw">&lt;/taglib-location&gt;</span></a>
+<a class="sourceLine" id="cb1-26" data-line-number="26">  <span class="kw">&lt;/taglib&gt;</span></a>
+<a class="sourceLine" id="cb1-27" data-line-number="27">  <span class="kw">&lt;taglib&gt;</span></a>
+<a class="sourceLine" id="cb1-28" data-line-number="28">    <span class="kw">&lt;taglib-uri&gt;</span>/tags/struts-logic<span class="kw">&lt;/taglib-uri&gt;</span></a>
+<a class="sourceLine" id="cb1-29" data-line-number="29">    <span class="kw">&lt;taglib-location&gt;</span>/WEB-INF/struts-logic.tld<span class="kw">&lt;/taglib-location&gt;</span></a>
+<a class="sourceLine" id="cb1-30" data-line-number="30">  <span class="kw">&lt;/taglib&gt;</span></a>
+<a class="sourceLine" id="cb1-31" data-line-number="31">  <span class="kw">&lt;taglib&gt;</span></a>
+<a class="sourceLine" id="cb1-32" data-line-number="32">    <span class="kw">&lt;taglib-uri&gt;</span>/tags/struts-nested<span class="kw">&lt;/taglib-uri&gt;</span></a>
+<a class="sourceLine" id="cb1-33" data-line-number="33">    <span class="kw">&lt;taglib-location&gt;</span>/WEB-INF/struts-nested.tld<span class="kw">&lt;/taglib-location&gt;</span></a>
+<a class="sourceLine" id="cb1-34" data-line-number="34">  <span class="kw">&lt;/taglib&gt;</span></a>
+<a class="sourceLine" id="cb1-35" data-line-number="35">  <span class="kw">&lt;taglib&gt;</span></a>
+<a class="sourceLine" id="cb1-36" data-line-number="36">    <span class="kw">&lt;taglib-uri&gt;</span>/tags/struts-tiles<span class="kw">&lt;/taglib-uri&gt;</span></a>
+<a class="sourceLine" id="cb1-37" data-line-number="37">    <span class="kw">&lt;taglib-location&gt;</span>/WEB-INF/struts-tiles.tld<span class="kw">&lt;/taglib-location&gt;</span></a>
+<a class="sourceLine" id="cb1-38" data-line-number="38">  <span class="kw">&lt;/taglib&gt;</span></a>
+<a class="sourceLine" id="cb1-39" data-line-number="39">//-------------以上注册Struts标签库------------------------</a></code></pre></div>
+<ol start="4" type="1">
 <li>最后，在WEB-INF目录下面构建Struts-config.xml文件，将开发中所需要注册的资源添加进去就可以了。</li>
 </ol>
 <p>至此，就可以着手进行文件上传的开发工作，不过，在此之前，让我们先了解一下在struts中进行文件上传的基本流程或者说简单原理。</p>
@@ -204,75 +217,75 @@
 <p>以上就是struts中进行文件上传的基本流程。</p>
 <h1 id="简单实例实现"><span class="header-section-number">5</span> 简单实例实现</h1>
 <p>我们实现一个简单的文件上传流程，在Upload.jsp页面中定义一个文件上传表单，定义一个文本域，一个文件输入域，分别代表上传者姓名和所上传的文件。Upload.jsp页面的主体实现代码如下：</p>
-<div class="sourceCode"><pre class="sourceCode xml"><code class="sourceCode xml"><span class="kw">&lt;html:form</span><span class="ot"> action=</span><span class="st">&quot;uploadAction.do&quot;</span><span class="ot"> method=</span><span class="st">&quot;post&quot;</span><span class="ot"> enctype=</span><span class="st">&quot;multipart/form-data&quot;</span><span class="kw">&gt;</span>
-To choose the File to be Uploaded:
-<span class="kw">&lt;br&gt;&lt;html:text</span><span class="ot"> property=</span><span class="er">”uploader”/&gt;</span>
-<span class="er">&lt;br&gt;&lt;html:file</span> <span class="er">property=</span><span class="st">&quot;fileOne&quot;</span><span class="kw">/&gt;&lt;br&gt;</span>
-<span class="kw">&lt;html:submit/&gt;&lt;html:reset/&gt;</span>
-<span class="kw">&lt;/html:form&gt;</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode xml"><code class="sourceCode xml"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw">&lt;html:form</span><span class="ot"> action=</span><span class="st">&quot;uploadAction.do&quot;</span><span class="ot"> method=</span><span class="st">&quot;post&quot;</span><span class="ot"> enctype=</span><span class="st">&quot;multipart/form-data&quot;</span><span class="kw">&gt;</span></a>
+<a class="sourceLine" id="cb2-2" data-line-number="2">To choose the File to be Uploaded:</a>
+<a class="sourceLine" id="cb2-3" data-line-number="3"><span class="kw">&lt;br&gt;&lt;html:text</span><span class="ot"> property=</span><span class="er">”uploader”/&gt;</span></a>
+<a class="sourceLine" id="cb2-4" data-line-number="4"><span class="er">&lt;br&gt;&lt;html:file</span> <span class="er">property=</span><span class="st">&quot;fileOne&quot;</span><span class="kw">/&gt;&lt;br&gt;</span></a>
+<a class="sourceLine" id="cb2-5" data-line-number="5"><span class="kw">&lt;html:submit/&gt;&lt;html:reset/&gt;</span></a>
+<a class="sourceLine" id="cb2-6" data-line-number="6"><span class="kw">&lt;/html:form&gt;</span></a></code></pre></div>
 <p>页面完成后，需要定义与之对于的ActionForm，在应用中新建一个ActionForm，命名为UploadForm，定义uploader属性为String型，fileOne属性为FormFile型。与各个属性相对应的setter和getter方法以规范实现，这里不作赘述。代码可以参考附带文件。</p>
 <p>ActionForm开发完成后，将其添加到struts-config.xml配置文件中以便于Action调用。在struts-config.xml文件中的&lt; form-beans &gt;元素下面添加以下内容：</p>
-<div class="sourceCode"><pre class="sourceCode xml"><code class="sourceCode xml"><span class="kw">&lt;form-bean</span><span class="ot"> name=</span><span class="st">&quot;uploadForm&quot;</span>
-<span class="ot">             type=</span><span class="st">&quot;com.darrenstudio.guestbook.forms.UploadForm&quot;</span><span class="kw">/&gt;</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode xml"><code class="sourceCode xml"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw">&lt;form-bean</span><span class="ot"> name=</span><span class="st">&quot;uploadForm&quot;</span></a>
+<a class="sourceLine" id="cb3-2" data-line-number="2"><span class="ot">             type=</span><span class="st">&quot;com.darrenstudio.guestbook.forms.UploadForm&quot;</span><span class="kw">/&gt;</span></a></code></pre></div>
 <p>以上完成后，就可以开始进行处理上传请求的Action的开发了。我们定义Action类为UploadAction，扩展自org.apache.struts.action.Action类。在该Action中，我们通过取得ActionForm，然后判断，如果是UploadForm则进行逻辑操作，从UploadForm实例中取得上传者姓名以及上传的FormFile实例。然后，通过FormFile提供的处理方法，将FormFile实例所代表的文件另存为服务器上的一个同名文件中。最后，处理完成后将页面forward到UploadResult.jsp页面，显示上传信息，如果出错，则forward到error处理页面。UploadAction的部分代码实现如下，完整代码可参照附带源码文件：</p>
-<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="kw">if</span> (form <span class="kw">instanceof</span> UploadForm) {
-UploadForm theForm = (UploadForm) form;
-<span class="bu">String</span> uploader = theForm.<span class="fu">getUploader</span>();
-FormFile file = theForm.<span class="fu">getFileOne</span>();
-<span class="bu">String</span> BasePath = <span class="bu">System</span>.<span class="fu">getProperty</span>(<span class="st">&quot;user.dir&quot;</span>)+<span class="bu">File</span>.<span class="fu">separator</span>;
-<span class="bu">InputStream</span> ins = <span class="kw">null</span>;
-<span class="bu">OutputStream</span> out = <span class="kw">null</span>;
-<span class="kw">try</span>{
-<span class="dt">byte</span>[] buffer = <span class="kw">new</span> <span class="dt">byte</span>[<span class="dv">1024</span>];
-<span class="dt">int</span> bufferRead = <span class="dv">0</span>;
-<span class="kw">if</span>(!(file.<span class="fu">getFileName</span>()==<span class="kw">null</span>||file.<span class="fu">getFileName</span>().<span class="fu">equals</span>(<span class="st">&quot;&quot;</span>)))
-            {
-                ins = file.<span class="fu">getInputStream</span>();
-                out = <span class="kw">new</span> <span class="bu">FileOutputStream</span>(BasePath +
-                                           EncodingBean.<span class="fu">ISO2GBK</span>(file1.
-                    <span class="fu">getFileName</span>()));
-                <span class="kw">while</span> ( (bufferRead = ins.<span class="fu">read</span>(buffer, <span class="dv">0</span>, buffer.<span class="fu">length</span>)) != -<span class="dv">1</span>) {
-                    out.<span class="fu">write</span>(buffer, <span class="dv">0</span>, buffer.<span class="fu">length</span>);
-                }
-                ins.<span class="fu">close</span>();
-                out.<span class="fu">close</span>();
-            }
-file.<span class="fu">destroy</span>();
-}<span class="kw">catch</span>(<span class="bu">Exception</span> e)
-{
-     e.<span class="fu">printStackTrace</span>();
-     <span class="kw">return</span> actionMapping.<span class="fu">findForward</span>(<span class="st">&quot;failure&quot;</span>);
-}
-<span class="kw">return</span> actionMapping.<span class="fu">findForward</span>(<span class="st">&quot;success&quot;</span>);
-}<span class="kw">return</span> <span class="kw">null</span>;   <span class="co">// will never happen in this sample</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode java"><code class="sourceCode java"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="kw">if</span> (form <span class="kw">instanceof</span> UploadForm) {</a>
+<a class="sourceLine" id="cb4-2" data-line-number="2">UploadForm theForm = (UploadForm) form;</a>
+<a class="sourceLine" id="cb4-3" data-line-number="3"><span class="bu">String</span> uploader = theForm.<span class="fu">getUploader</span>();</a>
+<a class="sourceLine" id="cb4-4" data-line-number="4">FormFile file = theForm.<span class="fu">getFileOne</span>();</a>
+<a class="sourceLine" id="cb4-5" data-line-number="5"><span class="bu">String</span> BasePath = <span class="bu">System</span>.<span class="fu">getProperty</span>(<span class="st">&quot;user.dir&quot;</span>)+<span class="bu">File</span>.<span class="fu">separator</span>;</a>
+<a class="sourceLine" id="cb4-6" data-line-number="6"><span class="bu">InputStream</span> ins = <span class="kw">null</span>;</a>
+<a class="sourceLine" id="cb4-7" data-line-number="7"><span class="bu">OutputStream</span> out = <span class="kw">null</span>;</a>
+<a class="sourceLine" id="cb4-8" data-line-number="8"><span class="kw">try</span>{</a>
+<a class="sourceLine" id="cb4-9" data-line-number="9"><span class="dt">byte</span>[] buffer = <span class="kw">new</span> <span class="dt">byte</span>[<span class="dv">1024</span>];</a>
+<a class="sourceLine" id="cb4-10" data-line-number="10"><span class="dt">int</span> bufferRead = <span class="dv">0</span>;</a>
+<a class="sourceLine" id="cb4-11" data-line-number="11"><span class="kw">if</span>(!(file.<span class="fu">getFileName</span>()==<span class="kw">null</span>||file.<span class="fu">getFileName</span>().<span class="fu">equals</span>(<span class="st">&quot;&quot;</span>)))</a>
+<a class="sourceLine" id="cb4-12" data-line-number="12">            {</a>
+<a class="sourceLine" id="cb4-13" data-line-number="13">                ins = file.<span class="fu">getInputStream</span>();</a>
+<a class="sourceLine" id="cb4-14" data-line-number="14">                out = <span class="kw">new</span> <span class="bu">FileOutputStream</span>(BasePath +</a>
+<a class="sourceLine" id="cb4-15" data-line-number="15">                                           EncodingBean.<span class="fu">ISO2GBK</span>(file1.</a>
+<a class="sourceLine" id="cb4-16" data-line-number="16">                    <span class="fu">getFileName</span>()));</a>
+<a class="sourceLine" id="cb4-17" data-line-number="17">                <span class="kw">while</span> ( (bufferRead = ins.<span class="fu">read</span>(buffer, <span class="dv">0</span>, buffer.<span class="fu">length</span>)) != <span class="dv">-1</span>) {</a>
+<a class="sourceLine" id="cb4-18" data-line-number="18">                    out.<span class="fu">write</span>(buffer, <span class="dv">0</span>, buffer.<span class="fu">length</span>);</a>
+<a class="sourceLine" id="cb4-19" data-line-number="19">                }</a>
+<a class="sourceLine" id="cb4-20" data-line-number="20">                ins.<span class="fu">close</span>();</a>
+<a class="sourceLine" id="cb4-21" data-line-number="21">                out.<span class="fu">close</span>();</a>
+<a class="sourceLine" id="cb4-22" data-line-number="22">            }</a>
+<a class="sourceLine" id="cb4-23" data-line-number="23">file.<span class="fu">destroy</span>();</a>
+<a class="sourceLine" id="cb4-24" data-line-number="24">}<span class="kw">catch</span>(<span class="bu">Exception</span> e)</a>
+<a class="sourceLine" id="cb4-25" data-line-number="25">{</a>
+<a class="sourceLine" id="cb4-26" data-line-number="26">     e.<span class="fu">printStackTrace</span>();</a>
+<a class="sourceLine" id="cb4-27" data-line-number="27">     <span class="kw">return</span> actionMapping.<span class="fu">findForward</span>(<span class="st">&quot;failure&quot;</span>);</a>
+<a class="sourceLine" id="cb4-28" data-line-number="28">}</a>
+<a class="sourceLine" id="cb4-29" data-line-number="29"><span class="kw">return</span> actionMapping.<span class="fu">findForward</span>(<span class="st">&quot;success&quot;</span>);</a>
+<a class="sourceLine" id="cb4-30" data-line-number="30">}<span class="kw">return</span> <span class="kw">null</span>;   <span class="co">// will never happen in this sample</span></a></code></pre></div>
 <p>代码完成之后，将该Action类，即UploadAction，添加到struts-config.xml文件中，在struts-config.xml文件中添加以下内容：</p>
-<div class="sourceCode"><pre class="sourceCode xml"><code class="sourceCode xml"><span class="kw">&lt;action</span><span class="ot"> name=</span><span class="st">&quot;uploadForm&quot;</span>
-<span class="ot">          type=</span><span class="st">&quot;com.darrenstudio.guestbook.actions.UploadAction&quot;</span>
-<span class="ot">          validate=</span><span class="st">&quot;false&quot;</span>
-<span class="ot">          input=</span><span class="st">&quot;/upload.jsp&quot;</span>
-<span class="ot">          scope=</span><span class="st">&quot;request&quot;</span>
-<span class="ot">          path=</span><span class="st">&quot;/uploadAction&quot;</span><span class="kw">&gt;</span>
-   <span class="kw">&lt;forward</span><span class="ot"> name=</span><span class="st">&quot;success&quot;</span>
-<span class="ot">            path=</span><span class="st">&quot;/UploadResult.jsp&quot;</span>
-<span class="ot">            redirect=</span><span class="st">&quot;false&quot;</span><span class="kw">/&gt;</span>
-   <span class="kw">&lt;forward</span><span class="ot"> name=</span><span class="st">&quot;failure&quot;</span>
-<span class="ot">            path=</span><span class="st">&quot;/ErrorPage.jsp&quot;</span>
-<span class="ot">            redirect=</span><span class="st">&quot;false&quot;</span><span class="kw">/&gt;</span>
-<span class="kw">&lt;/action&gt;</span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode xml"><code class="sourceCode xml"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="kw">&lt;action</span><span class="ot"> name=</span><span class="st">&quot;uploadForm&quot;</span></a>
+<a class="sourceLine" id="cb5-2" data-line-number="2"><span class="ot">          type=</span><span class="st">&quot;com.darrenstudio.guestbook.actions.UploadAction&quot;</span></a>
+<a class="sourceLine" id="cb5-3" data-line-number="3"><span class="ot">          validate=</span><span class="st">&quot;false&quot;</span></a>
+<a class="sourceLine" id="cb5-4" data-line-number="4"><span class="ot">          input=</span><span class="st">&quot;/upload.jsp&quot;</span></a>
+<a class="sourceLine" id="cb5-5" data-line-number="5"><span class="ot">          scope=</span><span class="st">&quot;request&quot;</span></a>
+<a class="sourceLine" id="cb5-6" data-line-number="6"><span class="ot">          path=</span><span class="st">&quot;/uploadAction&quot;</span><span class="kw">&gt;</span></a>
+<a class="sourceLine" id="cb5-7" data-line-number="7">   <span class="kw">&lt;forward</span><span class="ot"> name=</span><span class="st">&quot;success&quot;</span></a>
+<a class="sourceLine" id="cb5-8" data-line-number="8"><span class="ot">            path=</span><span class="st">&quot;/UploadResult.jsp&quot;</span></a>
+<a class="sourceLine" id="cb5-9" data-line-number="9"><span class="ot">            redirect=</span><span class="st">&quot;false&quot;</span><span class="kw">/&gt;</span></a>
+<a class="sourceLine" id="cb5-10" data-line-number="10">   <span class="kw">&lt;forward</span><span class="ot"> name=</span><span class="st">&quot;failure&quot;</span></a>
+<a class="sourceLine" id="cb5-11" data-line-number="11"><span class="ot">            path=</span><span class="st">&quot;/ErrorPage.jsp&quot;</span></a>
+<a class="sourceLine" id="cb5-12" data-line-number="12"><span class="ot">            redirect=</span><span class="st">&quot;false&quot;</span><span class="kw">/&gt;</span></a>
+<a class="sourceLine" id="cb5-13" data-line-number="13"><span class="kw">&lt;/action&gt;</span></a></code></pre></div>
 <p>需要注意的是：action的name属性应该与上面定义的FormBean的name属性的值一样，在这里都是“uploadFrom”。这里，还为这个action定义了两个Forward，即success和failure，当处理顺利完成后，forward走success；否则，走failure报错。</p>
 <p>处理如果顺利完成，则页面跳转到UploadResult.jsp,在这里显示上传后的定制显示信息。而且，为了用户重新上传，还在这个页面中添加了一个重新到upload.jsp的link。该页面部分代码如下所示：</p>
-<div class="sourceCode"><pre class="sourceCode xml"><code class="sourceCode xml"><span class="kw">&lt;pre&gt;</span>  
- <span class="kw">&lt;font</span><span class="ot"> color=</span><span class="st">&quot;red&quot;</span><span class="kw">&gt;</span>Files Uploaded Successfully!<span class="kw">&lt;/font&gt;</span>
- Uploader : <span class="er">&lt;</span>%=uploader%&gt;
- FileName : <span class="er">&lt;</span>%=FileName%&gt;
- FileLocationOnServer:<span class="er">&lt;</span>%=FilePath%&gt;
-<span class="kw">&lt;/pre&gt;</span>
-<span class="kw">&lt;br&gt;</span>
-<span class="kw">&lt;html:link</span><span class="ot"> href=</span><span class="st">&quot;return2Upload.do&quot;</span><span class="kw">&gt;</span>返回上传页面<span class="kw">&lt;/html:link&gt;</span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode xml"><code class="sourceCode xml"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="kw">&lt;pre&gt;</span>  </a>
+<a class="sourceLine" id="cb6-2" data-line-number="2"> <span class="kw">&lt;font</span><span class="ot"> color=</span><span class="st">&quot;red&quot;</span><span class="kw">&gt;</span>Files Uploaded Successfully!<span class="kw">&lt;/font&gt;</span></a>
+<a class="sourceLine" id="cb6-3" data-line-number="3"> Uploader : <span class="er">&lt;</span>%=uploader%&gt;</a>
+<a class="sourceLine" id="cb6-4" data-line-number="4"> FileName : <span class="er">&lt;</span>%=FileName%&gt;</a>
+<a class="sourceLine" id="cb6-5" data-line-number="5"> FileLocationOnServer:<span class="er">&lt;</span>%=FilePath%&gt;</a>
+<a class="sourceLine" id="cb6-6" data-line-number="6"><span class="kw">&lt;/pre&gt;</span></a>
+<a class="sourceLine" id="cb6-7" data-line-number="7"><span class="kw">&lt;br&gt;</span></a>
+<a class="sourceLine" id="cb6-8" data-line-number="8"><span class="kw">&lt;html:link</span><span class="ot"> href=</span><span class="st">&quot;return2Upload.do&quot;</span><span class="kw">&gt;</span>返回上传页面<span class="kw">&lt;/html:link&gt;</span></a></code></pre></div>
 <p>为了将连接归入struts架构下，为其在Struts-config.xml文件中添加一个action，内容如下：</p>
-<div class="sourceCode"><pre class="sourceCode xml"><code class="sourceCode xml"><span class="kw">&lt;action</span><span class="ot"> path=</span><span class="st">&quot;/return2Upload&quot;</span>
-<span class="ot">          parameter=</span><span class="st">&quot;/upload.jsp&quot;</span>
-<span class="ot">          type=</span><span class="st">&quot;org.apache.struts.actions.ForwardAction&quot;</span><span class="kw">/&gt;</span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode xml"><code class="sourceCode xml"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="kw">&lt;action</span><span class="ot"> path=</span><span class="st">&quot;/return2Upload&quot;</span></a>
+<a class="sourceLine" id="cb7-2" data-line-number="2"><span class="ot">          parameter=</span><span class="st">&quot;/upload.jsp&quot;</span></a>
+<a class="sourceLine" id="cb7-3" data-line-number="3"><span class="ot">          type=</span><span class="st">&quot;org.apache.struts.actions.ForwardAction&quot;</span><span class="kw">/&gt;</span></a></code></pre></div>
 <p>关于ForwardAction的使用，在以前的《》一文中已经提到过。</p>
 <p>至此，整个上传流程的开发完成，只要将该Web应用部署到相应的应用服务器上的规定目录下面就可以运行了。</p>
 <h1 id="深入阐述"><span class="header-section-number">6</span> 深入阐述</h1>
@@ -280,16 +293,16 @@ file.<span class="fu">destroy</span>();
 <p>前者在上面的实例中已经接触过，它代表从客户端上传上来的文件，也是在struts应用中在上传文件方面使用最多的接口或者说是类，通过它提供的各种文件操作方法，我们可以对于应用中它所代表的文件进行各种所需要的操作，比如取得从客户端上传的文件的文件名，或者取得文件大小，进而可以取得输入流，对该文件进行操作等，这在上面的实例中都可以涉及到。</p>
 <p>后者，即MultipartRequestHandler接口，为struts应用提供一个标准接口，用来处理表单的enctype属性为“multipart/form-data”的文件上传操作。这个接口有一个ATTRIBUTE_MAX_LENGTH_EXCEEDED域，通过这个域，我们可以对客户端上传的文件的大小进行控制。下面，我们就对于如何控制客户端上传文件的大小进行简单描述。 在通常的web应用中，如果允许文件上传的话，也不是可以任意上传的，一般会对客户端上传的文件大小进行适当的限制，以便服务器可以负担，因为文件上传是很耗服务器资源的一件事情。</p>
 <p>在struts中对文件的上传进行控制需要进行一下几个步骤:</p>
-<ol style="list-style-type: decimal">
+<ol type="1">
 <li>在struts-config.xml文件中注册一个controller，通过其maxFileSize属性设置对文件大小进行的限制；</li>
 <li>在FormBean的validate（）验证方法中进行检查，判断上传的文件大小是否超出controller所设置的大小，如果超出，则向ActionErrors中添加一个ActionError，然后返回input指定的页面；否则，返回的ActionErrors对象为空，处理交给Action处理；</li>
 <li>如果文件大小超出限制，需要在原上传页面中对文件没有允许上传进行信息提示。</li>
 </ol>
 <p>下面就是在各个步骤中所涉及的具体实施内容：</p>
-<ol style="list-style-type: decimal">
+<ol type="1">
 <li>向struts-config.xml文件中添加以下内容即可完成Controller对象的注册工作：</li>
 </ol>
-<div class="sourceCode"><pre class="sourceCode xml"><code class="sourceCode xml"><span class="kw">&lt;controller</span><span class="ot"> maxFileSize=</span><span class="st">&quot;2M&quot;</span> <span class="kw">/&gt;</span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode xml"><code class="sourceCode xml"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="kw">&lt;controller</span><span class="ot"> maxFileSize=</span><span class="st">&quot;2M&quot;</span> <span class="kw">/&gt;</span></a></code></pre></div>
 <pre>
 注意，controller元素的父元素是<struts-config>,你可以在<struts-config>下面注册多个controller分别处理不同逻辑。
 <controller>元素有多个属性，其中针对文件上传进行控制的属性只有bufferSize，maxFileSize，multipartClass和tempDir。
@@ -298,39 +311,39 @@ file.<span class="fu">destroy</span>();
 >multipartClass属性指定被controller使用的MultipartRequestHandler类的全名，也是可选属性，默认为org.apache.struts.upload.CommonsMultipartRequestHandler。
 >tempDir属性指定处理文件上传时候使用的临时工作目录，同样是可选属性。
 </pre>
-<ol start="2" style="list-style-type: decimal">
+<ol start="2" type="1">
 <li>在ActionForm的validate（）方法中进行文件大小是否超出规定大小进行检查，那么如何知道文件是否超出规定大小那？具体实现是这样的：</li>
 </ol>
-<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java">ActionErrors errors = <span class="kw">null</span>;
-<span class="bu">Boolean</span> maxLengthExceeded = (<span class="bu">Boolean</span>)            request.<span class="fu">getAttribute</span>(MultipartRequestHandler.<span class="fu">ATTRIBUTE_MAX_LENGTH_EXCEEDED</span>);
-<span class="kw">if</span> ((maxLengthExceeded != <span class="kw">null</span>) &amp;&amp; (maxLengthExceeded.<span class="fu">booleanValue</span>()))
-{
-    errors = <span class="kw">new</span> <span class="fu">ActionErrors</span>();
-    errors.<span class="fu">add</span>(“FileSizeExceeded”, <span class="kw">new</span> <span class="fu">ActionError</span>(<span class="st">&quot;maxLengthExceeded&quot;</span>));
-}
-<span class="kw">return</span> errors;</code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode java"><code class="sourceCode java"><a class="sourceLine" id="cb9-1" data-line-number="1">ActionErrors errors = <span class="kw">null</span>;</a>
+<a class="sourceLine" id="cb9-2" data-line-number="2"><span class="bu">Boolean</span> maxLengthExceeded = (<span class="bu">Boolean</span>)            request.<span class="fu">getAttribute</span>(MultipartRequestHandler.<span class="fu">ATTRIBUTE_MAX_LENGTH_EXCEEDED</span>);</a>
+<a class="sourceLine" id="cb9-3" data-line-number="3"><span class="kw">if</span> ((maxLengthExceeded != <span class="kw">null</span>) &amp;&amp; (maxLengthExceeded.<span class="fu">booleanValue</span>()))</a>
+<a class="sourceLine" id="cb9-4" data-line-number="4">{</a>
+<a class="sourceLine" id="cb9-5" data-line-number="5">    errors = <span class="kw">new</span> <span class="fu">ActionErrors</span>();</a>
+<a class="sourceLine" id="cb9-6" data-line-number="6">    errors.<span class="fu">add</span>(“FileSizeExceeded”, <span class="kw">new</span> <span class="fu">ActionError</span>(<span class="st">&quot;maxLengthExceeded&quot;</span>));</a>
+<a class="sourceLine" id="cb9-7" data-line-number="7">}</a>
+<a class="sourceLine" id="cb9-8" data-line-number="8"><span class="kw">return</span> errors;</a></code></pre></div>
 <p>在该章开始我们就提到过，我们是通过MultipartRequestHandler类的ATTRIBUTE_MAX_LENGTH_EXCEEDED域进行文件大小限制的。当读入一个multipart类型的request并且上传的文件最大长度超出实现规定的话，ServletRequest的这个属性将会被设置，否则，如果文件长度没有超出规定，则这个属性就不会被设置，该属性返回类型为Boolean型。所以，从上面的代码中我们可以看出，我们可以通过取得request的这个属性，然后判断其是否为空，并且其返回的对于boolean值是否为true来判断文件是否超出规定长度。如果，判断得到超出规定长度，则向ActionErrors对象中加入文件长度超出限制的ActionError；否则，直接就是返回null的ActionErrors对象。可以看出，文件长度比较等逻辑实现复杂度在struts中都已经隐藏了。</p>
-<ol start="3" style="list-style-type: decimal">
+<ol start="3" type="1">
 <li>如果文件超出规定长度，需要在原来的上传初始页面中提示错误信息，下面是struts的sample中提供的代码实现，但不是唯一的：</li>
 </ol>
-<div class="sourceCode"><pre class="sourceCode xml"><code class="sourceCode xml"><span class="kw">&lt;logic:present</span><span class="ot"> name=</span><span class="st">&quot;</span><span class="er">&lt;</span><span class="st">%= Action.ERROR_KEY %&gt;&quot;</span><span class="ot"> scope=</span><span class="st">&quot;request&quot;</span><span class="kw">&gt;</span>
-    <span class="er">&lt;</span>%
-        ActionErrors errors = (ActionErrors) request.getAttribute(Action.ERROR_KEY);
-        //note that this error is created in the validate() method of UploadForm
-        Iterator iterator = errors.get(UploadForm.ERROR_PROPERTY_MAX_LENGTH_EXCEEDED);
-        //there&#39;&#39;s only one possible error in this
-        ActionError error = (ActionError) iterator.next();
-        pageContext.setAttribute(&quot;maxlength.error&quot;, error, PageContext.REQUEST_SCOPE);
-    %&gt;
-<span class="kw">&lt;/logic:present&gt;</span>
-<span class="co">&lt;!-- If there was an error, print it out --&gt;</span>
-<span class="kw">&lt;logic:present</span><span class="ot"> name=</span><span class="st">&quot;maxlength.error&quot;</span><span class="ot"> scope=</span><span class="st">&quot;request&quot;</span><span class="kw">&gt;</span>
-    <span class="kw">&lt;font</span><span class="ot"> color=</span><span class="st">&quot;red&quot;</span><span class="kw">&gt;&lt;bean:message</span><span class="ot"> name=</span><span class="st">&quot;maxlength.error&quot;</span><span class="ot"> property=</span><span class="st">&quot;key&quot;</span> <span class="kw">/&gt;&lt;/font&gt;</span>
-<span class="kw">&lt;/logic:present&gt;</span>
-<span class="kw">&lt;logic:notPresent</span><span class="ot"> name=</span><span class="st">&quot;maxlength.error&quot;</span><span class="ot"> scope=</span><span class="st">&quot;request&quot;</span><span class="kw">&gt;</span>
-    Note that the maximum allowed size of an uploaded file for this application is two megabytes.
-    See the /WEB-INF/struts-config.xml file for this application to change it.
-<span class="kw">&lt;/logic:notPresent&gt;</span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode xml"><code class="sourceCode xml"><a class="sourceLine" id="cb10-1" data-line-number="1"><span class="kw">&lt;logic:present</span><span class="ot"> name=</span><span class="st">&quot;</span><span class="er">&lt;</span><span class="st">%= Action.ERROR_KEY %&gt;&quot;</span><span class="ot"> scope=</span><span class="st">&quot;request&quot;</span><span class="kw">&gt;</span></a>
+<a class="sourceLine" id="cb10-2" data-line-number="2">    <span class="er">&lt;</span>%</a>
+<a class="sourceLine" id="cb10-3" data-line-number="3">        ActionErrors errors = (ActionErrors) request.getAttribute(Action.ERROR_KEY);</a>
+<a class="sourceLine" id="cb10-4" data-line-number="4">        //note that this error is created in the validate() method of UploadForm</a>
+<a class="sourceLine" id="cb10-5" data-line-number="5">        Iterator iterator = errors.get(UploadForm.ERROR_PROPERTY_MAX_LENGTH_EXCEEDED);</a>
+<a class="sourceLine" id="cb10-6" data-line-number="6">        //there&#39;&#39;s only one possible error in this</a>
+<a class="sourceLine" id="cb10-7" data-line-number="7">        ActionError error = (ActionError) iterator.next();</a>
+<a class="sourceLine" id="cb10-8" data-line-number="8">        pageContext.setAttribute(&quot;maxlength.error&quot;, error, PageContext.REQUEST_SCOPE);</a>
+<a class="sourceLine" id="cb10-9" data-line-number="9">    %&gt;</a>
+<a class="sourceLine" id="cb10-10" data-line-number="10"><span class="kw">&lt;/logic:present&gt;</span></a>
+<a class="sourceLine" id="cb10-11" data-line-number="11"><span class="co">&lt;!-- If there was an error, print it out --&gt;</span></a>
+<a class="sourceLine" id="cb10-12" data-line-number="12"><span class="kw">&lt;logic:present</span><span class="ot"> name=</span><span class="st">&quot;maxlength.error&quot;</span><span class="ot"> scope=</span><span class="st">&quot;request&quot;</span><span class="kw">&gt;</span></a>
+<a class="sourceLine" id="cb10-13" data-line-number="13">    <span class="kw">&lt;font</span><span class="ot"> color=</span><span class="st">&quot;red&quot;</span><span class="kw">&gt;&lt;bean:message</span><span class="ot"> name=</span><span class="st">&quot;maxlength.error&quot;</span><span class="ot"> property=</span><span class="st">&quot;key&quot;</span> <span class="kw">/&gt;&lt;/font&gt;</span></a>
+<a class="sourceLine" id="cb10-14" data-line-number="14"><span class="kw">&lt;/logic:present&gt;</span></a>
+<a class="sourceLine" id="cb10-15" data-line-number="15"><span class="kw">&lt;logic:notPresent</span><span class="ot"> name=</span><span class="st">&quot;maxlength.error&quot;</span><span class="ot"> scope=</span><span class="st">&quot;request&quot;</span><span class="kw">&gt;</span></a>
+<a class="sourceLine" id="cb10-16" data-line-number="16">    Note that the maximum allowed size of an uploaded file for this application is two megabytes.</a>
+<a class="sourceLine" id="cb10-17" data-line-number="17">    See the /WEB-INF/struts-config.xml file for this application to change it.</a>
+<a class="sourceLine" id="cb10-18" data-line-number="18"><span class="kw">&lt;/logic:notPresent&gt;</span></a></code></pre></div>
 <p>至此，对于上传文件大小进行限制的实现就可以完成了。</p>
 <p>对于org.apache.struts.upload包中的其他类，如果读者感兴趣，可以参考Struts官方网站所提供的API参考。</p>
 <h1 id="可能遇到的问题"><span class="header-section-number">7</span> 可能遇到的问题</h1>
@@ -340,18 +353,13 @@ file.<span class="fu">destroy</span>();
 <p>至此，针对struts中如何实现文件上传的内容阐述就结束了。</p>
 <p>由于笔者对于struts还是初次接触，所以有些方面还不是十分的了解，如果本文中有什么不妥之处，还希望读者热心指正。也希望本文所谈到的内容能够为大家提供一定的帮助。</p>
 <h1 id="参考文献"><span class="header-section-number">9</span> 参考文献</h1>
-<ol style="list-style-type: decimal">
+<ol type="1">
 <li>Apache Jakarta Struts User Guide</li>
 <li>Struts Upload API Reference</li>
 <li>Struts-upload.war附带文档以及源码</li>
 </ol>
-<hr>
-<div align="center">
-<img src="/images/wechat-qrcode-footer.png"/>
-</div>
 
-</div>
+    </article>
 
-
-
-</body></html>
+  </body>
+</html>

@@ -1,14 +1,16 @@
 <!DOCTYPE html>
-<html lang="zh">
-<head>
+<html>
+  <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>今天,你被宰了吗? - 一个架构士的思考与沉</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="王福强的博客， 一个架构士的思考与沉淀">
     <meta name="keywords" content="architecture, book author, thinker, fighter, 架构, 思考, 技术, 武术, 哲学">
     <meta name="author" content="王福强">
-        <link rel="icon" href="/favicon.ico">
-    <title>今天,你被宰了吗? - 一个架构士的思考与沉淀</title>
-    <!-- 百度统计 -->
+    <link rel="stylesheet" href="/ivy.css">
+    <link rel="shortcut icon" href="/favicon.ico"/>
+    <style type="text/css">code{white-space: pre;}</style>
+            <!-- 百度统计 -->
     <script>
       var _hmt = _hmt || [];
       (function() {
@@ -18,35 +20,26 @@
           s.parentNode.insertBefore(hm, s);
       })();
     </script>
+  </head>
 
-	<link href="/css/custom.css" rel="stylesheet"/>
-	<link rel="shortcut icon" href="/favicon.ico"/>
+  <body class="node homepage">
 
-<style type="text/css">code{white-space: pre;}</style>
-        
-	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-	<!--[if lt IE 9]>
-	  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.2/html5shiv.js"></script>
-	  <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-	<![endif]-->
-
-</head>
-
-<body>
-
-    <div class="masthead">
-		<!--
-    <h1 class="masthead-title fq">
-      <a href="/">扶墙老师</a>
-
-    </h1>
-    -->
-    <a href="/"><h1>扶墙老师说</h1></a>
-		<p class="masthead-lead">一个架构士的思考与沉淀</p>
-
-		<hr class="masthead-hr">
-
-	  	<ul class="masthead-nav">
+    <header class="masthead">
+      <h1><a href="/">扶墙老师说</a></h1>
+      <p class="tagline">
+         一个架构士的思考与沉淀
+          <img src="/images/wechat-qrcode-footer.png"/>
+          扶墙老师，辨证施“知”
+      </p>
+      
+      <nav class="menu">
+        <input id="menu-check" type="checkbox"/>
+        <label id="menu-label" for="menu-check" class="unselectable">
+          <span class="icon close-icon">✕</span>
+          <span class="icon open-icon">☰</span>
+          <span class="text">展开</span>
+        </label>
+        <ul>
             <li class="nav-item"><a class="nav-link" href="/favorite.html">我的收藏</a></li>
             <li class="nav-item"><a class="nav-link" href="/dashboard.html">金融看板</a></li>
             <li class="nav-item"><a class="nav-link" href="/columns.html">专栏文章</a></li>
@@ -54,20 +47,12 @@
             <li class="nav-item"><a class="nav-link" href="/whoami.html">我是何人</a></li>
             <li class="nav-item"><a class="nav-link" href="/interlinks.html">友情链接</a></li>
             <li class="nav-item"><a class="nav-link" href="/feeds.xml">RSS订阅</a></li>
-		</ul>
+        </ul>
+      </nav>
+    </header>
 
-  		<hr class="masthead-hr">
-
-	  	<ul class="masthead-nav">
-            <li class="nav-item"><small>©afoo.me</small></li>
-            <li class="nav-item"><small>Powered by <a href="http://pandoc.org/">pandoc</a> and <a href="http://rometools.github.io/rome/">ROME</a></small></li>
-		</ul>
-
-	</div>
-
-
-    <div class="listing">
-
+    <article class="main">
+      
 <div class="row">
 <div id="header">
 <p class="lead">
@@ -93,7 +78,7 @@
 “哪里要那么贵?”(我心里想,丫儿的, 平常就算拼车, 一部车也才300左右, 你tnd真敢要啊)
 “根本没有车, 公交车都不走了,你去车站也买不到票”</code></pre>
 <p>我心想,鬼才信你,就算公交车真没票, 我也不会挨你宰. 实际上, 青岛机场原来是有车直接跑招远的, 我跑到那个柜台一看, 没了,看来是生意不好, 黄了, 不然也不用跟他白费口舌.</p>
-<p>走出机场, 给”志波”兄弟打电话,问怎么去长途车总站, 然后打算打出租车过去,还没看到一辆出租车, 另一个哥们又过来了...</p>
+<p>走出机场, 给”志波”兄弟打电话,问怎么去长途车总站, 然后打算打出租车过去,还没看到一辆出租车, 另一个哥们又过来了…</p>
 <pre><code>“大哥, 到哪儿? 要车不?”
 “到招远多少?”
 “400, 这天不好找车阿”</code></pre>
@@ -114,7 +99,7 @@
 <p>这大哥一路上肯定是以点带面的咒骂青岛人啦, 说青岛人不能交啦, 青岛人做生意太差劲了, 太坏啦, 等等等等, 我心想, 全国上下,这种地方,哪里也不比哪里好哪儿去, 扯的范围广了其实也没太大意思, 不过,话说回来, 这帮鸟人做得实在有些那啥呀, 中间白白搞去大头儿, 长此以往, 整个儿一鼓励不劳而获嘛.</p>
 <p>从招远转车, 这回这个司机也说起他类似一个经历, 说有次也是从青岛机场, 别人转给他一个乘客, 送到莱西, 50块钱, 后来那个乘客半挖苦的跟他说, 她交给最初那个人160, 他却给了这个司机就50, 哈, nnd, 杯具, 杯具阿, 真应了那句话, “杯具, 往往都是相似的”.</p>
 <p><strong>当日零星杂谈</strong></p>
-<ol style="list-style-type: decimal">
+<ol type="1">
 <li><p>山东航空真抠门, 老子早饭没吃赶飞机, 最终却发现就发了个”热狗”, 而且, 我只是往好听里说, 说白了,就一个香肠加在两片很一般的面包之间, 害得老子到家, 赶快让老妈下面条, 饺子都来不及包了.</p></li>
 <li><p>回家有电视看了, 然后想贴近一下天朝的实时动态, 发现一则扫黄打非的新闻, 但见画面上, 某制服男在屏幕上漫无目的的点鼠标, 画面上,顺序的一堆文件夹, 名字整齐划一:</p></li>
 </ol>
@@ -126,13 +111,8 @@
 新建文件夹(23)
 </pre>
 <p>nnd, 你tmd当别人都电脑盲是吧? 看来,我不看天朝的电视新闻是对的, 珍爱生命, 远离CCAV. especially its Daily News. 当然了, 财经新闻和重大政策还是要关注一下的, 不过, 还是RSS实惠些.</p>
-<hr>
-<div align="center">
-<img src="/images/wechat-qrcode-footer.png"/>
-</div>
 
-</div>
+    </article>
 
-
-
-</body></html>
+  </body>
+</html>

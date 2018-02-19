@@ -1,15 +1,17 @@
 <!DOCTYPE html>
-<html lang="zh">
-<head>
+<html>
+  <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>挖财平台技术保障部广发英雄帖 - 一个架构士的思考与沉</title>
+        <meta name="date" content="2016-01-14" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="王福强的博客， 一个架构士的思考与沉淀">
     <meta name="keywords" content="architecture, book author, thinker, fighter, 架构, 思考, 技术, 武术, 哲学">
     <meta name="author" content="王福强">
-        <meta name="date" content="2016-01-14" />
-        <link rel="icon" href="/favicon.ico">
-    <title>挖财平台技术保障部广发英雄帖 - 一个架构士的思考与沉淀</title>
-    <!-- 百度统计 -->
+    <link rel="stylesheet" href="/ivy.css">
+    <link rel="shortcut icon" href="/favicon.ico"/>
+    <style type="text/css">code{white-space: pre;}</style>
+            <!-- 百度统计 -->
     <script>
       var _hmt = _hmt || [];
       (function() {
@@ -19,35 +21,26 @@
           s.parentNode.insertBefore(hm, s);
       })();
     </script>
+  </head>
 
-	<link href="/css/custom.css" rel="stylesheet"/>
-	<link rel="shortcut icon" href="/favicon.ico"/>
+  <body class="node homepage">
 
-<style type="text/css">code{white-space: pre;}</style>
-        
-	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-	<!--[if lt IE 9]>
-	  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.2/html5shiv.js"></script>
-	  <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-	<![endif]-->
-
-</head>
-
-<body>
-
-    <div class="masthead">
-		<!--
-    <h1 class="masthead-title fq">
-      <a href="/">扶墙老师</a>
-
-    </h1>
-    -->
-    <a href="/"><h1>扶墙老师说</h1></a>
-		<p class="masthead-lead">一个架构士的思考与沉淀</p>
-
-		<hr class="masthead-hr">
-
-	  	<ul class="masthead-nav">
+    <header class="masthead">
+      <h1><a href="/">扶墙老师说</a></h1>
+      <p class="tagline">
+         一个架构士的思考与沉淀
+          <img src="/images/wechat-qrcode-footer.png"/>
+          扶墙老师，辨证施“知”
+      </p>
+      
+      <nav class="menu">
+        <input id="menu-check" type="checkbox"/>
+        <label id="menu-label" for="menu-check" class="unselectable">
+          <span class="icon close-icon">✕</span>
+          <span class="icon open-icon">☰</span>
+          <span class="text">展开</span>
+        </label>
+        <ul>
             <li class="nav-item"><a class="nav-link" href="/favorite.html">我的收藏</a></li>
             <li class="nav-item"><a class="nav-link" href="/dashboard.html">金融看板</a></li>
             <li class="nav-item"><a class="nav-link" href="/columns.html">专栏文章</a></li>
@@ -55,20 +48,12 @@
             <li class="nav-item"><a class="nav-link" href="/whoami.html">我是何人</a></li>
             <li class="nav-item"><a class="nav-link" href="/interlinks.html">友情链接</a></li>
             <li class="nav-item"><a class="nav-link" href="/feeds.xml">RSS订阅</a></li>
-		</ul>
+        </ul>
+      </nav>
+    </header>
 
-  		<hr class="masthead-hr">
-
-	  	<ul class="masthead-nav">
-            <li class="nav-item"><small>©afoo.me</small></li>
-            <li class="nav-item"><small>Powered by <a href="http://pandoc.org/">pandoc</a> and <a href="http://rometools.github.io/rome/">ROME</a></small></li>
-		</ul>
-
-	</div>
-
-
-    <div class="listing">
-
+    <article class="main">
+      
 <div class="row">
 <div id="header">
 <p class="lead">
@@ -97,25 +82,22 @@
 </div>
 <hr/>
 
-<p>阿里在学习了Supercell之后提出了<strong>&quot;大中台，小前台“</strong>战略， 任正非也刚刚发出了新年呼吁， <strong>让前线呼唤炮火</strong>， 所有这些背后意味着什么？ 他们又是出于什么现状做出这些战略决策的那？本质上来说就是原来基于“人海战术，各自为战”的方式已经无法有效带动整个公司和集团的整体效能了。 所以， 为了打破现状，提高效能， 就得转型， 转型怎么转？ 沉淀稳固的资产，灵活调配变化资源， 让沉淀的资产以平台形式持续沉淀，从而以有限优质的资源向前支撑所有前端业务， 让易变的前端业务可以依托平台上沉淀的资产快速试错，迭代和创新， 从而实现整体的效能提升， 所谓”前轻后重“，即此。</p>
-<div class="figure">
-<img src="images/equiped-soldier.png" />
-
-</div>
+<p>阿里在学习了Supercell之后提出了**“大中台，小前台“<strong>战略， 任正非也刚刚发出了新年呼吁， </strong>让前线呼唤炮火**， 所有这些背后意味着什么？ 他们又是出于什么现状做出这些战略决策的那？本质上来说就是原来基于“人海战术，各自为战”的方式已经无法有效带动整个公司和集团的整体效能了。 所以， 为了打破现状，提高效能， 就得转型， 转型怎么转？ 沉淀稳固的资产，灵活调配变化资源， 让沉淀的资产以平台形式持续沉淀，从而以有限优质的资源向前支撑所有前端业务， 让易变的前端业务可以依托平台上沉淀的资产快速试错，迭代和创新， 从而实现整体的效能提升， 所谓”前轻后重“，即此。</p>
+<p><img src="images/equiped-soldier.png" /></p>
 <p>平台的沉淀起步越早， 时间给与的累计优势就越明显， 所以， 2016年， 挖财平台技术保障部将加大对基础设施和平台的持续建设，为我挖及早积累技术优势， 从而保障技术对业务的中长期发展需要。</p>
 <p>如果哪位同学认同挖财平台技术保障部的愿景并且也想持续在技术和技术产品领域沉淀并成长，那么，欢迎自荐或者推荐亲朋好友加入我挖平台技术保障部共创辉煌 💪</p>
 <h2 id="求贤若渴职位描述"><span class="header-section-number">0.1</span> 求贤若渴（职位描述）</h2>
 <p>以下所有职位：</p>
-<ol style="list-style-type: decimal">
+<ol type="1">
 <li>A <strong>whole-life learner</strong> is prefered.</li>
 <li>you should be <strong>open-minded</strong>.</li>
 <li>you can be a dick or asshole, but you should <strong>make sense</strong>.</li>
 </ol>
 <h3 id="java架构师"><span class="header-section-number">0.1.1</span> Java架构师</h3>
-<p>我就不废话什么SSH之类了， 这是必须的， 作为一名Java架构师，你技能下得了厨房（写代码的乐趣你要有）， 还得上得了厅堂（你要能够将自己的规划和设想推广并落地）， 你行，就来跟我们的男神@巨石和大神<span class="citation">@错刀过过招</span>。</p>
+<p>我就不废话什么SSH之类了， 这是必须的， 作为一名Java架构师，你技能下得了厨房（写代码的乐趣你要有）， 还得上得了厅堂（你要能够将自己的规划和设想推广并落地）， 你行，就来跟我们的男神@巨石和大神<span class="citation" data-cites="错刀过过招">@错刀过过招</span>。</p>
 <h3 id="中间件和技术产品专家"><span class="header-section-number">0.1.2</span> 中间件和技术产品专家</h3>
 <p>2016我们将在以下领域进行PAAS式的服务治理：</p>
-<ol style="list-style-type: decimal">
+<ol type="1">
 <li>Kafka</li>
 <li>Redis</li>
 <li>ElasticSearch</li>
@@ -132,7 +114,7 @@
 <h3 id="移动研发总监"><span class="header-section-number">0.1.6</span> 移动研发总监</h3>
 <p>移动时代， 谁领风骚？ 你， 你，还是你！</p>
 <h3 id="其它职位"><span class="header-section-number">0.1.7</span> 其它职位</h3>
-<ol style="list-style-type: decimal">
+<ol type="1">
 <li>前端要玩NodeJS等前沿技术的同学，你们在哪里？</li>
 <li>对金融系统和业务感兴趣的同学，你们在哪里？</li>
 <li>对Scala和实时计算感兴趣的同学， 你们在哪里？</li>
@@ -143,13 +125,8 @@
 </ol>
 <hr />
 <p><strong>2016, 约吗？</strong>😉</p>
-<hr>
-<div align="center">
-<img src="/images/wechat-qrcode-footer.png"/>
-</div>
 
-</div>
+    </article>
 
-
-
-</body></html>
+  </body>
+</html>

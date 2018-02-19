@@ -1,14 +1,16 @@
 <!DOCTYPE html>
-<html lang="zh">
-<head>
+<html>
+  <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>狂热，不应该用在这里 - 一个架构士的思考与沉</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="王福强的博客， 一个架构士的思考与沉淀">
     <meta name="keywords" content="architecture, book author, thinker, fighter, 架构, 思考, 技术, 武术, 哲学">
     <meta name="author" content="王福强">
-        <link rel="icon" href="/favicon.ico">
-    <title>狂热，不应该用在这里 - 一个架构士的思考与沉淀</title>
-    <!-- 百度统计 -->
+    <link rel="stylesheet" href="/ivy.css">
+    <link rel="shortcut icon" href="/favicon.ico"/>
+    <style type="text/css">code{white-space: pre;}</style>
+            <!-- 百度统计 -->
     <script>
       var _hmt = _hmt || [];
       (function() {
@@ -18,35 +20,26 @@
           s.parentNode.insertBefore(hm, s);
       })();
     </script>
+  </head>
 
-	<link href="/css/custom.css" rel="stylesheet"/>
-	<link rel="shortcut icon" href="/favicon.ico"/>
+  <body class="node homepage">
 
-<style type="text/css">code{white-space: pre;}</style>
-        
-	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-	<!--[if lt IE 9]>
-	  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.2/html5shiv.js"></script>
-	  <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-	<![endif]-->
-
-</head>
-
-<body>
-
-    <div class="masthead">
-		<!--
-    <h1 class="masthead-title fq">
-      <a href="/">扶墙老师</a>
-
-    </h1>
-    -->
-    <a href="/"><h1>扶墙老师说</h1></a>
-		<p class="masthead-lead">一个架构士的思考与沉淀</p>
-
-		<hr class="masthead-hr">
-
-	  	<ul class="masthead-nav">
+    <header class="masthead">
+      <h1><a href="/">扶墙老师说</a></h1>
+      <p class="tagline">
+         一个架构士的思考与沉淀
+          <img src="/images/wechat-qrcode-footer.png"/>
+          扶墙老师，辨证施“知”
+      </p>
+      
+      <nav class="menu">
+        <input id="menu-check" type="checkbox"/>
+        <label id="menu-label" for="menu-check" class="unselectable">
+          <span class="icon close-icon">✕</span>
+          <span class="icon open-icon">☰</span>
+          <span class="text">展开</span>
+        </label>
+        <ul>
             <li class="nav-item"><a class="nav-link" href="/favorite.html">我的收藏</a></li>
             <li class="nav-item"><a class="nav-link" href="/dashboard.html">金融看板</a></li>
             <li class="nav-item"><a class="nav-link" href="/columns.html">专栏文章</a></li>
@@ -54,20 +47,12 @@
             <li class="nav-item"><a class="nav-link" href="/whoami.html">我是何人</a></li>
             <li class="nav-item"><a class="nav-link" href="/interlinks.html">友情链接</a></li>
             <li class="nav-item"><a class="nav-link" href="/feeds.xml">RSS订阅</a></li>
-		</ul>
+        </ul>
+      </nav>
+    </header>
 
-  		<hr class="masthead-hr">
-
-	  	<ul class="masthead-nav">
-            <li class="nav-item"><small>©afoo.me</small></li>
-            <li class="nav-item"><small>Powered by <a href="http://pandoc.org/">pandoc</a> and <a href="http://rometools.github.io/rome/">ROME</a></small></li>
-		</ul>
-
-	</div>
-
-
-    <div class="listing">
-
+    <article class="main">
+      
 <div class="row">
 <div id="header">
 <p class="lead">
@@ -81,7 +66,7 @@
 <blockquote>
 <p>2014年从msn space存档中重新恢复出来！</p>
 </blockquote>
-<p>这几天晚上都在看《Grey's Anatomy》，昨天晚上顶到1点看完了大结局，对大结局里的一个场景感慨颇多，这里白活白活。</p>
+<p>这几天晚上都在看《Grey’s Anatomy》，昨天晚上顶到1点看完了大结局，对大结局里的一个场景感慨颇多，这里白活白活。</p>
 <p>对于Izzie为了让她喜欢的penny得到要移植的心脏所作出的举动，我只能用可怕的狂热来形容，看得我心惊胆颤。这个女人在那个时候完全就变成了另一个人似的，眼神举止思想完全迷失在那份狂热当中。虽然她的那份狂热最终为penny“骗”回来可以移植的心脏，但是，天意弄人，penny虽然移植心脏成功，却于手术恢复中的某1s内，突然死于脑溢血还是啥急性脑血块堵塞之类的突发疾病，那份狂热挽回一时，却没有像Izzie预想的那样，为她或者说他们挽回一世。</p>
 <p>实际上，她这么做，从道德的角度来说，完全是不可以接受的。在她的眼里，她的penny或许是很重要的人，可是同样等待移植心脏的人，却也同样的重要，尤其是他的家人，况且，对方还有四五岁的孩子。Izzie的举动不但骗了公益机构，损害了自身所在医院的信誉，还毁了自己的职业生涯，可是实际上那，penny的状况完全可以等待下一颗可移植的心脏，而没有必要非此刻此颗心脏不可，Izzie的狂热不但差点儿直接kill掉penny，而且最终也没有挽回penny可以健康活着的美好愿望。天意弄人，呵呵，该还的，终究要还。</p>
 <p>坚持原则，某些情况下是很难，可是退一步，或许确是最好的办法。(这好像与《钱以外的能力》里要阐述的理念有点儿像哈)</p>
@@ -94,13 +79,8 @@
 <p>司空见惯的现象。处处都是自私，黑暗。购票排对无聊，泼你一水！ 闹闹 - 1/14/2009 9:26:43 AM</p>
 努力争取,不放弃机会,但也要顺其自然.
 </blockquote>
-<hr>
-<div align="center">
-<img src="/images/wechat-qrcode-footer.png"/>
-</div>
 
-</div>
+    </article>
 
-
-
-</body></html>
+  </body>
+</html>

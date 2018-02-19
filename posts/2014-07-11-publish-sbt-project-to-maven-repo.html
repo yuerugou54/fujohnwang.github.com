@@ -1,14 +1,16 @@
 <!DOCTYPE html>
-<html lang="zh">
-<head>
+<html>
+  <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Publish SBT project to Maven repo(Nexus?) - 一个架构士的思考与沉</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="王福强的博客， 一个架构士的思考与沉淀">
     <meta name="keywords" content="architecture, book author, thinker, fighter, 架构, 思考, 技术, 武术, 哲学">
     <meta name="author" content="王福强">
-        <link rel="icon" href="/favicon.ico">
-    <title>Publish SBT project to Maven repo(Nexus?) - 一个架构士的思考与沉淀</title>
-    <!-- 百度统计 -->
+    <link rel="stylesheet" href="/ivy.css">
+    <link rel="shortcut icon" href="/favicon.ico"/>
+    <style type="text/css">code{white-space: pre;}</style>
+            <!-- 百度统计 -->
     <script>
       var _hmt = _hmt || [];
       (function() {
@@ -18,35 +20,26 @@
           s.parentNode.insertBefore(hm, s);
       })();
     </script>
+  </head>
 
-	<link href="/css/custom.css" rel="stylesheet"/>
-	<link rel="shortcut icon" href="/favicon.ico"/>
+  <body class="node homepage">
 
-<style type="text/css">code{white-space: pre;}</style>
-        
-	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-	<!--[if lt IE 9]>
-	  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.2/html5shiv.js"></script>
-	  <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-	<![endif]-->
-
-</head>
-
-<body>
-
-    <div class="masthead">
-		<!--
-    <h1 class="masthead-title fq">
-      <a href="/">扶墙老师</a>
-
-    </h1>
-    -->
-    <a href="/"><h1>扶墙老师说</h1></a>
-		<p class="masthead-lead">一个架构士的思考与沉淀</p>
-
-		<hr class="masthead-hr">
-
-	  	<ul class="masthead-nav">
+    <header class="masthead">
+      <h1><a href="/">扶墙老师说</a></h1>
+      <p class="tagline">
+         一个架构士的思考与沉淀
+          <img src="/images/wechat-qrcode-footer.png"/>
+          扶墙老师，辨证施“知”
+      </p>
+      
+      <nav class="menu">
+        <input id="menu-check" type="checkbox"/>
+        <label id="menu-label" for="menu-check" class="unselectable">
+          <span class="icon close-icon">✕</span>
+          <span class="icon open-icon">☰</span>
+          <span class="text">展开</span>
+        </label>
+        <ul>
             <li class="nav-item"><a class="nav-link" href="/favorite.html">我的收藏</a></li>
             <li class="nav-item"><a class="nav-link" href="/dashboard.html">金融看板</a></li>
             <li class="nav-item"><a class="nav-link" href="/columns.html">专栏文章</a></li>
@@ -54,20 +47,12 @@
             <li class="nav-item"><a class="nav-link" href="/whoami.html">我是何人</a></li>
             <li class="nav-item"><a class="nav-link" href="/interlinks.html">友情链接</a></li>
             <li class="nav-item"><a class="nav-link" href="/feeds.xml">RSS订阅</a></li>
-		</ul>
+        </ul>
+      </nav>
+    </header>
 
-  		<hr class="masthead-hr">
-
-	  	<ul class="masthead-nav">
-            <li class="nav-item"><small>©afoo.me</small></li>
-            <li class="nav-item"><small>Powered by <a href="http://pandoc.org/">pandoc</a> and <a href="http://rometools.github.io/rome/">ROME</a></small></li>
-		</ul>
-
-	</div>
-
-
-    <div class="listing">
-
+    <article class="main">
+      
 <div class="row">
 <div id="header">
 <p class="lead">
@@ -91,7 +76,7 @@
 </div>
 <hr/>
 
-<p>--阶段性反刍--</p>
+<p>–阶段性反刍–</p>
 <h1 id="准备配置内容"><span class="header-section-number">1</span> 准备配置内容</h1>
 build.sbt中需要添加发布到maven相应配置：
 <pre>
@@ -112,7 +97,7 @@ credentials += Credentials("${realm}", "${host}", "${username}", "${password}")
 <h1 id="本地测试"><span class="header-section-number">2</span> 本地测试</h1>
 <p>可以通过<code>sbt publish-local</code>先本地测试一下， 发布到本地maven库中并检查是否有遗漏或者错误</p>
 <h1 id="正式发布"><span class="header-section-number">3</span> 正式发布</h1>
-<p>运行<code>sbt publish</code>, 等待结果...</p>
+<p>运行<code>sbt publish</code>, 等待结果…</p>
 <h1 id="关于credentials"><span class="header-section-number">4</span> 关于Credentials</h1>
 <p>直接写到project的build文件当然可以，但还是放到独立的一台发布机上比较靠谱一些，所以，我们可以在project的build文件里只声明credential文件的位置：</p>
 <pre>
@@ -127,16 +112,11 @@ user=myuser
 password=mypass
 </pre>
 <h1 id="其它参考"><span class="header-section-number">5</span> 其它参考</h1>
-<ol style="list-style-type: decimal">
-<li><a href="http://www.cakesolutions.net/teamblogs/publishing-artefacts-to-oss-sonatype-nexus-using-sbt-and-travis-ci-here...">Publishing artefacts to OSS Sonatype Nexus using SBT and Travis CI Here...</a></li>
+<ol type="1">
+<li><a href="http://www.cakesolutions.net/teamblogs/publishing-artefacts-to-oss-sonatype-nexus-using-sbt-and-travis-ci-here...">Publishing artefacts to OSS Sonatype Nexus using SBT and Travis CI Here…</a></li>
 </ol>
-<hr>
-<div align="center">
-<img src="/images/wechat-qrcode-footer.png"/>
-</div>
 
-</div>
+    </article>
 
-
-
-</body></html>
+  </body>
+</html>

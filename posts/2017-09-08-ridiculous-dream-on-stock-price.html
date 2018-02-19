@@ -1,15 +1,17 @@
 <!DOCTYPE html>
-<html lang="zh">
-<head>
+<html>
+  <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>荒诞之梦 - 一个架构士的思考与沉</title>
+        <meta name="date" content="2017-09-08" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="王福强的博客， 一个架构士的思考与沉淀">
     <meta name="keywords" content="architecture, book author, thinker, fighter, 架构, 思考, 技术, 武术, 哲学">
     <meta name="author" content="王福强">
-        <meta name="date" content="2017-09-08" />
-        <link rel="icon" href="/favicon.ico">
-    <title>荒诞之梦 - 一个架构士的思考与沉淀</title>
-    <!-- 百度统计 -->
+    <link rel="stylesheet" href="/ivy.css">
+    <link rel="shortcut icon" href="/favicon.ico"/>
+    <style type="text/css">code{white-space: pre;}</style>
+            <!-- 百度统计 -->
     <script>
       var _hmt = _hmt || [];
       (function() {
@@ -19,35 +21,26 @@
           s.parentNode.insertBefore(hm, s);
       })();
     </script>
+  </head>
 
-	<link href="/css/custom.css" rel="stylesheet"/>
-	<link rel="shortcut icon" href="/favicon.ico"/>
+  <body class="node homepage">
 
-<style type="text/css">code{white-space: pre;}</style>
-        
-	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-	<!--[if lt IE 9]>
-	  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.2/html5shiv.js"></script>
-	  <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-	<![endif]-->
-
-</head>
-
-<body>
-
-    <div class="masthead">
-		<!--
-    <h1 class="masthead-title fq">
-      <a href="/">扶墙老师</a>
-
-    </h1>
-    -->
-    <a href="/"><h1>扶墙老师说</h1></a>
-		<p class="masthead-lead">一个架构士的思考与沉淀</p>
-
-		<hr class="masthead-hr">
-
-	  	<ul class="masthead-nav">
+    <header class="masthead">
+      <h1><a href="/">扶墙老师说</a></h1>
+      <p class="tagline">
+         一个架构士的思考与沉淀
+          <img src="/images/wechat-qrcode-footer.png"/>
+          扶墙老师，辨证施“知”
+      </p>
+      
+      <nav class="menu">
+        <input id="menu-check" type="checkbox"/>
+        <label id="menu-label" for="menu-check" class="unselectable">
+          <span class="icon close-icon">✕</span>
+          <span class="icon open-icon">☰</span>
+          <span class="text">展开</span>
+        </label>
+        <ul>
             <li class="nav-item"><a class="nav-link" href="/favorite.html">我的收藏</a></li>
             <li class="nav-item"><a class="nav-link" href="/dashboard.html">金融看板</a></li>
             <li class="nav-item"><a class="nav-link" href="/columns.html">专栏文章</a></li>
@@ -55,20 +48,12 @@
             <li class="nav-item"><a class="nav-link" href="/whoami.html">我是何人</a></li>
             <li class="nav-item"><a class="nav-link" href="/interlinks.html">友情链接</a></li>
             <li class="nav-item"><a class="nav-link" href="/feeds.xml">RSS订阅</a></li>
-		</ul>
+        </ul>
+      </nav>
+    </header>
 
-  		<hr class="masthead-hr">
-
-	  	<ul class="masthead-nav">
-            <li class="nav-item"><small>©afoo.me</small></li>
-            <li class="nav-item"><small>Powered by <a href="http://pandoc.org/">pandoc</a> and <a href="http://rometools.github.io/rome/">ROME</a></small></li>
-		</ul>
-
-	</div>
-
-
-    <div class="listing">
-
+    <article class="main">
+      
 <div class="row">
 <div id="header">
 <p class="lead">
@@ -84,20 +69,12 @@
 
 
 <p>同样可以参读微信公众号文章 [荒诞之梦](https://mp.weixin.qq.com/s?__biz=MzIzNzkzODU5Mg==&amp;mid=2247483700&amp;idx=1&amp;sn=406eff690f756f584408f99cb040a1ab&amp;chksm=e8c1b3fbdfb63aed7a51f31550f77027a72151b2a199d52adbd994bd4c4b9fc7b609da5483f6#rd</p>
-<p>昨天晚上做了一个很诡异的梦，梦到阿里的股价一泻千里（我一般都是睡觉前看下美股，睡醒了看眼，觉得有机会就下个限价单）， 从170多跌倒了1.37美金，最终反弹到5.49还是多少收盘...</p>
-<p>究其原因是， 马云在年会上说要分拆现在已经上市的阿里业务，分批再注入， 而分批的业务是第一批“支付宝宫”，第二批“什么宫”（卧槽，难道是黄金十二宫的节奏，不过好像是貌似各种食品类名字）...</p>
-<div class="figure">
-<img src="images/fuckme.png" />
-
-</div>
+<p>昨天晚上做了一个很诡异的梦，梦到阿里的股价一泻千里（我一般都是睡觉前看下美股，睡醒了看眼，觉得有机会就下个限价单）， 从170多跌倒了1.37美金，最终反弹到5.49还是多少收盘…</p>
+<p>究其原因是， 马云在年会上说要分拆现在已经上市的阿里业务，分批再注入， 而分批的业务是第一批“支付宝宫”，第二批“什么宫”（卧槽，难道是黄金十二宫的节奏，不过好像是貌似各种食品类名字）…</p>
+<p><img src="images/fuckme.png" /></p>
 <p>mmd， 明明今天阿里才开年会吧， 我居然昨天晚上做了这么荒诞的一个黄粱一梦，😅，好在早上惊醒了看了下盘，没有这回事儿， 我这得多么不盼个阿里的好啊…[捂脸]</p>
-<hr>
-<div align="center">
-<img src="/images/wechat-qrcode-footer.png"/>
-</div>
 
-</div>
+    </article>
 
-
-
-</body></html>
+  </body>
+</html>

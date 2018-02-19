@@ -1,14 +1,81 @@
 <!DOCTYPE html>
-<html lang="zh">
-<head>
+<html>
+  <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Excel-Launching With Jacob - 一个架构士的思考与沉</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="王福强的博客， 一个架构士的思考与沉淀">
     <meta name="keywords" content="architecture, book author, thinker, fighter, 架构, 思考, 技术, 武术, 哲学">
     <meta name="author" content="王福强">
-        <link rel="icon" href="/favicon.ico">
-    <title>Excel-Launching With Jacob - 一个架构士的思考与沉淀</title>
-    <!-- 百度统计 -->
+    <link rel="stylesheet" href="/ivy.css">
+    <link rel="shortcut icon" href="/favicon.ico"/>
+    <style type="text/css">code{white-space: pre;}</style>
+    <style type="text/css">
+    a.sourceLine { display: inline-block; line-height: 1.25; }
+    a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+    a.sourceLine:empty { height: 1.2em; position: absolute; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode { white-space: pre; position: relative; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    code.sourceCode { white-space: pre-wrap; }
+    a.sourceLine { text-indent: -1em; padding-left: 1em; }
+    }
+    pre.numberSource a.sourceLine
+      { position: relative; }
+    pre.numberSource a.sourceLine:empty
+      { position: absolute; }
+    pre.numberSource a.sourceLine::before
+      { content: attr(data-line-number);
+        position: absolute; left: -5em; text-align: right; vertical-align: baseline;
+        border: none; pointer-events: all;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {  }
+    @media screen {
+    a.sourceLine::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+            <!-- 百度统计 -->
     <script>
       var _hmt = _hmt || [];
       (function() {
@@ -18,72 +85,26 @@
           s.parentNode.insertBefore(hm, s);
       })();
     </script>
+  </head>
 
-	<link href="/css/custom.css" rel="stylesheet"/>
-	<link rel="shortcut icon" href="/favicon.ico"/>
+  <body class="node homepage">
 
-<style type="text/css">code{white-space: pre;}</style>
-    <style type="text/css">
-    div.sourceCode { overflow-x: auto; }
-    table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
-      margin: 0; padding: 0; vertical-align: baseline; border: none; }
-    table.sourceCode { width: 100%; line-height: 100%; }
-    td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
-    td.sourceCode { padding-left: 5px; }
-    code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
-    code > span.dt { color: #902000; } /* DataType */
-    code > span.dv { color: #40a070; } /* DecVal */
-    code > span.bn { color: #40a070; } /* BaseN */
-    code > span.fl { color: #40a070; } /* Float */
-    code > span.ch { color: #4070a0; } /* Char */
-    code > span.st { color: #4070a0; } /* String */
-    code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
-    code > span.ot { color: #007020; } /* Other */
-    code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
-    code > span.fu { color: #06287e; } /* Function */
-    code > span.er { color: #ff0000; font-weight: bold; } /* Error */
-    code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-    code > span.cn { color: #880000; } /* Constant */
-    code > span.sc { color: #4070a0; } /* SpecialChar */
-    code > span.vs { color: #4070a0; } /* VerbatimString */
-    code > span.ss { color: #bb6688; } /* SpecialString */
-    code > span.im { } /* Import */
-    code > span.va { color: #19177c; } /* Variable */
-    code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-    code > span.op { color: #666666; } /* Operator */
-    code > span.bu { } /* BuiltIn */
-    code > span.ex { } /* Extension */
-    code > span.pp { color: #bc7a00; } /* Preprocessor */
-    code > span.at { color: #7d9029; } /* Attribute */
-    code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
-    code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-    code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-    code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-  </style>
-        
-	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-	<!--[if lt IE 9]>
-	  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.2/html5shiv.js"></script>
-	  <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-	<![endif]-->
-
-</head>
-
-<body>
-
-    <div class="masthead">
-		<!--
-    <h1 class="masthead-title fq">
-      <a href="/">扶墙老师</a>
-
-    </h1>
-    -->
-    <a href="/"><h1>扶墙老师说</h1></a>
-		<p class="masthead-lead">一个架构士的思考与沉淀</p>
-
-		<hr class="masthead-hr">
-
-	  	<ul class="masthead-nav">
+    <header class="masthead">
+      <h1><a href="/">扶墙老师说</a></h1>
+      <p class="tagline">
+         一个架构士的思考与沉淀
+          <img src="/images/wechat-qrcode-footer.png"/>
+          扶墙老师，辨证施“知”
+      </p>
+      
+      <nav class="menu">
+        <input id="menu-check" type="checkbox"/>
+        <label id="menu-label" for="menu-check" class="unselectable">
+          <span class="icon close-icon">✕</span>
+          <span class="icon open-icon">☰</span>
+          <span class="text">展开</span>
+        </label>
+        <ul>
             <li class="nav-item"><a class="nav-link" href="/favorite.html">我的收藏</a></li>
             <li class="nav-item"><a class="nav-link" href="/dashboard.html">金融看板</a></li>
             <li class="nav-item"><a class="nav-link" href="/columns.html">专栏文章</a></li>
@@ -91,20 +112,12 @@
             <li class="nav-item"><a class="nav-link" href="/whoami.html">我是何人</a></li>
             <li class="nav-item"><a class="nav-link" href="/interlinks.html">友情链接</a></li>
             <li class="nav-item"><a class="nav-link" href="/feeds.xml">RSS订阅</a></li>
-		</ul>
+        </ul>
+      </nav>
+    </header>
 
-  		<hr class="masthead-hr">
-
-	  	<ul class="masthead-nav">
-            <li class="nav-item"><small>©afoo.me</small></li>
-            <li class="nav-item"><small>Powered by <a href="http://pandoc.org/">pandoc</a> and <a href="http://rometools.github.io/rome/">ROME</a></small></li>
-		</ul>
-
-	</div>
-
-
-    <div class="listing">
-
+    <article class="main">
+      
 <div class="row">
 <div id="header">
 <p class="lead">
@@ -125,90 +138,85 @@
 <p>分析代码后估计是两个实例指向了同一个automation（具体原因确实无从考证，因为偶对于微软的程序相关的东西实在不甚了了），所以前一个实例指向的automation被改动或者破坏了，从而导致以上问题。</p>
 <p>所以，直接改为直接静态实例化，并将调用方法同时改为static的，这样反而减少了调用时候实例化的繁琐，只要最后在系统的Shell dispose的时候调用JacobExcelLauncher的release方法就可以了。</p>
 <p>附上改动后的程序代码：</p>
-<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="co">/**</span>
+<div class="sourceCode" id="cb1"><pre class="sourceCode java"><code class="sourceCode java"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="co">/**</span></a>
+<a class="sourceLine" id="cb1-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb1-3" data-line-number="3"><span class="co">* </span><span class="kw">@author </span>Darren<span class="co">.</span>Wang</a>
+<a class="sourceLine" id="cb1-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb1-5" data-line-number="5"><span class="co">*</span> <span class="co">2005/03/17</span></a>
+<a class="sourceLine" id="cb1-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb1-7" data-line-number="7"><span class="co">*</span> Thanks to Samir<span class="co">(</span>who is in Australia<span class="co">),</span> without his help <span class="co">,</span> I can<span class="co">&#39;</span>t complete this work<span class="co">.</span></a>
+<a class="sourceLine" id="cb1-8" data-line-number="8"></a>
+<a class="sourceLine" id="cb1-9" data-line-number="9"><span class="co">*/</span></a>
+<a class="sourceLine" id="cb1-10" data-line-number="10"></a>
+<a class="sourceLine" id="cb1-11" data-line-number="11"><span class="kw">public</span> <span class="kw">class</span> JacobExcelLauncher {</a>
+<a class="sourceLine" id="cb1-12" data-line-number="12"></a>
+<a class="sourceLine" id="cb1-13" data-line-number="13"><span class="co">// excel automation</span></a>
+<a class="sourceLine" id="cb1-14" data-line-number="14"></a>
+<a class="sourceLine" id="cb1-15" data-line-number="15"><span class="kw">private</span> <span class="dt">static</span> ActiveXComponent excel;</a>
+<a class="sourceLine" id="cb1-16" data-line-number="16"></a>
+<a class="sourceLine" id="cb1-17" data-line-number="17"></a>
+<a class="sourceLine" id="cb1-18" data-line-number="18"><span class="dt">static</span></a>
+<a class="sourceLine" id="cb1-19" data-line-number="19"></a>
+<a class="sourceLine" id="cb1-20" data-line-number="20">{</a>
+<a class="sourceLine" id="cb1-21" data-line-number="21"></a>
+<a class="sourceLine" id="cb1-22" data-line-number="22"><span class="co">// start the Excel</span></a>
+<a class="sourceLine" id="cb1-23" data-line-number="23"></a>
+<a class="sourceLine" id="cb1-24" data-line-number="24">excel = <span class="kw">new</span> <span class="fu">ActiveXComponent</span>(<span class="st">&quot;Excel.Application&quot;</span>);</a>
+<a class="sourceLine" id="cb1-25" data-line-number="25"></a>
+<a class="sourceLine" id="cb1-26" data-line-number="26"><span class="co">// first time, we need set the excel to be invisible</span></a>
+<a class="sourceLine" id="cb1-27" data-line-number="27"></a>
+<a class="sourceLine" id="cb1-28" data-line-number="28">excel.<span class="fu">setProperty</span>(<span class="st">&quot;Visible&quot;</span>,<span class="kw">new</span> <span class="fu">Variant</span>(<span class="kw">false</span>));</a>
+<a class="sourceLine" id="cb1-29" data-line-number="29"></a>
+<a class="sourceLine" id="cb1-30" data-line-number="30">}</a>
+<a class="sourceLine" id="cb1-31" data-line-number="31"></a>
+<a class="sourceLine" id="cb1-32" data-line-number="32"><span class="co">/*</span></a>
+<a class="sourceLine" id="cb1-33" data-line-number="33"></a>
+<a class="sourceLine" id="cb1-34" data-line-number="34"><span class="co">* Launch Excel file with this method,</span></a>
+<a class="sourceLine" id="cb1-35" data-line-number="35"></a>
+<a class="sourceLine" id="cb1-36" data-line-number="36"><span class="co">* it can be invoked many times</span></a>
+<a class="sourceLine" id="cb1-37" data-line-number="37"></a>
+<a class="sourceLine" id="cb1-38" data-line-number="38"><span class="co">*/</span></a>
+<a class="sourceLine" id="cb1-39" data-line-number="39"></a>
+<a class="sourceLine" id="cb1-40" data-line-number="40"><span class="kw">public</span> <span class="dt">static</span> <span class="dt">void</span> <span class="fu">launch</span>(<span class="bu">String</span> fileName)</a>
+<a class="sourceLine" id="cb1-41" data-line-number="41"></a>
+<a class="sourceLine" id="cb1-42" data-line-number="42">{</a>
+<a class="sourceLine" id="cb1-43" data-line-number="43"></a>
+<a class="sourceLine" id="cb1-44" data-line-number="44"><span class="co">// now make it appear,for we have set it to be invisible before</span></a>
+<a class="sourceLine" id="cb1-45" data-line-number="45"></a>
+<a class="sourceLine" id="cb1-46" data-line-number="46">excel.<span class="fu">setProperty</span>(<span class="st">&quot;Visible&quot;</span>,<span class="kw">new</span> <span class="fu">Variant</span>(<span class="kw">true</span>));</a>
+<a class="sourceLine" id="cb1-47" data-line-number="47"></a>
+<a class="sourceLine" id="cb1-48" data-line-number="48"><span class="co">// open the excel file</span></a>
+<a class="sourceLine" id="cb1-49" data-line-number="49"></a>
+<a class="sourceLine" id="cb1-50" data-line-number="50"><span class="bu">Dispatch</span>.<span class="fu">callN</span>(excel.<span class="fu">getProperty</span>(<span class="st">&quot;WorkBooks&quot;</span>).<span class="fu">toDispatch</span>(),<span class="st">&quot;Open&quot;</span>,<span class="kw">new</span> <span class="bu">Object</span>[]{fileName});</a>
+<a class="sourceLine" id="cb1-51" data-line-number="51"></a>
+<a class="sourceLine" id="cb1-52" data-line-number="52">}</a>
+<a class="sourceLine" id="cb1-53" data-line-number="53"></a>
+<a class="sourceLine" id="cb1-54" data-line-number="54"></a>
+<a class="sourceLine" id="cb1-55" data-line-number="55"><span class="co">/*</span></a>
+<a class="sourceLine" id="cb1-56" data-line-number="56"></a>
+<a class="sourceLine" id="cb1-57" data-line-number="57"><span class="co">* Release the resources and kill the excel process</span></a>
+<a class="sourceLine" id="cb1-58" data-line-number="58"></a>
+<a class="sourceLine" id="cb1-59" data-line-number="59"><span class="co">*/</span></a>
+<a class="sourceLine" id="cb1-60" data-line-number="60"></a>
+<a class="sourceLine" id="cb1-61" data-line-number="61"><span class="kw">public</span> <span class="dt">static</span> <span class="dt">void</span> <span class="fu">release</span>()</a>
+<a class="sourceLine" id="cb1-62" data-line-number="62"></a>
+<a class="sourceLine" id="cb1-63" data-line-number="63">{</a>
+<a class="sourceLine" id="cb1-64" data-line-number="64"></a>
+<a class="sourceLine" id="cb1-65" data-line-number="65"><span class="co">// quit the excel application</span></a>
+<a class="sourceLine" id="cb1-66" data-line-number="66"></a>
+<a class="sourceLine" id="cb1-67" data-line-number="67">excel.<span class="fu">invoke</span>(<span class="st">&quot;Quit&quot;</span>,<span class="kw">new</span> Variant[]{});</a>
+<a class="sourceLine" id="cb1-68" data-line-number="68"></a>
+<a class="sourceLine" id="cb1-69" data-line-number="69"><span class="co">// invoke the method to count down the numbers of the reference,</span></a>
+<a class="sourceLine" id="cb1-70" data-line-number="70"></a>
+<a class="sourceLine" id="cb1-71" data-line-number="71"><span class="co">// and release them one by one to kill the excel process finally.</span></a>
+<a class="sourceLine" id="cb1-72" data-line-number="72"></a>
+<a class="sourceLine" id="cb1-73" data-line-number="73">ComThread.<span class="fu">Release</span>();</a>
+<a class="sourceLine" id="cb1-74" data-line-number="74"></a>
+<a class="sourceLine" id="cb1-75" data-line-number="75">}</a>
+<a class="sourceLine" id="cb1-76" data-line-number="76"></a>
+<a class="sourceLine" id="cb1-77" data-line-number="77">}</a></code></pre></div>
 
-<span class="co">* </span><span class="kw">@author </span>Darren<span class="co">.</span>Wang
+    </article>
 
-<span class="co">*</span> <span class="co">2005/03/17</span>
-
-<span class="co">*</span> Thanks to Samir<span class="co">(</span>who is in Australia<span class="co">),</span> without his help <span class="co">,</span> I can<span class="co">&#39;</span>t complete this work<span class="co">.</span>
-
-<span class="co">*/</span>
-
-<span class="kw">public</span> <span class="kw">class</span> JacobExcelLauncher {
-
-<span class="co">// excel automation</span>
-
-<span class="kw">private</span> <span class="dt">static</span> ActiveXComponent excel;
-
-
-<span class="dt">static</span>
-
-{
-
-<span class="co">// start the Excel</span>
-
-excel = <span class="kw">new</span> <span class="fu">ActiveXComponent</span>(<span class="st">&quot;Excel.Application&quot;</span>);
-
-<span class="co">// first time, we need set the excel to be invisible</span>
-
-excel.<span class="fu">setProperty</span>(<span class="st">&quot;Visible&quot;</span>,<span class="kw">new</span> <span class="fu">Variant</span>(<span class="kw">false</span>));
-
-}
-
-<span class="co">/*</span>
-
-<span class="co">* Launch Excel file with this method,</span>
-
-<span class="co">* it can be invoked many times</span>
-
-<span class="co">*/</span>
-
-<span class="kw">public</span> <span class="dt">static</span> <span class="dt">void</span> <span class="fu">launch</span>(<span class="bu">String</span> fileName)
-
-{
-
-<span class="co">// now make it appear,for we have set it to be invisible before</span>
-
-excel.<span class="fu">setProperty</span>(<span class="st">&quot;Visible&quot;</span>,<span class="kw">new</span> <span class="fu">Variant</span>(<span class="kw">true</span>));
-
-<span class="co">// open the excel file</span>
-
-<span class="bu">Dispatch</span>.<span class="fu">callN</span>(excel.<span class="fu">getProperty</span>(<span class="st">&quot;WorkBooks&quot;</span>).<span class="fu">toDispatch</span>(),<span class="st">&quot;Open&quot;</span>,<span class="kw">new</span> <span class="bu">Object</span>[]{fileName});
-
-}
-
-
-<span class="co">/*</span>
-
-<span class="co">* Release the resources and kill the excel process</span>
-
-<span class="co">*/</span>
-
-<span class="kw">public</span> <span class="dt">static</span> <span class="dt">void</span> <span class="fu">release</span>()
-
-{
-
-<span class="co">// quit the excel application</span>
-
-excel.<span class="fu">invoke</span>(<span class="st">&quot;Quit&quot;</span>,<span class="kw">new</span> Variant[]{});
-
-<span class="co">// invoke the method to count down the numbers of the reference,</span>
-
-<span class="co">// and release them one by one to kill the excel process finally.</span>
-
-ComThread.<span class="fu">Release</span>();
-
-}
-
-}</code></pre></div>
-<hr>
-<div align="center">
-<img src="/images/wechat-qrcode-footer.png"/>
-</div>
-
-</div>
-
-
-
-</body></html>
+  </body>
+</html>

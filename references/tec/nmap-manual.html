@@ -1,14 +1,16 @@
 <!DOCTYPE html>
-<html lang="zh">
-<head>
+<html>
+  <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>nmap手册 - 一个架构士的思考与沉</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="王福强的博客， 一个架构士的思考与沉淀">
     <meta name="keywords" content="architecture, book author, thinker, fighter, 架构, 思考, 技术, 武术, 哲学">
     <meta name="author" content="王福强">
-        <link rel="icon" href="/favicon.ico">
-    <title>nmap手册 - 一个架构士的思考与沉淀</title>
-    <!-- 百度统计 -->
+    <link rel="stylesheet" href="/ivy.css">
+    <link rel="shortcut icon" href="/favicon.ico"/>
+    <style type="text/css">code{white-space: pre;}</style>
+            <!-- 百度统计 -->
     <script>
       var _hmt = _hmt || [];
       (function() {
@@ -18,35 +20,26 @@
           s.parentNode.insertBefore(hm, s);
       })();
     </script>
+  </head>
 
-	<link href="/css/custom.css" rel="stylesheet"/>
-	<link rel="shortcut icon" href="/favicon.ico"/>
+  <body class="node homepage">
 
-<style type="text/css">code{white-space: pre;}</style>
-        
-	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-	<!--[if lt IE 9]>
-	  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.2/html5shiv.js"></script>
-	  <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-	<![endif]-->
-
-</head>
-
-<body>
-
-    <div class="masthead">
-		<!--
-    <h1 class="masthead-title fq">
-      <a href="/">扶墙老师</a>
-
-    </h1>
-    -->
-    <a href="/"><h1>扶墙老师说</h1></a>
-		<p class="masthead-lead">一个架构士的思考与沉淀</p>
-
-		<hr class="masthead-hr">
-
-	  	<ul class="masthead-nav">
+    <header class="masthead">
+      <h1><a href="/">扶墙老师说</a></h1>
+      <p class="tagline">
+         一个架构士的思考与沉淀
+          <img src="/images/wechat-qrcode-footer.png"/>
+          扶墙老师，辨证施“知”
+      </p>
+      
+      <nav class="menu">
+        <input id="menu-check" type="checkbox"/>
+        <label id="menu-label" for="menu-check" class="unselectable">
+          <span class="icon close-icon">✕</span>
+          <span class="icon open-icon">☰</span>
+          <span class="text">展开</span>
+        </label>
+        <ul>
             <li class="nav-item"><a class="nav-link" href="/favorite.html">我的收藏</a></li>
             <li class="nav-item"><a class="nav-link" href="/dashboard.html">金融看板</a></li>
             <li class="nav-item"><a class="nav-link" href="/columns.html">专栏文章</a></li>
@@ -54,21 +47,12 @@
             <li class="nav-item"><a class="nav-link" href="/whoami.html">我是何人</a></li>
             <li class="nav-item"><a class="nav-link" href="/interlinks.html">友情链接</a></li>
             <li class="nav-item"><a class="nav-link" href="/feeds.xml">RSS订阅</a></li>
-		</ul>
+        </ul>
+      </nav>
+    </header>
 
-  		<hr class="masthead-hr">
-
-	  	<ul class="masthead-nav">
-            <li class="nav-item"><image src="/images/qrcode_for_gh_4fe672b2e860_430.jpg" width="215"/></li>
-            <li class="nav-item"><small>©afoo.me</small></li>
-            <li class="nav-item"><small>Powered by <a href="http://pandoc.org/">pandoc</a> and <a href="http://rometools.github.io/rome/">ROME</a></small></li>
-      </ul>
-
-	</div>
-
-
-    <div class="listing">
-
+    <article class="main">
+      
 <div class="row">
 <div id="header">
 <p class="lead">
@@ -155,7 +139,7 @@
 <p>nmap -R -sL 209.85.229.99/27 | awk ‘{if($3==”not”)print”(“$2″) no PTR”;else print$3″ is “$2}’ | grep ‘(‘</p>
 </blockquote>
 <h1 id="显示网络上共有多少台-linux-及-win-设备"><span class="header-section-number">10</span> 显示网络上共有多少台 Linux 及 Win 设备?</h1>
-<p>sudo nmap -F -O 192.168.0.1-255 | grep “Running:” &gt; /tmp/os; echo “<span class="math inline">(<em>c</em><em>a</em><em>t</em>/<em>t</em><em>m</em><em>p</em>/<em>o</em><em>s</em>|<em>g</em><em>r</em><em>e</em><em>p</em><em>L</em><em>i</em><em>n</em><em>u</em><em>x</em>|<em>w</em><em>c</em> − <em>l</em>)<em>L</em><em>i</em><em>n</em><em>u</em><em>x</em><em>d</em><em>e</em><em>v</em><em>i</em><em>c</em><em>e</em>(<em>s</em>)”; <em>e</em><em>c</em><em>h</em><em>o</em>“</span>(cat /tmp/os | grep Windows | wc -l) Window(s) device”</p>
+<p>sudo nmap -F -O 192.168.0.1-255 | grep “Running:” &gt; /tmp/os; echo “<span class="math inline">(<em>c</em><em>a</em><em>t</em>/<em>t</em><em>m</em><em>p</em>/<em>o</em><em>s</em>|<em>g</em><em>r</em><em>e</em><em>p</em><em>L</em><em>i</em><em>n</em><em>u</em><em>x</em>|<em>w</em><em>c</em> − <em>l</em>)<em>L</em><em>i</em><em>n</em><em>u</em><em>x</em><em>d</em><em>e</em><em>v</em><em>i</em><em>c</em><em>e</em>(<em>s</em>)”;<em>e</em><em>c</em><em>h</em><em>o</em>“</span>(cat /tmp/os | grep Windows | wc -l) Window(s) device”</p>
 <h1 id="扫描主机中所有的保留tcp端口"><span class="header-section-number">11</span> 扫描主机中所有的保留TCP端口</h1>
 <blockquote>
 <p>nmap -v scanme.nmap.org</p>
@@ -189,8 +173,7 @@
 <li><a href="http://nmap.org/man/zh/man-examples.html" class="uri">http://nmap.org/man/zh/man-examples.html</a></li>
 </ol>
 
-</div>
+    </article>
 
-
-
-</body></html>
+  </body>
+</html>

@@ -1,14 +1,16 @@
 <!DOCTYPE html>
-<html lang="zh">
-<head>
+<html>
+  <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>到底谁指望谁？！ - 一个架构士的思考与沉</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="王福强的博客， 一个架构士的思考与沉淀">
     <meta name="keywords" content="architecture, book author, thinker, fighter, 架构, 思考, 技术, 武术, 哲学">
     <meta name="author" content="王福强">
-        <link rel="icon" href="/favicon.ico">
-    <title>到底谁指望谁？！ - 一个架构士的思考与沉淀</title>
-    <!-- 百度统计 -->
+    <link rel="stylesheet" href="/ivy.css">
+    <link rel="shortcut icon" href="/favicon.ico"/>
+    <style type="text/css">code{white-space: pre;}</style>
+            <!-- 百度统计 -->
     <script>
       var _hmt = _hmt || [];
       (function() {
@@ -18,35 +20,26 @@
           s.parentNode.insertBefore(hm, s);
       })();
     </script>
+  </head>
 
-	<link href="/css/custom.css" rel="stylesheet"/>
-	<link rel="shortcut icon" href="/favicon.ico"/>
+  <body class="node homepage">
 
-<style type="text/css">code{white-space: pre;}</style>
-        
-	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-	<!--[if lt IE 9]>
-	  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.2/html5shiv.js"></script>
-	  <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-	<![endif]-->
-
-</head>
-
-<body>
-
-    <div class="masthead">
-		<!--
-    <h1 class="masthead-title fq">
-      <a href="/">扶墙老师</a>
-
-    </h1>
-    -->
-    <a href="/"><h1>扶墙老师说</h1></a>
-		<p class="masthead-lead">一个架构士的思考与沉淀</p>
-
-		<hr class="masthead-hr">
-
-	  	<ul class="masthead-nav">
+    <header class="masthead">
+      <h1><a href="/">扶墙老师说</a></h1>
+      <p class="tagline">
+         一个架构士的思考与沉淀
+          <img src="/images/wechat-qrcode-footer.png"/>
+          扶墙老师，辨证施“知”
+      </p>
+      
+      <nav class="menu">
+        <input id="menu-check" type="checkbox"/>
+        <label id="menu-label" for="menu-check" class="unselectable">
+          <span class="icon close-icon">✕</span>
+          <span class="icon open-icon">☰</span>
+          <span class="text">展开</span>
+        </label>
+        <ul>
             <li class="nav-item"><a class="nav-link" href="/favorite.html">我的收藏</a></li>
             <li class="nav-item"><a class="nav-link" href="/dashboard.html">金融看板</a></li>
             <li class="nav-item"><a class="nav-link" href="/columns.html">专栏文章</a></li>
@@ -54,20 +47,12 @@
             <li class="nav-item"><a class="nav-link" href="/whoami.html">我是何人</a></li>
             <li class="nav-item"><a class="nav-link" href="/interlinks.html">友情链接</a></li>
             <li class="nav-item"><a class="nav-link" href="/feeds.xml">RSS订阅</a></li>
-		</ul>
+        </ul>
+      </nav>
+    </header>
 
-  		<hr class="masthead-hr">
-
-	  	<ul class="masthead-nav">
-            <li class="nav-item"><small>©afoo.me</small></li>
-            <li class="nav-item"><small>Powered by <a href="http://pandoc.org/">pandoc</a> and <a href="http://rometools.github.io/rome/">ROME</a></small></li>
-		</ul>
-
-	</div>
-
-
-    <div class="listing">
-
+    <article class="main">
+      
 <div class="row">
 <div id="header">
 <p class="lead">
@@ -82,17 +67,12 @@
 <p>2014年从msn space存档中重新恢复出来！</p>
 </blockquote>
 <p>周日中午去好又多买点儿东西，反正中午了，想到老三住附近，也很长时间没见，就电话这小子出来，可这小子非要我过去他家里，说正好家里包饺子，父母都在，那也罢，买了箱特伦苏，买点儿水果就过去了。</p>
-<p>老三刚有个儿子，不到2个月吧，扯着扯着就说到这个孩子多难养，一个月得花几千几千啦，说老大阿，我老了，把这小崽子养大了，还得给他找工作，买房子，找媳妇...</p>
-<p>我听他一口一个小崽子一直想笑，不过，还是安慰他，等孩子大了孝顺你就得了呗，老三和他媳妇异口同声阿，“这就不要指望了，从来都是小的指望老的，老的从来指望不到小的”，“你不看看我们俩，房子都是父母帮忙买的...”，连阿姨在边上包饺子都对这种观点表示支持，哈哈</p>
+<p>老三刚有个儿子，不到2个月吧，扯着扯着就说到这个孩子多难养，一个月得花几千几千啦，说老大阿，我老了，把这小崽子养大了，还得给他找工作，买房子，找媳妇…</p>
+<p>我听他一口一个小崽子一直想笑，不过，还是安慰他，等孩子大了孝顺你就得了呗，老三和他媳妇异口同声阿，“这就不要指望了，从来都是小的指望老的，老的从来指望不到小的”，“你不看看我们俩，房子都是父母帮忙买的…”，连阿姨在边上包饺子都对这种观点表示支持，哈哈</p>
 <p>哎，我活这么大，才发现我为什么活着这么累了，原来我活得正好反了阿，农村教育孩子都是让他长大了有出息，孝顺老的，从来都是老的指望小的，城市里正好相反，是老的辛苦积攒下的东西，都是为了小的，反而是小的指望老的，呜呼，原来差异在此啊！</p>
 <p>不过，各自该咋活还得咋活啊，呵呵，其实谁都清楚 大笑</p>
-<hr>
-<div align="center">
-<img src="/images/wechat-qrcode-footer.png"/>
-</div>
 
-</div>
+    </article>
 
-
-
-</body></html>
+  </body>
+</html>

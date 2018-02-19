@@ -52,12 +52,12 @@ object SiteBuilder {
       val pageContent = tuples.foldLeft("")((index, tuple) => {
         val block =
           s"""
-             |<div class="entry">
-             |	<div class="entry-content">
-             |		<h2 class="entry-title"><a href="/posts/${tuple._2}">${tuple._1}</a></h2>
-             |		<p class="entry-date">发布日期: ${tuple._3}</p>
+             |<header class="title">
+             |	<div>
+             |		<small>${tuple._3}</small>
+             |		<h2><a href="/posts/${tuple._2}">${tuple._1}</a></h2>
              |	</div>
-             |</div>
+             |</header>
            """.stripMargin
 
         index ++ block
@@ -106,7 +106,7 @@ object SiteBuilder {
 
     s"""
        |  <hr>
-       |  <div class="paginator">
+       |  <div class="paginator" style="text-align: center;">
        |				<a href="$previousLink" class="paginate previous">更新鲜(Newer)</a>
        |				<a href="$nextLink" class="paginate older">更早些时候(Older)</span>
        |	</div>

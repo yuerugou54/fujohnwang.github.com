@@ -1,14 +1,16 @@
 <!DOCTYPE html>
-<html lang="zh">
-<head>
+<html>
+  <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>借记卡-准贷记卡与贷记卡的区别[转] - 一个架构士的思考与沉</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="王福强的博客， 一个架构士的思考与沉淀">
     <meta name="keywords" content="architecture, book author, thinker, fighter, 架构, 思考, 技术, 武术, 哲学">
     <meta name="author" content="王福强">
-        <link rel="icon" href="/favicon.ico">
-    <title>借记卡-准贷记卡与贷记卡的区别[转] - 一个架构士的思考与沉淀</title>
-    <!-- 百度统计 -->
+    <link rel="stylesheet" href="/ivy.css">
+    <link rel="shortcut icon" href="/favicon.ico"/>
+    <style type="text/css">code{white-space: pre;}</style>
+            <!-- 百度统计 -->
     <script>
       var _hmt = _hmt || [];
       (function() {
@@ -18,35 +20,26 @@
           s.parentNode.insertBefore(hm, s);
       })();
     </script>
+  </head>
 
-	<link href="/css/custom.css" rel="stylesheet"/>
-	<link rel="shortcut icon" href="/favicon.ico"/>
+  <body class="node homepage">
 
-<style type="text/css">code{white-space: pre;}</style>
-        
-	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-	<!--[if lt IE 9]>
-	  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.2/html5shiv.js"></script>
-	  <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-	<![endif]-->
-
-</head>
-
-<body>
-
-    <div class="masthead">
-		<!--
-    <h1 class="masthead-title fq">
-      <a href="/">扶墙老师</a>
-
-    </h1>
-    -->
-    <a href="/"><h1>扶墙老师说</h1></a>
-		<p class="masthead-lead">一个架构士的思考与沉淀</p>
-
-		<hr class="masthead-hr">
-
-	  	<ul class="masthead-nav">
+    <header class="masthead">
+      <h1><a href="/">扶墙老师说</a></h1>
+      <p class="tagline">
+         一个架构士的思考与沉淀
+          <img src="/images/wechat-qrcode-footer.png"/>
+          扶墙老师，辨证施“知”
+      </p>
+      
+      <nav class="menu">
+        <input id="menu-check" type="checkbox"/>
+        <label id="menu-label" for="menu-check" class="unselectable">
+          <span class="icon close-icon">✕</span>
+          <span class="icon open-icon">☰</span>
+          <span class="text">展开</span>
+        </label>
+        <ul>
             <li class="nav-item"><a class="nav-link" href="/favorite.html">我的收藏</a></li>
             <li class="nav-item"><a class="nav-link" href="/dashboard.html">金融看板</a></li>
             <li class="nav-item"><a class="nav-link" href="/columns.html">专栏文章</a></li>
@@ -54,20 +47,12 @@
             <li class="nav-item"><a class="nav-link" href="/whoami.html">我是何人</a></li>
             <li class="nav-item"><a class="nav-link" href="/interlinks.html">友情链接</a></li>
             <li class="nav-item"><a class="nav-link" href="/feeds.xml">RSS订阅</a></li>
-		</ul>
+        </ul>
+      </nav>
+    </header>
 
-  		<hr class="masthead-hr">
-
-	  	<ul class="masthead-nav">
-            <li class="nav-item"><small>©afoo.me</small></li>
-            <li class="nav-item"><small>Powered by <a href="http://pandoc.org/">pandoc</a> and <a href="http://rometools.github.io/rome/">ROME</a></small></li>
-		</ul>
-
-	</div>
-
-
-    <div class="listing">
-
+    <article class="main">
+      
 <div class="row">
 <div id="header">
 <p class="lead">
@@ -96,77 +81,72 @@
 <h1 id="三者的主要区别"><span class="header-section-number">4</span> 三者的主要区别</h1>
 <table>
 <colgroup>
-<col width="33%" />
-<col width="35%" />
-<col width="30%" />
+<col style="width: 33%" />
+<col style="width: 35%" />
+<col style="width: 30%" />
 </colgroup>
 <thead>
 <tr class="header">
-<th align="center">借记卡</th>
-<th align="center">准贷记卡</th>
-<th align="center">贷记卡</th>
+<th style="text-align: center;">借记卡</th>
+<th style="text-align: center;">准贷记卡</th>
+<th style="text-align: center;">贷记卡</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td align="center">先存后用</td>
-<td align="center">先存后用可适当透支</td>
-<td align="center">先用后还</td>
+<td style="text-align: center;">先存后用</td>
+<td style="text-align: center;">先存后用可适当透支</td>
+<td style="text-align: center;">先用后还</td>
 </tr>
 <tr class="even">
-<td align="center">存款计息</td>
-<td align="center">存款计息</td>
-<td align="center">存款不计息</td>
+<td style="text-align: center;">存款计息</td>
+<td style="text-align: center;">存款计息</td>
+<td style="text-align: center;">存款不计息</td>
 </tr>
 <tr class="odd">
-<td align="center">同城取现无手续费</td>
-<td align="center">同城取现无手续费</td>
-<td align="center">取现收取高手续费</td>
+<td style="text-align: center;">同城取现无手续费</td>
+<td style="text-align: center;">同城取现无手续费</td>
+<td style="text-align: center;">取现收取高手续费</td>
 </tr>
 <tr class="even">
-<td align="center">年费很低</td>
-<td align="center">年费介于借记卡和贷记卡之间</td>
-<td align="center">年费最高</td>
+<td style="text-align: center;">年费很低</td>
+<td style="text-align: center;">年费介于借记卡和贷记卡之间</td>
+<td style="text-align: center;">年费最高</td>
 </tr>
 <tr class="odd">
-<td align="center">无使用年限限制</td>
-<td align="center">使用年限最长为两年</td>
-<td align="center">使用年限一般为三年</td>
+<td style="text-align: center;">无使用年限限制</td>
+<td style="text-align: center;">使用年限最长为两年</td>
+<td style="text-align: center;">使用年限一般为三年</td>
 </tr>
 <tr class="even">
-<td align="center">不提供对账单可索取</td>
-<td align="center">不提供对账单可索取</td>
-<td align="center">每月免费提供账单</td>
+<td style="text-align: center;">不提供对账单可索取</td>
+<td style="text-align: center;">不提供对账单可索取</td>
+<td style="text-align: center;">每月免费提供账单</td>
 </tr>
 <tr class="odd">
-<td align="center">不可透支</td>
-<td align="center">可透支额度小</td>
-<td align="center">可透支额度大</td>
+<td style="text-align: center;">不可透支</td>
+<td style="text-align: center;">可透支额度小</td>
+<td style="text-align: center;">可透支额度大</td>
 </tr>
 <tr class="even">
-<td align="center"></td>
-<td align="center">无免息期</td>
-<td align="center">最长56天的免息期</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">无免息期</td>
+<td style="text-align: center;">最长56天的免息期</td>
 </tr>
 <tr class="odd">
-<td align="center"></td>
-<td align="center">透支之日起每天按万分之五计单</td>
-<td align="center">利 免息期后每天按万分之五计复利</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">透支之日起每天按万分之五计单</td>
+<td style="text-align: center;">利 免息期后每天按万分之五计复利</td>
 </tr>
 <tr class="even">
-<td align="center"></td>
-<td align="center">最长透支天数60天</td>
-<td align="center">无透支天数约束</td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">最长透支天数60天</td>
+<td style="text-align: center;">无透支天数约束</td>
 </tr>
 </tbody>
 </table>
-<hr>
-<div align="center">
-<img src="/images/wechat-qrcode-footer.png"/>
-</div>
 
-</div>
+    </article>
 
-
-
-</body></html>
+  </body>
+</html>

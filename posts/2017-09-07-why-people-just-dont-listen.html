@@ -1,15 +1,17 @@
 <!DOCTYPE html>
-<html lang="zh">
-<head>
+<html>
+  <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>为什么你好心说的话，别人却不听 - 一个架构士的思考与沉</title>
+        <meta name="date" content="2017-09-07" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="王福强的博客， 一个架构士的思考与沉淀">
     <meta name="keywords" content="architecture, book author, thinker, fighter, 架构, 思考, 技术, 武术, 哲学">
     <meta name="author" content="王福强">
-        <meta name="date" content="2017-09-07" />
-        <link rel="icon" href="/favicon.ico">
-    <title>为什么你好心说的话，别人却不听 - 一个架构士的思考与沉淀</title>
-    <!-- 百度统计 -->
+    <link rel="stylesheet" href="/ivy.css">
+    <link rel="shortcut icon" href="/favicon.ico"/>
+    <style type="text/css">code{white-space: pre;}</style>
+            <!-- 百度统计 -->
     <script>
       var _hmt = _hmt || [];
       (function() {
@@ -19,35 +21,26 @@
           s.parentNode.insertBefore(hm, s);
       })();
     </script>
+  </head>
 
-	<link href="/css/custom.css" rel="stylesheet"/>
-	<link rel="shortcut icon" href="/favicon.ico"/>
+  <body class="node homepage">
 
-<style type="text/css">code{white-space: pre;}</style>
-        
-	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-	<!--[if lt IE 9]>
-	  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.2/html5shiv.js"></script>
-	  <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-	<![endif]-->
-
-</head>
-
-<body>
-
-    <div class="masthead">
-		<!--
-    <h1 class="masthead-title fq">
-      <a href="/">扶墙老师</a>
-
-    </h1>
-    -->
-    <a href="/"><h1>扶墙老师说</h1></a>
-		<p class="masthead-lead">一个架构士的思考与沉淀</p>
-
-		<hr class="masthead-hr">
-
-	  	<ul class="masthead-nav">
+    <header class="masthead">
+      <h1><a href="/">扶墙老师说</a></h1>
+      <p class="tagline">
+         一个架构士的思考与沉淀
+          <img src="/images/wechat-qrcode-footer.png"/>
+          扶墙老师，辨证施“知”
+      </p>
+      
+      <nav class="menu">
+        <input id="menu-check" type="checkbox"/>
+        <label id="menu-label" for="menu-check" class="unselectable">
+          <span class="icon close-icon">✕</span>
+          <span class="icon open-icon">☰</span>
+          <span class="text">展开</span>
+        </label>
+        <ul>
             <li class="nav-item"><a class="nav-link" href="/favorite.html">我的收藏</a></li>
             <li class="nav-item"><a class="nav-link" href="/dashboard.html">金融看板</a></li>
             <li class="nav-item"><a class="nav-link" href="/columns.html">专栏文章</a></li>
@@ -55,20 +48,12 @@
             <li class="nav-item"><a class="nav-link" href="/whoami.html">我是何人</a></li>
             <li class="nav-item"><a class="nav-link" href="/interlinks.html">友情链接</a></li>
             <li class="nav-item"><a class="nav-link" href="/feeds.xml">RSS订阅</a></li>
-		</ul>
+        </ul>
+      </nav>
+    </header>
 
-  		<hr class="masthead-hr">
-
-	  	<ul class="masthead-nav">
-            <li class="nav-item"><small>©afoo.me</small></li>
-            <li class="nav-item"><small>Powered by <a href="http://pandoc.org/">pandoc</a> and <a href="http://rometools.github.io/rome/">ROME</a></small></li>
-		</ul>
-
-	</div>
-
-
-    <div class="listing">
-
+    <article class="main">
+      
 <div class="row">
 <div id="header">
 <p class="lead">
@@ -85,23 +70,15 @@
 
 <p>也可以参读微信公众号<a href="https://mp.weixin.qq.com/s?__biz=MzIzNzkzODU5Mg==&amp;mid=2247483695&amp;idx=1&amp;sn=0bd94867282838fce1a30114cc78bbe2&amp;chksm=e8c1b3e0dfb63af67da77d8023dd4f429882c79d906ef28e162734dbf5aa07cf16f087fc44b3#rd" class="uri">https://mp.weixin.qq.com/s?__biz=MzIzNzkzODU5Mg==&amp;mid=2247483695&amp;idx=1&amp;sn=0bd94867282838fce1a30114cc78bbe2&amp;chksm=e8c1b3e0dfb63af67da77d8023dd4f429882c79d906ef28e162734dbf5aa07cf16f087fc44b3#rd</a></p>
 <hr />
-<p>一直在想一个事情， 如果一年前听了孙猴子的话， 是不是可以少淌一些坑儿，少遇到一些烂人...</p>
+<p>一直在想一个事情， 如果一年前听了孙猴子的话， 是不是可以少淌一些坑儿，少遇到一些烂人…</p>
 <p>思来想去答案可能都是不可能听进去，第一个原因是，我是那种不撞南墙不回头的主儿， 不管别人怎么说，我自己如果不去折腾下，验证下，我是不死心的，因为小马过河， 别人给你的建议也只是别人的经历和经验，他或许是大牛， 也可能是小羊， 你这匹小马驹没法照搬任何人的经验模式。</p>
 <p>另外一个就是，兼听则明，偏听则暗。单纯只是听了一个人的话就做决定显然是不明智的，甚至是听了多个人得建议也是，尤其是这些人跟你可能只是初步接触，没有形成很强的信任， 这个时候，兼听也不一定可以帮助你做出合理的决策。看《罗生门》就知道了， 每一张嘴说的话都是没法完全相信的， 大部分都是从自己的利益出发，掺入半真半假的情节， 辨识的难度相当大，因为你没法获取足够的信息。</p>
 <p>信息不对称是一个无法避免的问题， 就跟那天在江边散步， 警察拉警戒圈，发现浮尸这样的事儿， 转眼过去一段时间之后， 没有多少人记得， 也不是所有人都在场和知道这个事儿。</p>
 <p>信息的验证和证明成本是很高的，好在有个办法可以帮助我们尽量减少这种成本损耗， 即构建自己的信任圈， 通过多次的接触和打磨，你和一些人之间的信任链条建立之后， 很多信息的筛选就可以适当降低辨别真伪的难度了。 虽然前期投入可能很多， 过程也可能很曲折，但长期来看这是值得的， “以至真胜至伪”是一个比较好策略！</p>
 <p>发展和成长的过程，其实就是一个踩坑+学习的过程， 没有人能够代替你去试错和成长。</p>
-<div class="figure">
-<img src="images/you-changed.jpg" />
+<p><img src="images/you-changed.jpg" /></p>
 
-</div>
-<hr>
-<div align="center">
-<img src="/images/wechat-qrcode-footer.png"/>
-</div>
+    </article>
 
-</div>
-
-
-
-</body></html>
+  </body>
+</html>

@@ -1,14 +1,16 @@
 <!DOCTYPE html>
-<html lang="zh">
-<head>
+<html>
+  <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transaction Management Patterns In Brief - 一个架构士的思考与沉</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="王福强的博客， 一个架构士的思考与沉淀">
     <meta name="keywords" content="architecture, book author, thinker, fighter, 架构, 思考, 技术, 武术, 哲学">
     <meta name="author" content="王福强">
-        <link rel="icon" href="/favicon.ico">
-    <title>Transaction Management Patterns In Brief - 一个架构士的思考与沉淀</title>
-    <!-- 百度统计 -->
+    <link rel="stylesheet" href="/ivy.css">
+    <link rel="shortcut icon" href="/favicon.ico"/>
+    <style type="text/css">code{white-space: pre;}</style>
+            <!-- 百度统计 -->
     <script>
       var _hmt = _hmt || [];
       (function() {
@@ -18,35 +20,26 @@
           s.parentNode.insertBefore(hm, s);
       })();
     </script>
+  </head>
 
-	<link href="/css/custom.css" rel="stylesheet"/>
-	<link rel="shortcut icon" href="/favicon.ico"/>
+  <body class="node homepage">
 
-<style type="text/css">code{white-space: pre;}</style>
-        
-	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-	<!--[if lt IE 9]>
-	  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.2/html5shiv.js"></script>
-	  <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-	<![endif]-->
-
-</head>
-
-<body>
-
-    <div class="masthead">
-		<!--
-    <h1 class="masthead-title fq">
-      <a href="/">扶墙老师</a>
-
-    </h1>
-    -->
-    <a href="/"><h1>扶墙老师说</h1></a>
-		<p class="masthead-lead">一个架构士的思考与沉淀</p>
-
-		<hr class="masthead-hr">
-
-	  	<ul class="masthead-nav">
+    <header class="masthead">
+      <h1><a href="/">扶墙老师说</a></h1>
+      <p class="tagline">
+         一个架构士的思考与沉淀
+          <img src="/images/wechat-qrcode-footer.png"/>
+          扶墙老师，辨证施“知”
+      </p>
+      
+      <nav class="menu">
+        <input id="menu-check" type="checkbox"/>
+        <label id="menu-label" for="menu-check" class="unselectable">
+          <span class="icon close-icon">✕</span>
+          <span class="icon open-icon">☰</span>
+          <span class="text">展开</span>
+        </label>
+        <ul>
             <li class="nav-item"><a class="nav-link" href="/favorite.html">我的收藏</a></li>
             <li class="nav-item"><a class="nav-link" href="/dashboard.html">金融看板</a></li>
             <li class="nav-item"><a class="nav-link" href="/columns.html">专栏文章</a></li>
@@ -54,20 +47,12 @@
             <li class="nav-item"><a class="nav-link" href="/whoami.html">我是何人</a></li>
             <li class="nav-item"><a class="nav-link" href="/interlinks.html">友情链接</a></li>
             <li class="nav-item"><a class="nav-link" href="/feeds.xml">RSS订阅</a></li>
-		</ul>
+        </ul>
+      </nav>
+    </header>
 
-  		<hr class="masthead-hr">
-
-	  	<ul class="masthead-nav">
-            <li class="nav-item"><small>©afoo.me</small></li>
-            <li class="nav-item"><small>Powered by <a href="http://pandoc.org/">pandoc</a> and <a href="http://rometools.github.io/rome/">ROME</a></small></li>
-		</ul>
-
-	</div>
-
-
-    <div class="listing">
-
+    <article class="main">
+      
 <div class="row">
 <div id="header">
 <p class="lead">
@@ -88,28 +73,23 @@
 </div>
 <hr/>
 
-<p>There are several patterns you can take when you have faced with balances on transaction management, especially when you are using spring framework to do such things. The idea is not mine, I just give a brief note here, although I have used some patterns myself, but I didn't name them.</p>
+<p>There are several patterns you can take when you have faced with balances on transaction management, especially when you are using spring framework to do such things. The idea is not mine, I just give a brief note here, although I have used some patterns myself, but I didn’t name them.</p>
 <p>I start from the simplest pattern.</p>
 <h1 id="wing-and-a-prayer-pattern"><span class="header-section-number">1</span> Wing-And-A-Prayer Pattern</h1>
-<p>this is a type of anti-pattern or worse practice, it means, you manage transaction on A resource, but data access on B resource, in chinese &quot;驴唇不对马嘴&quot;, :-)</p>
+<p>this is a type of anti-pattern or worse practice, it means, you manage transaction on A resource, but data access on B resource, in chinese “驴唇不对马嘴”, :-)</p>
 <h1 id="shared-transaction-resources-pattern"><span class="header-section-number">2</span> Shared Transaction Resources Pattern</h1>
-<p>the data access request are sent to resource A, the transaction are managed against resource A too, that's, the normal situation, right?</p>
+<p>the data access request are sent to resource A, the transaction are managed against resource A too, that’s, the normal situation, right?</p>
 <h1 id="non-transactional-access-pattern"><span class="header-section-number">3</span> Non-Transactional Access Pattern</h1>
 <p>we have 2 or more resources, in this pattern, we only guarantee ONE long transaction against one of the resources, as to data access requests against other resources, we let them go ( auto commit, as u see).</p>
 <h1 id="best-efforts-1pc-pattern"><span class="header-section-number">4</span> Best Efforts 1PC Pattern</h1>
-<p>we have 2 or more resources too, just like the scenario in Non-Transactional Access Pattern, but only guarantee ONE long transaction is not enough, and we don't want to use XA distributed transaction management either, so what we do?</p>
-<p>In Best Efforts 1PC Pattern, we start all of the local transaction against each resources we manage, we commit or rollback them all as per situation, but don't guarantee the data integration when errors occurs at the point of commit or rollback, there is only 1 phase commit and we do our best to make sure the transactions to be managed properly, that's why it's called Best Efforts 1 PC Pattern.</p>
+<p>we have 2 or more resources too, just like the scenario in Non-Transactional Access Pattern, but only guarantee ONE long transaction is not enough, and we don’t want to use XA distributed transaction management either, so what we do?</p>
+<p>In Best Efforts 1PC Pattern, we start all of the local transaction against each resources we manage, we commit or rollback them all as per situation, but don’t guarantee the data integration when errors occurs at the point of commit or rollback, there is only 1 phase commit and we do our best to make sure the transactions to be managed properly, that’s why it’s called Best Efforts 1 PC Pattern.</p>
 <h1 id="xa-2pc-distributed-transaction-pattern"><span class="header-section-number">5</span> XA 2PC Distributed Transaction Pattern</h1>
-<p>it's natural to resort to XA 2PC Distributed Transaction Pattern when the transaction involves more resources, we all know it, but we also know that XA 2PC distributed transaction brings performance penalty too.</p>
-<p>So, you see, no matter which pattern you choose, choose one that's suitable to your scenario!</p>
-<p>BTW, Taobao guys have another solution for transaction management, but their solution is specific to their scenario too, so pick the one that 's best suitable to you.</p>
-<hr>
-<div align="center">
-<img src="/images/wechat-qrcode-footer.png"/>
-</div>
+<p>it’s natural to resort to XA 2PC Distributed Transaction Pattern when the transaction involves more resources, we all know it, but we also know that XA 2PC distributed transaction brings performance penalty too.</p>
+<p>So, you see, no matter which pattern you choose, choose one that’s suitable to your scenario!</p>
+<p>BTW, Taobao guys have another solution for transaction management, but their solution is specific to their scenario too, so pick the one that ’s best suitable to you.</p>
 
-</div>
+    </article>
 
-
-
-</body></html>
+  </body>
+</html>

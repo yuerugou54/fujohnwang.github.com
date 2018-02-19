@@ -1,15 +1,17 @@
 <!DOCTYPE html>
-<html lang="zh">
-<head>
+<html>
+  <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JVM Attach API Introducation And Practice - 一个架构士的思考与沉</title>
+        <meta name="date" content="2010-11-25" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="王福强的博客， 一个架构士的思考与沉淀">
     <meta name="keywords" content="architecture, book author, thinker, fighter, 架构, 思考, 技术, 武术, 哲学">
     <meta name="author" content="王福强">
-        <meta name="date" content="2010-11-25" />
-        <link rel="icon" href="/favicon.ico">
-    <title>JVM Attach API Introducation And Practice - 一个架构士的思考与沉淀</title>
-    <!-- 百度统计 -->
+    <link rel="stylesheet" href="/ivy.css">
+    <link rel="shortcut icon" href="/favicon.ico"/>
+    <style type="text/css">code{white-space: pre;}</style>
+            <!-- 百度统计 -->
     <script>
       var _hmt = _hmt || [];
       (function() {
@@ -19,35 +21,26 @@
           s.parentNode.insertBefore(hm, s);
       })();
     </script>
+  </head>
 
-	<link href="/css/custom.css" rel="stylesheet"/>
-	<link rel="shortcut icon" href="/favicon.ico"/>
+  <body class="node homepage">
 
-<style type="text/css">code{white-space: pre;}</style>
-        
-	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-	<!--[if lt IE 9]>
-	  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.2/html5shiv.js"></script>
-	  <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-	<![endif]-->
-
-</head>
-
-<body>
-
-    <div class="masthead">
-		<!--
-    <h1 class="masthead-title fq">
-      <a href="/">扶墙老师</a>
-
-    </h1>
-    -->
-    <a href="/"><h1>扶墙老师说</h1></a>
-		<p class="masthead-lead">一个架构士的思考与沉淀</p>
-
-		<hr class="masthead-hr">
-
-	  	<ul class="masthead-nav">
+    <header class="masthead">
+      <h1><a href="/">扶墙老师说</a></h1>
+      <p class="tagline">
+         一个架构士的思考与沉淀
+          <img src="/images/wechat-qrcode-footer.png"/>
+          扶墙老师，辨证施“知”
+      </p>
+      
+      <nav class="menu">
+        <input id="menu-check" type="checkbox"/>
+        <label id="menu-label" for="menu-check" class="unselectable">
+          <span class="icon close-icon">✕</span>
+          <span class="icon open-icon">☰</span>
+          <span class="text">展开</span>
+        </label>
+        <ul>
             <li class="nav-item"><a class="nav-link" href="/favorite.html">我的收藏</a></li>
             <li class="nav-item"><a class="nav-link" href="/dashboard.html">金融看板</a></li>
             <li class="nav-item"><a class="nav-link" href="/columns.html">专栏文章</a></li>
@@ -55,20 +48,12 @@
             <li class="nav-item"><a class="nav-link" href="/whoami.html">我是何人</a></li>
             <li class="nav-item"><a class="nav-link" href="/interlinks.html">友情链接</a></li>
             <li class="nav-item"><a class="nav-link" href="/feeds.xml">RSS订阅</a></li>
-		</ul>
+        </ul>
+      </nav>
+    </header>
 
-  		<hr class="masthead-hr">
-
-	  	<ul class="masthead-nav">
-            <li class="nav-item"><small>©afoo.me</small></li>
-            <li class="nav-item"><small>Powered by <a href="http://pandoc.org/">pandoc</a> and <a href="http://rometools.github.io/rome/">ROME</a></small></li>
-		</ul>
-
-	</div>
-
-
-    <div class="listing">
-
+    <article class="main">
+      
 <div class="row">
 <div id="header">
 <p class="lead">
@@ -84,7 +69,7 @@
 
 <div id="TOC">
 <ul>
-<li><a href="#whats-attach-api-and-what-it-can-do"><span class="toc-section-number">1</span> What's Attach API and What It can do?</a></li>
+<li><a href="#whats-attach-api-and-what-it-can-do"><span class="toc-section-number">1</span> What’s Attach API and What It can do?</a></li>
 <li><a href="#mate-of-attach-api-1---java-agent"><span class="toc-section-number">2</span> Mate of Attach API [1] - Java Agent</a></li>
 <li><a href="#attach-api-family-hierarchy"><span class="toc-section-number">3</span> Attach API Family Hierarchy</a></li>
 <li><a href="#code-speaks---a-simple-usage-demo"><span class="toc-section-number">4</span> Code Speaks - A Simple Usage Demo</a></li>
@@ -95,12 +80,12 @@
 <hr/>
 
 <p><strong>author: fujohnwang</strong></p>
-<p>My Journey of Attach API started from a simple tool to monitor and manage our application in production as a complementary way(of course, we have our own monitoring and mangement platform).This inspired me to escalate the usage scenarios of the Attach API. That's why this piece of words are here.</p>
-<h1 id="whats-attach-api-and-what-it-can-do"><span class="header-section-number">1</span> What's Attach API and What It can do?</h1>
-<p>The Attach API was introduced after Java6(Mustang), it allows us to attach our application(can be a simple tool as I have, or with other purpose) to another target application running in JVM. The instant idea is that U can add new functionalities to ur java applications even they have been started. That's true, although it's not exactly(because you still have to plan for the whole architecture things of your applications).</p>
+<p>My Journey of Attach API started from a simple tool to monitor and manage our application in production as a complementary way(of course, we have our own monitoring and mangement platform).This inspired me to escalate the usage scenarios of the Attach API. That’s why this piece of words are here.</p>
+<h1 id="whats-attach-api-and-what-it-can-do"><span class="header-section-number">1</span> What’s Attach API and What It can do?</h1>
+<p>The Attach API was introduced after Java6(Mustang), it allows us to attach our application(can be a simple tool as I have, or with other purpose) to another target application running in JVM. The instant idea is that U can add new functionalities to ur java applications even they have been started. That’s true, although it’s not exactly(because you still have to plan for the whole architecture things of your applications).</p>
 <p>People say, “One picture is better than a thousand of words” , So here is a picture I made for u, ;-)</p>
 <p><img src="../images/AttachAPIDemo.png"/></p>
-<p>As you see, “Target App” and “Attach API Use App” are in diferent boxes, that's, running in different JVM instances. Even when “Target App” has been started for a while, “Attach API Use App” still can“put” an agent into it to run, here “YourAgent” in the picture. Isn't it simple? yeah, the idea is simple, but you may ask, what kind of agent? What's the format of “YourAgent” in the picture? read on...</p>
+<p>As you see, “Target App” and “Attach API Use App” are in diferent boxes, that’s, running in different JVM instances. Even when “Target App” has been started for a while, “Attach API Use App” still can“put” an agent into it to run, here “YourAgent” in the picture. Isn’t it simple? yeah, the idea is simple, but you may ask, what kind of agent? What’s the format of “YourAgent” in the picture? read on…</p>
 <h1 id="mate-of-attach-api-1---java-agent"><span class="header-section-number">2</span> Mate of Attach API [1] - Java Agent</h1>
 <p>The Agents the Attach API use are standard java agent, see javadoc of JDK package “java.lang.instrument” , the package description gives a elaberate explanation on the java agent.</p>
 <p>Simply put, a java agent is a jar, which has the MANIFEST.MF defined one or two entries that identify which class definition(s) is the main running entry. If you want to implement a java agent which will be used with “-javaagent:youragent.jar” command line option, which will run before the main method of your application, you should add an entry in MANIFEST.MF of your jar which of course has packaged in the class you want it to be the main entry:</p>
@@ -111,7 +96,7 @@ Premain-Class: xx.xx.AgentDefinitionClass
 <pre>
 Agent-Class: xx.xx.AgentDefinitionClass
 </pre>
-<p>That's all? No...</p>
+<p>That’s all? No…</p>
 <p>The entry methods defined in java agent have no common “public static void main(String args[])” method sinature, there is a little difference. If your agent definition is only aimed for running before the main method of your application, you can just define a “premain” method as the execution entry:</p>
 <pre>
 public static void premain(String agentArgs, Instrumentation inst)
@@ -124,14 +109,14 @@ public static void premain(String agentArgs)
 <pre>
 public static void agentmain(String agentArgs, Instrumentation inst)
 </pre>
-<p>or if you don't need the second argument:</p>
+<p>or if you don’t need the second argument:</p>
 <pre>
 public static void agentmain(String agentArgs)
 </pre>
 <p>At last, If you want your agent to be run in both timing, you of course can define both “premain” and “agentmain” together inside too.</p>
-<p>That's all for java agent, more or less, if you still don't get it, read the package description of java.lang.instrument for further information.(U do should read it to know what you can do in both “premain” and“agentmain” methods, or how they are loaded into the JVM, etc.)</p>
+<p>That’s all for java agent, more or less, if you still don’t get it, read the package description of java.lang.instrument for further information.(U do should read it to know what you can do in both “premain” and“agentmain” methods, or how they are loaded into the JVM, etc.)</p>
 <h1 id="attach-api-family-hierarchy"><span class="header-section-number">3</span> Attach API Family Hierarchy</h1>
-<p>The family of Attach API is small, so it's not too hard to find out how it work.</p>
+<p>The family of Attach API is small, so it’s not too hard to find out how it work.</p>
 <p>There are 2 packages and 7 classes for Attach API with 3 exception classes, you can find details here . We mainly focus on 2 classes, “VirtualMachine” and “AttachProvider” , as you guess, since“AttachProvider” is under a spi package, its implementations will be responsible for providing different attach providers as per different operating systems. An attach provider will provide a“VirtualMachine” implementation as per its OS type. JVMs for different OS will provide different “AttachProvider” and corresponding “VirtualMachine” implementations.</p>
 Currently, we can get a simple class hierachy for this two:
 <pre>
@@ -143,7 +128,7 @@ WindowsAttachProvider  |   LinuxAttachProvider                         LinuxVirt
               MacosxAttachProvider                                                  MacosxVirtualMachine
 
 </pre>
-<p>With This picture in mind, let's go further to find out what the two abstractions can do.</p>
+<p>With This picture in mind, let’s go further to find out what the two abstractions can do.</p>
 <p>“VirtualMachine” is the one class will interactive with when we use the AttachAPI, with “VirtualMachine” , we can attach our application to another target java application, and we can load agent into the target java application after attached to it. A conventional usage pattern looks like this:</p>
 <pre>
 VirtualMachine vm = VirtualMachine.attach("18244");
@@ -154,7 +139,7 @@ try {
     vm.detach();
 }
 </pre>
-<p>Usually, we attach to the target application by the process id (here our application's pid is 18244), as the first line of the code states. If no exceptions are thrown after attaching, we can load our agent by“loadAgent(..)” method. At last, remember to detach from the target vm when things are done.</p>
+<p>Usually, we attach to the target application by the process id (here our application’s pid is 18244), as the first line of the code states. If no exceptions are thrown after attaching, we can load our agent by“loadAgent(..)” method. At last, remember to detach from the target vm when things are done.</p>
 <p>So until now, if “VirtualMachine” can do everything for us in such scenarios, what “AttachProvider” does? In fact, when we call attach method of “VirtualMachine” , underneath “AttachProvider” will be the real worker. A prototype code may seem like:</p>
 <pre>
 // VirtualMachine vm = VirtualMachine.attach("pid");
@@ -173,9 +158,9 @@ for (AttachProvider provider : providers) {
 
 </pre>
 <p>Just a lookup to find out which provider is qualified and return a corresponding “VirtualMachine” instance.</p>
-<p>Now, I think you should have know something about JVM Attach API, but all of the above is theory, let's get our hands dirty to write some code.</p>
+<p>Now, I think you should have know something about JVM Attach API, but all of the above is theory, let’s get our hands dirty to write some code.</p>
 <h1 id="code-speaks---a-simple-usage-demo"><span class="header-section-number">4</span> Code Speaks - A Simple Usage Demo</h1>
-<p>In this sample, we will connect to the target application via JMX to dump an overview information of the application status. Since we just registered Mbeans onto Platform MBeanServer and didn't expose MBeans remotely, we have to connect to the Platform MBeanServer locally. To do this, we have to resort to the AttachAPI after Java6, and luckily, we are using Java6 ;-)</p>
+<p>In this sample, we will connect to the target application via JMX to dump an overview information of the application status. Since we just registered Mbeans onto Platform MBeanServer and didn’t expose MBeans remotely, we have to connect to the Platform MBeanServer locally. To do this, we have to resort to the AttachAPI after Java6, and luckily, we are using Java6 ;-)</p>
 <pre><code>Tip
 This things we are doing is a prototype monitoring application, you can escalate it to do more things.</code></pre>
 <p>Suppose we have defined our MBeans and registered them into JMX Platform MbeanSever:</p>
@@ -257,31 +242,26 @@ public class App
   }
 }
 </pre>
-<p>we try “ConnectorAddressLink.importFrom” first to get the local JMX address , if failed, we turn to use Attach API. That's, we attach to the target application by pid, and then check agent property<code>com.sun.management.jmxremote.localConnectorAddress</code> to see if it exists, if not, load management agent from JDK's lib folder and then get agent property<code>com.sun.management.jmxremote.localConnectorAddress</code> again, If no errors, this time we will get the local JMX address of the target application. Whe local JMX address is fetched, we use standard JMX API to pull necessray information we want.</p>
-<p>That's the whole thing, read the code again and again to let you know this well if you cann't figure out what's going on here,^_^</p>
+<p>we try “ConnectorAddressLink.importFrom” first to get the local JMX address , if failed, we turn to use Attach API. That’s, we attach to the target application by pid, and then check agent property<code>com.sun.management.jmxremote.localConnectorAddress</code> to see if it exists, if not, load management agent from JDK’s lib folder and then get agent property<code>com.sun.management.jmxremote.localConnectorAddress</code> again, If no errors, this time we will get the local JMX address of the target application. Whe local JMX address is fetched, we use standard JMX API to pull necessray information we want.</p>
+<p>That’s the whole thing, read the code again and again to let you know this well if you cann’t figure out what’s going on here,^_^</p>
 <h1 id="further-thoughts-on-usage-scenarios"><span class="header-section-number">5</span> Further Thoughts On Usage Scenarios</h1>
 <p>Attach API has more usage scenarios and many products have been using it for a long time, for example, most of the profiling tools, or JConsole. But I think more on application usage scenarios here.</p>
-<p>With the support of Attach API, we can separate different concerns of our applications more clearly. The main modules can mainly focus on the important parts of the system, and support modules can be added later on. For example, if we don't have enough resources to improve the monitoring and management concerns of our applications, we can simply add necessary functions for this and place an extension point for future. When we have enough resources, we can improve this part by attaching new monitoring and management functionalities to the original target applications.</p>
+<p>With the support of Attach API, we can separate different concerns of our applications more clearly. The main modules can mainly focus on the important parts of the system, and support modules can be added later on. For example, if we don’t have enough resources to improve the monitoring and management concerns of our applications, we can simply add necessary functions for this and place an extension point for future. When we have enough resources, we can improve this part by attaching new monitoring and management functionalities to the original target applications.</p>
 <p>I draft a simple picture before:</p>
 <p><img src="../images/AttachAPIEscalate.png"/></p>
-<p>Different modules have separate boundaries bewteen them, and they can be developed, deployed and maintained separately too. If we are feed of JMX's complicated API, we can set up our own Monitoring Context and access it in our own way. For example, we can embed a Jetty inside of our agents and interactive with it to construct a new platform for Monitoring and management of applications. If original monitoring and management platforms exist, the integration can be done within the agent only, it will not impact the target application, even pollute its API.</p>
+<p>Different modules have separate boundaries bewteen them, and they can be developed, deployed and maintained separately too. If we are feed of JMX’s complicated API, we can set up our own Monitoring Context and access it in our own way. For example, we can embed a Jetty inside of our agents and interactive with it to construct a new platform for Monitoring and management of applications. If original monitoring and management platforms exist, the integration can be done within the agent only, it will not impact the target application, even pollute its API.</p>
 <p>I think you can find more useful usage scenarios for Attach API and for yourself. Good luck and have fun with Attach API.</p>
 <h1 id="参考文档"><span class="header-section-number">6</span> 参考文档</h1>
-<ol style="list-style-type: decimal">
+<ol type="1">
 <li>The Attach API. <a href="http://blogs.sun.com/CoreJavaTechTips/entry/the_attach_api" class="uri">http://blogs.sun.com/CoreJavaTechTips/entry/the_attach_api</a></li>
 <li>Javadoc of Attach API. <a href="http://download.oracle.com/javase/6/docs/jdk/api/attach/spec/index.html" class="uri">http://download.oracle.com/javase/6/docs/jdk/api/attach/spec/index.html</a></li>
-<li>Using Mustang's Attach API. <a href="http://blogs.sun.com/sundararajan/entry/using_mustang_s_attach_api" class="uri">http://blogs.sun.com/sundararajan/entry/using_mustang_s_attach_api</a></li>
+<li>Using Mustang’s Attach API. <a href="http://blogs.sun.com/sundararajan/entry/using_mustang_s_attach_api" class="uri">http://blogs.sun.com/sundararajan/entry/using_mustang_s_attach_api</a></li>
 <li>Sun JVM Attach API. <a href="http://ayufox.javaeye.com/blog/655761" class="uri">http://ayufox.javaeye.com/blog/655761</a></li>
 </ol>
 <hr />
 <p>[1] 除了JavaAgent， 还有JVMTI等相关技术</p>
-<hr>
-<div align="center">
-<img src="/images/wechat-qrcode-footer.png"/>
-</div>
 
-</div>
+    </article>
 
-
-
-</body></html>
+  </body>
+</html>

@@ -1,14 +1,16 @@
 <!DOCTYPE html>
-<html lang="zh">
-<head>
+<html>
+  <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CREDIT项目阶段反思 - 一个架构士的思考与沉</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="王福强的博客， 一个架构士的思考与沉淀">
     <meta name="keywords" content="architecture, book author, thinker, fighter, 架构, 思考, 技术, 武术, 哲学">
     <meta name="author" content="王福强">
-        <link rel="icon" href="/favicon.ico">
-    <title>CREDIT项目阶段反思 - 一个架构士的思考与沉淀</title>
-    <!-- 百度统计 -->
+    <link rel="stylesheet" href="/ivy.css">
+    <link rel="shortcut icon" href="/favicon.ico"/>
+    <style type="text/css">code{white-space: pre;}</style>
+            <!-- 百度统计 -->
     <script>
       var _hmt = _hmt || [];
       (function() {
@@ -18,35 +20,26 @@
           s.parentNode.insertBefore(hm, s);
       })();
     </script>
+  </head>
 
-	<link href="/css/custom.css" rel="stylesheet"/>
-	<link rel="shortcut icon" href="/favicon.ico"/>
+  <body class="node homepage">
 
-<style type="text/css">code{white-space: pre;}</style>
-        
-	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-	<!--[if lt IE 9]>
-	  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.2/html5shiv.js"></script>
-	  <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-	<![endif]-->
-
-</head>
-
-<body>
-
-    <div class="masthead">
-		<!--
-    <h1 class="masthead-title fq">
-      <a href="/">扶墙老师</a>
-
-    </h1>
-    -->
-    <a href="/"><h1>扶墙老师说</h1></a>
-		<p class="masthead-lead">一个架构士的思考与沉淀</p>
-
-		<hr class="masthead-hr">
-
-	  	<ul class="masthead-nav">
+    <header class="masthead">
+      <h1><a href="/">扶墙老师说</a></h1>
+      <p class="tagline">
+         一个架构士的思考与沉淀
+          <img src="/images/wechat-qrcode-footer.png"/>
+          扶墙老师，辨证施“知”
+      </p>
+      
+      <nav class="menu">
+        <input id="menu-check" type="checkbox"/>
+        <label id="menu-label" for="menu-check" class="unselectable">
+          <span class="icon close-icon">✕</span>
+          <span class="icon open-icon">☰</span>
+          <span class="text">展开</span>
+        </label>
+        <ul>
             <li class="nav-item"><a class="nav-link" href="/favorite.html">我的收藏</a></li>
             <li class="nav-item"><a class="nav-link" href="/dashboard.html">金融看板</a></li>
             <li class="nav-item"><a class="nav-link" href="/columns.html">专栏文章</a></li>
@@ -54,20 +47,12 @@
             <li class="nav-item"><a class="nav-link" href="/whoami.html">我是何人</a></li>
             <li class="nav-item"><a class="nav-link" href="/interlinks.html">友情链接</a></li>
             <li class="nav-item"><a class="nav-link" href="/feeds.xml">RSS订阅</a></li>
-		</ul>
+        </ul>
+      </nav>
+    </header>
 
-  		<hr class="masthead-hr">
-
-	  	<ul class="masthead-nav">
-            <li class="nav-item"><small>©afoo.me</small></li>
-            <li class="nav-item"><small>Powered by <a href="http://pandoc.org/">pandoc</a> and <a href="http://rometools.github.io/rome/">ROME</a></small></li>
-		</ul>
-
-	</div>
-
-
-    <div class="listing">
-
+    <article class="main">
+      
 <div class="row">
 <div id="header">
 <p class="lead">
@@ -171,7 +156,7 @@
 <p>我现在也没有想出更好的替代方案，第一印象当然就是JAAS啦，除此之外，像基于Spring的Acegi安全框架啦，OpenSymphony的OSUser（未发布正式版）啦等等，都不是可以很好的集成到现在的系统中，或者说很好的集成到Standalone形式的应用中，如果其他人有更好的建议，希望可以分享你的观点。</p>
 <h1 id="系统异常体系"><span class="header-section-number">7</span> 系统异常体系</h1>
 <h2 id="当前情况-6"><span class="header-section-number">7.1</span> 当前情况</h2>
-<p>无论是从数据访问层来看还是从业务层来看，CREDIT系统都没有一个设计合理的异常体系结构来支撑，或者说根本就没有什么异常体系；数据访问层只是单纯的以单一的一个自定义的DaoException（Checked Exception）来向上层抛出，业务层根本就无法根据异常来判断应该进行什么样的处理，进而导致在业务层也以单一的自定义ServiceException来标志业务处理异常，可以想像，最终导致的结果就是以粗暴到何种简单的程度向用户进行反馈，“系统发生内部错误，请与系统管理员联系...”</p>
+<p>无论是从数据访问层来看还是从业务层来看，CREDIT系统都没有一个设计合理的异常体系结构来支撑，或者说根本就没有什么异常体系；数据访问层只是单纯的以单一的一个自定义的DaoException（Checked Exception）来向上层抛出，业务层根本就无法根据异常来判断应该进行什么样的处理，进而导致在业务层也以单一的自定义ServiceException来标志业务处理异常，可以想像，最终导致的结果就是以粗暴到何种简单的程度向用户进行反馈，“系统发生内部错误，请与系统管理员联系…”</p>
 <h2 id="alternative-6"><span class="header-section-number">7.2</span> Alternative</h2>
 <p>对于一个设计良好的系统来说，一个好的异常体系可以为系统的健壮性提供很好的保证，如果系统可以重新实现的话（当前系统因为力包稳定，而且重构的范围很大，导致困难重重，所以，基本不存在重构的可能），在数据访问层，可以考虑引入Spring提供的数据访问层现成的异常体系，或者根据情况，给出一套自己的实现也可以；而业务层则需要结合CREDIT系统业务逻辑和当前系统情况，从总体上给出一个设计良好，分类详细的适合当前系统的业务层异常体系结构，使客户端代码可以根据这个良好的体系结构为用户提供相应的反馈，使得系统的健壮性和用户友好度可以更进一步。</p>
 <h1 id="数据访问"><span class="header-section-number">8</span> 数据访问</h1>
@@ -194,15 +179,10 @@
 <h2 id="当前情况-10"><span class="header-section-number">11.1</span> 当前情况</h2>
 <p>使用徐敬琪自定义开发的XTable组件现实表格类的数据，主要是SWT的table不能很好的按照日方要求表现相应的数据，使用XTable，可以基本满足日方的数据表现需求。但在个人使用过程中依然觉得存在一些瑕疵，比如，表格定义的时候，通过反射表明数据和表格之间的对应关系，造成定义XTable的时候较为繁琐（当然，copy Code的方式可以省去不少烦恼），而且，数据对应是通过方法明和返回值类型的对应实现的，稍微不甚就会频发异常，这在CREDIT组员中是经常碰到的现象； ## Alternative 如果要满足日方数据的表现需求，现在实在没有太好的选择，只有自己去自定义Table实现，现在虽然SWT/JFace的table有了一定的增强，但某些方面依然很弱，比如Swing中Table的Render功能，SWT/JFace的Table对这方面的支持就很少，或者说根本没有什么支持（自定义除外）。当然KTable作为SWT/JFace的一个自定义Table也提供了许多自定义功能，但还是有些地方不尽如人意，不过，大多数情况下已经很可以了。</p>
 <hr />
-<p>恩，目前就想到这些东西，如果有新的，随时补充...</p>
+<p>恩，目前就想到这些东西，如果有新的，随时补充…</p>
 <p>以上愚见，欢迎拍砖！</p>
-<hr>
-<div align="center">
-<img src="/images/wechat-qrcode-footer.png"/>
-</div>
 
-</div>
+    </article>
 
-
-
-</body></html>
+  </body>
+</html>

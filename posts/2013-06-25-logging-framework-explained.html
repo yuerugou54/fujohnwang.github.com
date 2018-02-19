@@ -1,14 +1,16 @@
 <!DOCTYPE html>
-<html lang="zh">
-<head>
+<html>
+  <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Logging Framework Explained (afoo.me) - 一个架构士的思考与沉</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="王福强的博客， 一个架构士的思考与沉淀">
     <meta name="keywords" content="architecture, book author, thinker, fighter, 架构, 思考, 技术, 武术, 哲学">
     <meta name="author" content="王福强">
-        <link rel="icon" href="/favicon.ico">
-    <title>Logging Framework Explained (afoo.me) - 一个架构士的思考与沉淀</title>
-    <!-- 百度统计 -->
+    <link rel="stylesheet" href="/ivy.css">
+    <link rel="shortcut icon" href="/favicon.ico"/>
+    <style type="text/css">code{white-space: pre;}</style>
+            <!-- 百度统计 -->
     <script>
       var _hmt = _hmt || [];
       (function() {
@@ -18,35 +20,26 @@
           s.parentNode.insertBefore(hm, s);
       })();
     </script>
+  </head>
 
-	<link href="/css/custom.css" rel="stylesheet"/>
-	<link rel="shortcut icon" href="/favicon.ico"/>
+  <body class="node homepage">
 
-<style type="text/css">code{white-space: pre;}</style>
-        
-	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-	<!--[if lt IE 9]>
-	  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.2/html5shiv.js"></script>
-	  <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-	<![endif]-->
-
-</head>
-
-<body>
-
-    <div class="masthead">
-		<!--
-    <h1 class="masthead-title fq">
-      <a href="/">扶墙老师</a>
-
-    </h1>
-    -->
-    <a href="/"><h1>扶墙老师说</h1></a>
-		<p class="masthead-lead">一个架构士的思考与沉淀</p>
-
-		<hr class="masthead-hr">
-
-	  	<ul class="masthead-nav">
+    <header class="masthead">
+      <h1><a href="/">扶墙老师说</a></h1>
+      <p class="tagline">
+         一个架构士的思考与沉淀
+          <img src="/images/wechat-qrcode-footer.png"/>
+          扶墙老师，辨证施“知”
+      </p>
+      
+      <nav class="menu">
+        <input id="menu-check" type="checkbox"/>
+        <label id="menu-label" for="menu-check" class="unselectable">
+          <span class="icon close-icon">✕</span>
+          <span class="icon open-icon">☰</span>
+          <span class="text">展开</span>
+        </label>
+        <ul>
             <li class="nav-item"><a class="nav-link" href="/favorite.html">我的收藏</a></li>
             <li class="nav-item"><a class="nav-link" href="/dashboard.html">金融看板</a></li>
             <li class="nav-item"><a class="nav-link" href="/columns.html">专栏文章</a></li>
@@ -54,20 +47,12 @@
             <li class="nav-item"><a class="nav-link" href="/whoami.html">我是何人</a></li>
             <li class="nav-item"><a class="nav-link" href="/interlinks.html">友情链接</a></li>
             <li class="nav-item"><a class="nav-link" href="/feeds.xml">RSS订阅</a></li>
-		</ul>
+        </ul>
+      </nav>
+    </header>
 
-  		<hr class="masthead-hr">
-
-	  	<ul class="masthead-nav">
-            <li class="nav-item"><small>©afoo.me</small></li>
-            <li class="nav-item"><small>Powered by <a href="http://pandoc.org/">pandoc</a> and <a href="http://rometools.github.io/rome/">ROME</a></small></li>
-		</ul>
-
-	</div>
-
-
-    <div class="listing">
-
+    <article class="main">
+      
 <div class="row">
 <div id="header">
 <p class="lead">
@@ -89,13 +74,13 @@
 </div>
 <hr/>
 
-<p>源于@实仙 生产环境碰到的一个日志问题，遂写一写...</p>
+<p>源于@实仙 生产环境碰到的一个日志问题，遂写一写…</p>
 <h1 id="logging-framework溯源"><span class="header-section-number">1</span> logging framework溯源</h1>
 <p>蛮荒时代，我们用System.out.println</p>
 <p>工业时代，我们有了log4j</p>
 <p>要是所有人都使用log4j也就好了，其实不同的人还是会有不同的选择，所以，有人为了屏蔽这种mess，就开始封装，比如，我写个wrapper，通过配置来决定是使用古老的System.out.println还是使用工业装备log4j。</p>
 <p>好啦，现在我们就可以从两个角度来看待logging啦：</p>
-<ol style="list-style-type: decimal">
+<ol type="1">
 <li>A logging facade or logging API
 <ul>
 <li>slf4j</li>
@@ -114,7 +99,7 @@
 <p>SLF4J是个logging facade/logging API, 从名字上也看的出来嘛， “Simple Logging Facade for Java”</p>
 <p>只要是个logging facade/logging API， 它就要考虑一个问题， 最终的日志该由谁或者说哪个logging implementation来负责, 用专业术语来讲就是，binding关系怎么确定！</p>
 <p>这里有两种方式：</p>
-<ol style="list-style-type: decimal">
+<ol type="1">
 <li>动态绑定/运行期绑定 (dynamic/runtime binding)</li>
 <li>静态绑定(static binding)</li>
 </ol>
@@ -137,7 +122,7 @@ PS. logback is an implemenation with binder inside
 <p>好啦， 既然所有的都导到slf4j api，那下一步就该决定用哪种logging implementation了，毕竟slf4j-api也是个logging facade/api嘛，人家不干底层的脏活儿累活儿。 要选择谁来干活儿， 需要为slf4j指定用哪个binder， 比如用log4j，就要指定一个用于log4j的binder； 用java.util.logging，就要指定一个用于jul的binder； 好在这些都有现成的，slf4j都提供了，其实就是下面那一堆命名形式类似于slf4j-XXX的jar包， 比如选择log4j作为最终的logging implementation,那么我们就将slf4j-log4j.jar包放入classpath，这样，它就会把log4j和slf4j-api关联起来， slf4j-api就知道，噢， 我要用log4j输出和管理日志（当然， 这个时候log4j也要在classpath里咯，binder和implemenation要成对儿出现）。</p>
 <p>logback是个特例，原则上来讲它是个logging implementation，不过， 它自己提供了slf4j的binder实现，而且，它还就直接用slf4j-api作为它的logging facade/api,所以，一看这小子就是个集成度比较高的主儿，不过，通过放大镜看看，其实，它还是分成了2层，一层是logging api, 一层是logging implementation!</p>
 <h1 id="参考"><span class="header-section-number">3</span> 参考</h1>
-<ol style="list-style-type: decimal">
+<ol type="1">
 <li><a href="http://stackoverflow.com/questions/3222895/why-is-commons-logging-believed-to-be-unpopular" class="uri">http://stackoverflow.com/questions/3222895/why-is-commons-logging-believed-to-be-unpopular</a></li>
 <li><a href="http://articles.qos.ch/classloader.html">Taxonomy of class loader problems encountered when using Jakarta Commons Logging</a></li>
 <li><a href="http://articles.qos.ch/thinkAgain.html">Think again before adopting the commons-logging API</a></li>
@@ -147,13 +132,8 @@ PS. logback is an implemenation with binder inside
 <li><a href="http://geekexplains.blogspot.com/2008/06/dynamic-binding-vs-static-binding-in.html">Dynamic Binding or Late Binding</a></li>
 <li><a href="http://wrschneider.blogspot.com/2005/06/commons-logging-classloader-pain_18.html">commons-logging classloader pain</a></li>
 </ol>
-<hr>
-<div align="center">
-<img src="/images/wechat-qrcode-footer.png"/>
-</div>
 
-</div>
+    </article>
 
-
-
-</body></html>
+  </body>
+</html>

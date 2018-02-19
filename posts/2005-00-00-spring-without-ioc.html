@@ -1,14 +1,81 @@
 <!DOCTYPE html>
-<html lang="zh">
-<head>
+<html>
+  <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spring Without IoC - 一个架构士的思考与沉</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="王福强的博客， 一个架构士的思考与沉淀">
     <meta name="keywords" content="architecture, book author, thinker, fighter, 架构, 思考, 技术, 武术, 哲学">
     <meta name="author" content="王福强">
-        <link rel="icon" href="/favicon.ico">
-    <title>Spring Without IoC - 一个架构士的思考与沉淀</title>
-    <!-- 百度统计 -->
+    <link rel="stylesheet" href="/ivy.css">
+    <link rel="shortcut icon" href="/favicon.ico"/>
+    <style type="text/css">code{white-space: pre;}</style>
+    <style type="text/css">
+    a.sourceLine { display: inline-block; line-height: 1.25; }
+    a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+    a.sourceLine:empty { height: 1.2em; position: absolute; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode { white-space: pre; position: relative; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    code.sourceCode { white-space: pre-wrap; }
+    a.sourceLine { text-indent: -1em; padding-left: 1em; }
+    }
+    pre.numberSource a.sourceLine
+      { position: relative; }
+    pre.numberSource a.sourceLine:empty
+      { position: absolute; }
+    pre.numberSource a.sourceLine::before
+      { content: attr(data-line-number);
+        position: absolute; left: -5em; text-align: right; vertical-align: baseline;
+        border: none; pointer-events: all;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {  }
+    @media screen {
+    a.sourceLine::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+            <!-- 百度统计 -->
     <script>
       var _hmt = _hmt || [];
       (function() {
@@ -18,72 +85,26 @@
           s.parentNode.insertBefore(hm, s);
       })();
     </script>
+  </head>
 
-	<link href="/css/custom.css" rel="stylesheet"/>
-	<link rel="shortcut icon" href="/favicon.ico"/>
+  <body class="node homepage">
 
-<style type="text/css">code{white-space: pre;}</style>
-    <style type="text/css">
-    div.sourceCode { overflow-x: auto; }
-    table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
-      margin: 0; padding: 0; vertical-align: baseline; border: none; }
-    table.sourceCode { width: 100%; line-height: 100%; }
-    td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
-    td.sourceCode { padding-left: 5px; }
-    code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
-    code > span.dt { color: #902000; } /* DataType */
-    code > span.dv { color: #40a070; } /* DecVal */
-    code > span.bn { color: #40a070; } /* BaseN */
-    code > span.fl { color: #40a070; } /* Float */
-    code > span.ch { color: #4070a0; } /* Char */
-    code > span.st { color: #4070a0; } /* String */
-    code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
-    code > span.ot { color: #007020; } /* Other */
-    code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
-    code > span.fu { color: #06287e; } /* Function */
-    code > span.er { color: #ff0000; font-weight: bold; } /* Error */
-    code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-    code > span.cn { color: #880000; } /* Constant */
-    code > span.sc { color: #4070a0; } /* SpecialChar */
-    code > span.vs { color: #4070a0; } /* VerbatimString */
-    code > span.ss { color: #bb6688; } /* SpecialString */
-    code > span.im { } /* Import */
-    code > span.va { color: #19177c; } /* Variable */
-    code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-    code > span.op { color: #666666; } /* Operator */
-    code > span.bu { } /* BuiltIn */
-    code > span.ex { } /* Extension */
-    code > span.pp { color: #bc7a00; } /* Preprocessor */
-    code > span.at { color: #7d9029; } /* Attribute */
-    code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
-    code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-    code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-    code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-  </style>
-        
-	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-	<!--[if lt IE 9]>
-	  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.2/html5shiv.js"></script>
-	  <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-	<![endif]-->
-
-</head>
-
-<body>
-
-    <div class="masthead">
-		<!--
-    <h1 class="masthead-title fq">
-      <a href="/">扶墙老师</a>
-
-    </h1>
-    -->
-    <a href="/"><h1>扶墙老师说</h1></a>
-		<p class="masthead-lead">一个架构士的思考与沉淀</p>
-
-		<hr class="masthead-hr">
-
-	  	<ul class="masthead-nav">
+    <header class="masthead">
+      <h1><a href="/">扶墙老师说</a></h1>
+      <p class="tagline">
+         一个架构士的思考与沉淀
+          <img src="/images/wechat-qrcode-footer.png"/>
+          扶墙老师，辨证施“知”
+      </p>
+      
+      <nav class="menu">
+        <input id="menu-check" type="checkbox"/>
+        <label id="menu-label" for="menu-check" class="unselectable">
+          <span class="icon close-icon">✕</span>
+          <span class="icon open-icon">☰</span>
+          <span class="text">展开</span>
+        </label>
+        <ul>
             <li class="nav-item"><a class="nav-link" href="/favorite.html">我的收藏</a></li>
             <li class="nav-item"><a class="nav-link" href="/dashboard.html">金融看板</a></li>
             <li class="nav-item"><a class="nav-link" href="/columns.html">专栏文章</a></li>
@@ -91,20 +112,12 @@
             <li class="nav-item"><a class="nav-link" href="/whoami.html">我是何人</a></li>
             <li class="nav-item"><a class="nav-link" href="/interlinks.html">友情链接</a></li>
             <li class="nav-item"><a class="nav-link" href="/feeds.xml">RSS订阅</a></li>
-		</ul>
+        </ul>
+      </nav>
+    </header>
 
-  		<hr class="masthead-hr">
-
-	  	<ul class="masthead-nav">
-            <li class="nav-item"><small>©afoo.me</small></li>
-            <li class="nav-item"><small>Powered by <a href="http://pandoc.org/">pandoc</a> and <a href="http://rometools.github.io/rome/">ROME</a></small></li>
-		</ul>
-
-	</div>
-
-
-    <div class="listing">
-
+    <article class="main">
+      
 <div class="row">
 <div id="header">
 <p class="lead">
@@ -124,48 +137,43 @@
 <p>或许有的时候你并不想用spring的beanFactory，比如，你目前不做j2EE，而是做一般的java应用，并且，项目也已经启动了，并没有使用spring的IoC支持，这种情况下，你是否会怀念spring中提供的种种便利那？！</p>
 <p>其实没有了spring的BeanFactory，你同样可以很容易的使用spring的种种便利，不要忘了，spring的BeanFactory组装的也仅仅是普通的pojo而已，现在只是通过一样的方式构造并使用它们就可以了。</p>
 <p>比如，我们要在应用中使用spring提供的发送mail的API的支持，那么现在我们现在就可以这样写：</p>
-<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java">JavaMailSender mailSender = <span class="kw">new</span> <span class="fu">JavaMailSenderImpl</span>();
-((JavaMailSenderImpl)mailSender).<span class="fu">setHost</span>(<span class="st">&quot;mail.livedoor.cn&quot;</span>);
-((JavaMailSenderImpl)mailSender).<span class="fu">setUsername</span>(<span class="st">&quot;wfq@livedoor.cn&quot;</span>);
-((JavaMailSenderImpl)mailSender).<span class="fu">setPassword</span>(<span class="st">&quot;458524033931&quot;</span>);
-<span class="co">// IF your Mail Server request SMTP authentication, you must set properties below,</span>
-<span class="co">// Otherwise, mail sending will fail.</span>
-<span class="bu">Properties</span> prop = <span class="kw">new</span> <span class="bu">Properties</span>();
-prop.<span class="fu">setProperty</span>(<span class="st">&quot;mail.smtp.auth&quot;</span>,<span class="st">&quot;true&quot;</span>);
-((JavaMailSenderImpl)mailSender).<span class="fu">setJavaMailProperties</span>(prop);
-
-mailSender.<span class="fu">send</span>(<span class="kw">new</span> <span class="fu">MimeMessagePreparator</span>(){
-<span class="kw">public</span> <span class="dt">void</span> <span class="fu">prepare</span>(MimeMessage message) <span class="kw">throws</span> <span class="bu">Exception</span>
-{
-MimeMessageHelper helper = <span class="kw">new</span> <span class="fu">MimeMessageHelper</span>(message);
-helper.<span class="fu">setTo</span>(<span class="st">&quot;wfq@livedoor.cn&quot;</span>);
-helper.<span class="fu">setFrom</span>(<span class="st">&quot;wfq@livedoor.cn&quot;</span>);
-helper.<span class="fu">setSubject</span>(<span class="st">&quot;Spring Mail Test Without IoC&quot;</span>);
-helper.<span class="fu">setText</span>(<span class="st">&quot;Spring Mail is cool!&quot;</span>);
-}
-});</code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode java"><code class="sourceCode java"><a class="sourceLine" id="cb1-1" data-line-number="1">JavaMailSender mailSender = <span class="kw">new</span> <span class="fu">JavaMailSenderImpl</span>();</a>
+<a class="sourceLine" id="cb1-2" data-line-number="2">((JavaMailSenderImpl)mailSender).<span class="fu">setHost</span>(<span class="st">&quot;mail.livedoor.cn&quot;</span>);</a>
+<a class="sourceLine" id="cb1-3" data-line-number="3">((JavaMailSenderImpl)mailSender).<span class="fu">setUsername</span>(<span class="st">&quot;wfq@livedoor.cn&quot;</span>);</a>
+<a class="sourceLine" id="cb1-4" data-line-number="4">((JavaMailSenderImpl)mailSender).<span class="fu">setPassword</span>(<span class="st">&quot;458524033931&quot;</span>);</a>
+<a class="sourceLine" id="cb1-5" data-line-number="5"><span class="co">// IF your Mail Server request SMTP authentication, you must set properties below,</span></a>
+<a class="sourceLine" id="cb1-6" data-line-number="6"><span class="co">// Otherwise, mail sending will fail.</span></a>
+<a class="sourceLine" id="cb1-7" data-line-number="7"><span class="bu">Properties</span> prop = <span class="kw">new</span> <span class="bu">Properties</span>();</a>
+<a class="sourceLine" id="cb1-8" data-line-number="8">prop.<span class="fu">setProperty</span>(<span class="st">&quot;mail.smtp.auth&quot;</span>,<span class="st">&quot;true&quot;</span>);</a>
+<a class="sourceLine" id="cb1-9" data-line-number="9">((JavaMailSenderImpl)mailSender).<span class="fu">setJavaMailProperties</span>(prop);</a>
+<a class="sourceLine" id="cb1-10" data-line-number="10"></a>
+<a class="sourceLine" id="cb1-11" data-line-number="11">mailSender.<span class="fu">send</span>(<span class="kw">new</span> <span class="fu">MimeMessagePreparator</span>(){</a>
+<a class="sourceLine" id="cb1-12" data-line-number="12"><span class="kw">public</span> <span class="dt">void</span> <span class="fu">prepare</span>(MimeMessage message) <span class="kw">throws</span> <span class="bu">Exception</span></a>
+<a class="sourceLine" id="cb1-13" data-line-number="13">{</a>
+<a class="sourceLine" id="cb1-14" data-line-number="14">MimeMessageHelper helper = <span class="kw">new</span> <span class="fu">MimeMessageHelper</span>(message);</a>
+<a class="sourceLine" id="cb1-15" data-line-number="15">helper.<span class="fu">setTo</span>(<span class="st">&quot;wfq@livedoor.cn&quot;</span>);</a>
+<a class="sourceLine" id="cb1-16" data-line-number="16">helper.<span class="fu">setFrom</span>(<span class="st">&quot;wfq@livedoor.cn&quot;</span>);</a>
+<a class="sourceLine" id="cb1-17" data-line-number="17">helper.<span class="fu">setSubject</span>(<span class="st">&quot;Spring Mail Test Without IoC&quot;</span>);</a>
+<a class="sourceLine" id="cb1-18" data-line-number="18">helper.<span class="fu">setText</span>(<span class="st">&quot;Spring Mail is cool!&quot;</span>);</a>
+<a class="sourceLine" id="cb1-19" data-line-number="19">}</a>
+<a class="sourceLine" id="cb1-20" data-line-number="20">});</a></code></pre></div>
 <p>或者，我们仅仅为了拦截某个对象的方法，而不是很普遍，那么我们也可以这样：</p>
-<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java">BusinessImpl impl = <span class="kw">new</span> <span class="fu">BusinessImpl</span>();
-BusinessBeforeAdvice advice = <span class="kw">new</span> <span class="fu">BusinessBeforeAdvice</span>();
-<span class="co">// construct advisor in Regexp Way</span>
-RegexpMethodPointcutAdvisor advisor = <span class="kw">new</span> <span class="fu">RegexpMethodPointcutAdvisor</span>();
-advisor.<span class="fu">setAdvice</span>(advice);
-advisor.<span class="fu">setPattern</span>(<span class="st">&quot;.*doSomething.*&quot;</span>);
-
-ProxyFactory factory = <span class="kw">new</span> <span class="fu">ProxyFactory</span>();
-factory.<span class="fu">setTarget</span>(impl);
-factory.<span class="fu">addAdvisor</span>(advisor);
-IBusiness bo = (IBusiness)factory.<span class="fu">getProxy</span>();
-bo.<span class="fu">doSomething</span>();</code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode java"><code class="sourceCode java"><a class="sourceLine" id="cb2-1" data-line-number="1">BusinessImpl impl = <span class="kw">new</span> <span class="fu">BusinessImpl</span>();</a>
+<a class="sourceLine" id="cb2-2" data-line-number="2">BusinessBeforeAdvice advice = <span class="kw">new</span> <span class="fu">BusinessBeforeAdvice</span>();</a>
+<a class="sourceLine" id="cb2-3" data-line-number="3"><span class="co">// construct advisor in Regexp Way</span></a>
+<a class="sourceLine" id="cb2-4" data-line-number="4">RegexpMethodPointcutAdvisor advisor = <span class="kw">new</span> <span class="fu">RegexpMethodPointcutAdvisor</span>();</a>
+<a class="sourceLine" id="cb2-5" data-line-number="5">advisor.<span class="fu">setAdvice</span>(advice);</a>
+<a class="sourceLine" id="cb2-6" data-line-number="6">advisor.<span class="fu">setPattern</span>(<span class="st">&quot;.*doSomething.*&quot;</span>);</a>
+<a class="sourceLine" id="cb2-7" data-line-number="7"></a>
+<a class="sourceLine" id="cb2-8" data-line-number="8">ProxyFactory factory = <span class="kw">new</span> <span class="fu">ProxyFactory</span>();</a>
+<a class="sourceLine" id="cb2-9" data-line-number="9">factory.<span class="fu">setTarget</span>(impl);</a>
+<a class="sourceLine" id="cb2-10" data-line-number="10">factory.<span class="fu">addAdvisor</span>(advisor);</a>
+<a class="sourceLine" id="cb2-11" data-line-number="11">IBusiness bo = (IBusiness)factory.<span class="fu">getProxy</span>();</a>
+<a class="sourceLine" id="cb2-12" data-line-number="12">bo.<span class="fu">doSomething</span>();</a></code></pre></div>
 <p>怎么样？！是不是很容易那？</p>
 <p>仅仅是这几天实在想不出写些什么，故此闲话些许。</p>
-<hr>
-<div align="center">
-<img src="/images/wechat-qrcode-footer.png"/>
-</div>
 
-</div>
+    </article>
 
-
-
-</body></html>
+  </body>
+</html>

@@ -1,14 +1,16 @@
 <!DOCTYPE html>
-<html lang="zh">
-<head>
+<html>
+  <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>南京南京南京~ - 一个架构士的思考与沉</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="王福强的博客， 一个架构士的思考与沉淀">
     <meta name="keywords" content="architecture, book author, thinker, fighter, 架构, 思考, 技术, 武术, 哲学">
     <meta name="author" content="王福强">
-        <link rel="icon" href="/favicon.ico">
-    <title>南京南京南京~ - 一个架构士的思考与沉淀</title>
-    <!-- 百度统计 -->
+    <link rel="stylesheet" href="/ivy.css">
+    <link rel="shortcut icon" href="/favicon.ico"/>
+    <style type="text/css">code{white-space: pre;}</style>
+            <!-- 百度统计 -->
     <script>
       var _hmt = _hmt || [];
       (function() {
@@ -18,35 +20,26 @@
           s.parentNode.insertBefore(hm, s);
       })();
     </script>
+  </head>
 
-	<link href="/css/custom.css" rel="stylesheet"/>
-	<link rel="shortcut icon" href="/favicon.ico"/>
+  <body class="node homepage">
 
-<style type="text/css">code{white-space: pre;}</style>
-        
-	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-	<!--[if lt IE 9]>
-	  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.2/html5shiv.js"></script>
-	  <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-	<![endif]-->
-
-</head>
-
-<body>
-
-    <div class="masthead">
-		<!--
-    <h1 class="masthead-title fq">
-      <a href="/">扶墙老师</a>
-
-    </h1>
-    -->
-    <a href="/"><h1>扶墙老师说</h1></a>
-		<p class="masthead-lead">一个架构士的思考与沉淀</p>
-
-		<hr class="masthead-hr">
-
-	  	<ul class="masthead-nav">
+    <header class="masthead">
+      <h1><a href="/">扶墙老师说</a></h1>
+      <p class="tagline">
+         一个架构士的思考与沉淀
+          <img src="/images/wechat-qrcode-footer.png"/>
+          扶墙老师，辨证施“知”
+      </p>
+      
+      <nav class="menu">
+        <input id="menu-check" type="checkbox"/>
+        <label id="menu-label" for="menu-check" class="unselectable">
+          <span class="icon close-icon">✕</span>
+          <span class="icon open-icon">☰</span>
+          <span class="text">展开</span>
+        </label>
+        <ul>
             <li class="nav-item"><a class="nav-link" href="/favorite.html">我的收藏</a></li>
             <li class="nav-item"><a class="nav-link" href="/dashboard.html">金融看板</a></li>
             <li class="nav-item"><a class="nav-link" href="/columns.html">专栏文章</a></li>
@@ -54,20 +47,12 @@
             <li class="nav-item"><a class="nav-link" href="/whoami.html">我是何人</a></li>
             <li class="nav-item"><a class="nav-link" href="/interlinks.html">友情链接</a></li>
             <li class="nav-item"><a class="nav-link" href="/feeds.xml">RSS订阅</a></li>
-		</ul>
+        </ul>
+      </nav>
+    </header>
 
-  		<hr class="masthead-hr">
-
-	  	<ul class="masthead-nav">
-            <li class="nav-item"><small>©afoo.me</small></li>
-            <li class="nav-item"><small>Powered by <a href="http://pandoc.org/">pandoc</a> and <a href="http://rometools.github.io/rome/">ROME</a></small></li>
-		</ul>
-
-	</div>
-
-
-    <div class="listing">
-
+    <article class="main">
+      
 <div class="row">
 <div id="header">
 <p class="lead">
@@ -89,7 +74,7 @@
 <p>2014年从msn space存档中重新恢复出来！</p>
 </blockquote>
 <h1 id="序言"><span class="header-section-number">1</span> 序言</h1>
-<p>回来就火烧火燎的赶进度, 单元测试, 代码重构, 并发策略改善, 等等等等, 吃完晚饭, 将并发处理相关的代码提交之后, 才抽出空来写写上周的南京之行点滴...</p>
+<p>回来就火烧火燎的赶进度, 单元测试, 代码重构, 并发策略改善, 等等等等, 吃完晚饭, 将并发处理相关的代码提交之后, 才抽出空来写写上周的南京之行点滴…</p>
 <h1 id="正篇"><span class="header-section-number">2</span> 正篇</h1>
 <p>古人云”阳春三月下扬州”, 借着春暖花开之际, 又受友人邀请, 我这典型的宅男开始了”东奔西跑”的踏青之旅.</p>
 <p>上上周本来”葫芦梨”邀请我去义乌逛逛, 但无奈一周下雨, 实在不想冒雨奔波, 暂时作罢; 不过, 上周借着跟于光杰说好的契机, 我踏上了去南京的长途汽车, 一周一地, 这, 是我这个春天的周末计划.</p>
@@ -106,13 +91,8 @@
 <p>吃完饭, 李文峰还得赶紧回去处理他那套房子,所以就散了, 我和光杰决定往玄武湖那边去, 逛完后, 顺道去汽车站,好往回走. 参观了古城墙, 在下面才感觉, mmd, 这墙真tmd高, 原来看电视里攻城, 没感觉有那么高, 现在才知道, 怪不得攻城为下下策那, 这tmd真得攻城, 要死多少人才能攻上去阿.</p>
 <p>时间有限, 我们俩玄武湖也只逛了湖中2个岛不到, 看时间差不多了, 赶bus到中央门车站,买票往回赶.(昨天堵车受够了, 光杰把车停在地铁站, 我们俩周日基本上是地铁+bus)</p>
 <p>晚上到杭州已经8点多了, 路上折腾了5个小时左右, 累死老子了, mmd, 116路早早就没车了, 只能打车到滨江. 给老妈打个电话报平安, 短信感谢光杰夫妇的热情招待, 洗洗睡了, 这周末, 累而充实. 最主要的, 宅男终于逼着自己开始动弹了, 呵呵</p>
-<hr>
-<div align="center">
-<img src="/images/wechat-qrcode-footer.png"/>
-</div>
 
-</div>
+    </article>
 
-
-
-</body></html>
+  </body>
+</html>

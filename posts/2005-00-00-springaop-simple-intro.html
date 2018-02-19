@@ -1,14 +1,16 @@
 <!DOCTYPE html>
-<html lang="zh">
-<head>
+<html>
+  <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>闲话SpringAOP的应用 - 一个架构士的思考与沉</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="王福强的博客， 一个架构士的思考与沉淀">
     <meta name="keywords" content="architecture, book author, thinker, fighter, 架构, 思考, 技术, 武术, 哲学">
     <meta name="author" content="王福强">
-        <link rel="icon" href="/favicon.ico">
-    <title>闲话SpringAOP的应用 - 一个架构士的思考与沉淀</title>
-    <!-- 百度统计 -->
+    <link rel="stylesheet" href="/ivy.css">
+    <link rel="shortcut icon" href="/favicon.ico"/>
+    <style type="text/css">code{white-space: pre;}</style>
+            <!-- 百度统计 -->
     <script>
       var _hmt = _hmt || [];
       (function() {
@@ -18,35 +20,26 @@
           s.parentNode.insertBefore(hm, s);
       })();
     </script>
+  </head>
 
-	<link href="/css/custom.css" rel="stylesheet"/>
-	<link rel="shortcut icon" href="/favicon.ico"/>
+  <body class="node homepage">
 
-<style type="text/css">code{white-space: pre;}</style>
-        
-	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-	<!--[if lt IE 9]>
-	  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.2/html5shiv.js"></script>
-	  <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-	<![endif]-->
-
-</head>
-
-<body>
-
-    <div class="masthead">
-		<!--
-    <h1 class="masthead-title fq">
-      <a href="/">扶墙老师</a>
-
-    </h1>
-    -->
-    <a href="/"><h1>扶墙老师说</h1></a>
-		<p class="masthead-lead">一个架构士的思考与沉淀</p>
-
-		<hr class="masthead-hr">
-
-	  	<ul class="masthead-nav">
+    <header class="masthead">
+      <h1><a href="/">扶墙老师说</a></h1>
+      <p class="tagline">
+         一个架构士的思考与沉淀
+          <img src="/images/wechat-qrcode-footer.png"/>
+          扶墙老师，辨证施“知”
+      </p>
+      
+      <nav class="menu">
+        <input id="menu-check" type="checkbox"/>
+        <label id="menu-label" for="menu-check" class="unselectable">
+          <span class="icon close-icon">✕</span>
+          <span class="icon open-icon">☰</span>
+          <span class="text">展开</span>
+        </label>
+        <ul>
             <li class="nav-item"><a class="nav-link" href="/favorite.html">我的收藏</a></li>
             <li class="nav-item"><a class="nav-link" href="/dashboard.html">金融看板</a></li>
             <li class="nav-item"><a class="nav-link" href="/columns.html">专栏文章</a></li>
@@ -54,20 +47,12 @@
             <li class="nav-item"><a class="nav-link" href="/whoami.html">我是何人</a></li>
             <li class="nav-item"><a class="nav-link" href="/interlinks.html">友情链接</a></li>
             <li class="nav-item"><a class="nav-link" href="/feeds.xml">RSS订阅</a></li>
-		</ul>
+        </ul>
+      </nav>
+    </header>
 
-  		<hr class="masthead-hr">
-
-	  	<ul class="masthead-nav">
-            <li class="nav-item"><small>©afoo.me</small></li>
-            <li class="nav-item"><small>Powered by <a href="http://pandoc.org/">pandoc</a> and <a href="http://rometools.github.io/rome/">ROME</a></small></li>
-		</ul>
-
-	</div>
-
-
-    <div class="listing">
-
+    <article class="main">
+      
 <div class="row">
 <div id="header">
 <p class="lead">
@@ -88,7 +73,7 @@
 <p>刚开始的时候，我并没有马上就想到使用spring提供的aop，因为在此之前，也就是在看jbossAop的时候（半年多以前），我其实已经dip into过springAOP，但是，当时因为主要是了解JbossAOP，所以，对于SpringAOP也就没有太用心，而且，估计对于AOP概念的接受是以JbossAOP为切入口的，所以，感觉SpringAOP有些“奇怪”（这个将在后面解释），也就没有深入之。既然当时就先入为主了，那么现在也不会这么快就马上接受他来解决问题咯…</p>
 <p>在搜遍www和各大forum之后，初步有了一些印象，估计可以使用Spring的DelegatingDataSource或者HotSwappableTargetSource来解决这个问题，但是，后者牵扯SpringAOP，而且时间上也不是太允许，我重点攻击前者。具体就是在捕捉到数据库不可用相关的异常之后，重新设置DelegatingDataSource的targetDataSouce，这样在这次事务失败之后，下次就可以重新在slave数据库上进行。</p>
 <p>很自然的，我考虑了使用Observer模式来指导具体实现，虽然这个方案最终让我否决了，但是，还是有必要在这里提一下原来在JavaWorld网站发布的一篇The event generator idiom 所提倡的思想。</p>
-<ol style="list-style-type: decimal">
+<ol type="1">
 <li>我继承java.util.EventObject类来实现自己系统所需要的DatabaseCrashEvent类；</li>
 <li>实现Listener接口，继承java.util. EventListener接口来实现自定义的DatabaseCrashListener类；</li>
 <li>因为Adaptor对于我们现在的实现没有什么意义，所以，我没有实现；</li>
@@ -101,13 +86,8 @@
 <p>因为，AOP的weaving过程基本上可以分为三种：编译期间织入（weaving），class Load的时候织入，以及runtime期间的织入（Weaving）。JbossAOP使用的是自定义的classLoader来实现织入过程，也就是说，我实现了Intercepter（在JbossAOP中是单一功能的Advice）并指定完pointcut之后，剩下的事情就全都交给JbossAOP来处理了；但是SpringAOP则不同，他使用的是第三种织入方式，即runtime weaving，而且还将pointcut和advice放在了他提供的advisor概念中，所以，这就是为什么我当时会认为其实现有些“奇怪”，不过现在，完全可以解开这个迷了，不是嘛？！至于第一种织入方式，就是AspectJ提供的啦，做为第一代的AOP实现，好处那，我不想说，因为我对于它没有太大兴趣，除了它是AOP概念的始源。先不说它提供了自己的编译器，但说其学习曲线我就不能接受，我那里有那么些时间那，java我还没有expert那！</p>
 <p>Wokao，要下班了，先写这些吧，改天再细说SpringAOP吧…</p>
 <p>老话，预知后事如何，且听下回分解，呵呵 :em510:</p>
-<hr>
-<div align="center">
-<img src="/images/wechat-qrcode-footer.png"/>
-</div>
 
-</div>
+    </article>
 
-
-
-</body></html>
+  </body>
+</html>

@@ -1,14 +1,81 @@
 <!DOCTYPE html>
-<html lang="zh">
-<head>
+<html>
+  <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>使用Velocity模板生成枚举类 - 一个架构士的思考与沉</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="王福强的博客， 一个架构士的思考与沉淀">
     <meta name="keywords" content="architecture, book author, thinker, fighter, 架构, 思考, 技术, 武术, 哲学">
     <meta name="author" content="王福强">
-        <link rel="icon" href="/favicon.ico">
-    <title>使用Velocity模板生成枚举类 - 一个架构士的思考与沉淀</title>
-    <!-- 百度统计 -->
+    <link rel="stylesheet" href="/ivy.css">
+    <link rel="shortcut icon" href="/favicon.ico"/>
+    <style type="text/css">code{white-space: pre;}</style>
+    <style type="text/css">
+    a.sourceLine { display: inline-block; line-height: 1.25; }
+    a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+    a.sourceLine:empty { height: 1.2em; position: absolute; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode { white-space: pre; position: relative; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    code.sourceCode { white-space: pre-wrap; }
+    a.sourceLine { text-indent: -1em; padding-left: 1em; }
+    }
+    pre.numberSource a.sourceLine
+      { position: relative; }
+    pre.numberSource a.sourceLine:empty
+      { position: absolute; }
+    pre.numberSource a.sourceLine::before
+      { content: attr(data-line-number);
+        position: absolute; left: -5em; text-align: right; vertical-align: baseline;
+        border: none; pointer-events: all;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {  }
+    @media screen {
+    a.sourceLine::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+            <!-- 百度统计 -->
     <script>
       var _hmt = _hmt || [];
       (function() {
@@ -18,72 +85,26 @@
           s.parentNode.insertBefore(hm, s);
       })();
     </script>
+  </head>
 
-	<link href="/css/custom.css" rel="stylesheet"/>
-	<link rel="shortcut icon" href="/favicon.ico"/>
+  <body class="node homepage">
 
-<style type="text/css">code{white-space: pre;}</style>
-    <style type="text/css">
-    div.sourceCode { overflow-x: auto; }
-    table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
-      margin: 0; padding: 0; vertical-align: baseline; border: none; }
-    table.sourceCode { width: 100%; line-height: 100%; }
-    td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
-    td.sourceCode { padding-left: 5px; }
-    code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
-    code > span.dt { color: #902000; } /* DataType */
-    code > span.dv { color: #40a070; } /* DecVal */
-    code > span.bn { color: #40a070; } /* BaseN */
-    code > span.fl { color: #40a070; } /* Float */
-    code > span.ch { color: #4070a0; } /* Char */
-    code > span.st { color: #4070a0; } /* String */
-    code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
-    code > span.ot { color: #007020; } /* Other */
-    code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
-    code > span.fu { color: #06287e; } /* Function */
-    code > span.er { color: #ff0000; font-weight: bold; } /* Error */
-    code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-    code > span.cn { color: #880000; } /* Constant */
-    code > span.sc { color: #4070a0; } /* SpecialChar */
-    code > span.vs { color: #4070a0; } /* VerbatimString */
-    code > span.ss { color: #bb6688; } /* SpecialString */
-    code > span.im { } /* Import */
-    code > span.va { color: #19177c; } /* Variable */
-    code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-    code > span.op { color: #666666; } /* Operator */
-    code > span.bu { } /* BuiltIn */
-    code > span.ex { } /* Extension */
-    code > span.pp { color: #bc7a00; } /* Preprocessor */
-    code > span.at { color: #7d9029; } /* Attribute */
-    code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
-    code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-    code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-    code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-  </style>
-        
-	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-	<!--[if lt IE 9]>
-	  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.2/html5shiv.js"></script>
-	  <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-	<![endif]-->
-
-</head>
-
-<body>
-
-    <div class="masthead">
-		<!--
-    <h1 class="masthead-title fq">
-      <a href="/">扶墙老师</a>
-
-    </h1>
-    -->
-    <a href="/"><h1>扶墙老师说</h1></a>
-		<p class="masthead-lead">一个架构士的思考与沉淀</p>
-
-		<hr class="masthead-hr">
-
-	  	<ul class="masthead-nav">
+    <header class="masthead">
+      <h1><a href="/">扶墙老师说</a></h1>
+      <p class="tagline">
+         一个架构士的思考与沉淀
+          <img src="/images/wechat-qrcode-footer.png"/>
+          扶墙老师，辨证施“知”
+      </p>
+      
+      <nav class="menu">
+        <input id="menu-check" type="checkbox"/>
+        <label id="menu-label" for="menu-check" class="unselectable">
+          <span class="icon close-icon">✕</span>
+          <span class="icon open-icon">☰</span>
+          <span class="text">展开</span>
+        </label>
+        <ul>
             <li class="nav-item"><a class="nav-link" href="/favorite.html">我的收藏</a></li>
             <li class="nav-item"><a class="nav-link" href="/dashboard.html">金融看板</a></li>
             <li class="nav-item"><a class="nav-link" href="/columns.html">专栏文章</a></li>
@@ -91,20 +112,12 @@
             <li class="nav-item"><a class="nav-link" href="/whoami.html">我是何人</a></li>
             <li class="nav-item"><a class="nav-link" href="/interlinks.html">友情链接</a></li>
             <li class="nav-item"><a class="nav-link" href="/feeds.xml">RSS订阅</a></li>
-		</ul>
+        </ul>
+      </nav>
+    </header>
 
-  		<hr class="masthead-hr">
-
-	  	<ul class="masthead-nav">
-            <li class="nav-item"><small>©afoo.me</small></li>
-            <li class="nav-item"><small>Powered by <a href="http://pandoc.org/">pandoc</a> and <a href="http://rometools.github.io/rome/">ROME</a></small></li>
-		</ul>
-
-	</div>
-
-
-    <div class="listing">
-
+    <article class="main">
+      
 <div class="row">
 <div id="header">
 <p class="lead">
@@ -167,60 +180,60 @@ public final class clazz extends Enum
 <p>上面的模板很简单，有兴趣可以去查一下Velocity的VTL Reference，很容易理解。</p>
 <p>有了模板，我们需要提供数据，初步设想是需要调用者提供枚举类的包名，枚举类的类名，枚举类里各个枚举以及要输出的路径。输出路径简化为只提供Writer作为接口。所以，提供数据输入的接口方法的signature就初步定为：<code>public static void buildEnum(String pkg,String clazz,List enums,Writer writer)</code></p>
 <p>到这里，我们先不管到底提供的数据是什么样子，数据输入接口确定后，我们下一步要做的就是将数据和模板融合在一起以得到我们所需要的结果。 要merge模板和数据，我们简单将步骤总结为四步：</p>
-<ol style="list-style-type: decimal">
+<ol type="1">
 <li>初始化Velocity模板引擎；</li>
 <li>为模板准备数据，也可以说将数据导入context，以便Velocity将其与模板相融合；</li>
 <li>取得模板，呵呵，很容易想到啊；</li>
 <li>更容易想到，“万事具备”了嘛，当然就是将数据和模板merge一下咯</li>
 </ol>
 <p>好了，说了这么些废话，还是用code说话吧：</p>
-<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="co">// 1.init Config</span>
-   <span class="bu">InputStream</span> ins = EnumBuilder.<span class="fu">class</span>.<span class="fu">getResourceAsStream</span>(<span class="st">&quot;v.properties&quot;</span>);
-   <span class="bu">Properties</span> prop = <span class="kw">new</span> <span class="bu">Properties</span>();
-   prop.<span class="fu">load</span>(ins);
-   Velocity.<span class="fu">init</span>(prop);
-   <span class="co">// 2.prepare Data</span>
-   <span class="bu">Context</span> context = <span class="kw">new</span> <span class="fu">VelocityContext</span>();
-   context.<span class="fu">put</span>(<span class="st">&quot;packageName&quot;</span>,pkg);
-   context.<span class="fu">put</span>(<span class="st">&quot;clazz&quot;</span>,clazz);
-   context.<span class="fu">put</span>(<span class="st">&quot;enums&quot;</span>,enums);
-   <span class="co">// 3. prepare template</span>
-   Template template = <span class="kw">null</span>;
-            <span class="kw">try</span> 
-            {
-                template = Velocity.<span class="fu">getTemplate</span>(<span class="st">&quot;net/darrenwang/commons/demo/lang/enum/utils/enum.vm&quot;</span>);
-            }
-            <span class="kw">catch</span>( ResourceNotFoundException rnfe )
-            {
-                <span class="bu">System</span>.<span class="fu">out</span>.<span class="fu">println</span>(<span class="st">&quot;Example : error : cannot find template &quot;</span>);
-            }
-            <span class="kw">catch</span>( ParseErrorException pee )
-            {
-                <span class="bu">System</span>.<span class="fu">out</span>.<span class="fu">println</span>(<span class="st">&quot;Example : Syntax error in template &quot;</span>);
-            }
-            
-            <span class="co">// 4. merge the template and context</span>
-            <span class="kw">if</span> ( template != <span class="kw">null</span>)
-                template.<span class="fu">merge</span>(context, writer);</code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode java"><code class="sourceCode java"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="co">// 1.init Config</span></a>
+<a class="sourceLine" id="cb2-2" data-line-number="2">   <span class="bu">InputStream</span> ins = EnumBuilder.<span class="fu">class</span>.<span class="fu">getResourceAsStream</span>(<span class="st">&quot;v.properties&quot;</span>);</a>
+<a class="sourceLine" id="cb2-3" data-line-number="3">   <span class="bu">Properties</span> prop = <span class="kw">new</span> <span class="bu">Properties</span>();</a>
+<a class="sourceLine" id="cb2-4" data-line-number="4">   prop.<span class="fu">load</span>(ins);</a>
+<a class="sourceLine" id="cb2-5" data-line-number="5">   Velocity.<span class="fu">init</span>(prop);</a>
+<a class="sourceLine" id="cb2-6" data-line-number="6">   <span class="co">// 2.prepare Data</span></a>
+<a class="sourceLine" id="cb2-7" data-line-number="7">   <span class="bu">Context</span> context = <span class="kw">new</span> <span class="fu">VelocityContext</span>();</a>
+<a class="sourceLine" id="cb2-8" data-line-number="8">   context.<span class="fu">put</span>(<span class="st">&quot;packageName&quot;</span>,pkg);</a>
+<a class="sourceLine" id="cb2-9" data-line-number="9">   context.<span class="fu">put</span>(<span class="st">&quot;clazz&quot;</span>,clazz);</a>
+<a class="sourceLine" id="cb2-10" data-line-number="10">   context.<span class="fu">put</span>(<span class="st">&quot;enums&quot;</span>,enums);</a>
+<a class="sourceLine" id="cb2-11" data-line-number="11">   <span class="co">// 3. prepare template</span></a>
+<a class="sourceLine" id="cb2-12" data-line-number="12">   Template template = <span class="kw">null</span>;</a>
+<a class="sourceLine" id="cb2-13" data-line-number="13">            <span class="kw">try</span> </a>
+<a class="sourceLine" id="cb2-14" data-line-number="14">            {</a>
+<a class="sourceLine" id="cb2-15" data-line-number="15">                template = Velocity.<span class="fu">getTemplate</span>(<span class="st">&quot;net/darrenwang/commons/demo/lang/enum/utils/enum.vm&quot;</span>);</a>
+<a class="sourceLine" id="cb2-16" data-line-number="16">            }</a>
+<a class="sourceLine" id="cb2-17" data-line-number="17">            <span class="kw">catch</span>( ResourceNotFoundException rnfe )</a>
+<a class="sourceLine" id="cb2-18" data-line-number="18">            {</a>
+<a class="sourceLine" id="cb2-19" data-line-number="19">                <span class="bu">System</span>.<span class="fu">out</span>.<span class="fu">println</span>(<span class="st">&quot;Example : error : cannot find template &quot;</span>);</a>
+<a class="sourceLine" id="cb2-20" data-line-number="20">            }</a>
+<a class="sourceLine" id="cb2-21" data-line-number="21">            <span class="kw">catch</span>( ParseErrorException pee )</a>
+<a class="sourceLine" id="cb2-22" data-line-number="22">            {</a>
+<a class="sourceLine" id="cb2-23" data-line-number="23">                <span class="bu">System</span>.<span class="fu">out</span>.<span class="fu">println</span>(<span class="st">&quot;Example : Syntax error in template &quot;</span>);</a>
+<a class="sourceLine" id="cb2-24" data-line-number="24">            }</a>
+<a class="sourceLine" id="cb2-25" data-line-number="25">            </a>
+<a class="sourceLine" id="cb2-26" data-line-number="26">            <span class="co">// 4. merge the template and context</span></a>
+<a class="sourceLine" id="cb2-27" data-line-number="27">            <span class="kw">if</span> ( template != <span class="kw">null</span>)</a>
+<a class="sourceLine" id="cb2-28" data-line-number="28">                template.<span class="fu">merge</span>(context, writer);</a></code></pre></div>
 <p>好，以上就是所有的代码了，细节（象异常处理什么的）这里就不写了，大家都明白，是吧？！</p>
 <p>主要工作完成的差不多了，让我们调用我们的EnumBuilder看看:</p>
-<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="co">// 1.</span>
-  <span class="bu">String</span> pkg = <span class="st">&quot;net.darrenwang.enum&quot;</span>;<span class="co">// Package Name of the Class</span>
-  <span class="bu">String</span> clazz = <span class="st">&quot;ColorEnum&quot;</span>;        <span class="co">// Enum Class Name</span>
-  <span class="bu">List</span> enums = <span class="kw">new</span> <span class="bu">ArrayList</span>();      <span class="co">// Enum Names</span>
-  enums.<span class="fu">add</span>(<span class="st">&quot;Red&quot;</span>);
-  enums.<span class="fu">add</span>(<span class="st">&quot;Green&quot;</span>);
-  enums.<span class="fu">add</span>(<span class="st">&quot;Yellow&quot;</span>);
-  enums.<span class="fu">add</span>(<span class="st">&quot;Grey&quot;</span>);
-  <span class="co">// 2.</span>
-  <span class="bu">Writer</span> writer;
-  <span class="kw">try</span> {
-   writer = <span class="kw">new</span> <span class="bu">FileWriter</span>(<span class="st">&quot;ColorEnum.java&quot;</span>);
-<span class="co">//   writer = writer = new BufferedWriter(new OutputStreamWriter(System.out));</span>
-   EnumBuilder.<span class="fu">buildEnum</span>(<span class="st">&quot;net.darrenwang.enum&quot;</span>,<span class="st">&quot;ColorEnum&quot;</span>,enums,writer);
-  } <span class="kw">catch</span> (<span class="bu">IOException</span> e) {
-   e.<span class="fu">printStackTrace</span>();
-  }</code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode java"><code class="sourceCode java"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="co">// 1.</span></a>
+<a class="sourceLine" id="cb3-2" data-line-number="2">  <span class="bu">String</span> pkg = <span class="st">&quot;net.darrenwang.enum&quot;</span>;<span class="co">// Package Name of the Class</span></a>
+<a class="sourceLine" id="cb3-3" data-line-number="3">  <span class="bu">String</span> clazz = <span class="st">&quot;ColorEnum&quot;</span>;        <span class="co">// Enum Class Name</span></a>
+<a class="sourceLine" id="cb3-4" data-line-number="4">  <span class="bu">List</span> enums = <span class="kw">new</span> <span class="bu">ArrayList</span>();      <span class="co">// Enum Names</span></a>
+<a class="sourceLine" id="cb3-5" data-line-number="5">  enums.<span class="fu">add</span>(<span class="st">&quot;Red&quot;</span>);</a>
+<a class="sourceLine" id="cb3-6" data-line-number="6">  enums.<span class="fu">add</span>(<span class="st">&quot;Green&quot;</span>);</a>
+<a class="sourceLine" id="cb3-7" data-line-number="7">  enums.<span class="fu">add</span>(<span class="st">&quot;Yellow&quot;</span>);</a>
+<a class="sourceLine" id="cb3-8" data-line-number="8">  enums.<span class="fu">add</span>(<span class="st">&quot;Grey&quot;</span>);</a>
+<a class="sourceLine" id="cb3-9" data-line-number="9">  <span class="co">// 2.</span></a>
+<a class="sourceLine" id="cb3-10" data-line-number="10">  <span class="bu">Writer</span> writer;</a>
+<a class="sourceLine" id="cb3-11" data-line-number="11">  <span class="kw">try</span> {</a>
+<a class="sourceLine" id="cb3-12" data-line-number="12">   writer = <span class="kw">new</span> <span class="bu">FileWriter</span>(<span class="st">&quot;ColorEnum.java&quot;</span>);</a>
+<a class="sourceLine" id="cb3-13" data-line-number="13"><span class="co">//   writer = writer = new BufferedWriter(new OutputStreamWriter(System.out));</span></a>
+<a class="sourceLine" id="cb3-14" data-line-number="14">   EnumBuilder.<span class="fu">buildEnum</span>(<span class="st">&quot;net.darrenwang.enum&quot;</span>,<span class="st">&quot;ColorEnum&quot;</span>,enums,writer);</a>
+<a class="sourceLine" id="cb3-15" data-line-number="15">  } <span class="kw">catch</span> (<span class="bu">IOException</span> e) {</a>
+<a class="sourceLine" id="cb3-16" data-line-number="16">   e.<span class="fu">printStackTrace</span>();</a>
+<a class="sourceLine" id="cb3-17" data-line-number="17">  }</a></code></pre></div>
 <p>哈哈，大功告成！不过，来之不易啊，有谁知道要让这么简单的东西出来，让我浪费了多少时间啊，呵呵，经验教训还是要总结di ，hoho</p>
 <pre>
 NOTE：  实际上，在没有重新看Velocity的文档之前，我已经忘记了Velocity的Resource Loader策略问题，所以，在刚开始的Velocity引擎初始化的时候，和取得模板的时候，都直接制定Properties的文件名和模板文件名的时候，根本就找不到，大家都讨厌的异常自然就频频出来烦我咯。
@@ -259,13 +272,8 @@ classpath.resource.loader.path=.
 
          哦，对了，上面的模板中用到了lang的enum类，虽然tiger已经有了enum的支持，但是1.4不是还没有嘛，呵呵
 </pre>
-<hr>
-<div align="center">
-<img src="/images/wechat-qrcode-footer.png"/>
-</div>
 
-</div>
+    </article>
 
-
-
-</body></html>
+  </body>
+</html>

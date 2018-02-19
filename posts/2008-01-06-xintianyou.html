@@ -1,14 +1,16 @@
 <!DOCTYPE html>
-<html lang="zh">
-<head>
+<html>
+  <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>信天游 - 一个架构士的思考与沉</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="王福强的博客， 一个架构士的思考与沉淀">
     <meta name="keywords" content="architecture, book author, thinker, fighter, 架构, 思考, 技术, 武术, 哲学">
     <meta name="author" content="王福强">
-        <link rel="icon" href="/favicon.ico">
-    <title>信天游 - 一个架构士的思考与沉淀</title>
-    <!-- 百度统计 -->
+    <link rel="stylesheet" href="/ivy.css">
+    <link rel="shortcut icon" href="/favicon.ico"/>
+    <style type="text/css">code{white-space: pre;}</style>
+            <!-- 百度统计 -->
     <script>
       var _hmt = _hmt || [];
       (function() {
@@ -18,35 +20,26 @@
           s.parentNode.insertBefore(hm, s);
       })();
     </script>
+  </head>
 
-	<link href="/css/custom.css" rel="stylesheet"/>
-	<link rel="shortcut icon" href="/favicon.ico"/>
+  <body class="node homepage">
 
-<style type="text/css">code{white-space: pre;}</style>
-        
-	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-	<!--[if lt IE 9]>
-	  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.2/html5shiv.js"></script>
-	  <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-	<![endif]-->
-
-</head>
-
-<body>
-
-    <div class="masthead">
-		<!--
-    <h1 class="masthead-title fq">
-      <a href="/">扶墙老师</a>
-
-    </h1>
-    -->
-    <a href="/"><h1>扶墙老师说</h1></a>
-		<p class="masthead-lead">一个架构士的思考与沉淀</p>
-
-		<hr class="masthead-hr">
-
-	  	<ul class="masthead-nav">
+    <header class="masthead">
+      <h1><a href="/">扶墙老师说</a></h1>
+      <p class="tagline">
+         一个架构士的思考与沉淀
+          <img src="/images/wechat-qrcode-footer.png"/>
+          扶墙老师，辨证施“知”
+      </p>
+      
+      <nav class="menu">
+        <input id="menu-check" type="checkbox"/>
+        <label id="menu-label" for="menu-check" class="unselectable">
+          <span class="icon close-icon">✕</span>
+          <span class="icon open-icon">☰</span>
+          <span class="text">展开</span>
+        </label>
+        <ul>
             <li class="nav-item"><a class="nav-link" href="/favorite.html">我的收藏</a></li>
             <li class="nav-item"><a class="nav-link" href="/dashboard.html">金融看板</a></li>
             <li class="nav-item"><a class="nav-link" href="/columns.html">专栏文章</a></li>
@@ -54,20 +47,12 @@
             <li class="nav-item"><a class="nav-link" href="/whoami.html">我是何人</a></li>
             <li class="nav-item"><a class="nav-link" href="/interlinks.html">友情链接</a></li>
             <li class="nav-item"><a class="nav-link" href="/feeds.xml">RSS订阅</a></li>
-		</ul>
+        </ul>
+      </nav>
+    </header>
 
-  		<hr class="masthead-hr">
-
-	  	<ul class="masthead-nav">
-            <li class="nav-item"><small>©afoo.me</small></li>
-            <li class="nav-item"><small>Powered by <a href="http://pandoc.org/">pandoc</a> and <a href="http://rometools.github.io/rome/">ROME</a></small></li>
-		</ul>
-
-	</div>
-
-
-    <div class="listing">
-
+    <article class="main">
+      
 <div class="row">
 <div id="header">
 <p class="lead">
@@ -88,18 +73,13 @@
 </blockquote>
 <strong>圪梁梁</strong>
 <blockquote>
-对了坂坂的那个屹梁梁上那是一个谁 那就是了那个有名的二呀么二妹妹 你在你的那个屹梁梁上哥哥呀我在那沟 看中了的那个哥哥妹妹你就招一招手 白领领的那个布衫衫穿在呀妹妹的身 哥哥呀那个出门想你见你呀见不上个人 满天天的那个星星一呀么一颗颗明 有两颗颗它最明那就是咱二人 对坂坂的那个屹梁梁上那是一个谁 那就是我那有名的二妹妹 ---------------------------------(这个的词儿血色浪漫里面的秦岭唱的与阿宝这个版本不一样)
+对了坂坂的那个屹梁梁上那是一个谁 那就是了那个有名的二呀么二妹妹 你在你的那个屹梁梁上哥哥呀我在那沟 看中了的那个哥哥妹妹你就招一招手 白领领的那个布衫衫穿在呀妹妹的身 哥哥呀那个出门想你见你呀见不上个人 满天天的那个星星一呀么一颗颗明 有两颗颗它最明那就是咱二人 对坂坂的那个屹梁梁上那是一个谁 那就是我那有名的二妹妹 ———————————(这个的词儿血色浪漫里面的秦岭唱的与阿宝这个版本不一样)
 </blockquote>
 <p>还有《亲亲说不够》和《满天的花满天的云》，尤其是满天的花满天的云，当时看《血色浪漫》的时候我记得好像都不禁热泪盈眶了。</p>
 <p>虽然大部分都是划为情歌一类，但其间往往掺杂一些愁苦，尤其是血色浪漫里面从秦岭唱出来的，尤其如此。悠扬的旋律表现的好像是一种韧性，不管环境如何困苦，他依然保持着一种倔强的生命力。</p>
 <p>不管是什么样的环境下创造的这种艺术形式，中华的文化宝库中有此一颗奇葩，幸哉！</p>
-<hr>
-<div align="center">
-<img src="/images/wechat-qrcode-footer.png"/>
-</div>
 
-</div>
+    </article>
 
-
-
-</body></html>
+  </body>
+</html>

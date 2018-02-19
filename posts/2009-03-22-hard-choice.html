@@ -1,14 +1,16 @@
 <!DOCTYPE html>
-<html lang="zh">
-<head>
+<html>
+  <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>剪不断，理还乱… - 一个架构士的思考与沉</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="王福强的博客， 一个架构士的思考与沉淀">
     <meta name="keywords" content="architecture, book author, thinker, fighter, 架构, 思考, 技术, 武术, 哲学">
     <meta name="author" content="王福强">
-        <link rel="icon" href="/favicon.ico">
-    <title>剪不断，理还乱... - 一个架构士的思考与沉淀</title>
-    <!-- 百度统计 -->
+    <link rel="stylesheet" href="/ivy.css">
+    <link rel="shortcut icon" href="/favicon.ico"/>
+    <style type="text/css">code{white-space: pre;}</style>
+            <!-- 百度统计 -->
     <script>
       var _hmt = _hmt || [];
       (function() {
@@ -18,35 +20,26 @@
           s.parentNode.insertBefore(hm, s);
       })();
     </script>
+  </head>
 
-	<link href="/css/custom.css" rel="stylesheet"/>
-	<link rel="shortcut icon" href="/favicon.ico"/>
+  <body class="node homepage">
 
-<style type="text/css">code{white-space: pre;}</style>
-        
-	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-	<!--[if lt IE 9]>
-	  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.2/html5shiv.js"></script>
-	  <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-	<![endif]-->
-
-</head>
-
-<body>
-
-    <div class="masthead">
-		<!--
-    <h1 class="masthead-title fq">
-      <a href="/">扶墙老师</a>
-
-    </h1>
-    -->
-    <a href="/"><h1>扶墙老师说</h1></a>
-		<p class="masthead-lead">一个架构士的思考与沉淀</p>
-
-		<hr class="masthead-hr">
-
-	  	<ul class="masthead-nav">
+    <header class="masthead">
+      <h1><a href="/">扶墙老师说</a></h1>
+      <p class="tagline">
+         一个架构士的思考与沉淀
+          <img src="/images/wechat-qrcode-footer.png"/>
+          扶墙老师，辨证施“知”
+      </p>
+      
+      <nav class="menu">
+        <input id="menu-check" type="checkbox"/>
+        <label id="menu-label" for="menu-check" class="unselectable">
+          <span class="icon close-icon">✕</span>
+          <span class="icon open-icon">☰</span>
+          <span class="text">展开</span>
+        </label>
+        <ul>
             <li class="nav-item"><a class="nav-link" href="/favorite.html">我的收藏</a></li>
             <li class="nav-item"><a class="nav-link" href="/dashboard.html">金融看板</a></li>
             <li class="nav-item"><a class="nav-link" href="/columns.html">专栏文章</a></li>
@@ -54,24 +47,16 @@
             <li class="nav-item"><a class="nav-link" href="/whoami.html">我是何人</a></li>
             <li class="nav-item"><a class="nav-link" href="/interlinks.html">友情链接</a></li>
             <li class="nav-item"><a class="nav-link" href="/feeds.xml">RSS订阅</a></li>
-		</ul>
+        </ul>
+      </nav>
+    </header>
 
-  		<hr class="masthead-hr">
-
-	  	<ul class="masthead-nav">
-            <li class="nav-item"><small>©afoo.me</small></li>
-            <li class="nav-item"><small>Powered by <a href="http://pandoc.org/">pandoc</a> and <a href="http://rometools.github.io/rome/">ROME</a></small></li>
-		</ul>
-
-	</div>
-
-
-    <div class="listing">
-
+    <article class="main">
+      
 <div class="row">
 <div id="header">
 <p class="lead">
-<h1 class="title">剪不断，理还乱...</h1>
+<h1 class="title">剪不断，理还乱…</h1>
 </p>
 </div>
 
@@ -93,11 +78,11 @@
 <blockquote>
 <p>2014年从msn space存档中重新恢复出来！</p>
 </blockquote>
-<p>很疲惫，身体上很疲惫，倒班你也就倒吧，非要一会儿倒晚班，一会儿倒早班， 我这身老骨头现在哪里经得起这么折腾啊，再加上周末猎头帮约了阿里B2B的面试， 又是早起，god，睡点儿懒觉都没机会，周六贾维办婚宴，或许是很长时间不沾酒星儿了， 下午就开始头疼，晚上回来更是头疼欲裂，而且还有点儿恶心（难道长途车坐的恶心？）， 没办法，早点儿睡吧，本来还想给家里打个电话，postpone吧！半夜醒过来一回， 然后一直睡到今天大上午，下午看了《上帝之城》（又是老李之前推荐的，呵呵，long long time ago）， 之后又犯困，期间让杨爽短信吵醒，睁了睁眼，一直到四点半起来冲了个澡，回头想想，周末两天净tmd睡觉了，nnd...</p>
-<p>身体上疲惫到也罢了，不行就多睡呗，可这心也累，各种因素纠结，让我实在不知如何是好，不过，好好理一下，好像还能整理出一些头绪...</p>
+<p>很疲惫，身体上很疲惫，倒班你也就倒吧，非要一会儿倒晚班，一会儿倒早班， 我这身老骨头现在哪里经得起这么折腾啊，再加上周末猎头帮约了阿里B2B的面试， 又是早起，god，睡点儿懒觉都没机会，周六贾维办婚宴，或许是很长时间不沾酒星儿了， 下午就开始头疼，晚上回来更是头疼欲裂，而且还有点儿恶心（难道长途车坐的恶心？）， 没办法，早点儿睡吧，本来还想给家里打个电话，postpone吧！半夜醒过来一回， 然后一直睡到今天大上午，下午看了《上帝之城》（又是老李之前推荐的，呵呵，long long time ago）， 之后又犯困，期间让杨爽短信吵醒，睁了睁眼，一直到四点半起来冲了个澡，回头想想，周末两天净tmd睡觉了，nnd…</p>
+<p>身体上疲惫到也罢了，不行就多睡呗，可这心也累，各种因素纠结，让我实在不知如何是好，不过，好好理一下，好像还能整理出一些头绪…</p>
 <h1 id="软件业永远的痛交付延期"><span class="header-section-number">1</span> 软件业永远的痛－交付延期</h1>
 <p>延期交付好像属于软件业里面比较常见的现象，尤其是在花旗的这几个月，更是常见，不过，这事儿要是摊到自己身上，还真不是那个味儿, 当然啦，我们现在说的不是软件开发，而是我宝贝书的出版。 这书一时没看见，我心里就一直是没着没落的，自然心情也不是很好。Donald J Trump说要“Keep it short, fast and direct”， 一拿他这个标准来卡，我就更是心急如焚，虽然也安慰自己说，“Trump一个项目有时候还搞个好几年甚至十几年那，我这才充其量2年嘛”， 但我可是个急性子阿，现在都快磨的一点儿脾气没有了。</p>
-<p>不过，说一点儿脾气都没有，那肯定是表面的，终日为“伊”消得人憔悴，你也不能blame too much，毕竟，你不能要求别人跟你一样...</p>
+<p>不过，说一点儿脾气都没有，那肯定是表面的，终日为“伊”消得人憔悴，你也不能blame too much，毕竟，你不能要求别人跟你一样…</p>
 <h1 id="树欲静而风不止永远必须面临的抉择"><span class="header-section-number">2</span> 树欲静，而风不止－永远必须面临的抉择</h1>
 <p>经济学第一原则－人们面临权衡取舍，但事实却是，你永远面临权衡取舍，不管是经济方面还是其它方面。</p>
 <p>本来指望自己能够稳定下来，借着花旗的环境也好，借着某个人也好，但计划永远没有变化的快，从去年年底开始就一直在挣扎，挣扎， 却又不确定自己的挣扎是否值得，总得来说，摆在前面有三条路，路怎么走，自己看着办咯，可是真tmd不好办阿！</p>
@@ -116,17 +101,12 @@
 <p>如果说花旗有许多福利的话，比如每年15天的带薪休假，住房利率补贴，企业年金等等，那么，阿里能给提供的可能相对要少一些， 只有第一年的7天假和三年后每年才有9天假，去除年薪先不谈，股票期权应该会有。这是从福利待遇上来说，不过，如果能给给你一个舒心的环境，其实这些倒也可以不会计较多少吧。</p>
 <h2 id="startup-company-with-dino"><span class="header-section-number">2.3</span> Startup Company With Dino</h2>
 <p>从老李创建现在的startup公司开始，就一直希望我过去，说实在的，我也确实有想过。</p>
-<p>如果你去投资的话，肯定会更愿意投资给有经验的经营者，而老李之前在加拿大那边就做过公司，所以，同样的startup公司，成功的几率要大一些。 况且，现在已经有了稳定的资金流入，待进一步扩大现有资金流入之后，老李就打算让我加入进去，他把初期的一些风险都给我免了，你说我要推辞好吗？ 而且，跟老李确实能学到许多东西，我曾经跟老王半开玩笑的说过，说我前面两个带路的人，一个是他，一个是老李，但这确实是真的，Trump说 I only work with the best， 我也是向比我强的人学习。另一个，自己也会时常受各种资料的鼓动，有要创业之类的想法（又让我想起汤炀说过，谁年轻的时候没有那么多想法阿），想像兄弟们大碗喝酒，大碗吃肉的场景，累归累，但也会留下快乐和美好的回忆。 所有的这些，都会促使我向老李的startup公司靠拢...</p>
-<p>可是，除了以上那些因素，还有几个因素让我很是拿捏不定。BDConsulting的业务现在主要是三块儿：外派，培训和咨询，我作为一个技术出身的人， 在这三块儿上都没有绝对的优势，外派指定是老李挑大梁了，我这种性格指定不成。培训，或许可以有发挥的余地，加上书出版后的预期， 如果我过去，老李指定会把这块儿放给我去做，但是长期来看，与我原来的职业规划相背离，个人感觉会缺乏后劲。 咨询，属于高端业务了，看老李做个策划方案，感觉只要你用心去做了，肯定可以做好，背景上来看，确实没有那些大型咨询机构那么有影响， 但只要你功课作到了，也不会差到那里去，谁也不是一开始什么都会的，而且现在许多信息都是很容易就可以共享抓过来用的，不过，还是那种担忧， 我可以转型，但是长远来看，没有一个确定的愿景...</p>
+<p>如果你去投资的话，肯定会更愿意投资给有经验的经营者，而老李之前在加拿大那边就做过公司，所以，同样的startup公司，成功的几率要大一些。 况且，现在已经有了稳定的资金流入，待进一步扩大现有资金流入之后，老李就打算让我加入进去，他把初期的一些风险都给我免了，你说我要推辞好吗？ 而且，跟老李确实能学到许多东西，我曾经跟老王半开玩笑的说过，说我前面两个带路的人，一个是他，一个是老李，但这确实是真的，Trump说 I only work with the best， 我也是向比我强的人学习。另一个，自己也会时常受各种资料的鼓动，有要创业之类的想法（又让我想起汤炀说过，谁年轻的时候没有那么多想法阿），想像兄弟们大碗喝酒，大碗吃肉的场景，累归累，但也会留下快乐和美好的回忆。 所有的这些，都会促使我向老李的startup公司靠拢…</p>
+<p>可是，除了以上那些因素，还有几个因素让我很是拿捏不定。BDConsulting的业务现在主要是三块儿：外派，培训和咨询，我作为一个技术出身的人， 在这三块儿上都没有绝对的优势，外派指定是老李挑大梁了，我这种性格指定不成。培训，或许可以有发挥的余地，加上书出版后的预期， 如果我过去，老李指定会把这块儿放给我去做，但是长期来看，与我原来的职业规划相背离，个人感觉会缺乏后劲。 咨询，属于高端业务了，看老李做个策划方案，感觉只要你用心去做了，肯定可以做好，背景上来看，确实没有那些大型咨询机构那么有影响， 但只要你功课作到了，也不会差到那里去，谁也不是一开始什么都会的，而且现在许多信息都是很容易就可以共享抓过来用的，不过，还是那种担忧， 我可以转型，但是长远来看，没有一个确定的愿景…</p>
 <h1 id="to-or-not-to-be-it-always-a-problem."><span class="header-section-number">3</span> To or not to be, it always a problem.</h1>
-<p>我这可怜的脑瓜子里装上这些，然后再加上其他的一些乱七八糟的东西，一句话，it sucks. 何去何从？！ Time will give me the answer. Currently, I still have to stay between the devils and deep sea...</p>
-<hr>
-<div align="center">
-<img src="/images/wechat-qrcode-footer.png"/>
-</div>
+<p>我这可怜的脑瓜子里装上这些，然后再加上其他的一些乱七八糟的东西，一句话，it sucks. 何去何从？！ Time will give me the answer. Currently, I still have to stay between the devils and deep sea…</p>
 
-</div>
+    </article>
 
-
-
-</body></html>
+  </body>
+</html>

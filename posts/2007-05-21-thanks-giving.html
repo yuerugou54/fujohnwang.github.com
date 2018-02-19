@@ -1,14 +1,16 @@
 <!DOCTYPE html>
-<html lang="zh">
-<head>
+<html>
+  <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thanks Giving - 一个架构士的思考与沉</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="王福强的博客， 一个架构士的思考与沉淀">
     <meta name="keywords" content="architecture, book author, thinker, fighter, 架构, 思考, 技术, 武术, 哲学">
     <meta name="author" content="王福强">
-        <link rel="icon" href="/favicon.ico">
-    <title>Thanks Giving - 一个架构士的思考与沉淀</title>
-    <!-- 百度统计 -->
+    <link rel="stylesheet" href="/ivy.css">
+    <link rel="shortcut icon" href="/favicon.ico"/>
+    <style type="text/css">code{white-space: pre;}</style>
+            <!-- 百度统计 -->
     <script>
       var _hmt = _hmt || [];
       (function() {
@@ -18,35 +20,26 @@
           s.parentNode.insertBefore(hm, s);
       })();
     </script>
+  </head>
 
-	<link href="/css/custom.css" rel="stylesheet"/>
-	<link rel="shortcut icon" href="/favicon.ico"/>
+  <body class="node homepage">
 
-<style type="text/css">code{white-space: pre;}</style>
-        
-	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-	<!--[if lt IE 9]>
-	  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.2/html5shiv.js"></script>
-	  <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-	<![endif]-->
-
-</head>
-
-<body>
-
-    <div class="masthead">
-		<!--
-    <h1 class="masthead-title fq">
-      <a href="/">扶墙老师</a>
-
-    </h1>
-    -->
-    <a href="/"><h1>扶墙老师说</h1></a>
-		<p class="masthead-lead">一个架构士的思考与沉淀</p>
-
-		<hr class="masthead-hr">
-
-	  	<ul class="masthead-nav">
+    <header class="masthead">
+      <h1><a href="/">扶墙老师说</a></h1>
+      <p class="tagline">
+         一个架构士的思考与沉淀
+          <img src="/images/wechat-qrcode-footer.png"/>
+          扶墙老师，辨证施“知”
+      </p>
+      
+      <nav class="menu">
+        <input id="menu-check" type="checkbox"/>
+        <label id="menu-label" for="menu-check" class="unselectable">
+          <span class="icon close-icon">✕</span>
+          <span class="icon open-icon">☰</span>
+          <span class="text">展开</span>
+        </label>
+        <ul>
             <li class="nav-item"><a class="nav-link" href="/favorite.html">我的收藏</a></li>
             <li class="nav-item"><a class="nav-link" href="/dashboard.html">金融看板</a></li>
             <li class="nav-item"><a class="nav-link" href="/columns.html">专栏文章</a></li>
@@ -54,20 +47,12 @@
             <li class="nav-item"><a class="nav-link" href="/whoami.html">我是何人</a></li>
             <li class="nav-item"><a class="nav-link" href="/interlinks.html">友情链接</a></li>
             <li class="nav-item"><a class="nav-link" href="/feeds.xml">RSS订阅</a></li>
-		</ul>
+        </ul>
+      </nav>
+    </header>
 
-  		<hr class="masthead-hr">
-
-	  	<ul class="masthead-nav">
-            <li class="nav-item"><small>©afoo.me</small></li>
-            <li class="nav-item"><small>Powered by <a href="http://pandoc.org/">pandoc</a> and <a href="http://rometools.github.io/rome/">ROME</a></small></li>
-		</ul>
-
-	</div>
-
-
-    <div class="listing">
-
+    <article class="main">
+      
 <div class="row">
 <div id="header">
 <p class="lead">
@@ -90,19 +75,14 @@
 <p>老李（Dino），跟老王完全两个类型，不过，这恰好可以让我有所对比，观念上的，做事上的，等等，帮助我从其他角度去看待问题,老李看问题大多是从上往下俯瞰的那种感觉，对某个事物可以提纲挈领的把握，一个点一个点的把重点的东西点明白，这些东西确实很值得称道的，也是我一直在追求的一个东西，抓住事物的本质，那么一切东西就很明了了，不要让任何表象的东西遮挡你的视线；</p>
 <p>袜子，其实很多事情啦，不过，我想说的是到天安后，他跟我说的一句话，大意就是，作项目的时候，你可以看到的不应该仅仅是技术，你还可以学习到许多技术之外的东西。而恰逢当时我也有了类似的感悟，所以，这句话还是记得的；</p>
 <p>曲静，一句话足矣，而这句话恰恰点醒了当时的我。当年毕业不久的我，看待问题还是原来的观念，一直以一种悲观的情绪去看待问题，你要知道，事物总是有好有坏的，如果你一直以悲观的情绪去看问题，你就永远只能看到悲观的东西。她当时因为什么事情说我，记不清楚了，只有那句话我记得大意，“如果一直以这种情绪或者观点看问题，你就是一个傻瓜”，不管她当时有心无心，反正听者有意啦。</p>
-<p>当然，我还要谢谢我身边所有关心我的同事和朋友，我到天安后认的“表姐”，热心帮我介绍女朋友的晓丽，Kim，介绍旅游信息给我并给与我鼓励的师姐，还有陪我一起K歌的credit team members，太多，太多...</p>
+<p>当然，我还要谢谢我身边所有关心我的同事和朋友，我到天安后认的“表姐”，热心帮我介绍女朋友的晓丽，Kim，介绍旅游信息给我并给与我鼓励的师姐，还有陪我一起K歌的credit team members，太多，太多…</p>
 <p>虽然主题是thanks giving，不过，还是连一些歉意和懊悔一起写下来吧!</p>
-<p>明天有个恒睿的同事设立婚礼答谢宴，我不想去，因为我觉得没有处到那个份上，不过，对于（袜子，曲静）和阿梅的婚宴，我却真的过意不去了，前者虽然去了，但是，走的挺早，后者没有去，当时不知耍什么性子，反正现在想想有些懊悔，呵呵，也跟老王说了...</p>
+<p>明天有个恒睿的同事设立婚礼答谢宴，我不想去，因为我觉得没有处到那个份上，不过，对于（袜子，曲静）和阿梅的婚宴，我却真的过意不去了，前者虽然去了，但是，走的挺早，后者没有去，当时不知耍什么性子，反正现在想想有些懊悔，呵呵，也跟老王说了…</p>
 <p>to S. and S.，I did not intend to decline you ,I was just not well prepared then, sorry. Although the God will not give me another opportunity, but I will pray for your happiness.</p>
 <p>（一些话既然无法当着当事人的面表达，那我也只能通过文字来让这些思绪和话语流淌了）</p>
 <p>于2007年5月19日晚</p>
-<hr>
-<div align="center">
-<img src="/images/wechat-qrcode-footer.png"/>
-</div>
 
-</div>
+    </article>
 
-
-
-</body></html>
+  </body>
+</html>

@@ -1,15 +1,82 @@
 <!DOCTYPE html>
-<html lang="zh">
-<head>
+<html>
+  <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>技术人也需要有产品思维(why techies also need think the PD way) - 一个架构士的思考与沉</title>
+        <meta name="date" content="2015-11-10" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="王福强的博客， 一个架构士的思考与沉淀">
     <meta name="keywords" content="architecture, book author, thinker, fighter, 架构, 思考, 技术, 武术, 哲学">
     <meta name="author" content="王福强">
-        <meta name="date" content="2015-11-10" />
-        <link rel="icon" href="/favicon.ico">
-    <title>技术人也需要有产品思维(why techies also need think the PD way) - 一个架构士的思考与沉淀</title>
-    <!-- 百度统计 -->
+    <link rel="stylesheet" href="/ivy.css">
+    <link rel="shortcut icon" href="/favicon.ico"/>
+    <style type="text/css">code{white-space: pre;}</style>
+    <style type="text/css">
+    a.sourceLine { display: inline-block; line-height: 1.25; }
+    a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+    a.sourceLine:empty { height: 1.2em; position: absolute; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode { white-space: pre; position: relative; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    code.sourceCode { white-space: pre-wrap; }
+    a.sourceLine { text-indent: -1em; padding-left: 1em; }
+    }
+    pre.numberSource a.sourceLine
+      { position: relative; }
+    pre.numberSource a.sourceLine:empty
+      { position: absolute; }
+    pre.numberSource a.sourceLine::before
+      { content: attr(data-line-number);
+        position: absolute; left: -5em; text-align: right; vertical-align: baseline;
+        border: none; pointer-events: all;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {  }
+    @media screen {
+    a.sourceLine::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+            <!-- 百度统计 -->
     <script>
       var _hmt = _hmt || [];
       (function() {
@@ -19,72 +86,26 @@
           s.parentNode.insertBefore(hm, s);
       })();
     </script>
+  </head>
 
-	<link href="/css/custom.css" rel="stylesheet"/>
-	<link rel="shortcut icon" href="/favicon.ico"/>
+  <body class="node homepage">
 
-<style type="text/css">code{white-space: pre;}</style>
-    <style type="text/css">
-    div.sourceCode { overflow-x: auto; }
-    table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
-      margin: 0; padding: 0; vertical-align: baseline; border: none; }
-    table.sourceCode { width: 100%; line-height: 100%; }
-    td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
-    td.sourceCode { padding-left: 5px; }
-    code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
-    code > span.dt { color: #902000; } /* DataType */
-    code > span.dv { color: #40a070; } /* DecVal */
-    code > span.bn { color: #40a070; } /* BaseN */
-    code > span.fl { color: #40a070; } /* Float */
-    code > span.ch { color: #4070a0; } /* Char */
-    code > span.st { color: #4070a0; } /* String */
-    code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
-    code > span.ot { color: #007020; } /* Other */
-    code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
-    code > span.fu { color: #06287e; } /* Function */
-    code > span.er { color: #ff0000; font-weight: bold; } /* Error */
-    code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-    code > span.cn { color: #880000; } /* Constant */
-    code > span.sc { color: #4070a0; } /* SpecialChar */
-    code > span.vs { color: #4070a0; } /* VerbatimString */
-    code > span.ss { color: #bb6688; } /* SpecialString */
-    code > span.im { } /* Import */
-    code > span.va { color: #19177c; } /* Variable */
-    code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-    code > span.op { color: #666666; } /* Operator */
-    code > span.bu { } /* BuiltIn */
-    code > span.ex { } /* Extension */
-    code > span.pp { color: #bc7a00; } /* Preprocessor */
-    code > span.at { color: #7d9029; } /* Attribute */
-    code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
-    code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-    code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-    code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-  </style>
-        
-	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-	<!--[if lt IE 9]>
-	  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.2/html5shiv.js"></script>
-	  <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-	<![endif]-->
-
-</head>
-
-<body>
-
-    <div class="masthead">
-		<!--
-    <h1 class="masthead-title fq">
-      <a href="/">扶墙老师</a>
-
-    </h1>
-    -->
-    <a href="/"><h1>扶墙老师说</h1></a>
-		<p class="masthead-lead">一个架构士的思考与沉淀</p>
-
-		<hr class="masthead-hr">
-
-	  	<ul class="masthead-nav">
+    <header class="masthead">
+      <h1><a href="/">扶墙老师说</a></h1>
+      <p class="tagline">
+         一个架构士的思考与沉淀
+          <img src="/images/wechat-qrcode-footer.png"/>
+          扶墙老师，辨证施“知”
+      </p>
+      
+      <nav class="menu">
+        <input id="menu-check" type="checkbox"/>
+        <label id="menu-label" for="menu-check" class="unselectable">
+          <span class="icon close-icon">✕</span>
+          <span class="icon open-icon">☰</span>
+          <span class="text">展开</span>
+        </label>
+        <ul>
             <li class="nav-item"><a class="nav-link" href="/favorite.html">我的收藏</a></li>
             <li class="nav-item"><a class="nav-link" href="/dashboard.html">金融看板</a></li>
             <li class="nav-item"><a class="nav-link" href="/columns.html">专栏文章</a></li>
@@ -92,20 +113,12 @@
             <li class="nav-item"><a class="nav-link" href="/whoami.html">我是何人</a></li>
             <li class="nav-item"><a class="nav-link" href="/interlinks.html">友情链接</a></li>
             <li class="nav-item"><a class="nav-link" href="/feeds.xml">RSS订阅</a></li>
-		</ul>
+        </ul>
+      </nav>
+    </header>
 
-  		<hr class="masthead-hr">
-
-	  	<ul class="masthead-nav">
-            <li class="nav-item"><small>©afoo.me</small></li>
-            <li class="nav-item"><small>Powered by <a href="http://pandoc.org/">pandoc</a> and <a href="http://rometools.github.io/rome/">ROME</a></small></li>
-		</ul>
-
-	</div>
-
-
-    <div class="listing">
-
+    <article class="main">
+      
 <div class="row">
 <div id="header">
 <p class="lead">
@@ -121,7 +134,7 @@
 
 <div id="TOC">
 <ul>
-<li><a href="#名字-很重要whats-in-a-name"><span class="toc-section-number">1</span> 名字， 很重要(What's In A Name?)</a></li>
+<li><a href="#名字-很重要whats-in-a-name"><span class="toc-section-number">1</span> 名字， 很重要(What’s In A Name?)</a></li>
 <li><a href="#你真的会写邮件吗mail-wisely"><span class="toc-section-number">2</span> 你真的会写邮件吗？(Mail Wisely)</a></li>
 <li><a href="#api设计也需要考虑用户体验the-way-of-api-design"><span class="toc-section-number">3</span> API设计也需要考虑用户体验(The Way Of API Design)</a></li>
 <li><a href="#技术产品同样需要考虑用户体验tech-product-design-in-a-better-way"><span class="toc-section-number">4</span> 技术产品同样需要考虑用户体验(Tech Product Design In A Better Way)</a></li>
@@ -135,25 +148,22 @@
 <p>有人说， 在一个老板是产品出身的公司里， 大家自然而然的会更加关注产品，所以， 既然有很多人已经在关注产品了，那么我选择扑在技术上，帮助把支撑的根基夯实。 不过这并不表示我不关注产品， 实际上， 只要你有心， 产品思维可以帮助你把事情做得更好，落地更平滑。</p>
 <p>什么是产品思维？ 不管是哪种“大家”， 其拥有的综合能力一定都是比较强的， 好的产品经理也不例外， 我不专职PD， 也不想班门弄斧，我只想跟大家先强调一点， <code>尝试去多关注一下用户体验</code>， <strong>UX Matters!</strong></p>
 <p>下面是扶墙老师乐意跟大家分享的几个案例场景，粒度由小到大，希望大家喜欢并有所启发 ;)</p>
-<div class="figure">
-<img src="images/fenxing.png" />
-
-</div>
-<h1 id="名字-很重要whats-in-a-name"><span class="header-section-number">1</span> 名字， 很重要(What's In A Name?)</h1>
+<p><img src="images/fenxing.png" /></p>
+<h1 id="名字-很重要whats-in-a-name"><span class="header-section-number">1</span> 名字， 很重要(What’s In A Name?)</h1>
 <p>新建一个项目之前，开发一款新产品之前， 创立一家新公司之前， 最头疼的事情是什么？ 对， 起名字！</p>
 <p>一个好的名字，绝对可以后期省掉你很多的事情，尤其是省钱 ；）</p>
 <p>君不见，一个好的域名值多少银子？ 为啥？因为人家值啊， 搞一个贼jb长的名字，你就得砸一堆的银子去做营销， 这些银子，其实就是一个好域名的价值体现；</p>
 <p>名字起的好， 用户记得牢，更容易被接受，从而也就更容易推广。</p>
 <p>很多时候，我们在起名字的时候都仅仅是站在自己的角度去想，但其实对于这些名字的受众来说， 却是一种糟糕的体验。</p>
 <p>扶墙老师是一个很有情怀的人， 尤其是对marvel的文化很推崇，所以， 就希望给公司里很多技术项目起一些marvel相关的名字，比如obelisk, avengers, multiverse， 但是， 说实话，从用户体验角度来看，其实是在下输了, 试问， 诸君看了这几个名字知道是啥意思不？ 进而知道名字背后代表的项目是做啥用的不？ 基本不知道吧，哈哈</p>
-<ol style="list-style-type: decimal">
+<ol type="1">
 <li>obelisk其实是我们挖财的一键部署平台项目；</li>
 <li>avengers是挖财内部一些通用的元数据管理项目；</li>
 <li>mutiverse是挖财内部配合obelisk一起工作的配置中心项目；</li>
 </ol>
 <p>没想到吧？ 所以说是在下输了，情怀这东西是要有，但不能当饭吃， 该内秀的就别动不动外漏了 ;)</p>
 <blockquote>
-<p>为了强化obelisk这个名字， 我需要每周的周报中以<code>obelisk(一键部署平台)</code>这样的形式来写周报， 这tmd都是成本啊<sub>~</sub></p>
+<p>为了强化obelisk这个名字， 我需要每周的周报中以<code>obelisk(一键部署平台)</code>这样的形式来写周报， 这tmd都是成本啊~~~</p>
 </blockquote>
 <h1 id="你真的会写邮件吗mail-wisely"><span class="header-section-number">2</span> 你真的会写邮件吗？(Mail Wisely)</h1>
 <p>大家都写过邮件吧？ 写得好吗？ 其实，邮件写的好不好，做做对比就知道了。</p>
@@ -163,34 +173,34 @@
 <p>如果邮件列表中都是千篇一律的<code>周报</code>或者<code>发布公告</code>之类很普遍的信息， 邮件接收者很难从这个列表中选择出他/她希望关注的邮件，可是如果我加上一些很特定的或者特异性的信息，设计成<code>xxx的周报</code>或者<code>xxx项目发布公告</code>形式的邮件标题，那么，就可以让邮件接收者很容的从邮件列表中捕捉到明确的邮件了。</p>
 <h1 id="api设计也需要考虑用户体验the-way-of-api-design"><span class="header-section-number">3</span> API设计也需要考虑用户体验(The Way Of API Design)</h1>
 <p>遥想当年（大约2004年或者2005年左右）， 扶墙老师还在大连英极奋发图强， 曾经苦口婆心，怒发冲冠的跟“白袜子”同学讨论他写的XXClient，设计多么烂，多么不好用，应该参考一下Spring框架里Template模式的使用，云云</p>
-<p>可是，今天， 扶墙老师却踩入了同样的一个坑儿里...</p>
+<p>可是，今天， 扶墙老师却踩入了同样的一个坑儿里…</p>
 <p>作为一个技术人，最自然的行为会去考虑如何实现功能，比如一个XXClient， 我们会很自然认为，先要有如何连接，如何通信，如何关闭等功能实现，然后自然而然的，这些功能实现的想法又会反映到我们提供给用户的API上（当然，这里的用户是使用你的XXClient的开发者），从而设计出如下类似的API接口：</p>
-<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="kw">public</span> <span class="kw">interface</span> XXClient{
-    <span class="kw">public</span> <span class="dt">void</span> <span class="fu">connect</span>() <span class="kw">throws</span> <span class="bu">IOException</span>;
-    
-    <span class="kw">public</span> <span class="bu">String</span> <span class="fu">upload</span>(<span class="bu">File</span> payload) <span class="kw">throws</span> <span class="bu">IOException</span>;
-    
-    <span class="kw">public</span> <span class="dt">void</span> <span class="fu">close</span>() <span class="kw">throws</span> <span class="bu">IOException</span>;
-}</code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode java"><code class="sourceCode java"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">public</span> <span class="kw">interface</span> XXClient{</a>
+<a class="sourceLine" id="cb1-2" data-line-number="2">    <span class="kw">public</span> <span class="dt">void</span> <span class="fu">connect</span>() <span class="kw">throws</span> <span class="bu">IOException</span>;</a>
+<a class="sourceLine" id="cb1-3" data-line-number="3">    </a>
+<a class="sourceLine" id="cb1-4" data-line-number="4">    <span class="kw">public</span> <span class="bu">String</span> <span class="fu">upload</span>(<span class="bu">File</span> payload) <span class="kw">throws</span> <span class="bu">IOException</span>;</a>
+<a class="sourceLine" id="cb1-5" data-line-number="5">    </a>
+<a class="sourceLine" id="cb1-6" data-line-number="6">    <span class="kw">public</span> <span class="dt">void</span> <span class="fu">close</span>() <span class="kw">throws</span> <span class="bu">IOException</span>;</a>
+<a class="sourceLine" id="cb1-7" data-line-number="7">}</a></code></pre></div>
 <p>可是作为API的使用者来说， 他最关心的是什么？ 他最关心的其实就一个功能：</p>
-<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="kw">public</span> <span class="kw">interface</span> XXClientLite {
-    <span class="kw">public</span> <span class="bu">String</span> <span class="fu">upload</span>(<span class="bu">File</span> payload) <span class="kw">throws</span> <span class="bu">IOException</span>;
-}
-
-<span class="co">// client.upload(file);</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode java"><code class="sourceCode java"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw">public</span> <span class="kw">interface</span> XXClientLite {</a>
+<a class="sourceLine" id="cb2-2" data-line-number="2">    <span class="kw">public</span> <span class="bu">String</span> <span class="fu">upload</span>(<span class="bu">File</span> payload) <span class="kw">throws</span> <span class="bu">IOException</span>;</a>
+<a class="sourceLine" id="cb2-3" data-line-number="3">}</a>
+<a class="sourceLine" id="cb2-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb2-5" data-line-number="5"><span class="co">// client.upload(file);</span></a></code></pre></div>
 <p>至于你如何复杂，如何牛B的实现这个接口， 其实用户真不那么关心！</p>
 <p>道理其实很简单， 列位估计也已经对扶墙老师就这么弱的问题还blablabla说个不停嗤之以鼻了吧？</p>
-<p>螺旋上升之路有些时候是曲折的，比如10年后，扶墙老师在这个层面上败给了&quot;当年的那个愤青&quot;...</p>
+<p>螺旋上升之路有些时候是曲折的，比如10年后，扶墙老师在这个层面上败给了“当年的那个愤青”…</p>
 <p>为了更好的推广Web API的规范， 扶墙老师写了一个webapi的library用于简化Web API的开发，开发者只要maven里依赖一下就可以写写SpringMVC的Controller， 从而自动享受到Web API文档的支持，享受到返回遵循挖财web api规范的Json格式响应， 享受到统一的异常处理， 但是， 也许是扶墙老师‘利欲熏心’，太要强于推广web api规范落地了，所以，硬生生的要求通过强类型的约束来编写Controller:</p>
-<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="at">@RequestMapping</span>(value = <span class="st">&quot;/api/v1.1/{endpoint}&quot;</span>, method = RequestMethod.<span class="fu">GET</span>)
-<span class="kw">public</span> WebApiResponse&lt;<span class="bu">String</span>&gt; <span class="fu">endpointApi2</span>(<span class="at">@PathVariable</span>(<span class="st">&quot;endpoint&quot;</span>) <span class="bu">String</span> endpoint) {
-   <span class="kw">return</span> WebApiResponse.<span class="fu">success</span>(<span class="st">&quot;just test payload&quot;</span>);
-}</code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode java"><code class="sourceCode java"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="at">@RequestMapping</span>(value = <span class="st">&quot;/api/v1.1/{endpoint}&quot;</span>, method = RequestMethod.<span class="fu">GET</span>)</a>
+<a class="sourceLine" id="cb3-2" data-line-number="2"><span class="kw">public</span> WebApiResponse&lt;<span class="bu">String</span>&gt; <span class="fu">endpointApi2</span>(<span class="at">@PathVariable</span>(<span class="st">&quot;endpoint&quot;</span>) <span class="bu">String</span> endpoint) {</a>
+<a class="sourceLine" id="cb3-3" data-line-number="3">   <span class="kw">return</span> WebApiResponse.<span class="fu">success</span>(<span class="st">&quot;just test payload&quot;</span>);</a>
+<a class="sourceLine" id="cb3-4" data-line-number="4">}</a></code></pre></div>
 <p>即使是到这一步，我们也演化了很久，但实际上我们却忽略了最基本的用户体验， 对于一般的应用开发者来说，他们希望的其实就是， 直接返回相应的值对象(Value Object)类型，而不是通过WebApiResponse封装的类型， 你框架背后怎么把这些结果转化为符合web api规范的json响应，我干嘛要关心？</p>
-<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="at">@RequestMapping</span>(value = <span class="st">&quot;/api/v1.1/{endpoint}&quot;</span>, method = RequestMethod.<span class="fu">GET</span>)
-<span class="kw">public</span> ValueObject <span class="fu">endpointApi</span>(<span class="at">@PathVariable</span>(<span class="st">&quot;endpoint&quot;</span>) <span class="bu">String</span> endpoint) {
-   <span class="kw">return</span> <span class="kw">new</span> <span class="fu">ValueObject</span>();
-}</code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode java"><code class="sourceCode java"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="at">@RequestMapping</span>(value = <span class="st">&quot;/api/v1.1/{endpoint}&quot;</span>, method = RequestMethod.<span class="fu">GET</span>)</a>
+<a class="sourceLine" id="cb4-2" data-line-number="2"><span class="kw">public</span> ValueObject <span class="fu">endpointApi</span>(<span class="at">@PathVariable</span>(<span class="st">&quot;endpoint&quot;</span>) <span class="bu">String</span> endpoint) {</a>
+<a class="sourceLine" id="cb4-3" data-line-number="3">   <span class="kw">return</span> <span class="kw">new</span> <span class="fu">ValueObject</span>();</a>
+<a class="sourceLine" id="cb4-4" data-line-number="4">}</a></code></pre></div>
 <p>恍然一惊之后， 才发现原来之前太过于执着规范的落地了， 太过于从自己出发，反而这样简单的API设计道理都忘记了， ：（</p>
 <p>遂痛改前非，稍作coding， 让以上两种形式都可以工作。</p>
 <p>啥？ 为啥还留着之前的形式？ 亲， 之前签订的条约你要遵守的啦， 单方面撕毁条约你要承担后果的哦~</p>
@@ -201,16 +211,10 @@
 <p>很多技术人员以技术的高深境界来评判和选择一个技术产品， 唯技高者🐴首是瞻， 从而盲目的选型，进而把本可以避免的问题又再一次从其它机构引入到自己内部来，并沾沾自喜， 不信？ 各位看官开眼啦~</p>
 <p>TAO系在技术业界是名声在外的，但不意味着他们所有的技术和产品都是最好的，考虑最系统的，设计最合理的。 以配置中心Diamond为例，这个东西对所有的分布式系统是必须的吗？ 我认为不一定。</p>
 <p>这里的配置中心的概念，扶墙老师也不认为是配置中心， 倒是称作状态中心更为贴切， 实际上， 这个东西完全被当做了一个共享状态使用了， 一个客户端和服务器端共享的状态中心， 而这个共享状态中心的本质目的就是实现双方的消息交互！</p>
-<div class="figure">
-<img src="images/middleware%20design1.png" />
-
-</div>
+<p><img src="images/middleware%20design1.png" /></p>
 <p>可是，为了达到这个目的，就一定要烦恼你的客户端用户嘛？ 我为什么既要知道你这个状态中心在哪儿，并且怎么通信，还要知道你服务器在哪儿，怎么通信？ 你扩容了，我还得知道并调整自己的工作状态？</p>
 <p>拜托，那tmd都是你们家里（serverside）的家务事，干嘛来烦我？ 我要的只是，给我你的地址，有事儿我只找你一个，不是吗？</p>
-<div class="figure">
-<img src="images/middleware%20design2.png" />
-
-</div>
+<p><img src="images/middleware%20design2.png" /></p>
 <p>这时候有人要说了，你这样不就引入更多roundtrip了嘛，这多影响性能啊？ 拜托， 对于你的用户来说，<code>关我啥事儿？</code>，那是你服务提供者（service implementor）要考虑的事情！ (你要么inline服务节点，要么提高网络基础设施的服务能力， 但这些都与用户无关）</p>
 <p>帮助用户（client app）屏蔽掉复杂度， 也就节省了用户的心智，小白都能配置一个你的服务地址调用服务了，何来一堆复杂的配置要去搞懂那？ 这样容易配置使用的产品会没有人愿意用？</p>
 <blockquote>
@@ -224,23 +228,18 @@
 <p>扶墙老师提倡一个原则： <code>抽象共性，实现个性</code>， 我们可以某种程度上求同， 但落实的时候则需要存异，要工作到位， 这个时候就是应该具体情况具体分析！</p>
 <h1 id="后话"><span class="header-section-number">6</span> 后话</h1>
 <p>扶墙老师以身示范自黑， 不知各位看官以上这些小故事读得爽吗？</p>
-<p>其实就是考验各位的换位思考能力以及实践检验&quot;你的真理&quot;的能力， 只要别换来换去把自己整疯了就行，哈哈哈</p>
+<p>其实就是考验各位的换位思考能力以及实践检验“你的真理”的能力， 只要别换来换去把自己整疯了就行，哈哈哈</p>
 <blockquote>
 <p>严重声明： 扶墙老师不是在贬低技术人， 偶也是做技术的， 但如果我们做技术的都能够多少关注一下用户的体验和感受，那么技术将发挥更大的作用和价值！！！</p>
 </blockquote>
 <h1 id="references"><span class="header-section-number">7</span> References</h1>
-<ol style="list-style-type: decimal">
+<ol type="1">
 <li><a href="http://mp.weixin.qq.com/s?__biz=MzA3ODQ1NjYyOQ==&amp;mid=400704277&amp;idx=1&amp;sn=3c089e3f4df3905fac1d6e064c482b70&amp;scene=1&amp;srcid=1110on3B66ym8DlWmarMDaqs&amp;from=groupmessage&amp;isappinstalled=0#wechat_redirect">马化腾的“邮件癖”</a></li>
 <li><a href="http://mp.weixin.qq.com/s?__biz=MjM5MDE0Mjc4MA==&amp;mid=400645575&amp;idx=1&amp;sn=da55d75db55117046c520de88dde1123&amp;scene=2&amp;srcid=1109XAQ6ZhXGRe6trz3blGJb&amp;from=timeline&amp;isappinstalled=0#rd">实施微服务需要哪些基础框架</a></li>
 <li>推荐书目： 《像外行一样思考，像专家一样实践》</li>
 </ol>
-<hr>
-<div align="center">
-<img src="/images/wechat-qrcode-footer.png"/>
-</div>
 
-</div>
+    </article>
 
-
-
-</body></html>
+  </body>
+</html>

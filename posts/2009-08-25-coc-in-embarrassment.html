@@ -1,14 +1,81 @@
 <!DOCTYPE html>
-<html lang="zh">
-<head>
+<html>
+  <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>尴尬的COC - 一个架构士的思考与沉</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="王福强的博客， 一个架构士的思考与沉淀">
     <meta name="keywords" content="architecture, book author, thinker, fighter, 架构, 思考, 技术, 武术, 哲学">
     <meta name="author" content="王福强">
-        <link rel="icon" href="/favicon.ico">
-    <title>尴尬的COC - 一个架构士的思考与沉淀</title>
-    <!-- 百度统计 -->
+    <link rel="stylesheet" href="/ivy.css">
+    <link rel="shortcut icon" href="/favicon.ico"/>
+    <style type="text/css">code{white-space: pre;}</style>
+    <style type="text/css">
+    a.sourceLine { display: inline-block; line-height: 1.25; }
+    a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+    a.sourceLine:empty { height: 1.2em; position: absolute; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode { white-space: pre; position: relative; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    code.sourceCode { white-space: pre-wrap; }
+    a.sourceLine { text-indent: -1em; padding-left: 1em; }
+    }
+    pre.numberSource a.sourceLine
+      { position: relative; }
+    pre.numberSource a.sourceLine:empty
+      { position: absolute; }
+    pre.numberSource a.sourceLine::before
+      { content: attr(data-line-number);
+        position: absolute; left: -5em; text-align: right; vertical-align: baseline;
+        border: none; pointer-events: all;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {  }
+    @media screen {
+    a.sourceLine::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+            <!-- 百度统计 -->
     <script>
       var _hmt = _hmt || [];
       (function() {
@@ -18,72 +85,26 @@
           s.parentNode.insertBefore(hm, s);
       })();
     </script>
+  </head>
 
-	<link href="/css/custom.css" rel="stylesheet"/>
-	<link rel="shortcut icon" href="/favicon.ico"/>
+  <body class="node homepage">
 
-<style type="text/css">code{white-space: pre;}</style>
-    <style type="text/css">
-    div.sourceCode { overflow-x: auto; }
-    table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
-      margin: 0; padding: 0; vertical-align: baseline; border: none; }
-    table.sourceCode { width: 100%; line-height: 100%; }
-    td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
-    td.sourceCode { padding-left: 5px; }
-    code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
-    code > span.dt { color: #902000; } /* DataType */
-    code > span.dv { color: #40a070; } /* DecVal */
-    code > span.bn { color: #40a070; } /* BaseN */
-    code > span.fl { color: #40a070; } /* Float */
-    code > span.ch { color: #4070a0; } /* Char */
-    code > span.st { color: #4070a0; } /* String */
-    code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
-    code > span.ot { color: #007020; } /* Other */
-    code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
-    code > span.fu { color: #06287e; } /* Function */
-    code > span.er { color: #ff0000; font-weight: bold; } /* Error */
-    code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-    code > span.cn { color: #880000; } /* Constant */
-    code > span.sc { color: #4070a0; } /* SpecialChar */
-    code > span.vs { color: #4070a0; } /* VerbatimString */
-    code > span.ss { color: #bb6688; } /* SpecialString */
-    code > span.im { } /* Import */
-    code > span.va { color: #19177c; } /* Variable */
-    code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-    code > span.op { color: #666666; } /* Operator */
-    code > span.bu { } /* BuiltIn */
-    code > span.ex { } /* Extension */
-    code > span.pp { color: #bc7a00; } /* Preprocessor */
-    code > span.at { color: #7d9029; } /* Attribute */
-    code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
-    code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-    code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-    code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-  </style>
-        
-	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-	<!--[if lt IE 9]>
-	  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.2/html5shiv.js"></script>
-	  <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-	<![endif]-->
-
-</head>
-
-<body>
-
-    <div class="masthead">
-		<!--
-    <h1 class="masthead-title fq">
-      <a href="/">扶墙老师</a>
-
-    </h1>
-    -->
-    <a href="/"><h1>扶墙老师说</h1></a>
-		<p class="masthead-lead">一个架构士的思考与沉淀</p>
-
-		<hr class="masthead-hr">
-
-	  	<ul class="masthead-nav">
+    <header class="masthead">
+      <h1><a href="/">扶墙老师说</a></h1>
+      <p class="tagline">
+         一个架构士的思考与沉淀
+          <img src="/images/wechat-qrcode-footer.png"/>
+          扶墙老师，辨证施“知”
+      </p>
+      
+      <nav class="menu">
+        <input id="menu-check" type="checkbox"/>
+        <label id="menu-label" for="menu-check" class="unselectable">
+          <span class="icon close-icon">✕</span>
+          <span class="icon open-icon">☰</span>
+          <span class="text">展开</span>
+        </label>
+        <ul>
             <li class="nav-item"><a class="nav-link" href="/favorite.html">我的收藏</a></li>
             <li class="nav-item"><a class="nav-link" href="/dashboard.html">金融看板</a></li>
             <li class="nav-item"><a class="nav-link" href="/columns.html">专栏文章</a></li>
@@ -91,20 +112,12 @@
             <li class="nav-item"><a class="nav-link" href="/whoami.html">我是何人</a></li>
             <li class="nav-item"><a class="nav-link" href="/interlinks.html">友情链接</a></li>
             <li class="nav-item"><a class="nav-link" href="/feeds.xml">RSS订阅</a></li>
-		</ul>
+        </ul>
+      </nav>
+    </header>
 
-  		<hr class="masthead-hr">
-
-	  	<ul class="masthead-nav">
-            <li class="nav-item"><small>©afoo.me</small></li>
-            <li class="nav-item"><small>Powered by <a href="http://pandoc.org/">pandoc</a> and <a href="http://rometools.github.io/rome/">ROME</a></small></li>
-		</ul>
-
-	</div>
-
-
-    <div class="listing">
-
+    <article class="main">
+      
 <div class="row">
 <div id="header">
 <p class="lead">
@@ -115,31 +128,26 @@
 <hr>
 
 
-<p>Convention Over Configuration大家都已经耳熟能详了， 这东西好不好那？ 好， 绝对是好， 不过， 还要看用的人到底怎么用， 或者说是否真的理解了它到底是怎么回事， 说两三个小场景...</p>
+<p>Convention Over Configuration大家都已经耳熟能详了， 这东西好不好那？ 好， 绝对是好， 不过， 还要看用的人到底怎么用， 或者说是否真的理解了它到底是怎么回事， 说两三个小场景…</p>
 <p>发现某个框架虽声称COC是其主打特色， 但某些功能模块在实现的时候却没有将COC执行彻底， 比方说， 大部分情况下可以根据URL取得的信息， 现在依然要求开发人员在某个配置文件中进行统一配置， 虽然这个功能侧重就是统一配置和管理某些URL映射， 但key和value都一样的情况下， 完全可以让框架根据某一Convention自动提取， 而没必要重复配置这些key和value的值， 实际上，只有说key和value不同的时候，进行一下配置就可以了， 你说，这里的COC尴尬不？</p>
 <p>JUnit4之后引入了@Test用于标注测试用例的测试方法， 这东西好不好？ 好， 让你可以在一处管理所有的信息， 而且像强类型支持， IDE的支持等等好处都可以享受到， 再也不会因为把testXXX拼错成tsetXXX之类并导致测试用例的“怪异”行为而头疼了，不过， 事情真的像宣称的或者说看起来的那么美嘛？ 你用@Test标注的测试方法依然需要声明吧？测试方法依然需要有一个表意清晰的名称吧？ 按理说， 每个测试方法的名称以test开头不就是个Convention嘛？ 现在使用@Test代替这个Convention， 那COC是不是又感觉很尴尬呀？ 我怎么就觉得直接敲方法名要比敲方法名和@Test这个Annotation更便捷那？ 拼写错误？ come on， 数数大家还是会的吧？ 上一次跑了12/12个测试方法，你添加个新的测试方法之后，run的时候还是12/12， 你难道不知道问题出在哪里嘛？</p>
 <p>部门另一个架构师开发了个GenericDao框架，用于简化大家的日常开发，提高开发效率， 好东西吧？ 绝对好东西， 不过， 在用的时候，发现点儿不方便的地方。当然了，这个不方便不是框架设计者本身的问题，可能更多是局限于现有的技术前提条件。其实， 几年前就有过类似的想法， 打个比方， 假设我声明如下接口定义：</p>
-<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="kw">public</span> <span class="kw">interface</span> XXXDao&lt;T&gt;  {  
-    <span class="bu">List</span>&lt;T&gt; <span class="fu">findByProperty1AndProperty2</span>(<span class="bu">String</span> propertyOne, <span class="bu">String</span> propertyTwo);  
-}</code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode java"><code class="sourceCode java"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">public</span> <span class="kw">interface</span> XXXDao&lt;T&gt;  {  </a>
+<a class="sourceLine" id="cb1-2" data-line-number="2">    <span class="bu">List</span>&lt;T&gt; <span class="fu">findByProperty1AndProperty2</span>(<span class="bu">String</span> propertyOne, <span class="bu">String</span> propertyTwo);  </a>
+<a class="sourceLine" id="cb1-3" data-line-number="3">}</a></code></pre></div>
 <p>那么，按照我最初的想法， GenericDao框架内部就应该直接根据参数名称构建个map，然后传给sqlmap作为调用的参数（假设采用IBatis做数据访问），也就是说， 按照某种Convention， 方法参数的名称与sqlmap中的参数名称是一一对应的， 这样，开发人员只需要声明个数据访问方法就可以了，简单直接， 不是嘛？</p>
-<p>不过那，现实是残酷的，呵呵，编译的时候， 参数名称这样的信息在编译的时候， 默认是忽略掉的， 这也就是为啥通过反射API只能得到个参数类型，而得不到参数名称。虽然新的java版本一直吵吵着要加入这个信息，但目前来看，还是不行，所以， 我们就只能变通一下， COC中的第一个C（Convention）搞不定了， 只能启用一下第二个C（Configuration), 通过某个Annotation，比如@Param(&quot;name&quot;)， 来告知框架怎么关联方法调用与sqlmap调用参数之间的映射关系。你说， 这里的COC尴尬不？我觉得最尴尬了，绕都绕不过去， 除非你再加个Post-Compile的过程或者Pre-Compile的过程， 在Java Source的基础上做做手脚，然后带到编译后的成果物中去（class文件中，或者自动生成的某种配置信息中）。</p>
-<p>不过那，最理想的还是从“根儿”上解决这个问题， 你JavaClassFormat都把三个规则中的两个默认 <a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a>启用了，为啥就不启用这最后一个 <a href="#fn2" class="footnoteRef" id="fnref2"><sup>2</sup></a>那？如果怕编译后的class文件膨胀，那咱权宜一下，只对interface类型做这个事情好不？</p>
+<p>不过那，现实是残酷的，呵呵，编译的时候， 参数名称这样的信息在编译的时候， 默认是忽略掉的， 这也就是为啥通过反射API只能得到个参数类型，而得不到参数名称。虽然新的java版本一直吵吵着要加入这个信息，但目前来看，还是不行，所以， 我们就只能变通一下， COC中的第一个C（Convention）搞不定了， 只能启用一下第二个C（Configuration), 通过某个Annotation，比如@Param(“name”)， 来告知框架怎么关联方法调用与sqlmap调用参数之间的映射关系。你说， 这里的COC尴尬不？我觉得最尴尬了，绕都绕不过去， 除非你再加个Post-Compile的过程或者Pre-Compile的过程， 在Java Source的基础上做做手脚，然后带到编译后的成果物中去（class文件中，或者自动生成的某种配置信息中）。</p>
+<p>不过那，最理想的还是从“根儿”上解决这个问题， 你JavaClassFormat都把三个规则中的两个默认 <a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>启用了，为啥就不启用这最后一个 <a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a>那？如果怕编译后的class文件膨胀，那咱权宜一下，只对interface类型做这个事情好不？</p>
 <p>嗯， 就说这么些了， 套用当下已经用烂了的一句话， “COC自己其实一点儿都不尴尬，只是寂寞”， 哈哈</p>
-<div class="footnotes">
+<section class="footnotes">
 <hr />
 <ol>
-<li id="fn1"><p>line number tables for each method和the name of the source file<a href="#fnref1">↩</a></p></li>
-<li id="fn2"><p>local variable tables for each method)<a href="#fnref2">↩</a></p></li>
+<li id="fn1"><p>line number tables for each method和the name of the source file<a href="#fnref1" class="footnote-back">↩</a></p></li>
+<li id="fn2"><p>local variable tables for each method)<a href="#fnref2" class="footnote-back">↩</a></p></li>
 </ol>
-</div>
-<hr>
-<div align="center">
-<img src="/images/wechat-qrcode-footer.png"/>
-</div>
+</section>
 
-</div>
+    </article>
 
-
-
-</body></html>
+  </body>
+</html>

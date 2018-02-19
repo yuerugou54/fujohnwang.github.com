@@ -1,14 +1,81 @@
 <!DOCTYPE html>
-<html lang="zh">
-<head>
+<html>
+  <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>《打开量化投资的黑箱》读书笔记 - 一个架构士的思考与沉</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="王福强的博客， 一个架构士的思考与沉淀">
     <meta name="keywords" content="architecture, book author, thinker, fighter, 架构, 思考, 技术, 武术, 哲学">
     <meta name="author" content="王福强">
-        <link rel="icon" href="/favicon.ico">
-    <title>《打开量化投资的黑箱》读书笔记 - 一个架构士的思考与沉淀</title>
-    <!-- 百度统计 -->
+    <link rel="stylesheet" href="/ivy.css">
+    <link rel="shortcut icon" href="/favicon.ico"/>
+    <style type="text/css">code{white-space: pre;}</style>
+    <style type="text/css">
+    a.sourceLine { display: inline-block; line-height: 1.25; }
+    a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+    a.sourceLine:empty { height: 1.2em; position: absolute; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode { white-space: pre; position: relative; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    code.sourceCode { white-space: pre-wrap; }
+    a.sourceLine { text-indent: -1em; padding-left: 1em; }
+    }
+    pre.numberSource a.sourceLine
+      { position: relative; }
+    pre.numberSource a.sourceLine:empty
+      { position: absolute; }
+    pre.numberSource a.sourceLine::before
+      { content: attr(data-line-number);
+        position: absolute; left: -5em; text-align: right; vertical-align: baseline;
+        border: none; pointer-events: all;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {  }
+    @media screen {
+    a.sourceLine::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+            <!-- 百度统计 -->
     <script>
       var _hmt = _hmt || [];
       (function() {
@@ -18,72 +85,26 @@
           s.parentNode.insertBefore(hm, s);
       })();
     </script>
+  </head>
 
-	<link href="/css/custom.css" rel="stylesheet"/>
-	<link rel="shortcut icon" href="/favicon.ico"/>
+  <body class="node homepage">
 
-<style type="text/css">code{white-space: pre;}</style>
-    <style type="text/css">
-    div.sourceCode { overflow-x: auto; }
-    table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
-      margin: 0; padding: 0; vertical-align: baseline; border: none; }
-    table.sourceCode { width: 100%; line-height: 100%; }
-    td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
-    td.sourceCode { padding-left: 5px; }
-    code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
-    code > span.dt { color: #902000; } /* DataType */
-    code > span.dv { color: #40a070; } /* DecVal */
-    code > span.bn { color: #40a070; } /* BaseN */
-    code > span.fl { color: #40a070; } /* Float */
-    code > span.ch { color: #4070a0; } /* Char */
-    code > span.st { color: #4070a0; } /* String */
-    code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
-    code > span.ot { color: #007020; } /* Other */
-    code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
-    code > span.fu { color: #06287e; } /* Function */
-    code > span.er { color: #ff0000; font-weight: bold; } /* Error */
-    code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-    code > span.cn { color: #880000; } /* Constant */
-    code > span.sc { color: #4070a0; } /* SpecialChar */
-    code > span.vs { color: #4070a0; } /* VerbatimString */
-    code > span.ss { color: #bb6688; } /* SpecialString */
-    code > span.im { } /* Import */
-    code > span.va { color: #19177c; } /* Variable */
-    code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-    code > span.op { color: #666666; } /* Operator */
-    code > span.bu { } /* BuiltIn */
-    code > span.ex { } /* Extension */
-    code > span.pp { color: #bc7a00; } /* Preprocessor */
-    code > span.at { color: #7d9029; } /* Attribute */
-    code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
-    code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-    code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-    code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-  </style>
-        
-	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-	<!--[if lt IE 9]>
-	  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.2/html5shiv.js"></script>
-	  <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-	<![endif]-->
-
-</head>
-
-<body>
-
-    <div class="masthead">
-		<!--
-    <h1 class="masthead-title fq">
-      <a href="/">扶墙老师</a>
-
-    </h1>
-    -->
-    <a href="/"><h1>扶墙老师说</h1></a>
-		<p class="masthead-lead">一个架构士的思考与沉淀</p>
-
-		<hr class="masthead-hr">
-
-	  	<ul class="masthead-nav">
+    <header class="masthead">
+      <h1><a href="/">扶墙老师说</a></h1>
+      <p class="tagline">
+         一个架构士的思考与沉淀
+          <img src="/images/wechat-qrcode-footer.png"/>
+          扶墙老师，辨证施“知”
+      </p>
+      
+      <nav class="menu">
+        <input id="menu-check" type="checkbox"/>
+        <label id="menu-label" for="menu-check" class="unselectable">
+          <span class="icon close-icon">✕</span>
+          <span class="icon open-icon">☰</span>
+          <span class="text">展开</span>
+        </label>
+        <ul>
             <li class="nav-item"><a class="nav-link" href="/favorite.html">我的收藏</a></li>
             <li class="nav-item"><a class="nav-link" href="/dashboard.html">金融看板</a></li>
             <li class="nav-item"><a class="nav-link" href="/columns.html">专栏文章</a></li>
@@ -91,20 +112,12 @@
             <li class="nav-item"><a class="nav-link" href="/whoami.html">我是何人</a></li>
             <li class="nav-item"><a class="nav-link" href="/interlinks.html">友情链接</a></li>
             <li class="nav-item"><a class="nav-link" href="/feeds.xml">RSS订阅</a></li>
-		</ul>
+        </ul>
+      </nav>
+    </header>
 
-  		<hr class="masthead-hr">
-
-	  	<ul class="masthead-nav">
-            <li class="nav-item"><small>©afoo.me</small></li>
-            <li class="nav-item"><small>Powered by <a href="http://pandoc.org/">pandoc</a> and <a href="http://rometools.github.io/rome/">ROME</a></small></li>
-		</ul>
-
-	</div>
-
-
-    <div class="listing">
-
+    <article class="main">
+      
 <div class="row">
 <div id="header">
 <p class="lead">
@@ -157,7 +170,7 @@
 
 <p>英文名: inside the black box - the simple truth about quantitative trading</p>
 <h1 id="个人感受"><span class="header-section-number">1</span> 个人感受</h1>
-<ol style="list-style-type: decimal">
+<ol type="1">
 <li>对alpha模型，风控模型和成本模型三者的关系，采用乐观主义者，悲观主义者和精打细算的会计来类比，很不错；</li>
 <li>整书的提纲挈领做的很好， Have a nice big picture；</li>
 <li>内容深浅适度，挺适合我这种人读 ：）</li>
@@ -165,9 +178,9 @@
 <li>量化建模也尤其有限的特别适合的场景，超出这些场景或者用错场景，极有可能招致灾难；</li>
 </ol>
 <h1 id="量化交易模型big-picture"><span class="header-section-number">2</span> 量化交易模型Big Picture</h1>
-<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala">((alpha model, risk model, transaction cost model) =&gt; portfolio construction model) &lt;=&gt; execution model</code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode scala"><code class="sourceCode scala"><a class="sourceLine" id="cb1-1" data-line-number="1">((alpha model, risk model, transaction cost model) =&gt; portfolio construction model) &lt;=&gt; execution model</a></code></pre></div>
 <h1 id="alpha模型类别"><span class="header-section-number">3</span> alpha模型类别</h1>
-<ol style="list-style-type: decimal">
+<ol type="1">
 <li>理论驱动型
 <ul>
 <li>基于价格相关数据的策略
@@ -187,7 +200,7 @@
 <ul>
 <li>线性模型
 <ul>
-<li>等权重模型(&quot;既然无法预测和分派确切的权重，那就全都一样就好了&quot;)</li>
+<li>等权重模型(“既然无法预测和分派确切的权重，那就全都一样就好了”)</li>
 </ul></li>
 <li>非线性模型
 <ul>
@@ -204,7 +217,7 @@
 </ul></li>
 </ol>
 <h1 id="策略的实施"><span class="header-section-number">4</span> 策略的实施</h1>
-<ol style="list-style-type: decimal">
+<ol type="1">
 <li>预测目标
 <ul>
 <li>方向</li>
@@ -243,7 +256,7 @@
 风险管理并不只是规避风险或者减少损失，它是为了提高回报的质量和持续性， 而面对敞口(exposure)实施有目的的选择和规模控制。
 </blockquote>
 <h2 id="限制风险的大小"><span class="header-section-number">5.1</span> 限制风险的大小</h2>
-<ol style="list-style-type: decimal">
+<ol type="1">
 <li>通过严格的约束条件和惩罚机制来限制头寸的大小
 <ul>
 <li>投资标准基线， 超出部分激活惩罚机制， 离基线越远， 增加额外规模则越困难</li>
@@ -271,7 +284,7 @@
 </ul></li>
 </ol>
 <h2 id="限制风险的类型"><span class="header-section-number">5.2</span> 限制风险的类型</h2>
-<ol style="list-style-type: decimal">
+<ol type="1">
 <li>理论驱动型风控模型
 <ul>
 <li>“通常关注__已知__名称的或者系统性的风险因素”</li>
@@ -293,7 +306,7 @@
 </blockquote>
 <p>交易成本模型背后的思想是， 任何交易都要花费成本。</p>
 <h2 id="交易成本定义"><span class="header-section-number">6.1</span> 交易成本定义</h2>
-<ol style="list-style-type: decimal">
+<ol type="1">
 <li>佣金和费用
 <ul>
 <li>清算和结算费用，有时候可能包含到佣金中</li>
@@ -309,7 +322,7 @@
 </ol>
 <h2 id="交易成本模型的类型"><span class="header-section-number">6.2</span> 交易成本模型的类型</h2>
 <p>y = f(x), y为交易成本， x为交易规模</p>
-<ol style="list-style-type: decimal">
+<ol type="1">
 <li>常数交易成本模型
 <ul>
 <li>基本不现实，只有一点与实际成本曲线相交/拟合</li>
@@ -328,10 +341,10 @@
 </ul></li>
 </ol>
 <h1 id="投资组合构建模型portfolio-construction-model"><span class="header-section-number">7</span> 投资组合构建模型(portfolio construction model)</h1>
-<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala">投资组合构建模型 =&gt; 投资组合</code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode scala"><code class="sourceCode scala"><a class="sourceLine" id="cb2-1" data-line-number="1">投资组合构建模型 =&gt; 投资组合</a></code></pre></div>
 <h2 id="基于规则的投资组合构建模型"><span class="header-section-number">7.1</span> 基于规则的投资组合构建模型</h2>
 <p>基于直觉</p>
-<ol style="list-style-type: decimal">
+<ol type="1">
 <li>相等头寸权重</li>
 <li>相等风险权重
 <ul>
@@ -350,13 +363,13 @@
 <h2 id="基于最优化工具的投资组合构建模型"><span class="header-section-number">7.2</span> 基于最优化工具的投资组合构建模型</h2>
 <p>基于现代投资组合理论的逻辑思路</p>
 <h3 id="最优化工具的输入"><span class="header-section-number">7.2.1</span> 最优化工具的输入</h3>
-<ol style="list-style-type: decimal">
+<ol type="1">
 <li>期望回报</li>
 <li>期望波动率</li>
 <li>期望相关性</li>
 </ol>
 <h3 id="最优化技术"><span class="header-section-number">7.2.2</span> 最优化技术</h3>
-<ol style="list-style-type: decimal">
+<ol type="1">
 <li>无约束条件的最优化</li>
 <li>有约束条件的最优化</li>
 <li>布莱克-莱特曼最优化方法
@@ -372,7 +385,7 @@
 <h1 id="执行模型"><span class="header-section-number">8</span> 执行模型</h1>
 <p>简单来讲，就是将订单通过相应的交易通道，投递到相应的流动性订单池</p>
 <h2 id="交易方式"><span class="header-section-number">8.1</span> 交易方式</h2>
-<ol style="list-style-type: decimal">
+<ol type="1">
 <li>电子化交易</li>
 <li>通过人工中介交易（比如经纪商）
 <ul>
@@ -388,7 +401,7 @@
 <p>适合小规模资产，大规模的高频交易会大幅度的改变市场，以至于预测价格与最终执行价格非常接近，无多少利润空间。</p>
 <p>“鲨鱼”算法， 跟踪和依附“冰山”暗订单之上/前， 借助于“冰山”推高价格的同时盈利。</p>
 <h2 id="交易基础设施"><span class="header-section-number">8.4</span> 交易基础设施</h2>
-<ol style="list-style-type: decimal">
+<ol type="1">
 <li>硬件
 <ul>
 <li>定制芯片</li>
@@ -413,7 +426,7 @@
 </ul></li>
 </ol>
 <h1 id="数据"><span class="header-section-number">9</span> 数据</h1>
-<ol style="list-style-type: decimal">
+<ol type="1">
 <li>数据的重要性
 <ul>
 <li>输入 =&gt; 输出</li>
@@ -459,7 +472,7 @@
 <h1 id="研究"><span class="header-section-number">10</span> 研究</h1>
 <p>主要讨论了方法， 思想来源， 检验和假设相关内容</p>
 <p>思想来源可以归纳为如下四种：</p>
-<ol style="list-style-type: decimal">
+<ol type="1">
 <li>市场观察</li>
 <li>学术文献</li>
 <li>挖掘其他量化交易机构的交易者并向其学习</li>
@@ -471,7 +484,7 @@
 每件事都应力求简单，而又不能过于简单。
 </blockquote>
 <h1 id="量化交易策略的固有风险"><span class="header-section-number">11</span> 量化交易策略的固有风险</h1>
-<ol style="list-style-type: decimal">
+<ol type="1">
 <li>模型风险(model risk)
 <ul>
 <li>建模的不适宜性(the inapplicability of modeling)</li>
@@ -499,7 +512,7 @@
 </ul></li>
 </ol>
 <h2 id="风险检测工具"><span class="header-section-number">11.1</span> 风险检测工具</h2>
-<ol style="list-style-type: decimal">
+<ol type="1">
 <li>敞口检测工具</li>
 <li>盈利和亏损检测工具</li>
 <li>执行检测工具
@@ -512,7 +525,7 @@
 <p>后面几章大体上没有啥要有条理的记录的，唯一印象深刻的是拷问诚信的内容，作者引用了《审问者》这本书里提到的一些技巧和准则以及在具体场景下的案例，感觉很有意思，或许可以进一步挖掘。 不过，对于那种信口雌黄的主儿，这些技巧和准则可能就没有什么作用了。 比如“好的问题和好的回答比业务记录重要的多”，以及“（在发生了如此多的丑闻之后），名声和业务记录对于判断基金经理是否诚信往往都是不够的”。</p>
 <p>另外， 作者提到“一些小的公司长期疲于奔命， 很少与其他人有任何接触”， 这一点其实落到人和某些群体上，所见，所闻，所感同身受，窃以为如此。</p>
 <h1 id="术语"><span class="header-section-number">13</span> 术语</h1>
-<ol style="list-style-type: decimal">
+<ol type="1">
 <li>quantative trading strategies - 量化交易策略</li>
 <li>quants - 量化交易者， 俗称宽客</li>
 <li>high frequency trading - 高频交易</li>
@@ -553,7 +566,7 @@
 <li>流动性提供者(Liquidity Providers)</li>
 <li>逆向选择偏误(adverse selection bias)
 <ul>
-<li>&quot;压路机前捡硬币&quot;，这个比喻很生动形象</li>
+<li>“压路机前捡硬币”，这个比喻很生动形象</li>
 </ul></li>
 <li>均值方差优化模型(mean variance optimization)</li>
 <li>现代投资组合原理(modern portfolio theory, MPT)
@@ -562,7 +575,7 @@
 </ul></li>
 <li>明订单(visible orders)/暗订单(hidden orders)
 <ul>
-<li>&quot;冰山一角“(iceberging), 一种暗订单交易技术，即将大订单切割成许多小订单，然后投递到orderbook中</li>
+<li>“冰山一角“(iceberging), 一种暗订单交易技术，即将大订单切割成许多小订单，然后投递到orderbook中</li>
 </ul></li>
 <li>stop loss policy/止损策略
 <ul>
@@ -572,7 +585,7 @@
 <ul>
 <li>该指标是回报率显著高于平均值那段时间的回报在策略总回报中所占的比例</li>
 </ul></li>
-<li>奥卡姆剃刀原理(Occam's Razor)
+<li>奥卡姆剃刀原理(Occam’s Razor)
 <ul>
 <li>如无必要，勿增实体 - Entities must not be multiplied beyond necessity.</li>
 </ul></li>
@@ -584,13 +597,8 @@
 <li>交叉抵押(cross-collateraling)</li>
 <li>关键时点交易(breakout trading)</li>
 </ol>
-<hr>
-<div align="center">
-<img src="/images/wechat-qrcode-footer.png"/>
-</div>
 
-</div>
+    </article>
 
-
-
-</body></html>
+  </body>
+</html>

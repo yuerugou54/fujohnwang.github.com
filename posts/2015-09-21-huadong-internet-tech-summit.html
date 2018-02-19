@@ -1,15 +1,17 @@
 <!DOCTYPE html>
-<html lang="zh">
-<head>
+<html>
+  <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>华东互联网+技术峰会回顾 - 一个架构士的思考与沉</title>
+        <meta name="date" content="2015-09-21" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="王福强的博客， 一个架构士的思考与沉淀">
     <meta name="keywords" content="architecture, book author, thinker, fighter, 架构, 思考, 技术, 武术, 哲学">
     <meta name="author" content="王福强">
-        <meta name="date" content="2015-09-21" />
-        <link rel="icon" href="/favicon.ico">
-    <title>华东互联网+技术峰会回顾 - 一个架构士的思考与沉淀</title>
-    <!-- 百度统计 -->
+    <link rel="stylesheet" href="/ivy.css">
+    <link rel="shortcut icon" href="/favicon.ico"/>
+    <style type="text/css">code{white-space: pre;}</style>
+            <!-- 百度统计 -->
     <script>
       var _hmt = _hmt || [];
       (function() {
@@ -19,35 +21,26 @@
           s.parentNode.insertBefore(hm, s);
       })();
     </script>
+  </head>
 
-	<link href="/css/custom.css" rel="stylesheet"/>
-	<link rel="shortcut icon" href="/favicon.ico"/>
+  <body class="node homepage">
 
-<style type="text/css">code{white-space: pre;}</style>
-        
-	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-	<!--[if lt IE 9]>
-	  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.2/html5shiv.js"></script>
-	  <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-	<![endif]-->
-
-</head>
-
-<body>
-
-    <div class="masthead">
-		<!--
-    <h1 class="masthead-title fq">
-      <a href="/">扶墙老师</a>
-
-    </h1>
-    -->
-    <a href="/"><h1>扶墙老师说</h1></a>
-		<p class="masthead-lead">一个架构士的思考与沉淀</p>
-
-		<hr class="masthead-hr">
-
-	  	<ul class="masthead-nav">
+    <header class="masthead">
+      <h1><a href="/">扶墙老师说</a></h1>
+      <p class="tagline">
+         一个架构士的思考与沉淀
+          <img src="/images/wechat-qrcode-footer.png"/>
+          扶墙老师，辨证施“知”
+      </p>
+      
+      <nav class="menu">
+        <input id="menu-check" type="checkbox"/>
+        <label id="menu-label" for="menu-check" class="unselectable">
+          <span class="icon close-icon">✕</span>
+          <span class="icon open-icon">☰</span>
+          <span class="text">展开</span>
+        </label>
+        <ul>
             <li class="nav-item"><a class="nav-link" href="/favorite.html">我的收藏</a></li>
             <li class="nav-item"><a class="nav-link" href="/dashboard.html">金融看板</a></li>
             <li class="nav-item"><a class="nav-link" href="/columns.html">专栏文章</a></li>
@@ -55,20 +48,12 @@
             <li class="nav-item"><a class="nav-link" href="/whoami.html">我是何人</a></li>
             <li class="nav-item"><a class="nav-link" href="/interlinks.html">友情链接</a></li>
             <li class="nav-item"><a class="nav-link" href="/feeds.xml">RSS订阅</a></li>
-		</ul>
+        </ul>
+      </nav>
+    </header>
 
-  		<hr class="masthead-hr">
-
-	  	<ul class="masthead-nav">
-            <li class="nav-item"><small>©afoo.me</small></li>
-            <li class="nav-item"><small>Powered by <a href="http://pandoc.org/">pandoc</a> and <a href="http://rometools.github.io/rome/">ROME</a></small></li>
-		</ul>
-
-	</div>
-
-
-    <div class="listing">
-
+    <article class="main">
+      
 <div class="row">
 <div id="header">
 <p class="lead">
@@ -117,19 +102,16 @@
 <p>以下文字为扶墙老师一家之言，权作参考，扶墙老师在运维方面属于菜鸟级别 ;)</p>
 </blockquote>
 <h1 id="本期峰会word-cloud"><span class="header-section-number">1</span> 本期峰会Word Cloud</h1>
-<div class="figure">
-<img src="images/zhoushan-ops-word-cloud.png" />
-
-</div>
+<p><img src="images/zhoushan-ops-word-cloud.png" /></p>
 <h1 id="运维发展方向"><span class="header-section-number">2</span> 运维发展方向</h1>
 <h2 id="视角与维度一"><span class="header-section-number">2.1</span> 视角与维度一</h2>
-<ol style="list-style-type: decimal">
+<ol type="1">
 <li>运维1.0 - 监控</li>
 <li>运维2.0 - 工具化和自动化</li>
-<li>运维3.0 - 动态变更（比如阿里的单元化 <a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a>）</li>
+<li>运维3.0 - 动态变更（比如阿里的单元化 <a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>）</li>
 </ol>
 <h2 id="视角与维度二"><span class="header-section-number">2.2</span> 视角与维度二</h2>
-<ol style="list-style-type: decimal">
+<ol type="1">
 <li>Tooling &amp; Automation（工具化和自动化）</li>
 <li>Private Cloud （构建私有云）
 <ul>
@@ -138,16 +120,13 @@
 <li>DCOS</li>
 </ol>
 <h2 id="视角与维度三"><span class="header-section-number">2.3</span> 视角与维度三</h2>
-<ol style="list-style-type: decimal">
+<ol type="1">
 <li>运维自助化， 自动化</li>
 <li>场景自动化</li>
 <li>智能化（数据驱动动态变更？）</li>
 </ol>
 <h1 id="运维组织的建设与发展"><span class="header-section-number">3</span> 运维组织的建设与发展</h1>
-<div class="figure">
-<img src="images/zhoushan-ops-stack.png" />
-
-</div>
+<p><img src="images/zhoushan-ops-stack.png" /></p>
 <h1 id="运维之道"><span class="header-section-number">4</span> 运维之道</h1>
 <p><strong>运维职能减少人为事故，但无法完全避免！！！</strong></p>
 <p><strong>边界的权衡</strong>， 比如内外网与否</p>
@@ -171,40 +150,40 @@
 <p><code>服务目录管理入口</code>与<code>上帝节点</code></p>
 <p>服务注册与发现</p>
 <h2 id="容灾预案"><span class="header-section-number">5.1</span> 容灾预案</h2>
-<ol style="list-style-type: decimal">
+<ol type="1">
 <li>IDC粒度</li>
 <li>单元粒度， eg. 异地多活</li>
 <li>网络层面</li>
-<li>...</li>
+<li>…</li>
 </ol>
 <h2 id="统一路由管理阿里的案例"><span class="header-section-number">5.2</span> 统一路由管理（阿里的案例）</h2>
 <p>覆盖如下层面， 20秒最快更新</p>
-<ol style="list-style-type: decimal">
+<ol type="1">
 <li>统一接入层（nginx）</li>
 <li>RPC框架</li>
 <li>异步消息</li>
 <li>数据层</li>
 </ol>
 <h2 id="网络基础数据"><span class="header-section-number">5.3</span> 网络基础数据</h2>
-<ol style="list-style-type: decimal">
+<ol type="1">
 <li>IDC机房内(Intra-IDC)， 0.2ms</li>
 <li>城域网内（跨机房）(Intra-City)， 1ms</li>
 <li>跨城（Inter-City）， 10ms ~ 100ms</li>
 </ol>
 <h1 id="产业链"><span class="header-section-number">6</span> 产业链</h1>
 <h2 id="硬件"><span class="header-section-number">6.1</span> 硬件</h2>
-<ol style="list-style-type: decimal">
+<ol type="1">
 <li>DELL VS. Inspur(浪潮)
 <ul>
 <li>服务器市场</li>
 </ul></li>
 <li>H3C
 <ul>
-<li>网络设备 <a href="#fn2" class="footnoteRef" id="fnref2"><sup>2</sup></a></li>
+<li>网络设备 <a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a></li>
 </ul></li>
 </ol>
 <h2 id="cdn市场"><span class="header-section-number">6.2</span> CDN市场</h2>
-<ol start="0" style="list-style-type: decimal">
+<ol start="0" type="1">
 <li>脉创</li>
 <li>阿里云</li>
 <li>腾讯云</li>
@@ -212,10 +191,10 @@
 <li>upyun</li>
 <li>蓝汛</li>
 <li>迅雷</li>
-<li>...</li>
+<li>…</li>
 </ol>
 <h1 id="运维血泪史案例分享"><span class="header-section-number">7</span> 运维血泪史案例分享</h1>
-<ol style="list-style-type: decimal">
+<ol type="1">
 <li>交付的裸服务器被种木马 （腾讯游戏）
 <ul>
 <li>做好上线检查</li>
@@ -227,30 +206,22 @@
 <li>可以加上我们自己最近一次发生的机房内光纤故障</li>
 </ol>
 <h1 id="术语"><span class="header-section-number">8</span> 术语</h1>
-<ol style="list-style-type: decimal">
+<ol type="1">
 <li>TCO = Total Cost of Ownership， 总所有成本</li>
 <li>Cloud Cube Model</li>
 <li>ITIL = IT服务管理规范，只是概念</li>
 <li>ITSM = IT Service Management， IT服务治理</li>
 </ol>
-<div class="figure">
-<img src="images/zhoushan.JPG" />
-
-</div>
-<div class="footnotes">
+<p><img src="images/zhoushan.JPG" /></p>
+<section class="footnotes">
 <hr />
 <ol>
-<li id="fn1"><p>什么是单元化？扶墙老师的理解是， 以功能或者服务维度对支撑这个粒度的软件服务所需要的硬件资源等进行归并划分， 联动调度， 每个功能或者服务可以按需被部署和调度到指定的硬件资源单元边界内，即做到了资源的动态调度和变更， <code>服务(Software) &lt;-&gt; 单元(Hardware)</code><a href="#fnref1">↩</a></p></li>
-<li id="fn2"><p>交换机类型： 1. 核心交换机；2. 汇聚交换机； 3. 接入交换机<a href="#fnref2">↩</a></p></li>
+<li id="fn1"><p>什么是单元化？扶墙老师的理解是， 以功能或者服务维度对支撑这个粒度的软件服务所需要的硬件资源等进行归并划分， 联动调度， 每个功能或者服务可以按需被部署和调度到指定的硬件资源单元边界内，即做到了资源的动态调度和变更， <code>服务(Software) &lt;-&gt; 单元(Hardware)</code><a href="#fnref1" class="footnote-back">↩</a></p></li>
+<li id="fn2"><p>交换机类型： 1. 核心交换机；2. 汇聚交换机； 3. 接入交换机<a href="#fnref2" class="footnote-back">↩</a></p></li>
 </ol>
-</div>
-<hr>
-<div align="center">
-<img src="/images/wechat-qrcode-footer.png"/>
-</div>
+</section>
 
-</div>
+    </article>
 
-
-
-</body></html>
+  </body>
+</html>

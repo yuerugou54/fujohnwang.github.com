@@ -1,14 +1,81 @@
 <!DOCTYPE html>
-<html lang="zh">
-<head>
+<html>
+  <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>谈java中的动态条件查询（Dynamic Criteria Query In Java） - 一个架构士的思考与沉</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="王福强的博客， 一个架构士的思考与沉淀">
     <meta name="keywords" content="architecture, book author, thinker, fighter, 架构, 思考, 技术, 武术, 哲学">
     <meta name="author" content="王福强">
-        <link rel="icon" href="/favicon.ico">
-    <title>谈java中的动态条件查询（Dynamic Criteria Query In Java） - 一个架构士的思考与沉淀</title>
-    <!-- 百度统计 -->
+    <link rel="stylesheet" href="/ivy.css">
+    <link rel="shortcut icon" href="/favicon.ico"/>
+    <style type="text/css">code{white-space: pre;}</style>
+    <style type="text/css">
+    a.sourceLine { display: inline-block; line-height: 1.25; }
+    a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+    a.sourceLine:empty { height: 1.2em; position: absolute; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode { white-space: pre; position: relative; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    code.sourceCode { white-space: pre-wrap; }
+    a.sourceLine { text-indent: -1em; padding-left: 1em; }
+    }
+    pre.numberSource a.sourceLine
+      { position: relative; }
+    pre.numberSource a.sourceLine:empty
+      { position: absolute; }
+    pre.numberSource a.sourceLine::before
+      { content: attr(data-line-number);
+        position: absolute; left: -5em; text-align: right; vertical-align: baseline;
+        border: none; pointer-events: all;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {  }
+    @media screen {
+    a.sourceLine::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+            <!-- 百度统计 -->
     <script>
       var _hmt = _hmt || [];
       (function() {
@@ -18,72 +85,26 @@
           s.parentNode.insertBefore(hm, s);
       })();
     </script>
+  </head>
 
-	<link href="/css/custom.css" rel="stylesheet"/>
-	<link rel="shortcut icon" href="/favicon.ico"/>
+  <body class="node homepage">
 
-<style type="text/css">code{white-space: pre;}</style>
-    <style type="text/css">
-    div.sourceCode { overflow-x: auto; }
-    table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
-      margin: 0; padding: 0; vertical-align: baseline; border: none; }
-    table.sourceCode { width: 100%; line-height: 100%; }
-    td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
-    td.sourceCode { padding-left: 5px; }
-    code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
-    code > span.dt { color: #902000; } /* DataType */
-    code > span.dv { color: #40a070; } /* DecVal */
-    code > span.bn { color: #40a070; } /* BaseN */
-    code > span.fl { color: #40a070; } /* Float */
-    code > span.ch { color: #4070a0; } /* Char */
-    code > span.st { color: #4070a0; } /* String */
-    code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
-    code > span.ot { color: #007020; } /* Other */
-    code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
-    code > span.fu { color: #06287e; } /* Function */
-    code > span.er { color: #ff0000; font-weight: bold; } /* Error */
-    code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-    code > span.cn { color: #880000; } /* Constant */
-    code > span.sc { color: #4070a0; } /* SpecialChar */
-    code > span.vs { color: #4070a0; } /* VerbatimString */
-    code > span.ss { color: #bb6688; } /* SpecialString */
-    code > span.im { } /* Import */
-    code > span.va { color: #19177c; } /* Variable */
-    code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-    code > span.op { color: #666666; } /* Operator */
-    code > span.bu { } /* BuiltIn */
-    code > span.ex { } /* Extension */
-    code > span.pp { color: #bc7a00; } /* Preprocessor */
-    code > span.at { color: #7d9029; } /* Attribute */
-    code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
-    code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-    code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-    code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-  </style>
-        
-	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-	<!--[if lt IE 9]>
-	  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.2/html5shiv.js"></script>
-	  <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-	<![endif]-->
-
-</head>
-
-<body>
-
-    <div class="masthead">
-		<!--
-    <h1 class="masthead-title fq">
-      <a href="/">扶墙老师</a>
-
-    </h1>
-    -->
-    <a href="/"><h1>扶墙老师说</h1></a>
-		<p class="masthead-lead">一个架构士的思考与沉淀</p>
-
-		<hr class="masthead-hr">
-
-	  	<ul class="masthead-nav">
+    <header class="masthead">
+      <h1><a href="/">扶墙老师说</a></h1>
+      <p class="tagline">
+         一个架构士的思考与沉淀
+          <img src="/images/wechat-qrcode-footer.png"/>
+          扶墙老师，辨证施“知”
+      </p>
+      
+      <nav class="menu">
+        <input id="menu-check" type="checkbox"/>
+        <label id="menu-label" for="menu-check" class="unselectable">
+          <span class="icon close-icon">✕</span>
+          <span class="icon open-icon">☰</span>
+          <span class="text">展开</span>
+        </label>
+        <ul>
             <li class="nav-item"><a class="nav-link" href="/favorite.html">我的收藏</a></li>
             <li class="nav-item"><a class="nav-link" href="/dashboard.html">金融看板</a></li>
             <li class="nav-item"><a class="nav-link" href="/columns.html">专栏文章</a></li>
@@ -91,20 +112,12 @@
             <li class="nav-item"><a class="nav-link" href="/whoami.html">我是何人</a></li>
             <li class="nav-item"><a class="nav-link" href="/interlinks.html">友情链接</a></li>
             <li class="nav-item"><a class="nav-link" href="/feeds.xml">RSS订阅</a></li>
-		</ul>
+        </ul>
+      </nav>
+    </header>
 
-  		<hr class="masthead-hr">
-
-	  	<ul class="masthead-nav">
-            <li class="nav-item"><small>©afoo.me</small></li>
-            <li class="nav-item"><small>Powered by <a href="http://pandoc.org/">pandoc</a> and <a href="http://rometools.github.io/rome/">ROME</a></small></li>
-		</ul>
-
-	</div>
-
-
-    <div class="listing">
-
+    <article class="main">
+      
 <div class="row">
 <div id="header">
 <p class="lead">
@@ -134,7 +147,7 @@
 <blockquote>
 <p>2014年从msn space存档中重新恢复出来！</p>
 </blockquote>
-<p>偶然的机会，发现开发中的这个共通的问题---动态条件查询，故此决定结合自己当初的开发方式以及网上各种观点，对这个问题点作一个分析和总结，以供参考。 在我们的开发过程中，经常需要面对各种数据的查询需求，比如说检索顾客信息，根据业务视图抽取相关数据做成报表等等，而对于这些查询，有的时候查询条件是固定的，比如说检索所有的顾客；但有的时候则不然，查询条件会不固定，像用户可以根据需求选择相应的查询条件，比如这次要根据姓名查询，下次可能就会根据年龄段来查询等等，像这类问题，查询的处理就会比固定条件查询要复杂一些，所以，下面我们就对这种动态查询的情况做一个总结，以期引入更多观点来完善相应问题的解决方式。 为了说明各种方式的差异，我们需要一个实例来作为比较的标准，所以，假设我们拥有以下查询条件画面（因为只是实例，所以无论从画面还是表结构上都做了很大的简化，实际项目中要复杂的多）：</p>
+<p>偶然的机会，发现开发中的这个共通的问题—动态条件查询，故此决定结合自己当初的开发方式以及网上各种观点，对这个问题点作一个分析和总结，以供参考。 在我们的开发过程中，经常需要面对各种数据的查询需求，比如说检索顾客信息，根据业务视图抽取相关数据做成报表等等，而对于这些查询，有的时候查询条件是固定的，比如说检索所有的顾客；但有的时候则不然，查询条件会不固定，像用户可以根据需求选择相应的查询条件，比如这次要根据姓名查询，下次可能就会根据年龄段来查询等等，像这类问题，查询的处理就会比固定条件查询要复杂一些，所以，下面我们就对这种动态查询的情况做一个总结，以期引入更多观点来完善相应问题的解决方式。 为了说明各种方式的差异，我们需要一个实例来作为比较的标准，所以，假设我们拥有以下查询条件画面（因为只是实例，所以无论从画面还是表结构上都做了很大的简化，实际项目中要复杂的多）：</p>
 <pre>
 -------------------------- ---
 顾客姓名｜ ｜ ｜暧｜
@@ -149,10 +162,10 @@
 +--------------------------------------+
 </pre>
 <h1 id="查询需求"><span class="header-section-number">1</span> 查询需求</h1>
-<ol style="list-style-type: decimal">
+<ol type="1">
 <li>用户可以输入顾客姓名进行查询，默认查询模式为模糊查询，如果用户点击［暧］按钮，可以在［暧］－［前］－［后］－［全］四种模式中选择，分别进行模糊查询，前向匹配查询，后向匹配查询和完全匹配查询；如果用户没有输入顾客姓名，则顾客姓名不加入查询条件；</li>
 <li>用户可以输入电话号码进行查询
-<ol style="list-style-type: decimal">
+<ol type="1">
 <li>用户只是输入电话号码，而没有选择下方group中的相应电话类型，则查询条件中不加入电话号码的条件限制；</li>
 <li>用户没有输入电话号码，不管选择还是没有选择下方group中的相应电话类型，则查询条件不加入电话号码条件限制；</li>
 <li>用户输入了电话号码，并选择了下方group中的最少一项电话类型，加入电话号码和电话类型的查询条件进行检索。</li>
@@ -162,92 +175,92 @@
 <h1 id="查询需求的实现方式"><span class="header-section-number">2</span> 查询需求的实现方式</h1>
 <h2 id="sql语句的字符串拼接sql-string-concatenation"><span class="header-section-number">2.1</span> SQL语句的字符串拼接（SQL String Concatenation)</h2>
 <p>这种方式是从我大学时期做兼职时代就开始的一种实现方式，在我没有找到更好的解决方式之前，也是我解决类似问题的唯一方式，缺点自然不用多说，各种条件的判断纠缠在一起，后期维护很难；但是，如果后期不会加入太多新的查询条件的话，测试完成后就基本可以不用管了（对了，说到测试，这东西也很难测试的哦！）。 下面是对于实例画面给出的一个参考拼接结果，当然不是唯一的，仅作参考：</p>
-<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="bu">StringBuffer</span> criteria = <span class="kw">new</span> <span class="bu">StringBuffer</span>();
-criteria.<span class="fu">append</span>(<span class="st">&quot;SELECT DISTINCT CustomerID FROM Mastercustomer as cust WHERE &quot;</span>);
-<span class="dt">int</span> flag = <span class="dv">0</span>;
-<span class="bu">String</span> surnameKanji = model.<span class="fu">getSurNameKanji</span>();
-<span class="kw">if</span>(!CustomerValidator.<span class="fu">isBlank</span>(surnameKanji))
-{
-<span class="kw">switch</span>(model.<span class="fu">getSurNameKanjiFlag</span>())
-{
-<span class="kw">case</span> CmpQueryState.<span class="fu">LEFT_MATCH_STATE</span>:
-criteria.<span class="fu">append</span>(<span class="st">&quot;CUSTOMERNAME LIKE &#39;&quot;</span>+surnameKanji+<span class="st">&quot;%&#39; AND &quot;</span>);
-<span class="kw">break</span>;
-<span class="kw">case</span> CmpQueryState.<span class="fu">RIGHT_MATCH_STATE</span>:
-criteria.<span class="fu">append</span>(<span class="st">&quot;CUSTOMERNAME LIKE &#39;%&quot;</span>+surnameKanji+<span class="st">&quot;&#39; AND &quot;</span>);
-<span class="kw">break</span>;
-<span class="kw">case</span> CmpQueryState.<span class="fu">ALL_MATCH_STATE</span>:
-criteria.<span class="fu">append</span>(<span class="st">&quot;CUSTOMERNAME = &#39;&quot;</span>+surnameKanji+<span class="st">&quot;&#39; AND &quot;</span>);
-<span class="kw">break</span>;
-<span class="kw">case</span> CmpQueryState.<span class="fu">AMBIGUOUS_MATCH_STATE</span>:
-criteria.<span class="fu">append</span>(<span class="st">&quot;CUSTOMERNAME LIKE &#39;%&quot;</span>+surnameKanji+<span class="st">&quot;%&#39; AND &quot;</span>);
-<span class="kw">break</span>;
-}
-flag++;
-}
-<span class="bu">String</span> tel = model.<span class="fu">getPhoneNum</span>();
-<span class="kw">if</span>(!CustomerValidator.<span class="fu">isBlank</span>(tel))
-{
-tel = telFormatter<span class="fu">.format</span>(tel);
-<span class="dt">int</span> innerflag = <span class="dv">0</span>;
-criteria.<span class="fu">append</span>(<span class="st">&quot;( &quot;</span>);
-<span class="kw">if</span>(model.<span class="fu">isHomeTelSelected</span>())
-{
-criteria.<span class="fu">append</span>(<span class="st">&quot;APPLHOMETEL = &#39;&quot;</span>+tel+<span class="st">&quot;&#39; OR &quot;</span>);
-innerflag++;
-}
-<span class="kw">if</span>(model.<span class="fu">isKin1TelSelected</span>())
-{
-criteria.<span class="fu">append</span>(<span class="st">&quot;KIN1HOMETEL = &#39;&quot;</span>+tel+<span class="st">&quot;&#39; OR &quot;</span>);
-innerflag++;
-}
-<span class="kw">if</span>(model.<span class="fu">isKin2TelSelected</span>())
-{
-criteria.<span class="fu">append</span>(<span class="st">&quot;KIN2HOMETEL = &#39;&quot;</span>+tel+<span class="st">&quot;&#39; OR &quot;</span>);
-innerflag++;
-}
-<span class="kw">if</span>(model.<span class="fu">isOffice1TelSelected</span>())
-{
-criteria.<span class="fu">append</span>(<span class="st">&quot;APPLWRK1TEL = &#39;&quot;</span>+tel+<span class="st">&quot;&#39; OR &quot;</span>);
-innerflag++;
-}
-<span class="kw">if</span>(model.<span class="fu">isOffice2TelSelected</span>())
-{
-criteria.<span class="fu">append</span>(<span class="st">&quot;APPLWRK2TEL = &#39;&quot;</span>+tel+<span class="st">&quot;&#39; OR &quot;</span>);
-innerflag++;
-}
-<span class="kw">if</span>(model.<span class="fu">isMobile1Selected</span>())
-{
-criteria.<span class="fu">append</span>(<span class="st">&quot;APPLMOBILE1TEL = &#39;&quot;</span>+tel+<span class="st">&quot;&#39; OR &quot;</span>);
-innerflag++;
-}
-<span class="co">//-----------DELETE USELESS WORDS---------------</span>
-<span class="kw">if</span>(innerflag == <span class="dv">0</span>)
-{
-criteria.<span class="fu">delete</span>(criteria.<span class="fu">length</span>()-<span class="dv">2</span>,criteria.<span class="fu">length</span>());
-}
-<span class="kw">else</span>
-{
-criteria.<span class="fu">delete</span>(criteria.<span class="fu">length</span>()-<span class="dv">3</span>,criteria.<span class="fu">length</span>());
-criteria.<span class="fu">append</span>(<span class="st">&quot; ) AND &quot;</span>);
-flag++;
-}
-}
-<span class="co">// finally</span>
-<span class="kw">if</span>(flag == <span class="dv">0</span>)
-{
-<span class="co">// In this way, the user select no query constraint field</span>
-<span class="co">// we need to delete the &quot;WHERE&quot; from the StringBuffer&#39;s end </span>
-criteria.<span class="fu">delete</span>(criteria.<span class="fu">length</span>()-<span class="dv">6</span> , criteria.<span class="fu">length</span>());
-}
-<span class="kw">else</span>
-{
-<span class="co">// here, the user select one or more query constraint field,</span>
-<span class="co">// we need to delete the &quot;AND&quot; from the StringBuffer&#39;s end</span>
-criteria.<span class="fu">delete</span>(criteria.<span class="fu">length</span>() - <span class="dv">4</span> , criteria.<span class="fu">length</span>());
-}
-<span class="kw">return</span> criteria.<span class="fu">toString</span>(); </code></pre></div>
-<p>可能一些地方还可以节俭，但你还是可以看出，这种方式是多么的复杂，不仅要维护条件的上下文，而且还要根据情况添加查询条件，我想你看到这么多的条件判断语句已经很faint了吧，呵呵，不过这还只是一个简单的查询页面，想想一个页面上几十甚至上百个的查询条件，这种方式恐怖你就可想而知了，开发效率，健壮性，可维护性，这些都是问题啊...</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode java"><code class="sourceCode java"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="bu">StringBuffer</span> criteria = <span class="kw">new</span> <span class="bu">StringBuffer</span>();</a>
+<a class="sourceLine" id="cb1-2" data-line-number="2">criteria.<span class="fu">append</span>(<span class="st">&quot;SELECT DISTINCT CustomerID FROM Mastercustomer as cust WHERE &quot;</span>);</a>
+<a class="sourceLine" id="cb1-3" data-line-number="3"><span class="dt">int</span> flag = <span class="dv">0</span>;</a>
+<a class="sourceLine" id="cb1-4" data-line-number="4"><span class="bu">String</span> surnameKanji = model.<span class="fu">getSurNameKanji</span>();</a>
+<a class="sourceLine" id="cb1-5" data-line-number="5"><span class="kw">if</span>(!CustomerValidator.<span class="fu">isBlank</span>(surnameKanji))</a>
+<a class="sourceLine" id="cb1-6" data-line-number="6">{</a>
+<a class="sourceLine" id="cb1-7" data-line-number="7"><span class="kw">switch</span>(model.<span class="fu">getSurNameKanjiFlag</span>())</a>
+<a class="sourceLine" id="cb1-8" data-line-number="8">{</a>
+<a class="sourceLine" id="cb1-9" data-line-number="9"><span class="kw">case</span> CmpQueryState.<span class="fu">LEFT_MATCH_STATE</span>:</a>
+<a class="sourceLine" id="cb1-10" data-line-number="10">criteria.<span class="fu">append</span>(<span class="st">&quot;CUSTOMERNAME LIKE &#39;&quot;</span>+surnameKanji+<span class="st">&quot;%&#39; AND &quot;</span>);</a>
+<a class="sourceLine" id="cb1-11" data-line-number="11"><span class="kw">break</span>;</a>
+<a class="sourceLine" id="cb1-12" data-line-number="12"><span class="kw">case</span> CmpQueryState.<span class="fu">RIGHT_MATCH_STATE</span>:</a>
+<a class="sourceLine" id="cb1-13" data-line-number="13">criteria.<span class="fu">append</span>(<span class="st">&quot;CUSTOMERNAME LIKE &#39;%&quot;</span>+surnameKanji+<span class="st">&quot;&#39; AND &quot;</span>);</a>
+<a class="sourceLine" id="cb1-14" data-line-number="14"><span class="kw">break</span>;</a>
+<a class="sourceLine" id="cb1-15" data-line-number="15"><span class="kw">case</span> CmpQueryState.<span class="fu">ALL_MATCH_STATE</span>:</a>
+<a class="sourceLine" id="cb1-16" data-line-number="16">criteria.<span class="fu">append</span>(<span class="st">&quot;CUSTOMERNAME = &#39;&quot;</span>+surnameKanji+<span class="st">&quot;&#39; AND &quot;</span>);</a>
+<a class="sourceLine" id="cb1-17" data-line-number="17"><span class="kw">break</span>;</a>
+<a class="sourceLine" id="cb1-18" data-line-number="18"><span class="kw">case</span> CmpQueryState.<span class="fu">AMBIGUOUS_MATCH_STATE</span>:</a>
+<a class="sourceLine" id="cb1-19" data-line-number="19">criteria.<span class="fu">append</span>(<span class="st">&quot;CUSTOMERNAME LIKE &#39;%&quot;</span>+surnameKanji+<span class="st">&quot;%&#39; AND &quot;</span>);</a>
+<a class="sourceLine" id="cb1-20" data-line-number="20"><span class="kw">break</span>;</a>
+<a class="sourceLine" id="cb1-21" data-line-number="21">}</a>
+<a class="sourceLine" id="cb1-22" data-line-number="22">flag++;</a>
+<a class="sourceLine" id="cb1-23" data-line-number="23">}</a>
+<a class="sourceLine" id="cb1-24" data-line-number="24"><span class="bu">String</span> tel = model.<span class="fu">getPhoneNum</span>();</a>
+<a class="sourceLine" id="cb1-25" data-line-number="25"><span class="kw">if</span>(!CustomerValidator.<span class="fu">isBlank</span>(tel))</a>
+<a class="sourceLine" id="cb1-26" data-line-number="26">{</a>
+<a class="sourceLine" id="cb1-27" data-line-number="27">tel = telFormatter<span class="fu">.format</span>(tel);</a>
+<a class="sourceLine" id="cb1-28" data-line-number="28"><span class="dt">int</span> innerflag = <span class="dv">0</span>;</a>
+<a class="sourceLine" id="cb1-29" data-line-number="29">criteria.<span class="fu">append</span>(<span class="st">&quot;( &quot;</span>);</a>
+<a class="sourceLine" id="cb1-30" data-line-number="30"><span class="kw">if</span>(model.<span class="fu">isHomeTelSelected</span>())</a>
+<a class="sourceLine" id="cb1-31" data-line-number="31">{</a>
+<a class="sourceLine" id="cb1-32" data-line-number="32">criteria.<span class="fu">append</span>(<span class="st">&quot;APPLHOMETEL = &#39;&quot;</span>+tel+<span class="st">&quot;&#39; OR &quot;</span>);</a>
+<a class="sourceLine" id="cb1-33" data-line-number="33">innerflag++;</a>
+<a class="sourceLine" id="cb1-34" data-line-number="34">}</a>
+<a class="sourceLine" id="cb1-35" data-line-number="35"><span class="kw">if</span>(model.<span class="fu">isKin1TelSelected</span>())</a>
+<a class="sourceLine" id="cb1-36" data-line-number="36">{</a>
+<a class="sourceLine" id="cb1-37" data-line-number="37">criteria.<span class="fu">append</span>(<span class="st">&quot;KIN1HOMETEL = &#39;&quot;</span>+tel+<span class="st">&quot;&#39; OR &quot;</span>);</a>
+<a class="sourceLine" id="cb1-38" data-line-number="38">innerflag++;</a>
+<a class="sourceLine" id="cb1-39" data-line-number="39">}</a>
+<a class="sourceLine" id="cb1-40" data-line-number="40"><span class="kw">if</span>(model.<span class="fu">isKin2TelSelected</span>())</a>
+<a class="sourceLine" id="cb1-41" data-line-number="41">{</a>
+<a class="sourceLine" id="cb1-42" data-line-number="42">criteria.<span class="fu">append</span>(<span class="st">&quot;KIN2HOMETEL = &#39;&quot;</span>+tel+<span class="st">&quot;&#39; OR &quot;</span>);</a>
+<a class="sourceLine" id="cb1-43" data-line-number="43">innerflag++;</a>
+<a class="sourceLine" id="cb1-44" data-line-number="44">}</a>
+<a class="sourceLine" id="cb1-45" data-line-number="45"><span class="kw">if</span>(model.<span class="fu">isOffice1TelSelected</span>())</a>
+<a class="sourceLine" id="cb1-46" data-line-number="46">{</a>
+<a class="sourceLine" id="cb1-47" data-line-number="47">criteria.<span class="fu">append</span>(<span class="st">&quot;APPLWRK1TEL = &#39;&quot;</span>+tel+<span class="st">&quot;&#39; OR &quot;</span>);</a>
+<a class="sourceLine" id="cb1-48" data-line-number="48">innerflag++;</a>
+<a class="sourceLine" id="cb1-49" data-line-number="49">}</a>
+<a class="sourceLine" id="cb1-50" data-line-number="50"><span class="kw">if</span>(model.<span class="fu">isOffice2TelSelected</span>())</a>
+<a class="sourceLine" id="cb1-51" data-line-number="51">{</a>
+<a class="sourceLine" id="cb1-52" data-line-number="52">criteria.<span class="fu">append</span>(<span class="st">&quot;APPLWRK2TEL = &#39;&quot;</span>+tel+<span class="st">&quot;&#39; OR &quot;</span>);</a>
+<a class="sourceLine" id="cb1-53" data-line-number="53">innerflag++;</a>
+<a class="sourceLine" id="cb1-54" data-line-number="54">}</a>
+<a class="sourceLine" id="cb1-55" data-line-number="55"><span class="kw">if</span>(model.<span class="fu">isMobile1Selected</span>())</a>
+<a class="sourceLine" id="cb1-56" data-line-number="56">{</a>
+<a class="sourceLine" id="cb1-57" data-line-number="57">criteria.<span class="fu">append</span>(<span class="st">&quot;APPLMOBILE1TEL = &#39;&quot;</span>+tel+<span class="st">&quot;&#39; OR &quot;</span>);</a>
+<a class="sourceLine" id="cb1-58" data-line-number="58">innerflag++;</a>
+<a class="sourceLine" id="cb1-59" data-line-number="59">}</a>
+<a class="sourceLine" id="cb1-60" data-line-number="60"><span class="co">//-----------DELETE USELESS WORDS---------------</span></a>
+<a class="sourceLine" id="cb1-61" data-line-number="61"><span class="kw">if</span>(innerflag == <span class="dv">0</span>)</a>
+<a class="sourceLine" id="cb1-62" data-line-number="62">{</a>
+<a class="sourceLine" id="cb1-63" data-line-number="63">criteria.<span class="fu">delete</span>(criteria.<span class="fu">length</span>()-<span class="dv">2</span>,criteria.<span class="fu">length</span>());</a>
+<a class="sourceLine" id="cb1-64" data-line-number="64">}</a>
+<a class="sourceLine" id="cb1-65" data-line-number="65"><span class="kw">else</span></a>
+<a class="sourceLine" id="cb1-66" data-line-number="66">{</a>
+<a class="sourceLine" id="cb1-67" data-line-number="67">criteria.<span class="fu">delete</span>(criteria.<span class="fu">length</span>()-<span class="dv">3</span>,criteria.<span class="fu">length</span>());</a>
+<a class="sourceLine" id="cb1-68" data-line-number="68">criteria.<span class="fu">append</span>(<span class="st">&quot; ) AND &quot;</span>);</a>
+<a class="sourceLine" id="cb1-69" data-line-number="69">flag++;</a>
+<a class="sourceLine" id="cb1-70" data-line-number="70">}</a>
+<a class="sourceLine" id="cb1-71" data-line-number="71">}</a>
+<a class="sourceLine" id="cb1-72" data-line-number="72"><span class="co">// finally</span></a>
+<a class="sourceLine" id="cb1-73" data-line-number="73"><span class="kw">if</span>(flag == <span class="dv">0</span>)</a>
+<a class="sourceLine" id="cb1-74" data-line-number="74">{</a>
+<a class="sourceLine" id="cb1-75" data-line-number="75"><span class="co">// In this way, the user select no query constraint field</span></a>
+<a class="sourceLine" id="cb1-76" data-line-number="76"><span class="co">// we need to delete the &quot;WHERE&quot; from the StringBuffer&#39;s end </span></a>
+<a class="sourceLine" id="cb1-77" data-line-number="77">criteria.<span class="fu">delete</span>(criteria.<span class="fu">length</span>()-<span class="dv">6</span> , criteria.<span class="fu">length</span>());</a>
+<a class="sourceLine" id="cb1-78" data-line-number="78">}</a>
+<a class="sourceLine" id="cb1-79" data-line-number="79"><span class="kw">else</span></a>
+<a class="sourceLine" id="cb1-80" data-line-number="80">{</a>
+<a class="sourceLine" id="cb1-81" data-line-number="81"><span class="co">// here, the user select one or more query constraint field,</span></a>
+<a class="sourceLine" id="cb1-82" data-line-number="82"><span class="co">// we need to delete the &quot;AND&quot; from the StringBuffer&#39;s end</span></a>
+<a class="sourceLine" id="cb1-83" data-line-number="83">criteria.<span class="fu">delete</span>(criteria.<span class="fu">length</span>() - <span class="dv">4</span> , criteria.<span class="fu">length</span>());</a>
+<a class="sourceLine" id="cb1-84" data-line-number="84">}</a>
+<a class="sourceLine" id="cb1-85" data-line-number="85"><span class="kw">return</span> criteria.<span class="fu">toString</span>(); </a></code></pre></div>
+<p>可能一些地方还可以节俭，但你还是可以看出，这种方式是多么的复杂，不仅要维护条件的上下文，而且还要根据情况添加查询条件，我想你看到这么多的条件判断语句已经很faint了吧，呵呵，不过这还只是一个简单的查询页面，想想一个页面上几十甚至上百个的查询条件，这种方式恐怖你就可想而知了，开发效率，健壮性，可维护性，这些都是问题啊…</p>
 <p>但，我想，有些时候，如果其他方式无法解决的话，这也只能是你的last resort了。</p>
 <blockquote>
 <p>NOTE：这种方式虽然复杂，但是同时也可以给你最大的灵活性，“路怎么走，你看着办咯”</p>
@@ -256,56 +269,51 @@ criteria.<span class="fu">delete</span>(criteria.<span class="fu">length</span>(
 <h2 id="ibatis的dynamicsql支持"><span class="header-section-number">2.2</span> iBatis的DynamicSQL支持</h2>
 <p>iBatis针对这种动态查询提供了一种DynamicSQL的支持，通过在其SQLMap中定义查询条件，减少抽取逻辑和程序之间的耦合，而且，这种SQL的组装是通过XML来完成的，通过合理的处理，相对于SQL语句拼接方式来说，开发效率上更胜一筹。</p>
 <p>让我们来看一下相应于实例画面的查询，DynamicSQL是如何实现的吧：</p>
-<div class="sourceCode"><pre class="sourceCode xml"><code class="sourceCode xml"><span class="kw">&lt;statement</span><span class="ot"> id=</span><span class="st">&quot;yourQuery&quot;</span><span class="ot"> resultMap=</span><span class="st">&quot;yourRetMap&quot;</span><span class="kw">&gt;</span>
-SELECT DISTINCT CustomerID FROM Mastercustomer as cust
-<span class="kw">&lt;dynamic</span><span class="ot"> prepend=</span><span class="st">&quot;WHERE&quot;</span><span class="kw">&gt;</span>
-<span class="kw">&lt;isNotEmpty</span><span class="ot"> property=</span><span class="st">&quot;customerName&quot;</span><span class="ot"> prepend=</span><span class="st">&quot;AND&quot;</span><span class="kw">&gt;</span>
-<span class="kw">&lt;isEqual</span><span class="ot"> property=</span><span class="st">&quot;customerNameSearchMode&quot;</span><span class="ot"> compareValue=</span><span class="st">&quot;0&quot;</span><span class="kw">&gt;</span>CUSTOMERNAME LIKE &#39;#customerName#%&#39;<span class="kw">&lt;/isEqual&gt;</span>
-<span class="kw">&lt;isEqual</span><span class="ot"> property=</span><span class="st">&quot;customerNameSearchMode&quot;</span><span class="ot"> compareValue=</span><span class="st">&quot;1&quot;</span><span class="kw">&gt;</span>CUSTOMERNAME LIKE &#39;%#customerName#&#39;<span class="kw">&lt;/isEqual&gt;</span>
-<span class="kw">&lt;isEqual</span><span class="ot"> property=</span><span class="st">&quot;customerNameSearchMode&quot;</span><span class="ot"> compareValue=</span><span class="st">&quot;2&quot;</span><span class="kw">&gt;</span>CUSTOMERNAME = &#39;#customerName#&#39;<span class="kw">&lt;/isEqual&gt;</span>
-<span class="kw">&lt;isEqual</span><span class="ot"> property=</span><span class="st">&quot;customerNameSearchMode&quot;</span><span class="ot"> compareValue=</span><span class="st">&quot;3&quot;</span><span class="kw">&gt;</span>CUSTOMERNAME LIKE &#39;%#customerName#%&#39;<span class="kw">&lt;/isEqual&gt;</span>
-<span class="kw">&lt;/isNotEmpty&gt;</span>
-<span class="kw">&lt;isNotEmpty</span><span class="ot"> property=</span><span class="st">&quot;telNum&quot;</span><span class="ot"> prepend=</span><span class="st">&quot;AND&quot;</span><span class="kw">&gt;</span>
-<span class="kw">&lt;iterate</span><span class="ot"> property=</span><span class="st">&quot;telTypeList&quot;</span><span class="ot"> open=</span><span class="st">&quot;(&quot;</span><span class="ot"> close=</span><span class="st">&quot;)&quot;</span><span class="ot"> conjunction=</span><span class="st">&quot;OR&quot;</span><span class="kw">&gt;</span>
-telNumber=#telTypeList[]#
-<span class="kw">&lt;/iterate&gt;</span>
-<span class="kw">&lt;/isNotEmpty&gt;</span>
-<span class="kw">&lt;/dynamic&gt;</span>
-<span class="kw">&lt;/statement&gt;</span></code></pre></div>
-<p>更多信息可以参考iBatis提供的Reference...</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode xml"><code class="sourceCode xml"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw">&lt;statement</span><span class="ot"> id=</span><span class="st">&quot;yourQuery&quot;</span><span class="ot"> resultMap=</span><span class="st">&quot;yourRetMap&quot;</span><span class="kw">&gt;</span></a>
+<a class="sourceLine" id="cb2-2" data-line-number="2">SELECT DISTINCT CustomerID FROM Mastercustomer as cust</a>
+<a class="sourceLine" id="cb2-3" data-line-number="3"><span class="kw">&lt;dynamic</span><span class="ot"> prepend=</span><span class="st">&quot;WHERE&quot;</span><span class="kw">&gt;</span></a>
+<a class="sourceLine" id="cb2-4" data-line-number="4"><span class="kw">&lt;isNotEmpty</span><span class="ot"> property=</span><span class="st">&quot;customerName&quot;</span><span class="ot"> prepend=</span><span class="st">&quot;AND&quot;</span><span class="kw">&gt;</span></a>
+<a class="sourceLine" id="cb2-5" data-line-number="5"><span class="kw">&lt;isEqual</span><span class="ot"> property=</span><span class="st">&quot;customerNameSearchMode&quot;</span><span class="ot"> compareValue=</span><span class="st">&quot;0&quot;</span><span class="kw">&gt;</span>CUSTOMERNAME LIKE &#39;#customerName#%&#39;<span class="kw">&lt;/isEqual&gt;</span></a>
+<a class="sourceLine" id="cb2-6" data-line-number="6"><span class="kw">&lt;isEqual</span><span class="ot"> property=</span><span class="st">&quot;customerNameSearchMode&quot;</span><span class="ot"> compareValue=</span><span class="st">&quot;1&quot;</span><span class="kw">&gt;</span>CUSTOMERNAME LIKE &#39;%#customerName#&#39;<span class="kw">&lt;/isEqual&gt;</span></a>
+<a class="sourceLine" id="cb2-7" data-line-number="7"><span class="kw">&lt;isEqual</span><span class="ot"> property=</span><span class="st">&quot;customerNameSearchMode&quot;</span><span class="ot"> compareValue=</span><span class="st">&quot;2&quot;</span><span class="kw">&gt;</span>CUSTOMERNAME = &#39;#customerName#&#39;<span class="kw">&lt;/isEqual&gt;</span></a>
+<a class="sourceLine" id="cb2-8" data-line-number="8"><span class="kw">&lt;isEqual</span><span class="ot"> property=</span><span class="st">&quot;customerNameSearchMode&quot;</span><span class="ot"> compareValue=</span><span class="st">&quot;3&quot;</span><span class="kw">&gt;</span>CUSTOMERNAME LIKE &#39;%#customerName#%&#39;<span class="kw">&lt;/isEqual&gt;</span></a>
+<a class="sourceLine" id="cb2-9" data-line-number="9"><span class="kw">&lt;/isNotEmpty&gt;</span></a>
+<a class="sourceLine" id="cb2-10" data-line-number="10"><span class="kw">&lt;isNotEmpty</span><span class="ot"> property=</span><span class="st">&quot;telNum&quot;</span><span class="ot"> prepend=</span><span class="st">&quot;AND&quot;</span><span class="kw">&gt;</span></a>
+<a class="sourceLine" id="cb2-11" data-line-number="11"><span class="kw">&lt;iterate</span><span class="ot"> property=</span><span class="st">&quot;telTypeList&quot;</span><span class="ot"> open=</span><span class="st">&quot;(&quot;</span><span class="ot"> close=</span><span class="st">&quot;)&quot;</span><span class="ot"> conjunction=</span><span class="st">&quot;OR&quot;</span><span class="kw">&gt;</span></a>
+<a class="sourceLine" id="cb2-12" data-line-number="12">telNumber=#telTypeList[]#</a>
+<a class="sourceLine" id="cb2-13" data-line-number="13"><span class="kw">&lt;/iterate&gt;</span></a>
+<a class="sourceLine" id="cb2-14" data-line-number="14"><span class="kw">&lt;/isNotEmpty&gt;</span></a>
+<a class="sourceLine" id="cb2-15" data-line-number="15"><span class="kw">&lt;/dynamic&gt;</span></a>
+<a class="sourceLine" id="cb2-16" data-line-number="16"><span class="kw">&lt;/statement&gt;</span></a></code></pre></div>
+<p>更多信息可以参考iBatis提供的Reference…</p>
 <p>btw.个人还是很看中这种方式的</p>
 <h2 id="hibernate的detachedcriteria或者hql拼接"><span class="header-section-number">2.3</span> Hibernate的(Detached)Criteria或者HQL拼接</h2>
 <p>如果你的系统当前的persistence层用的是Hibernate的话，那恭喜你，在你享有hibernate当前便利的前提下，针对这种动态查询问题，你还会享有hibernate提供的(Detached)Criteria或者HQL灵活拼接的支持。</p>
 <p>只要你将相应的SearchContext中的查询条件设置到(Detached)Criteria中，那么你就可以直接取得你需要的查询结果就可以了，所有的什么拼接啦，查询结果组装啦什么乱七八糟的事情统统全免，是不是很惬意那？！不过，前提是你的系统persistence用的是hibernate，而且，实际上，(Detached)Criteria也不是万能药，对于复杂的查询，他也依然无能为力，所以，这个时候，不好意思，你还是的求助于字符串拼接的方式，不过，这回不是SQL的拼接了，而是HQL的拼接，不过原理是一样的，这里就不做赘述了，下面只是列出使用(Detached)Criteria的实现代码片段以供参考：</p>
-<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java">DetachedCriteria detachedCriteria = DetachedCriteria.<span class="fu">forClass</span>(Mastercustomer.<span class="fu">class</span>); 
-<span class="co">// ... 根据情况取得相应的Criterion,如Criterion nameCriteria = Restrictions.eq(&quot;customerName&quot;,customerName);</span>
-detachedCriteria.<span class="fu">add</span>(nameCriteria);
-<span class="kw">if</span>(<span class="fu">notEmpty</span>(telNum))
-{
-Disjunction disjunction = Restrictions.<span class="fu">disjunction</span>();
-for（int i=<span class="dv">0</span>,size=telTypeList.<span class="fu">size</span>;i&lt;size;i++)
-{
-disjuction.<span class="fu">add</span>(Restrictions.<span class="fu">eq</span>(<span class="st">&quot;telNum&quot;</span>,telTypeList.<span class="fu">get</span>(i)));
-}
-detachedCriteria.<span class="fu">add</span>(disjunction);
-}
-Criteria criteria = detachedCriteria.<span class="fu">getExecutableCriteria</span>(session);
-<span class="kw">return</span> criteria.<span class="fu">list</span>(); </code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode java"><code class="sourceCode java"><a class="sourceLine" id="cb3-1" data-line-number="1">DetachedCriteria detachedCriteria = DetachedCriteria.<span class="fu">forClass</span>(Mastercustomer.<span class="fu">class</span>); </a>
+<a class="sourceLine" id="cb3-2" data-line-number="2"><span class="co">// ... 根据情况取得相应的Criterion,如Criterion nameCriteria = Restrictions.eq(&quot;customerName&quot;,customerName);</span></a>
+<a class="sourceLine" id="cb3-3" data-line-number="3">detachedCriteria.<span class="fu">add</span>(nameCriteria);</a>
+<a class="sourceLine" id="cb3-4" data-line-number="4"><span class="kw">if</span>(<span class="fu">notEmpty</span>(telNum))</a>
+<a class="sourceLine" id="cb3-5" data-line-number="5">{</a>
+<a class="sourceLine" id="cb3-6" data-line-number="6">Disjunction disjunction = Restrictions.<span class="fu">disjunction</span>();</a>
+<a class="sourceLine" id="cb3-7" data-line-number="7">for（int i=<span class="dv">0</span>,size=telTypeList.<span class="fu">size</span>;i&lt;size;i++)</a>
+<a class="sourceLine" id="cb3-8" data-line-number="8">{</a>
+<a class="sourceLine" id="cb3-9" data-line-number="9">disjuction.<span class="fu">add</span>(Restrictions.<span class="fu">eq</span>(<span class="st">&quot;telNum&quot;</span>,telTypeList.<span class="fu">get</span>(i)));</a>
+<a class="sourceLine" id="cb3-10" data-line-number="10">}</a>
+<a class="sourceLine" id="cb3-11" data-line-number="11">detachedCriteria.<span class="fu">add</span>(disjunction);</a>
+<a class="sourceLine" id="cb3-12" data-line-number="12">}</a>
+<a class="sourceLine" id="cb3-13" data-line-number="13">Criteria criteria = detachedCriteria.<span class="fu">getExecutableCriteria</span>(session);</a>
+<a class="sourceLine" id="cb3-14" data-line-number="14"><span class="kw">return</span> criteria.<span class="fu">list</span>(); </a></code></pre></div>
 <p>以上就是我本人对于这种动态查询条件相关问题解决方式的几点认识，如有谬误，还望指正。希望以上文字可以为大家解决相关问题提供一定的思路和解决问题的方向，如果大家还有什么更好的解决方式，也可以放到网上与大家共享，毕竟现在是互联网的时代 :-&gt;</p>
 <h1 id="篇后语"><span class="header-section-number">3</span> 篇后语</h1>
-<p>感谢Sun Java Forums 和javaEye Forum中的开发者共享他们的观点，使我能够可以了解更多相关信息并促成这篇文字的诞生，同时也要感谢万维网和google的支持，没有他们，我也无法顺利的形成这篇文字并将其与大家分享...</p>
+<p>感谢Sun Java Forums 和javaEye Forum中的开发者共享他们的观点，使我能够可以了解更多相关信息并促成这篇文字的诞生，同时也要感谢万维网和google的支持，没有他们，我也无法顺利的形成这篇文字并将其与大家分享…</p>
 <h1 id="参考文献"><span class="header-section-number">4</span> 参考文献</h1>
-<ol style="list-style-type: decimal">
+<ol type="1">
 <li>《iBatis SqlMap Developer Guide 2.0》</li>
 <li>《Hibernate Reference》</li>
 </ol>
-<hr>
-<div align="center">
-<img src="/images/wechat-qrcode-footer.png"/>
-</div>
 
-</div>
+    </article>
 
-
-
-</body></html>
+  </body>
+</html>

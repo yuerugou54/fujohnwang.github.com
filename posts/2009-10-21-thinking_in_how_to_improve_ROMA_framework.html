@@ -1,15 +1,82 @@
 <!DOCTYPE html>
-<html lang="zh">
-<head>
+<html>
+  <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ROMA框架潜在改进点思考 - 一个架构士的思考与沉</title>
+        <meta name="date" content="2009-10-21" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="王福强的博客， 一个架构士的思考与沉淀">
     <meta name="keywords" content="architecture, book author, thinker, fighter, 架构, 思考, 技术, 武术, 哲学">
     <meta name="author" content="王福强">
-        <meta name="date" content="2009-10-21" />
-        <link rel="icon" href="/favicon.ico">
-    <title>ROMA框架潜在改进点思考 - 一个架构士的思考与沉淀</title>
-    <!-- 百度统计 -->
+    <link rel="stylesheet" href="/ivy.css">
+    <link rel="shortcut icon" href="/favicon.ico"/>
+    <style type="text/css">code{white-space: pre;}</style>
+    <style type="text/css">
+    a.sourceLine { display: inline-block; line-height: 1.25; }
+    a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+    a.sourceLine:empty { height: 1.2em; position: absolute; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode { white-space: pre; position: relative; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    code.sourceCode { white-space: pre-wrap; }
+    a.sourceLine { text-indent: -1em; padding-left: 1em; }
+    }
+    pre.numberSource a.sourceLine
+      { position: relative; }
+    pre.numberSource a.sourceLine:empty
+      { position: absolute; }
+    pre.numberSource a.sourceLine::before
+      { content: attr(data-line-number);
+        position: absolute; left: -5em; text-align: right; vertical-align: baseline;
+        border: none; pointer-events: all;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {  }
+    @media screen {
+    a.sourceLine::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+            <!-- 百度统计 -->
     <script>
       var _hmt = _hmt || [];
       (function() {
@@ -19,72 +86,26 @@
           s.parentNode.insertBefore(hm, s);
       })();
     </script>
+  </head>
 
-	<link href="/css/custom.css" rel="stylesheet"/>
-	<link rel="shortcut icon" href="/favicon.ico"/>
+  <body class="node homepage">
 
-<style type="text/css">code{white-space: pre;}</style>
-    <style type="text/css">
-    div.sourceCode { overflow-x: auto; }
-    table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
-      margin: 0; padding: 0; vertical-align: baseline; border: none; }
-    table.sourceCode { width: 100%; line-height: 100%; }
-    td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
-    td.sourceCode { padding-left: 5px; }
-    code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
-    code > span.dt { color: #902000; } /* DataType */
-    code > span.dv { color: #40a070; } /* DecVal */
-    code > span.bn { color: #40a070; } /* BaseN */
-    code > span.fl { color: #40a070; } /* Float */
-    code > span.ch { color: #4070a0; } /* Char */
-    code > span.st { color: #4070a0; } /* String */
-    code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
-    code > span.ot { color: #007020; } /* Other */
-    code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
-    code > span.fu { color: #06287e; } /* Function */
-    code > span.er { color: #ff0000; font-weight: bold; } /* Error */
-    code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-    code > span.cn { color: #880000; } /* Constant */
-    code > span.sc { color: #4070a0; } /* SpecialChar */
-    code > span.vs { color: #4070a0; } /* VerbatimString */
-    code > span.ss { color: #bb6688; } /* SpecialString */
-    code > span.im { } /* Import */
-    code > span.va { color: #19177c; } /* Variable */
-    code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-    code > span.op { color: #666666; } /* Operator */
-    code > span.bu { } /* BuiltIn */
-    code > span.ex { } /* Extension */
-    code > span.pp { color: #bc7a00; } /* Preprocessor */
-    code > span.at { color: #7d9029; } /* Attribute */
-    code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
-    code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-    code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-    code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-  </style>
-        
-	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-	<!--[if lt IE 9]>
-	  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.2/html5shiv.js"></script>
-	  <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-	<![endif]-->
-
-</head>
-
-<body>
-
-    <div class="masthead">
-		<!--
-    <h1 class="masthead-title fq">
-      <a href="/">扶墙老师</a>
-
-    </h1>
-    -->
-    <a href="/"><h1>扶墙老师说</h1></a>
-		<p class="masthead-lead">一个架构士的思考与沉淀</p>
-
-		<hr class="masthead-hr">
-
-	  	<ul class="masthead-nav">
+    <header class="masthead">
+      <h1><a href="/">扶墙老师说</a></h1>
+      <p class="tagline">
+         一个架构士的思考与沉淀
+          <img src="/images/wechat-qrcode-footer.png"/>
+          扶墙老师，辨证施“知”
+      </p>
+      
+      <nav class="menu">
+        <input id="menu-check" type="checkbox"/>
+        <label id="menu-label" for="menu-check" class="unselectable">
+          <span class="icon close-icon">✕</span>
+          <span class="icon open-icon">☰</span>
+          <span class="text">展开</span>
+        </label>
+        <ul>
             <li class="nav-item"><a class="nav-link" href="/favorite.html">我的收藏</a></li>
             <li class="nav-item"><a class="nav-link" href="/dashboard.html">金融看板</a></li>
             <li class="nav-item"><a class="nav-link" href="/columns.html">专栏文章</a></li>
@@ -92,20 +113,12 @@
             <li class="nav-item"><a class="nav-link" href="/whoami.html">我是何人</a></li>
             <li class="nav-item"><a class="nav-link" href="/interlinks.html">友情链接</a></li>
             <li class="nav-item"><a class="nav-link" href="/feeds.xml">RSS订阅</a></li>
-		</ul>
+        </ul>
+      </nav>
+    </header>
 
-  		<hr class="masthead-hr">
-
-	  	<ul class="masthead-nav">
-            <li class="nav-item"><small>©afoo.me</small></li>
-            <li class="nav-item"><small>Powered by <a href="http://pandoc.org/">pandoc</a> and <a href="http://rometools.github.io/rome/">ROME</a></small></li>
-		</ul>
-
-	</div>
-
-
-    <div class="listing">
-
+    <article class="main">
+      
 <div class="row">
 <div id="header">
 <p class="lead">
@@ -225,7 +238,7 @@ Xml代码
 <p>URIBroker的初衷是为了避免因为页面内链接的变更导致大批相关页面都要变动的局面。实际上， URIBroker起到一个隔离层的功效。从这一点来说， URIBroker功不可没，不过， 从个人角度来看，如果能够稍微改进一些， 则可以让这把小刀子更亮，更快。</p>
 <p>先来看现在URIBroker的使用场景。 在一个视图模板中，因为uribroker已经成为vm的内嵌对象，所以，为了表达一个链接，我们通常这么写：</p>
 <p>Java代码</p>
-<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java">$uribroker.<span class="fu">subscription</span>.<span class="fu">subcontroller</span>.<span class="fu">setTarget</span>( <span class="st">&quot;search.htm&quot;</span> )  </code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode java"><code class="sourceCode java"><a class="sourceLine" id="cb1-1" data-line-number="1">$uribroker.<span class="fu">subscription</span>.<span class="fu">subcontroller</span>.<span class="fu">setTarget</span>( <span class="st">&quot;search.htm&quot;</span> )  </a></code></pre></div>
 <p>当视图渲染完成后， 以上链接地址就可能变为“ http://host:port/contextpath/subscription/subcontroller/search.htm ”， 因为URIBroker会从一个外部的配置文件uri.xml中读取配置信息，形如：</p>
 <pre>
 Xml代码  
@@ -248,13 +261,8 @@ Xml代码
 <p>当路径需要变更的时候， 只修改uri.xml文件一个地方，所以使用$uribroker生成链接地址的视图模板都会得到统一的更新。</p>
 <p>可是对照一下使用<span class="math inline"><em>u</em><em>r</em><em>i</em><em>b</em><em>r</em><em>o</em><em>k</em><em>e</em><em>r</em><em>表</em><em>述</em><em>的</em><em>路</em><em>径</em>，<em>和</em><em>u</em><em>r</em><em>i</em>.<em>x</em><em>m</em><em>l</em><em>中</em><em>表</em><em>述</em><em>的</em><em>内</em><em>容</em>，<em>很</em><em>容</em><em>易</em><em>发</em><em>现</em>，<em>许</em><em>多</em><em>信</em><em>息</em><em>都</em><em>是</em><em>重</em><em>复</em><em>出</em><em>现</em><em>的</em>，<em>如</em><em>果</em><em>按</em><em>照</em><em>C</em><em>O</em><em>C</em><em>的</em><em>理</em><em>念</em>，<em>这</em><em>些</em><em>相</em><em>同</em><em>的</em><em>信</em><em>息</em><em>完</em><em>全</em><em>可</em><em>以</em><em>推</em><em>导</em><em>出</em><em>来</em>，<em>而</em><em>不</em><em>用</em><em>明</em><em>确</em><em>再</em><em>去</em><em>配</em><em>置</em><em>一</em><em>遍</em>，<em>理</em><em>想</em><em>的</em><em>情</em><em>况</em><em>是</em>，<em>只</em><em>有</em><em>路</em><em>径</em><em>信</em><em>息</em><em>和</em></span>uribroker所表述的路径不一致的时候，明确在uri.xml中配置这种路径信息才是合理而有效的。</p>
 <p>那么， 是不是可以这样那？！ 当<span class="math inline"><em>u</em><em>r</em><em>i</em><em>b</em><em>r</em><em>o</em><em>k</em><em>e</em><em>r</em><em>生</em><em>成</em><em>路</em><em>径</em><em>信</em><em>息</em><em>的</em><em>时</em><em>候</em>，<em>首</em><em>先</em><em>去</em><em>检</em><em>查</em><em>u</em><em>r</em><em>i</em>.<em>x</em><em>m</em><em>l</em><em>中</em><em>有</em><em>没</em><em>有</em><em>对</em><em>应</em><em>当</em><em>前</em><em>路</em><em>径</em><em>的</em><em>配</em><em>置</em><em>项</em>，<em>如</em><em>果</em><em>有</em>，<em>则</em><em>使</em><em>用</em><em>之</em>，<em>如</em><em>果</em><em>没</em><em>有</em>，<em>则</em><em>把</em></span>uribroker中指定的路径作为最终输出。 这样，就可以极大减少配置量，降低开发人员的负担。实现过程中是否有困难，这里不做考虑，从为开发人员考虑，和提高生产率的角度来说，个人认为，这样的需求是合理的。</p>
-<hr>
-<div align="center">
-<img src="/images/wechat-qrcode-footer.png"/>
-</div>
 
-</div>
+    </article>
 
-
-
-</body></html>
+  </body>
+</html>

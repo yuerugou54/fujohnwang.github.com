@@ -1,14 +1,16 @@
 <!DOCTYPE html>
-<html lang="zh">
-<head>
+<html>
+  <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple, Yet Powerful系列之“隔离” - 一个架构士的思考与沉</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="王福强的博客， 一个架构士的思考与沉淀">
     <meta name="keywords" content="architecture, book author, thinker, fighter, 架构, 思考, 技术, 武术, 哲学">
     <meta name="author" content="王福强">
-        <link rel="icon" href="/favicon.ico">
-    <title>Simple, Yet Powerful系列之“隔离” - 一个架构士的思考与沉淀</title>
-    <!-- 百度统计 -->
+    <link rel="stylesheet" href="/ivy.css">
+    <link rel="shortcut icon" href="/favicon.ico"/>
+    <style type="text/css">code{white-space: pre;}</style>
+            <!-- 百度统计 -->
     <script>
       var _hmt = _hmt || [];
       (function() {
@@ -18,35 +20,26 @@
           s.parentNode.insertBefore(hm, s);
       })();
     </script>
+  </head>
 
-	<link href="/css/custom.css" rel="stylesheet"/>
-	<link rel="shortcut icon" href="/favicon.ico"/>
+  <body class="node homepage">
 
-<style type="text/css">code{white-space: pre;}</style>
-        
-	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-	<!--[if lt IE 9]>
-	  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.2/html5shiv.js"></script>
-	  <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-	<![endif]-->
-
-</head>
-
-<body>
-
-    <div class="masthead">
-		<!--
-    <h1 class="masthead-title fq">
-      <a href="/">扶墙老师</a>
-
-    </h1>
-    -->
-    <a href="/"><h1>扶墙老师说</h1></a>
-		<p class="masthead-lead">一个架构士的思考与沉淀</p>
-
-		<hr class="masthead-hr">
-
-	  	<ul class="masthead-nav">
+    <header class="masthead">
+      <h1><a href="/">扶墙老师说</a></h1>
+      <p class="tagline">
+         一个架构士的思考与沉淀
+          <img src="/images/wechat-qrcode-footer.png"/>
+          扶墙老师，辨证施“知”
+      </p>
+      
+      <nav class="menu">
+        <input id="menu-check" type="checkbox"/>
+        <label id="menu-label" for="menu-check" class="unselectable">
+          <span class="icon close-icon">✕</span>
+          <span class="icon open-icon">☰</span>
+          <span class="text">展开</span>
+        </label>
+        <ul>
             <li class="nav-item"><a class="nav-link" href="/favorite.html">我的收藏</a></li>
             <li class="nav-item"><a class="nav-link" href="/dashboard.html">金融看板</a></li>
             <li class="nav-item"><a class="nav-link" href="/columns.html">专栏文章</a></li>
@@ -54,20 +47,12 @@
             <li class="nav-item"><a class="nav-link" href="/whoami.html">我是何人</a></li>
             <li class="nav-item"><a class="nav-link" href="/interlinks.html">友情链接</a></li>
             <li class="nav-item"><a class="nav-link" href="/feeds.xml">RSS订阅</a></li>
-		</ul>
+        </ul>
+      </nav>
+    </header>
 
-  		<hr class="masthead-hr">
-
-	  	<ul class="masthead-nav">
-            <li class="nav-item"><small>©afoo.me</small></li>
-            <li class="nav-item"><small>Powered by <a href="http://pandoc.org/">pandoc</a> and <a href="http://rometools.github.io/rome/">ROME</a></small></li>
-		</ul>
-
-	</div>
-
-
-    <div class="listing">
-
+    <article class="main">
+      
 <div class="row">
 <div id="header">
 <p class="lead">
@@ -86,7 +71,7 @@
 </div>
 <hr/>
 
-<p>隔离的概念其实很简单， 但越是简单的东西， 就越不能小看。应用得当的话， 可以让我们的系统“天生丽质”， 一出生就在某些方面领先他人一步， 不信， 咱上眼瞧...</p>
+<p>隔离的概念其实很简单， 但越是简单的东西， 就越不能小看。应用得当的话， 可以让我们的系统“天生丽质”， 一出生就在某些方面领先他人一步， 不信， 咱上眼瞧…</p>
 <h1 id="隔离以提高系统的容灾"><span class="header-section-number">1</span> 隔离以提高系统的容灾</h1>
 <p>部门本来有一个项目可以满足其它部门的需求， 但一些架构师不想使用现有的这个项目，而要另起炉灶， 其中的一个原因是某个应用如果突发状况致使统一的服务down掉， 那么使用统一服务的其它应用也将受牵连， 让我们来看一下为什么会出现这种情况。</p>
 <p><img src="images/service-without-isolation.png" alt=""/></p>
@@ -107,13 +92,8 @@
 <p>事务的隔离级别大家应该不陌生吧？那它的作用是什么那？我知道， 把它归到并发控制策略那边或许更合适一些， 可我这里要说隔离， 所以， 我就死拉硬扯地， 把它先暂且划归这里一会儿吧。 通过事务隔离级别，我们可以控制数据的可见性， 从而在一定程度上规避共享状态地某些冲突， 或者说即使有冲突， 我们也可以按照预先设定地策略进行规避（MVCC）， 但扩展来讲，如果我们能够将某些关注点从一开始就隔离开来的话， 那也就从根本上规避了某些状态地冲突， 至于相应地， 系统更易于管理和维护，以及更加易于扩展之类的好处， 那自然而然就都随之而来了。 这么“一石多鸟”的事情， 可能的情况下，应该多为才对。</p>
 <h1 id="结束语"><span class="header-section-number">3</span> 结束语</h1>
 <p>本来我还想胡搅蛮缠一下扩充点儿篇幅， 想将“关注点／功能／服务／系统”的治理和维护也纳入道这个topic下， 但发现“隔离”和”分离“语意上可能还是有些差异的， 所以就此作罢， 先写一部分确定的内容吧！</p>
-<hr>
-<div align="center">
-<img src="/images/wechat-qrcode-footer.png"/>
-</div>
 
-</div>
+    </article>
 
-
-
-</body></html>
+  </body>
+</html>

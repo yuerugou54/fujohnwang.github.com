@@ -1,14 +1,81 @@
 <!DOCTYPE html>
-<html lang="zh">
-<head>
+<html>
+  <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>设计原本如此简单 - 一个架构士的思考与沉</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="王福强的博客， 一个架构士的思考与沉淀">
     <meta name="keywords" content="architecture, book author, thinker, fighter, 架构, 思考, 技术, 武术, 哲学">
     <meta name="author" content="王福强">
-        <link rel="icon" href="/favicon.ico">
-    <title>设计原本如此简单 - 一个架构士的思考与沉淀</title>
-    <!-- 百度统计 -->
+    <link rel="stylesheet" href="/ivy.css">
+    <link rel="shortcut icon" href="/favicon.ico"/>
+    <style type="text/css">code{white-space: pre;}</style>
+    <style type="text/css">
+    a.sourceLine { display: inline-block; line-height: 1.25; }
+    a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+    a.sourceLine:empty { height: 1.2em; position: absolute; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode { white-space: pre; position: relative; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    code.sourceCode { white-space: pre-wrap; }
+    a.sourceLine { text-indent: -1em; padding-left: 1em; }
+    }
+    pre.numberSource a.sourceLine
+      { position: relative; }
+    pre.numberSource a.sourceLine:empty
+      { position: absolute; }
+    pre.numberSource a.sourceLine::before
+      { content: attr(data-line-number);
+        position: absolute; left: -5em; text-align: right; vertical-align: baseline;
+        border: none; pointer-events: all;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {  }
+    @media screen {
+    a.sourceLine::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+            <!-- 百度统计 -->
     <script>
       var _hmt = _hmt || [];
       (function() {
@@ -18,72 +85,26 @@
           s.parentNode.insertBefore(hm, s);
       })();
     </script>
+  </head>
 
-	<link href="/css/custom.css" rel="stylesheet"/>
-	<link rel="shortcut icon" href="/favicon.ico"/>
+  <body class="node homepage">
 
-<style type="text/css">code{white-space: pre;}</style>
-    <style type="text/css">
-    div.sourceCode { overflow-x: auto; }
-    table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
-      margin: 0; padding: 0; vertical-align: baseline; border: none; }
-    table.sourceCode { width: 100%; line-height: 100%; }
-    td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
-    td.sourceCode { padding-left: 5px; }
-    code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
-    code > span.dt { color: #902000; } /* DataType */
-    code > span.dv { color: #40a070; } /* DecVal */
-    code > span.bn { color: #40a070; } /* BaseN */
-    code > span.fl { color: #40a070; } /* Float */
-    code > span.ch { color: #4070a0; } /* Char */
-    code > span.st { color: #4070a0; } /* String */
-    code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
-    code > span.ot { color: #007020; } /* Other */
-    code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
-    code > span.fu { color: #06287e; } /* Function */
-    code > span.er { color: #ff0000; font-weight: bold; } /* Error */
-    code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-    code > span.cn { color: #880000; } /* Constant */
-    code > span.sc { color: #4070a0; } /* SpecialChar */
-    code > span.vs { color: #4070a0; } /* VerbatimString */
-    code > span.ss { color: #bb6688; } /* SpecialString */
-    code > span.im { } /* Import */
-    code > span.va { color: #19177c; } /* Variable */
-    code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-    code > span.op { color: #666666; } /* Operator */
-    code > span.bu { } /* BuiltIn */
-    code > span.ex { } /* Extension */
-    code > span.pp { color: #bc7a00; } /* Preprocessor */
-    code > span.at { color: #7d9029; } /* Attribute */
-    code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
-    code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-    code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-    code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-  </style>
-        
-	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-	<!--[if lt IE 9]>
-	  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.2/html5shiv.js"></script>
-	  <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-	<![endif]-->
-
-</head>
-
-<body>
-
-    <div class="masthead">
-		<!--
-    <h1 class="masthead-title fq">
-      <a href="/">扶墙老师</a>
-
-    </h1>
-    -->
-    <a href="/"><h1>扶墙老师说</h1></a>
-		<p class="masthead-lead">一个架构士的思考与沉淀</p>
-
-		<hr class="masthead-hr">
-
-	  	<ul class="masthead-nav">
+    <header class="masthead">
+      <h1><a href="/">扶墙老师说</a></h1>
+      <p class="tagline">
+         一个架构士的思考与沉淀
+          <img src="/images/wechat-qrcode-footer.png"/>
+          扶墙老师，辨证施“知”
+      </p>
+      
+      <nav class="menu">
+        <input id="menu-check" type="checkbox"/>
+        <label id="menu-label" for="menu-check" class="unselectable">
+          <span class="icon close-icon">✕</span>
+          <span class="icon open-icon">☰</span>
+          <span class="text">展开</span>
+        </label>
+        <ul>
             <li class="nav-item"><a class="nav-link" href="/favorite.html">我的收藏</a></li>
             <li class="nav-item"><a class="nav-link" href="/dashboard.html">金融看板</a></li>
             <li class="nav-item"><a class="nav-link" href="/columns.html">专栏文章</a></li>
@@ -91,20 +112,12 @@
             <li class="nav-item"><a class="nav-link" href="/whoami.html">我是何人</a></li>
             <li class="nav-item"><a class="nav-link" href="/interlinks.html">友情链接</a></li>
             <li class="nav-item"><a class="nav-link" href="/feeds.xml">RSS订阅</a></li>
-		</ul>
+        </ul>
+      </nav>
+    </header>
 
-  		<hr class="masthead-hr">
-
-	  	<ul class="masthead-nav">
-            <li class="nav-item"><small>©afoo.me</small></li>
-            <li class="nav-item"><small>Powered by <a href="http://pandoc.org/">pandoc</a> and <a href="http://rometools.github.io/rome/">ROME</a></small></li>
-		</ul>
-
-	</div>
-
-
-    <div class="listing">
-
+    <article class="main">
+      
 <div class="row">
 <div id="header">
 <p class="lead">
@@ -128,37 +141,37 @@
 </div>
 <hr/>
 
-<p>年前收到福川兄寄出的《写给大家看的设计书》(The Non-Designer's Design Book)，自己还没看的， 却推荐给了老李(Dino)先行阅读，只因他正在做一个咨询方案，感觉这本书可以有所帮助， 现在看来，这帮助绝对不是可以用一点儿来形容了。 福川兄推荐这本书的时候就赞不绝口，说，“大家看了后都说好”， 既然如此，没看之前难免会觉得福川兄有“王婆卖瓜，自卖自夸”之嫌， 现在看来，这一顾虑也是没有必要的，因为，这本书确实就是好嘛！</p>
+<p>年前收到福川兄寄出的《写给大家看的设计书》(The Non-Designer’s Design Book)，自己还没看的， 却推荐给了老李(Dino)先行阅读，只因他正在做一个咨询方案，感觉这本书可以有所帮助， 现在看来，这帮助绝对不是可以用一点儿来形容了。 福川兄推荐这本书的时候就赞不绝口，说，“大家看了后都说好”， 既然如此，没看之前难免会觉得福川兄有“王婆卖瓜，自卖自夸”之嫌， 现在看来，这一顾虑也是没有必要的，因为，这本书确实就是好嘛！</p>
 <h1 id="写给大家看的设计书你值得拥有"><span class="header-section-number">1</span> “《写给大家看的设计书》，你值得拥有！”</h1>
 <p>当乘着2009年1月20号晚上从大连到烟台的滚装船飘摇在渤海之上的时候， 无聊困顿之时，我打开了这本《写给大家看的设计书》，仅仅是读到第一页作者讲的第一个亲身体验的小故事的时候， 我就深深的被吸引到了作者营造的阅读环境之中。</p>
 <p>许多事物，虽然我们每日都看到，却往往对它们是熟视无睹。作者以“约书亚树”的故事作为开始， 阐明了这一浅显的道理，进而打消了我们进入设计领域“探险”的顾虑。 读到此处，我就有提笔标注的冲动，只可惜啊，手头没有笔，这里是第一个触动我的地方， 有道是“与卿心有戚戚焉”，那时候的脑海里，跃然浮现出了清琪描绘出的现金流与资产负债表之间的简图， 正是这一简图，让我从另一个角度认识到了现金流与资产负债之间的关系。 作者的“约书亚树”，对那时的我来说，也有异曲同工之效， 只不过，这道理嘛，却推延到了日常生活中，进而借此简单的道理，引导我们进入设计的世界里。</p>
 <p>在此之前，不知道各位是不是像我这样，因为没有经历过正规的设计专业的教育，而在某些设计问题面前略感信心不足， 反正我知道，当我读完本书的第一部分，甚至只是作者给出的“四大基本设计原则”之后，这一切都烟消云散了， 当时的我，简直就是醍醐灌顶的感觉！</p>
 <p>作者以“四大基本设计原则”为“开路先锋”， 前期为我们详细地介绍了每一条设计原则，然后在“四大基本设计原则”的基础上， 使用专门的一章为我们提供了各种领域的设计用例，以帮助我们巩固对“四大基本设计原则”的理解和运用， 最后，为了帮助我们向更专业的设计领域迈进， 以详尽的篇幅为我们介绍了色轮与字体的各种相关概念。 整本书读起来脉络清晰，一点儿都没有冗余枯燥之感，当看得同一船舱中的乘客陆续入睡之后， 我才恋恋不舍的合上手头这本书，脑海中带着对“四大基本设计原则”的“念叨”而入睡（那个时候，我已经是一口气读完了介绍“四大基本设计原则”的前六章）。</p>
-<p>或许别人看到这里已经有些忍无可忍了，感觉我像是个书托儿， 确实，福川兄确实希望我读完这本书的时候为这本书写一些文字，但促使我写下这篇文字的，更多的却是因为，这本书确实很好，而且又岂止一个好字了得啊！ 就跟那什么广告说的好，“金利手机，你值得拥有！” <a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a>， 现在倒应该是，“《写个大家看的设计书》，你值得拥有！”</p>
+<p>或许别人看到这里已经有些忍无可忍了，感觉我像是个书托儿， 确实，福川兄确实希望我读完这本书的时候为这本书写一些文字，但促使我写下这篇文字的，更多的却是因为，这本书确实很好，而且又岂止一个好字了得啊！ 就跟那什么广告说的好，“金利手机，你值得拥有！” <a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>， 现在倒应该是，“《写个大家看的设计书》，你值得拥有！”</p>
 <p>不要以为某些设计只有专业的设计人员才能做到，只要你有一双认识美的眼睛，只要你能够理解并充分运用书中的“四大基本设计原则”， 你也可以创作出精美的设计作品，从简历到PPT演讲稿，从个人主页到专业的网站，等等。 在经历了《写给大家看的设计书》的洗练之后，我坚信，届时的你，绝对不可同日而语!</p>
 <h1 id="美或者说艺术原来是相通的"><span class="header-section-number">2</span> 美，或者说，艺术原来是相通的</h1>
-<p>要不是色弱，现在的我或许已经是个大夫啥的了，虽然现在做软件这一行与色彩打交道不是很多，但是，不得不承认， 对于色彩的处理，我确实没有啥先天优势。当给老李的咨询方案PPT提一些建议之后，老李（Dino）说我对色彩的把握很好， 我只能是苦笑，或许是整体上色彩的对比可以把握一些，但色弱这一先天弱势，却让我对更细致的色彩把握没有任何自信。 当我看作者将色轮那一章的时候，感觉作者讲的很简单易懂，但是，不得不承认，许多色彩对我来说一点儿感觉没有，尤其是相近的颜色， 所以，无论是色轮还是字体，都不是对我感触最多的地方，对我感触最多的，是从这本讲设计的书中，我发现并又一次验证了“格栅理论” <a href="#fn2" class="footnoteRef" id="fnref2"><sup>2</sup></a>。</p>
-<p>在这个世界上，好像冥冥之中，万物皆有关联与相通之处，在一个领域中的某些理念， 通常可以类比并推演到其它领域之中，在阅读作者提出的“四大基本设计原则”的时候， 我的脑海中就会时不时的蹦出自己领域和其它领域中存在相似原则的实例，不信？ 下面就是当时的一些记忆残片，或许你早就有所感悟了...</p>
+<p>要不是色弱，现在的我或许已经是个大夫啥的了，虽然现在做软件这一行与色彩打交道不是很多，但是，不得不承认， 对于色彩的处理，我确实没有啥先天优势。当给老李的咨询方案PPT提一些建议之后，老李（Dino）说我对色彩的把握很好， 我只能是苦笑，或许是整体上色彩的对比可以把握一些，但色弱这一先天弱势，却让我对更细致的色彩把握没有任何自信。 当我看作者将色轮那一章的时候，感觉作者讲的很简单易懂，但是，不得不承认，许多色彩对我来说一点儿感觉没有，尤其是相近的颜色， 所以，无论是色轮还是字体，都不是对我感触最多的地方，对我感触最多的，是从这本讲设计的书中，我发现并又一次验证了“格栅理论” <a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a>。</p>
+<p>在这个世界上，好像冥冥之中，万物皆有关联与相通之处，在一个领域中的某些理念， 通常可以类比并推演到其它领域之中，在阅读作者提出的“四大基本设计原则”的时候， 我的脑海中就会时不时的蹦出自己领域和其它领域中存在相似原则的实例，不信？ 下面就是当时的一些记忆残片，或许你早就有所感悟了…</p>
 <h2 id="亲密性proximity"><span class="header-section-number">2.1</span> 亲密性(Proximity)</h2>
 <p>设计的亲密性原则强调信息的组织，相关的信息要尽可能的靠近，相反，不相关的信息，则尽可能的分离。 实际上，同样的原则，我们无时无刻不在使用，只不过，这些事物我们日常接触太多，却忽略了它们背后的东西。</p>
 <p>我是做软件的，所以，就先构建软件的代码说起吧！在过程式编程的年代，像C或者Pascal， 老师或者说教材都会告诉你为了代码复用，将某些相关的代码组织成函数(Function)或者过程(Procedure)； 而到了面向对象编程的年代，比如Java中，我们会将相关的代码组织为方法或者是对象；实际上，这些都是亲密性原则的体现。 试想，你愿意看到各种逻辑混杂的一大段代码那，还是愿意看到关注点划分清晰又组织良好的代码那？ 具体一点儿，你是愿意看到“代码清单1”中代码那，还是愿意看到“代码清单2”中的代码？</p>
-<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java">代码清单1
-<span class="kw">public</span> <span class="kw">class</span> CodeStyleSample {
-    <span class="kw">private</span> <span class="dt">static</span> <span class="dt">final</span> <span class="kw">transient</span> Log logger=LogFactory.<span class="fu">getLog</span>(CodeStyleSample.<span class="fu">class</span>);
-    <span class="kw">public</span> <span class="dt">static</span> <span class="dt">final</span> <span class="bu">String</span> CONSTANT_ONE=<span class="st">&quot;..&quot;</span>;
-    <span class="kw">public</span> <span class="dt">static</span> <span class="dt">final</span> <span class="dt">int</span> CONSTANT_TWO=<span class="dv">11</span>;
-    ...
-}</code></pre></div>
-<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java">代码清单2
-<span class="kw">public</span> <span class="kw">class</span> CodeStyleSample {
-
-    <span class="kw">private</span> <span class="dt">static</span> <span class="dt">final</span> <span class="kw">transient</span> Log logger=LogFactory.<span class="fu">getLog</span>(CodeStyleSample.<span class="fu">class</span>);
-    
-    <span class="kw">public</span> <span class="dt">static</span> <span class="dt">final</span> <span class="bu">String</span> CONSTANT_ONE=<span class="st">&quot;..&quot;</span>;
-    <span class="kw">public</span> <span class="dt">static</span> <span class="dt">final</span> <span class="dt">int</span> CONSTANT_TWO=<span class="dv">11</span>;
-    
-    ...
-}</code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode java"><code class="sourceCode java"><a class="sourceLine" id="cb1-1" data-line-number="1">代码清单1</a>
+<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw">public</span> <span class="kw">class</span> CodeStyleSample {</a>
+<a class="sourceLine" id="cb1-3" data-line-number="3">    <span class="kw">private</span> <span class="dt">static</span> <span class="dt">final</span> <span class="kw">transient</span> Log logger=LogFactory.<span class="fu">getLog</span>(CodeStyleSample.<span class="fu">class</span>);</a>
+<a class="sourceLine" id="cb1-4" data-line-number="4">    <span class="kw">public</span> <span class="dt">static</span> <span class="dt">final</span> <span class="bu">String</span> CONSTANT_ONE=<span class="st">&quot;..&quot;</span>;</a>
+<a class="sourceLine" id="cb1-5" data-line-number="5">    <span class="kw">public</span> <span class="dt">static</span> <span class="dt">final</span> <span class="dt">int</span> CONSTANT_TWO=<span class="dv">11</span>;</a>
+<a class="sourceLine" id="cb1-6" data-line-number="6">    ...</a>
+<a class="sourceLine" id="cb1-7" data-line-number="7">}</a></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode java"><code class="sourceCode java"><a class="sourceLine" id="cb2-1" data-line-number="1">代码清单2</a>
+<a class="sourceLine" id="cb2-2" data-line-number="2"><span class="kw">public</span> <span class="kw">class</span> CodeStyleSample {</a>
+<a class="sourceLine" id="cb2-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb2-4" data-line-number="4">    <span class="kw">private</span> <span class="dt">static</span> <span class="dt">final</span> <span class="kw">transient</span> Log logger=LogFactory.<span class="fu">getLog</span>(CodeStyleSample.<span class="fu">class</span>);</a>
+<a class="sourceLine" id="cb2-5" data-line-number="5">    </a>
+<a class="sourceLine" id="cb2-6" data-line-number="6">    <span class="kw">public</span> <span class="dt">static</span> <span class="dt">final</span> <span class="bu">String</span> CONSTANT_ONE=<span class="st">&quot;..&quot;</span>;</a>
+<a class="sourceLine" id="cb2-7" data-line-number="7">    <span class="kw">public</span> <span class="dt">static</span> <span class="dt">final</span> <span class="dt">int</span> CONSTANT_TWO=<span class="dv">11</span>;</a>
+<a class="sourceLine" id="cb2-8" data-line-number="8">    </a>
+<a class="sourceLine" id="cb2-9" data-line-number="9">    ...</a>
+<a class="sourceLine" id="cb2-10" data-line-number="10">}</a></code></pre></div>
 <p>我想代码清单2要更有条理一些吧？！（当然，还不算最好，说道对齐原则的时候，我们还会看到进一步的改进）</p>
 <p>代码是一个级别，推而广之，架构之中的逻辑分层，实际上也可以算是亲密性原则的体现。 还有， 你愿意将所有的组件部署在一台服务器上，还是愿意将职责分明的组件分别部署到不同的服务器上？ 就跟亲密性原则所说，尽可能的将相近的信息放在一起，而将不相关的信息相分离，侧重Scale out而不是Scale up， 或许亲密性原则也是一种解释吧，呵呵，一台机器的Scale up，你只能买更强大的硬件，而多台机器的Scale out，你可以购买更廉价的硬件来组建各种server farms，后者看起来不是很像是亲密性原则的信徒吗？！</p>
 <p>光说软件与亲密性的联系有些狭隘，那我们推广到社会与家庭如何？！一个个的家庭是不是相互分离的那？可是家庭内部是不是亲密性很强？ 再进一步的放眼，一个个的国家内部是不是亲密性很强，放到世界的范围内，它们看起来是不是又成为了一个个的个体？！</p>
@@ -166,16 +179,16 @@
 <h2 id="对齐alignment"><span class="header-section-number">2.2</span> 对齐(Alignment)</h2>
 <p>对齐的概念很简单，不用我说大家也知道，在某个有限的平面空间内，通常也就“向左对齐”，“向右对齐”以及“居中对齐”， 要么说作者这本书写的简单易懂嘛，这么简单的概念，经作者一提点，你我就会发现，原来如此简单的原则，却可以构建那么不简单的效果。</p>
 <p>还是先以代码为例，我不知道大家是愿意看到“代码清单2”中的代码那，还是愿意看到“代码清单3”中的代码？！</p>
-<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java">代码清单3
-<span class="kw">public</span> <span class="kw">class</span> CodeStyleSample {
-
-    <span class="kw">private</span> <span class="dt">static</span> <span class="dt">final</span> <span class="kw">transient</span> Log logger=LogFactory.<span class="fu">getLog</span>(CodeStyleSample.<span class="fu">class</span>);
-    
-    <span class="kw">public</span> <span class="dt">static</span> <span class="dt">final</span> <span class="bu">String</span>   CONSTANT_ONE=<span class="st">&quot;..&quot;</span>;
-    <span class="kw">public</span> <span class="dt">static</span> <span class="dt">final</span> <span class="dt">int</span>      CONSTANT_TWO=<span class="dv">11</span>;   
-    
-    ...
-}</code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode java"><code class="sourceCode java"><a class="sourceLine" id="cb3-1" data-line-number="1">代码清单3</a>
+<a class="sourceLine" id="cb3-2" data-line-number="2"><span class="kw">public</span> <span class="kw">class</span> CodeStyleSample {</a>
+<a class="sourceLine" id="cb3-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb3-4" data-line-number="4">    <span class="kw">private</span> <span class="dt">static</span> <span class="dt">final</span> <span class="kw">transient</span> Log logger=LogFactory.<span class="fu">getLog</span>(CodeStyleSample.<span class="fu">class</span>);</a>
+<a class="sourceLine" id="cb3-5" data-line-number="5">    </a>
+<a class="sourceLine" id="cb3-6" data-line-number="6">    <span class="kw">public</span> <span class="dt">static</span> <span class="dt">final</span> <span class="bu">String</span>   CONSTANT_ONE=<span class="st">&quot;..&quot;</span>;</a>
+<a class="sourceLine" id="cb3-7" data-line-number="7">    <span class="kw">public</span> <span class="dt">static</span> <span class="dt">final</span> <span class="dt">int</span>      CONSTANT_TWO=<span class="dv">11</span>;   </a>
+<a class="sourceLine" id="cb3-8" data-line-number="8">    </a>
+<a class="sourceLine" id="cb3-9" data-line-number="9">    ...</a>
+<a class="sourceLine" id="cb3-10" data-line-number="10">}</a></code></pre></div>
 <p>将代码按照某一基线对齐之后，看起来是不是更加赏心悦目那？！</p>
 <p>“向右看齐！”，当你还是学生的时候，出操排队的时候是不是经常被要求这么做那？ 在了解了对齐原则之后，你有没有认为这里也是对齐原则的一处体现之地那？做领导的，可不愿意看到下面零零散散，乱七八糟的人群， 当你排好队，一排排齐刷刷的出现在操场的时候，领导看着要舒心多了，哈哈！ 类似的，国家领导人阅兵的时候， 也希望看到的是雄赳赳，齐刷刷的方阵，而这些恰好都是对齐原则的体现，创造美，实际上就这么简单。</p>
 <p>所以说，对齐，作为四大设计原则之一，或许作者只是在这本更强调平面设计的书里提出，但同样可以推而广之到其他的领域来应用。敞开你畅想的翅膀，尽情飞翔吧！</p>
@@ -188,29 +201,24 @@
 <p>为了突出某些信息，吸引别人的注意，生活中使用对比的例子多不胜数。 奇装异服就不说了，这属于通过衣着的对比来达成吸引他人注意； 在安静的场所，你冷不丁的吼一嗓子，是不是也会与整体环境的安静形成鲜明的对比那？</p>
 <p>我不知道其他人是否玩游戏，在玩CS的时候，许多玩家愿意把自己的名字拼成大小写混杂的形式，比如honor这个单词， 他或许拼为HoNoR或者hOnOr之类，当你读完作者关于字体对比的那几章内容之后， 你就会发现，这属于通过字体的对比来达到突出某些信息的目的。</p>
 <p>各种大型活动会有人阵表演，奥运会开幕式上的人阵表演大家应该看过了，我来说说我记起的一个搞笑点儿的人阵的例子吧！ 或许有的人已经看过这个视频，是说金正日阅兵，然后参加人阵的一个演员(姑且这么称呼)睡过头了， 庆典开始之后他没有到，然后就看到以人阵拼成的伟大的金正日同志的头像上，冷不丁的少了颗门牙，呵呵，真的假的我就不知道了， 但这个例子绝对是对比原则很好的体现，只要是观礼台上的人，指定都会看到那颗少了的门牙 ;-) 如果有人要丑化伟大的金正日同志，那他的目的绝对达到了。</p>
-<p>怎么样？关于对比原则，你是不是也有一些想法那？ If so, Fly, Baby! Fly...</p>
+<p>怎么样？关于对比原则，你是不是也有一些想法那？ If so, Fly, Baby! Fly…</p>
 <h1 id="结束语"><span class="header-section-number">3</span> 结束语</h1>
 <p>所有的这些原则都不是孤立的，很多时候都是多种原则协调使用才能达成想要的效果。 另外，除了这些基本原则，我还想提两点跟阅读这本书相关的两点感受：</p>
 <ul>
 <li>作者有时候会先给出一件设计糟糕的作品让我们找出都有哪些不足，然后引导我们使用四大基本设计原则来不断的改进这一作品， 最后再让我们看到最终的设计效果， 作为软件开发人员来说，有没有感觉这一过程有点儿是曾相识那？ 我们一再强调的“重构”(refactoring)， 不正是这一过程吗？推而广之，楼房的设计图纸的改进，航天计划的完善，难道不都是一种“重构”的过程吗？ 看来，不但设计原则可以推而广之，每一领域的做事方式也是相通的吧？！</li>
-<li>作者在书中的很多地方都会强调留白的重要性，这与国画和书法中强调的留白难道又是一种巧合吗？ 我想并不能用一句巧合来解释这一切吧？！艺术，应该也是相通的！<a href="#fn3" class="footnoteRef" id="fnref3"><sup>3</sup></a></li>
+<li>作者在书中的很多地方都会强调留白的重要性，这与国画和书法中强调的留白难道又是一种巧合吗？ 我想并不能用一句巧合来解释这一切吧？！艺术，应该也是相通的！<a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a></li>
 </ul>
-<p>这确实是一本讲设计的书，一本浅显易懂，让人受益匪浅的设计书(起码我是这么认为的)， 但对我来说，它向我传达的又好像不仅仅只是设计领域的相关理念那么简单， 或许所有的“门派”在一定的层次之上都不再称其为“门派”； 或许所有艺术，学术以及其它人类文明的分类原本就出自一家； 又或许本来就是很一般的概念却让我们自己分门别类的给划分成了各种特殊的情形，谁又知道那？！ 可能连盘古和女娲都不知道这些....</p>
-<div class="footnotes">
+<p>这确实是一本讲设计的书，一本浅显易懂，让人受益匪浅的设计书(起码我是这么认为的)， 但对我来说，它向我传达的又好像不仅仅只是设计领域的相关理念那么简单， 或许所有的“门派”在一定的层次之上都不再称其为“门派”； 或许所有艺术，学术以及其它人类文明的分类原本就出自一家； 又或许本来就是很一般的概念却让我们自己分门别类的给划分成了各种特殊的情形，谁又知道那？！ 可能连盘古和女娲都不知道这些….</p>
+<section class="footnotes">
 <hr />
 <ol>
-<li id="fn1"><p>好像是啥手机广告吧？有些记不清了，呵呵<a href="#fnref1">↩</a></p></li>
-<li id="fn2"><p>如果你不知道格栅理论是啥，那可以看一下《巴菲特-從牛頓達爾文到巴菲特-投資的格栅理論》这本书， 虽然这是讲股票分析的书，但你可以发现这之外的很多东西，其中的某些理念，也是我这篇文字要阐述的。<a href="#fnref2">↩</a></p></li>
-<li id="fn3"><p>说道留白，我又想起代码清单里还剩下点儿东西没有完成，在代码清单3中添加了对齐的元素之后， 我们还可以进一步的在等号(=)左右添加空格来留白，你可以看一下现在的代码风格是不是很清新可人了那？！呵呵，回想一下，还是当年王学俊交给我的这一点那...<a href="#fnref3">↩</a></p></li>
+<li id="fn1"><p>好像是啥手机广告吧？有些记不清了，呵呵<a href="#fnref1" class="footnote-back">↩</a></p></li>
+<li id="fn2"><p>如果你不知道格栅理论是啥，那可以看一下《巴菲特-從牛頓達爾文到巴菲特-投資的格栅理論》这本书， 虽然这是讲股票分析的书，但你可以发现这之外的很多东西，其中的某些理念，也是我这篇文字要阐述的。<a href="#fnref2" class="footnote-back">↩</a></p></li>
+<li id="fn3"><p>说道留白，我又想起代码清单里还剩下点儿东西没有完成，在代码清单3中添加了对齐的元素之后， 我们还可以进一步的在等号(=)左右添加空格来留白，你可以看一下现在的代码风格是不是很清新可人了那？！呵呵，回想一下，还是当年王学俊交给我的这一点那…<a href="#fnref3" class="footnote-back">↩</a></p></li>
 </ol>
-</div>
-<hr>
-<div align="center">
-<img src="/images/wechat-qrcode-footer.png"/>
-</div>
+</section>
 
-</div>
+    </article>
 
-
-
-</body></html>
+  </body>
+</html>

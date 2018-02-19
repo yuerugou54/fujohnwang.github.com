@@ -1,15 +1,17 @@
 <!DOCTYPE html>
-<html lang="zh">
-<head>
+<html>
+  <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>哪里是阶级固化，明明就是阶级消亡 - 一个架构士的思考与沉</title>
+        <meta name="date" content="2017-04-27" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="王福强的博客， 一个架构士的思考与沉淀">
     <meta name="keywords" content="architecture, book author, thinker, fighter, 架构, 思考, 技术, 武术, 哲学">
     <meta name="author" content="王福强">
-        <meta name="date" content="2017-04-27" />
-        <link rel="icon" href="/favicon.ico">
-    <title>哪里是阶级固化，明明就是阶级消亡 - 一个架构士的思考与沉淀</title>
-    <!-- 百度统计 -->
+    <link rel="stylesheet" href="/ivy.css">
+    <link rel="shortcut icon" href="/favicon.ico"/>
+    <style type="text/css">code{white-space: pre;}</style>
+            <!-- 百度统计 -->
     <script>
       var _hmt = _hmt || [];
       (function() {
@@ -19,35 +21,26 @@
           s.parentNode.insertBefore(hm, s);
       })();
     </script>
+  </head>
 
-	<link href="/css/custom.css" rel="stylesheet"/>
-	<link rel="shortcut icon" href="/favicon.ico"/>
+  <body class="node homepage">
 
-<style type="text/css">code{white-space: pre;}</style>
-        
-	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-	<!--[if lt IE 9]>
-	  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.2/html5shiv.js"></script>
-	  <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-	<![endif]-->
-
-</head>
-
-<body>
-
-    <div class="masthead">
-		<!--
-    <h1 class="masthead-title fq">
-      <a href="/">扶墙老师</a>
-
-    </h1>
-    -->
-    <a href="/"><h1>扶墙老师说</h1></a>
-		<p class="masthead-lead">一个架构士的思考与沉淀</p>
-
-		<hr class="masthead-hr">
-
-	  	<ul class="masthead-nav">
+    <header class="masthead">
+      <h1><a href="/">扶墙老师说</a></h1>
+      <p class="tagline">
+         一个架构士的思考与沉淀
+          <img src="/images/wechat-qrcode-footer.png"/>
+          扶墙老师，辨证施“知”
+      </p>
+      
+      <nav class="menu">
+        <input id="menu-check" type="checkbox"/>
+        <label id="menu-label" for="menu-check" class="unselectable">
+          <span class="icon close-icon">✕</span>
+          <span class="icon open-icon">☰</span>
+          <span class="text">展开</span>
+        </label>
+        <ul>
             <li class="nav-item"><a class="nav-link" href="/favorite.html">我的收藏</a></li>
             <li class="nav-item"><a class="nav-link" href="/dashboard.html">金融看板</a></li>
             <li class="nav-item"><a class="nav-link" href="/columns.html">专栏文章</a></li>
@@ -55,20 +48,12 @@
             <li class="nav-item"><a class="nav-link" href="/whoami.html">我是何人</a></li>
             <li class="nav-item"><a class="nav-link" href="/interlinks.html">友情链接</a></li>
             <li class="nav-item"><a class="nav-link" href="/feeds.xml">RSS订阅</a></li>
-		</ul>
+        </ul>
+      </nav>
+    </header>
 
-  		<hr class="masthead-hr">
-
-	  	<ul class="masthead-nav">
-            <li class="nav-item"><small>©afoo.me</small></li>
-            <li class="nav-item"><small>Powered by <a href="http://pandoc.org/">pandoc</a> and <a href="http://rometools.github.io/rome/">ROME</a></small></li>
-		</ul>
-
-	</div>
-
-
-    <div class="listing">
-
+    <article class="main">
+      
 <div class="row">
 <div id="header">
 <p class="lead">
@@ -86,21 +71,13 @@
 <p>上周末EGO小组会上大象就跟大家讨论阶级固化的问题， 周二晚上， 健身房老板也跟我抱怨<code>现在机会都没了， 生不逢时云云</code>，我是很不认同这种观点的，可能大环境确实会让人有这样的感觉，但阶级从来是存在的， 我认为阶级固化只是相对的， 不是绝对的。</p>
 <p>我觉得阶级序列是一个动态进化的整体， 序列层级的数量可能是固定的， 但每一个层级却会随着时间的演化而固化直至消亡， 与此同时， 新的层级又会在消亡的层级相反的方向生长出来，从而维持了整个阶级序列的整体稳定。</p>
 <p>甚至于可以进一步悲情一点儿说（有点儿宿命论）， 新成长起来的阶级层级，可能又是原来阶级序列中某个层级换了新的面孔再来一次。</p>
-<div class="figure">
-<img src="images/escalator.jpg" />
-
-</div>
+<p><img src="images/escalator.jpg" /></p>
 <p>从生态演化上来讲， 每一个阶级层级的命运注定都是要固化直至消亡的， 只是阶级固化的言论者们只看到了阶级层级生命周期的一环， 而实际上只要有生命周期，就一定有新生， 到固化，再到消亡， 这是周期规律，何必危言耸听让那么多人恐慌那？！</p>
 <p>作为某一个阶级层级的一员， 你能做的要么是固化在当前阶级层级等待消亡， 要么就是寻求“跳级”， 让自己固化到上一个层级甚至上上..个层级然后再消亡， 仅此而已， No one live forever。</p>
 <p>但如果你是一个年轻人，我希望你少些抱怨，多些思考和实干， 很多机会都是面向未来的， 如果你觉得当前没机会，那你就把眼光瞄向未来， 抱怨或者缅怀过去不会有新机会， 可能过去年代的某些人也会抱怨当下没机会，但同样时代的有些人却还是抓住或者创造了新的机会， 七八十年代会想象得到现在程序员工种现在这么普及吗？那时候只有工厂职工是普及的， 但再往前， 啥是工厂估计都没有概念吧？ 如果你觉得当下没有机会了，那就努力探索未来吧， 未来是由那些开拓者引领的， 比如Elon Musk这类人， 如果你引领不了，那就跟随！毕竟，<strong>抱怨解决不了问题</strong>。</p>
 <p>阶级是否固化， 完全取决于你对待它的态度， 是让它成为你前进的动力，还是不作为的借口，你自己看着办！</p>
-<hr>
-<div align="center">
-<img src="/images/wechat-qrcode-footer.png"/>
-</div>
 
-</div>
+    </article>
 
-
-
-</body></html>
+  </body>
+</html>

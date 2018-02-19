@@ -1,14 +1,81 @@
 <!DOCTYPE html>
-<html lang="zh">
-<head>
+<html>
+  <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Using Java Reflection In a DSL-like Style - 一个架构士的思考与沉</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="王福强的博客， 一个架构士的思考与沉淀">
     <meta name="keywords" content="architecture, book author, thinker, fighter, 架构, 思考, 技术, 武术, 哲学">
     <meta name="author" content="王福强">
-        <link rel="icon" href="/favicon.ico">
-    <title>Using Java Reflection In a DSL-like Style - 一个架构士的思考与沉淀</title>
-    <!-- 百度统计 -->
+    <link rel="stylesheet" href="/ivy.css">
+    <link rel="shortcut icon" href="/favicon.ico"/>
+    <style type="text/css">code{white-space: pre;}</style>
+    <style type="text/css">
+    a.sourceLine { display: inline-block; line-height: 1.25; }
+    a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+    a.sourceLine:empty { height: 1.2em; position: absolute; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode { white-space: pre; position: relative; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    code.sourceCode { white-space: pre-wrap; }
+    a.sourceLine { text-indent: -1em; padding-left: 1em; }
+    }
+    pre.numberSource a.sourceLine
+      { position: relative; }
+    pre.numberSource a.sourceLine:empty
+      { position: absolute; }
+    pre.numberSource a.sourceLine::before
+      { content: attr(data-line-number);
+        position: absolute; left: -5em; text-align: right; vertical-align: baseline;
+        border: none; pointer-events: all;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {  }
+    @media screen {
+    a.sourceLine::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+            <!-- 百度统计 -->
     <script>
       var _hmt = _hmt || [];
       (function() {
@@ -18,72 +85,26 @@
           s.parentNode.insertBefore(hm, s);
       })();
     </script>
+  </head>
 
-	<link href="/css/custom.css" rel="stylesheet"/>
-	<link rel="shortcut icon" href="/favicon.ico"/>
+  <body class="node homepage">
 
-<style type="text/css">code{white-space: pre;}</style>
-    <style type="text/css">
-    div.sourceCode { overflow-x: auto; }
-    table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
-      margin: 0; padding: 0; vertical-align: baseline; border: none; }
-    table.sourceCode { width: 100%; line-height: 100%; }
-    td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
-    td.sourceCode { padding-left: 5px; }
-    code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
-    code > span.dt { color: #902000; } /* DataType */
-    code > span.dv { color: #40a070; } /* DecVal */
-    code > span.bn { color: #40a070; } /* BaseN */
-    code > span.fl { color: #40a070; } /* Float */
-    code > span.ch { color: #4070a0; } /* Char */
-    code > span.st { color: #4070a0; } /* String */
-    code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
-    code > span.ot { color: #007020; } /* Other */
-    code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
-    code > span.fu { color: #06287e; } /* Function */
-    code > span.er { color: #ff0000; font-weight: bold; } /* Error */
-    code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-    code > span.cn { color: #880000; } /* Constant */
-    code > span.sc { color: #4070a0; } /* SpecialChar */
-    code > span.vs { color: #4070a0; } /* VerbatimString */
-    code > span.ss { color: #bb6688; } /* SpecialString */
-    code > span.im { } /* Import */
-    code > span.va { color: #19177c; } /* Variable */
-    code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-    code > span.op { color: #666666; } /* Operator */
-    code > span.bu { } /* BuiltIn */
-    code > span.ex { } /* Extension */
-    code > span.pp { color: #bc7a00; } /* Preprocessor */
-    code > span.at { color: #7d9029; } /* Attribute */
-    code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
-    code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-    code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-    code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-  </style>
-        
-	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-	<!--[if lt IE 9]>
-	  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.2/html5shiv.js"></script>
-	  <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-	<![endif]-->
-
-</head>
-
-<body>
-
-    <div class="masthead">
-		<!--
-    <h1 class="masthead-title fq">
-      <a href="/">扶墙老师</a>
-
-    </h1>
-    -->
-    <a href="/"><h1>扶墙老师说</h1></a>
-		<p class="masthead-lead">一个架构士的思考与沉淀</p>
-
-		<hr class="masthead-hr">
-
-	  	<ul class="masthead-nav">
+    <header class="masthead">
+      <h1><a href="/">扶墙老师说</a></h1>
+      <p class="tagline">
+         一个架构士的思考与沉淀
+          <img src="/images/wechat-qrcode-footer.png"/>
+          扶墙老师，辨证施“知”
+      </p>
+      
+      <nav class="menu">
+        <input id="menu-check" type="checkbox"/>
+        <label id="menu-label" for="menu-check" class="unselectable">
+          <span class="icon close-icon">✕</span>
+          <span class="icon open-icon">☰</span>
+          <span class="text">展开</span>
+        </label>
+        <ul>
             <li class="nav-item"><a class="nav-link" href="/favorite.html">我的收藏</a></li>
             <li class="nav-item"><a class="nav-link" href="/dashboard.html">金融看板</a></li>
             <li class="nav-item"><a class="nav-link" href="/columns.html">专栏文章</a></li>
@@ -91,20 +112,12 @@
             <li class="nav-item"><a class="nav-link" href="/whoami.html">我是何人</a></li>
             <li class="nav-item"><a class="nav-link" href="/interlinks.html">友情链接</a></li>
             <li class="nav-item"><a class="nav-link" href="/feeds.xml">RSS订阅</a></li>
-		</ul>
+        </ul>
+      </nav>
+    </header>
 
-  		<hr class="masthead-hr">
-
-	  	<ul class="masthead-nav">
-            <li class="nav-item"><small>©afoo.me</small></li>
-            <li class="nav-item"><small>Powered by <a href="http://pandoc.org/">pandoc</a> and <a href="http://rometools.github.io/rome/">ROME</a></small></li>
-		</ul>
-
-	</div>
-
-
-    <div class="listing">
-
+    <article class="main">
+      
 <div class="row">
 <div id="header">
 <p class="lead">
@@ -115,170 +128,165 @@
 <hr>
 
 
-<p>I know someone must have heard or known about a library named FEST-Reflect, and maybe you are just using it. It's an interesting library that let you write code of java reflection in a DSL-like style. For example:</p>
-<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="bu">String</span> name = <span class="fu">method</span>(<span class="st">&quot;get&quot;</span>).<span class="fu">withReturnType</span>(<span class="bu">String</span>.<span class="fu">class</span>)  
-                           .<span class="fu">withParameterTypes</span>(<span class="dt">int</span>.<span class="fu">class</span>)  
-                           .<span class="fu">in</span>(names)  
-                           .<span class="fu">invoke</span>(<span class="dv">8</span>);  </code></pre></div>
-<p>It's just another way to express same logic, but it give you another way to write your code which make your code more readable. If you want to write your code this way, of course, you can use FEST-reflect directly, but that's not why wrote words below, what I try to tell you is, you can implement such things yourself with little effort. I will draft a prototype to implement such a DSL-like style Java Reflection usage API, If you are interested, read on...</p>
-<p>To enable the users to use our API in a DSL-like style like code sample above, it's easy to figure out 2 things:</p>
-<ol style="list-style-type: decimal">
+<p>I know someone must have heard or known about a library named FEST-Reflect, and maybe you are just using it. It’s an interesting library that let you write code of java reflection in a DSL-like style. For example:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode java"><code class="sourceCode java"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="bu">String</span> name = <span class="fu">method</span>(<span class="st">&quot;get&quot;</span>).<span class="fu">withReturnType</span>(<span class="bu">String</span>.<span class="fu">class</span>)  </a>
+<a class="sourceLine" id="cb1-2" data-line-number="2">                           .<span class="fu">withParameterTypes</span>(<span class="dt">int</span>.<span class="fu">class</span>)  </a>
+<a class="sourceLine" id="cb1-3" data-line-number="3">                           .<span class="fu">in</span>(names)  </a>
+<a class="sourceLine" id="cb1-4" data-line-number="4">                           .<span class="fu">invoke</span>(<span class="dv">8</span>);  </a></code></pre></div>
+<p>It’s just another way to express same logic, but it give you another way to write your code which make your code more readable. If you want to write your code this way, of course, you can use FEST-reflect directly, but that’s not why wrote words below, what I try to tell you is, you can implement such things yourself with little effort. I will draft a prototype to implement such a DSL-like style Java Reflection usage API, If you are interested, read on…</p>
+<p>To enable the users to use our API in a DSL-like style like code sample above, it’s easy to figure out 2 things:</p>
+<ol type="1">
 <li>We have to enable method chaining.</li>
 <li>Static import feature after Java5 may be needed so that the code looks like a DSL syntax.</li>
 </ol>
 <p>So first, we have to find out which operations or methods can be used.</p>
-<p>We focus on only java reflection usage on Instance Method, since it's not a difficult thing to find out what we can do with Method, An abstraction can be given below:</p>
-<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="co">/**</span> 
- <span class="co">*</span> method<span class="co">(&quot;</span>name<span class="co">&quot;).</span>on<span class="co">(</span>targetobject<span class="co">).</span>withArgumentTypes<span class="co">(...).</span>invoke<span class="co">(...);</span> 
- <span class="co">*</span>  
- <span class="co">* </span><span class="kw">@author </span>fujohnwang 
- <span class="co">*</span> <span class="kw">@since </span> <span class="co">1.0</span>  
- <span class="co">*/</span>  
-<span class="kw">public</span> <span class="kw">interface</span> IMethodDSL {  
-      
-    IMethodDSL <span class="fu">on</span>(<span class="bu">Object</span> target);  
-      
-    IMethodDSL <span class="fu">withArgumentTypes</span>(<span class="bu">Class</span>&lt;?&gt;<span class="kw">... </span>args);  
-      
-    IMethodDSL <span class="fu">makeAccessible</span>(<span class="dt">boolean</span> flag);  
-      
-    &lt;T&gt; T <span class="fu">invoke</span>(<span class="bu">Object</span><span class="kw">... </span>args) <span class="kw">throws</span> <span class="bu">InvocationTargetException</span>;  
-}  </code></pre></div>
-<p>We express the abstraction in an Java interface, except for the last “invoke ” method, other operations have a return type of the same interface, that's, IMethodDSL itself. That's the way we implement a method chaining behavior.</p>
+<p>We focus on only java reflection usage on Instance Method, since it’s not a difficult thing to find out what we can do with Method, An abstraction can be given below:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode java"><code class="sourceCode java"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="co">/**</span> </a>
+<a class="sourceLine" id="cb2-2" data-line-number="2"> <span class="co">*</span> method<span class="co">(&quot;</span>name<span class="co">&quot;).</span>on<span class="co">(</span>targetobject<span class="co">).</span>withArgumentTypes<span class="co">(...).</span>invoke<span class="co">(...);</span> </a>
+<a class="sourceLine" id="cb2-3" data-line-number="3"> <span class="co">*</span>  </a>
+<a class="sourceLine" id="cb2-4" data-line-number="4"> <span class="co">* </span><span class="kw">@author </span>fujohnwang </a>
+<a class="sourceLine" id="cb2-5" data-line-number="5"> <span class="co">*</span> <span class="kw">@since </span> <span class="co">1.0</span>  </a>
+<a class="sourceLine" id="cb2-6" data-line-number="6"> <span class="co">*/</span>  </a>
+<a class="sourceLine" id="cb2-7" data-line-number="7"><span class="kw">public</span> <span class="kw">interface</span> IMethodDSL {  </a>
+<a class="sourceLine" id="cb2-8" data-line-number="8">      </a>
+<a class="sourceLine" id="cb2-9" data-line-number="9">    IMethodDSL <span class="fu">on</span>(<span class="bu">Object</span> target);  </a>
+<a class="sourceLine" id="cb2-10" data-line-number="10">      </a>
+<a class="sourceLine" id="cb2-11" data-line-number="11">    IMethodDSL <span class="fu">withArgumentTypes</span>(<span class="bu">Class</span>&lt;?&gt;<span class="kw">... </span>args);  </a>
+<a class="sourceLine" id="cb2-12" data-line-number="12">      </a>
+<a class="sourceLine" id="cb2-13" data-line-number="13">    IMethodDSL <span class="fu">makeAccessible</span>(<span class="dt">boolean</span> flag);  </a>
+<a class="sourceLine" id="cb2-14" data-line-number="14">      </a>
+<a class="sourceLine" id="cb2-15" data-line-number="15">    &lt;T&gt; T <span class="fu">invoke</span>(<span class="bu">Object</span><span class="kw">... </span>args) <span class="kw">throws</span> <span class="bu">InvocationTargetException</span>;  </a>
+<a class="sourceLine" id="cb2-16" data-line-number="16">}  </a></code></pre></div>
+<p>We express the abstraction in an Java interface, except for the last “invoke” method, other operations have a return type of the same interface, that’s, IMethodDSL itself. That’s the way we implement a method chaining behavior.</p>
 <p>Since we have had the key abstraction, we can give it an implementation now, it looks like below:</p>
-<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="co">/**</span> 
- <span class="co">*</span> Default IMethodDSL implementation<span class="co">.</span><span class="kw">&lt;br&gt;</span> 
- <span class="co">*</span>  
- <span class="co">* </span><span class="kw">@author </span>fujohnwang 
- <span class="co">*</span> <span class="kw">@since </span> <span class="co">1.0</span>  
- <span class="co">*</span> <span class="kw">@see </span>   ReflectDSL 
- <span class="co">*</span> <span class="kw">@see </span>   IMethodDSL 
- <span class="co">*/</span>  
-<span class="kw">public</span> <span class="kw">class</span> MethodDSL <span class="kw">implements</span> IMethodDSL {  
-  
-    <span class="kw">private</span> <span class="dt">static</span> <span class="dt">final</span> <span class="bu">Logger</span> logger = LoggerFactory.<span class="fu">getLogger</span>(MethodDSL.<span class="fu">class</span>);  
-  
-    <span class="kw">private</span> <span class="bu">String</span> methodName;  
-    <span class="kw">private</span> <span class="bu">Object</span> target;  
-    <span class="kw">private</span> <span class="bu">Class</span>&lt;?&gt;[] argTypes;  
-    <span class="kw">private</span> <span class="dt">boolean</span> accessible;  
-  
-    <span class="kw">public</span> <span class="fu">MethodDSL</span>(<span class="bu">String</span> methodName) {  
-        <span class="kw">this</span>.<span class="fu">methodName</span> = methodName;  
-    }  
-  
-    <span class="kw">public</span> &lt;T&gt; T <span class="fu">invoke</span>(<span class="bu">Object</span><span class="kw">... </span>args) <span class="kw">throws</span> <span class="bu">InvocationTargetException</span> {  
-        <span class="fu">checkInvokeDependencies</span>();  
-        <span class="kw">try</span> {  
-            <span class="bu">Method</span> method = <span class="fu">findQualifiedMethod</span>(target.<span class="fu">getClass</span>());  
-            <span class="kw">if</span>(<span class="kw">this</span>.<span class="fu">accessible</span>)  
-            {  
-                method.<span class="fu">setAccessible</span>(<span class="kw">true</span>);  
-            }  
-            <span class="co">/**</span> 
-             <span class="co">*</span> usually<span class="co">,</span> the caller will be required to declare proper return type of the method invocation<span class="co">,</span> 
-             <span class="co">*</span> so cast to the type they declared is acceptable<span class="co">.  </span>
-             <span class="co">*</span> the return type the caller declared should be the returnType they have assigned<span class="co">.</span> 
-             <span class="co">*/</span>  
-            <span class="at">@SuppressWarnings</span>(<span class="st">&quot;unchecked&quot;</span>)  
-            T result = (T)method.<span class="fu">invoke</span>(target, PreConditions.<span class="fu">nullAsEmpty</span>(args,<span class="bu">Object</span>.<span class="fu">class</span>));  
-            <span class="kw">return</span> result;  
-        } <span class="kw">catch</span> (<span class="bu">SecurityException</span> e) {  
-            <span class="kw">throw</span> <span class="kw">new</span> <span class="bu">InvocationTargetException</span>(e);  
-        } <span class="kw">catch</span> (<span class="bu">NoSuchMethodException</span> e) {  
-            <span class="kw">throw</span> <span class="kw">new</span> <span class="bu">InvocationTargetException</span>(e);  
-        } <span class="kw">catch</span> (<span class="bu">IllegalArgumentException</span> e) {  
-            <span class="kw">throw</span> <span class="kw">new</span> <span class="bu">InvocationTargetException</span>(e);  
-        } <span class="kw">catch</span> (<span class="bu">IllegalAccessException</span> e) {  
-            <span class="kw">throw</span> <span class="kw">new</span> <span class="bu">InvocationTargetException</span>(e);  
-        }  
-    }  
-  
-    <span class="kw">protected</span> <span class="bu">Method</span> <span class="fu">findQualifiedMethod</span>(<span class="bu">Class</span>&lt;?&gt; clazz) <span class="kw">throws</span> <span class="bu">SecurityException</span>, <span class="bu">NoSuchMethodException</span> {  
-        <span class="kw">if</span>(<span class="kw">this</span>.<span class="fu">argTypes</span> == <span class="kw">null</span>)  
-        {  
-            <span class="bu">Method</span> qualifiedMethod = <span class="kw">null</span>;  
-            <span class="kw">for</span>(<span class="bu">Method</span> method : clazz.<span class="fu">getDeclaredMethods</span>())  
-            {  
-                <span class="kw">if</span>(method.<span class="fu">getName</span>().<span class="fu">equals</span>(<span class="kw">this</span>.<span class="fu">methodName</span>))  
-                {  
-                    <span class="kw">if</span>(qualifiedMethod != <span class="kw">null</span>)  
-                    {  
-                        <span class="kw">throw</span> <span class="kw">new</span> <span class="bu">IllegalStateException</span>(<span class="st">&quot;please provide arguments of method if you want to invoke on overloaded methods.&quot;</span>);  
-                    }  
-                    qualifiedMethod = method;  
-                }  
-            }  
-            <span class="kw">if</span>(qualifiedMethod == <span class="kw">null</span>)  
-            {  
-                <span class="kw">throw</span> <span class="kw">new</span> <span class="bu">NoSuchMethodException</span>();  
-            }  
-            <span class="kw">return</span> qualifiedMethod;  
-        }  
-        <span class="kw">else</span>  
-        {  
-            <span class="kw">return</span> clazz.<span class="fu">getDeclaredMethod</span>(<span class="kw">this</span>.<span class="fu">methodName</span>, <span class="kw">this</span>.<span class="fu">argTypes</span>);  
-        }  
-    }  
-    <span class="co">/**</span> 
-     <span class="co">*</span> usually<span class="co">,</span> these information like <span class="co">&quot;</span>methodName<span class="co">&quot;,</span> <span class="co">&quot;</span>target<span class="co">&quot;</span> are required<span class="co">,</span> <span class="kw">&lt;br&gt;</span> 
-     <span class="co">*</span> but in case special situations<span class="co">,</span> this method is declared protected so that in those situations<span class="co">,</span>  
-     <span class="co">*</span> others can override this default behavior<span class="co">. </span>
-     <span class="co">*/</span>  
-    <span class="kw">protected</span> <span class="dt">void</span> <span class="fu">checkInvokeDependencies</span>() {  
-        logger.<span class="fu">info</span>(<span class="st">&quot;the data is lazily bound before the real invocation of the method, check before invocation here.&quot;</span>);  
-        PreConditions.<span class="fu">isNotEmpty</span>(methodName);  
-        PreConditions.<span class="fu">isNotNull</span>(target);  
-    }  
-  
-    <span class="kw">public</span> IMethodDSL <span class="fu">on</span>(<span class="bu">Object</span> target) {  
-        <span class="kw">this</span>.<span class="fu">target</span> = target;  
-        <span class="kw">return</span> <span class="kw">this</span>;  
-    }  
-  
-    <span class="kw">public</span> IMethodDSL <span class="fu">withArgumentTypes</span>(<span class="bu">Class</span>&lt;?&gt;<span class="kw">... </span>args) {  
-        <span class="kw">this</span>.<span class="fu">argTypes</span> = args;  
-        <span class="kw">return</span> <span class="kw">this</span>;  
-    }  
-  
-    <span class="kw">public</span> IMethodDSL <span class="fu">makeAccessible</span>(<span class="dt">boolean</span> flag) {  
-        <span class="kw">this</span>.<span class="fu">accessible</span> = flag;  
-        <span class="kw">return</span> <span class="kw">this</span>;  
-    }  
-  
-}  </code></pre></div>
-<p>The intermediate operations just accept the parameter value and “return this; ” to achieve method chaining, the key point is the last operation, that's, the “invoke ” method, this is where all of the real stuff take effect. We check the preconditions before invoking Java Reflection API, and then find proper Method with attribute the API user have passed in as chaining-method's parameter. At last, cast the invocation result to the type the users expect to get. That's all, very simple , isn't it?</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode java"><code class="sourceCode java"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="co">/**</span> </a>
+<a class="sourceLine" id="cb3-2" data-line-number="2"> <span class="co">*</span> Default IMethodDSL implementation<span class="co">.</span><span class="kw">&lt;br&gt;</span> </a>
+<a class="sourceLine" id="cb3-3" data-line-number="3"> <span class="co">*</span>  </a>
+<a class="sourceLine" id="cb3-4" data-line-number="4"> <span class="co">* </span><span class="kw">@author </span>fujohnwang </a>
+<a class="sourceLine" id="cb3-5" data-line-number="5"> <span class="co">*</span> <span class="kw">@since </span> <span class="co">1.0</span>  </a>
+<a class="sourceLine" id="cb3-6" data-line-number="6"> <span class="co">*</span> <span class="kw">@see </span>   ReflectDSL </a>
+<a class="sourceLine" id="cb3-7" data-line-number="7"> <span class="co">*</span> <span class="kw">@see </span>   IMethodDSL </a>
+<a class="sourceLine" id="cb3-8" data-line-number="8"> <span class="co">*/</span>  </a>
+<a class="sourceLine" id="cb3-9" data-line-number="9"><span class="kw">public</span> <span class="kw">class</span> MethodDSL <span class="kw">implements</span> IMethodDSL {  </a>
+<a class="sourceLine" id="cb3-10" data-line-number="10">  </a>
+<a class="sourceLine" id="cb3-11" data-line-number="11">    <span class="kw">private</span> <span class="dt">static</span> <span class="dt">final</span> <span class="bu">Logger</span> logger = LoggerFactory.<span class="fu">getLogger</span>(MethodDSL.<span class="fu">class</span>);  </a>
+<a class="sourceLine" id="cb3-12" data-line-number="12">  </a>
+<a class="sourceLine" id="cb3-13" data-line-number="13">    <span class="kw">private</span> <span class="bu">String</span> methodName;  </a>
+<a class="sourceLine" id="cb3-14" data-line-number="14">    <span class="kw">private</span> <span class="bu">Object</span> target;  </a>
+<a class="sourceLine" id="cb3-15" data-line-number="15">    <span class="kw">private</span> <span class="bu">Class</span>&lt;?&gt;[] argTypes;  </a>
+<a class="sourceLine" id="cb3-16" data-line-number="16">    <span class="kw">private</span> <span class="dt">boolean</span> accessible;  </a>
+<a class="sourceLine" id="cb3-17" data-line-number="17">  </a>
+<a class="sourceLine" id="cb3-18" data-line-number="18">    <span class="kw">public</span> <span class="fu">MethodDSL</span>(<span class="bu">String</span> methodName) {  </a>
+<a class="sourceLine" id="cb3-19" data-line-number="19">        <span class="kw">this</span>.<span class="fu">methodName</span> = methodName;  </a>
+<a class="sourceLine" id="cb3-20" data-line-number="20">    }  </a>
+<a class="sourceLine" id="cb3-21" data-line-number="21">  </a>
+<a class="sourceLine" id="cb3-22" data-line-number="22">    <span class="kw">public</span> &lt;T&gt; T <span class="fu">invoke</span>(<span class="bu">Object</span><span class="kw">... </span>args) <span class="kw">throws</span> <span class="bu">InvocationTargetException</span> {  </a>
+<a class="sourceLine" id="cb3-23" data-line-number="23">        <span class="fu">checkInvokeDependencies</span>();  </a>
+<a class="sourceLine" id="cb3-24" data-line-number="24">        <span class="kw">try</span> {  </a>
+<a class="sourceLine" id="cb3-25" data-line-number="25">            <span class="bu">Method</span> method = <span class="fu">findQualifiedMethod</span>(target.<span class="fu">getClass</span>());  </a>
+<a class="sourceLine" id="cb3-26" data-line-number="26">            <span class="kw">if</span>(<span class="kw">this</span>.<span class="fu">accessible</span>)  </a>
+<a class="sourceLine" id="cb3-27" data-line-number="27">            {  </a>
+<a class="sourceLine" id="cb3-28" data-line-number="28">                method.<span class="fu">setAccessible</span>(<span class="kw">true</span>);  </a>
+<a class="sourceLine" id="cb3-29" data-line-number="29">            }  </a>
+<a class="sourceLine" id="cb3-30" data-line-number="30">            <span class="co">/**</span> </a>
+<a class="sourceLine" id="cb3-31" data-line-number="31">             <span class="co">*</span> usually<span class="co">,</span> the caller will be required to declare proper return type of the method invocation<span class="co">,</span> </a>
+<a class="sourceLine" id="cb3-32" data-line-number="32">             <span class="co">*</span> so cast to the type they declared is acceptable<span class="co">.  </span></a>
+<a class="sourceLine" id="cb3-33" data-line-number="33">             <span class="co">*</span> the return type the caller declared should be the returnType they have assigned<span class="co">.</span> </a>
+<a class="sourceLine" id="cb3-34" data-line-number="34">             <span class="co">*/</span>  </a>
+<a class="sourceLine" id="cb3-35" data-line-number="35">            <span class="at">@SuppressWarnings</span>(<span class="st">&quot;unchecked&quot;</span>)  </a>
+<a class="sourceLine" id="cb3-36" data-line-number="36">            T result = (T)method.<span class="fu">invoke</span>(target, PreConditions.<span class="fu">nullAsEmpty</span>(args,<span class="bu">Object</span>.<span class="fu">class</span>));  </a>
+<a class="sourceLine" id="cb3-37" data-line-number="37">            <span class="kw">return</span> result;  </a>
+<a class="sourceLine" id="cb3-38" data-line-number="38">        } <span class="kw">catch</span> (<span class="bu">SecurityException</span> e) {  </a>
+<a class="sourceLine" id="cb3-39" data-line-number="39">            <span class="kw">throw</span> <span class="kw">new</span> <span class="bu">InvocationTargetException</span>(e);  </a>
+<a class="sourceLine" id="cb3-40" data-line-number="40">        } <span class="kw">catch</span> (<span class="bu">NoSuchMethodException</span> e) {  </a>
+<a class="sourceLine" id="cb3-41" data-line-number="41">            <span class="kw">throw</span> <span class="kw">new</span> <span class="bu">InvocationTargetException</span>(e);  </a>
+<a class="sourceLine" id="cb3-42" data-line-number="42">        } <span class="kw">catch</span> (<span class="bu">IllegalArgumentException</span> e) {  </a>
+<a class="sourceLine" id="cb3-43" data-line-number="43">            <span class="kw">throw</span> <span class="kw">new</span> <span class="bu">InvocationTargetException</span>(e);  </a>
+<a class="sourceLine" id="cb3-44" data-line-number="44">        } <span class="kw">catch</span> (<span class="bu">IllegalAccessException</span> e) {  </a>
+<a class="sourceLine" id="cb3-45" data-line-number="45">            <span class="kw">throw</span> <span class="kw">new</span> <span class="bu">InvocationTargetException</span>(e);  </a>
+<a class="sourceLine" id="cb3-46" data-line-number="46">        }  </a>
+<a class="sourceLine" id="cb3-47" data-line-number="47">    }  </a>
+<a class="sourceLine" id="cb3-48" data-line-number="48">  </a>
+<a class="sourceLine" id="cb3-49" data-line-number="49">    <span class="kw">protected</span> <span class="bu">Method</span> <span class="fu">findQualifiedMethod</span>(<span class="bu">Class</span>&lt;?&gt; clazz) <span class="kw">throws</span> <span class="bu">SecurityException</span>, <span class="bu">NoSuchMethodException</span> {  </a>
+<a class="sourceLine" id="cb3-50" data-line-number="50">        <span class="kw">if</span>(<span class="kw">this</span>.<span class="fu">argTypes</span> == <span class="kw">null</span>)  </a>
+<a class="sourceLine" id="cb3-51" data-line-number="51">        {  </a>
+<a class="sourceLine" id="cb3-52" data-line-number="52">            <span class="bu">Method</span> qualifiedMethod = <span class="kw">null</span>;  </a>
+<a class="sourceLine" id="cb3-53" data-line-number="53">            <span class="kw">for</span>(<span class="bu">Method</span> method : clazz.<span class="fu">getDeclaredMethods</span>())  </a>
+<a class="sourceLine" id="cb3-54" data-line-number="54">            {  </a>
+<a class="sourceLine" id="cb3-55" data-line-number="55">                <span class="kw">if</span>(method.<span class="fu">getName</span>().<span class="fu">equals</span>(<span class="kw">this</span>.<span class="fu">methodName</span>))  </a>
+<a class="sourceLine" id="cb3-56" data-line-number="56">                {  </a>
+<a class="sourceLine" id="cb3-57" data-line-number="57">                    <span class="kw">if</span>(qualifiedMethod != <span class="kw">null</span>)  </a>
+<a class="sourceLine" id="cb3-58" data-line-number="58">                    {  </a>
+<a class="sourceLine" id="cb3-59" data-line-number="59">                        <span class="kw">throw</span> <span class="kw">new</span> <span class="bu">IllegalStateException</span>(<span class="st">&quot;please provide arguments of method if you want to invoke on overloaded methods.&quot;</span>);  </a>
+<a class="sourceLine" id="cb3-60" data-line-number="60">                    }  </a>
+<a class="sourceLine" id="cb3-61" data-line-number="61">                    qualifiedMethod = method;  </a>
+<a class="sourceLine" id="cb3-62" data-line-number="62">                }  </a>
+<a class="sourceLine" id="cb3-63" data-line-number="63">            }  </a>
+<a class="sourceLine" id="cb3-64" data-line-number="64">            <span class="kw">if</span>(qualifiedMethod == <span class="kw">null</span>)  </a>
+<a class="sourceLine" id="cb3-65" data-line-number="65">            {  </a>
+<a class="sourceLine" id="cb3-66" data-line-number="66">                <span class="kw">throw</span> <span class="kw">new</span> <span class="bu">NoSuchMethodException</span>();  </a>
+<a class="sourceLine" id="cb3-67" data-line-number="67">            }  </a>
+<a class="sourceLine" id="cb3-68" data-line-number="68">            <span class="kw">return</span> qualifiedMethod;  </a>
+<a class="sourceLine" id="cb3-69" data-line-number="69">        }  </a>
+<a class="sourceLine" id="cb3-70" data-line-number="70">        <span class="kw">else</span>  </a>
+<a class="sourceLine" id="cb3-71" data-line-number="71">        {  </a>
+<a class="sourceLine" id="cb3-72" data-line-number="72">            <span class="kw">return</span> clazz.<span class="fu">getDeclaredMethod</span>(<span class="kw">this</span>.<span class="fu">methodName</span>, <span class="kw">this</span>.<span class="fu">argTypes</span>);  </a>
+<a class="sourceLine" id="cb3-73" data-line-number="73">        }  </a>
+<a class="sourceLine" id="cb3-74" data-line-number="74">    }  </a>
+<a class="sourceLine" id="cb3-75" data-line-number="75">    <span class="co">/**</span> </a>
+<a class="sourceLine" id="cb3-76" data-line-number="76">     <span class="co">*</span> usually<span class="co">,</span> these information like <span class="co">&quot;</span>methodName<span class="co">&quot;,</span> <span class="co">&quot;</span>target<span class="co">&quot;</span> are required<span class="co">,</span> <span class="kw">&lt;br&gt;</span> </a>
+<a class="sourceLine" id="cb3-77" data-line-number="77">     <span class="co">*</span> but in case special situations<span class="co">,</span> this method is declared protected so that in those situations<span class="co">,</span>  </a>
+<a class="sourceLine" id="cb3-78" data-line-number="78">     <span class="co">*</span> others can override this default behavior<span class="co">. </span></a>
+<a class="sourceLine" id="cb3-79" data-line-number="79">     <span class="co">*/</span>  </a>
+<a class="sourceLine" id="cb3-80" data-line-number="80">    <span class="kw">protected</span> <span class="dt">void</span> <span class="fu">checkInvokeDependencies</span>() {  </a>
+<a class="sourceLine" id="cb3-81" data-line-number="81">        logger.<span class="fu">info</span>(<span class="st">&quot;the data is lazily bound before the real invocation of the method, check before invocation here.&quot;</span>);  </a>
+<a class="sourceLine" id="cb3-82" data-line-number="82">        PreConditions.<span class="fu">isNotEmpty</span>(methodName);  </a>
+<a class="sourceLine" id="cb3-83" data-line-number="83">        PreConditions.<span class="fu">isNotNull</span>(target);  </a>
+<a class="sourceLine" id="cb3-84" data-line-number="84">    }  </a>
+<a class="sourceLine" id="cb3-85" data-line-number="85">  </a>
+<a class="sourceLine" id="cb3-86" data-line-number="86">    <span class="kw">public</span> IMethodDSL <span class="fu">on</span>(<span class="bu">Object</span> target) {  </a>
+<a class="sourceLine" id="cb3-87" data-line-number="87">        <span class="kw">this</span>.<span class="fu">target</span> = target;  </a>
+<a class="sourceLine" id="cb3-88" data-line-number="88">        <span class="kw">return</span> <span class="kw">this</span>;  </a>
+<a class="sourceLine" id="cb3-89" data-line-number="89">    }  </a>
+<a class="sourceLine" id="cb3-90" data-line-number="90">  </a>
+<a class="sourceLine" id="cb3-91" data-line-number="91">    <span class="kw">public</span> IMethodDSL <span class="fu">withArgumentTypes</span>(<span class="bu">Class</span>&lt;?&gt;<span class="kw">... </span>args) {  </a>
+<a class="sourceLine" id="cb3-92" data-line-number="92">        <span class="kw">this</span>.<span class="fu">argTypes</span> = args;  </a>
+<a class="sourceLine" id="cb3-93" data-line-number="93">        <span class="kw">return</span> <span class="kw">this</span>;  </a>
+<a class="sourceLine" id="cb3-94" data-line-number="94">    }  </a>
+<a class="sourceLine" id="cb3-95" data-line-number="95">  </a>
+<a class="sourceLine" id="cb3-96" data-line-number="96">    <span class="kw">public</span> IMethodDSL <span class="fu">makeAccessible</span>(<span class="dt">boolean</span> flag) {  </a>
+<a class="sourceLine" id="cb3-97" data-line-number="97">        <span class="kw">this</span>.<span class="fu">accessible</span> = flag;  </a>
+<a class="sourceLine" id="cb3-98" data-line-number="98">        <span class="kw">return</span> <span class="kw">this</span>;  </a>
+<a class="sourceLine" id="cb3-99" data-line-number="99">    }  </a>
+<a class="sourceLine" id="cb3-100" data-line-number="100">  </a>
+<a class="sourceLine" id="cb3-101" data-line-number="101">}  </a></code></pre></div>
+<p>The intermediate operations just accept the parameter value and “return this;” to achieve method chaining, the key point is the last operation, that’s, the “invoke” method, this is where all of the real stuff take effect. We check the preconditions before invoking Java Reflection API, and then find proper Method with attribute the API user have passed in as chaining-method’s parameter. At last, cast the invocation result to the type the users expect to get. That’s all, very simple , isn’t it?</p>
 <p>To make API users to use this more DSL-likely, we need to offer a Factory-method for our MethodDSL, it looks like:</p>
-<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="kw">public</span> <span class="kw">abstract</span> <span class="kw">class</span> ReflectDSL {  
-      
-    <span class="kw">public</span> <span class="dt">static</span> IMethodDSL <span class="fu">method</span>(<span class="bu">String</span> methodName)  
-    {  
-        <span class="kw">return</span> <span class="kw">new</span> <span class="fu">MethodDSL</span>(methodName);  
-    }  
-    <span class="kw">...  </span>
-}  </code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode java"><code class="sourceCode java"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="kw">public</span> <span class="kw">abstract</span> <span class="kw">class</span> ReflectDSL {  </a>
+<a class="sourceLine" id="cb4-2" data-line-number="2">      </a>
+<a class="sourceLine" id="cb4-3" data-line-number="3">    <span class="kw">public</span> <span class="dt">static</span> IMethodDSL <span class="fu">method</span>(<span class="bu">String</span> methodName)  </a>
+<a class="sourceLine" id="cb4-4" data-line-number="4">    {  </a>
+<a class="sourceLine" id="cb4-5" data-line-number="5">        <span class="kw">return</span> <span class="kw">new</span> <span class="fu">MethodDSL</span>(methodName);  </a>
+<a class="sourceLine" id="cb4-6" data-line-number="6">    }  </a>
+<a class="sourceLine" id="cb4-7" data-line-number="7">    <span class="kw">...  </span></a>
+<a class="sourceLine" id="cb4-8" data-line-number="8">}  </a></code></pre></div>
 <p>With this, we can use our DSL-like Java Reflection API this way:</p>
-<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="kw">import static</span><span class="im"> ..ReflectionDSL.*;</span>  
-  
-<span class="fu">method</span>(<span class="st">&quot;methodName&quot;</span>)  
-        .<span class="fu">on</span>(targetObject)  
-        .<span class="fu">withArgumentTypes</span>(...)  
-        .<span class="fu">makeAccessable</span>(<span class="kw">true</span>)  
-        .<span class="fu">invoke</span>(...); </code></pre></div>
-<p>Of course, some parameters are optional, like the makeAccessable() if it's a public method.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode java"><code class="sourceCode java"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="kw">import static</span><span class="im"> ..ReflectionDSL.*;</span>  </a>
+<a class="sourceLine" id="cb5-2" data-line-number="2">  </a>
+<a class="sourceLine" id="cb5-3" data-line-number="3"><span class="fu">method</span>(<span class="st">&quot;methodName&quot;</span>)  </a>
+<a class="sourceLine" id="cb5-4" data-line-number="4">        .<span class="fu">on</span>(targetObject)  </a>
+<a class="sourceLine" id="cb5-5" data-line-number="5">        .<span class="fu">withArgumentTypes</span>(...)  </a>
+<a class="sourceLine" id="cb5-6" data-line-number="6">        .<span class="fu">makeAccessable</span>(<span class="kw">true</span>)  </a>
+<a class="sourceLine" id="cb5-7" data-line-number="7">        .<span class="fu">invoke</span>(...); </a></code></pre></div>
+<p>Of course, some parameters are optional, like the makeAccessable() if it’s a public method.</p>
 <p>Until now, we have implement a simple DSL-like style java reflection AP for method, you can move on to provide such similar APIs for Field and Constructor and Static Method and so on.</p>
 <p>The way we used to implement such DSL-like style API have some limitations or defects, for example, we bind intermediate method late and the final effect takes at last, that means, if users use our API in an improper way, they will not get warnings or errors until runtime. To fix this, we can use intermediate type for chaining methods, how? try it yourself and have fun ;-)</p>
 <blockquote>
 <p>NOTE</p>
-<p>IMHO, this may not bring any benefits for you or your customers, it's just another way to write your code and make it more readable, make a balance to figure out whether it's proper to do it in your own situations.</p>
+<p>IMHO, this may not bring any benefits for you or your customers, it’s just another way to write your code and make it more readable, make a balance to figure out whether it’s proper to do it in your own situations.</p>
 </blockquote>
-<hr>
-<div align="center">
-<img src="/images/wechat-qrcode-footer.png"/>
-</div>
 
-</div>
+    </article>
 
-
-
-</body></html>
+  </body>
+</html>

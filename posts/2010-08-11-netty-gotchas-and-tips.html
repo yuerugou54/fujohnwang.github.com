@@ -1,14 +1,81 @@
 <!DOCTYPE html>
-<html lang="zh">
-<head>
+<html>
+  <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Netty Framework Tips And Gotchas - 一个架构士的思考与沉</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="王福强的博客， 一个架构士的思考与沉淀">
     <meta name="keywords" content="architecture, book author, thinker, fighter, 架构, 思考, 技术, 武术, 哲学">
     <meta name="author" content="王福强">
-        <link rel="icon" href="/favicon.ico">
-    <title>Netty Framework Tips And Gotchas - 一个架构士的思考与沉淀</title>
-    <!-- 百度统计 -->
+    <link rel="stylesheet" href="/ivy.css">
+    <link rel="shortcut icon" href="/favicon.ico"/>
+    <style type="text/css">code{white-space: pre;}</style>
+    <style type="text/css">
+    a.sourceLine { display: inline-block; line-height: 1.25; }
+    a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+    a.sourceLine:empty { height: 1.2em; position: absolute; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode { white-space: pre; position: relative; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    code.sourceCode { white-space: pre-wrap; }
+    a.sourceLine { text-indent: -1em; padding-left: 1em; }
+    }
+    pre.numberSource a.sourceLine
+      { position: relative; }
+    pre.numberSource a.sourceLine:empty
+      { position: absolute; }
+    pre.numberSource a.sourceLine::before
+      { content: attr(data-line-number);
+        position: absolute; left: -5em; text-align: right; vertical-align: baseline;
+        border: none; pointer-events: all;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {  }
+    @media screen {
+    a.sourceLine::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+            <!-- 百度统计 -->
     <script>
       var _hmt = _hmt || [];
       (function() {
@@ -18,72 +85,26 @@
           s.parentNode.insertBefore(hm, s);
       })();
     </script>
+  </head>
 
-	<link href="/css/custom.css" rel="stylesheet"/>
-	<link rel="shortcut icon" href="/favicon.ico"/>
+  <body class="node homepage">
 
-<style type="text/css">code{white-space: pre;}</style>
-    <style type="text/css">
-    div.sourceCode { overflow-x: auto; }
-    table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
-      margin: 0; padding: 0; vertical-align: baseline; border: none; }
-    table.sourceCode { width: 100%; line-height: 100%; }
-    td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
-    td.sourceCode { padding-left: 5px; }
-    code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
-    code > span.dt { color: #902000; } /* DataType */
-    code > span.dv { color: #40a070; } /* DecVal */
-    code > span.bn { color: #40a070; } /* BaseN */
-    code > span.fl { color: #40a070; } /* Float */
-    code > span.ch { color: #4070a0; } /* Char */
-    code > span.st { color: #4070a0; } /* String */
-    code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
-    code > span.ot { color: #007020; } /* Other */
-    code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
-    code > span.fu { color: #06287e; } /* Function */
-    code > span.er { color: #ff0000; font-weight: bold; } /* Error */
-    code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-    code > span.cn { color: #880000; } /* Constant */
-    code > span.sc { color: #4070a0; } /* SpecialChar */
-    code > span.vs { color: #4070a0; } /* VerbatimString */
-    code > span.ss { color: #bb6688; } /* SpecialString */
-    code > span.im { } /* Import */
-    code > span.va { color: #19177c; } /* Variable */
-    code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-    code > span.op { color: #666666; } /* Operator */
-    code > span.bu { } /* BuiltIn */
-    code > span.ex { } /* Extension */
-    code > span.pp { color: #bc7a00; } /* Preprocessor */
-    code > span.at { color: #7d9029; } /* Attribute */
-    code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
-    code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-    code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-    code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-  </style>
-        
-	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-	<!--[if lt IE 9]>
-	  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.2/html5shiv.js"></script>
-	  <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-	<![endif]-->
-
-</head>
-
-<body>
-
-    <div class="masthead">
-		<!--
-    <h1 class="masthead-title fq">
-      <a href="/">扶墙老师</a>
-
-    </h1>
-    -->
-    <a href="/"><h1>扶墙老师说</h1></a>
-		<p class="masthead-lead">一个架构士的思考与沉淀</p>
-
-		<hr class="masthead-hr">
-
-	  	<ul class="masthead-nav">
+    <header class="masthead">
+      <h1><a href="/">扶墙老师说</a></h1>
+      <p class="tagline">
+         一个架构士的思考与沉淀
+          <img src="/images/wechat-qrcode-footer.png"/>
+          扶墙老师，辨证施“知”
+      </p>
+      
+      <nav class="menu">
+        <input id="menu-check" type="checkbox"/>
+        <label id="menu-label" for="menu-check" class="unselectable">
+          <span class="icon close-icon">✕</span>
+          <span class="icon open-icon">☰</span>
+          <span class="text">展开</span>
+        </label>
+        <ul>
             <li class="nav-item"><a class="nav-link" href="/favorite.html">我的收藏</a></li>
             <li class="nav-item"><a class="nav-link" href="/dashboard.html">金融看板</a></li>
             <li class="nav-item"><a class="nav-link" href="/columns.html">专栏文章</a></li>
@@ -91,20 +112,12 @@
             <li class="nav-item"><a class="nav-link" href="/whoami.html">我是何人</a></li>
             <li class="nav-item"><a class="nav-link" href="/interlinks.html">友情链接</a></li>
             <li class="nav-item"><a class="nav-link" href="/feeds.xml">RSS订阅</a></li>
-		</ul>
+        </ul>
+      </nav>
+    </header>
 
-  		<hr class="masthead-hr">
-
-	  	<ul class="masthead-nav">
-            <li class="nav-item"><small>©afoo.me</small></li>
-            <li class="nav-item"><small>Powered by <a href="http://pandoc.org/">pandoc</a> and <a href="http://rometools.github.io/rome/">ROME</a></small></li>
-		</ul>
-
-	</div>
-
-
-    <div class="listing">
-
+    <article class="main">
+      
 <div class="row">
 <div id="header">
 <p class="lead">
@@ -124,55 +137,50 @@
 
 <p><em>target on netty 3.x</em></p>
 <h1 id="tips-of-netty"><span class="header-section-number">1</span> Tips of Netty</h1>
-<ol style="list-style-type: decimal">
-<li>annotation doesn't effect anything, pipeline factory do!</li>
-<li>always provide your own PipelineFactory so that others can see your pipeline overview; add java doc(<span class="citation">@see</span>) in your ChannelHandler to point to the PipelineFactory definition class for further documentation;</li>
+<ol type="1">
+<li>annotation doesn’t effect anything, pipeline factory do!</li>
+<li>always provide your own PipelineFactory so that others can see your pipeline overview; add java doc(<span class="citation" data-cites="see">@see</span>) in your ChannelHandler to point to the PipelineFactory definition class for further documentation;</li>
 <li>prevent re-invent the wheels that has been available;(Since Netty has provided lot of available ChannelHandler implementations we can use.)</li>
-<li>pay attention to event-driven attribute of Netty, simply put, the &quot;messageReceived&quot; method will be invoked multiple times, so take care of the state of your data carefully.</li>
+<li>pay attention to event-driven attribute of Netty, simply put, the “messageReceived” method will be invoked multiple times, so take care of the state of your data carefully.</li>
 <li>use LoggingHandler to debug.
 <ul>
 <li>LoggingHandler use JDK logging as default logging facility. If we want to change to use other ones, we need invoke InternalLoggingFactory.setDefaultFactory(..) before any netty classes are loaded. for example, if we want to use slf4j logging facility: <code>InternalLoggingFactory.setDefaultFactory(new Slf4JLoggingFactory();</code></li>
 </ul></li>
 <li>You have to invoke channel.close() in another thread other than the IOWorker thread.</li>
 </ol>
-<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="kw">public</span> <span class="dt">void</span> <span class="fu">exceptionCaught</span>(<span class="dt">final</span> ChannelHandlerContext ctx, ExceptionEvent e) <span class="kw">throws</span> <span class="bu">Exception</span> {  
-            <span class="kw">new</span> <span class="bu">Thread</span>(){  
-                <span class="kw">public</span> <span class="dt">void</span> <span class="fu">run</span>(){  
-                    ctx.<span class="fu">getChannel</span>().<span class="fu">close</span>().<span class="fu">addListener</span>(<span class="kw">new</span> <span class="fu">ChannelFutureListener</span>() {  
-                        <span class="kw">public</span> <span class="dt">void</span> <span class="fu">operationComplete</span>(ChannelFuture future) <span class="kw">throws</span> <span class="bu">Exception</span> {  
-                            future.<span class="fu">awaitUninterruptibly</span>();  
-                            <span class="fu">getBoostrap</span>().<span class="fu">releaseExternalResources</span>();  
-                            logger.<span class="fu">debug</span>(<span class="st">&quot;shutdown&quot;</span>);  
-                        }  
-                    });  
-                }  
-            }.<span class="fu">start</span>();  
-    }  </code></pre></div>
-<ol start="7" style="list-style-type: decimal">
+<div class="sourceCode" id="cb1"><pre class="sourceCode java"><code class="sourceCode java"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">public</span> <span class="dt">void</span> <span class="fu">exceptionCaught</span>(<span class="dt">final</span> ChannelHandlerContext ctx, ExceptionEvent e) <span class="kw">throws</span> <span class="bu">Exception</span> {  </a>
+<a class="sourceLine" id="cb1-2" data-line-number="2">            <span class="kw">new</span> <span class="bu">Thread</span>(){  </a>
+<a class="sourceLine" id="cb1-3" data-line-number="3">                <span class="kw">public</span> <span class="dt">void</span> <span class="fu">run</span>(){  </a>
+<a class="sourceLine" id="cb1-4" data-line-number="4">                    ctx.<span class="fu">getChannel</span>().<span class="fu">close</span>().<span class="fu">addListener</span>(<span class="kw">new</span> <span class="fu">ChannelFutureListener</span>() {  </a>
+<a class="sourceLine" id="cb1-5" data-line-number="5">                        <span class="kw">public</span> <span class="dt">void</span> <span class="fu">operationComplete</span>(ChannelFuture future) <span class="kw">throws</span> <span class="bu">Exception</span> {  </a>
+<a class="sourceLine" id="cb1-6" data-line-number="6">                            future.<span class="fu">awaitUninterruptibly</span>();  </a>
+<a class="sourceLine" id="cb1-7" data-line-number="7">                            <span class="fu">getBoostrap</span>().<span class="fu">releaseExternalResources</span>();  </a>
+<a class="sourceLine" id="cb1-8" data-line-number="8">                            logger.<span class="fu">debug</span>(<span class="st">&quot;shutdown&quot;</span>);  </a>
+<a class="sourceLine" id="cb1-9" data-line-number="9">                        }  </a>
+<a class="sourceLine" id="cb1-10" data-line-number="10">                    });  </a>
+<a class="sourceLine" id="cb1-11" data-line-number="11">                }  </a>
+<a class="sourceLine" id="cb1-12" data-line-number="12">            }.<span class="fu">start</span>();  </a>
+<a class="sourceLine" id="cb1-13" data-line-number="13">    }  </a></code></pre></div>
+<ol start="7" type="1">
 <li>use IdleStateHandler and IdleStateAwareChannelHandler together to achieve some functionalities like connection status checking, long-push server mocks, etc.
 <ul>
 <li>NOTE: use a global Timer to share between all of you IdleStateHandlers instead of creating each for them. A Timer can suffice because of its implementation mechanism(TimerWheel).</li>
 </ul></li>
 <li>always set “connectTimeoutMillis” connection option to achieve timeout return. without this option, future.awaitUninterruptibly(timeoutValue) means less.</li>
-<li>More...</li>
+<li>More…</li>
 </ol>
 <h1 id="gotchas-of-netty"><span class="header-section-number">2</span> Gotchas of Netty</h1>
-<ol style="list-style-type: decimal">
+<ol type="1">
 <li>在使用ChannelBuffer的readBytes和getBytes的时候要注意index的意义不同.
 <ul>
 <li>例 如: 当前ChannelBuffer中有10个byte, 你通过readBytes读取了4个, 然后, 想查看一下下一个byte的值, 那么,你可以通过readByte()方法, 然后resetReaderIndex(); 或者, 你可以通过getByte(4)来peek这个值, 这里要注意的就是, getByte传入的index是最初的ChannelBuffer开始位置进行计算, 而不是剩余的bytes的位置进行计算. 即不是getByte(0).</li>
 </ul></li>
-<li><span class="citation">@ChannelPipelineCoverage</span>(&quot;one&quot;) Annotation doesn’t mean too much. It only works as a tip, nothing more. If you think you mark a ChannelHandler with “one” and Netty will use the ChannelHandler as a prototype, then you are wrong. It’s still your responsibility to ensure the scope semantics of singleton and prototype.</li>
+<li><span class="citation" data-cites="ChannelPipelineCoverage">@ChannelPipelineCoverage</span>(“one”) Annotation doesn’t mean too much. It only works as a tip, nothing more. If you think you mark a ChannelHandler with “one” and Netty will use the ChannelHandler as a prototype, then you are wrong. It’s still your responsibility to ensure the scope semantics of singleton and prototype.</li>
 <li>在ChannelHandler中， 通过exceptionCaught方法再次将异常抛出以期望更上层来处理是没有前途的。 因为这种情况下抛出的异常将只是由DefaultChannelPipeline记录一条warning的日志，仅此而已， 你无法进一步插足该异常的处理。另选方案可能是， 在exceptionCaught方法中将要抛出以交给其他对象处理的异常放入某个共享状态中， 比如某个queue， 然后， 对这些异常感兴趣的对象可以对该队列进行轮询以处理之。</li>
-<li>More...</li>
+<li>More…</li>
 </ol>
-<hr>
-<div align="center">
-<img src="/images/wechat-qrcode-footer.png"/>
-</div>
 
-</div>
+    </article>
 
-
-
-</body></html>
+  </body>
+</html>

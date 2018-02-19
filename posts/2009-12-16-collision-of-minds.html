@@ -1,14 +1,16 @@
 <!DOCTYPE html>
-<html lang="zh">
-<head>
+<html>
+  <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我快疯了… - 一个架构士的思考与沉</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="王福强的博客， 一个架构士的思考与沉淀">
     <meta name="keywords" content="architecture, book author, thinker, fighter, 架构, 思考, 技术, 武术, 哲学">
     <meta name="author" content="王福强">
-        <link rel="icon" href="/favicon.ico">
-    <title>我快疯了... - 一个架构士的思考与沉淀</title>
-    <!-- 百度统计 -->
+    <link rel="stylesheet" href="/ivy.css">
+    <link rel="shortcut icon" href="/favicon.ico"/>
+    <style type="text/css">code{white-space: pre;}</style>
+            <!-- 百度统计 -->
     <script>
       var _hmt = _hmt || [];
       (function() {
@@ -18,35 +20,26 @@
           s.parentNode.insertBefore(hm, s);
       })();
     </script>
+  </head>
 
-	<link href="/css/custom.css" rel="stylesheet"/>
-	<link rel="shortcut icon" href="/favicon.ico"/>
+  <body class="node homepage">
 
-<style type="text/css">code{white-space: pre;}</style>
-        
-	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-	<!--[if lt IE 9]>
-	  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.2/html5shiv.js"></script>
-	  <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-	<![endif]-->
-
-</head>
-
-<body>
-
-    <div class="masthead">
-		<!--
-    <h1 class="masthead-title fq">
-      <a href="/">扶墙老师</a>
-
-    </h1>
-    -->
-    <a href="/"><h1>扶墙老师说</h1></a>
-		<p class="masthead-lead">一个架构士的思考与沉淀</p>
-
-		<hr class="masthead-hr">
-
-	  	<ul class="masthead-nav">
+    <header class="masthead">
+      <h1><a href="/">扶墙老师说</a></h1>
+      <p class="tagline">
+         一个架构士的思考与沉淀
+          <img src="/images/wechat-qrcode-footer.png"/>
+          扶墙老师，辨证施“知”
+      </p>
+      
+      <nav class="menu">
+        <input id="menu-check" type="checkbox"/>
+        <label id="menu-label" for="menu-check" class="unselectable">
+          <span class="icon close-icon">✕</span>
+          <span class="icon open-icon">☰</span>
+          <span class="text">展开</span>
+        </label>
+        <ul>
             <li class="nav-item"><a class="nav-link" href="/favorite.html">我的收藏</a></li>
             <li class="nav-item"><a class="nav-link" href="/dashboard.html">金融看板</a></li>
             <li class="nav-item"><a class="nav-link" href="/columns.html">专栏文章</a></li>
@@ -54,24 +47,16 @@
             <li class="nav-item"><a class="nav-link" href="/whoami.html">我是何人</a></li>
             <li class="nav-item"><a class="nav-link" href="/interlinks.html">友情链接</a></li>
             <li class="nav-item"><a class="nav-link" href="/feeds.xml">RSS订阅</a></li>
-		</ul>
+        </ul>
+      </nav>
+    </header>
 
-  		<hr class="masthead-hr">
-
-	  	<ul class="masthead-nav">
-            <li class="nav-item"><small>©afoo.me</small></li>
-            <li class="nav-item"><small>Powered by <a href="http://pandoc.org/">pandoc</a> and <a href="http://rometools.github.io/rome/">ROME</a></small></li>
-		</ul>
-
-	</div>
-
-
-    <div class="listing">
-
+    <article class="main">
+      
 <div class="row">
 <div id="header">
 <p class="lead">
-<h1 class="title">我快疯了...</h1>
+<h1 class="title">我快疯了…</h1>
 </p>
 </div>
 
@@ -87,9 +72,9 @@
 <p>人家不是还长一双眼睛和一对耳朵的嘛，呵呵</p>
 <p>是，我承认，平台技术部是有牛人，可是， 这牛人也不用非要表现的那么对啥人都不屑吧？！</p>
 <p>牛顿是可能有缺点，可该肯定他的地方还是要肯定啊， 毕竟，人不是靠缺点来评判的，</p>
-<p>人都说&quot;一美遮百丑&quot;，这倒好，变成“一丑遮百美”了。</p>
+<p>人都说“一美遮百丑”，这倒好，变成“一丑遮百美”了。</p>
 <p>最让我感慨的就是，某次会话之后，自己感觉别人认为你连new BufferedReader(new InputStreamReader(System.in)))这样的最基本套路都不知道，</p>
-<p>苍天啊，大地啊，我写这么些年程序白写了...</p>
+<p>苍天啊，大地啊，我写这么些年程序白写了…</p>
 <p>聊了， 不想做roma这种web框架（原因很多，不想多说），想做海量数据库和分布式计算相关的， 因为我知道网站上一定规模，这些东西是必须的（什么项目，数据量上来，这些东西都缺不了）， 不用去推广，网站就得主动找上门来要着用。 而像web框架这种东西，说白了，也就那么回事，alternatives多了。</p>
 <p>让我跟搞海量数据库的人聊聊，看是否能接收我过去，因为分布式计算那边都是搞C++和飞天的，人满为患， 只有海量数据库这边好像还有待提高。OK啊， 那就找时间聊聊吧！</p>
 <p>王齐倒是挺看得开的，我短短半年，就调了2部门，一般人还不得气死啊，要这样的人做甚啊！ 其实我也挺奇怪的，就当年我从贾维婚宴上一身酒气的过去面试，而且故意飞扬跋扈的那种气势， 我都很难搞明白他到底为啥招我进来。</p>
@@ -123,13 +108,8 @@ Wang Darren - 12/25/2009 8:53:21 AM
 
 怀疑你和他们都是一家子，4个王，呵呵。
 </pre>
-<hr>
-<div align="center">
-<img src="/images/wechat-qrcode-footer.png"/>
-</div>
 
-</div>
+    </article>
 
-
-
-</body></html>
+  </body>
+</html>

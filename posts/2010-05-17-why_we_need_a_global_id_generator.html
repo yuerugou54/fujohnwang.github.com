@@ -1,15 +1,17 @@
 <!DOCTYPE html>
-<html lang="zh">
-<head>
+<html>
+  <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Why We Need A Global ID Generator?! - 一个架构士的思考与沉</title>
+        <meta name="date" content="2010-05-17" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="王福强的博客， 一个架构士的思考与沉淀">
     <meta name="keywords" content="architecture, book author, thinker, fighter, 架构, 思考, 技术, 武术, 哲学">
     <meta name="author" content="王福强">
-        <meta name="date" content="2010-05-17" />
-        <link rel="icon" href="/favicon.ico">
-    <title>Why We Need A Global ID Generator?! - 一个架构士的思考与沉淀</title>
-    <!-- 百度统计 -->
+    <link rel="stylesheet" href="/ivy.css">
+    <link rel="shortcut icon" href="/favicon.ico"/>
+    <style type="text/css">code{white-space: pre;}</style>
+            <!-- 百度统计 -->
     <script>
       var _hmt = _hmt || [];
       (function() {
@@ -19,35 +21,26 @@
           s.parentNode.insertBefore(hm, s);
       })();
     </script>
+  </head>
 
-	<link href="/css/custom.css" rel="stylesheet"/>
-	<link rel="shortcut icon" href="/favicon.ico"/>
+  <body class="node homepage">
 
-<style type="text/css">code{white-space: pre;}</style>
-        
-	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-	<!--[if lt IE 9]>
-	  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.2/html5shiv.js"></script>
-	  <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-	<![endif]-->
-
-</head>
-
-<body>
-
-    <div class="masthead">
-		<!--
-    <h1 class="masthead-title fq">
-      <a href="/">扶墙老师</a>
-
-    </h1>
-    -->
-    <a href="/"><h1>扶墙老师说</h1></a>
-		<p class="masthead-lead">一个架构士的思考与沉淀</p>
-
-		<hr class="masthead-hr">
-
-	  	<ul class="masthead-nav">
+    <header class="masthead">
+      <h1><a href="/">扶墙老师说</a></h1>
+      <p class="tagline">
+         一个架构士的思考与沉淀
+          <img src="/images/wechat-qrcode-footer.png"/>
+          扶墙老师，辨证施“知”
+      </p>
+      
+      <nav class="menu">
+        <input id="menu-check" type="checkbox"/>
+        <label id="menu-label" for="menu-check" class="unselectable">
+          <span class="icon close-icon">✕</span>
+          <span class="icon open-icon">☰</span>
+          <span class="text">展开</span>
+        </label>
+        <ul>
             <li class="nav-item"><a class="nav-link" href="/favorite.html">我的收藏</a></li>
             <li class="nav-item"><a class="nav-link" href="/dashboard.html">金融看板</a></li>
             <li class="nav-item"><a class="nav-link" href="/columns.html">专栏文章</a></li>
@@ -55,20 +48,12 @@
             <li class="nav-item"><a class="nav-link" href="/whoami.html">我是何人</a></li>
             <li class="nav-item"><a class="nav-link" href="/interlinks.html">友情链接</a></li>
             <li class="nav-item"><a class="nav-link" href="/feeds.xml">RSS订阅</a></li>
-		</ul>
+        </ul>
+      </nav>
+    </header>
 
-  		<hr class="masthead-hr">
-
-	  	<ul class="masthead-nav">
-            <li class="nav-item"><small>©afoo.me</small></li>
-            <li class="nav-item"><small>Powered by <a href="http://pandoc.org/">pandoc</a> and <a href="http://rometools.github.io/rome/">ROME</a></small></li>
-		</ul>
-
-	</div>
-
-
-    <div class="listing">
-
+    <article class="main">
+      
 <div class="row">
 <div id="header">
 <p class="lead">
@@ -85,12 +70,12 @@
 <div id="TOC">
 <ul>
 <li><a href="#pains-in-the-neck"><span class="toc-section-number">1</span> Pains In The Neck</a><ul>
-<li><a href="#mysql的自增长主键的问题the-problem-with-mysqls-auto-increment-id"><span class="toc-section-number">1.1</span> MySQL的自增长主键的问题(The Problem With MySQL's Auto-Increment ID)</a></li>
-<li><a href="#similar-problem-with-credits-scenario-on-db2"><span class="toc-section-number">1.2</span> Similar Problem With Credit's Scenario On DB2</a></li>
+<li><a href="#mysql的自增长主键的问题the-problem-with-mysqls-auto-increment-id"><span class="toc-section-number">1.1</span> MySQL的自增长主键的问题(The Problem With MySQL’s Auto-Increment ID)</a></li>
+<li><a href="#similar-problem-with-credits-scenario-on-db2"><span class="toc-section-number">1.2</span> Similar Problem With Credit’s Scenario On DB2</a></li>
 </ul></li>
 <li><a href="#what-we-do"><span class="toc-section-number">2</span> What We Do?</a><ul>
 <li><a href="#打造我们自己的主键生成器roll-our-own-id-generator"><span class="toc-section-number">2.1</span> 打造我们自己的主键生成器(Roll Our Own ID Generator)</a></li>
-<li><a href="#利用甚至扩展现有的spring的-datafieldmaxvalueincrementorextends-springs-datafieldmaxvalueincrementor-abstraction"><span class="toc-section-number">2.2</span> 利用甚至扩展现有的Spring的 DataFieldMaxValueIncrementor(Extends Spring's DataFieldMaxValueIncrementor Abstraction)</a></li>
+<li><a href="#利用甚至扩展现有的spring的-datafieldmaxvalueincrementorextends-springs-datafieldmaxvalueincrementor-abstraction"><span class="toc-section-number">2.2</span> 利用甚至扩展现有的Spring的 DataFieldMaxValueIncrementor(Extends Spring’s DataFieldMaxValueIncrementor Abstraction)</a></li>
 </ul></li>
 <li><a href="#结束语-conclusion"><span class="toc-section-number">3</span> 结束语 (Conclusion)</a></li>
 </ul>
@@ -99,8 +84,8 @@
 
 <p><strong>author: fujohnwang</strong></p>
 <h1 id="pains-in-the-neck"><span class="header-section-number">1</span> Pains In The Neck</h1>
-<p>我们先得从MySQL的自增长主键说起...</p>
-<h2 id="mysql的自增长主键的问题the-problem-with-mysqls-auto-increment-id"><span class="header-section-number">1.1</span> MySQL的自增长主键的问题(The Problem With MySQL's Auto-Increment ID)</h2>
+<p>我们先得从MySQL的自增长主键说起…</p>
+<h2 id="mysql的自增长主键的问题the-problem-with-mysqls-auto-increment-id"><span class="header-section-number">1.1</span> MySQL的自增长主键的问题(The Problem With MySQL’s Auto-Increment ID)</h2>
 <p>考虑到系统的可用性以及地理区域内的访问效率等特点, 我们需要在两个处于不同地理区域的机房中的MySQL之间进行数据的同步, 为了避免位于不同机房中的MySQL在进行同步的时候出现数据冲突, 通常会为它们指派不同的主键范围(当然采用的是MySQL默认的自增主键支持), 例如:</p>
 <pre>
    DB Node A: 0-99999
@@ -110,12 +95,12 @@
 <p>如果我们只是将Node A的数据单向同步到另一个机房的Node B中, 那么So far so good, 整个过程将按照我们所预想的那样进行.可是, 一旦我们要将Node B的数据单向或者双向的同步到Node A, 那么问题就来了.</p>
 <p>问题在于, 如果将自增主键范围较大的主键同步到自增主键范围较小的数据库, 那么, 自增主键范围较小的数据库的自增序列的默认行为将被打破, 即新生成的自增主键将从最大的主键开始. 以Node A和Node B来讲就是, 如果我将100001的数据同步到Node A, 那么, Node A后面生成的自增主键将以100001为基础施行自增长, 这完全打破了最初为它指定的自增长范围, 既然最初的数据同步的前提条件被打破, 那么后继的所有行为和结果就都乱套了.</p>
 <p>也就是说, 如果不需要类似以上的数据同步, 或者只是将范围较小的自增主键对应的数据同步到范围较大的数据库,那自增主键的使用是没有太大问题的. 可是一旦出现双向同步或者单向的将较大的自增主键数据同步到较小的自增主键数据库中,那么, MySQL的自增主键策略就会带来问题了.</p>
-<h2 id="similar-problem-with-credits-scenario-on-db2"><span class="header-section-number">1.2</span> Similar Problem With Credit's Scenario On DB2</h2>
+<h2 id="similar-problem-with-credits-scenario-on-db2"><span class="header-section-number">1.2</span> Similar Problem With Credit’s Scenario On DB2</h2>
 <p>依稀记得阿九提到过Credit项目组在进行数据导入的时候也会存在类似头疼的问题, 从一个库导入数据到另一个库的时候, 都需要修改外键引用的值才可以, 这也是因为使用了MySQL的自增主键类似的策略导致的. 更多细节可以参考阿九的blog: <a href="http://trydofor.javaeye.com/blog/668705" class="uri">http://trydofor.javaeye.com/blog/668705</a></p>
 <p>这两个场景不是说自增主键不好, 而是说在某些场景下, 自增主键会变成一间令人头疼的事情, 比如上面提到的数据同步之类的场景.</p>
 <h1 id="what-we-do"><span class="header-section-number">2</span> What We Do?</h1>
 <p>既然在以上场景中数据库自带的自增主键策略无法满足需要, 那我们当然就得另寻他路咯. 我们采用客户端生成主键的策略, 但UUID/GUID不在考虑之列, 主要因为是UUID/GUID对索引, 范围查询等很不友好, 当然生成速度和存储空间也包含在排除因素之列.</p>
-<p>从各个方面来讲, 数字增长型主键依然是我们倾向于使用的主键策略. 当然, 其它类型的主键在某些场景下也可以考虑(比如, 对索引来说比UUID/GUID要友好一些的符合某种格式的字符串类型的主键). 为了实现这样的一个主键生成服务, 我们可以选择两条路...</p>
+<p>从各个方面来讲, 数字增长型主键依然是我们倾向于使用的主键策略. 当然, 其它类型的主键在某些场景下也可以考虑(比如, 对索引来说比UUID/GUID要友好一些的符合某种格式的字符串类型的主键). 为了实现这样的一个主键生成服务, 我们可以选择两条路…</p>
 <h2 id="打造我们自己的主键生成器roll-our-own-id-generator"><span class="header-section-number">2.1</span> 打造我们自己的主键生成器(Roll Our Own ID Generator)</h2>
 <p>实际上, 搞这么一个东西并没有太大的难度, 所以, 展开来细说也没有太多的必要,我们这里只提几个实现这样一个自定义的主键生成器的时候需要考虑的点.</p>
 <p>第一个就是行为的抽象. 最简单的抽象可能可能是:</p>
@@ -128,7 +113,7 @@ public interface IDGenerator{
 <p>第二个需要考虑的就是状态的存储方式, 是存储到内存, 还是文件,亦或数据库当中, 这个要根据这些存储媒介的特性以及其它因素来进行权衡. 比如内存状态易失, 那么, 就意味着基于内存的主键状态存储只能限定于指定生命周期范围内的应用场景. 对文件或者数据库等存储方式来说, 也需要类似的考虑.</p>
 <p>第三个需要考虑的就是主键生成器部署场景, 是嵌入到应用程序内, 还是以独立的服务进行部署. 不管采用那种部署方式, 我们需要进一步考虑在这些部署场景下主键生成器的轻量性, 灵活性以及可用性. 至于如何来满足这些特性需求, 那就是“ 八仙过海, 各显神通 ”了. 比如为了保证可用性, 我们可以进行运行期间的failover; 为了让其更轻量,更灵活, 我们可以对状态的管理方式进行权衡, 选用最合适的方案等等.</p>
 <p>其它点可能就是实现期间的一些事情了, 比如增长的步长, 本地缓存以提高生成效率, 主键的分区等等.</p>
-<h2 id="利用甚至扩展现有的spring的-datafieldmaxvalueincrementorextends-springs-datafieldmaxvalueincrementor-abstraction"><span class="header-section-number">2.2</span> 利用甚至扩展现有的Spring的 DataFieldMaxValueIncrementor(Extends Spring's DataFieldMaxValueIncrementor Abstraction)</h2>
+<h2 id="利用甚至扩展现有的spring的-datafieldmaxvalueincrementorextends-springs-datafieldmaxvalueincrementor-abstraction"><span class="header-section-number">2.2</span> 利用甚至扩展现有的Spring的 DataFieldMaxValueIncrementor(Extends Spring’s DataFieldMaxValueIncrementor Abstraction)</h2>
 <p>实际上, Spring框架已经有一个现成的抽象,即DataFieldMaxValueIncrementor, 它基本上可以满足这种自定义主键生成器的场景, 从该接口的定义也可以看出来:</p>
 <pre>
 public interface DataFieldMaxValueIncrementer {
@@ -144,13 +129,8 @@ public interface DataFieldMaxValueIncrementer {
 <h1 id="结束语-conclusion"><span class="header-section-number">3</span> 结束语 (Conclusion)</h1>
 <p>其实这个话题真得很没说头, 呵呵, 都过去了这么些年了, 想把这个写出来完全是因为眼前看到相关team遇到的一些问题, 以及联想到之前的一些零星思绪片段, 所以就简单整理一下, 摆出来权作抛砖引用吧!</p>
 <p>BTW. 好像记得flickr的一个工程师写过类似的东西, 介绍flickr如何实现这样的东西, 链接找不到了, 大体上是使用MySQL的MyISAM做存储, 然后两个库采用不同的主键步长来保证HA, 不过, 记得当时看过之后感觉不靠谱,大家感兴趣可以搜一下看看.</p>
-<hr>
-<div align="center">
-<img src="/images/wechat-qrcode-footer.png"/>
-</div>
 
-</div>
+    </article>
 
-
-
-</body></html>
+  </body>
+</html>

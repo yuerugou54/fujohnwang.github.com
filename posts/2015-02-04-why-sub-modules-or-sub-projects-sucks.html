@@ -1,15 +1,17 @@
 <!DOCTYPE html>
-<html lang="zh">
-<head>
+<html>
+  <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我为什么不喜欢子项目或者子模块的概念 - 一个架构士的思考与沉</title>
+        <meta name="date" content="2015-02-04" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="王福强的博客， 一个架构士的思考与沉淀">
     <meta name="keywords" content="architecture, book author, thinker, fighter, 架构, 思考, 技术, 武术, 哲学">
     <meta name="author" content="王福强">
-        <meta name="date" content="2015-02-04" />
-        <link rel="icon" href="/favicon.ico">
-    <title>我为什么不喜欢子项目或者子模块的概念 - 一个架构士的思考与沉淀</title>
-    <!-- 百度统计 -->
+    <link rel="stylesheet" href="/ivy.css">
+    <link rel="shortcut icon" href="/favicon.ico"/>
+    <style type="text/css">code{white-space: pre;}</style>
+            <!-- 百度统计 -->
     <script>
       var _hmt = _hmt || [];
       (function() {
@@ -19,35 +21,26 @@
           s.parentNode.insertBefore(hm, s);
       })();
     </script>
+  </head>
 
-	<link href="/css/custom.css" rel="stylesheet"/>
-	<link rel="shortcut icon" href="/favicon.ico"/>
+  <body class="node homepage">
 
-<style type="text/css">code{white-space: pre;}</style>
-        
-	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-	<!--[if lt IE 9]>
-	  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.2/html5shiv.js"></script>
-	  <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-	<![endif]-->
-
-</head>
-
-<body>
-
-    <div class="masthead">
-		<!--
-    <h1 class="masthead-title fq">
-      <a href="/">扶墙老师</a>
-
-    </h1>
-    -->
-    <a href="/"><h1>扶墙老师说</h1></a>
-		<p class="masthead-lead">一个架构士的思考与沉淀</p>
-
-		<hr class="masthead-hr">
-
-	  	<ul class="masthead-nav">
+    <header class="masthead">
+      <h1><a href="/">扶墙老师说</a></h1>
+      <p class="tagline">
+         一个架构士的思考与沉淀
+          <img src="/images/wechat-qrcode-footer.png"/>
+          扶墙老师，辨证施“知”
+      </p>
+      
+      <nav class="menu">
+        <input id="menu-check" type="checkbox"/>
+        <label id="menu-label" for="menu-check" class="unselectable">
+          <span class="icon close-icon">✕</span>
+          <span class="icon open-icon">☰</span>
+          <span class="text">展开</span>
+        </label>
+        <ul>
             <li class="nav-item"><a class="nav-link" href="/favorite.html">我的收藏</a></li>
             <li class="nav-item"><a class="nav-link" href="/dashboard.html">金融看板</a></li>
             <li class="nav-item"><a class="nav-link" href="/columns.html">专栏文章</a></li>
@@ -55,20 +48,12 @@
             <li class="nav-item"><a class="nav-link" href="/whoami.html">我是何人</a></li>
             <li class="nav-item"><a class="nav-link" href="/interlinks.html">友情链接</a></li>
             <li class="nav-item"><a class="nav-link" href="/feeds.xml">RSS订阅</a></li>
-		</ul>
+        </ul>
+      </nav>
+    </header>
 
-  		<hr class="masthead-hr">
-
-	  	<ul class="masthead-nav">
-            <li class="nav-item"><small>©afoo.me</small></li>
-            <li class="nav-item"><small>Powered by <a href="http://pandoc.org/">pandoc</a> and <a href="http://rometools.github.io/rome/">ROME</a></small></li>
-		</ul>
-
-	</div>
-
-
-    <div class="listing">
-
+    <article class="main">
+      
 <div class="row">
 <div id="header">
 <p class="lead">
@@ -93,13 +78,13 @@
 <p>发现大部分人愿意使用Maven的modules来管理多个项目的组织结构， 这或许是Maven的最佳实践提倡的，也或许是开发人员为了开发阶段可以集中管理这些项目相关的关注点， 当然，大范围出现这种现象，可能更多是不加思考的copy（比如原来有人用jredis的时候使用了Jedis而不是JedisPool，那么， 后面的人再参考代码的时候也会复制这种不恰当的API理解和实践）， 从我个人来讲， 我其实更愿意让每个项目都是独立的， 那么为什么那？</p>
 <h1 id="个体独立性"><span class="header-section-number">1</span> 个体独立性</h1>
 <p>项目应该是一个可以独立发布的粒度， 它应该是独立的实体：</p>
-<ol style="list-style-type: decimal">
+<ol type="1">
 <li>如果某些功能只是最终发布实体的一个组合部分，那么，使用package粒度就可以了，设置modules反而是多此一举；</li>
 <li>如果某些功能是可以独立发布，供别人依赖或者可独立运行的，那么， 这些功能就应该是一个顶层的project粒度，而不应该设置为modules；类似于，你就算有多个孩子，但他们依然是独立的实体， 如果要组织成一个家庭的概念，那么， 这种概念不应该作为你孩子的强制属性，而应该是外部化的概念；</li>
 </ol>
 <p>但你会讲，很多时候， 就算设置为多个项目，可这些项目会因某种因素有所关联，我想集中管理， 所以我才会设置一个parent的project，然后把子的modules或者project包含在这个parent的project下面， 原则上， parent project的概念其实对你我来说一个目录就足够了，最常见的就是你的workspace目录， 下面包含和管理了project这个概念的一批实体。</p>
 <p>所以， 即使是使用parent + modules的结构来管理一批项目， 我更倾向于parent和modules的项目目录是并列的，而不是包含的关系。</p>
-<p>但parent + modules的结构其实还有其它不合适的地方...</p>
+<p>但parent + modules的结构其实还有其它不合适的地方…</p>
 <h1 id="版本个异性"><span class="header-section-number">2</span> 版本个异性</h1>
 <p>使用parent+modules的一个好处是， 我们只要在parent项目设置一个版本号，然后让modules继承就好了， 所谓版本一致性是也。 可是，这种版本一致性的考虑很多时候在实践的过程中却是一种pains in the neck，比如， 针对一个服务的项目设置，我们可以有两种项目设置结构的选择：</p>
 <pre>
@@ -116,13 +101,8 @@
 <p>当然啦， 使用parent+modules的实践不一定非要都以同一个版本号发布所有的modules，可这就又回来到第一个概念了，你到底是把modules当成独立的实体还是某种功能关注点的组织形式？ 如果是独立的实体，那么， 使用clean folder来组织独立的project就可以了， parent+modules则没有什么太大意义。</p>
 <p>那么，是不是使用workspace下管理多个并行的project的方式就一定比parent + modules的形式更好那？ 也不尽然，起码开发期间你可能要同时在多个project之间切换，但从整个开发-测试-部署-运行的pipeline来说， 我更倾向于采用第二种项目设置结构： api和impl独立开发和发布， 依赖关系通过maven（或者sbt等工具进行版本化关联管理）， impl的更新对api的依赖者来说尽量透明，模块化的治理粒度从各个层面都有清晰的区分。</p>
 <p>嗯，就先扯这么些吧！</p>
-<hr>
-<div align="center">
-<img src="/images/wechat-qrcode-footer.png"/>
-</div>
 
-</div>
+    </article>
 
-
-
-</body></html>
+  </body>
+</html>

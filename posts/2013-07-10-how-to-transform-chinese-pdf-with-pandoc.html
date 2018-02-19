@@ -1,14 +1,81 @@
 <!DOCTYPE html>
-<html lang="zh">
-<head>
+<html>
+  <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>pandoc中文pdf转换攻略 - 一个架构士的思考与沉</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="王福强的博客， 一个架构士的思考与沉淀">
     <meta name="keywords" content="architecture, book author, thinker, fighter, 架构, 思考, 技术, 武术, 哲学">
     <meta name="author" content="王福强">
-        <link rel="icon" href="/favicon.ico">
-    <title>pandoc中文pdf转换攻略 - 一个架构士的思考与沉淀</title>
-    <!-- 百度统计 -->
+    <link rel="stylesheet" href="/ivy.css">
+    <link rel="shortcut icon" href="/favicon.ico"/>
+    <style type="text/css">code{white-space: pre;}</style>
+    <style type="text/css">
+    a.sourceLine { display: inline-block; line-height: 1.25; }
+    a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+    a.sourceLine:empty { height: 1.2em; position: absolute; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode { white-space: pre; position: relative; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    code.sourceCode { white-space: pre-wrap; }
+    a.sourceLine { text-indent: -1em; padding-left: 1em; }
+    }
+    pre.numberSource a.sourceLine
+      { position: relative; }
+    pre.numberSource a.sourceLine:empty
+      { position: absolute; }
+    pre.numberSource a.sourceLine::before
+      { content: attr(data-line-number);
+        position: absolute; left: -5em; text-align: right; vertical-align: baseline;
+        border: none; pointer-events: all;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {  }
+    @media screen {
+    a.sourceLine::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+            <!-- 百度统计 -->
     <script>
       var _hmt = _hmt || [];
       (function() {
@@ -18,72 +85,26 @@
           s.parentNode.insertBefore(hm, s);
       })();
     </script>
+  </head>
 
-	<link href="/css/custom.css" rel="stylesheet"/>
-	<link rel="shortcut icon" href="/favicon.ico"/>
+  <body class="node homepage">
 
-<style type="text/css">code{white-space: pre;}</style>
-    <style type="text/css">
-    div.sourceCode { overflow-x: auto; }
-    table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
-      margin: 0; padding: 0; vertical-align: baseline; border: none; }
-    table.sourceCode { width: 100%; line-height: 100%; }
-    td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
-    td.sourceCode { padding-left: 5px; }
-    code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
-    code > span.dt { color: #902000; } /* DataType */
-    code > span.dv { color: #40a070; } /* DecVal */
-    code > span.bn { color: #40a070; } /* BaseN */
-    code > span.fl { color: #40a070; } /* Float */
-    code > span.ch { color: #4070a0; } /* Char */
-    code > span.st { color: #4070a0; } /* String */
-    code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
-    code > span.ot { color: #007020; } /* Other */
-    code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
-    code > span.fu { color: #06287e; } /* Function */
-    code > span.er { color: #ff0000; font-weight: bold; } /* Error */
-    code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-    code > span.cn { color: #880000; } /* Constant */
-    code > span.sc { color: #4070a0; } /* SpecialChar */
-    code > span.vs { color: #4070a0; } /* VerbatimString */
-    code > span.ss { color: #bb6688; } /* SpecialString */
-    code > span.im { } /* Import */
-    code > span.va { color: #19177c; } /* Variable */
-    code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-    code > span.op { color: #666666; } /* Operator */
-    code > span.bu { } /* BuiltIn */
-    code > span.ex { } /* Extension */
-    code > span.pp { color: #bc7a00; } /* Preprocessor */
-    code > span.at { color: #7d9029; } /* Attribute */
-    code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
-    code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-    code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-    code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-  </style>
-        
-	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-	<!--[if lt IE 9]>
-	  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.2/html5shiv.js"></script>
-	  <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-	<![endif]-->
-
-</head>
-
-<body>
-
-    <div class="masthead">
-		<!--
-    <h1 class="masthead-title fq">
-      <a href="/">扶墙老师</a>
-
-    </h1>
-    -->
-    <a href="/"><h1>扶墙老师说</h1></a>
-		<p class="masthead-lead">一个架构士的思考与沉淀</p>
-
-		<hr class="masthead-hr">
-
-	  	<ul class="masthead-nav">
+    <header class="masthead">
+      <h1><a href="/">扶墙老师说</a></h1>
+      <p class="tagline">
+         一个架构士的思考与沉淀
+          <img src="/images/wechat-qrcode-footer.png"/>
+          扶墙老师，辨证施“知”
+      </p>
+      
+      <nav class="menu">
+        <input id="menu-check" type="checkbox"/>
+        <label id="menu-label" for="menu-check" class="unselectable">
+          <span class="icon close-icon">✕</span>
+          <span class="icon open-icon">☰</span>
+          <span class="text">展开</span>
+        </label>
+        <ul>
             <li class="nav-item"><a class="nav-link" href="/favorite.html">我的收藏</a></li>
             <li class="nav-item"><a class="nav-link" href="/dashboard.html">金融看板</a></li>
             <li class="nav-item"><a class="nav-link" href="/columns.html">专栏文章</a></li>
@@ -91,20 +112,12 @@
             <li class="nav-item"><a class="nav-link" href="/whoami.html">我是何人</a></li>
             <li class="nav-item"><a class="nav-link" href="/interlinks.html">友情链接</a></li>
             <li class="nav-item"><a class="nav-link" href="/feeds.xml">RSS订阅</a></li>
-		</ul>
+        </ul>
+      </nav>
+    </header>
 
-  		<hr class="masthead-hr">
-
-	  	<ul class="masthead-nav">
-            <li class="nav-item"><small>©afoo.me</small></li>
-            <li class="nav-item"><small>Powered by <a href="http://pandoc.org/">pandoc</a> and <a href="http://rometools.github.io/rome/">ROME</a></small></li>
-		</ul>
-
-	</div>
-
-
-    <div class="listing">
-
+    <article class="main">
+      
 <div class="row">
 <div id="header">
 <p class="lead">
@@ -118,13 +131,13 @@
 <hr>
 
 
-<p>按照pandoc官方网站说明，下载<a href="http://www.tug.org/mactex/morepackages.html">BasicTex</a>以及MacTeX-Additions， 不管三七二十一，一并装了，才占用几百M，在这个年月，&quot;洒洒水&quot;啦~</p>
-<p>装完后，运行<code>pandoc --latex-engine=xelatex -V mainfont=Hei 统一投放平台规划与设想.md -o tek.pdf</code>, 发现tnd不给换行，太长的行直接截断，好啦，第一个症状出现了...</p>
+<p>按照pandoc官方网站说明，下载<a href="http://www.tug.org/mactex/morepackages.html">BasicTex</a>以及MacTeX-Additions， 不管三七二十一，一并装了，才占用几百M，在这个年月，“洒洒水”啦~</p>
+<p>装完后，运行<code>pandoc --latex-engine=xelatex -V mainfont=Hei 统一投放平台规划与设想.md -o tek.pdf</code>, 发现tnd不给换行，太长的行直接截断，好啦，第一个症状出现了…</p>
 <p>遂Google之， 发现了这篇<a href="https://groups.google.com/forum/#!topic/pandoc-discuss/GIy4crum8II" class="uri">https://groups.google.com/forum/#!topic/pandoc-discuss/GIy4crum8II</a>, 但貌似还是没有答案，也不知道纠结了多久，在pandoc官网导航栏里，点了[<a href="https://github.com/jgm/pandoc/wiki/Pandoc-Extras">Extras</a>], 寻摸， 突然发现接近页尾的地方有中文翻译的pandoc文档项目，有转换时用的命令行说明以及其他几个文档，点进<a href="https://github.com/tzengyuxio/pages/blob/gh-pages/pandoc/convert.sh" class="uri">https://github.com/tzengyuxio/pages/blob/gh-pages/pandoc/convert.sh</a>,发现如下命令赫然在目:</p>
-<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="ex">pandoc</span> pandoc.markdown -o pandoc-zhtw.pdf --toc --smart --template=pm-template --latex-engine=xelatex -V mainfont=<span class="st">&#39;LiHei Pro&#39;</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="ex">pandoc</span> pandoc.markdown -o pandoc-zhtw.pdf --toc --smart --template=pm-template --latex-engine=xelatex -V mainfont=<span class="st">&#39;LiHei Pro&#39;</span></a></code></pre></div>
 <p>哈哈， 太爽了， 马上<code>git clone</code>这个项目到本地，查看输出的pdf，发现格式完全没有问题，我直接把模板拿过来用不就搞定了嘛，so:</p>
-<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="ex">pandoc</span> --latex-engine=xelatex -V mainfont=<span class="st">&#39;LiHei Pro&#39;</span> --template=pm-template 统一投放平台规划与设想.md -o tek.pdf</code></pre></div>
-<p>But， Shit happens...</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="ex">pandoc</span> --latex-engine=xelatex -V mainfont=<span class="st">&#39;LiHei Pro&#39;</span> --template=pm-template 统一投放平台规划与设想.md -o tek.pdf</a></code></pre></div>
+<p>But， Shit happens…</p>
 <pre>
 pandoc: Error producing PDF from TeX source.
 ! LaTeX Error: File `titling.sty' not found.
@@ -139,15 +152,15 @@ Enter file name:
 l.65 \setlength
 </pre>
 <p>没关系， 继续google， 嗯，貌似是某个Latex包没有， 发现CTAN有这么个包下载，可下下来也不会安装啊，应该有现成的包管理器吧？！ 搜来搜去，果然有，嘿嘿:</p>
-<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="fu">sudo</span> tlmgr install titling</code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="fu">sudo</span> tlmgr install titling</a></code></pre></div>
 <p>继续运行， 发现还缺“lastpage.sty”， 同理安装， 再运行， No news is good news, 命令运行成功， 马上查看运行结果，NND，内容是生成了，咋许多汉字变成了方框啊！！！</p>
 <p>哦，对了， LiHei Pro这个字体貌似不是完全支持中文的字体，换换命令：<code>pandoc --latex-engine=xelatex -V mainfont=Hei --template=pm-template 统一投放平台规划与设想.md -o tek.pdf</code>, 换成黑体，运行后还是方框， fuck， 打开pm-template.latex，发现有字体设置的地方也是LiHei Pro，改之， 再运行， OH YEAH, 完美结果！</p>
 <p>好啦， 最后总结一下：</p>
-<ol style="list-style-type: decimal">
+<ol type="1">
 <li>安装BasicTex;</li>
 <li>把<a href="https://github.com/tzengyuxio/pages" class="uri">https://github.com/tzengyuxio/pages</a>项目中的pm-template.latex模板提前弄下来，将LiHei Pro字体改为黑体或者其它完全支持中文的字体；</li>
 <li>使用tlmgr包管理器把titling.sty和lastpage.sty两个依赖装上；</li>
-<li>运行pandoc生成pdf， 当然，不要忘了要使用到第二步更改过的template文件，并指定&quot;--latex-engine=xelatex -V mainfont=Hei&quot;</li>
+<li>运行pandoc生成pdf， 当然，不要忘了要使用到第二步更改过的template文件，并指定“–latex-engine=xelatex -V mainfont=Hei”</li>
 </ol>
 <p>仅此文献给那些依然为相似问题而苦恼的兄弟姐妹们， 如果可以，记得请我吃饭，比如海宝同学，哈哈哈</p>
 <hr />
@@ -161,13 +174,8 @@ sudo cp Downloads/CJKfntef.sty ~/Library/texmf/tex/latex/local
 <blockquote>
 <p>MMD， pandoc的markdown中如果插入图片的话，经常报错， 这个时候，检查一下图片是否是gif格式，如果是，那么将其转成png格式， 这真是一个大坑，老子耗费了差不多一天的时间来解决这个问题， 因为报错信息基本没参考价值， 就各种google， 各种装依赖尝试， 各种改模板，总之各种折腾， 最后是通过先转成latex中间格式，然后再使用xelatex从latex格式转pdf的log中才瞅出些许端倪，然后将gif改成png格式之后， 哇啦， 顺利通关！</p>
 </blockquote>
-<hr>
-<div align="center">
-<img src="/images/wechat-qrcode-footer.png"/>
-</div>
 
-</div>
+    </article>
 
-
-
-</body></html>
+  </body>
+</html>

@@ -1,15 +1,17 @@
 <!DOCTYPE html>
-<html lang="zh">
-<head>
+<html>
+  <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>“初探Hadoop MapReduce NextGen|MRv2|YARN(工作上下文紧急切换， 该篇待续)” - 一个架构士的思考与沉</title>
+        <meta name="date" content="2011-12-16" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="王福强的博客， 一个架构士的思考与沉淀">
     <meta name="keywords" content="architecture, book author, thinker, fighter, 架构, 思考, 技术, 武术, 哲学">
     <meta name="author" content="王福强">
-        <meta name="date" content="2011-12-16" />
-        <link rel="icon" href="/favicon.ico">
-    <title>&quot;初探Hadoop MapReduce NextGen|MRv2|YARN(工作上下文紧急切换， 该篇待续)&quot; - 一个架构士的思考与沉淀</title>
-    <!-- 百度统计 -->
+    <link rel="stylesheet" href="/ivy.css">
+    <link rel="shortcut icon" href="/favicon.ico"/>
+    <style type="text/css">code{white-space: pre;}</style>
+            <!-- 百度统计 -->
     <script>
       var _hmt = _hmt || [];
       (function() {
@@ -19,35 +21,26 @@
           s.parentNode.insertBefore(hm, s);
       })();
     </script>
+  </head>
 
-	<link href="/css/custom.css" rel="stylesheet"/>
-	<link rel="shortcut icon" href="/favicon.ico"/>
+  <body class="node homepage">
 
-<style type="text/css">code{white-space: pre;}</style>
-        
-	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-	<!--[if lt IE 9]>
-	  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.2/html5shiv.js"></script>
-	  <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-	<![endif]-->
-
-</head>
-
-<body>
-
-    <div class="masthead">
-		<!--
-    <h1 class="masthead-title fq">
-      <a href="/">扶墙老师</a>
-
-    </h1>
-    -->
-    <a href="/"><h1>扶墙老师说</h1></a>
-		<p class="masthead-lead">一个架构士的思考与沉淀</p>
-
-		<hr class="masthead-hr">
-
-	  	<ul class="masthead-nav">
+    <header class="masthead">
+      <h1><a href="/">扶墙老师说</a></h1>
+      <p class="tagline">
+         一个架构士的思考与沉淀
+          <img src="/images/wechat-qrcode-footer.png"/>
+          扶墙老师，辨证施“知”
+      </p>
+      
+      <nav class="menu">
+        <input id="menu-check" type="checkbox"/>
+        <label id="menu-label" for="menu-check" class="unselectable">
+          <span class="icon close-icon">✕</span>
+          <span class="icon open-icon">☰</span>
+          <span class="text">展开</span>
+        </label>
+        <ul>
             <li class="nav-item"><a class="nav-link" href="/favorite.html">我的收藏</a></li>
             <li class="nav-item"><a class="nav-link" href="/dashboard.html">金融看板</a></li>
             <li class="nav-item"><a class="nav-link" href="/columns.html">专栏文章</a></li>
@@ -55,24 +48,16 @@
             <li class="nav-item"><a class="nav-link" href="/whoami.html">我是何人</a></li>
             <li class="nav-item"><a class="nav-link" href="/interlinks.html">友情链接</a></li>
             <li class="nav-item"><a class="nav-link" href="/feeds.xml">RSS订阅</a></li>
-		</ul>
+        </ul>
+      </nav>
+    </header>
 
-  		<hr class="masthead-hr">
-
-	  	<ul class="masthead-nav">
-            <li class="nav-item"><small>©afoo.me</small></li>
-            <li class="nav-item"><small>Powered by <a href="http://pandoc.org/">pandoc</a> and <a href="http://rometools.github.io/rome/">ROME</a></small></li>
-		</ul>
-
-	</div>
-
-
-    <div class="listing">
-
+    <article class="main">
+      
 <div class="row">
 <div id="header">
 <p class="lead">
-<h1 class="title">&quot;初探Hadoop MapReduce NextGen|MRv2|YARN(工作上下文紧急切换， 该篇待续)&quot;</h1>
+<h1 class="title">“初探Hadoop MapReduce NextGen|MRv2|YARN(工作上下文紧急切换， 该篇待续)”</h1>
 <small>
 <h3 class="author">fujohnwang</h3>
 </small>
@@ -87,9 +72,7 @@
 <li><a href="#architecture"><span class="toc-section-number">1</span> Architecture</a></li>
 <li><a href="#components"><span class="toc-section-number">2</span> Components</a></li>
 <li><a href="#interesting-projects-built-on-hadoop"><span class="toc-section-number">3</span> Interesting projects built on hadoop</a></li>
-<li><a href="#hadoop-in-multiple-com"><span class="toc-section-number">4</span> Hadoop in multiple com</a><ul>
-<li><a href="#hadoop-百度"><span class="toc-section-number">4.1</span> Hadoop @ 百度</a></li>
-</ul></li>
+<li><a href="#hadoop-in-multiple-com"><span class="toc-section-number">4</span> Hadoop in multiple com</a></li>
 <li><a href="#references"><span class="toc-section-number">5</span> References</a></li>
 </ul>
 </div>
@@ -99,7 +82,7 @@
 <p>人家年初提出来的想法，我年末才刚开始看， 惭愧…</p>
 </blockquote>
 <h1 id="architecture"><span class="header-section-number">1</span> Architecture</h1>
-<ol style="list-style-type: decimal">
+<ol type="1">
 <li>further separation of concerns on JobTracker
 <ul>
 <li>resource management concern</li>
@@ -108,7 +91,7 @@
 <li>not limited to MapReduce pattern, multiple different parallel programming patterns can be used too, like master-workers, MPI, iterative monads, etc. This is a more generic distributed parallel programming framework.</li>
 </ol>
 <h1 id="components"><span class="header-section-number">2</span> Components</h1>
-<ol style="list-style-type: decimal">
+<ol type="1">
 <li>ResourceManager
 <ul>
 <li>Scheduler</li>
@@ -118,32 +101,23 @@
 <li>ApplicationMaster</li>
 </ol>
 <h1 id="interesting-projects-built-on-hadoop"><span class="header-section-number">3</span> Interesting projects built on hadoop</h1>
-<ol style="list-style-type: decimal">
+<ol type="1">
 <li><a href="http://www.lilyproject.org/lily/index.html" class="uri">http://www.lilyproject.org/lily/index.html</a> - LILY - SMART DATA, AT SCALE, MADE EASY</li>
 </ol>
 <h1 id="hadoop-in-multiple-com"><span class="header-section-number">4</span> Hadoop in multiple com</h1>
-<h2 id="hadoop-百度"><span class="header-section-number">4.1</span> Hadoop @ 百度</h2>
-<pre><code>1. 透明压缩
-    - linux idle class调度
-    - 异步block级别压缩
-
-2. 资源隔离 
+<p>##Hadoop @ 百度 1. 透明压缩 - linux idle class调度 - 异步block级别压缩</p>
+<pre><code>2. 资源隔离 
     - cgroup</code></pre>
 <h1 id="references"><span class="header-section-number">5</span> References</h1>
-<ol style="list-style-type: decimal">
+<ol type="1">
 <li><a href="http://developer.yahoo.com/blogs/hadoop/posts/2011/02/mapreduce-nextgen/" class="uri">http://developer.yahoo.com/blogs/hadoop/posts/2011/02/mapreduce-nextgen/</a></li>
 <li><a href="http://developer.yahoo.com/blogs/hadoop/posts/2011/03/mapreduce-nextgen-scheduler/" class="uri">http://developer.yahoo.com/blogs/hadoop/posts/2011/03/mapreduce-nextgen-scheduler/</a></li>
 <li><a href="http://www.mesosproject.org/" class="uri">http://www.mesosproject.org/</a></li>
 <li><a href="http://developer.yahoo.com/blogs/hadoop/posts/2011/02/capacity-scheduler/" class="uri">http://developer.yahoo.com/blogs/hadoop/posts/2011/02/capacity-scheduler/</a></li>
 <li><a href="http://wiki.apache.org/hadoop/SupportingProjects" class="uri">http://wiki.apache.org/hadoop/SupportingProjects</a></li>
 </ol>
-<hr>
-<div align="center">
-<img src="/images/wechat-qrcode-footer.png"/>
-</div>
 
-</div>
+    </article>
 
-
-
-</body></html>
+  </body>
+</html>

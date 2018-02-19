@@ -1,14 +1,16 @@
 <!DOCTYPE html>
-<html lang="zh">
-<head>
+<html>
+  <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>笑谈完美主义者 - 一个架构士的思考与沉</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="王福强的博客， 一个架构士的思考与沉淀">
     <meta name="keywords" content="architecture, book author, thinker, fighter, 架构, 思考, 技术, 武术, 哲学">
     <meta name="author" content="王福强">
-        <link rel="icon" href="/favicon.ico">
-    <title>笑谈完美主义者 - 一个架构士的思考与沉淀</title>
-    <!-- 百度统计 -->
+    <link rel="stylesheet" href="/ivy.css">
+    <link rel="shortcut icon" href="/favicon.ico"/>
+    <style type="text/css">code{white-space: pre;}</style>
+            <!-- 百度统计 -->
     <script>
       var _hmt = _hmt || [];
       (function() {
@@ -18,35 +20,26 @@
           s.parentNode.insertBefore(hm, s);
       })();
     </script>
+  </head>
 
-	<link href="/css/custom.css" rel="stylesheet"/>
-	<link rel="shortcut icon" href="/favicon.ico"/>
+  <body class="node homepage">
 
-<style type="text/css">code{white-space: pre;}</style>
-        
-	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-	<!--[if lt IE 9]>
-	  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.2/html5shiv.js"></script>
-	  <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-	<![endif]-->
-
-</head>
-
-<body>
-
-    <div class="masthead">
-		<!--
-    <h1 class="masthead-title fq">
-      <a href="/">扶墙老师</a>
-
-    </h1>
-    -->
-    <a href="/"><h1>扶墙老师说</h1></a>
-		<p class="masthead-lead">一个架构士的思考与沉淀</p>
-
-		<hr class="masthead-hr">
-
-	  	<ul class="masthead-nav">
+    <header class="masthead">
+      <h1><a href="/">扶墙老师说</a></h1>
+      <p class="tagline">
+         一个架构士的思考与沉淀
+          <img src="/images/wechat-qrcode-footer.png"/>
+          扶墙老师，辨证施“知”
+      </p>
+      
+      <nav class="menu">
+        <input id="menu-check" type="checkbox"/>
+        <label id="menu-label" for="menu-check" class="unselectable">
+          <span class="icon close-icon">✕</span>
+          <span class="icon open-icon">☰</span>
+          <span class="text">展开</span>
+        </label>
+        <ul>
             <li class="nav-item"><a class="nav-link" href="/favorite.html">我的收藏</a></li>
             <li class="nav-item"><a class="nav-link" href="/dashboard.html">金融看板</a></li>
             <li class="nav-item"><a class="nav-link" href="/columns.html">专栏文章</a></li>
@@ -54,20 +47,12 @@
             <li class="nav-item"><a class="nav-link" href="/whoami.html">我是何人</a></li>
             <li class="nav-item"><a class="nav-link" href="/interlinks.html">友情链接</a></li>
             <li class="nav-item"><a class="nav-link" href="/feeds.xml">RSS订阅</a></li>
-		</ul>
+        </ul>
+      </nav>
+    </header>
 
-  		<hr class="masthead-hr">
-
-	  	<ul class="masthead-nav">
-            <li class="nav-item"><small>©afoo.me</small></li>
-            <li class="nav-item"><small>Powered by <a href="http://pandoc.org/">pandoc</a> and <a href="http://rometools.github.io/rome/">ROME</a></small></li>
-		</ul>
-
-	</div>
-
-
-    <div class="listing">
-
+    <article class="main">
+      
 <div class="row">
 <div id="header">
 <p class="lead">
@@ -86,20 +71,15 @@
 <p>俺认为，完美主义者有其自身的优点，但同时也存在危险的不确定因素。</p>
 <p>首先，追求完美的特质，使得这一类人做什么事情都是全神贯注，精益求精，以百分之百甚至百分之二百的精力投入到自己所做的事情中去， 所以，他们可以很好的完成自己的工作，甚至于，个人的努力加上际遇可以帮助他们创造奇迹，并获得各种辉煌的成就。如果没有说错的话， 森谷帝二能够成长为日本建筑界的著名建筑艺术家，也正得益于这一点。 做建筑，他的建筑艺术品举世称道；做厨艺，他自己手工做的cookie让人尝过之后不能不交口称赞，这难道不得益于他的这种“天赋”吗？！</p>
 <p>可是，“天赋”如果不加以控制任其恣意而为的话，也会招致毁灭性的后果。 完美主义者追求完美的品性很容易产生某种狂热，“眼里不揉沙”就是说的这种感觉，当这种狂热完全占据上风的时候， 完美主义者将不会容许自己所做的事情、自己所创造的作品存在任何的瑕疵，否则，他宁愿推倒重来，而不管推倒的代价如何之大， 森谷宁愿炸掉自己早期的多个建筑作品的行为，恰好说明了这一点，即使那些作品并非烂的没边儿，有的甚至还得过设计大奖。 再次想想自己有时候整个的干掉自己之前写的一些代码，然后重写的行为，跟森谷的相比，不是“小巫见大巫”又是什么那？</p>
-<p>但人总有一个成长的过程，你总需要从不成熟走向成熟，你的作品， 你的人生皆是如此，何必对自己的过去那么苛刻那？ 尝试着压抑住那种狂热，只让它起到好的作用，这才是完美主义者走的正确之路啊，这个世界上本来就没有十全十美的东西， 你又何必苛求那？ 只可惜森谷活了大半辈子，却一直让那种狂热占据自己，最终落得个锒铛入狱的下场，否则，你不就可以在日本甚至世界范围的建筑界获得一个万世流芳的美名吗？！ 不过，话又说回来了，那谁不是说“只有偏执狂才能给生存”吗？！或许正是那种狂热才能造就天才也说不定哦，可这，谁又知道那？ 我应该是没有啥资格评判人家的人生，只不过，关联自身的一些境遇和想法来回想一下，竟然有那么多的相似性，真的是很有意思那...</p>
+<p>但人总有一个成长的过程，你总需要从不成熟走向成熟，你的作品， 你的人生皆是如此，何必对自己的过去那么苛刻那？ 尝试着压抑住那种狂热，只让它起到好的作用，这才是完美主义者走的正确之路啊，这个世界上本来就没有十全十美的东西， 你又何必苛求那？ 只可惜森谷活了大半辈子，却一直让那种狂热占据自己，最终落得个锒铛入狱的下场，否则，你不就可以在日本甚至世界范围的建筑界获得一个万世流芳的美名吗？！ 不过，话又说回来了，那谁不是说“只有偏执狂才能给生存”吗？！或许正是那种狂热才能造就天才也说不定哦，可这，谁又知道那？ 我应该是没有啥资格评判人家的人生，只不过，关联自身的一些境遇和想法来回想一下，竟然有那么多的相似性，真的是很有意思那…</p>
 <hr />
 <blockquote>
 <p>Comments</p>
 <p>永刚 李 - 2/1/2009 5:44:09 PM 什么时候给我寄书</p>
 Wang Darren - 2/1/2009 6:13:23 PM 出了就给你寄，还在in progress那，慢得我现在一点儿脾气没有，呵呵
 </blockquote>
-<hr>
-<div align="center">
-<img src="/images/wechat-qrcode-footer.png"/>
-</div>
 
-</div>
+    </article>
 
-
-
-</body></html>
+  </body>
+</html>

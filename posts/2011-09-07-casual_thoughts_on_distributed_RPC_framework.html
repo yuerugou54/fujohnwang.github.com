@@ -1,15 +1,17 @@
 <!DOCTYPE html>
-<html lang="zh">
-<head>
+<html>
+  <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Casual Thoughts On Distributed RPC Service Framework - 一个架构士的思考与沉</title>
+        <meta name="date" content="2011-09-07" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="王福强的博客， 一个架构士的思考与沉淀">
     <meta name="keywords" content="architecture, book author, thinker, fighter, 架构, 思考, 技术, 武术, 哲学">
     <meta name="author" content="王福强">
-        <meta name="date" content="2011-09-07" />
-        <link rel="icon" href="/favicon.ico">
-    <title>Casual Thoughts On Distributed RPC Service Framework - 一个架构士的思考与沉淀</title>
-    <!-- 百度统计 -->
+    <link rel="stylesheet" href="/ivy.css">
+    <link rel="shortcut icon" href="/favicon.ico"/>
+    <style type="text/css">code{white-space: pre;}</style>
+            <!-- 百度统计 -->
     <script>
       var _hmt = _hmt || [];
       (function() {
@@ -19,35 +21,26 @@
           s.parentNode.insertBefore(hm, s);
       })();
     </script>
+  </head>
 
-	<link href="/css/custom.css" rel="stylesheet"/>
-	<link rel="shortcut icon" href="/favicon.ico"/>
+  <body class="node homepage">
 
-<style type="text/css">code{white-space: pre;}</style>
-        
-	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-	<!--[if lt IE 9]>
-	  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.2/html5shiv.js"></script>
-	  <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-	<![endif]-->
-
-</head>
-
-<body>
-
-    <div class="masthead">
-		<!--
-    <h1 class="masthead-title fq">
-      <a href="/">扶墙老师</a>
-
-    </h1>
-    -->
-    <a href="/"><h1>扶墙老师说</h1></a>
-		<p class="masthead-lead">一个架构士的思考与沉淀</p>
-
-		<hr class="masthead-hr">
-
-	  	<ul class="masthead-nav">
+    <header class="masthead">
+      <h1><a href="/">扶墙老师说</a></h1>
+      <p class="tagline">
+         一个架构士的思考与沉淀
+          <img src="/images/wechat-qrcode-footer.png"/>
+          扶墙老师，辨证施“知”
+      </p>
+      
+      <nav class="menu">
+        <input id="menu-check" type="checkbox"/>
+        <label id="menu-label" for="menu-check" class="unselectable">
+          <span class="icon close-icon">✕</span>
+          <span class="icon open-icon">☰</span>
+          <span class="text">展开</span>
+        </label>
+        <ul>
             <li class="nav-item"><a class="nav-link" href="/favorite.html">我的收藏</a></li>
             <li class="nav-item"><a class="nav-link" href="/dashboard.html">金融看板</a></li>
             <li class="nav-item"><a class="nav-link" href="/columns.html">专栏文章</a></li>
@@ -55,20 +48,12 @@
             <li class="nav-item"><a class="nav-link" href="/whoami.html">我是何人</a></li>
             <li class="nav-item"><a class="nav-link" href="/interlinks.html">友情链接</a></li>
             <li class="nav-item"><a class="nav-link" href="/feeds.xml">RSS订阅</a></li>
-		</ul>
+        </ul>
+      </nav>
+    </header>
 
-  		<hr class="masthead-hr">
-
-	  	<ul class="masthead-nav">
-            <li class="nav-item"><small>©afoo.me</small></li>
-            <li class="nav-item"><small>Powered by <a href="http://pandoc.org/">pandoc</a> and <a href="http://rometools.github.io/rome/">ROME</a></small></li>
-		</ul>
-
-	</div>
-
-
-    <div class="listing">
-
+    <article class="main">
+      
 <div class="row">
 <div id="header">
 <p class="lead">
@@ -101,21 +86,21 @@
 <h1 id="service-identity-1"><span class="header-section-number">2</span> service identity</h1>
 <p>[artifact version] + FQname + version</p>
 <h1 id="service-lookup"><span class="header-section-number">3</span> service lookup</h1>
-<ol style="list-style-type: decimal">
+<ol type="1">
 <li>how many services exist?</li>
 <li>what kind of details operations/services in each service?!</li>
-<li>what's the signature of each operations?</li>
+<li>what’s the signature of each operations?</li>
 </ol>
 <h1 id="service-extensions"><span class="header-section-number">4</span> service extensions</h1>
-<ol style="list-style-type: decimal">
+<ol type="1">
 <li>can I replace the data structure serialization and deserialization?!
 <ul>
 <li>use custom serialization mechanism</li>
-<li>some flag to indicate the mechanism that's used by service providers</li>
+<li>some flag to indicate the mechanism that’s used by service providers</li>
 </ul></li>
-<li>can I intercept service operations without service implementations' intrusion?!</li>
+<li>can I intercept service operations without service implementations’ intrusion?!</li>
 <li>can I replace default service lookup service provider?</li>
-<li>can I hook in custom LB and failover mechanisms in the service users' side?</li>
+<li>can I hook in custom LB and failover mechanisms in the service users’ side?</li>
 <li>can I hook in audit and monitoring concerns?</li>
 <li>can I tune the server side of the service exposion?
 <ul>
@@ -127,28 +112,23 @@
 <li>can I expose same service via different transports at the same time?!</li>
 </ol>
 <h1 id="service-upgrade"><span class="header-section-number">5</span> service upgrade</h1>
-<ol style="list-style-type: decimal">
+<ol type="1">
 <li>service framework upgrade</li>
 <li>service upgrade</li>
 </ol>
 <h1 id="service-deployment"><span class="header-section-number">6</span> service deployment</h1>
-<ol style="list-style-type: decimal">
+<ol type="1">
 <li>how to ease the large scale service deployment?! even make it automatically?</li>
 <li>template publication node?!</li>
 </ol>
 <h1 id="potential-points"><span class="header-section-number">7</span> potential points</h1>
-<ol style="list-style-type: decimal">
+<ol type="1">
 <li>are overloaded methods allowed?!</li>
 <li>are multiple languages inter-operations supported?!</li>
 <li>If you want to provide OO-RPC interface for clients to use, what kind of interception mechanisms u want to use? reflection or bytecode gen? Are there some overheads in this point?</li>
 </ol>
-<hr>
-<div align="center">
-<img src="/images/wechat-qrcode-footer.png"/>
-</div>
 
-</div>
+    </article>
 
-
-
-</body></html>
+  </body>
+</html>

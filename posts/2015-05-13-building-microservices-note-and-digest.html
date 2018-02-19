@@ -1,15 +1,17 @@
 <!DOCTYPE html>
-<html lang="zh">
-<head>
+<html>
+  <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BuildingMicroservices读书笔记与感悟 - 一个架构士的思考与沉</title>
+        <meta name="date" content="2015-05-13" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="王福强的博客， 一个架构士的思考与沉淀">
     <meta name="keywords" content="architecture, book author, thinker, fighter, 架构, 思考, 技术, 武术, 哲学">
     <meta name="author" content="王福强">
-        <meta name="date" content="2015-05-13" />
-        <link rel="icon" href="/favicon.ico">
-    <title>BuildingMicroservices读书笔记与感悟 - 一个架构士的思考与沉淀</title>
-    <!-- 百度统计 -->
+    <link rel="stylesheet" href="/ivy.css">
+    <link rel="shortcut icon" href="/favicon.ico"/>
+    <style type="text/css">code{white-space: pre;}</style>
+            <!-- 百度统计 -->
     <script>
       var _hmt = _hmt || [];
       (function() {
@@ -19,35 +21,26 @@
           s.parentNode.insertBefore(hm, s);
       })();
     </script>
+  </head>
 
-	<link href="/css/custom.css" rel="stylesheet"/>
-	<link rel="shortcut icon" href="/favicon.ico"/>
+  <body class="node homepage">
 
-<style type="text/css">code{white-space: pre;}</style>
-        
-	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-	<!--[if lt IE 9]>
-	  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.2/html5shiv.js"></script>
-	  <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-	<![endif]-->
-
-</head>
-
-<body>
-
-    <div class="masthead">
-		<!--
-    <h1 class="masthead-title fq">
-      <a href="/">扶墙老师</a>
-
-    </h1>
-    -->
-    <a href="/"><h1>扶墙老师说</h1></a>
-		<p class="masthead-lead">一个架构士的思考与沉淀</p>
-
-		<hr class="masthead-hr">
-
-	  	<ul class="masthead-nav">
+    <header class="masthead">
+      <h1><a href="/">扶墙老师说</a></h1>
+      <p class="tagline">
+         一个架构士的思考与沉淀
+          <img src="/images/wechat-qrcode-footer.png"/>
+          扶墙老师，辨证施“知”
+      </p>
+      
+      <nav class="menu">
+        <input id="menu-check" type="checkbox"/>
+        <label id="menu-label" for="menu-check" class="unselectable">
+          <span class="icon close-icon">✕</span>
+          <span class="icon open-icon">☰</span>
+          <span class="text">展开</span>
+        </label>
+        <ul>
             <li class="nav-item"><a class="nav-link" href="/favorite.html">我的收藏</a></li>
             <li class="nav-item"><a class="nav-link" href="/dashboard.html">金融看板</a></li>
             <li class="nav-item"><a class="nav-link" href="/columns.html">专栏文章</a></li>
@@ -55,20 +48,12 @@
             <li class="nav-item"><a class="nav-link" href="/whoami.html">我是何人</a></li>
             <li class="nav-item"><a class="nav-link" href="/interlinks.html">友情链接</a></li>
             <li class="nav-item"><a class="nav-link" href="/feeds.xml">RSS订阅</a></li>
-		</ul>
+        </ul>
+      </nav>
+    </header>
 
-  		<hr class="masthead-hr">
-
-	  	<ul class="masthead-nav">
-            <li class="nav-item"><small>©afoo.me</small></li>
-            <li class="nav-item"><small>Powered by <a href="http://pandoc.org/">pandoc</a> and <a href="http://rometools.github.io/rome/">ROME</a></small></li>
-		</ul>
-
-	</div>
-
-
-    <div class="listing">
-
+    <article class="main">
+      
 <div class="row">
 <div id="header">
 <p class="lead">
@@ -113,18 +98,18 @@
 <hr/>
 
 <p>loose coupling(interexchange) and high cohesion(autonomy), the most simple but long-lived rule for software development stand!!!</p>
-<p>align service/functionality, person, team, organization, even bigger entities...</p>
+<p>align service/functionality, person, team, organization, even bigger entities…</p>
 <pre><code>bounded context  -&gt; atomic unit boundary -&gt; compositional boundaries</code></pre>
 <blockquote>
 <p>== Words That Make Sense In This Book ==</p>
 <ul>
 <li>trade short-term gain for long-term pain</li>
-<li>Build if it's <strong>unique</strong> to what you do.</li>
+<li>Build if it’s <strong>unique</strong> to what you do.</li>
 <li>we can make a change to a single service and deploy it independently of the rest.</li>
 </ul>
 </blockquote>
 <h1 id="orchestration-vs.-choreography"><span class="header-section-number">1</span> Orchestration VS. Choreography</h1>
-<p>(终于tmd理解了这两个鸟单词在软件行业里的确切意思了...)</p>
+<p>(终于tmd理解了这两个鸟单词在软件行业里的确切意思了…)</p>
 <p>With orchestration, we rely on a central brain to guide and drive the process, much like the conductor in an orchestra. (the coordination way)</p>
 <p>With choreography, we inform each part of the system of its job, and let it work out the details, like dancers all finding their way and reacting to others around them in a ballet. (the fire-and-forget way)</p>
 <p>类似于计划经济 VS. 市场经济，或者中央集权 VS. 地方自治，the former can be implemented in synchronous RPCs way, and the latter in asynchronous event-driven way.</p>
@@ -141,7 +126,7 @@
 <p>并非所有服务都是职能单一的，很多时候多种服务是要协同工作的，这个时候往往就需要管理事务性的服务执行，通常情况下，会再设置独立的组合性质的服务来管理跨多个服务的事务。</p>
 <p>单数据库结点即可满足需求的服务， 事务完全可以交给数据库来管理； 一旦跳出这个能力边界， 比如跨库或者跨服务， 就需要通过其它方式来管理事务。</p>
 <p>常见的手段有：</p>
-<ol style="list-style-type: decimal">
+<ol type="1">
 <li>数据补偿与订正；(the compensating/retry way)</li>
 <li>2PC或者相似思想的分布式事务管理方式; (the orchestration way)</li>
 </ol>
@@ -162,7 +147,7 @@
 <p>say, rpm for redhat/centos, deb for debian/ubuntu, msi for windows</p>
 <p>减少支持的操作系统类型的数量以避免无必要的资源投入。</p>
 <p>制作自定义的Image景象，减少不必要的provisioning过程和重复（One approach to reducing this spin-up time is to create a virtual machine image that bakes in some of the common dependencies we use）。</p>
-<p>在组织层次不足以支撑和cover新技术栈的情况下，不建议使用docker之类的容器Image技术，虽然属于发布的artifact的形式之一，但牵扯到周边系统的工作也会需要变更，包括人员，工作流程等。 &quot;先进的，往往也是落后的&quot;！</p>
+<p>在组织层次不足以支撑和cover新技术栈的情况下，不建议使用docker之类的容器Image技术，虽然属于发布的artifact的形式之一，但牵扯到周边系统的工作也会需要变更，包括人员，工作流程等。 “先进的，往往也是落后的”！</p>
 <h1 id="service-to-host-mapping"><span class="header-section-number">5</span> Service-to-Host Mapping</h1>
 <p>单节点部署多服务的情况，主要需要考虑资源隔离的问题。</p>
 <p>单节点部署单一服务的情况，主要需要解决资源利用率的问题。</p>
@@ -171,19 +156,19 @@
 <blockquote>
 <ul>
 <li>Type 1 virtualization refers to technology where the VMs run directly on hardware, not on top of another operating system.</li>
-<li>Type 2 virtualization, AWS, VMWare, VSphere, Xen, and KVM...</li>
+<li>Type 2 virtualization, AWS, VMWare, VSphere, Xen, and KVM…</li>
 </ul>
 </blockquote>
 <blockquote>
 <p>if you don’t trust the code you are running, don’t expect that you can run it in a container and be safe. If you need that sort of isolation, you’ll need to consider using virtual machines instead.</p>
 </blockquote>
-<p>&quot;After many years of working in this space, I am convinced that the most sensible way to trigger any deployment is via a single, parameterizable command-line call.&quot;, 实际上， 命令行只是一种表现形式， 你当然可以把核心功能用shell脚本来写，但核心功能只要集中管理之后， 命令行也好， 操作页面也罢，都只是核心功能的一种延伸形式罢了。</p>
+<p>“After many years of working in this space, I am convinced that the most sensible way to trigger any deployment is via a single, parameterizable command-line call.”, 实际上， 命令行只是一种表现形式， 你当然可以把核心功能用shell脚本来写，但核心功能只要集中管理之后， 命令行也好， 操作页面也罢，都只是核心功能的一种延伸形式罢了。</p>
 <h1 id="test"><span class="header-section-number">6</span> Test</h1>
 <p>as long as you understand that test design and performing help you to design and implement your services/systems better, you will find the way to do the test properly.</p>
 <p>So, I skip this section.</p>
 <h1 id="monitoring"><span class="header-section-number">7</span> Monitoring</h1>
-<p>我坚持&quot;No News Is The Good News&quot;原则！</p>
-<ol style="list-style-type: decimal">
+<p>我坚持“No News Is The Good News”原则！</p>
+<ol type="1">
 <li>Alert是后继流程的起点，and <strong>Identity</strong> Matters here!
 <ul>
 <li>Including <code>Correlation ID</code>s</li>
@@ -215,7 +200,7 @@
 <h1 id="system-design"><span class="header-section-number">9</span> System Design</h1>
 <blockquote>
 <ul>
-<li>Any organization that designs a system (defined more broadly here than just information systems) will inevitably produce a design whose structure is a copy of the organization’s communication structure.</li>
+<li>Any organization that designs a system (defined more broadly here than just information systems)will inevitably produce a design whose structure is a copy of the organization’s communicationstructure.</li>
 </ul>
 </blockquote>
 <blockquote>
@@ -229,19 +214,19 @@
 </blockquote>
 <p>我们实行PO制度，也是同样的道理, 职责不清，纠缠扯皮的事儿就多。</p>
 <h1 id="工具参考"><span class="header-section-number">10</span> 工具参考</h1>
-<ol style="list-style-type: decimal">
+<ol type="1">
 <li><a href="https://github.com/jordansissel/fpm/wiki">fpm - Effing Package Management</a></li>
 <li><a href="https://www.packer.io/">Packer is a tool for creating identical machine images for multiple platforms from a single source configuration.</a></li>
 </ol>
 <h1 id="单词与词组学习复习"><span class="header-section-number">11</span> 单词与词组学习/复习</h1>
-<ol style="list-style-type: decimal">
-<li>inhibit, [ɪn'hɪbɪt] , v., 抑制；阻止；使不能
+<ol type="1">
+<li>inhibit, [ɪn’hɪbɪt] , v., 抑制；阻止；使不能
 <ul>
-<li>e.g. Distributed Transaction cand inhibit scaling.</li>
+<li>e.g. Distributed Transaction cand inhibit scaling.</li>
 <li>区别于inhabit, v.居住于；占据；栖息</li>
 <li>可以引申联想到prohibitive</li>
 </ul></li>
-<li>perilous, ['perələs], adj.危险的；冒险的
+<li>perilous, [’perələs], adj.危险的；冒险的
 <ul>
 <li>The snow and the blackout combined to make motoring perilous - 大雪加上灯火管制使得车辆行驶成了危险的事。</li>
 </ul></li>
@@ -252,16 +237,11 @@
 </ul></li>
 </ol>
 <h1 id="相关文章"><span class="header-section-number">12</span> 相关文章</h1>
-<ol style="list-style-type: decimal">
+<ol type="1">
 <li><a href="http://nginx.com/blog/introduction-to-microservices/">Introduction to Microservices</a></li>
 </ol>
-<hr>
-<div align="center">
-<img src="/images/wechat-qrcode-footer.png"/>
-</div>
 
-</div>
+    </article>
 
-
-
-</body></html>
+  </body>
+</html>

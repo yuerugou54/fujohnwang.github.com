@@ -1,15 +1,82 @@
 <!DOCTYPE html>
-<html lang="zh">
-<head>
+<html>
+  <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scala开发者的SpringBoot快速入门指南 - 一个架构士的思考与沉</title>
+        <meta name="date" content="2015-07-21" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="王福强的博客， 一个架构士的思考与沉淀">
     <meta name="keywords" content="architecture, book author, thinker, fighter, 架构, 思考, 技术, 武术, 哲学">
     <meta name="author" content="王福强">
-        <meta name="date" content="2015-07-21" />
-        <link rel="icon" href="/favicon.ico">
-    <title>Scala开发者的SpringBoot快速入门指南 - 一个架构士的思考与沉淀</title>
-    <!-- 百度统计 -->
+    <link rel="stylesheet" href="/ivy.css">
+    <link rel="shortcut icon" href="/favicon.ico"/>
+    <style type="text/css">code{white-space: pre;}</style>
+    <style type="text/css">
+    a.sourceLine { display: inline-block; line-height: 1.25; }
+    a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+    a.sourceLine:empty { height: 1.2em; position: absolute; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode { white-space: pre; position: relative; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    code.sourceCode { white-space: pre-wrap; }
+    a.sourceLine { text-indent: -1em; padding-left: 1em; }
+    }
+    pre.numberSource a.sourceLine
+      { position: relative; }
+    pre.numberSource a.sourceLine:empty
+      { position: absolute; }
+    pre.numberSource a.sourceLine::before
+      { content: attr(data-line-number);
+        position: absolute; left: -5em; text-align: right; vertical-align: baseline;
+        border: none; pointer-events: all;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {  }
+    @media screen {
+    a.sourceLine::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+            <!-- 百度统计 -->
     <script>
       var _hmt = _hmt || [];
       (function() {
@@ -19,72 +86,26 @@
           s.parentNode.insertBefore(hm, s);
       })();
     </script>
+  </head>
 
-	<link href="/css/custom.css" rel="stylesheet"/>
-	<link rel="shortcut icon" href="/favicon.ico"/>
+  <body class="node homepage">
 
-<style type="text/css">code{white-space: pre;}</style>
-    <style type="text/css">
-    div.sourceCode { overflow-x: auto; }
-    table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
-      margin: 0; padding: 0; vertical-align: baseline; border: none; }
-    table.sourceCode { width: 100%; line-height: 100%; }
-    td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
-    td.sourceCode { padding-left: 5px; }
-    code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
-    code > span.dt { color: #902000; } /* DataType */
-    code > span.dv { color: #40a070; } /* DecVal */
-    code > span.bn { color: #40a070; } /* BaseN */
-    code > span.fl { color: #40a070; } /* Float */
-    code > span.ch { color: #4070a0; } /* Char */
-    code > span.st { color: #4070a0; } /* String */
-    code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
-    code > span.ot { color: #007020; } /* Other */
-    code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
-    code > span.fu { color: #06287e; } /* Function */
-    code > span.er { color: #ff0000; font-weight: bold; } /* Error */
-    code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-    code > span.cn { color: #880000; } /* Constant */
-    code > span.sc { color: #4070a0; } /* SpecialChar */
-    code > span.vs { color: #4070a0; } /* VerbatimString */
-    code > span.ss { color: #bb6688; } /* SpecialString */
-    code > span.im { } /* Import */
-    code > span.va { color: #19177c; } /* Variable */
-    code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-    code > span.op { color: #666666; } /* Operator */
-    code > span.bu { } /* BuiltIn */
-    code > span.ex { } /* Extension */
-    code > span.pp { color: #bc7a00; } /* Preprocessor */
-    code > span.at { color: #7d9029; } /* Attribute */
-    code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
-    code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-    code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-    code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-  </style>
-        
-	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-	<!--[if lt IE 9]>
-	  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.2/html5shiv.js"></script>
-	  <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-	<![endif]-->
-
-</head>
-
-<body>
-
-    <div class="masthead">
-		<!--
-    <h1 class="masthead-title fq">
-      <a href="/">扶墙老师</a>
-
-    </h1>
-    -->
-    <a href="/"><h1>扶墙老师说</h1></a>
-		<p class="masthead-lead">一个架构士的思考与沉淀</p>
-
-		<hr class="masthead-hr">
-
-	  	<ul class="masthead-nav">
+    <header class="masthead">
+      <h1><a href="/">扶墙老师说</a></h1>
+      <p class="tagline">
+         一个架构士的思考与沉淀
+          <img src="/images/wechat-qrcode-footer.png"/>
+          扶墙老师，辨证施“知”
+      </p>
+      
+      <nav class="menu">
+        <input id="menu-check" type="checkbox"/>
+        <label id="menu-label" for="menu-check" class="unselectable">
+          <span class="icon close-icon">✕</span>
+          <span class="icon open-icon">☰</span>
+          <span class="text">展开</span>
+        </label>
+        <ul>
             <li class="nav-item"><a class="nav-link" href="/favorite.html">我的收藏</a></li>
             <li class="nav-item"><a class="nav-link" href="/dashboard.html">金融看板</a></li>
             <li class="nav-item"><a class="nav-link" href="/columns.html">专栏文章</a></li>
@@ -92,20 +113,12 @@
             <li class="nav-item"><a class="nav-link" href="/whoami.html">我是何人</a></li>
             <li class="nav-item"><a class="nav-link" href="/interlinks.html">友情链接</a></li>
             <li class="nav-item"><a class="nav-link" href="/feeds.xml">RSS订阅</a></li>
-		</ul>
+        </ul>
+      </nav>
+    </header>
 
-  		<hr class="masthead-hr">
-
-	  	<ul class="masthead-nav">
-            <li class="nav-item"><small>©afoo.me</small></li>
-            <li class="nav-item"><small>Powered by <a href="http://pandoc.org/">pandoc</a> and <a href="http://rometools.github.io/rome/">ROME</a></small></li>
-		</ul>
-
-	</div>
-
-
-    <div class="listing">
-
+    <article class="main">
+      
 <div class="row">
 <div id="header">
 <p class="lead">
@@ -129,262 +142,257 @@
 </div>
 <hr/>
 
-<p>使用Scala开发SpringBoot应用， 采用Maven作为构建工具，基本可以从Java开发SpringBoot应用的模式中平滑地迁移过来， 但如果使用SBT作为构建工具，那么多少需要一些定制...</p>
+<p>使用Scala开发SpringBoot应用， 采用Maven作为构建工具，基本可以从Java开发SpringBoot应用的模式中平滑地迁移过来， 但如果使用SBT作为构建工具，那么多少需要一些定制…</p>
 <h1 id="使用maven构建scala开发的springboot应用"><span class="header-section-number">1</span> 使用Maven构建Scala开发的SpringBoot应用</h1>
 <p>访问<a href="http://start.spring.io/" class="uri">http://start.spring.io/</a>， 填写必要的项目信息并选择必要的选项， 点击“Generate Project”下载预先生成的项目模板， 因为我只选择了web和actuator两个模块的依赖以及以jar的形式发布，所以得到如下的pom定义：</p>
-<div class="sourceCode"><pre class="sourceCode xml"><code class="sourceCode xml"><span class="kw">&lt;?xml</span> version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;<span class="kw">?&gt;</span>
-<span class="kw">&lt;project</span><span class="ot"> xmlns=</span><span class="st">&quot;http://maven.apache.org/POM/4.0.0&quot;</span><span class="ot"> xmlns:xsi=</span><span class="st">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span>
-<span class="ot">    xsi:schemaLocation=</span><span class="st">&quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&quot;</span><span class="kw">&gt;</span>
-    <span class="kw">&lt;modelVersion&gt;</span>4.0.0<span class="kw">&lt;/modelVersion&gt;</span>
-
-    <span class="kw">&lt;groupId&gt;</span>org.test<span class="kw">&lt;/groupId&gt;</span>
-    <span class="kw">&lt;artifactId&gt;</span>demo<span class="kw">&lt;/artifactId&gt;</span>
-    <span class="kw">&lt;version&gt;</span>0.0.1-SNAPSHOT<span class="kw">&lt;/version&gt;</span>
-    <span class="kw">&lt;packaging&gt;</span>jar<span class="kw">&lt;/packaging&gt;</span>
-
-    <span class="kw">&lt;name&gt;</span>demo<span class="kw">&lt;/name&gt;</span>
-    <span class="kw">&lt;description&gt;</span>Demo project for Spring Boot<span class="kw">&lt;/description&gt;</span>
-
-    <span class="kw">&lt;parent&gt;</span>
-        <span class="kw">&lt;groupId&gt;</span>org.springframework.boot<span class="kw">&lt;/groupId&gt;</span>
-        <span class="kw">&lt;artifactId&gt;</span>spring-boot-starter-parent<span class="kw">&lt;/artifactId&gt;</span>
-        <span class="kw">&lt;version&gt;</span>1.2.5.RELEASE<span class="kw">&lt;/version&gt;</span>
-        <span class="kw">&lt;relativePath/&gt;</span> <span class="co">&lt;!-- lookup parent from repository --&gt;</span>
-    <span class="kw">&lt;/parent&gt;</span>
-
-    <span class="kw">&lt;properties&gt;</span>
-        <span class="kw">&lt;project.build.sourceEncoding&gt;</span>UTF-8<span class="kw">&lt;/project.build.sourceEncoding&gt;</span>
-        <span class="kw">&lt;java.version&gt;</span>1.8<span class="kw">&lt;/java.version&gt;</span>
-    <span class="kw">&lt;/properties&gt;</span>
-
-    <span class="kw">&lt;dependencies&gt;</span>
-        <span class="kw">&lt;dependency&gt;</span>
-            <span class="kw">&lt;groupId&gt;</span>org.springframework.boot<span class="kw">&lt;/groupId&gt;</span>
-            <span class="kw">&lt;artifactId&gt;</span>spring-boot-starter-actuator<span class="kw">&lt;/artifactId&gt;</span>
-        <span class="kw">&lt;/dependency&gt;</span>
-        <span class="kw">&lt;dependency&gt;</span>
-            <span class="kw">&lt;groupId&gt;</span>org.springframework.boot<span class="kw">&lt;/groupId&gt;</span>
-            <span class="kw">&lt;artifactId&gt;</span>spring-boot-starter-web<span class="kw">&lt;/artifactId&gt;</span>
-        <span class="kw">&lt;/dependency&gt;</span>
-        
-        <span class="kw">&lt;dependency&gt;</span>
-            <span class="kw">&lt;groupId&gt;</span>org.springframework.boot<span class="kw">&lt;/groupId&gt;</span>
-            <span class="kw">&lt;artifactId&gt;</span>spring-boot-starter-test<span class="kw">&lt;/artifactId&gt;</span>
-            <span class="kw">&lt;scope&gt;</span>test<span class="kw">&lt;/scope&gt;</span>
-        <span class="kw">&lt;/dependency&gt;</span>
-    <span class="kw">&lt;/dependencies&gt;</span>
-    
-    <span class="kw">&lt;build&gt;</span>
-        <span class="kw">&lt;plugins&gt;</span>
-            <span class="kw">&lt;plugin&gt;</span>
-                <span class="kw">&lt;groupId&gt;</span>org.springframework.boot<span class="kw">&lt;/groupId&gt;</span>
-                <span class="kw">&lt;artifactId&gt;</span>spring-boot-maven-plugin<span class="kw">&lt;/artifactId&gt;</span>
-            <span class="kw">&lt;/plugin&gt;</span>
-        <span class="kw">&lt;/plugins&gt;</span>
-    <span class="kw">&lt;/build&gt;</span>
-    
-
-<span class="kw">&lt;/project&gt;</span></code></pre></div>
-<p>这是为Java项目准备的， 要使用Scala在这个项目模板的基础上进行开发，我们需要在pom中再添加点儿“佐料” ...</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode xml"><code class="sourceCode xml"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">&lt;?xml</span> version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;<span class="kw">?&gt;</span></a>
+<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw">&lt;project</span><span class="ot"> xmlns=</span><span class="st">&quot;http://maven.apache.org/POM/4.0.0&quot;</span><span class="ot"> xmlns:xsi=</span><span class="st">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span></a>
+<a class="sourceLine" id="cb1-3" data-line-number="3"><span class="ot">    xsi:schemaLocation=</span><span class="st">&quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&quot;</span><span class="kw">&gt;</span></a>
+<a class="sourceLine" id="cb1-4" data-line-number="4">    <span class="kw">&lt;modelVersion&gt;</span>4.0.0<span class="kw">&lt;/modelVersion&gt;</span></a>
+<a class="sourceLine" id="cb1-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb1-6" data-line-number="6">    <span class="kw">&lt;groupId&gt;</span>org.test<span class="kw">&lt;/groupId&gt;</span></a>
+<a class="sourceLine" id="cb1-7" data-line-number="7">    <span class="kw">&lt;artifactId&gt;</span>demo<span class="kw">&lt;/artifactId&gt;</span></a>
+<a class="sourceLine" id="cb1-8" data-line-number="8">    <span class="kw">&lt;version&gt;</span>0.0.1-SNAPSHOT<span class="kw">&lt;/version&gt;</span></a>
+<a class="sourceLine" id="cb1-9" data-line-number="9">    <span class="kw">&lt;packaging&gt;</span>jar<span class="kw">&lt;/packaging&gt;</span></a>
+<a class="sourceLine" id="cb1-10" data-line-number="10"></a>
+<a class="sourceLine" id="cb1-11" data-line-number="11">    <span class="kw">&lt;name&gt;</span>demo<span class="kw">&lt;/name&gt;</span></a>
+<a class="sourceLine" id="cb1-12" data-line-number="12">    <span class="kw">&lt;description&gt;</span>Demo project for Spring Boot<span class="kw">&lt;/description&gt;</span></a>
+<a class="sourceLine" id="cb1-13" data-line-number="13"></a>
+<a class="sourceLine" id="cb1-14" data-line-number="14">    <span class="kw">&lt;parent&gt;</span></a>
+<a class="sourceLine" id="cb1-15" data-line-number="15">        <span class="kw">&lt;groupId&gt;</span>org.springframework.boot<span class="kw">&lt;/groupId&gt;</span></a>
+<a class="sourceLine" id="cb1-16" data-line-number="16">        <span class="kw">&lt;artifactId&gt;</span>spring-boot-starter-parent<span class="kw">&lt;/artifactId&gt;</span></a>
+<a class="sourceLine" id="cb1-17" data-line-number="17">        <span class="kw">&lt;version&gt;</span>1.2.5.RELEASE<span class="kw">&lt;/version&gt;</span></a>
+<a class="sourceLine" id="cb1-18" data-line-number="18">        <span class="kw">&lt;relativePath/&gt;</span> <span class="co">&lt;!-- lookup parent from repository --&gt;</span></a>
+<a class="sourceLine" id="cb1-19" data-line-number="19">    <span class="kw">&lt;/parent&gt;</span></a>
+<a class="sourceLine" id="cb1-20" data-line-number="20"></a>
+<a class="sourceLine" id="cb1-21" data-line-number="21">    <span class="kw">&lt;properties&gt;</span></a>
+<a class="sourceLine" id="cb1-22" data-line-number="22">        <span class="kw">&lt;project.build.sourceEncoding&gt;</span>UTF-8<span class="kw">&lt;/project.build.sourceEncoding&gt;</span></a>
+<a class="sourceLine" id="cb1-23" data-line-number="23">        <span class="kw">&lt;java.version&gt;</span>1.8<span class="kw">&lt;/java.version&gt;</span></a>
+<a class="sourceLine" id="cb1-24" data-line-number="24">    <span class="kw">&lt;/properties&gt;</span></a>
+<a class="sourceLine" id="cb1-25" data-line-number="25"></a>
+<a class="sourceLine" id="cb1-26" data-line-number="26">    <span class="kw">&lt;dependencies&gt;</span></a>
+<a class="sourceLine" id="cb1-27" data-line-number="27">        <span class="kw">&lt;dependency&gt;</span></a>
+<a class="sourceLine" id="cb1-28" data-line-number="28">            <span class="kw">&lt;groupId&gt;</span>org.springframework.boot<span class="kw">&lt;/groupId&gt;</span></a>
+<a class="sourceLine" id="cb1-29" data-line-number="29">            <span class="kw">&lt;artifactId&gt;</span>spring-boot-starter-actuator<span class="kw">&lt;/artifactId&gt;</span></a>
+<a class="sourceLine" id="cb1-30" data-line-number="30">        <span class="kw">&lt;/dependency&gt;</span></a>
+<a class="sourceLine" id="cb1-31" data-line-number="31">        <span class="kw">&lt;dependency&gt;</span></a>
+<a class="sourceLine" id="cb1-32" data-line-number="32">            <span class="kw">&lt;groupId&gt;</span>org.springframework.boot<span class="kw">&lt;/groupId&gt;</span></a>
+<a class="sourceLine" id="cb1-33" data-line-number="33">            <span class="kw">&lt;artifactId&gt;</span>spring-boot-starter-web<span class="kw">&lt;/artifactId&gt;</span></a>
+<a class="sourceLine" id="cb1-34" data-line-number="34">        <span class="kw">&lt;/dependency&gt;</span></a>
+<a class="sourceLine" id="cb1-35" data-line-number="35">        </a>
+<a class="sourceLine" id="cb1-36" data-line-number="36">        <span class="kw">&lt;dependency&gt;</span></a>
+<a class="sourceLine" id="cb1-37" data-line-number="37">            <span class="kw">&lt;groupId&gt;</span>org.springframework.boot<span class="kw">&lt;/groupId&gt;</span></a>
+<a class="sourceLine" id="cb1-38" data-line-number="38">            <span class="kw">&lt;artifactId&gt;</span>spring-boot-starter-test<span class="kw">&lt;/artifactId&gt;</span></a>
+<a class="sourceLine" id="cb1-39" data-line-number="39">            <span class="kw">&lt;scope&gt;</span>test<span class="kw">&lt;/scope&gt;</span></a>
+<a class="sourceLine" id="cb1-40" data-line-number="40">        <span class="kw">&lt;/dependency&gt;</span></a>
+<a class="sourceLine" id="cb1-41" data-line-number="41">    <span class="kw">&lt;/dependencies&gt;</span></a>
+<a class="sourceLine" id="cb1-42" data-line-number="42">    </a>
+<a class="sourceLine" id="cb1-43" data-line-number="43">    <span class="kw">&lt;build&gt;</span></a>
+<a class="sourceLine" id="cb1-44" data-line-number="44">        <span class="kw">&lt;plugins&gt;</span></a>
+<a class="sourceLine" id="cb1-45" data-line-number="45">            <span class="kw">&lt;plugin&gt;</span></a>
+<a class="sourceLine" id="cb1-46" data-line-number="46">                <span class="kw">&lt;groupId&gt;</span>org.springframework.boot<span class="kw">&lt;/groupId&gt;</span></a>
+<a class="sourceLine" id="cb1-47" data-line-number="47">                <span class="kw">&lt;artifactId&gt;</span>spring-boot-maven-plugin<span class="kw">&lt;/artifactId&gt;</span></a>
+<a class="sourceLine" id="cb1-48" data-line-number="48">            <span class="kw">&lt;/plugin&gt;</span></a>
+<a class="sourceLine" id="cb1-49" data-line-number="49">        <span class="kw">&lt;/plugins&gt;</span></a>
+<a class="sourceLine" id="cb1-50" data-line-number="50">    <span class="kw">&lt;/build&gt;</span></a>
+<a class="sourceLine" id="cb1-51" data-line-number="51">    </a>
+<a class="sourceLine" id="cb1-52" data-line-number="52"></a>
+<a class="sourceLine" id="cb1-53" data-line-number="53"><span class="kw">&lt;/project&gt;</span></a></code></pre></div>
+<p>这是为Java项目准备的， 要使用Scala在这个项目模板的基础上进行开发，我们需要在pom中再添加点儿“佐料” …</p>
 <p>首先， 使用Scala进行开发，自然需要能够对Scala代码进行编译啦，所以，我们需要添加一个Maven的Scala编译插件：</p>
-<div class="sourceCode"><pre class="sourceCode xml"><code class="sourceCode xml">            <span class="kw">&lt;plugin&gt;</span>
-                <span class="kw">&lt;groupId&gt;</span>net.alchim31.maven<span class="kw">&lt;/groupId&gt;</span>
-                <span class="kw">&lt;artifactId&gt;</span>scala-maven-plugin<span class="kw">&lt;/artifactId&gt;</span>
-                <span class="kw">&lt;version&gt;</span>3.2.1<span class="kw">&lt;/version&gt;</span>
-                <span class="kw">&lt;executions&gt;</span>
-                    <span class="kw">&lt;execution&gt;</span>
-                        <span class="kw">&lt;id&gt;</span>compile-scala<span class="kw">&lt;/id&gt;</span>
-                        <span class="kw">&lt;phase&gt;</span>compile<span class="kw">&lt;/phase&gt;</span>
-                        <span class="kw">&lt;goals&gt;</span>
-                            <span class="kw">&lt;goal&gt;</span>add-source<span class="kw">&lt;/goal&gt;</span>
-                            <span class="kw">&lt;goal&gt;</span>compile<span class="kw">&lt;/goal&gt;</span>
-                        <span class="kw">&lt;/goals&gt;</span>
-                    <span class="kw">&lt;/execution&gt;</span>
-                    <span class="kw">&lt;execution&gt;</span>
-                        <span class="kw">&lt;id&gt;</span>test-compile-scala<span class="kw">&lt;/id&gt;</span>
-                        <span class="kw">&lt;phase&gt;</span>test-compile<span class="kw">&lt;/phase&gt;</span>
-                        <span class="kw">&lt;goals&gt;</span>
-                            <span class="kw">&lt;goal&gt;</span>add-source<span class="kw">&lt;/goal&gt;</span>
-                            <span class="kw">&lt;goal&gt;</span>testCompile<span class="kw">&lt;/goal&gt;</span>
-                        <span class="kw">&lt;/goals&gt;</span>
-                    <span class="kw">&lt;/execution&gt;</span>
-                <span class="kw">&lt;/executions&gt;</span>
-                <span class="kw">&lt;configuration&gt;</span>
-                    <span class="kw">&lt;recompileMode&gt;</span>incremental<span class="kw">&lt;/recompileMode&gt;</span>
-                    <span class="kw">&lt;scalaVersion&gt;</span>${scala.version}<span class="kw">&lt;/scalaVersion&gt;</span>
-                    <span class="kw">&lt;args&gt;</span>
-                        <span class="kw">&lt;arg&gt;</span>-deprecation<span class="kw">&lt;/arg&gt;</span>
-                    <span class="kw">&lt;/args&gt;</span>
-                    <span class="kw">&lt;jvmArgs&gt;</span>
-                        <span class="kw">&lt;jvmArg&gt;</span>-Xms64m<span class="kw">&lt;/jvmArg&gt;</span>
-                        <span class="kw">&lt;jvmArg&gt;</span>-Xmx1024m<span class="kw">&lt;/jvmArg&gt;</span>
-                    <span class="kw">&lt;/jvmArgs&gt;</span>
-                <span class="kw">&lt;/configuration&gt;</span>
-            <span class="kw">&lt;/plugin&gt;</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode xml"><code class="sourceCode xml"><a class="sourceLine" id="cb2-1" data-line-number="1">            <span class="kw">&lt;plugin&gt;</span></a>
+<a class="sourceLine" id="cb2-2" data-line-number="2">                <span class="kw">&lt;groupId&gt;</span>net.alchim31.maven<span class="kw">&lt;/groupId&gt;</span></a>
+<a class="sourceLine" id="cb2-3" data-line-number="3">                <span class="kw">&lt;artifactId&gt;</span>scala-maven-plugin<span class="kw">&lt;/artifactId&gt;</span></a>
+<a class="sourceLine" id="cb2-4" data-line-number="4">                <span class="kw">&lt;version&gt;</span>3.2.1<span class="kw">&lt;/version&gt;</span></a>
+<a class="sourceLine" id="cb2-5" data-line-number="5">                <span class="kw">&lt;executions&gt;</span></a>
+<a class="sourceLine" id="cb2-6" data-line-number="6">                    <span class="kw">&lt;execution&gt;</span></a>
+<a class="sourceLine" id="cb2-7" data-line-number="7">                        <span class="kw">&lt;id&gt;</span>compile-scala<span class="kw">&lt;/id&gt;</span></a>
+<a class="sourceLine" id="cb2-8" data-line-number="8">                        <span class="kw">&lt;phase&gt;</span>compile<span class="kw">&lt;/phase&gt;</span></a>
+<a class="sourceLine" id="cb2-9" data-line-number="9">                        <span class="kw">&lt;goals&gt;</span></a>
+<a class="sourceLine" id="cb2-10" data-line-number="10">                            <span class="kw">&lt;goal&gt;</span>add-source<span class="kw">&lt;/goal&gt;</span></a>
+<a class="sourceLine" id="cb2-11" data-line-number="11">                            <span class="kw">&lt;goal&gt;</span>compile<span class="kw">&lt;/goal&gt;</span></a>
+<a class="sourceLine" id="cb2-12" data-line-number="12">                        <span class="kw">&lt;/goals&gt;</span></a>
+<a class="sourceLine" id="cb2-13" data-line-number="13">                    <span class="kw">&lt;/execution&gt;</span></a>
+<a class="sourceLine" id="cb2-14" data-line-number="14">                    <span class="kw">&lt;execution&gt;</span></a>
+<a class="sourceLine" id="cb2-15" data-line-number="15">                        <span class="kw">&lt;id&gt;</span>test-compile-scala<span class="kw">&lt;/id&gt;</span></a>
+<a class="sourceLine" id="cb2-16" data-line-number="16">                        <span class="kw">&lt;phase&gt;</span>test-compile<span class="kw">&lt;/phase&gt;</span></a>
+<a class="sourceLine" id="cb2-17" data-line-number="17">                        <span class="kw">&lt;goals&gt;</span></a>
+<a class="sourceLine" id="cb2-18" data-line-number="18">                            <span class="kw">&lt;goal&gt;</span>add-source<span class="kw">&lt;/goal&gt;</span></a>
+<a class="sourceLine" id="cb2-19" data-line-number="19">                            <span class="kw">&lt;goal&gt;</span>testCompile<span class="kw">&lt;/goal&gt;</span></a>
+<a class="sourceLine" id="cb2-20" data-line-number="20">                        <span class="kw">&lt;/goals&gt;</span></a>
+<a class="sourceLine" id="cb2-21" data-line-number="21">                    <span class="kw">&lt;/execution&gt;</span></a>
+<a class="sourceLine" id="cb2-22" data-line-number="22">                <span class="kw">&lt;/executions&gt;</span></a>
+<a class="sourceLine" id="cb2-23" data-line-number="23">                <span class="kw">&lt;configuration&gt;</span></a>
+<a class="sourceLine" id="cb2-24" data-line-number="24">                    <span class="kw">&lt;recompileMode&gt;</span>incremental<span class="kw">&lt;/recompileMode&gt;</span></a>
+<a class="sourceLine" id="cb2-25" data-line-number="25">                    <span class="kw">&lt;scalaVersion&gt;</span>${scala.version}<span class="kw">&lt;/scalaVersion&gt;</span></a>
+<a class="sourceLine" id="cb2-26" data-line-number="26">                    <span class="kw">&lt;args&gt;</span></a>
+<a class="sourceLine" id="cb2-27" data-line-number="27">                        <span class="kw">&lt;arg&gt;</span>-deprecation<span class="kw">&lt;/arg&gt;</span></a>
+<a class="sourceLine" id="cb2-28" data-line-number="28">                    <span class="kw">&lt;/args&gt;</span></a>
+<a class="sourceLine" id="cb2-29" data-line-number="29">                    <span class="kw">&lt;jvmArgs&gt;</span></a>
+<a class="sourceLine" id="cb2-30" data-line-number="30">                        <span class="kw">&lt;jvmArg&gt;</span>-Xms64m<span class="kw">&lt;/jvmArg&gt;</span></a>
+<a class="sourceLine" id="cb2-31" data-line-number="31">                        <span class="kw">&lt;jvmArg&gt;</span>-Xmx1024m<span class="kw">&lt;/jvmArg&gt;</span></a>
+<a class="sourceLine" id="cb2-32" data-line-number="32">                    <span class="kw">&lt;/jvmArgs&gt;</span></a>
+<a class="sourceLine" id="cb2-33" data-line-number="33">                <span class="kw">&lt;/configuration&gt;</span></a>
+<a class="sourceLine" id="cb2-34" data-line-number="34">            <span class="kw">&lt;/plugin&gt;</span></a></code></pre></div>
 <p>其次，我们需要添加Scala的相关依赖，所以， pom中还需要添加至少如下配置：</p>
-<div class="sourceCode"><pre class="sourceCode xml"><code class="sourceCode xml">        <span class="kw">&lt;dependency&gt;</span>
-            <span class="kw">&lt;groupId&gt;</span>org.scala-lang<span class="kw">&lt;/groupId&gt;</span>
-            <span class="kw">&lt;artifactId&gt;</span>scala-library<span class="kw">&lt;/artifactId&gt;</span>
-            <span class="kw">&lt;version&gt;</span>${scala.version}<span class="kw">&lt;/version&gt;</span>
-        <span class="kw">&lt;/dependency&gt;</span>
-        <span class="kw">&lt;dependency&gt;</span>
-            <span class="kw">&lt;groupId&gt;</span>org.scala-lang<span class="kw">&lt;/groupId&gt;</span>
-            <span class="kw">&lt;artifactId&gt;</span>scala-compiler<span class="kw">&lt;/artifactId&gt;</span>
-            <span class="kw">&lt;version&gt;</span>${scala.version}<span class="kw">&lt;/version&gt;</span>
-        <span class="kw">&lt;/dependency&gt;</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode xml"><code class="sourceCode xml"><a class="sourceLine" id="cb3-1" data-line-number="1">        <span class="kw">&lt;dependency&gt;</span></a>
+<a class="sourceLine" id="cb3-2" data-line-number="2">            <span class="kw">&lt;groupId&gt;</span>org.scala-lang<span class="kw">&lt;/groupId&gt;</span></a>
+<a class="sourceLine" id="cb3-3" data-line-number="3">            <span class="kw">&lt;artifactId&gt;</span>scala-library<span class="kw">&lt;/artifactId&gt;</span></a>
+<a class="sourceLine" id="cb3-4" data-line-number="4">            <span class="kw">&lt;version&gt;</span>${scala.version}<span class="kw">&lt;/version&gt;</span></a>
+<a class="sourceLine" id="cb3-5" data-line-number="5">        <span class="kw">&lt;/dependency&gt;</span></a>
+<a class="sourceLine" id="cb3-6" data-line-number="6">        <span class="kw">&lt;dependency&gt;</span></a>
+<a class="sourceLine" id="cb3-7" data-line-number="7">            <span class="kw">&lt;groupId&gt;</span>org.scala-lang<span class="kw">&lt;/groupId&gt;</span></a>
+<a class="sourceLine" id="cb3-8" data-line-number="8">            <span class="kw">&lt;artifactId&gt;</span>scala-compiler<span class="kw">&lt;/artifactId&gt;</span></a>
+<a class="sourceLine" id="cb3-9" data-line-number="9">            <span class="kw">&lt;version&gt;</span>${scala.version}<span class="kw">&lt;/version&gt;</span></a>
+<a class="sourceLine" id="cb3-10" data-line-number="10">        <span class="kw">&lt;/dependency&gt;</span></a></code></pre></div>
 <p>至此， 就可以在src/main/scala下添加相应的Scala代码进行SpringBoot应用的开发了， so easy~</p>
 <h1 id="使用sbt构建scala开发的springboot应用"><span class="header-section-number">2</span> 使用SBT构建Scala开发的SpringBoot应用</h1>
-<p>SpringBoot团队预先为Maven的用户提供了很多现成的支持，这大大降低了SpringBoot的入门门槛， 比如你只要继承spring-boot-starter-parent， 然后添加必要的module就可以开始一个SpringBoot项目，但是，如果我们不用Maven作为构建工具，那么， 就得自己稍微折腾一下了...</p>
+<p>SpringBoot团队预先为Maven的用户提供了很多现成的支持，这大大降低了SpringBoot的入门门槛， 比如你只要继承spring-boot-starter-parent， 然后添加必要的module就可以开始一个SpringBoot项目，但是，如果我们不用Maven作为构建工具，那么， 就得自己稍微折腾一下了…</p>
 <p>我们发现， spring-boot-starter-parent的pom定义中它的parent是spring-boot-dependencies， 不过spring-boot-dependencies只是定义了一堆的dependencyManagement和pluginManagement, 这显然只是为了Maven项目的依赖声明和管理的方便，所以，我们可以先暂时忽略spring-boot-dependencies的pom内容（回头其实还是会来参考它定义了哪些依赖）， 还是回去看spring-boot-starter-parent的pom定义。</p>
 <p>在构建过程中， spring-boot-starter-parent会过滤src/main/resources下的yml和properties配置文件， 这里我们可以先忽略(而且也不指望把配置放在这个位置，起码偶不建议这么做)。</p>
 <p>总得看下来， spring-boot-starter-parent也没有什么有用的东西， 所以， 没办法， 既然所有的SpringBoot应用都从某个starter项目开始， 那我们从最基础的spring-boot-starter项目的pom定义开始挖掘吧！</p>
 <p>这个时候，我们就可以发现一些端倪了， 通常情况下， 一个SpringBoot项目一定是需要依赖如下artifacts的：</p>
-<div class="sourceCode"><pre class="sourceCode xml"><code class="sourceCode xml">        <span class="kw">&lt;dependency&gt;</span>
-            <span class="kw">&lt;groupId&gt;</span>org.springframework.boot<span class="kw">&lt;/groupId&gt;</span>
-            <span class="kw">&lt;artifactId&gt;</span>spring-boot<span class="kw">&lt;/artifactId&gt;</span>
-        <span class="kw">&lt;/dependency&gt;</span>
-        <span class="kw">&lt;dependency&gt;</span>
-            <span class="kw">&lt;groupId&gt;</span>org.springframework.boot<span class="kw">&lt;/groupId&gt;</span>
-            <span class="kw">&lt;artifactId&gt;</span>spring-boot-autoconfigure<span class="kw">&lt;/artifactId&gt;</span>
-        <span class="kw">&lt;/dependency&gt;</span>
-        <span class="kw">&lt;dependency&gt;</span>
-            <span class="kw">&lt;groupId&gt;</span>org.springframework.boot<span class="kw">&lt;/groupId&gt;</span>
-            <span class="kw">&lt;artifactId&gt;</span>spring-boot-starter-logging<span class="kw">&lt;/artifactId&gt;</span>
-        <span class="kw">&lt;/dependency&gt;</span>
-        <span class="kw">&lt;dependency&gt;</span>
-            <span class="kw">&lt;groupId&gt;</span>org.springframework<span class="kw">&lt;/groupId&gt;</span>
-            <span class="kw">&lt;artifactId&gt;</span>spring-core<span class="kw">&lt;/artifactId&gt;</span>
-            <span class="kw">&lt;exclusions&gt;</span>
-                <span class="kw">&lt;exclusion&gt;</span>
-                    <span class="kw">&lt;groupId&gt;</span>commons-logging<span class="kw">&lt;/groupId&gt;</span>
-                    <span class="kw">&lt;artifactId&gt;</span>commons-logging<span class="kw">&lt;/artifactId&gt;</span>
-                <span class="kw">&lt;/exclusion&gt;</span>
-            <span class="kw">&lt;/exclusions&gt;</span>
-        <span class="kw">&lt;/dependency&gt;</span>
-        <span class="kw">&lt;dependency&gt;</span>
-            <span class="kw">&lt;groupId&gt;</span>org.yaml<span class="kw">&lt;/groupId&gt;</span>
-            <span class="kw">&lt;artifactId&gt;</span>snakeyaml<span class="kw">&lt;/artifactId&gt;</span>
-            <span class="kw">&lt;scope&gt;</span>runtime<span class="kw">&lt;/scope&gt;</span>
-        <span class="kw">&lt;/dependency&gt;</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode xml"><code class="sourceCode xml"><a class="sourceLine" id="cb4-1" data-line-number="1">        <span class="kw">&lt;dependency&gt;</span></a>
+<a class="sourceLine" id="cb4-2" data-line-number="2">            <span class="kw">&lt;groupId&gt;</span>org.springframework.boot<span class="kw">&lt;/groupId&gt;</span></a>
+<a class="sourceLine" id="cb4-3" data-line-number="3">            <span class="kw">&lt;artifactId&gt;</span>spring-boot<span class="kw">&lt;/artifactId&gt;</span></a>
+<a class="sourceLine" id="cb4-4" data-line-number="4">        <span class="kw">&lt;/dependency&gt;</span></a>
+<a class="sourceLine" id="cb4-5" data-line-number="5">        <span class="kw">&lt;dependency&gt;</span></a>
+<a class="sourceLine" id="cb4-6" data-line-number="6">            <span class="kw">&lt;groupId&gt;</span>org.springframework.boot<span class="kw">&lt;/groupId&gt;</span></a>
+<a class="sourceLine" id="cb4-7" data-line-number="7">            <span class="kw">&lt;artifactId&gt;</span>spring-boot-autoconfigure<span class="kw">&lt;/artifactId&gt;</span></a>
+<a class="sourceLine" id="cb4-8" data-line-number="8">        <span class="kw">&lt;/dependency&gt;</span></a>
+<a class="sourceLine" id="cb4-9" data-line-number="9">        <span class="kw">&lt;dependency&gt;</span></a>
+<a class="sourceLine" id="cb4-10" data-line-number="10">            <span class="kw">&lt;groupId&gt;</span>org.springframework.boot<span class="kw">&lt;/groupId&gt;</span></a>
+<a class="sourceLine" id="cb4-11" data-line-number="11">            <span class="kw">&lt;artifactId&gt;</span>spring-boot-starter-logging<span class="kw">&lt;/artifactId&gt;</span></a>
+<a class="sourceLine" id="cb4-12" data-line-number="12">        <span class="kw">&lt;/dependency&gt;</span></a>
+<a class="sourceLine" id="cb4-13" data-line-number="13">        <span class="kw">&lt;dependency&gt;</span></a>
+<a class="sourceLine" id="cb4-14" data-line-number="14">            <span class="kw">&lt;groupId&gt;</span>org.springframework<span class="kw">&lt;/groupId&gt;</span></a>
+<a class="sourceLine" id="cb4-15" data-line-number="15">            <span class="kw">&lt;artifactId&gt;</span>spring-core<span class="kw">&lt;/artifactId&gt;</span></a>
+<a class="sourceLine" id="cb4-16" data-line-number="16">            <span class="kw">&lt;exclusions&gt;</span></a>
+<a class="sourceLine" id="cb4-17" data-line-number="17">                <span class="kw">&lt;exclusion&gt;</span></a>
+<a class="sourceLine" id="cb4-18" data-line-number="18">                    <span class="kw">&lt;groupId&gt;</span>commons-logging<span class="kw">&lt;/groupId&gt;</span></a>
+<a class="sourceLine" id="cb4-19" data-line-number="19">                    <span class="kw">&lt;artifactId&gt;</span>commons-logging<span class="kw">&lt;/artifactId&gt;</span></a>
+<a class="sourceLine" id="cb4-20" data-line-number="20">                <span class="kw">&lt;/exclusion&gt;</span></a>
+<a class="sourceLine" id="cb4-21" data-line-number="21">            <span class="kw">&lt;/exclusions&gt;</span></a>
+<a class="sourceLine" id="cb4-22" data-line-number="22">        <span class="kw">&lt;/dependency&gt;</span></a>
+<a class="sourceLine" id="cb4-23" data-line-number="23">        <span class="kw">&lt;dependency&gt;</span></a>
+<a class="sourceLine" id="cb4-24" data-line-number="24">            <span class="kw">&lt;groupId&gt;</span>org.yaml<span class="kw">&lt;/groupId&gt;</span></a>
+<a class="sourceLine" id="cb4-25" data-line-number="25">            <span class="kw">&lt;artifactId&gt;</span>snakeyaml<span class="kw">&lt;/artifactId&gt;</span></a>
+<a class="sourceLine" id="cb4-26" data-line-number="26">            <span class="kw">&lt;scope&gt;</span>runtime<span class="kw">&lt;/scope&gt;</span></a>
+<a class="sourceLine" id="cb4-27" data-line-number="27">        <span class="kw">&lt;/dependency&gt;</span></a></code></pre></div>
 <p>其中， spring-core和spring-boot很好理解， SpringBoot应用嘛， 肯定需要对spring-boot的依赖，而spring-boot又依赖于spring-core即spring框架本身， 为了SpringBoot应用发挥其快捷的特性， spring-boot-autoconfigure自然也是不应该少的。</p>
 <p>剩下的logging啦， yaml啦， 就可以根据情况来了，虽然logging一般也不能少。</p>
 <p>为了验证我们的猜测和推断，我们再来看看spring-boot-starter-web和spring-boot-starter-actuator等一系列其它的starter modules， 就会发现， spring-boot-starter是最小子集，所以，哗啦， 整个事情就明朗了。</p>
 <p>要使用SBT来构建SpringBoot应用，只要依照spring-boot-starter来添加必要的依赖就可以了！ 剩下的其它依赖，只要根据情况添加即可！</p>
-<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala">
-libraryDependencies += <span class="st">&quot;org.springframework&quot;</span> % <span class="st">&quot;spring-core&quot;</span> % <span class="st">&quot;4.1.6.RELEASE&quot;</span> <span class="fu">exclude</span>(<span class="st">&quot;commons-logging&quot;</span>, <span class="st">&quot;commons-logging&quot;</span>)
-
-libraryDependencies += <span class="st">&quot;org.springframework.boot&quot;</span> % <span class="st">&quot;spring-boot&quot;</span> % <span class="st">&quot;1.2.4.RELEASE&quot;</span>
-
-libraryDependencies += <span class="st">&quot;org.springframework.boot&quot;</span> % <span class="st">&quot;spring-boot-autoconfigure&quot;</span> % <span class="st">&quot;1.2.4.RELEASE&quot;</span>
-
-libraryDependencies += <span class="st">&quot;org.springframework.boot&quot;</span> % <span class="st">&quot;spring-boot-starter-logging&quot;</span> % <span class="st">&quot;1.2.4.RELEASE&quot;</span>
-
-libraryDependencies += <span class="st">&quot;org.yaml&quot;</span> % <span class="st">&quot;snakeyaml&quot;</span> % <span class="st">&quot;1.14&quot;</span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode scala"><code class="sourceCode scala"><a class="sourceLine" id="cb5-1" data-line-number="1"></a>
+<a class="sourceLine" id="cb5-2" data-line-number="2">libraryDependencies += <span class="st">&quot;org.springframework&quot;</span> % <span class="st">&quot;spring-core&quot;</span> % <span class="st">&quot;4.1.6.RELEASE&quot;</span> <span class="fu">exclude</span>(<span class="st">&quot;commons-logging&quot;</span>, <span class="st">&quot;commons-logging&quot;</span>)</a>
+<a class="sourceLine" id="cb5-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb5-4" data-line-number="4">libraryDependencies += <span class="st">&quot;org.springframework.boot&quot;</span> % <span class="st">&quot;spring-boot&quot;</span> % <span class="st">&quot;1.2.4.RELEASE&quot;</span></a>
+<a class="sourceLine" id="cb5-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb5-6" data-line-number="6">libraryDependencies += <span class="st">&quot;org.springframework.boot&quot;</span> % <span class="st">&quot;spring-boot-autoconfigure&quot;</span> % <span class="st">&quot;1.2.4.RELEASE&quot;</span></a>
+<a class="sourceLine" id="cb5-7" data-line-number="7"></a>
+<a class="sourceLine" id="cb5-8" data-line-number="8">libraryDependencies += <span class="st">&quot;org.springframework.boot&quot;</span> % <span class="st">&quot;spring-boot-starter-logging&quot;</span> % <span class="st">&quot;1.2.4.RELEASE&quot;</span></a>
+<a class="sourceLine" id="cb5-9" data-line-number="9"></a>
+<a class="sourceLine" id="cb5-10" data-line-number="10">libraryDependencies += <span class="st">&quot;org.yaml&quot;</span> % <span class="st">&quot;snakeyaml&quot;</span> % <span class="st">&quot;1.14&quot;</span></a></code></pre></div>
 <p>之后，我们只要用Scala来写相应的Controller以及服务啦</p>
-<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">class</span> Message {
-  @BeanProperty
-  <span class="kw">var</span> value: String = _
-}
-
-
-@RestController
-<span class="kw">class</span> HelloController {
-
-  @<span class="fu">Value</span>(<span class="st">&quot;${hello.message}&quot;</span>)
-  @BeanProperty
-  <span class="kw">var</span> helloMessage: String = _
-
-  @<span class="fu">RequestMapping</span>(value = Array(<span class="st">&quot;/hello&quot;</span>), method = Array(RequestMethod.<span class="fu">GET</span>))
-  @ResponseBody
-  <span class="kw">def</span> <span class="fu">hello</span>(): Message = {
-    <span class="kw">val</span> message = <span class="kw">new</span> Message
-    message.<span class="fu">value</span> = helloMessage
-    message
-  }
-}</code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode scala"><code class="sourceCode scala"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="kw">class</span> Message {</a>
+<a class="sourceLine" id="cb6-2" data-line-number="2">  @BeanProperty</a>
+<a class="sourceLine" id="cb6-3" data-line-number="3">  <span class="kw">var</span> value: String = _</a>
+<a class="sourceLine" id="cb6-4" data-line-number="4">}</a>
+<a class="sourceLine" id="cb6-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb6-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb6-7" data-line-number="7">@RestController</a>
+<a class="sourceLine" id="cb6-8" data-line-number="8"><span class="kw">class</span> HelloController {</a>
+<a class="sourceLine" id="cb6-9" data-line-number="9"></a>
+<a class="sourceLine" id="cb6-10" data-line-number="10">  @<span class="fu">Value</span>(<span class="st">&quot;${hello.message}&quot;</span>)</a>
+<a class="sourceLine" id="cb6-11" data-line-number="11">  @BeanProperty</a>
+<a class="sourceLine" id="cb6-12" data-line-number="12">  <span class="kw">var</span> helloMessage: String = _</a>
+<a class="sourceLine" id="cb6-13" data-line-number="13"></a>
+<a class="sourceLine" id="cb6-14" data-line-number="14">  @<span class="fu">RequestMapping</span>(value = Array(<span class="st">&quot;/hello&quot;</span>), method = Array(RequestMethod.<span class="fu">GET</span>))</a>
+<a class="sourceLine" id="cb6-15" data-line-number="15">  @ResponseBody</a>
+<a class="sourceLine" id="cb6-16" data-line-number="16">  <span class="kw">def</span> <span class="fu">hello</span>(): Message = {</a>
+<a class="sourceLine" id="cb6-17" data-line-number="17">    <span class="kw">val</span> message = <span class="kw">new</span> Message</a>
+<a class="sourceLine" id="cb6-18" data-line-number="18">    message.<span class="fu">value</span> = helloMessage</a>
+<a class="sourceLine" id="cb6-19" data-line-number="19">    message</a>
+<a class="sourceLine" id="cb6-20" data-line-number="20">  }</a>
+<a class="sourceLine" id="cb6-21" data-line-number="21">}</a></code></pre></div>
 <blockquote>
 <p>NOTE</p>
 <p>上面的消息类我们也可以使用case class, 但注意也要添加@BeanProperty以便json的序列化可以正常完成： <code>case class Messsage(@BeanProperty var value:String)</code></p>
 </blockquote>
 <h2 id="基于sbt的springboot应用的发布"><span class="header-section-number">2.1</span> 基于SBT的SpringBoot应用的发布</h2>
 <p>SpringBoot提供了一个插件spring-boot-maven-plugin用来将SpringBoot应用打包为按照一定格式组织的可执行的jar包， 这个功能很赞！</p>
-<p>BUT， 哥比较懒，虽然我也可以把那个逻辑剥离出来弄成一个SBT插件 <a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a>， 但哥决定还是变通一下， 将当前SpringBoot项目直接使用<a href="https://github.com/sbt/sbt-native-packager">sbt-native-packager</a>打包发布好了， 启停脚本也可以自动生成。</p>
+<p>BUT， 哥比较懒，虽然我也可以把那个逻辑剥离出来弄成一个SBT插件 <a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>， 但哥决定还是变通一下， 将当前SpringBoot项目直接使用<a href="https://github.com/sbt/sbt-native-packager">sbt-native-packager</a>打包发布好了， 启停脚本也可以自动生成。</p>
 <p>所以，我们的build.sbt配置文件中还会再多添加几行配置：</p>
-<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala">mainClass := Some(<span class="st">&quot;com.example.Hello&quot;</span>)
-
-mappings in Universal += <span class="fu">file</span>(<span class="st">&quot;LICENSE&quot;</span>) -&gt; <span class="st">&quot;LICENSE&quot;</span>
-
-mappings in Universal ++= <span class="fu">directory</span>(<span class="st">&quot;config&quot;</span>)</code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode scala"><code class="sourceCode scala"><a class="sourceLine" id="cb7-1" data-line-number="1">mainClass := Some(<span class="st">&quot;com.example.Hello&quot;</span>)</a>
+<a class="sourceLine" id="cb7-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb7-3" data-line-number="3">mappings in Universal += <span class="fu">file</span>(<span class="st">&quot;LICENSE&quot;</span>) -&gt; <span class="st">&quot;LICENSE&quot;</span></a>
+<a class="sourceLine" id="cb7-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb7-5" data-line-number="5">mappings in Universal ++= <span class="fu">directory</span>(<span class="st">&quot;config&quot;</span>)</a></code></pre></div>
 <p>最终，一个完整的SBT项目build.sbt示例性配置文件如下：</p>
-<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">import</span> sbt._
-<span class="kw">import</span> com.<span class="fu">typesafe</span>.<span class="fu">sbt</span>.<span class="fu">packager</span>.<span class="fu">universal</span>.<span class="fu">UniversalPlugin</span>.<span class="fu">autoImport</span>._
-<span class="kw">import</span> com.<span class="fu">typesafe</span>.<span class="fu">sbt</span>.<span class="fu">packager</span>.<span class="fu">MappingsHelper</span>._
-
-<span class="kw">lazy</span> <span class="kw">val</span> root = project in <span class="fu">file</span>(<span class="st">&quot;.&quot;</span>) <span class="fu">enablePlugins</span>(JavaAppPackaging) <span class="fu">settings</span>(net.<span class="fu">virtualvoid</span>.<span class="fu">sbt</span>.<span class="fu">graph</span>.<span class="fu">Plugin</span>.<span class="fu">graphSettings</span>: _*)
-
-name := <span class="st">&quot;springboot-scala-with-sbt&quot;</span>
-
-organization := <span class="st">&quot;com.github.fujohnwang&quot;</span>
-
-version := <span class="st">&quot;0.0.1-SNAPSHOT&quot;</span>
-
-publishMavenStyle := <span class="kw">true</span>
-
-publishTo := Some(Resolver.<span class="fu">file</span>(<span class="st">&quot;local .m2 repository&quot;</span>,  <span class="kw">new</span> File(Path.<span class="fu">userHome</span>.<span class="fu">absolutePath</span>+<span class="st">&quot;/.m2/repository&quot;</span>)))
-
-resolvers += <span class="st">&quot;Local Maven Repository&quot;</span> at <span class="st">&quot;file://&quot;</span>+Path.<span class="fu">userHome</span>.<span class="fu">absolutePath</span>+<span class="st">&quot;/.m2/repository&quot;</span>
-
-resolvers += <span class="st">&quot;Central Maven Repository&quot;</span> at <span class="st">&quot;http://repo1.maven.org/maven2/&quot;</span>
-
-scalacOptions := Seq(<span class="st">&quot;-deprecation&quot;</span>, <span class="st">&quot;-unchecked&quot;</span>,<span class="st">&quot;-optimise&quot;</span>)
-
-javacOptions ++= Seq(<span class="st">&quot;-source&quot;</span>, <span class="st">&quot;1.8&quot;</span>, <span class="st">&quot;-target&quot;</span>, <span class="st">&quot;1.8&quot;</span>)
-
-scalaVersion := <span class="st">&quot;2.11.7&quot;</span>
-
-libraryDependencies += <span class="st">&quot;ch.qos.logback&quot;</span> % <span class="st">&quot;logback-core&quot;</span> % <span class="st">&quot;1.1.2&quot;</span>
-
-libraryDependencies += <span class="st">&quot;ch.qos.logback&quot;</span> % <span class="st">&quot;logback-classic&quot;</span> % <span class="st">&quot;1.1.2&quot;</span>
-
-libraryDependencies += <span class="st">&quot;org.slf4j&quot;</span> % <span class="st">&quot;jcl-over-slf4j&quot;</span> % <span class="st">&quot;1.7.12&quot;</span>
-
-libraryDependencies += <span class="st">&quot;org.slf4j&quot;</span> % <span class="st">&quot;log4j-over-slf4j&quot;</span> % <span class="st">&quot;1.7.12&quot;</span>
-
-libraryDependencies += <span class="st">&quot;io.dropwizard.metrics&quot;</span> % <span class="st">&quot;metrics-core&quot;</span> % <span class="st">&quot;3.1.2&quot;</span>
-
-libraryDependencies += <span class="st">&quot;org.springframework&quot;</span> % <span class="st">&quot;spring-core&quot;</span> % <span class="st">&quot;4.1.6.RELEASE&quot;</span> <span class="fu">exclude</span>(<span class="st">&quot;commons-logging&quot;</span>, <span class="st">&quot;commons-logging&quot;</span>)
-
-libraryDependencies += <span class="st">&quot;org.springframework.boot&quot;</span> % <span class="st">&quot;spring-boot&quot;</span> % <span class="st">&quot;1.2.4.RELEASE&quot;</span>
-
-libraryDependencies += <span class="st">&quot;org.springframework.boot&quot;</span> % <span class="st">&quot;spring-boot-autoconfigure&quot;</span> % <span class="st">&quot;1.2.4.RELEASE&quot;</span>
-
-libraryDependencies += <span class="st">&quot;org.springframework.boot&quot;</span> % <span class="st">&quot;spring-boot-starter-logging&quot;</span> % <span class="st">&quot;1.2.4.RELEASE&quot;</span>
-
-libraryDependencies += <span class="st">&quot;org.yaml&quot;</span> % <span class="st">&quot;snakeyaml&quot;</span> % <span class="st">&quot;1.14&quot;</span>
-
-libraryDependencies += <span class="st">&quot;org.springframework.boot&quot;</span> % <span class="st">&quot;spring-boot-starter-actuator&quot;</span> % <span class="st">&quot;1.2.4.RELEASE&quot;</span>
-
-libraryDependencies += <span class="st">&quot;org.springframework.boot&quot;</span> % <span class="st">&quot;spring-boot-starter-web&quot;</span> % <span class="st">&quot;1.2.4.RELEASE&quot;</span>
-
-mainClass := Some(<span class="st">&quot;com.example.Hello&quot;</span>)
-
-mappings in Universal += <span class="fu">file</span>(<span class="st">&quot;LICENSE&quot;</span>) -&gt; <span class="st">&quot;LICENSE&quot;</span>
-
-mappings in Universal ++= <span class="fu">directory</span>(<span class="st">&quot;conf&quot;</span>)</code></pre></div>
-<p>OK，that's it, happy hacking spring boot with scala and sbt!</p>
-<div class="footnotes">
+<div class="sourceCode" id="cb8"><pre class="sourceCode scala"><code class="sourceCode scala"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="kw">import</span> sbt._</a>
+<a class="sourceLine" id="cb8-2" data-line-number="2"><span class="kw">import</span> com.<span class="fu">typesafe</span>.<span class="fu">sbt</span>.<span class="fu">packager</span>.<span class="fu">universal</span>.<span class="fu">UniversalPlugin</span>.<span class="fu">autoImport</span>._</a>
+<a class="sourceLine" id="cb8-3" data-line-number="3"><span class="kw">import</span> com.<span class="fu">typesafe</span>.<span class="fu">sbt</span>.<span class="fu">packager</span>.<span class="fu">MappingsHelper</span>._</a>
+<a class="sourceLine" id="cb8-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb8-5" data-line-number="5"><span class="kw">lazy</span> <span class="kw">val</span> root = project in <span class="fu">file</span>(<span class="st">&quot;.&quot;</span>) <span class="fu">enablePlugins</span>(JavaAppPackaging) <span class="fu">settings</span>(net.<span class="fu">virtualvoid</span>.<span class="fu">sbt</span>.<span class="fu">graph</span>.<span class="fu">Plugin</span>.<span class="fu">graphSettings</span>: _*)</a>
+<a class="sourceLine" id="cb8-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb8-7" data-line-number="7">name := <span class="st">&quot;springboot-scala-with-sbt&quot;</span></a>
+<a class="sourceLine" id="cb8-8" data-line-number="8"></a>
+<a class="sourceLine" id="cb8-9" data-line-number="9">organization := <span class="st">&quot;com.github.fujohnwang&quot;</span></a>
+<a class="sourceLine" id="cb8-10" data-line-number="10"></a>
+<a class="sourceLine" id="cb8-11" data-line-number="11">version := <span class="st">&quot;0.0.1-SNAPSHOT&quot;</span></a>
+<a class="sourceLine" id="cb8-12" data-line-number="12"></a>
+<a class="sourceLine" id="cb8-13" data-line-number="13">publishMavenStyle := <span class="kw">true</span></a>
+<a class="sourceLine" id="cb8-14" data-line-number="14"></a>
+<a class="sourceLine" id="cb8-15" data-line-number="15">publishTo := Some(Resolver.<span class="fu">file</span>(<span class="st">&quot;local .m2 repository&quot;</span>,  <span class="kw">new</span> File(Path.<span class="fu">userHome</span>.<span class="fu">absolutePath</span>+<span class="st">&quot;/.m2/repository&quot;</span>)))</a>
+<a class="sourceLine" id="cb8-16" data-line-number="16"></a>
+<a class="sourceLine" id="cb8-17" data-line-number="17">resolvers += <span class="st">&quot;Local Maven Repository&quot;</span> at <span class="st">&quot;file://&quot;</span>+Path.<span class="fu">userHome</span>.<span class="fu">absolutePath</span>+<span class="st">&quot;/.m2/repository&quot;</span></a>
+<a class="sourceLine" id="cb8-18" data-line-number="18"></a>
+<a class="sourceLine" id="cb8-19" data-line-number="19">resolvers += <span class="st">&quot;Central Maven Repository&quot;</span> at <span class="st">&quot;http://repo1.maven.org/maven2/&quot;</span></a>
+<a class="sourceLine" id="cb8-20" data-line-number="20"></a>
+<a class="sourceLine" id="cb8-21" data-line-number="21">scalacOptions := Seq(<span class="st">&quot;-deprecation&quot;</span>, <span class="st">&quot;-unchecked&quot;</span>,<span class="st">&quot;-optimise&quot;</span>)</a>
+<a class="sourceLine" id="cb8-22" data-line-number="22"></a>
+<a class="sourceLine" id="cb8-23" data-line-number="23">javacOptions ++= Seq(<span class="st">&quot;-source&quot;</span>, <span class="st">&quot;1.8&quot;</span>, <span class="st">&quot;-target&quot;</span>, <span class="st">&quot;1.8&quot;</span>)</a>
+<a class="sourceLine" id="cb8-24" data-line-number="24"></a>
+<a class="sourceLine" id="cb8-25" data-line-number="25">scalaVersion := <span class="st">&quot;2.11.7&quot;</span></a>
+<a class="sourceLine" id="cb8-26" data-line-number="26"></a>
+<a class="sourceLine" id="cb8-27" data-line-number="27">libraryDependencies += <span class="st">&quot;ch.qos.logback&quot;</span> % <span class="st">&quot;logback-core&quot;</span> % <span class="st">&quot;1.1.2&quot;</span></a>
+<a class="sourceLine" id="cb8-28" data-line-number="28"></a>
+<a class="sourceLine" id="cb8-29" data-line-number="29">libraryDependencies += <span class="st">&quot;ch.qos.logback&quot;</span> % <span class="st">&quot;logback-classic&quot;</span> % <span class="st">&quot;1.1.2&quot;</span></a>
+<a class="sourceLine" id="cb8-30" data-line-number="30"></a>
+<a class="sourceLine" id="cb8-31" data-line-number="31">libraryDependencies += <span class="st">&quot;org.slf4j&quot;</span> % <span class="st">&quot;jcl-over-slf4j&quot;</span> % <span class="st">&quot;1.7.12&quot;</span></a>
+<a class="sourceLine" id="cb8-32" data-line-number="32"></a>
+<a class="sourceLine" id="cb8-33" data-line-number="33">libraryDependencies += <span class="st">&quot;org.slf4j&quot;</span> % <span class="st">&quot;log4j-over-slf4j&quot;</span> % <span class="st">&quot;1.7.12&quot;</span></a>
+<a class="sourceLine" id="cb8-34" data-line-number="34"></a>
+<a class="sourceLine" id="cb8-35" data-line-number="35">libraryDependencies += <span class="st">&quot;io.dropwizard.metrics&quot;</span> % <span class="st">&quot;metrics-core&quot;</span> % <span class="st">&quot;3.1.2&quot;</span></a>
+<a class="sourceLine" id="cb8-36" data-line-number="36"></a>
+<a class="sourceLine" id="cb8-37" data-line-number="37">libraryDependencies += <span class="st">&quot;org.springframework&quot;</span> % <span class="st">&quot;spring-core&quot;</span> % <span class="st">&quot;4.1.6.RELEASE&quot;</span> <span class="fu">exclude</span>(<span class="st">&quot;commons-logging&quot;</span>, <span class="st">&quot;commons-logging&quot;</span>)</a>
+<a class="sourceLine" id="cb8-38" data-line-number="38"></a>
+<a class="sourceLine" id="cb8-39" data-line-number="39">libraryDependencies += <span class="st">&quot;org.springframework.boot&quot;</span> % <span class="st">&quot;spring-boot&quot;</span> % <span class="st">&quot;1.2.4.RELEASE&quot;</span></a>
+<a class="sourceLine" id="cb8-40" data-line-number="40"></a>
+<a class="sourceLine" id="cb8-41" data-line-number="41">libraryDependencies += <span class="st">&quot;org.springframework.boot&quot;</span> % <span class="st">&quot;spring-boot-autoconfigure&quot;</span> % <span class="st">&quot;1.2.4.RELEASE&quot;</span></a>
+<a class="sourceLine" id="cb8-42" data-line-number="42"></a>
+<a class="sourceLine" id="cb8-43" data-line-number="43">libraryDependencies += <span class="st">&quot;org.springframework.boot&quot;</span> % <span class="st">&quot;spring-boot-starter-logging&quot;</span> % <span class="st">&quot;1.2.4.RELEASE&quot;</span></a>
+<a class="sourceLine" id="cb8-44" data-line-number="44"></a>
+<a class="sourceLine" id="cb8-45" data-line-number="45">libraryDependencies += <span class="st">&quot;org.yaml&quot;</span> % <span class="st">&quot;snakeyaml&quot;</span> % <span class="st">&quot;1.14&quot;</span></a>
+<a class="sourceLine" id="cb8-46" data-line-number="46"></a>
+<a class="sourceLine" id="cb8-47" data-line-number="47">libraryDependencies += <span class="st">&quot;org.springframework.boot&quot;</span> % <span class="st">&quot;spring-boot-starter-actuator&quot;</span> % <span class="st">&quot;1.2.4.RELEASE&quot;</span></a>
+<a class="sourceLine" id="cb8-48" data-line-number="48"></a>
+<a class="sourceLine" id="cb8-49" data-line-number="49">libraryDependencies += <span class="st">&quot;org.springframework.boot&quot;</span> % <span class="st">&quot;spring-boot-starter-web&quot;</span> % <span class="st">&quot;1.2.4.RELEASE&quot;</span></a>
+<a class="sourceLine" id="cb8-50" data-line-number="50"></a>
+<a class="sourceLine" id="cb8-51" data-line-number="51">mainClass := Some(<span class="st">&quot;com.example.Hello&quot;</span>)</a>
+<a class="sourceLine" id="cb8-52" data-line-number="52"></a>
+<a class="sourceLine" id="cb8-53" data-line-number="53">mappings in Universal += <span class="fu">file</span>(<span class="st">&quot;LICENSE&quot;</span>) -&gt; <span class="st">&quot;LICENSE&quot;</span></a>
+<a class="sourceLine" id="cb8-54" data-line-number="54"></a>
+<a class="sourceLine" id="cb8-55" data-line-number="55">mappings in Universal ++= <span class="fu">directory</span>(<span class="st">&quot;conf&quot;</span>)</a></code></pre></div>
+<p>OK，that’s it, happy hacking spring boot with scala and sbt!</p>
+<section class="footnotes">
 <hr />
 <ol>
-<li id="fn1"><p>参考SpringBoot的Reference文档的60. Supporting other build systems一章， 自定义一个Repackager<a href="#fnref1">↩</a></p></li>
+<li id="fn1"><p>参考SpringBoot的Reference文档的60. Supporting other build systems一章， 自定义一个Repackager<a href="#fnref1" class="footnote-back">↩</a></p></li>
 </ol>
-</div>
-<hr>
-<div align="center">
-<img src="/images/wechat-qrcode-footer.png"/>
-</div>
+</section>
 
-</div>
+    </article>
 
-
-
-</body></html>
+  </body>
+</html>

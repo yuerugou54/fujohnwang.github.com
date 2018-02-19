@@ -1,14 +1,16 @@
 <!DOCTYPE html>
-<html lang="zh">
-<head>
+<html>
+  <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stock Times In China - 一个架构士的思考与沉</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="王福强的博客， 一个架构士的思考与沉淀">
     <meta name="keywords" content="architecture, book author, thinker, fighter, 架构, 思考, 技术, 武术, 哲学">
     <meta name="author" content="王福强">
-        <link rel="icon" href="/favicon.ico">
-    <title>Stock Times In China - 一个架构士的思考与沉淀</title>
-    <!-- 百度统计 -->
+    <link rel="stylesheet" href="/ivy.css">
+    <link rel="shortcut icon" href="/favicon.ico"/>
+    <style type="text/css">code{white-space: pre;}</style>
+            <!-- 百度统计 -->
     <script>
       var _hmt = _hmt || [];
       (function() {
@@ -18,35 +20,26 @@
           s.parentNode.insertBefore(hm, s);
       })();
     </script>
+  </head>
 
-	<link href="/css/custom.css" rel="stylesheet"/>
-	<link rel="shortcut icon" href="/favicon.ico"/>
+  <body class="node homepage">
 
-<style type="text/css">code{white-space: pre;}</style>
-        
-	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-	<!--[if lt IE 9]>
-	  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.2/html5shiv.js"></script>
-	  <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-	<![endif]-->
-
-</head>
-
-<body>
-
-    <div class="masthead">
-		<!--
-    <h1 class="masthead-title fq">
-      <a href="/">扶墙老师</a>
-
-    </h1>
-    -->
-    <a href="/"><h1>扶墙老师说</h1></a>
-		<p class="masthead-lead">一个架构士的思考与沉淀</p>
-
-		<hr class="masthead-hr">
-
-	  	<ul class="masthead-nav">
+    <header class="masthead">
+      <h1><a href="/">扶墙老师说</a></h1>
+      <p class="tagline">
+         一个架构士的思考与沉淀
+          <img src="/images/wechat-qrcode-footer.png"/>
+          扶墙老师，辨证施“知”
+      </p>
+      
+      <nav class="menu">
+        <input id="menu-check" type="checkbox"/>
+        <label id="menu-label" for="menu-check" class="unselectable">
+          <span class="icon close-icon">✕</span>
+          <span class="icon open-icon">☰</span>
+          <span class="text">展开</span>
+        </label>
+        <ul>
             <li class="nav-item"><a class="nav-link" href="/favorite.html">我的收藏</a></li>
             <li class="nav-item"><a class="nav-link" href="/dashboard.html">金融看板</a></li>
             <li class="nav-item"><a class="nav-link" href="/columns.html">专栏文章</a></li>
@@ -54,20 +47,12 @@
             <li class="nav-item"><a class="nav-link" href="/whoami.html">我是何人</a></li>
             <li class="nav-item"><a class="nav-link" href="/interlinks.html">友情链接</a></li>
             <li class="nav-item"><a class="nav-link" href="/feeds.xml">RSS订阅</a></li>
-		</ul>
+        </ul>
+      </nav>
+    </header>
 
-  		<hr class="masthead-hr">
-
-	  	<ul class="masthead-nav">
-            <li class="nav-item"><small>©afoo.me</small></li>
-            <li class="nav-item"><small>Powered by <a href="http://pandoc.org/">pandoc</a> and <a href="http://rometools.github.io/rome/">ROME</a></small></li>
-		</ul>
-
-	</div>
-
-
-    <div class="listing">
-
+    <article class="main">
+      
 <div class="row">
 <div id="header">
 <p class="lead">
@@ -81,11 +66,11 @@
 <blockquote>
 <p>2014年从msn space存档中重新恢复出来！</p>
 </blockquote>
-<p>这阵子从各个方面的所闻所见，促使我写下这篇搀合当前中国股票市场的文字，标题着实想了一阵子，呵呵，叫全民炒股总动员？！那是从动画片来的，不好，呵呵；roger推荐用click the stock，正好他刚看了《神奇遥控器》，不过，并不能恰如其分的表达我想表达的东西；后来，想起了摩登时代，故此，就以这个名字引申出上面的标题出来...</p>
-<p>不容我说你也应该看到了，不论是报纸上还是net上，到处都是中国全民炒股的报道，虽然我也炒股，但我真的没有感受到这些东西就在自己身边，直到...</p>
-<p>到嘉创大厦上班之后，因为我住的地方比较“憋屈”，不管坐哪个站点的406或者10路车，都要往前或者往后走一段路，而且百合方向人从来就是多多，早上上班时间有时候等半个小时都挤不上车，反正到嘉创也不是很远，所以，我现在走路过去。直到有一天，我临时坐了趟10路车，经过海事大学的时候，发现其体育场的边上明晃晃的挂着“虚拟炒股大赛”的横幅，我心里才不仅感叹，原来报纸上报道的都是真的，现在的在校大学生居然都开始炒股了...</p>
-<p>上周Roger问我开设股票账户的相关细节，想要开设证券账户，我啪啪啪一阵键盘给他简单说了基本的流程，今天又电话过来问，我才感觉到，这股风潮还真的刮到了我身边的人身上...</p>
-<p>MSN上看到王楠的名字改成了“Nathan，中华民族到了最赚钱的时候”，我靠，原来这次的股票大潮已经无孔不入了...</p>
+<p>这阵子从各个方面的所闻所见，促使我写下这篇搀合当前中国股票市场的文字，标题着实想了一阵子，呵呵，叫全民炒股总动员？！那是从动画片来的，不好，呵呵；roger推荐用click the stock，正好他刚看了《神奇遥控器》，不过，并不能恰如其分的表达我想表达的东西；后来，想起了摩登时代，故此，就以这个名字引申出上面的标题出来…</p>
+<p>不容我说你也应该看到了，不论是报纸上还是net上，到处都是中国全民炒股的报道，虽然我也炒股，但我真的没有感受到这些东西就在自己身边，直到…</p>
+<p>到嘉创大厦上班之后，因为我住的地方比较“憋屈”，不管坐哪个站点的406或者10路车，都要往前或者往后走一段路，而且百合方向人从来就是多多，早上上班时间有时候等半个小时都挤不上车，反正到嘉创也不是很远，所以，我现在走路过去。直到有一天，我临时坐了趟10路车，经过海事大学的时候，发现其体育场的边上明晃晃的挂着“虚拟炒股大赛”的横幅，我心里才不仅感叹，原来报纸上报道的都是真的，现在的在校大学生居然都开始炒股了…</p>
+<p>上周Roger问我开设股票账户的相关细节，想要开设证券账户，我啪啪啪一阵键盘给他简单说了基本的流程，今天又电话过来问，我才感觉到，这股风潮还真的刮到了我身边的人身上…</p>
+<p>MSN上看到王楠的名字改成了“Nathan，中华民族到了最赚钱的时候”，我靠，原来这次的股票大潮已经无孔不入了…</p>
 <p>当我2006年末发现大好机会已经逝去的时候，我还是决定去开办一个证券账户，既然丰收的2006我没有抓住，那就抓一个牛尾巴吧！为什么那！？因为我已经不是原来那个愤世嫉俗的人了，呵呵，我也说了，如果对一个事物你总是用悲观的观点去看待它，那你看到的也总是悲观的东西，所以，既然我认为中国的经济会持续向好，人民币升值的方向不会轻易改变，我为什么不进去那？！</p>
 <p>过年回家我就跟我老爸说，如果明明知道这是一个机会，你为什么不进去那？！或许有风险，但是，如果你踟躇不前，那就什么也不会得到。因为我知道，这是一个机会，所以，我决定抓住这个机会！ 不管怎么样，反正到目前为止，事实证明我当时的决定是正确的。</p>
 <p>我不想误导任何人，但我要说，这是一个不一样的年代，时代变了，times is changing，如果你还是以原来的观念去看待问题，那你会成为被时代遗弃的人。我之所以敢这么说，是以为我错过了太多的机会，呵呵,太多不该错过但已经错过的机会，如果可以再给我一次机会，我想我会抓住，不过，世上没有后悔药吃，我只能从过去吸取教训。</p>
@@ -98,17 +83,12 @@
 <p>这几日猛补了一些股票的知识，发现还是挺有意思的。隐藏在枯燥的曲线和一堆数字之后，有很多的规律可循。妙哉。 xinmei meng - 5/29/2007 8:07:49 PM</p>
 <p>我今天刚知道怎么开户，不过还没机会实践呢，哪天跟你讨教 xinmei meng - 5/29/2007 8:12:18 PM</p>
 <p>今天刚知道阿福还写博客啊，第一次进来，还不算晚吧，^_^ xinmei meng - 5/29/2007 8:13:15 PM</p>
-<p>为什么我总是&quot;某年某月的一天&quot;呢，我得好好想想怎么出来名字。。。。。。 Wang Darren - 5/30/2007 5:12:28 PM</p>
+<p>为什么我总是“某年某月的一天”呢，我得好好想想怎么出来名字。。。。。。 Wang Darren - 5/30/2007 5:12:28 PM</p>
 <p>这有啥晚不晚的阿，呵呵 Wang Darren - 5/31/2007 12:00:11 PM</p>
-农业部发布公告：提高印花税的目的不是为了打压股市，是为了抑制目前猪肉价格暴涨的局面，通过股民大量割肉 ，直接地增加了市场上肉的供应量，将极大地缓解供需矛盾！ &gt;&gt;&gt;刚从一个MSN好友的签名上看到的，呵呵，挺有意思，不过，这一提印花税，确实挺不得民心的，哈哈，要不财政部网站能让人给黑了啊...
+农业部发布公告：提高印花税的目的不是为了打压股市，是为了抑制目前猪肉价格暴涨的局面，通过股民大量割肉 ，直接地增加了市场上肉的供应量，将极大地缓解供需矛盾！ &gt;&gt;&gt;刚从一个MSN好友的签名上看到的，呵呵，挺有意思，不过，这一提印花税，确实挺不得民心的，哈哈，要不财政部网站能让人给黑了啊…
 </blockquote>
-<hr>
-<div align="center">
-<img src="/images/wechat-qrcode-footer.png"/>
-</div>
 
-</div>
+    </article>
 
-
-
-</body></html>
+  </body>
+</html>

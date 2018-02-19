@@ -1,14 +1,16 @@
 <!DOCTYPE html>
-<html lang="zh">
-<head>
+<html>
+  <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Ways To Achieve Your Modular System - 一个架构士的思考与沉</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="王福强的博客， 一个架构士的思考与沉淀">
     <meta name="keywords" content="architecture, book author, thinker, fighter, 架构, 思考, 技术, 武术, 哲学">
     <meta name="author" content="王福强">
-        <link rel="icon" href="/favicon.ico">
-    <title>The Ways To Achieve Your Modular System - 一个架构士的思考与沉淀</title>
-    <!-- 百度统计 -->
+    <link rel="stylesheet" href="/ivy.css">
+    <link rel="shortcut icon" href="/favicon.ico"/>
+    <style type="text/css">code{white-space: pre;}</style>
+            <!-- 百度统计 -->
     <script>
       var _hmt = _hmt || [];
       (function() {
@@ -18,35 +20,26 @@
           s.parentNode.insertBefore(hm, s);
       })();
     </script>
+  </head>
 
-	<link href="/css/custom.css" rel="stylesheet"/>
-	<link rel="shortcut icon" href="/favicon.ico"/>
+  <body class="node homepage">
 
-<style type="text/css">code{white-space: pre;}</style>
-        
-	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-	<!--[if lt IE 9]>
-	  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.2/html5shiv.js"></script>
-	  <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-	<![endif]-->
-
-</head>
-
-<body>
-
-    <div class="masthead">
-		<!--
-    <h1 class="masthead-title fq">
-      <a href="/">扶墙老师</a>
-
-    </h1>
-    -->
-    <a href="/"><h1>扶墙老师说</h1></a>
-		<p class="masthead-lead">一个架构士的思考与沉淀</p>
-
-		<hr class="masthead-hr">
-
-	  	<ul class="masthead-nav">
+    <header class="masthead">
+      <h1><a href="/">扶墙老师说</a></h1>
+      <p class="tagline">
+         一个架构士的思考与沉淀
+          <img src="/images/wechat-qrcode-footer.png"/>
+          扶墙老师，辨证施“知”
+      </p>
+      
+      <nav class="menu">
+        <input id="menu-check" type="checkbox"/>
+        <label id="menu-label" for="menu-check" class="unselectable">
+          <span class="icon close-icon">✕</span>
+          <span class="icon open-icon">☰</span>
+          <span class="text">展开</span>
+        </label>
+        <ul>
             <li class="nav-item"><a class="nav-link" href="/favorite.html">我的收藏</a></li>
             <li class="nav-item"><a class="nav-link" href="/dashboard.html">金融看板</a></li>
             <li class="nav-item"><a class="nav-link" href="/columns.html">专栏文章</a></li>
@@ -54,20 +47,12 @@
             <li class="nav-item"><a class="nav-link" href="/whoami.html">我是何人</a></li>
             <li class="nav-item"><a class="nav-link" href="/interlinks.html">友情链接</a></li>
             <li class="nav-item"><a class="nav-link" href="/feeds.xml">RSS订阅</a></li>
-		</ul>
+        </ul>
+      </nav>
+    </header>
 
-  		<hr class="masthead-hr">
-
-	  	<ul class="masthead-nav">
-            <li class="nav-item"><small>©afoo.me</small></li>
-            <li class="nav-item"><small>Powered by <a href="http://pandoc.org/">pandoc</a> and <a href="http://rometools.github.io/rome/">ROME</a></small></li>
-		</ul>
-
-	</div>
-
-
-    <div class="listing">
-
+    <article class="main">
+      
 <div class="row">
 <div id="header">
 <p class="lead">
@@ -78,8 +63,8 @@
 <hr>
 
 
-<p>进CSTS(大连)之后，当前的项目的frontend是用Swing实现的，这本来没啥惊奇的，但是，时间长了却发现一个比较现实的问题。本来以为当前的GUI的framework只是我们team用的，后来才发现，另一个Team开发的功能也要挂在这个应用框架之上，当两个team的发布时间不同的时候，问题就来了，我们Team要做Code Freeze的时候，需要同时协调另一个Team是否继续让他们提交代码，因为同时在一个Branch上开发，同时提交到相同的codebase，或许通过配置管理可以解决这样的冲突，但是，为什么不一开始就通过模块化系统的设计，来分离这样比较独立的功能模块那？这就促使我想要提一提标题所给出的这个话题...</p>
-<p>但是，即使是仅关注桌面应用的开发这一块儿，即使是仅关注Java平台上桌面应用这一块儿，也会发现，整个话题牵扯的范围依然过于宽泛了，根本就不是三言两语可以说清楚的，即使是三言两语说出来的，也可能只是皮毛而已。 而且现在感觉自己各方面状态不好，所以，这个话题暂且搁置了吧，不过，把开始的构思先放这里，或许以后某一天，我可以从这里继续...</p>
+<p>进CSTS(大连)之后，当前的项目的frontend是用Swing实现的，这本来没啥惊奇的，但是，时间长了却发现一个比较现实的问题。本来以为当前的GUI的framework只是我们team用的，后来才发现，另一个Team开发的功能也要挂在这个应用框架之上，当两个team的发布时间不同的时候，问题就来了，我们Team要做Code Freeze的时候，需要同时协调另一个Team是否继续让他们提交代码，因为同时在一个Branch上开发，同时提交到相同的codebase，或许通过配置管理可以解决这样的冲突，但是，为什么不一开始就通过模块化系统的设计，来分离这样比较独立的功能模块那？这就促使我想要提一提标题所给出的这个话题…</p>
+<p>但是，即使是仅关注桌面应用的开发这一块儿，即使是仅关注Java平台上桌面应用这一块儿，也会发现，整个话题牵扯的范围依然过于宽泛了，根本就不是三言两语可以说清楚的，即使是三言两语说出来的，也可能只是皮毛而已。 而且现在感觉自己各方面状态不好，所以，这个话题暂且搁置了吧，不过，把开始的构思先放这里，或许以后某一天，我可以从这里继续…</p>
 <pre>
 ==The Ways To Achieve Your Modular System==
 Phase 1: 
@@ -103,13 +88,8 @@ Reference:
 6)-<<Rich Client Programming:Plugging into the NetBeans Platform>> 
 </pre>
 <p>即使是从现在的结构也可以看出来，要参考的资料还是很多的，现在的参考列表还只是个开始而已。不过，要是其他人对这个话题感兴趣，倒是可以继续哈，我想之前这样的话题也应该有人提过了吧，没有google过，但能够从总体上对java平台上的桌面应用开发中的架构思考的资料，应该还是比较令人期待的吧？！</p>
-<hr>
-<div align="center">
-<img src="/images/wechat-qrcode-footer.png"/>
-</div>
 
-</div>
+    </article>
 
-
-
-</body></html>
+  </body>
+</html>

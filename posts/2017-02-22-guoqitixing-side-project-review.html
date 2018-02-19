@@ -1,15 +1,17 @@
 <!DOCTYPE html>
-<html lang="zh">
-<head>
+<html>
+  <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>一个side project的原型构建过程与总结 - 一个架构士的思考与沉</title>
+        <meta name="date" content="2017-02-22" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="王福强的博客， 一个架构士的思考与沉淀">
     <meta name="keywords" content="architecture, book author, thinker, fighter, 架构, 思考, 技术, 武术, 哲学">
     <meta name="author" content="王福强">
-        <meta name="date" content="2017-02-22" />
-        <link rel="icon" href="/favicon.ico">
-    <title>一个side project的原型构建过程与总结 - 一个架构士的思考与沉淀</title>
-    <!-- 百度统计 -->
+    <link rel="stylesheet" href="/ivy.css">
+    <link rel="shortcut icon" href="/favicon.ico"/>
+    <style type="text/css">code{white-space: pre;}</style>
+            <!-- 百度统计 -->
     <script>
       var _hmt = _hmt || [];
       (function() {
@@ -19,35 +21,26 @@
           s.parentNode.insertBefore(hm, s);
       })();
     </script>
+  </head>
 
-	<link href="/css/custom.css" rel="stylesheet"/>
-	<link rel="shortcut icon" href="/favicon.ico"/>
+  <body class="node homepage">
 
-<style type="text/css">code{white-space: pre;}</style>
-        
-	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-	<!--[if lt IE 9]>
-	  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.2/html5shiv.js"></script>
-	  <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-	<![endif]-->
-
-</head>
-
-<body>
-
-    <div class="masthead">
-		<!--
-    <h1 class="masthead-title fq">
-      <a href="/">扶墙老师</a>
-
-    </h1>
-    -->
-    <a href="/"><h1>扶墙老师说</h1></a>
-		<p class="masthead-lead">一个架构士的思考与沉淀</p>
-
-		<hr class="masthead-hr">
-
-	  	<ul class="masthead-nav">
+    <header class="masthead">
+      <h1><a href="/">扶墙老师说</a></h1>
+      <p class="tagline">
+         一个架构士的思考与沉淀
+          <img src="/images/wechat-qrcode-footer.png"/>
+          扶墙老师，辨证施“知”
+      </p>
+      
+      <nav class="menu">
+        <input id="menu-check" type="checkbox"/>
+        <label id="menu-label" for="menu-check" class="unselectable">
+          <span class="icon close-icon">✕</span>
+          <span class="icon open-icon">☰</span>
+          <span class="text">展开</span>
+        </label>
+        <ul>
             <li class="nav-item"><a class="nav-link" href="/favorite.html">我的收藏</a></li>
             <li class="nav-item"><a class="nav-link" href="/dashboard.html">金融看板</a></li>
             <li class="nav-item"><a class="nav-link" href="/columns.html">专栏文章</a></li>
@@ -55,20 +48,12 @@
             <li class="nav-item"><a class="nav-link" href="/whoami.html">我是何人</a></li>
             <li class="nav-item"><a class="nav-link" href="/interlinks.html">友情链接</a></li>
             <li class="nav-item"><a class="nav-link" href="/feeds.xml">RSS订阅</a></li>
-		</ul>
+        </ul>
+      </nav>
+    </header>
 
-  		<hr class="masthead-hr">
-
-	  	<ul class="masthead-nav">
-            <li class="nav-item"><small>©afoo.me</small></li>
-            <li class="nav-item"><small>Powered by <a href="http://pandoc.org/">pandoc</a> and <a href="http://rometools.github.io/rome/">ROME</a></small></li>
-		</ul>
-
-	</div>
-
-
-    <div class="listing">
-
+    <article class="main">
+      
 <div class="row">
 <div id="header">
 <p class="lead">
@@ -100,48 +85,34 @@
 <p>为了验证这个idea是否是普遍需求， 我通过一天多一点儿的时间，构建了一个side project， 用于验证这一需求是否值得进一步优化和产品化。</p>
 <p>我的验证前提是不投入任何预算， 只以serverless的形式（即我不投入自己的任何硬件资源， 使用开放的平台或者免费服务）构建这套服务体系。</p>
 <p>整个流程和牵扯的系统组件是这样的：</p>
-<ol style="list-style-type: decimal">
+<ol type="1">
 <li>用户发送邮件到指定的客服邮件地址（比如kf@keevol.com);</li>
 <li>人工接收到用户的服务请求邮件后，将用户邮件内容中的证照过期日期等信息配置到调度程序；</li>
 <li>调度程序长期运行， 并以天为调度单位定期轮训配置到系统中的证照过期日期，一旦发现某个证照还有一段时间（比如30天）就要过期，则发送邮件给用户（通过用户提交服务请求的邮箱地址）， 从而完成整个提醒服务的闭环；</li>
 </ol>
 <p>整个side project的核心组件只有一个，即Google Sheets， 我们将所有信息输入Google Sheets进行保存：</p>
-<div class="figure">
-<img src="images/guoqitixing_-_Google_Sheets.png" />
-
-</div>
+<p><img src="images/guoqitixing_-_Google_Sheets.png" /></p>
 <p>然后通过app script编写调度程序，配以app script的project trigger来触发调度（project trigger这里充当了cron的角色）:</p>
-<div class="figure">
-<img src="images/appscript.png" />
-
-</div>
+<p><img src="images/appscript.png" /></p>
 <p>这样，当证照即将过期的时候，我们就可以收到邮件提醒了：</p>
-<div class="figure">
-<img src="images/qqmail-notify-received.jpg" />
-
-</div>
+<p><img src="images/qqmail-notify-received.jpg" /></p>
 <h1 id="反思与小结"><span class="header-section-number">3</span> 反思与小结</h1>
 <p>整个服务流程打通后，我只是通过个人的朋友圈和微博来扩散一下，效果是：</p>
-<ol style="list-style-type: decimal">
+<ol type="1">
 <li>有的朋友直接超额打款；</li>
 <li>有的朋友聊天之后打款；</li>
 <li>有的朋友打款了， 但我不知道是谁（这里有个流程纰漏，因为只是测试，所以支付我只是贴了个人的微信和支付宝的收款二维码，但钱是收到了，不知道是谁）</li>
 </ol>
 <p>所以， 后面几天又朋友圈里敦促各位把日期信息邮件发来，没有人发过来 ：（</p>
 <p>看来，这次尝试是失败的结果， 可能的原因我个人估计是：</p>
-<ol style="list-style-type: decimal">
+<ol type="1">
 <li>从产品层面来说， 整个用户触达渠道不是那么友好， 提交信息到支付整个流程都不是那么顺畅；</li>
 <li>用户可能担心证照信息泄露（虽然并不需要提交敏感信息）；</li>
 <li>从用户心理层面， 尤其是跟福克斯同学某天聊天之后， 感觉用户更多的是在乎你能怎样帮我解决问题，而不是怎样帮我预防问题。 <strong>问题没有发生之前，都不是问题！</strong></li>
 </ol>
 <p>以上纯属个人YY， 以此纪念这个不成功的side project测试 ^_-</p>
-<hr>
-<div align="center">
-<img src="/images/wechat-qrcode-footer.png"/>
-</div>
 
-</div>
+    </article>
 
-
-
-</body></html>
+  </body>
+</html>

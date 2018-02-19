@@ -1,15 +1,17 @@
 <!DOCTYPE html>
-<html lang="zh">
-<head>
+<html>
+  <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>检车大厅所见所闻对软件架构设计的联想 - 一个架构士的思考与沉</title>
+        <meta name="date" content="2012-09-17" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="王福强的博客， 一个架构士的思考与沉淀">
     <meta name="keywords" content="architecture, book author, thinker, fighter, 架构, 思考, 技术, 武术, 哲学">
     <meta name="author" content="王福强">
-        <meta name="date" content="2012-09-17" />
-        <link rel="icon" href="/favicon.ico">
-    <title>检车大厅所见所闻对软件架构设计的联想 - 一个架构士的思考与沉淀</title>
-    <!-- 百度统计 -->
+    <link rel="stylesheet" href="/ivy.css">
+    <link rel="shortcut icon" href="/favicon.ico"/>
+    <style type="text/css">code{white-space: pre;}</style>
+            <!-- 百度统计 -->
     <script>
       var _hmt = _hmt || [];
       (function() {
@@ -19,35 +21,26 @@
           s.parentNode.insertBefore(hm, s);
       })();
     </script>
+  </head>
 
-	<link href="/css/custom.css" rel="stylesheet"/>
-	<link rel="shortcut icon" href="/favicon.ico"/>
+  <body class="node homepage">
 
-<style type="text/css">code{white-space: pre;}</style>
-        
-	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-	<!--[if lt IE 9]>
-	  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.2/html5shiv.js"></script>
-	  <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-	<![endif]-->
-
-</head>
-
-<body>
-
-    <div class="masthead">
-		<!--
-    <h1 class="masthead-title fq">
-      <a href="/">扶墙老师</a>
-
-    </h1>
-    -->
-    <a href="/"><h1>扶墙老师说</h1></a>
-		<p class="masthead-lead">一个架构士的思考与沉淀</p>
-
-		<hr class="masthead-hr">
-
-	  	<ul class="masthead-nav">
+    <header class="masthead">
+      <h1><a href="/">扶墙老师说</a></h1>
+      <p class="tagline">
+         一个架构士的思考与沉淀
+          <img src="/images/wechat-qrcode-footer.png"/>
+          扶墙老师，辨证施“知”
+      </p>
+      
+      <nav class="menu">
+        <input id="menu-check" type="checkbox"/>
+        <label id="menu-label" for="menu-check" class="unselectable">
+          <span class="icon close-icon">✕</span>
+          <span class="icon open-icon">☰</span>
+          <span class="text">展开</span>
+        </label>
+        <ul>
             <li class="nav-item"><a class="nav-link" href="/favorite.html">我的收藏</a></li>
             <li class="nav-item"><a class="nav-link" href="/dashboard.html">金融看板</a></li>
             <li class="nav-item"><a class="nav-link" href="/columns.html">专栏文章</a></li>
@@ -55,20 +48,12 @@
             <li class="nav-item"><a class="nav-link" href="/whoami.html">我是何人</a></li>
             <li class="nav-item"><a class="nav-link" href="/interlinks.html">友情链接</a></li>
             <li class="nav-item"><a class="nav-link" href="/feeds.xml">RSS订阅</a></li>
-		</ul>
+        </ul>
+      </nav>
+    </header>
 
-  		<hr class="masthead-hr">
-
-	  	<ul class="masthead-nav">
-            <li class="nav-item"><small>©afoo.me</small></li>
-            <li class="nav-item"><small>Powered by <a href="http://pandoc.org/">pandoc</a> and <a href="http://rometools.github.io/rome/">ROME</a></small></li>
-		</ul>
-
-	</div>
-
-
-    <div class="listing">
-
+    <article class="main">
+      
 <div class="row">
 <div id="header">
 <p class="lead">
@@ -91,21 +76,15 @@
 </blockquote>
 <p>可是（这个可是是我臆想的，正常情况下，其它窗口的工作人员应该也可以暂时帮助处理离开工作人员负责的窗口业务）， 假如我们让每一个窗口的工作人员都能够负责处理整个的流程，那么，每个窗口负责的工作就全都相同，业务流程的处理也变成了多条并行的流水线， 在系统架构中，基本上就是scale out easily了。 如果把每个工作人员都比作一个个的硬件结点，在原来的流水线规划中，他们或许负荷不高，硬件资源利用有限，一旦转换为每个硬件结点负责整体流水线业务，则可以充分利用每一硬件资源。 而且，系统的可用性也可以更上一个档次，不会因为一个结点的缺失，导致整体流程的断裂。</p>
 <p>整个类比到系统的架构层次，如下图：</p>
-<div class="figure">
-<img src="../images/vertical_stack_in_one.png" alt="vertical_stack" />
-<p class="caption">vertical_stack</p>
-</div>
+<figure>
+<img src="../images/vertical_stack_in_one.png" alt="vertical_stack" /><figcaption>vertical_stack</figcaption>
+</figure>
 <blockquote>
 <p>当然， 并非说之前的流水线规划不能达到很好的可用性，只要在加几倍的人，开辟多个流水线，也是可以保证整体服务的可用，只不过，这或许要以多倍的成本提高和系统复杂度为代价。</p>
 </blockquote>
 <p>个人感觉这个本质上是内聚与耦合的粒度到底到哪里合适的问题，具体如何权衡，当然要依据实际情况来决定。</p>
-<hr>
-<div align="center">
-<img src="/images/wechat-qrcode-footer.png"/>
-</div>
 
-</div>
+    </article>
 
-
-
-</body></html>
+  </body>
+</html>

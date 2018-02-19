@@ -1,14 +1,16 @@
 <!DOCTYPE html>
-<html lang="zh">
-<head>
+<html>
+  <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>行车记录 - 一个架构士的思考与沉</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="王福强的博客， 一个架构士的思考与沉淀">
     <meta name="keywords" content="architecture, book author, thinker, fighter, 架构, 思考, 技术, 武术, 哲学">
     <meta name="author" content="王福强">
-        <link rel="icon" href="/favicon.ico">
-    <title>行车记录 - 一个架构士的思考与沉淀</title>
-    <!-- 百度统计 -->
+    <link rel="stylesheet" href="/ivy.css">
+    <link rel="shortcut icon" href="/favicon.ico"/>
+    <style type="text/css">code{white-space: pre;}</style>
+            <!-- 百度统计 -->
     <script>
       var _hmt = _hmt || [];
       (function() {
@@ -18,35 +20,26 @@
           s.parentNode.insertBefore(hm, s);
       })();
     </script>
+  </head>
 
-	<link href="/css/custom.css" rel="stylesheet"/>
-	<link rel="shortcut icon" href="/favicon.ico"/>
+  <body class="node homepage">
 
-<style type="text/css">code{white-space: pre;}</style>
-        
-	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-	<!--[if lt IE 9]>
-	  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.2/html5shiv.js"></script>
-	  <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-	<![endif]-->
-
-</head>
-
-<body>
-
-    <div class="masthead">
-		<!--
-    <h1 class="masthead-title fq">
-      <a href="/">扶墙老师</a>
-
-    </h1>
-    -->
-    <a href="/"><h1>扶墙老师说</h1></a>
-		<p class="masthead-lead">一个架构士的思考与沉淀</p>
-
-		<hr class="masthead-hr">
-
-	  	<ul class="masthead-nav">
+    <header class="masthead">
+      <h1><a href="/">扶墙老师说</a></h1>
+      <p class="tagline">
+         一个架构士的思考与沉淀
+          <img src="/images/wechat-qrcode-footer.png"/>
+          扶墙老师，辨证施“知”
+      </p>
+      
+      <nav class="menu">
+        <input id="menu-check" type="checkbox"/>
+        <label id="menu-label" for="menu-check" class="unselectable">
+          <span class="icon close-icon">✕</span>
+          <span class="icon open-icon">☰</span>
+          <span class="text">展开</span>
+        </label>
+        <ul>
             <li class="nav-item"><a class="nav-link" href="/favorite.html">我的收藏</a></li>
             <li class="nav-item"><a class="nav-link" href="/dashboard.html">金融看板</a></li>
             <li class="nav-item"><a class="nav-link" href="/columns.html">专栏文章</a></li>
@@ -54,20 +47,12 @@
             <li class="nav-item"><a class="nav-link" href="/whoami.html">我是何人</a></li>
             <li class="nav-item"><a class="nav-link" href="/interlinks.html">友情链接</a></li>
             <li class="nav-item"><a class="nav-link" href="/feeds.xml">RSS订阅</a></li>
-		</ul>
+        </ul>
+      </nav>
+    </header>
 
-  		<hr class="masthead-hr">
-
-	  	<ul class="masthead-nav">
-            <li class="nav-item"><small>©afoo.me</small></li>
-            <li class="nav-item"><small>Powered by <a href="http://pandoc.org/">pandoc</a> and <a href="http://rometools.github.io/rome/">ROME</a></small></li>
-		</ul>
-
-	</div>
-
-
-    <div class="listing">
-
+    <article class="main">
+      
 <div class="row">
 <div id="header">
 <p class="lead">
@@ -89,7 +74,7 @@
 <blockquote>
 <p>2014年从msn space存档中重新恢复出来！</p>
 </blockquote>
-<p>本来嘛，学完车4，5年没有再摸车了，这倒好，怕什么来什么， 一上来就碰上了几个艰巨的任务...</p>
+<p>本来嘛，学完车4，5年没有再摸车了，这倒好，怕什么来什么， 一上来就碰上了几个艰巨的任务…</p>
 <h1 id="高架惊魂"><span class="header-section-number">1</span> 高架惊魂</h1>
 <p>周五去城北车管所上牌子， 上次把车开回来已经让钱磊旷工帮我开回来了，这次怎么说也不能再麻烦他了， 所以，赶鸭子上架，自己来吧！本来以为11点左右高架桥上车能少点儿， 可没想到的是，过了4桥之后没多久就开始堵，还好， 去的时候不管熄火多少次，总算是安全到达目的地石祥路390号祥通铃木4Ｓ店。</p>
 <p>本来预计3：30就差不多能办完了，可没想到人太多， 折腾到5点多， 而且办完后还回4Ｓ店给他复印一下资料。 得， 看着4Ｓ店外严密的车流，我有点儿彻底崩溃了的感觉， 你要知道，那一块儿什么大车都有， 而且， 下了高架就一条路， 我想掉都并道，那简直了-impossible的感觉。</p>
@@ -98,8 +83,8 @@
 <h1 id="比出中指"><span class="header-section-number">2</span> 比出中指</h1>
 <p>周六领俩小徒弟去垃圾街（杭州滨江区的小吃一条街）， 加完油，从江边绕， 在红灯之后右转熄火， 我后面的车就开始鸣笛，鸣笛就鸣笛吧，我知道挡了你， 可我发现后面这开车的好像不正常， 按理说，这事儿过就过去了，而且我车也没牌子，后面车也应该知道是新手之类吧， 可事儿还没完， 我都开出来很远了，后面车居然跟上来又跟我鸣笛，md，我直接对其比出中指。我很想做， 却一直没几会做的事情，遇到这样的，我就不客气了。（后面徒弟还让我文明点，哈）</p>
 <h1 id="忏悔碰人"><span class="header-section-number">3</span> 忏悔碰人</h1>
-<p>垃圾街人很多， 开进去才发现没有停车的地方，只好找路出来， 鸣笛人家都不让该怎么走还怎么走，你一点儿脾气没有。都快到路口了，居然碰了一个姐们，我本来那还有要道歉的意思，可他男朋友居然拍我车子， 得，我还是闪人吧！ 只对当事人忏悔， 对拍我车子的， ...</p>
-<p>开车看来真的是对脾气不好...</p>
+<p>垃圾街人很多， 开进去才发现没有停车的地方，只好找路出来， 鸣笛人家都不让该怎么走还怎么走，你一点儿脾气没有。都快到路口了，居然碰了一个姐们，我本来那还有要道歉的意思，可他男朋友居然拍我车子， 得，我还是闪人吧！ 只对当事人忏悔， 对拍我车子的， …</p>
+<p>开车看来真的是对脾气不好…</p>
 <p>(不过， 短时间内经历了这么艰巨的车况和路况，我还是没想到能make it)</p>
 <hr />
 <p>Comments</p>
@@ -119,13 +104,8 @@
 <li>9/12/2010 3:09:25 PM</li>
 </ul>
 <p>了解， 遇到行人我尽量是避让，呵呵</p>
-<hr>
-<div align="center">
-<img src="/images/wechat-qrcode-footer.png"/>
-</div>
 
-</div>
+    </article>
 
-
-
-</body></html>
+  </body>
+</html>

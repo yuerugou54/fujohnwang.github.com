@@ -1,15 +1,17 @@
 <!DOCTYPE html>
-<html lang="zh">
-<head>
+<html>
+  <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>架构的执念 - 一个架构士的思考与沉</title>
+        <meta name="date" content="2016-02-18" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="王福强的博客， 一个架构士的思考与沉淀">
     <meta name="keywords" content="architecture, book author, thinker, fighter, 架构, 思考, 技术, 武术, 哲学">
     <meta name="author" content="王福强">
-        <meta name="date" content="2016-02-18" />
-        <link rel="icon" href="/favicon.ico">
-    <title>架构的执念 - 一个架构士的思考与沉淀</title>
-    <!-- 百度统计 -->
+    <link rel="stylesheet" href="/ivy.css">
+    <link rel="shortcut icon" href="/favicon.ico"/>
+    <style type="text/css">code{white-space: pre;}</style>
+            <!-- 百度统计 -->
     <script>
       var _hmt = _hmt || [];
       (function() {
@@ -19,35 +21,26 @@
           s.parentNode.insertBefore(hm, s);
       })();
     </script>
+  </head>
 
-	<link href="/css/custom.css" rel="stylesheet"/>
-	<link rel="shortcut icon" href="/favicon.ico"/>
+  <body class="node homepage">
 
-<style type="text/css">code{white-space: pre;}</style>
-        
-	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-	<!--[if lt IE 9]>
-	  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.2/html5shiv.js"></script>
-	  <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-	<![endif]-->
-
-</head>
-
-<body>
-
-    <div class="masthead">
-		<!--
-    <h1 class="masthead-title fq">
-      <a href="/">扶墙老师</a>
-
-    </h1>
-    -->
-    <a href="/"><h1>扶墙老师说</h1></a>
-		<p class="masthead-lead">一个架构士的思考与沉淀</p>
-
-		<hr class="masthead-hr">
-
-	  	<ul class="masthead-nav">
+    <header class="masthead">
+      <h1><a href="/">扶墙老师说</a></h1>
+      <p class="tagline">
+         一个架构士的思考与沉淀
+          <img src="/images/wechat-qrcode-footer.png"/>
+          扶墙老师，辨证施“知”
+      </p>
+      
+      <nav class="menu">
+        <input id="menu-check" type="checkbox"/>
+        <label id="menu-label" for="menu-check" class="unselectable">
+          <span class="icon close-icon">✕</span>
+          <span class="icon open-icon">☰</span>
+          <span class="text">展开</span>
+        </label>
+        <ul>
             <li class="nav-item"><a class="nav-link" href="/favorite.html">我的收藏</a></li>
             <li class="nav-item"><a class="nav-link" href="/dashboard.html">金融看板</a></li>
             <li class="nav-item"><a class="nav-link" href="/columns.html">专栏文章</a></li>
@@ -55,20 +48,12 @@
             <li class="nav-item"><a class="nav-link" href="/whoami.html">我是何人</a></li>
             <li class="nav-item"><a class="nav-link" href="/interlinks.html">友情链接</a></li>
             <li class="nav-item"><a class="nav-link" href="/feeds.xml">RSS订阅</a></li>
-		</ul>
+        </ul>
+      </nav>
+    </header>
 
-  		<hr class="masthead-hr">
-
-	  	<ul class="masthead-nav">
-            <li class="nav-item"><small>©afoo.me</small></li>
-            <li class="nav-item"><small>Powered by <a href="http://pandoc.org/">pandoc</a> and <a href="http://rometools.github.io/rome/">ROME</a></small></li>
-		</ul>
-
-	</div>
-
-
-    <div class="listing">
-
+    <article class="main">
+      
 <div class="row">
 <div id="header">
 <p class="lead">
@@ -96,10 +81,7 @@
 </div>
 <hr/>
 
-<div class="figure">
-<img src="images/AFighter.jpg" />
-
-</div>
+<p><img src="images/AFighter.jpg" /></p>
 <p>所谓“Great Minds Think Alike”， 架构上很多东西都是相通的，架构的修行之路跟个人的修行之路随行， 如果说一个人要从<code>身, 心, 灵</code>多维度修行的话，那么，我们今天的架构话题更多是围绕着“灵（Spirit）”展开，希望跟大家一起探讨，一名合格的架构师应该拥有什么样的执念和坚守，使他/她可以在架构之路上能够引领潮流，持续前行！</p>
 <h1 id="前瞻性的眼光"><span class="header-section-number">1</span> 前瞻性的眼光</h1>
 <p>合格的架构师一定需要有前瞻性的眼光。</p>
@@ -107,32 +89,20 @@
 <p>一名合格的架构师设计出来的架构是要有前瞻性的，要为了将来的组织能力更上一个台阶而设计， 满足当下需求并能够适当扩展，是遵循架构设计的系统实现要关注的事情，系统是多样的，架构不是，系统是演化出来，架构不是。</p>
 <p>一名合格的架构师，要目光高远的去改造“世界”， 去将高远的思想化为现实， 你要做的是冲破各种阻力， 去构建大多数世人没有见过甚至没有想过的事情。</p>
 <p>如果搞建筑，你要搞的是摩天大楼，甚至宇宙城堡：</p>
-<div class="figure">
-<img src="images/buildings.jpg" />
-
-</div>
+<p><img src="images/buildings.jpg" /></p>
 <p>而不是仅仅搭建一个遮风挡雨的栖身之所：</p>
-<div class="figure">
-<img src="images/shelter.jpg" />
-
-</div>
+<p><img src="images/shelter.jpg" /></p>
 <p>前者体现了架构的更高价值， 后者则只是满足需求的野蛮生长， 我并没有说两种不同的生态孰优孰劣，但作为<strong>合格</strong>的架构师，你要很清楚自己的选择是什么。</p>
 <p>NASA当年给赞比亚修女的那封信， 相信大家都看过，解决眼前的问题很重要，但大部分人力和物力已经在做了， 应用，工具， 服务，所有这些都是为了解决类似的眼前问题。 所以， 作为合格的架构师， 你要做得应该是创造更高附加值的事情， 立足现状， 志存高远， 用你的前瞻性，作为先驱者， 探索， 发掘， 然后再回补， 周而复始， 走在前列。</p>
 <p>当然， 有前瞻性不意味着你要去做一个梦想家，甚至空想家， 就跟Donald J Trump所说：</p>
 <blockquote>
-<p>Before the dreams lift you into the clouds, make sure you've looked hard at the fact on the ground.</p>
+<p>Before the dreams lift you into the clouds, make sure you’ve looked hard at the fact on the ground.</p>
 </blockquote>
 <p>你要做的，只需要基于现有资源和环境，挖掘架构需求背后的本质， 做出高于普通标准的方案就可以了。 这跟艺术上经常说的“源于生活，又高于生活”是同样的道理。</p>
 <p>前阵子在自己的朋友圈看到一篇介绍智利的建筑设计师凭借“杀手级设计-半个房子(Half A House)”获得普利兹克奖的故事， 而这个半个房子的设计，实际上就是很好的前瞻性设计的典范：</p>
-<div class="figure">
-<img src="images/half-house1.jpg" />
-
-</div>
+<p><img src="images/half-house1.jpg" /></p>
 <p>设计者基于现有资源和环境给出了以上的设计， 然后希望后面的住户根据自己的经济实力和需求自行建设和装修， 而后面各个半个房子的演化也很好的证明了设计者的预想：</p>
-<div class="figure">
-<img src="images/half-house2.jpg" />
-
-</div>
+<p><img src="images/half-house2.jpg" /></p>
 <p>看，这就是前瞻性的眼光！</p>
 <h1 id="系统性的思考"><span class="header-section-number">2</span> 系统性的思考</h1>
 <p>合格的架构师都是好的战略家， 前瞻性眼光是他们起码的要求， 而系统性的思考则是将这些前瞻性眼光落地的必备素质。</p>
@@ -144,11 +114,8 @@
 <li><p>如果团队的成员能力还不足以支撑起微服务体系相关的所有工具化，服务化和平台化建设， 那么微服务架构也不是最合适的方向；</p></li>
 <li><p>如果公司业务还处在四处拼杀， 生死未卜的时候， 公司的现状也不会允许你去搞各种完善的基础性建设， 活下来才是第一位的；</p></li>
 </ul>
-<p>对于架构师来说， 你要关注的不是“点”， 而应该关注的是尽可能多的“点”， 进而是连接点的线， 到面，甚至到体， 你要构建的是“人浪”的整体形态， 而不是指导“人浪”中某个人的“起立和坐下”， 你要关注的是“整体效率”， 而不是&quot;单点效率&quot;， 否则就不是<code>健不健，美不美</code>的问题了：</p>
-<div class="figure">
-<img src="images/bigarm.jpg" />
-
-</div>
+<p>对于架构师来说， 你要关注的不是“点”， 而应该关注的是尽可能多的“点”， 进而是连接点的线， 到面，甚至到体， 你要构建的是“人浪”的整体形态， 而不是指导“人浪”中某个人的“起立和坐下”， 你要关注的是“整体效率”， 而不是“单点效率”， 否则就不是<code>健不健，美不美</code>的问题了：</p>
+<p><img src="images/bigarm.jpg" /></p>
 <p>系统性思维帮助做出合理的决策， 但最终都是为了架构的落地而服务，所以， 在繁杂的系统因素中做出抉择之后， 要能够集中兵力攻占阵地， 这个时候考验的则是架构师的统筹和带兵打仗的能力， 你可以使用情感纽带将兄弟们团结在一起为了同一目标而奋斗， 你也可以政教合一， 像亚马逊那样通过行政上的强化，来保证“所有服务都必须HTTP化”类似的决策执行， “路怎么走， 你们看着办咯~”</p>
 <blockquote>
 <p>No man ever steps into the same river twice!</p>
@@ -156,10 +123,7 @@
 <h1 id="开放性的心态"><span class="header-section-number">3</span> 开放性的心态</h1>
 <p>前瞻性的眼光， 系统性的思考能力不是凭空而来的， 你需要“海纳百川”， 去芜存菁，然后通过独立的思考，经过长时间的积累，持续沉淀为一名合格架构师的综合素质， 而开放性心态是那道坎儿， 你迈不过去， 持续的沉淀就无从谈起。</p>
 <p>一名合格的架构师是一座冰山， 他给你的印象可能只是很平常的小冰块儿， 但实在货都沉淀在下面：</p>
-<div class="figure">
-<img src="images/iceberg.jpg" />
-
-</div>
+<p><img src="images/iceberg.jpg" /></p>
 <p>而且， 在开放的心态下， 下面的沉淀将持续壮大。</p>
 <h2 id="有了开放性的心态你才能接纳差异做出合理的权衡"><span class="header-section-number">3.1</span> 有了开放性的心态，你才能“接纳差异”，做出合理的权衡</h2>
 <p>对于技术人来说， 或者说骨子里就是为技术而生的人， 与生俱来会有一种特质，那就是<strong>专注</strong>。 这种专注的特质可以让人沉浸在技术的海洋中欣喜而不可自拔， 但是， 不能因为这， 就忽略了千差万别的人，就忽略了斑驳陆离的世界。</p>
@@ -171,19 +135,14 @@
 <p>舍得，舍得， 只有舍了，才能得，杯子空了，才可以重新装入新的液体！</p>
 <h2 id="有了开放性的心态-你才会走上成长为一名合格架构师的莫比乌斯之路"><span class="header-section-number">3.3</span> 有了开放性的心态， 你才会走上成长为一名合格<a href="http://afoo.me/posts/2014-05-18-architect-is-not-the-one-you-think.html">架构师的莫比乌斯之路</a>！</h2>
 <p>相信“在座”的很多人都打过游戏吧？ 游戏之旅我们通常戏称为“打怪升级”之路， 我通常为了鼓励创业者能够跳出来勇敢地去折腾，也会用“打怪升级”来形容创业的过程， 而话说回来， 架构之路，实际上也是一条“打怪升级”之路。</p>
-<p>大部分架构师会在整个生命周期内接触不同层面，不同领域的工作内容，做过应用开发，做过数据库和系统管理，做过中间件，也做过大数据，还做过..., 甚至你还可能还有公司和组织架构的经验。 但不管怎么样，只有你有了一颗开放的心态，才可以保证自己能够持续的沿着那条看似毫无尽头但却精彩绝伦的<a href="http://afoo.me/posts/2014-05-18-architect-is-not-the-one-you-think.html">架构师的莫比乌斯之路</a>前行。</p>
+<p>大部分架构师会在整个生命周期内接触不同层面，不同领域的工作内容，做过应用开发，做过数据库和系统管理，做过中间件，也做过大数据，还做过…, 甚至你还可能还有公司和组织架构的经验。 但不管怎么样，只有你有了一颗开放的心态，才可以保证自己能够持续的沿着那条看似毫无尽头但却精彩绝伦的<a href="http://afoo.me/posts/2014-05-18-architect-is-not-the-one-you-think.html">架构师的莫比乌斯之路</a>前行。</p>
 <h1 id="be-a-full-life-learner"><span class="header-section-number">4</span> Be A Full-Life Learner!</h1>
 <p>我今天要讲的最后一点就是， Be A Full-Life Learner!</p>
 <p>技术很多时候是撬动人类历史快速向前发展的核心因素之一， 火药的发明引发了从烟花，到火炮，火绳枪，燧发枪， 连发枪的持续演化， 而且演化迭代的速度也是越来越快； 商业上也是同样的道理，如果说原来的电话普及是数十年才填满市场，那么现在的智能手机则只是短短的几年；</p>
 <p>一名合格的架构师在这个快速发展的背景下，只有不断持续的学习，才能跟得上时代的步伐，才能不让自己成为团队和组织的瓶颈，才能持续的做出自身的贡献，所以，要沿着架构之路坚持的走下去，就去做一名终身的学习者吧！</p>
 <p>你说那？;-)</p>
-<hr>
-<div align="center">
-<img src="/images/wechat-qrcode-footer.png"/>
-</div>
 
-</div>
+    </article>
 
-
-
-</body></html>
+  </body>
+</html>

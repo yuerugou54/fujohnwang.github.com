@@ -1,15 +1,82 @@
 <!DOCTYPE html>
-<html lang="zh">
-<head>
+<html>
+  <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Understanding SBT In My Way - 一个架构士的思考与沉</title>
+        <meta name="date" content="2010-11-24" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="王福强的博客， 一个架构士的思考与沉淀">
     <meta name="keywords" content="architecture, book author, thinker, fighter, 架构, 思考, 技术, 武术, 哲学">
     <meta name="author" content="王福强">
-        <meta name="date" content="2010-11-24" />
-        <link rel="icon" href="/favicon.ico">
-    <title>Understanding SBT In My Way - 一个架构士的思考与沉淀</title>
-    <!-- 百度统计 -->
+    <link rel="stylesheet" href="/ivy.css">
+    <link rel="shortcut icon" href="/favicon.ico"/>
+    <style type="text/css">code{white-space: pre;}</style>
+    <style type="text/css">
+    a.sourceLine { display: inline-block; line-height: 1.25; }
+    a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+    a.sourceLine:empty { height: 1.2em; position: absolute; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode { white-space: pre; position: relative; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    code.sourceCode { white-space: pre-wrap; }
+    a.sourceLine { text-indent: -1em; padding-left: 1em; }
+    }
+    pre.numberSource a.sourceLine
+      { position: relative; }
+    pre.numberSource a.sourceLine:empty
+      { position: absolute; }
+    pre.numberSource a.sourceLine::before
+      { content: attr(data-line-number);
+        position: absolute; left: -5em; text-align: right; vertical-align: baseline;
+        border: none; pointer-events: all;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {  }
+    @media screen {
+    a.sourceLine::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+            <!-- 百度统计 -->
     <script>
       var _hmt = _hmt || [];
       (function() {
@@ -19,72 +86,26 @@
           s.parentNode.insertBefore(hm, s);
       })();
     </script>
+  </head>
 
-	<link href="/css/custom.css" rel="stylesheet"/>
-	<link rel="shortcut icon" href="/favicon.ico"/>
+  <body class="node homepage">
 
-<style type="text/css">code{white-space: pre;}</style>
-    <style type="text/css">
-    div.sourceCode { overflow-x: auto; }
-    table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
-      margin: 0; padding: 0; vertical-align: baseline; border: none; }
-    table.sourceCode { width: 100%; line-height: 100%; }
-    td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
-    td.sourceCode { padding-left: 5px; }
-    code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
-    code > span.dt { color: #902000; } /* DataType */
-    code > span.dv { color: #40a070; } /* DecVal */
-    code > span.bn { color: #40a070; } /* BaseN */
-    code > span.fl { color: #40a070; } /* Float */
-    code > span.ch { color: #4070a0; } /* Char */
-    code > span.st { color: #4070a0; } /* String */
-    code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
-    code > span.ot { color: #007020; } /* Other */
-    code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
-    code > span.fu { color: #06287e; } /* Function */
-    code > span.er { color: #ff0000; font-weight: bold; } /* Error */
-    code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-    code > span.cn { color: #880000; } /* Constant */
-    code > span.sc { color: #4070a0; } /* SpecialChar */
-    code > span.vs { color: #4070a0; } /* VerbatimString */
-    code > span.ss { color: #bb6688; } /* SpecialString */
-    code > span.im { } /* Import */
-    code > span.va { color: #19177c; } /* Variable */
-    code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-    code > span.op { color: #666666; } /* Operator */
-    code > span.bu { } /* BuiltIn */
-    code > span.ex { } /* Extension */
-    code > span.pp { color: #bc7a00; } /* Preprocessor */
-    code > span.at { color: #7d9029; } /* Attribute */
-    code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
-    code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-    code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-    code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-  </style>
-        
-	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-	<!--[if lt IE 9]>
-	  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.2/html5shiv.js"></script>
-	  <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-	<![endif]-->
-
-</head>
-
-<body>
-
-    <div class="masthead">
-		<!--
-    <h1 class="masthead-title fq">
-      <a href="/">扶墙老师</a>
-
-    </h1>
-    -->
-    <a href="/"><h1>扶墙老师说</h1></a>
-		<p class="masthead-lead">一个架构士的思考与沉淀</p>
-
-		<hr class="masthead-hr">
-
-	  	<ul class="masthead-nav">
+    <header class="masthead">
+      <h1><a href="/">扶墙老师说</a></h1>
+      <p class="tagline">
+         一个架构士的思考与沉淀
+          <img src="/images/wechat-qrcode-footer.png"/>
+          扶墙老师，辨证施“知”
+      </p>
+      
+      <nav class="menu">
+        <input id="menu-check" type="checkbox"/>
+        <label id="menu-label" for="menu-check" class="unselectable">
+          <span class="icon close-icon">✕</span>
+          <span class="icon open-icon">☰</span>
+          <span class="text">展开</span>
+        </label>
+        <ul>
             <li class="nav-item"><a class="nav-link" href="/favorite.html">我的收藏</a></li>
             <li class="nav-item"><a class="nav-link" href="/dashboard.html">金融看板</a></li>
             <li class="nav-item"><a class="nav-link" href="/columns.html">专栏文章</a></li>
@@ -92,20 +113,12 @@
             <li class="nav-item"><a class="nav-link" href="/whoami.html">我是何人</a></li>
             <li class="nav-item"><a class="nav-link" href="/interlinks.html">友情链接</a></li>
             <li class="nav-item"><a class="nav-link" href="/feeds.xml">RSS订阅</a></li>
-		</ul>
+        </ul>
+      </nav>
+    </header>
 
-  		<hr class="masthead-hr">
-
-	  	<ul class="masthead-nav">
-            <li class="nav-item"><small>©afoo.me</small></li>
-            <li class="nav-item"><small>Powered by <a href="http://pandoc.org/">pandoc</a> and <a href="http://rometools.github.io/rome/">ROME</a></small></li>
-		</ul>
-
-	</div>
-
-
-    <div class="listing">
-
+    <article class="main">
+      
 <div class="row">
 <div id="header">
 <p class="lead">
@@ -134,48 +147,48 @@
 <pre>
 java -Xmx512M -jar `dirname $0`/sbt-launch-0.7.4.jar "$@"
 </pre>
-<p>I make a directory under workspace, call &quot;scalafun&quot;, then &quot;cd scalafun&quot; and run sbt. Since it's the first time I use sbt, it ask me whether to create a project, I choose Y of course, then it ask for some information on the project I create before the project creation is done. The information contains the project name, organize name, sbt version or scala version, just type in your answer or use the default choices.</p>
+<p>I make a directory under workspace, call “scalafun”, then “cd scalafun” and run sbt. Since it’s the first time I use sbt, it ask me whether to create a project, I choose Y of course, then it ask for some information on the project I create before the project creation is done. The information contains the project name, organize name, sbt version or scala version, just type in your answer or use the default choices.</p>
 <blockquote>
-when create project structure with sbt, it may loss the &quot;project/build&quot; directory where you should put your build file there, so usually after running sbt to setup the default project structure, you may have to create the &quot;project/build&quot; directory and corresponding build defintion files manully.
+when create project structure with sbt, it may loss the “project/build” directory where you should put your build file there, so usually after running sbt to setup the default project structure, you may have to create the “project/build” directory and corresponding build defintion files manully.
 </blockquote>
-<p>After the project setup is done, firstly, we have to define our build file in sbt, this is done by creating a scala file under &quot;project/build&quot;, the content may be:</p>
-<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">import</span> sbt._
-
-<span class="kw">class</span> <span class="fu">MySQLEventEmitter</span>(info:ProjectInfo) <span class="kw">extends</span> <span class="fu">DefaultProject</span>(info){
- <span class="kw">val</span> jbossRepository        = <span class="st">&quot;Jboss Repository&quot;</span> at <span class="st">&quot;http://repository.jboss.org/nexus/content/groups/public&quot;</span>
- <span class="kw">val</span> jbossRepository2       = <span class="st">&quot;jboss Maven2 repo&quot;</span> at <span class="st">&quot;http://repository.jboss.com/maven2&quot;</span>
- ...
- 
- <span class="kw">val</span> netty = <span class="st">&quot;org.jboss.netty&quot;</span> % <span class="st">&quot;netty&quot;</span> % <span class="st">&quot;3.2.2.Final&quot;</span>
- <span class="kw">val</span> scalatest = <span class="st">&quot;org.scalatest&quot;</span> % <span class="st">&quot;scalatest&quot;</span> % <span class="st">&quot;1.2&quot;</span> % <span class="st">&quot;test&quot;</span>
- ...
-}</code></pre></div>
-<p>As you can see, I add some repositories and dependencies as per sbt's scala method syntax, it's so easy to setup such a common project without any difficulty.</p>
-<p>Once above job is done, we can add our scala source files into src/main/scala directory, the src directory structure follows the maven's convention(if you used maven before, more exactly, it should be ivy style).</p>
-<p>After you have finished you code, you can run &quot;sbt update clean compile run&quot; in the command under the &quot;scalafun&quot; directory, or most of the time, I will just run &quot;sbt&quot; and then get into the interactive console of sbt, there, I just type &quot;~compile&quot; and then everything starts to rock, commands with &quot;~&quot; means &quot;continual&quot;, so once I edit my source file and save it, the compile will be performed immediately then you can see whether your code is ok or not. Of course, the most important thing is you don't have to care about the result if you don't want to, but the compilation will always there until you interrupt it when you will.</p>
+<p>After the project setup is done, firstly, we have to define our build file in sbt, this is done by creating a scala file under “project/build”, the content may be:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode scala"><code class="sourceCode scala"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">import</span> sbt._</a>
+<a class="sourceLine" id="cb1-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb1-3" data-line-number="3"><span class="kw">class</span> <span class="fu">MySQLEventEmitter</span>(info:ProjectInfo) <span class="kw">extends</span> <span class="fu">DefaultProject</span>(info){</a>
+<a class="sourceLine" id="cb1-4" data-line-number="4"> <span class="kw">val</span> jbossRepository        = <span class="st">&quot;Jboss Repository&quot;</span> at <span class="st">&quot;http://repository.jboss.org/nexus/content/groups/public&quot;</span></a>
+<a class="sourceLine" id="cb1-5" data-line-number="5"> <span class="kw">val</span> jbossRepository2       = <span class="st">&quot;jboss Maven2 repo&quot;</span> at <span class="st">&quot;http://repository.jboss.com/maven2&quot;</span></a>
+<a class="sourceLine" id="cb1-6" data-line-number="6"> ...</a>
+<a class="sourceLine" id="cb1-7" data-line-number="7"> </a>
+<a class="sourceLine" id="cb1-8" data-line-number="8"> <span class="kw">val</span> netty = <span class="st">&quot;org.jboss.netty&quot;</span> % <span class="st">&quot;netty&quot;</span> % <span class="st">&quot;3.2.2.Final&quot;</span></a>
+<a class="sourceLine" id="cb1-9" data-line-number="9"> <span class="kw">val</span> scalatest = <span class="st">&quot;org.scalatest&quot;</span> % <span class="st">&quot;scalatest&quot;</span> % <span class="st">&quot;1.2&quot;</span> % <span class="st">&quot;test&quot;</span></a>
+<a class="sourceLine" id="cb1-10" data-line-number="10"> ...</a>
+<a class="sourceLine" id="cb1-11" data-line-number="11">}</a></code></pre></div>
+<p>As you can see, I add some repositories and dependencies as per sbt’s scala method syntax, it’s so easy to setup such a common project without any difficulty.</p>
+<p>Once above job is done, we can add our scala source files into src/main/scala directory, the src directory structure follows the maven’s convention(if you used maven before, more exactly, it should be ivy style).</p>
+<p>After you have finished you code, you can run “sbt update clean compile run” in the command under the “scalafun” directory, or most of the time, I will just run “sbt” and then get into the interactive console of sbt, there, I just type “~compile” and then everything starts to rock, commands with “~” means “continual”, so once I edit my source file and save it, the compile will be performed immediately then you can see whether your code is ok or not. Of course, the most important thing is you don’t have to care about the result if you don’t want to, but the compilation will always there until you interrupt it when you will.</p>
 <blockquote>
-Although we have add dependencies in the build file, they are not available before we run &quot;sbt update&quot; or just &quot;update&quot; in sbt console, even we have maven2 local repository there. So when some compilation errors complain some classes are missing, most of the time, they are asking you to run &quot;update&quot; to fetch the dependencies.^_^
+Although we have add dependencies in the build file, they are not available before we run “sbt update” or just “update” in sbt console, even we have maven2 local repository there. So when some compilation errors complain some classes are missing, most of the time, they are asking you to run “update” to fetch the dependencies.^_^
 </blockquote>
 <p>OK, until now, I think most of the things work for us, but how SBT makes all of the things run smoothly?</p>
 <h1 id="how-sbt-works"><span class="header-section-number">2</span> How SBT works</h1>
 <p>The most interested thing about SBT is that it conforms to Scala everywhere, If you used maven before or still using it, you know the build defintion in maven is defined in xml(pom.xml) or groovy after maven3, although maven are mostly used with java projects. But since SBT is mainly for scala projects, its build files are written in scala too.</p>
-<p>SBT build artifacts are located at &quot;<span class="math inline"><em>y</em><em>o</em><em>u</em><em>r</em><sub><em>p</em></sub><em>r</em><em>o</em><em>j</em><em>e</em><em>c</em><em>t</em><sub><em>f</em></sub><em>o</em><em>l</em><em>d</em><em>e</em><em>r</em></span>/project&quot; folder which contains:</p>
+<p>SBT build artifacts are located at “<span class="math inline"><em>y</em><em>o</em><em>u</em><em>r</em><sub><em>p</em></sub><em>r</em><em>o</em><em>j</em><em>e</em><em>c</em><em>t</em><sub><em>f</em></sub><em>o</em><em>l</em><em>d</em><em>e</em><em>r</em></span>/project” folder which contains:</p>
 <ul>
 <li>build.properties // your project information and scala version information</li>
 <li>build // folder contains build file defintiion</li>
 <li>* boot // folder</li>
 </ul>
-<p>Under &quot;build&quot; sub-folder, you can define build file in a format of scala. SBT defines a scala trait Project as build specification, so to create your own build file, you just create a scala class which extends Project trait of SBT, most of the time we will extend DefaultProject, just as we have done in section 1 - SBT Quick Start.</p>
-<p>The build file can be placed under &quot;project/build&quot; directly, or if your build file depends on other dependencies, you can create a similar directory structure as top sbt project, that's, the &quot;project/build&quot; is also a sbt project. That's means you can create src/main/scala/ directory and place your build file there, or you can create &quot;lib&quot; directory and place your 3rd party dependencies there too, blablabla.</p>
+<p>Under “build” sub-folder, you can define build file in a format of scala. SBT defines a scala trait Project as build specification, so to create your own build file, you just create a scala class which extends Project trait of SBT, most of the time we will extend DefaultProject, just as we have done in section 1 - SBT Quick Start.</p>
+<p>The build file can be placed under “project/build” directly, or if your build file depends on other dependencies, you can create a similar directory structure as top sbt project, that’s, the “project/build” is also a sbt project. That’s means you can create src/main/scala/ directory and place your build file there, or you can create “lib” directory and place your 3rd party dependencies there too, blablabla.</p>
 <p>we can define different things in your Project defintion, whether val, lazy task or methods, we can add our own artifacts definitions or we can override the orginal ones.</p>
-<p>for example, method &quot;unmanagedClasspath&quot; will return the classpaths of unmanaged libraries, we can override it to add more paths we want:</p>
-<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">class</span> <span class="fu">MyProject</span>(info: ProjectInfo) <span class="kw">extends</span> <span class="fu">DefaultProject</span>(info)
-{
-  <span class="kw">override</span> <span class="kw">def</span> unmanagedClasspath: PathFinder =
-  {
-    <span class="kw">super</span>.<span class="fu">unmanagedClasspath</span> +++ Path.<span class="fu">fromFile</span>(<span class="st">&quot;some path&quot;</span>)
-   }
-}</code></pre></div>
+<p>for example, method “unmanagedClasspath” will return the classpaths of unmanaged libraries, we can override it to add more paths we want:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode scala"><code class="sourceCode scala"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw">class</span> <span class="fu">MyProject</span>(info: ProjectInfo) <span class="kw">extends</span> <span class="fu">DefaultProject</span>(info)</a>
+<a class="sourceLine" id="cb2-2" data-line-number="2">{</a>
+<a class="sourceLine" id="cb2-3" data-line-number="3">  <span class="kw">override</span> <span class="kw">def</span> unmanagedClasspath: PathFinder =</a>
+<a class="sourceLine" id="cb2-4" data-line-number="4">  {</a>
+<a class="sourceLine" id="cb2-5" data-line-number="5">    <span class="kw">super</span>.<span class="fu">unmanagedClasspath</span> +++ Path.<span class="fu">fromFile</span>(<span class="st">&quot;some path&quot;</span>)</a>
+<a class="sourceLine" id="cb2-6" data-line-number="6">   }</a>
+<a class="sourceLine" id="cb2-7" data-line-number="7">}</a></code></pre></div>
 <p>Note that if you just write :</p>
 <pre>
 super.unmanagedClasspath +++ "your extension classpath"
@@ -184,16 +197,11 @@ exception may raise which looks like:
 <pre>
 java.lang.IllegalArgumentException: requirement failed: Path component 'your path' must not have forward slashes in it
 </pre>
-<p>If you dive into the code of &quot;Path.scala&quot;, you may find the reason, to save your ass, just do as I did in above code snippet.</p>
+<p>If you dive into the code of “Path.scala”, you may find the reason, to save your ass, just do as I did in above code snippet.</p>
 <p>We can find more methods that we can customize to our own needs in SBT documentations(http://code.google.com/p/simple-build-tool/wiki/DocumentationHome), more advance features can be found in the documenation too, like modules, cross-building, web application project types, etc. I will not elaborate on these here, you have to find them out yourself.</p>
 <p>Enjoy SBT.</p>
-<hr>
-<div align="center">
-<img src="/images/wechat-qrcode-footer.png"/>
-</div>
 
-</div>
+    </article>
 
-
-
-</body></html>
+  </body>
+</html>

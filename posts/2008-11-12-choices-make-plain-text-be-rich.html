@@ -1,14 +1,81 @@
 <!DOCTYPE html>
-<html lang="zh">
-<head>
+<html>
+  <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>普通文本的“麻雀变凤凰”之路 - 一个架构士的思考与沉</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="王福强的博客， 一个架构士的思考与沉淀">
     <meta name="keywords" content="architecture, book author, thinker, fighter, 架构, 思考, 技术, 武术, 哲学">
     <meta name="author" content="王福强">
-        <link rel="icon" href="/favicon.ico">
-    <title>普通文本的“麻雀变凤凰”之路 - 一个架构士的思考与沉淀</title>
-    <!-- 百度统计 -->
+    <link rel="stylesheet" href="/ivy.css">
+    <link rel="shortcut icon" href="/favicon.ico"/>
+    <style type="text/css">code{white-space: pre;}</style>
+    <style type="text/css">
+    a.sourceLine { display: inline-block; line-height: 1.25; }
+    a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+    a.sourceLine:empty { height: 1.2em; position: absolute; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode { white-space: pre; position: relative; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    code.sourceCode { white-space: pre-wrap; }
+    a.sourceLine { text-indent: -1em; padding-left: 1em; }
+    }
+    pre.numberSource a.sourceLine
+      { position: relative; }
+    pre.numberSource a.sourceLine:empty
+      { position: absolute; }
+    pre.numberSource a.sourceLine::before
+      { content: attr(data-line-number);
+        position: absolute; left: -5em; text-align: right; vertical-align: baseline;
+        border: none; pointer-events: all;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {  }
+    @media screen {
+    a.sourceLine::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+            <!-- 百度统计 -->
     <script>
       var _hmt = _hmt || [];
       (function() {
@@ -18,72 +85,26 @@
           s.parentNode.insertBefore(hm, s);
       })();
     </script>
+  </head>
 
-	<link href="/css/custom.css" rel="stylesheet"/>
-	<link rel="shortcut icon" href="/favicon.ico"/>
+  <body class="node homepage">
 
-<style type="text/css">code{white-space: pre;}</style>
-    <style type="text/css">
-    div.sourceCode { overflow-x: auto; }
-    table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
-      margin: 0; padding: 0; vertical-align: baseline; border: none; }
-    table.sourceCode { width: 100%; line-height: 100%; }
-    td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
-    td.sourceCode { padding-left: 5px; }
-    code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
-    code > span.dt { color: #902000; } /* DataType */
-    code > span.dv { color: #40a070; } /* DecVal */
-    code > span.bn { color: #40a070; } /* BaseN */
-    code > span.fl { color: #40a070; } /* Float */
-    code > span.ch { color: #4070a0; } /* Char */
-    code > span.st { color: #4070a0; } /* String */
-    code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
-    code > span.ot { color: #007020; } /* Other */
-    code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
-    code > span.fu { color: #06287e; } /* Function */
-    code > span.er { color: #ff0000; font-weight: bold; } /* Error */
-    code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-    code > span.cn { color: #880000; } /* Constant */
-    code > span.sc { color: #4070a0; } /* SpecialChar */
-    code > span.vs { color: #4070a0; } /* VerbatimString */
-    code > span.ss { color: #bb6688; } /* SpecialString */
-    code > span.im { } /* Import */
-    code > span.va { color: #19177c; } /* Variable */
-    code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-    code > span.op { color: #666666; } /* Operator */
-    code > span.bu { } /* BuiltIn */
-    code > span.ex { } /* Extension */
-    code > span.pp { color: #bc7a00; } /* Preprocessor */
-    code > span.at { color: #7d9029; } /* Attribute */
-    code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
-    code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-    code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-    code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-  </style>
-        
-	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-	<!--[if lt IE 9]>
-	  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.2/html5shiv.js"></script>
-	  <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-	<![endif]-->
-
-</head>
-
-<body>
-
-    <div class="masthead">
-		<!--
-    <h1 class="masthead-title fq">
-      <a href="/">扶墙老师</a>
-
-    </h1>
-    -->
-    <a href="/"><h1>扶墙老师说</h1></a>
-		<p class="masthead-lead">一个架构士的思考与沉淀</p>
-
-		<hr class="masthead-hr">
-
-	  	<ul class="masthead-nav">
+    <header class="masthead">
+      <h1><a href="/">扶墙老师说</a></h1>
+      <p class="tagline">
+         一个架构士的思考与沉淀
+          <img src="/images/wechat-qrcode-footer.png"/>
+          扶墙老师，辨证施“知”
+      </p>
+      
+      <nav class="menu">
+        <input id="menu-check" type="checkbox"/>
+        <label id="menu-label" for="menu-check" class="unselectable">
+          <span class="icon close-icon">✕</span>
+          <span class="icon open-icon">☰</span>
+          <span class="text">展开</span>
+        </label>
+        <ul>
             <li class="nav-item"><a class="nav-link" href="/favorite.html">我的收藏</a></li>
             <li class="nav-item"><a class="nav-link" href="/dashboard.html">金融看板</a></li>
             <li class="nav-item"><a class="nav-link" href="/columns.html">专栏文章</a></li>
@@ -91,20 +112,12 @@
             <li class="nav-item"><a class="nav-link" href="/whoami.html">我是何人</a></li>
             <li class="nav-item"><a class="nav-link" href="/interlinks.html">友情链接</a></li>
             <li class="nav-item"><a class="nav-link" href="/feeds.xml">RSS订阅</a></li>
-		</ul>
+        </ul>
+      </nav>
+    </header>
 
-  		<hr class="masthead-hr">
-
-	  	<ul class="masthead-nav">
-            <li class="nav-item"><small>©afoo.me</small></li>
-            <li class="nav-item"><small>Powered by <a href="http://pandoc.org/">pandoc</a> and <a href="http://rometools.github.io/rome/">ROME</a></small></li>
-		</ul>
-
-	</div>
-
-
-    <div class="listing">
-
+    <article class="main">
+      
 <div class="row">
 <div id="header">
 <p class="lead">
@@ -120,7 +133,7 @@
 <li><a href="#wiki"><span class="toc-section-number">1.1</span> WIKI</a></li>
 <li><a href="#texlatex"><span class="toc-section-number">1.2</span> Tex/LaTex</a></li>
 <li><a href="#blueclothredcloth"><span class="toc-section-number">1.3</span> BlueCloth/RedCloth</a></li>
-<li><a href="#其他..."><span class="toc-section-number">1.4</span> 其他...</a></li>
+<li><a href="#其他"><span class="toc-section-number">1.4</span> 其他…</a></li>
 </ul></li>
 <li><a href="#基于xml格式的标记文本"><span class="toc-section-number">2</span> 基于XML格式的标记文本</a></li>
 <li><a href="#小结"><span class="toc-section-number">3</span> 小结</a></li>
@@ -128,33 +141,33 @@
 </div>
 <hr/>
 
-<p>整个标题整得有些过于夸张了（这种行为好像是称作“标题党 ”吧？！）， 呵呵，实际上，仅仅是因为无意间翻了翻“搞头书 ” <a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a> ， 发现个叫“BlueCloth ”的Gem库可以将普通文本标记转换成HTML格式， 从而牵连出自己脑海中的其它几种完成类似功能的工具选择，故此借机汇聚一下， 当然了，更希望是“抛砖引玉 ”，各位同仁如果还有更多的选择，不妨尽情添附，以(之)享整个社区。</p>
-<p>对于文档之类的编写工作来说，大家或许早就习惯了MS Word之类工具倡导的“所见即所得(WYSIWYG) ”编写方式， 属于这一类的工具很多，包括:</p>
-<ol style="list-style-type: decimal">
+<p>整个标题整得有些过于夸张了（这种行为好像是称作“标题党”吧？！）， 呵呵，实际上，仅仅是因为无意间翻了翻“搞头书” <a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a> ， 发现个叫“BlueCloth”的Gem库可以将普通文本标记转换成HTML格式， 从而牵连出自己脑海中的其它几种完成类似功能的工具选择，故此借机汇聚一下， 当然了，更希望是“抛砖引玉”，各位同仁如果还有更多的选择，不妨尽情添附，以(之)享整个社区。</p>
+<p>对于文档之类的编写工作来说，大家或许早就习惯了MS Word之类工具倡导的“所见即所得(WYSIWYG)”编写方式， 属于这一类的工具很多，包括:</p>
+<ol type="1">
 <li>Microsoft Word</li>
 <li>OpenOffice Writer</li>
 <li>DreamWeaver(我不知道把它罗列在这里是否合适，呵呵)</li>
 <li>Buzzword(http://buzzword.acrobat.com)</li>
 </ol>
-<p>但是，所有这些并不能代表整个世界，当我们透过镜子的这一面看过去的时候，就会发现， 在镜子的另一面，“所见即所得 ”并不像我们最初所想象的那样处处受欢迎， 因为在这里，“基于标记文本的文字编写方式 ”才是统治镜子另一面的那个“人 ”。 :-)</p>
-<p>我们不妨将“基于标记文本的文字编写方式 ”划分为两类，第一类不妨称其为“基于普通文本的标记文本 ”， 第二类不妨称其为“基于XML格式的标记文本 ”，下面我们分别对这两类标记文本方式进行细谈...</p>
+<p>但是，所有这些并不能代表整个世界，当我们透过镜子的这一面看过去的时候，就会发现， 在镜子的另一面，“所见即所得”并不像我们最初所想象的那样处处受欢迎， 因为在这里，“基于标记文本的文字编写方式”才是统治镜子另一面的那个“人”。 :-)</p>
+<p>我们不妨将“基于标记文本的文字编写方式”划分为两类，第一类不妨称其为“基于普通文本的标记文本”， 第二类不妨称其为“基于XML格式的标记文本”，下面我们分别对这两类标记文本方式进行细谈…</p>
 <h1 id="基于普通文本的标记文本"><span class="header-section-number">1</span> 基于普通文本的标记文本</h1>
-<p>通常情况下，“基于普通文本的标记文本 ”都是在普通文本中间“穿插 ”一些具有特殊意义的标记文本， 然后通过某种能够识别这些预先定义的标记文本的工具，对这些普通文本进行处理或者说转换，最终输出成各种格式的文档，比如最常见的就是输出成HTML文件。</p>
+<p>通常情况下，“基于普通文本的标记文本”都是在普通文本中间“穿插”一些具有特殊意义的标记文本， 然后通过某种能够识别这些预先定义的标记文本的工具，对这些普通文本进行处理或者说转换，最终输出成各种格式的文档，比如最常见的就是输出成HTML文件。</p>
 <h2 id="wiki"><span class="header-section-number">1.1</span> WIKI</h2>
-<p>属于此种范畴的“人选 ”，第一个当属“WIKI ”，大名鼎鼎的Wikipedia（http://en.wikipedia.org/wiki/Main_Page）想必大家都已经早有耳闻了。 WIKI形式的文档就是，编辑的时候以普通文本形式进行编辑，而显示的时候，则根据普通文本内容中嵌入的各种标记进行格式化输出成HTML进行显示。对WIKI的总体情况，笔者其实不是很熟悉， 好像各家WIKI都有各自都有的标记文本语法(Syntax)，而笔者充其量也只是早些年前自己装过“MoinMoin Wiki(http://moinmoin.wikiwikiweb.de/) ”，自己把玩了一把而已。</p>
+<p>属于此种范畴的“人选”，第一个当属“WIKI”，大名鼎鼎的Wikipedia（http://en.wikipedia.org/wiki/Main_Page）想必大家都已经早有耳闻了。 WIKI形式的文档就是，编辑的时候以普通文本形式进行编辑，而显示的时候，则根据普通文本内容中嵌入的各种标记进行格式化输出成HTML进行显示。对WIKI的总体情况，笔者其实不是很熟悉， 好像各家WIKI都有各自都有的标记文本语法(Syntax)，而笔者充其量也只是早些年前自己装过“MoinMoin Wiki(http://moinmoin.wikiwikiweb.de/)”，自己把玩了一把而已。</p>
 <p>WIKI的实现产品很多，基于各种编程语言的WIKI都会各自涌现一些优秀的产品，像MoinMoin Wiki就是使用Python语言开发的， 除此之外，还有使用Java语言开发的XWiki，使用Perl开发的最早的Wiki应用WikiWikiWeb等等。 你可以从http://en.wikipedia.org/wiki/Wiki_software获取更多使用其他语言开发的Wiki软件的相关信息。</p>
 <p>还记得前阵子在图灵的论坛里，刘江老师发起一个倡导大家通过Wiki合作写书的想法，可见Wiki并非浪得虚名，仅是说说而已了。</p>
 <h2 id="texlatex"><span class="header-section-number">1.2</span> Tex/LaTex</h2>
 <p>笔者想当年因为经济条件没有考研，所以也就没有真正验证过，只是听说，只要是读过研究生写过论文的， 好像大多数都接触过LaTeX（http://www.latex-project.org/），它属于TeX的改进版，但同样属于基于普通标记文本的文字编写方式。 LaTeX好像对各种公式的表达支持很好，不过，对于中文的支持来说，好像要诉诸于CTeX之类的本地化版本，但这都是笔者道听途说， 如果您对这种基于TeX/LaTeX的编辑方式感兴趣，倒是应该自己验证一下。俺此行的目的，仅仅是为了罗列选择项而已。</p>
 <p>这里有一个摘自LaTeX网站的实例，或许能够让我们有一个感性的认识。如果编写如下源文本：</p>
-<div class="sourceCode"><pre class="sourceCode latex"><code class="sourceCode latex"><span class="bu">\documentclass</span>{<span class="ex">article</span>}
-<span class="fu">\title</span>{Cartesian closed categories and the price of eggs}
-<span class="fu">\author</span>{Jane Doe}
-<span class="fu">\date</span>{September 1994}
-<span class="kw">\begin</span>{<span class="ex">document</span>}
-   <span class="fu">\maketitle</span>
-   Hello world!
-<span class="kw">\end</span>{<span class="ex">document</span>}</code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode latex"><code class="sourceCode latex"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="bu">\documentclass</span>{<span class="ex">article</span>}</a>
+<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="fu">\title</span>{Cartesian closed categories and the price of eggs}</a>
+<a class="sourceLine" id="cb1-3" data-line-number="3"><span class="fu">\author</span>{Jane Doe}</a>
+<a class="sourceLine" id="cb1-4" data-line-number="4"><span class="fu">\date</span>{September 1994}</a>
+<a class="sourceLine" id="cb1-5" data-line-number="5"><span class="kw">\begin</span>{<span class="ex">document</span>}</a>
+<a class="sourceLine" id="cb1-6" data-line-number="6">   <span class="fu">\maketitle</span></a>
+<a class="sourceLine" id="cb1-7" data-line-number="7">   Hello world!</a>
+<a class="sourceLine" id="cb1-8" data-line-number="8"><span class="kw">\end</span>{<span class="ex">document</span>}</a></code></pre></div>
 <p>那么，通过LaTeX处理后，将输出类似如下形式的显示效果(下面的输出无法完全反映效果，可以参考LaTeX网站上的样子)：</p>
 <pre>
 Cartesian closed categories and the price of eggs
@@ -171,27 +184,22 @@ Hello world!
 <p>前面说了，这篇文字是由BlueCloth（http://www.deveiate.org/projects/BlueCloth/）引出的， 这是一个基于Markdown(http://daringfireball.net/projects/markdown/)标记语法的Ruby Gem库， 使用它，我们可以在Ruby程序中将符合Markdown标记语法的普通文本转换成HTML格式的文本以供显示。</p>
 <p>在Ruby世界里，有一个BlueCloth的同胞兄弟，叫做RedCloth，它也是一个Ruby的Gem库，同样用于将普通的标记文本转换成HTML格式的文本， 但是，RedCloth所遵循的标记语法与BlueCloth是不一样的，它遵循的是Textism(http://www.textism.com/tools/textile/)所规定的标记语法。 ## A9text</p>
 <p>这个是自己兄弟阿九的开源项目，主要基于Javascript实现，采用自己的标记文本语法，同样采用的是基于普通标记文本格式。 A9Text可以让你在本机方便的进行文档编写，而不用去操心各种格式的编排之类的琐事，你可以从http://trydofor.iteye.com/获取更多A9Text的信息。</p>
-<h2 id="其他..."><span class="header-section-number">1.4</span> 其他...</h2>
+<h2 id="其他"><span class="header-section-number">1.4</span> 其他…</h2>
 <p>我想，许多思想都是相似的，在其他的计算机语言或者说技术社区中，应该也存在许多基于同一思想的软件或者说产品， 只是，俺不是超人，不可能去一一认识，列位如若晓得，不妨道明，也让俺开阔些眼界。</p>
 <h1 id="基于xml格式的标记文本"><span class="header-section-number">2</span> 基于XML格式的标记文本</h1>
 <p>这部分其实只是想说说DocBook，因为笔者现在已经习惯了基于docbook的文档编写方式，谁让俺没能精通Word的使用那，呵呵。 最初决定使用docbook的时候，是记得好像OReilly内部是使用docbook作为内部格式的，后来才发现，当初没有充分考虑国情， 因为国内还是用Word进行排版的，好在使用Docbook的好处就是，我只需要关注内容就可以了，至于最终的输出格式， 可以视情况而定，我可以将同样一份docbook输出成单页的HTML，多页的HTML，PDF等格式，甚至于如果我们能够知道Word文档的内部结构， 也可以写一个转换程序，将同一份docbook文档直接转换成Word文档。</p>
 <p>实际上，这篇文字就是使用docbook编写的，通过Velocity项目提供的Docbook Framework，只需要少许几步， 就可以在Eclipse中搭建一个完备的文档编写工程，如果不考虑交换的话，只是自己编写一些东西，离了word，其实也满逍遥的。</p>
 <h1 id="小结"><span class="header-section-number">3</span> 小结</h1>
-<p>或许真的就跟Linkin Park乐队在一首歌的结尾所说的那样，“Difference Is Good ”， 即使是基于相同的理念或者说思想，但各个产品之间还是会存在些许差异，或者是标记语法的差异，或者是实现语音的差异，等等。 这就跟经常见到的语言之争，框架之争一样，或许都只是个人喜好决定的，也正是如此，才会让整个世界变得如此斑斓。</p>
+<p>或许真的就跟Linkin Park乐队在一首歌的结尾所说的那样，“Difference Is Good”， 即使是基于相同的理念或者说思想，但各个产品之间还是会存在些许差异，或者是标记语法的差异，或者是实现语音的差异，等等。 这就跟经常见到的语言之争，框架之争一样，或许都只是个人喜好决定的，也正是如此，才会让整个世界变得如此斑斓。</p>
 <p>但话又说回来了，有时候，选择太多了也不好，或许会让大家选择的很累，这个时候，过多的差异反而成为了问题， 能够一统天下的方式，或许又会更受欢迎，谁又知道那？！</p>
-<div class="footnotes">
+<section class="footnotes">
 <hr />
 <ol>
-<li id="fn1"><p>《Programming Ruby》 2nd Edition<a href="#fnref1">↩</a></p></li>
+<li id="fn1"><p>《Programming Ruby》 2nd Edition<a href="#fnref1" class="footnote-back">↩</a></p></li>
 </ol>
-</div>
-<hr>
-<div align="center">
-<img src="/images/wechat-qrcode-footer.png"/>
-</div>
+</section>
 
-</div>
+    </article>
 
-
-
-</body></html>
+  </body>
+</html>

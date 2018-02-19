@@ -1,14 +1,16 @@
 <!DOCTYPE html>
-<html lang="zh">
-<head>
+<html>
+  <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scala Continuations Revisited - 一个架构士的思考与沉</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="王福强的博客， 一个架构士的思考与沉淀">
     <meta name="keywords" content="architecture, book author, thinker, fighter, 架构, 思考, 技术, 武术, 哲学">
     <meta name="author" content="王福强">
-        <link rel="icon" href="/favicon.ico">
-    <title>Scala Continuations Revisited - 一个架构士的思考与沉淀</title>
-    <!-- 百度统计 -->
+    <link rel="stylesheet" href="/ivy.css">
+    <link rel="shortcut icon" href="/favicon.ico"/>
+    <style type="text/css">code{white-space: pre;}</style>
+            <!-- 百度统计 -->
     <script>
       var _hmt = _hmt || [];
       (function() {
@@ -18,35 +20,26 @@
           s.parentNode.insertBefore(hm, s);
       })();
     </script>
+  </head>
 
-	<link href="/css/custom.css" rel="stylesheet"/>
-	<link rel="shortcut icon" href="/favicon.ico"/>
+  <body class="node homepage">
 
-<style type="text/css">code{white-space: pre;}</style>
-        
-	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-	<!--[if lt IE 9]>
-	  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.2/html5shiv.js"></script>
-	  <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-	<![endif]-->
-
-</head>
-
-<body>
-
-    <div class="masthead">
-		<!--
-    <h1 class="masthead-title fq">
-      <a href="/">扶墙老师</a>
-
-    </h1>
-    -->
-    <a href="/"><h1>扶墙老师说</h1></a>
-		<p class="masthead-lead">一个架构士的思考与沉淀</p>
-
-		<hr class="masthead-hr">
-
-	  	<ul class="masthead-nav">
+    <header class="masthead">
+      <h1><a href="/">扶墙老师说</a></h1>
+      <p class="tagline">
+         一个架构士的思考与沉淀
+          <img src="/images/wechat-qrcode-footer.png"/>
+          扶墙老师，辨证施“知”
+      </p>
+      
+      <nav class="menu">
+        <input id="menu-check" type="checkbox"/>
+        <label id="menu-label" for="menu-check" class="unselectable">
+          <span class="icon close-icon">✕</span>
+          <span class="icon open-icon">☰</span>
+          <span class="text">展开</span>
+        </label>
+        <ul>
             <li class="nav-item"><a class="nav-link" href="/favorite.html">我的收藏</a></li>
             <li class="nav-item"><a class="nav-link" href="/dashboard.html">金融看板</a></li>
             <li class="nav-item"><a class="nav-link" href="/columns.html">专栏文章</a></li>
@@ -54,20 +47,12 @@
             <li class="nav-item"><a class="nav-link" href="/whoami.html">我是何人</a></li>
             <li class="nav-item"><a class="nav-link" href="/interlinks.html">友情链接</a></li>
             <li class="nav-item"><a class="nav-link" href="/feeds.xml">RSS订阅</a></li>
-		</ul>
+        </ul>
+      </nav>
+    </header>
 
-  		<hr class="masthead-hr">
-
-	  	<ul class="masthead-nav">
-            <li class="nav-item"><small>©afoo.me</small></li>
-            <li class="nav-item"><small>Powered by <a href="http://pandoc.org/">pandoc</a> and <a href="http://rometools.github.io/rome/">ROME</a></small></li>
-		</ul>
-
-	</div>
-
-
-    <div class="listing">
-
+    <article class="main">
+      
 <div class="row">
 <div id="header">
 <p class="lead">
@@ -84,7 +69,7 @@
 <div id="TOC">
 <ul>
 <li><a href="#classification-of-continuation"><span class="toc-section-number">1</span> Classification Of Continuation</a></li>
-<li><a href="#how-to-enable-scalas-continuation-support"><span class="toc-section-number">2</span> How to enable scala's continuation support?</a></li>
+<li><a href="#how-to-enable-scalas-continuation-support"><span class="toc-section-number">2</span> How to enable scala’s continuation support?</a></li>
 <li><a href="#scala-continuation初瞥"><span class="toc-section-number">3</span> Scala Continuation初瞥</a></li>
 <li><a href="#yield-or-return"><span class="toc-section-number">4</span> yield or return</a></li>
 <li><a href="#潜在的可以简化的编程场景"><span class="toc-section-number">5</span> 潜在的可以简化的编程场景</a></li>
@@ -92,25 +77,25 @@
 <li><a href="#值得参考的项目"><span class="toc-section-number">7</span> 值得参考的项目</a></li>
 <li><a href="#一些模式与规则"><span class="toc-section-number">8</span> 一些模式与规则</a></li>
 <li><a href="#limitations"><span class="toc-section-number">9</span> Limitations</a></li>
-<li><a href="#read-more..."><span class="toc-section-number">10</span> Read More...</a></li>
+<li><a href="#read-more"><span class="toc-section-number">10</span> Read More…</a></li>
 </ul>
 </div>
 <hr/>
 
 <p>The continuation is all about <strong>suspend</strong> and <strong>resume</strong> semantic, the idea is simple, powerful, but hard to get, especially when you try to rewind your mind from threading world.</p>
-<p>After Scala2.8, a kind of continuation is introduced, which is called <strong>delimited continuation</strong>, aka. <em>partial continuation</em> or <em>composable continuation</em>, I had tried to understand scala's continuation support well before, but didn't get too much, So today, I try to do same thing again, here are some of the information that I regroup from former collections or new sources, I don't hope to understand it this time either, but at least I leave some footprint. :-)</p>
+<p>After Scala2.8, a kind of continuation is introduced, which is called <strong>delimited continuation</strong>, aka. <em>partial continuation</em> or <em>composable continuation</em>, I had tried to understand scala’s continuation support well before, but didn’t get too much, So today, I try to do same thing again, here are some of the information that I regroup from former collections or new sources, I don’t hope to understand it this time either, but at least I leave some footprint. :-)</p>
 <blockquote>
-<p>To understand Continuation and CPS concepts well, Jim Mcbeath's blog post on <a href="http://jim-mcbeath.blogspot.com/2010/08/delimited-continuations.html">Delimited Continuation</a> is highly recommended to read!!!</p>
+<p>To understand Continuation and CPS concepts well, Jim Mcbeath’s blog post on <a href="http://jim-mcbeath.blogspot.com/2010/08/delimited-continuations.html">Delimited Continuation</a> is highly recommended to read!!!</p>
 </blockquote>
 <hr />
 <h1 id="classification-of-continuation"><span class="header-section-number">1</span> Classification Of Continuation</h1>
-<ol style="list-style-type: decimal">
+<ol type="1">
 <li>Full Continuation / First-Class Continuation</li>
 <li>Delimited Continuations / Partial Continuation / Composable Continuation</li>
 </ol>
 <hr />
-<h1 id="how-to-enable-scalas-continuation-support"><span class="header-section-number">2</span> How to enable scala's continuation support?</h1>
-<ol style="list-style-type: decimal">
+<h1 id="how-to-enable-scalas-continuation-support"><span class="header-section-number">2</span> How to enable scala’s continuation support?</h1>
+<ol type="1">
 <li>enable compiler plugin
 <ul>
 <li>with compiler, <code>scalac -P:continuations:enable</code></li>
@@ -165,11 +150,11 @@ reset {
 <p>There are thus three types associated with shift:</p>
 <ul>
 <li>The type of the argument to pass to the continuation, which is the same as the syntactic return type of the shift in the source code.</li>
-<li>The type of the return from the continuation, which is the same as the return type of all of the code that follows the shift block in the source code (i.e. the type of the last value in the block of code between the shift block and the end of the function or reset block containing the shift block). This is called the untransformed return type.</li>
+<li>The type of the return from the continuation, which is the same as the return type of all of the code that follows the shift block in the source code (i.e. the type of the last value in the block of code between the shift block and the end of the function or reset block containing the shift block). This is called the untransformed return type.</li>
 <li>The type of the last value in the shift block, which becomes the type of the return value of the enclosing function or return block. This is called the transformed return type.</li>
 </ul>
 <p>In the signature for shift, the above three types appear as A, B and C, respectively: <code>shift [A, B, C] (fun: ((A) ⇒ B) ⇒ C): A @scala.util.continuations.cpsParam[B,C]</code></p>
-<p>Here's where those types appear: <code>C = reset { ...; A = shift { k:(A=&gt;B) =&gt; ...; C } ...; B }</code></p>
+<p>Here’s where those types appear: <code>C = reset { ...; A = shift { k:(A=&gt;B) =&gt; ...; C } ...; B }</code></p>
 <hr />
 <h1 id="yield-or-return"><span class="header-section-number">4</span> yield or return</h1>
 <p>shift捕获当前reset界定的continuation，在shift中可以直接调用并执行捕获的continuation，也可以将该continuation交给其他组件而暂时不执行，比如放入某个queue中，由某个组件集中调度其执行。</p>
@@ -180,7 +165,7 @@ reset {
 <p>除了在shift中捕获continuation并决定如何使用，我们还可以在shift中做其它事情，而不单单是为了捕获的continuation而“或者”，呵呵</p>
 <hr />
 <h1 id="潜在的可以简化的编程场景"><span class="header-section-number">5</span> 潜在的可以简化的编程场景</h1>
-<ol style="list-style-type: decimal">
+<ol type="1">
 <li>doing asynchronous I/O using Java NIO</li>
 <li>using executors and thread pools</li>
 <li>handling cross-request control flow in web applications</li>
@@ -204,38 +189,38 @@ scheduler.selectAndNotify
 </pre>
 <hr />
 <h1 id="值得参考的项目"><span class="header-section-number">7</span> 值得参考的项目</h1>
-<ol style="list-style-type: decimal">
+<ol type="1">
 <li>Swarm
 <ul>
 <li><a href="http://vimeo.com/6614042" class="uri">http://vimeo.com/6614042</a></li>
 <li><a href="http://www.earldouglas.com/actor-based-continuations-with-akka-and-swarm/" class="uri">http://www.earldouglas.com/actor-based-continuations-with-akka-and-swarm/</a></li>
 </ul></li>
-<li>Akka's DataFlow and NIO actor implementations</li>
+<li>Akka’s DataFlow and NIO actor implementations</li>
 <li>Jim McBeath的blog posts和github项目(Scoroutine &amp; NIOServer)</li>
 <li>Loft - <a href="https://github.com/rschildmeijer/loft" class="uri">https://github.com/rschildmeijer/loft</a></li>
 </ol>
 <hr />
 <h1 id="一些模式与规则"><span class="header-section-number">8</span> 一些模式与规则</h1>
-<ol style="list-style-type: decimal">
-<li>&quot;All code inside the reset, minus the shift expressions, is turned into continuations&quot;</li>
-<li>reset的返回值类型跟shift的返回值类型相同？！ - &quot;the value of the evaluated reset block is the value of the last expression in the shift block that gets executed within that reset block&quot;</li>
-<li>&quot;<strong>The gist of CPS is that we don't use return</strong>. Rather than calling a subroutine and having it return to us, as is the case in the normal Direct Style, we pass a continuation to the subroutine for it to execute when it is done.&quot;</li>
-<li>&quot;In every method where we call a subroutine using CPS, that call is always the very last thing in the method.&quot;</li>
+<ol type="1">
+<li>“All code inside the reset, minus the shift expressions, is turned into continuations”</li>
+<li>reset的返回值类型跟shift的返回值类型相同？！ - “the value of the evaluated reset block is the value of the last expression in the shift block that gets executed within that reset block”</li>
+<li>“<strong>The gist of CPS is that we don’t use return</strong>. Rather than calling a subroutine and having it return to us, as is the case in the normal Direct Style, we pass a continuation to the subroutine for it to execute when it is done.”</li>
+<li>“In every method where we call a subroutine using CPS, that call is always the very last thing in the method.”</li>
 <li>“Any method that includes shift must be marked as CPS, and any method that calls a CPS method must be marked as CPS, until you reach the enclosing reset call.”</li>
 <li></li>
 </ol>
 <hr />
 <h1 id="limitations"><span class="header-section-number">9</span> Limitations</h1>
-<ol style="list-style-type: decimal">
+<ol type="1">
 <li>Using return statements in a CPS function is unlikely to do what you expect, and may cause type mismatch compiler errors, so you should not use them.</li>
 <li>When using an if statement, you may get an error like this: <code>Foo.scala:21: error: then and else parts must both be cps code or neither of them</code></li>
-<li>The compiler plugin does not handle try blocks, so you can't catch exceptions within CPS code. Those exceptions will be propagated out to the enclosing reset block and can be caught there - unless the continuation is suspended and executed later, in which case any exceptions would be propagated to the reset block of the code doing that later execution.</li>
-<li>You need to be careful when using looping constructs. As <a href="http://scala-programming-language.1934581.n4.nabble.com/scala-Tail-Recursive-Calls-possible-inside-CPS-td2221188.html#a2226758">Tiark says</a>, <code>Capturing delimited continuations inside a while loop turns the loop basically into a general recursive function.</code> You can follow the above link for details, but basically each invocation of shift within a looping construct allocates another stack frame, so after &quot;looping&quot; many times you will likely get a StackOverflowError.</li>
+<li>The compiler plugin does not handle try blocks, so you can’t catch exceptions within CPS code. Those exceptions will be propagated out to the enclosing reset block and can be caught there - unless the continuation is suspended and executed later, in which case any exceptions would be propagated to the reset block of the code doing that later execution.</li>
+<li>You need to be careful when using looping constructs. As <a href="http://scala-programming-language.1934581.n4.nabble.com/scala-Tail-Recursive-Calls-possible-inside-CPS-td2221188.html#a2226758">Tiark says</a>, <code>Capturing delimited continuations inside a while loop turns the loop basically into a general recursive function.</code> You can follow the above link for details, but basically each invocation of shift within a looping construct allocates another stack frame, so after “looping” many times you will likely get a StackOverflowError.</li>
 <li>Some looping constructs can not be used with a shift inside them. To quote Tiark again: <code>In a reset block you can do anything, but shifts are not allowed everywhere. The limitation is that everything on the call path between a shift and its enclosing reset must be &quot;shift-aware&quot;. That rules out the regular foreach, map and filter methods because they know nothing about continuations, so they can't call closures containing shift.</code></li>
 </ol>
 <hr />
-<h1 id="read-more..."><span class="header-section-number">10</span> Read More...</h1>
-<ol style="list-style-type: decimal">
+<h1 id="read-more"><span class="header-section-number">10</span> Read More…</h1>
+<ol type="1">
 <li>My Question On Quora - <a href="http://www.quora.com/How-does-Scala-continuation-work-and-has-there-been-some-successful-system-built-on-it" class="uri">http://www.quora.com/How-does-Scala-continuation-work-and-has-there-been-some-successful-system-built-on-it</a></li>
 <li><strong>highly recommended</strong> - <a href="http://jim-mcbeath.blogspot.com/2010/08/delimited-continuations.html" class="uri">http://jim-mcbeath.blogspot.com/2010/08/delimited-continuations.html</a></li>
 <li><a href="http://ebruchez.blogspot.com/2011/09/continuations-in-scala.html" class="uri">http://ebruchez.blogspot.com/2011/09/continuations-in-scala.html</a></li>
@@ -249,13 +234,8 @@ scheduler.selectAndNotify
 <li><a href="http://lampsvn.epfl.ch/trac/scala/browser/compiler-plugins/continuations/trunk/doc/examples/continuations/Test17Webserver.scala" class="uri">http://lampsvn.epfl.ch/trac/scala/browser/compiler-plugins/continuations/trunk/doc/examples/continuations/Test17Webserver.scala</a></li>
 <li><a href="http://lampsvn.epfl.ch/trac/scala/browser/compiler-plugins/continuations/trunk/doc/examples/continuations" class="uri">http://lampsvn.epfl.ch/trac/scala/browser/compiler-plugins/continuations/trunk/doc/examples/continuations</a></li>
 </ol>
-<hr>
-<div align="center">
-<img src="/images/wechat-qrcode-footer.png"/>
-</div>
 
-</div>
+    </article>
 
-
-
-</body></html>
+  </body>
+</html>

@@ -1,15 +1,82 @@
 <!DOCTYPE html>
-<html lang="zh">
-<head>
+<html>
+  <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Explore The Scheduling of Scala Actors - 一个架构士的思考与沉</title>
+        <meta name="date" content="2010-12-25" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="王福强的博客， 一个架构士的思考与沉淀">
     <meta name="keywords" content="architecture, book author, thinker, fighter, 架构, 思考, 技术, 武术, 哲学">
     <meta name="author" content="王福强">
-        <meta name="date" content="2010-12-25" />
-        <link rel="icon" href="/favicon.ico">
-    <title>Explore The Scheduling of Scala Actors - 一个架构士的思考与沉淀</title>
-    <!-- 百度统计 -->
+    <link rel="stylesheet" href="/ivy.css">
+    <link rel="shortcut icon" href="/favicon.ico"/>
+    <style type="text/css">code{white-space: pre;}</style>
+    <style type="text/css">
+    a.sourceLine { display: inline-block; line-height: 1.25; }
+    a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+    a.sourceLine:empty { height: 1.2em; position: absolute; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode { white-space: pre; position: relative; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    code.sourceCode { white-space: pre-wrap; }
+    a.sourceLine { text-indent: -1em; padding-left: 1em; }
+    }
+    pre.numberSource a.sourceLine
+      { position: relative; }
+    pre.numberSource a.sourceLine:empty
+      { position: absolute; }
+    pre.numberSource a.sourceLine::before
+      { content: attr(data-line-number);
+        position: absolute; left: -5em; text-align: right; vertical-align: baseline;
+        border: none; pointer-events: all;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {  }
+    @media screen {
+    a.sourceLine::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+            <!-- 百度统计 -->
     <script>
       var _hmt = _hmt || [];
       (function() {
@@ -19,72 +86,26 @@
           s.parentNode.insertBefore(hm, s);
       })();
     </script>
+  </head>
 
-	<link href="/css/custom.css" rel="stylesheet"/>
-	<link rel="shortcut icon" href="/favicon.ico"/>
+  <body class="node homepage">
 
-<style type="text/css">code{white-space: pre;}</style>
-    <style type="text/css">
-    div.sourceCode { overflow-x: auto; }
-    table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
-      margin: 0; padding: 0; vertical-align: baseline; border: none; }
-    table.sourceCode { width: 100%; line-height: 100%; }
-    td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
-    td.sourceCode { padding-left: 5px; }
-    code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
-    code > span.dt { color: #902000; } /* DataType */
-    code > span.dv { color: #40a070; } /* DecVal */
-    code > span.bn { color: #40a070; } /* BaseN */
-    code > span.fl { color: #40a070; } /* Float */
-    code > span.ch { color: #4070a0; } /* Char */
-    code > span.st { color: #4070a0; } /* String */
-    code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
-    code > span.ot { color: #007020; } /* Other */
-    code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
-    code > span.fu { color: #06287e; } /* Function */
-    code > span.er { color: #ff0000; font-weight: bold; } /* Error */
-    code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-    code > span.cn { color: #880000; } /* Constant */
-    code > span.sc { color: #4070a0; } /* SpecialChar */
-    code > span.vs { color: #4070a0; } /* VerbatimString */
-    code > span.ss { color: #bb6688; } /* SpecialString */
-    code > span.im { } /* Import */
-    code > span.va { color: #19177c; } /* Variable */
-    code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-    code > span.op { color: #666666; } /* Operator */
-    code > span.bu { } /* BuiltIn */
-    code > span.ex { } /* Extension */
-    code > span.pp { color: #bc7a00; } /* Preprocessor */
-    code > span.at { color: #7d9029; } /* Attribute */
-    code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
-    code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-    code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-    code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-  </style>
-        
-	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-	<!--[if lt IE 9]>
-	  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.2/html5shiv.js"></script>
-	  <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-	<![endif]-->
-
-</head>
-
-<body>
-
-    <div class="masthead">
-		<!--
-    <h1 class="masthead-title fq">
-      <a href="/">扶墙老师</a>
-
-    </h1>
-    -->
-    <a href="/"><h1>扶墙老师说</h1></a>
-		<p class="masthead-lead">一个架构士的思考与沉淀</p>
-
-		<hr class="masthead-hr">
-
-	  	<ul class="masthead-nav">
+    <header class="masthead">
+      <h1><a href="/">扶墙老师说</a></h1>
+      <p class="tagline">
+         一个架构士的思考与沉淀
+          <img src="/images/wechat-qrcode-footer.png"/>
+          扶墙老师，辨证施“知”
+      </p>
+      
+      <nav class="menu">
+        <input id="menu-check" type="checkbox"/>
+        <label id="menu-label" for="menu-check" class="unselectable">
+          <span class="icon close-icon">✕</span>
+          <span class="icon open-icon">☰</span>
+          <span class="text">展开</span>
+        </label>
+        <ul>
             <li class="nav-item"><a class="nav-link" href="/favorite.html">我的收藏</a></li>
             <li class="nav-item"><a class="nav-link" href="/dashboard.html">金融看板</a></li>
             <li class="nav-item"><a class="nav-link" href="/columns.html">专栏文章</a></li>
@@ -92,20 +113,12 @@
             <li class="nav-item"><a class="nav-link" href="/whoami.html">我是何人</a></li>
             <li class="nav-item"><a class="nav-link" href="/interlinks.html">友情链接</a></li>
             <li class="nav-item"><a class="nav-link" href="/feeds.xml">RSS订阅</a></li>
-		</ul>
+        </ul>
+      </nav>
+    </header>
 
-  		<hr class="masthead-hr">
-
-	  	<ul class="masthead-nav">
-            <li class="nav-item"><small>©afoo.me</small></li>
-            <li class="nav-item"><small>Powered by <a href="http://pandoc.org/">pandoc</a> and <a href="http://rometools.github.io/rome/">ROME</a></small></li>
-		</ul>
-
-	</div>
-
-
-    <div class="listing">
-
+    <article class="main">
+      
 <div class="row">
 <div id="header">
 <p class="lead">
@@ -132,21 +145,21 @@
 <hr/>
 
 <p><strong>author: fujohnwang</strong></p>
-<p>We know that Scala provides 2 kinds of actors, that's, “Thread Based Actors” and “Event Based Actors” , usually, they are not replacable. You most of the time will use “Thread Based Actors” in scenarios with busy messages and use “Event Based Actos” in scenarios with not so busy messages. The reason is that if in your scenarios that high volumn messages will be emitted quickly without time intervals, “Thread Based Actors” will process these messages in their pre-allocated threads until the messages are done, without any context-switch. But for “Event Based Actors” , the messages are not guranteed to be alwauys processed in one thread, but maybe dispatched to different threads for different messages, clearly, context switch cost may cause performance penalty here. In low or moderate pressure, this is ok, but for high volume pressure, “Thread Based Actors” will excel in theory.</p>
-<p>But to know only these differences between “Thread Based Actors” and “Event Based Actors” won't help too much. If we want to gain more peformance improvements from Scala Actors, we have to dive into the scheduling of scala actors to find more...</p>
+<p>We know that Scala provides 2 kinds of actors, that’s, “Thread Based Actors” and “Event Based Actors” , usually, they are not replacable. You most of the time will use “Thread Based Actors” in scenarios with busy messages and use “Event Based Actos” in scenarios with not so busy messages. The reason is that if in your scenarios that high volumn messages will be emitted quickly without time intervals, “Thread Based Actors” will process these messages in their pre-allocated threads until the messages are done, without any context-switch. But for “Event Based Actors” , the messages are not guranteed to be alwauys processed in one thread, but maybe dispatched to different threads for different messages, clearly, context switch cost may cause performance penalty here. In low or moderate pressure, this is ok, but for high volume pressure, “Thread Based Actors” will excel in theory.</p>
+<p>But to know only these differences between “Thread Based Actors” and “Event Based Actors” won’t help too much. If we want to gain more peformance improvements from Scala Actors, we have to dive into the scheduling of scala actors to find more…</p>
 <h1 id="default-scheduler-of-scala-actor"><span class="header-section-number">1</span> Default Scheduler of Scala Actor</h1>
 <p>Usually, when we create actors as most of the code demonstrated:</p>
-<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">import</span> scala.<span class="fu">actors</span>._, Actor._
-
-<span class="kw">val</span> myActor = actor{
- ...
-}</code></pre></div>
-<p>A ForkJoinScheduler with 4 threads will working behind to support the running of our actors created this way. I do think if you are not writing toy code, the 4 threads can't suffice. So if you find your applications sucks after switching to Scala actors, don't worry, it should be if you don't tuning any thing about Scala Actor.</p>
-<p>Let's move on to find out how to tuning the scheduling of scala actors so that they can meet our needs.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode scala"><code class="sourceCode scala"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">import</span> scala.<span class="fu">actors</span>._, Actor._</a>
+<a class="sourceLine" id="cb1-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb1-3" data-line-number="3"><span class="kw">val</span> myActor = actor{</a>
+<a class="sourceLine" id="cb1-4" data-line-number="4"> ...</a>
+<a class="sourceLine" id="cb1-5" data-line-number="5">}</a></code></pre></div>
+<p>A ForkJoinScheduler with 4 threads will working behind to support the running of our actors created this way. I do think if you are not writing toy code, the 4 threads can’t suffice. So if you find your applications sucks after switching to Scala actors, don’t worry, it should be if you don’t tuning any thing about Scala Actor.</p>
+<p>Let’s move on to find out how to tuning the scheduling of scala actors so that they can meet our needs.</p>
 <h1 id="customize-the-schedulers-of-scala-actors"><span class="header-section-number">2</span> Customize The Schedulers of Scala Actors</h1>
-<p>Since Scala Actors are running in JVM, they can't escape from the basic facilities of JVM and fly in their own sky. That's, to implement Scala Actors so that they can support new concurrency model, we still have to use JVM's threading model as the fundation. For Scala Actors, the threading things are abstracted and hidden after IScheduler. Each tasks or events or messages will be submitted and processed by some IScheduler instance finally. You make the IScheduler work well, you make Scala Actors work well.</p>
+<p>Since Scala Actors are running in JVM, they can’t escape from the basic facilities of JVM and fly in their own sky. That’s, to implement Scala Actors so that they can support new concurrency model, we still have to use JVM’s threading model as the fundation. For Scala Actors, the threading things are abstracted and hidden after IScheduler. Each tasks or events or messages will be submitted and processed by some IScheduler instance finally. You make the IScheduler work well, you make Scala Actors work well.</p>
 <h2 id="tuning-global-scheduler"><span class="header-section-number">2.1</span> Tuning Global Scheduler</h2>
-<p>Each Actors that's created by using Actor.actor{..} helper method will use the default global scheduler as their scheduler. That's exactly the ForkJoinScheduler with 4 threads. Most of the time , 4 is not enough, to adjust it, We have 2 ways:</p>
+<p>Each Actors that’s created by using Actor.actor{..} helper method will use the default global scheduler as their scheduler. That’s exactly the ForkJoinScheduler with 4 threads. Most of the time , 4 is not enough, to adjust it, We have 2 ways:</p>
 <p>1- Replace the default scheduler in your code like this:</p>
 <p><code>Scheduler.impl = new ForkJoinScheduler(coreSize, maxSize, deamon, fair)</code></p>
 <p>Of course, since IScheduler trait has many other implementations, like SingleThreadedScheduler or ResizableThreadPoolScheduler, you can choose to use them as per your needs, as long as you do understand how to use them,:-)</p>
@@ -154,28 +167,23 @@
 <p><code>java -Dactors.corePoolSize=4 -Dactors.maxPoolSize=10 ...</code></p>
 <p>Simple and easy, ha?</p>
 <h2 id="tuning-specific-schedulers"><span class="header-section-number">2.2</span> Tuning Specific Schedulers</h2>
-<p>I hope your application is simple, so that one default scheduler will suffice, but most of the time, it's not true, for example, If I want to implement an SEDA style application with different actors stand in different staages, use only the default scheduler will not help too much. Simply put, you can't tuning each stage specifically in the point of theading pool. In such situations, we have to customize the schedulers of each scala actors specifically.</p>
-<p>We can't implement different Actors for different uses with different schedulers by override the “scheduler” method of them, here is an example:</p>
-<div class="sourceCode"><pre class="sourceCode scala"><code class="sourceCode scala"><span class="kw">class</span> MyActor <span class="kw">extends</span> Actor {
-  <span class="kw">import</span> scala.<span class="fu">actors</span>.<span class="fu">scheduler</span>._
-
-  <span class="kw">def</span> <span class="fu">act</span>() {
-    <span class="fu">println</span>(<span class="st">&quot;MyActor exit with = &quot;</span> + scheduler)
-  }
-
-  <span class="kw">override</span> <span class="kw">def</span> <span class="fu">scheduler</span>(): IScheduler = <span class="kw">new</span> <span class="fu">ForkJoinScheduler</span>(Runtime.<span class="fu">getRuntime</span>.<span class="fu">availableProcessors</span>, Runtime.<span class="fu">getRuntime</span>.<span class="fu">availableProcessors</span> * <span class="dv">2</span>, <span class="kw">false</span>, <span class="kw">true</span>)
-}</code></pre></div>
+<p>I hope your application is simple, so that one default scheduler will suffice, but most of the time, it’s not true, for example, If I want to implement an SEDA style application with different actors stand in different staages, use only the default scheduler will not help too much. Simply put, you can’t tuning each stage specifically in the point of theading pool. In such situations, we have to customize the schedulers of each scala actors specifically.</p>
+<p>We can’t implement different Actors for different uses with different schedulers by override the “scheduler” method of them, here is an example:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode scala"><code class="sourceCode scala"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw">class</span> MyActor <span class="kw">extends</span> Actor {</a>
+<a class="sourceLine" id="cb2-2" data-line-number="2">  <span class="kw">import</span> scala.<span class="fu">actors</span>.<span class="fu">scheduler</span>._</a>
+<a class="sourceLine" id="cb2-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb2-4" data-line-number="4">  <span class="kw">def</span> <span class="fu">act</span>() {</a>
+<a class="sourceLine" id="cb2-5" data-line-number="5">    <span class="fu">println</span>(<span class="st">&quot;MyActor exit with = &quot;</span> + scheduler)</a>
+<a class="sourceLine" id="cb2-6" data-line-number="6">  }</a>
+<a class="sourceLine" id="cb2-7" data-line-number="7"></a>
+<a class="sourceLine" id="cb2-8" data-line-number="8">  <span class="kw">override</span> <span class="kw">def</span> <span class="fu">scheduler</span>(): IScheduler = <span class="kw">new</span> <span class="fu">ForkJoinScheduler</span>(Runtime.<span class="fu">getRuntime</span>.<span class="fu">availableProcessors</span>, Runtime.<span class="fu">getRuntime</span>.<span class="fu">availableProcessors</span> * <span class="dv">2</span>, <span class="kw">false</span>, <span class="kw">true</span>)</a>
+<a class="sourceLine" id="cb2-9" data-line-number="9">}</a></code></pre></div>
 <p>As long as you know how to estimate how many threads should be used in each stages, you know how to override the “scheduler” method to provide proper IScheduler instances.</p>
 <h1 id="conclusion"><span class="header-section-number">3</span> Conclusion</h1>
-<p>After Scala 2.8, Scala Actors are much easier to extend, but it's still not perfect, that's why other actor implemenations on scala platform exist, like Akka Actor and Lift Actor. One of the key point of a successful Actor library is that how they schedule the running of their actors, Erlang Actors are running in their own VM, so they can be scheduled in their way, but Scala Actors are running in JVM, so they have to be scheduled in threading model. Although this is a limitation, but improvements still can be done.</p>
-<p>Although Scala Actors are based on JVM's threading model, but I think they do know how to balance the pros and cons on the design and implementation of Scala actors. For example, I found that although I can adjust the pool size of the schedulers, but I can't change the thread names in the pool, that's annoying when trying to find thread problems in our applications. But in the other hand, Since Actor are a higher level concurrency model, scala actor implementation should make the threading things transparent to the users. It's a hard tradeoff, for now, we still have to touch the threads to gain a better result, but who knows, maybe in the future, we won't bother about it any more.</p>
-<hr>
-<div align="center">
-<img src="/images/wechat-qrcode-footer.png"/>
-</div>
+<p>After Scala 2.8, Scala Actors are much easier to extend, but it’s still not perfect, that’s why other actor implemenations on scala platform exist, like Akka Actor and Lift Actor. One of the key point of a successful Actor library is that how they schedule the running of their actors, Erlang Actors are running in their own VM, so they can be scheduled in their way, but Scala Actors are running in JVM, so they have to be scheduled in threading model. Although this is a limitation, but improvements still can be done.</p>
+<p>Although Scala Actors are based on JVM’s threading model, but I think they do know how to balance the pros and cons on the design and implementation of Scala actors. For example, I found that although I can adjust the pool size of the schedulers, but I can’t change the thread names in the pool, that’s annoying when trying to find thread problems in our applications. But in the other hand, Since Actor are a higher level concurrency model, scala actor implementation should make the threading things transparent to the users. It’s a hard tradeoff, for now, we still have to touch the threads to gain a better result, but who knows, maybe in the future, we won’t bother about it any more.</p>
 
-</div>
+    </article>
 
-
-
-</body></html>
+  </body>
+</html>

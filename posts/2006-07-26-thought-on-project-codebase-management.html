@@ -1,14 +1,16 @@
 <!DOCTYPE html>
-<html lang="zh">
-<head>
+<html>
+  <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>由工程的组织结构所引发的… - 一个架构士的思考与沉</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="王福强的博客， 一个架构士的思考与沉淀">
     <meta name="keywords" content="architecture, book author, thinker, fighter, 架构, 思考, 技术, 武术, 哲学">
     <meta name="author" content="王福强">
-        <link rel="icon" href="/favicon.ico">
-    <title>由工程的组织结构所引发的... - 一个架构士的思考与沉淀</title>
-    <!-- 百度统计 -->
+    <link rel="stylesheet" href="/ivy.css">
+    <link rel="shortcut icon" href="/favicon.ico"/>
+    <style type="text/css">code{white-space: pre;}</style>
+            <!-- 百度统计 -->
     <script>
       var _hmt = _hmt || [];
       (function() {
@@ -18,35 +20,26 @@
           s.parentNode.insertBefore(hm, s);
       })();
     </script>
+  </head>
 
-	<link href="/css/custom.css" rel="stylesheet"/>
-	<link rel="shortcut icon" href="/favicon.ico"/>
+  <body class="node homepage">
 
-<style type="text/css">code{white-space: pre;}</style>
-        
-	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-	<!--[if lt IE 9]>
-	  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.2/html5shiv.js"></script>
-	  <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-	<![endif]-->
-
-</head>
-
-<body>
-
-    <div class="masthead">
-		<!--
-    <h1 class="masthead-title fq">
-      <a href="/">扶墙老师</a>
-
-    </h1>
-    -->
-    <a href="/"><h1>扶墙老师说</h1></a>
-		<p class="masthead-lead">一个架构士的思考与沉淀</p>
-
-		<hr class="masthead-hr">
-
-	  	<ul class="masthead-nav">
+    <header class="masthead">
+      <h1><a href="/">扶墙老师说</a></h1>
+      <p class="tagline">
+         一个架构士的思考与沉淀
+          <img src="/images/wechat-qrcode-footer.png"/>
+          扶墙老师，辨证施“知”
+      </p>
+      
+      <nav class="menu">
+        <input id="menu-check" type="checkbox"/>
+        <label id="menu-label" for="menu-check" class="unselectable">
+          <span class="icon close-icon">✕</span>
+          <span class="icon open-icon">☰</span>
+          <span class="text">展开</span>
+        </label>
+        <ul>
             <li class="nav-item"><a class="nav-link" href="/favorite.html">我的收藏</a></li>
             <li class="nav-item"><a class="nav-link" href="/dashboard.html">金融看板</a></li>
             <li class="nav-item"><a class="nav-link" href="/columns.html">专栏文章</a></li>
@@ -54,24 +47,16 @@
             <li class="nav-item"><a class="nav-link" href="/whoami.html">我是何人</a></li>
             <li class="nav-item"><a class="nav-link" href="/interlinks.html">友情链接</a></li>
             <li class="nav-item"><a class="nav-link" href="/feeds.xml">RSS订阅</a></li>
-		</ul>
+        </ul>
+      </nav>
+    </header>
 
-  		<hr class="masthead-hr">
-
-	  	<ul class="masthead-nav">
-            <li class="nav-item"><small>©afoo.me</small></li>
-            <li class="nav-item"><small>Powered by <a href="http://pandoc.org/">pandoc</a> and <a href="http://rometools.github.io/rome/">ROME</a></small></li>
-		</ul>
-
-	</div>
-
-
-    <div class="listing">
-
+    <article class="main">
+      
 <div class="row">
 <div id="header">
 <p class="lead">
-<h1 class="title">由工程的组织结构所引发的...</h1>
+<h1 class="title">由工程的组织结构所引发的…</h1>
 <small>
 <h3 class="author">FuqiangWang</h3>
 </small>
@@ -94,13 +79,8 @@
 <p>而这些问题其实可以通过很简单的一个结构组织的调整得以解决：类似以上情况，我们完全没有必要将一个项目分成多个来管理，而是只管理一个项目就可以了，唯一需要改变的就是，为可以模块化的功能提供单独的 source folder！这样，所以的dependency现在可以统一到一个classpath进行管理，而以上的冗余也不会存在，就算原来各个工程中的不同版本类库冲突的问题，现在也因为只需要在当前classpath中维护单一版本的类库而得以解决。（题外话：实际上，解决第二种问题的方式，可能因为各个项目环境的不同而不同，虽然，可以通过我上面说的合并方式可以解决，但不能说解决了所有情况下的类库冲突问题，因为有些时候，需要依赖不同版本类库的情况是存在的。不过，即使遇到这种情况也没有必要烦躁，呵呵，依然可以解决 ，比如，你可以写一些相应的自定义classloader来分别加载这些类，或者，为了偷懒（或许说为了避免重新发明轮子更确切一些哈），你可以借助于OSGi，你都用EclipseIDE开发了，不会连他的插件体系如何实现的都不知道吧？！一个道理的啊，呵呵，如果觉得adapt这个体系到你的需求不容易，你也可以借助于objectWeb的oscar，他也是OSGi的一个实现，应该可以帮助你解决相应问题）</p>
 <p>其实，问题的解决通常并不一定就只存在一条解决的路，这条路可能你很熟悉，知道能够达到你的终点，但是，不要排斥其他的路线，或许，还有比现在你知道的路更近，或者更好走的路也未定。不要让定式思维禁锢你，条条大路通罗马，为什么不找一条最适合你走的路那？！</p>
 <p>Apple的理念：<strong>THINK DIFFERENT</strong>！</p>
-<hr>
-<div align="center">
-<img src="/images/wechat-qrcode-footer.png"/>
-</div>
 
-</div>
+    </article>
 
-
-
-</body></html>
+  </body>
+</html>

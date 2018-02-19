@@ -1,15 +1,17 @@
 <!DOCTYPE html>
-<html lang="zh">
-<head>
+<html>
+  <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elegant Architecture With AOP-alike Thoughts - 一个架构士的思考与沉</title>
+        <meta name="date" content="2010-04-21" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="王福强的博客， 一个架构士的思考与沉淀">
     <meta name="keywords" content="architecture, book author, thinker, fighter, 架构, 思考, 技术, 武术, 哲学">
     <meta name="author" content="王福强">
-        <meta name="date" content="2010-04-21" />
-        <link rel="icon" href="/favicon.ico">
-    <title>Elegant Architecture With AOP-alike Thoughts - 一个架构士的思考与沉淀</title>
-    <!-- 百度统计 -->
+    <link rel="stylesheet" href="/ivy.css">
+    <link rel="shortcut icon" href="/favicon.ico"/>
+    <style type="text/css">code{white-space: pre;}</style>
+            <!-- 百度统计 -->
     <script>
       var _hmt = _hmt || [];
       (function() {
@@ -19,35 +21,26 @@
           s.parentNode.insertBefore(hm, s);
       })();
     </script>
+  </head>
 
-	<link href="/css/custom.css" rel="stylesheet"/>
-	<link rel="shortcut icon" href="/favicon.ico"/>
+  <body class="node homepage">
 
-<style type="text/css">code{white-space: pre;}</style>
-        
-	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-	<!--[if lt IE 9]>
-	  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.2/html5shiv.js"></script>
-	  <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-	<![endif]-->
-
-</head>
-
-<body>
-
-    <div class="masthead">
-		<!--
-    <h1 class="masthead-title fq">
-      <a href="/">扶墙老师</a>
-
-    </h1>
-    -->
-    <a href="/"><h1>扶墙老师说</h1></a>
-		<p class="masthead-lead">一个架构士的思考与沉淀</p>
-
-		<hr class="masthead-hr">
-
-	  	<ul class="masthead-nav">
+    <header class="masthead">
+      <h1><a href="/">扶墙老师说</a></h1>
+      <p class="tagline">
+         一个架构士的思考与沉淀
+          <img src="/images/wechat-qrcode-footer.png"/>
+          扶墙老师，辨证施“知”
+      </p>
+      
+      <nav class="menu">
+        <input id="menu-check" type="checkbox"/>
+        <label id="menu-label" for="menu-check" class="unselectable">
+          <span class="icon close-icon">✕</span>
+          <span class="icon open-icon">☰</span>
+          <span class="text">展开</span>
+        </label>
+        <ul>
             <li class="nav-item"><a class="nav-link" href="/favorite.html">我的收藏</a></li>
             <li class="nav-item"><a class="nav-link" href="/dashboard.html">金融看板</a></li>
             <li class="nav-item"><a class="nav-link" href="/columns.html">专栏文章</a></li>
@@ -55,20 +48,12 @@
             <li class="nav-item"><a class="nav-link" href="/whoami.html">我是何人</a></li>
             <li class="nav-item"><a class="nav-link" href="/interlinks.html">友情链接</a></li>
             <li class="nav-item"><a class="nav-link" href="/feeds.xml">RSS订阅</a></li>
-		</ul>
+        </ul>
+      </nav>
+    </header>
 
-  		<hr class="masthead-hr">
-
-	  	<ul class="masthead-nav">
-            <li class="nav-item"><small>©afoo.me</small></li>
-            <li class="nav-item"><small>Powered by <a href="http://pandoc.org/">pandoc</a> and <a href="http://rometools.github.io/rome/">ROME</a></small></li>
-		</ul>
-
-	</div>
-
-
-    <div class="listing">
-
+    <article class="main">
+      
 <div class="row">
 <div id="header">
 <p class="lead">
@@ -87,7 +72,7 @@
 <p>There are NO new things here， what I do is to just make them more theoretical and clear our heads so that we can push such similar ideas to more scenarios and gain more benefits.</p>
 <p>既然我们要讲AOP-alike的思考问题的方式， 那我们当然要先从AOP开始说起啦！（当然，如果我们过度的关注那个P的话，可能这个话题就没有什么好掰的了）</p>
 <p>AOP/AOSD中我们倡导（横切）关注点的分离， 这个OOP/OOSD中倡导的职责最小化的类设计是相似或者说相通的。如果一个系统中存在多种横切关注点的话，我们会分别针对不同的横切关注点提供相应的Advice/Aspect实现， 然后将这些Advice/Aspect实现像衣服一样， 一层层的套到我们要实现的系统身上。这回，我们不关注“织入”等相关技术细实现细节，而是关注这一层层的Advice/Aspect。从更高层次来讲， 我们代表了系统中一个个的关注点， 或者说系统要实现的一个个的职责。我们没有将他们一呼喇的都放在一个实体当中， 而是根据他们关注的点明确而清晰地将他们组织到一个个独立的实体当中。与一个类只关注一种职责类似， 现在一个Advice/Aspect, 也只关注一种职责，将简单的Advice/Aspect从实现类的层面推而广之， 扩展到层（Layer）的概念， 我们同样可以将类似的理念应用于系统的整体架构， 这种架构清晰而优雅， 却又看起来那么简单而容易理解， 如果将类似的理念应用于系统设计的方方面面， 并且合理应用， 我相信具体开发也好， 架构设计也好， 对谁都将是一种乐事。</p>
-<p>以上扯的可能有点儿虚， 我们不妨看一些现实中的一些实例， 以便可以有一些感性的认识。本着见微知著的精神， 我们先从最细粒度的关注点开始说起...</p>
+<p>以上扯的可能有点儿虚， 我们不妨看一些现实中的一些实例， 以便可以有一些感性的认识。本着见微知著的精神， 我们先从最细粒度的关注点开始说起…</p>
 <p>系统中零星的横切关注点当然可以使用AOP来实现， 但零零散散或许无法感受到类似理念带来的优雅， 所以，我们稍稍拔高一个层次， 从某些框架的设计开始举例。</p>
 <p>我之前在别的地方提到过Shy3， 这是“钱三石”开发的Web框架，该框架跟GWT之类web框架类似， 看过该框架相关的代码并且与钱钱聊过之后， 给我印象最深的其实是这个Web框架整体设计上的一致性。整个框架完全遵循AOP的理念进行设计， 从前端控制器到后面web请求处理相关的组件等等， 全都以AOP的理念纳入了框架的设计之中， 整体框架优雅而简洁，可以算做我写这篇文章来倡导类似理念的初步推动力。</p>
 <p>相似的例子还包括MINA， 以及公司内部最近统一后要推出的新一代Web框架， 实际上处处体现了这种将AOP-alike的想法运用于框架设计的理念。</p>
@@ -96,13 +81,8 @@
 <p><img src="http://www.project-voldemort.com/voldemort/images/logical_arch.png"/></p>
 <p>剥离关注点， 使实体的职责最小化， 我们不必单单将类似的理念只局限于编码或者细粒度的层次， 我们同样可以见微知著， 将相似的理念推而广之， 相信简单而优雅会处处可见。</p>
 <p>当然， 单一理念肯定无法满足所有场景需要， 我们还是要根据自身的问题场景来决定哪些理念更加适合当前场景， 但这并不会完全阻碍我们使用某些其它的理念， 在你通过SOA， SBA等来构建自身系统的时候， 每一个子系统内部， 每一个模块内部， 每一个组件内部， 实际上都可以成为让这种AOP-alike的理念发光发热的燎原之地。</p>
-<hr>
-<div align="center">
-<img src="/images/wechat-qrcode-footer.png"/>
-</div>
 
-</div>
+    </article>
 
-
-
-</body></html>
+  </body>
+</html>

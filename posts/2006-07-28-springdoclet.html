@@ -1,14 +1,16 @@
 <!DOCTYPE html>
-<html lang="zh">
-<head>
+<html>
+  <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>使用springdoclet简化基于spring框架的应用开发 - 一个架构士的思考与沉</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="王福强的博客， 一个架构士的思考与沉淀">
     <meta name="keywords" content="architecture, book author, thinker, fighter, 架构, 思考, 技术, 武术, 哲学">
     <meta name="author" content="王福强">
-        <link rel="icon" href="/favicon.ico">
-    <title>使用springdoclet简化基于spring框架的应用开发 - 一个架构士的思考与沉淀</title>
-    <!-- 百度统计 -->
+    <link rel="stylesheet" href="/ivy.css">
+    <link rel="shortcut icon" href="/favicon.ico"/>
+    <style type="text/css">code{white-space: pre;}</style>
+            <!-- 百度统计 -->
     <script>
       var _hmt = _hmt || [];
       (function() {
@@ -18,35 +20,26 @@
           s.parentNode.insertBefore(hm, s);
       })();
     </script>
+  </head>
 
-	<link href="/css/custom.css" rel="stylesheet"/>
-	<link rel="shortcut icon" href="/favicon.ico"/>
+  <body class="node homepage">
 
-<style type="text/css">code{white-space: pre;}</style>
-        
-	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-	<!--[if lt IE 9]>
-	  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.2/html5shiv.js"></script>
-	  <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-	<![endif]-->
-
-</head>
-
-<body>
-
-    <div class="masthead">
-		<!--
-    <h1 class="masthead-title fq">
-      <a href="/">扶墙老师</a>
-
-    </h1>
-    -->
-    <a href="/"><h1>扶墙老师说</h1></a>
-		<p class="masthead-lead">一个架构士的思考与沉淀</p>
-
-		<hr class="masthead-hr">
-
-	  	<ul class="masthead-nav">
+    <header class="masthead">
+      <h1><a href="/">扶墙老师说</a></h1>
+      <p class="tagline">
+         一个架构士的思考与沉淀
+          <img src="/images/wechat-qrcode-footer.png"/>
+          扶墙老师，辨证施“知”
+      </p>
+      
+      <nav class="menu">
+        <input id="menu-check" type="checkbox"/>
+        <label id="menu-label" for="menu-check" class="unselectable">
+          <span class="icon close-icon">✕</span>
+          <span class="icon open-icon">☰</span>
+          <span class="text">展开</span>
+        </label>
+        <ul>
             <li class="nav-item"><a class="nav-link" href="/favorite.html">我的收藏</a></li>
             <li class="nav-item"><a class="nav-link" href="/dashboard.html">金融看板</a></li>
             <li class="nav-item"><a class="nav-link" href="/columns.html">专栏文章</a></li>
@@ -54,20 +47,12 @@
             <li class="nav-item"><a class="nav-link" href="/whoami.html">我是何人</a></li>
             <li class="nav-item"><a class="nav-link" href="/interlinks.html">友情链接</a></li>
             <li class="nav-item"><a class="nav-link" href="/feeds.xml">RSS订阅</a></li>
-		</ul>
+        </ul>
+      </nav>
+    </header>
 
-  		<hr class="masthead-hr">
-
-	  	<ul class="masthead-nav">
-            <li class="nav-item"><small>©afoo.me</small></li>
-            <li class="nav-item"><small>Powered by <a href="http://pandoc.org/">pandoc</a> and <a href="http://rometools.github.io/rome/">ROME</a></small></li>
-		</ul>
-
-	</div>
-
-
-    <div class="listing">
-
+    <article class="main">
+      
 <div class="row">
 <div id="header">
 <p class="lead">
@@ -85,7 +70,7 @@
 <p>2014年从msn space存档中重新恢复出来！</p>
 </blockquote>
 <p><strong>楔子</strong></p>
-<p>之前写过几个基于spring的程序，因为规模不是很大，所以，开发过程中并没有探索更有效的开发流程，仅仅是手工编辑spring-config.xml文件，虽然通过个人的细心与努力最终能够成功的完成这些程序，但是，开发过程中也难免的暴露一些问题，在无意间看到springdoclet的时候，萌生了我想写下这篇文字的念头...</p>
+<p>之前写过几个基于spring的程序，因为规模不是很大，所以，开发过程中并没有探索更有效的开发流程，仅仅是手工编辑spring-config.xml文件，虽然通过个人的细心与努力最终能够成功的完成这些程序，但是，开发过程中也难免的暴露一些问题，在无意间看到springdoclet的时候，萌生了我想写下这篇文字的念头…</p>
 <hr />
 <p>在说springdoclet带来的便利之前，我还是先说说之前的开发流程，这样也好有一个比较。</p>
 <p>在没有任何途径得知基于spring框架开发流程是一个什么样的情况下，我开始了我的第一个spring-based应用的编写，在穿梭于源代码和配置文件之间多时之后，我最终形成了类似风格：将配置文件先扔一边，直接编写应用类，如果该类依赖于其他类，那我声明他们，然后IDE直接生成相应的setter,getter方法，当所有应用类完成之后，从主入口类开始，依次添加到spring-config.xml配置文件中，因为类似于从上倒下的索引形式，通常也不会遗漏任何类，所以也可以很顺利的配置下来，加上SpringIDE的支持，这种方式也可以很好的完成我的工作。</p>
@@ -95,7 +80,7 @@
 <p>当然，说这些不是说以上流程就一无是处，而是为了找出可以解决这些问题和不便的方法，所以，下面我们来看看springdoclet是如何帮助我们避免以上的纠缠的。</p>
 <p>我不想对springdoclet做详细的介绍，他只属于xdoclet为spring开发提供的一个task，想知道有关的更多信息，可以参考后面罗列的几个参考项，我这里只想说一下使用springdoclet后的开发流程以及与原来相比有什么便利：</p>
 <p>使用springdoclet，我们现在就可以完全撇开手工配置spring-config.xml配置文件这一过程，而全身心的投入到应用的开发过程中。现在，我们只需要关注应用类的编写就可以了，也就是说，现在的开发流程其实也就是上面提到的流程的前半部分，唯一的差别就是，现在，我们在完成一个类之后，要相应使用springdoclet的Tag为其标注相应标志和依赖。虽然就这个差别，实际上可以随着项目规模的增长，为开发带来的更大的便利。</p>
-<p>现在你只要关注单一的一个文件---java源代码，再也不用穿梭于源文件和配置文件，管理一个类和管理多个类加上配置文件相比，无论是工作量还是出错几率，都大大降低了；</p>
+<p>现在你只要关注单一的一个文件—java源代码，再也不用穿梭于源文件和配置文件，管理一个类和管理多个类加上配置文件相比，无论是工作量还是出错几率，都大大降低了；</p>
 <p>而且，随着项目规模的增长，为了增进开发人员的协作，我们通常会将spring-config.xml按照功能或者层次等分成多个来使得开发人员的开发可以并行进行，虽然如此，依然会存在多个开发人员需要注册同一个配置文件的情况，而使用了springdoclet之后，每个开发人员只需要关注自己开发的相关应用类并标注他们就可以了，完全不可能出现多个开发人员在一点出现冲突的情况；</p>
 <p>对于调试过程中的重构来说，因为你现在只关注源代码文件，所以，随着你对代码 的更改，对于就在眼前的javadoc，我想你不会视而不见吧？！只需要更改相应的javadoc，再也不用再跑到配置文件中搜寻相应配置并手工更改了。</p>
 <hr />
@@ -106,7 +91,7 @@
 <p>其他的就不再赘述了，随着开发的进行，我想更多的感受会自动过来找你的。</p>
 <hr />
 <p><strong>TroubleShooting</strong></p>
-<ol style="list-style-type: decimal">
+<ol type="1">
 <li>springdoclet对于某些property注入默认不提供支持，这种情况下怎么办？！
 <ul>
 <li>类似问题可以参照后面的参考资料部分第二项《扩展XDoclet对Spring List引用注入的支持》，xdoclet框架有很好的可扩展性，你可以按照自己的需要来对其进行扩展。对于《扩展XDoclet对Spring List引用注入的支持》这篇文章来说，我觉得文中提到的对原发布包进行更改的方式欠妥，实际上，完全可以通过自定义模板或者添加merge point来实现相同的功能，对原发布包也没有侵入性，以后要share的话，也仅仅只需要share模板就可以，第三方可以通过任何途径取得xdoclet的发布。</li>
@@ -120,16 +105,11 @@
 <p>GOOD LUCK!</p>
 <hr />
 <p><strong>参考资料</strong></p>
-<ol style="list-style-type: decimal">
+<ol type="1">
 <li>Manning《XDoclet In Action》by Craig Walls ,Norman Richards(建议读一下，里面对于Code Generation和XDoclet的一些理念对于开发和设计理念很有帮助，即使没有时间，起码读一下第一，第二，第12，13章，或者后面相应的appendix) 2.《扩展XDoclet对Spring List引用注入的支持 》from http://www.crackj2ee.com/Article/ShowArticle.asp?ArticleID=557 3.XDoclet documentation from http://xdoclet.sourceforge.net/</li>
 </ol>
-<hr>
-<div align="center">
-<img src="/images/wechat-qrcode-footer.png"/>
-</div>
 
-</div>
+    </article>
 
-
-
-</body></html>
+  </body>
+</html>

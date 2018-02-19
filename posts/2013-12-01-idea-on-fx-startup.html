@@ -1,14 +1,16 @@
 <!DOCTYPE html>
-<html lang="zh">
-<head>
+<html>
+  <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>关于以外汇交易平台为核心的创业公司的设想 - 一个架构士的思考与沉</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="王福强的博客， 一个架构士的思考与沉淀">
     <meta name="keywords" content="architecture, book author, thinker, fighter, 架构, 思考, 技术, 武术, 哲学">
     <meta name="author" content="王福强">
-        <link rel="icon" href="/favicon.ico">
-    <title>关于以外汇交易平台为核心的创业公司的设想 - 一个架构士的思考与沉淀</title>
-    <!-- 百度统计 -->
+    <link rel="stylesheet" href="/ivy.css">
+    <link rel="shortcut icon" href="/favicon.ico"/>
+    <style type="text/css">code{white-space: pre;}</style>
+            <!-- 百度统计 -->
     <script>
       var _hmt = _hmt || [];
       (function() {
@@ -18,35 +20,26 @@
           s.parentNode.insertBefore(hm, s);
       })();
     </script>
+  </head>
 
-	<link href="/css/custom.css" rel="stylesheet"/>
-	<link rel="shortcut icon" href="/favicon.ico"/>
+  <body class="node homepage">
 
-<style type="text/css">code{white-space: pre;}</style>
-        
-	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-	<!--[if lt IE 9]>
-	  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.2/html5shiv.js"></script>
-	  <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-	<![endif]-->
-
-</head>
-
-<body>
-
-    <div class="masthead">
-		<!--
-    <h1 class="masthead-title fq">
-      <a href="/">扶墙老师</a>
-
-    </h1>
-    -->
-    <a href="/"><h1>扶墙老师说</h1></a>
-		<p class="masthead-lead">一个架构士的思考与沉淀</p>
-
-		<hr class="masthead-hr">
-
-	  	<ul class="masthead-nav">
+    <header class="masthead">
+      <h1><a href="/">扶墙老师说</a></h1>
+      <p class="tagline">
+         一个架构士的思考与沉淀
+          <img src="/images/wechat-qrcode-footer.png"/>
+          扶墙老师，辨证施“知”
+      </p>
+      
+      <nav class="menu">
+        <input id="menu-check" type="checkbox"/>
+        <label id="menu-label" for="menu-check" class="unselectable">
+          <span class="icon close-icon">✕</span>
+          <span class="icon open-icon">☰</span>
+          <span class="text">展开</span>
+        </label>
+        <ul>
             <li class="nav-item"><a class="nav-link" href="/favorite.html">我的收藏</a></li>
             <li class="nav-item"><a class="nav-link" href="/dashboard.html">金融看板</a></li>
             <li class="nav-item"><a class="nav-link" href="/columns.html">专栏文章</a></li>
@@ -54,20 +47,12 @@
             <li class="nav-item"><a class="nav-link" href="/whoami.html">我是何人</a></li>
             <li class="nav-item"><a class="nav-link" href="/interlinks.html">友情链接</a></li>
             <li class="nav-item"><a class="nav-link" href="/feeds.xml">RSS订阅</a></li>
-		</ul>
+        </ul>
+      </nav>
+    </header>
 
-  		<hr class="masthead-hr">
-
-	  	<ul class="masthead-nav">
-            <li class="nav-item"><small>©afoo.me</small></li>
-            <li class="nav-item"><small>Powered by <a href="http://pandoc.org/">pandoc</a> and <a href="http://rometools.github.io/rome/">ROME</a></small></li>
-		</ul>
-
-	</div>
-
-
-    <div class="listing">
-
+    <article class="main">
+      
 <div class="row">
 <div id="header">
 <p class="lead">
@@ -102,7 +87,7 @@
 <p>不管欧美市场怎么成熟，日本市场怎么饱和，在中国外汇管制没有放开的前提下， 国内只有少部分机构在MT4上搭建黑平台， 可以说，一旦放开，以人民币作为基准货币的交易肯定会快速攀升，这时候，一定是各个外汇保证金零售商厮杀的时候， 这是一个机会，但如果前期就先铺垫好，希望会更大一些；</p>
 <p>虽然现在大部分都是基于MT4/5的交易平台，几乎是一统天下的态势，但MT4/5昂贵的授权费和部署环境的制约等都是这种平台的劣势，那么，如果能够提供成本合适的外汇保证金交易平台，应该可以撕开一个口子，现在已经涌现出了很多打成本牌的交易平台软件；</p>
 <p>假设这样一个满足市场需求的交易平台搭建完成，那么可以三种方式来运作它：</p>
-<ol style="list-style-type: decimal">
+<ol type="1">
 <li>卖软件，将软件卖给任何想要提供外汇零售服务的外汇零售商， 我提供软件售后支持， 基本上一锤子买卖，最原始的方式；</li>
 <li>与零售商合作分成，这里借助零售商的资金，结合我们的平台，完成外汇保证金交易的整条运作链路，我们可以少要一些分成，但好处是资金流是持续流入的；</li>
 <li>自有资金，自有平台， 自己运营， 这是最独立的情况，盈利通吃，就是需要自有资金，而且牵扯牌照的问题；</li>
@@ -113,13 +98,8 @@
 <p>前期直接走STP模式，几乎是没有风险的方案，后期要是能起来，转MM或者混合模式就可以了。</p>
 <p>好啦，就扯这么些碎碎念，呵呵， 不知道有没有说清楚我的这个个人想法， 就是想做这个事儿，但要么找合伙人，要么找人投钱，只我一个人单打独斗这个idea也只能留在纸上了。</p>
 <p>算法交易高频交易这种，入门门槛更高，肯定是要抱大腿，但要作为startup的方向，可能就不合适了，高精尖的东西作为创业方向往往却会成为快速死亡的催化剂，哈</p>
-<hr>
-<div align="center">
-<img src="/images/wechat-qrcode-footer.png"/>
-</div>
 
-</div>
+    </article>
 
-
-
-</body></html>
+  </body>
+</html>

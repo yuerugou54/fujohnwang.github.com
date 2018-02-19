@@ -1,14 +1,81 @@
 <!DOCTYPE html>
-<html lang="zh">
-<head>
+<html>
+  <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prototyping An Actor In Java - 一个架构士的思考与沉</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="王福强的博客， 一个架构士的思考与沉淀">
     <meta name="keywords" content="architecture, book author, thinker, fighter, 架构, 思考, 技术, 武术, 哲学">
     <meta name="author" content="王福强">
-        <link rel="icon" href="/favicon.ico">
-    <title>Prototyping An Actor In Java - 一个架构士的思考与沉淀</title>
-    <!-- 百度统计 -->
+    <link rel="stylesheet" href="/ivy.css">
+    <link rel="shortcut icon" href="/favicon.ico"/>
+    <style type="text/css">code{white-space: pre;}</style>
+    <style type="text/css">
+    a.sourceLine { display: inline-block; line-height: 1.25; }
+    a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+    a.sourceLine:empty { height: 1.2em; position: absolute; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode { white-space: pre; position: relative; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    code.sourceCode { white-space: pre-wrap; }
+    a.sourceLine { text-indent: -1em; padding-left: 1em; }
+    }
+    pre.numberSource a.sourceLine
+      { position: relative; }
+    pre.numberSource a.sourceLine:empty
+      { position: absolute; }
+    pre.numberSource a.sourceLine::before
+      { content: attr(data-line-number);
+        position: absolute; left: -5em; text-align: right; vertical-align: baseline;
+        border: none; pointer-events: all;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {  }
+    @media screen {
+    a.sourceLine::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+            <!-- 百度统计 -->
     <script>
       var _hmt = _hmt || [];
       (function() {
@@ -18,72 +85,26 @@
           s.parentNode.insertBefore(hm, s);
       })();
     </script>
+  </head>
 
-	<link href="/css/custom.css" rel="stylesheet"/>
-	<link rel="shortcut icon" href="/favicon.ico"/>
+  <body class="node homepage">
 
-<style type="text/css">code{white-space: pre;}</style>
-    <style type="text/css">
-    div.sourceCode { overflow-x: auto; }
-    table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
-      margin: 0; padding: 0; vertical-align: baseline; border: none; }
-    table.sourceCode { width: 100%; line-height: 100%; }
-    td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
-    td.sourceCode { padding-left: 5px; }
-    code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
-    code > span.dt { color: #902000; } /* DataType */
-    code > span.dv { color: #40a070; } /* DecVal */
-    code > span.bn { color: #40a070; } /* BaseN */
-    code > span.fl { color: #40a070; } /* Float */
-    code > span.ch { color: #4070a0; } /* Char */
-    code > span.st { color: #4070a0; } /* String */
-    code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
-    code > span.ot { color: #007020; } /* Other */
-    code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
-    code > span.fu { color: #06287e; } /* Function */
-    code > span.er { color: #ff0000; font-weight: bold; } /* Error */
-    code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-    code > span.cn { color: #880000; } /* Constant */
-    code > span.sc { color: #4070a0; } /* SpecialChar */
-    code > span.vs { color: #4070a0; } /* VerbatimString */
-    code > span.ss { color: #bb6688; } /* SpecialString */
-    code > span.im { } /* Import */
-    code > span.va { color: #19177c; } /* Variable */
-    code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-    code > span.op { color: #666666; } /* Operator */
-    code > span.bu { } /* BuiltIn */
-    code > span.ex { } /* Extension */
-    code > span.pp { color: #bc7a00; } /* Preprocessor */
-    code > span.at { color: #7d9029; } /* Attribute */
-    code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
-    code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-    code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-    code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-  </style>
-        
-	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-	<!--[if lt IE 9]>
-	  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.2/html5shiv.js"></script>
-	  <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-	<![endif]-->
-
-</head>
-
-<body>
-
-    <div class="masthead">
-		<!--
-    <h1 class="masthead-title fq">
-      <a href="/">扶墙老师</a>
-
-    </h1>
-    -->
-    <a href="/"><h1>扶墙老师说</h1></a>
-		<p class="masthead-lead">一个架构士的思考与沉淀</p>
-
-		<hr class="masthead-hr">
-
-	  	<ul class="masthead-nav">
+    <header class="masthead">
+      <h1><a href="/">扶墙老师说</a></h1>
+      <p class="tagline">
+         一个架构士的思考与沉淀
+          <img src="/images/wechat-qrcode-footer.png"/>
+          扶墙老师，辨证施“知”
+      </p>
+      
+      <nav class="menu">
+        <input id="menu-check" type="checkbox"/>
+        <label id="menu-label" for="menu-check" class="unselectable">
+          <span class="icon close-icon">✕</span>
+          <span class="icon open-icon">☰</span>
+          <span class="text">展开</span>
+        </label>
+        <ul>
             <li class="nav-item"><a class="nav-link" href="/favorite.html">我的收藏</a></li>
             <li class="nav-item"><a class="nav-link" href="/dashboard.html">金融看板</a></li>
             <li class="nav-item"><a class="nav-link" href="/columns.html">专栏文章</a></li>
@@ -91,20 +112,12 @@
             <li class="nav-item"><a class="nav-link" href="/whoami.html">我是何人</a></li>
             <li class="nav-item"><a class="nav-link" href="/interlinks.html">友情链接</a></li>
             <li class="nav-item"><a class="nav-link" href="/feeds.xml">RSS订阅</a></li>
-		</ul>
+        </ul>
+      </nav>
+    </header>
 
-  		<hr class="masthead-hr">
-
-	  	<ul class="masthead-nav">
-            <li class="nav-item"><small>©afoo.me</small></li>
-            <li class="nav-item"><small>Powered by <a href="http://pandoc.org/">pandoc</a> and <a href="http://rometools.github.io/rome/">ROME</a></small></li>
-		</ul>
-
-	</div>
-
-
-    <div class="listing">
-
+    <article class="main">
+      
 <div class="row">
 <div id="header">
 <p class="lead">
@@ -134,418 +147,413 @@
     * To simply the prototyping process, I will left any generic type design behind, hope u can polish it so that it can be your own tools.
 </pre>
 <p>Before start, we need to make something clear. In Java, the concurrency is modeled in Task-Based Concurrency, We run different logic which is modeled as tasks to run in parallel. But The actor is different, it belongs to the category of Data-Based Concurrency, to bridge the differences between this two concurrency models, I will declare an interface to confine the process logic into it:</p>
-<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="kw">public</span> <span class="kw">interface</span> ActorClosure&lt;T&gt; <span class="kw">extends</span> <span class="bu">Runnable</span> {
-     <span class="dt">void</span> <span class="fu">sinkEvent</span>(T event);
-}</code></pre></div>
-<p>ActorClosure will accept different events each time but run them one by one with same process logic. That's why a sinkeEvent() method is declared.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode java"><code class="sourceCode java"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">public</span> <span class="kw">interface</span> ActorClosure&lt;T&gt; <span class="kw">extends</span> <span class="bu">Runnable</span> {</a>
+<a class="sourceLine" id="cb1-2" data-line-number="2">     <span class="dt">void</span> <span class="fu">sinkEvent</span>(T event);</a>
+<a class="sourceLine" id="cb1-3" data-line-number="3">}</a></code></pre></div>
+<p>ActorClosure will accept different events each time but run them one by one with same process logic. That’s why a sinkeEvent() method is declared.</p>
 <p>Besides, we also give out an stub for our demonstration:</p>
-<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="kw">public</span> <span class="kw">class</span> ActorClosureStub <span class="kw">implements</span> ActorClosure&lt;<span class="bu">String</span>&gt; {
-    <span class="kw">private</span> <span class="bu">String</span> event;
-    
-    <span class="kw">public</span> <span class="dt">void</span> <span class="fu">run</span>() {
-        <span class="kw">try</span> {
-            <span class="bu">TimeUnit</span>.<span class="fu">SECONDS</span>.<span class="fu">sleep</span>(<span class="dv">5</span>);
-        } <span class="kw">catch</span> (<span class="bu">InterruptedException</span> e) {
-         <span class="co">// log the exception</span>
-            <span class="kw">return</span>;
-        }
-        <span class="bu">System</span>.<span class="fu">out</span>.<span class="fu">println</span>(<span class="st">&quot;received event:&quot;</span> + event);
-    }
-    <span class="kw">public</span> <span class="dt">void</span> <span class="fu">sinkEvent</span>(<span class="bu">String</span> event) {
-        <span class="kw">this</span>.<span class="fu">event</span> = event;
-    }
-}</code></pre></div>
-<p>OK, background is done, let's start with our java actor prototyping play...</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode java"><code class="sourceCode java"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw">public</span> <span class="kw">class</span> ActorClosureStub <span class="kw">implements</span> ActorClosure&lt;<span class="bu">String</span>&gt; {</a>
+<a class="sourceLine" id="cb2-2" data-line-number="2">    <span class="kw">private</span> <span class="bu">String</span> event;</a>
+<a class="sourceLine" id="cb2-3" data-line-number="3">    </a>
+<a class="sourceLine" id="cb2-4" data-line-number="4">    <span class="kw">public</span> <span class="dt">void</span> <span class="fu">run</span>() {</a>
+<a class="sourceLine" id="cb2-5" data-line-number="5">        <span class="kw">try</span> {</a>
+<a class="sourceLine" id="cb2-6" data-line-number="6">            <span class="bu">TimeUnit</span>.<span class="fu">SECONDS</span>.<span class="fu">sleep</span>(<span class="dv">5</span>);</a>
+<a class="sourceLine" id="cb2-7" data-line-number="7">        } <span class="kw">catch</span> (<span class="bu">InterruptedException</span> e) {</a>
+<a class="sourceLine" id="cb2-8" data-line-number="8">         <span class="co">// log the exception</span></a>
+<a class="sourceLine" id="cb2-9" data-line-number="9">            <span class="kw">return</span>;</a>
+<a class="sourceLine" id="cb2-10" data-line-number="10">        }</a>
+<a class="sourceLine" id="cb2-11" data-line-number="11">        <span class="bu">System</span>.<span class="fu">out</span>.<span class="fu">println</span>(<span class="st">&quot;received event:&quot;</span> + event);</a>
+<a class="sourceLine" id="cb2-12" data-line-number="12">    }</a>
+<a class="sourceLine" id="cb2-13" data-line-number="13">    <span class="kw">public</span> <span class="dt">void</span> <span class="fu">sinkEvent</span>(<span class="bu">String</span> event) {</a>
+<a class="sourceLine" id="cb2-14" data-line-number="14">        <span class="kw">this</span>.<span class="fu">event</span> = event;</a>
+<a class="sourceLine" id="cb2-15" data-line-number="15">    }</a>
+<a class="sourceLine" id="cb2-16" data-line-number="16">}</a></code></pre></div>
+<p>OK, background is done, let’s start with our java actor prototyping play…</p>
 <h1 id="actor-with-same-instance-reference-of-actionfailed"><span class="header-section-number">1</span> Actor with Same Instance Reference of Action(Failed)</h1>
-<p>Since each event that send to the actor should be processed by one processing logic, At first, we will just let our actor to use only one ActorClosure to process all of the events that's sent to it. So below is the code :</p>
-<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="kw">public</span> <span class="kw">class</span> FailedActorWithSameReference {
-
-    <span class="kw">private</span> <span class="bu">ExecutorService</span>      scheduler = <span class="bu">Executors</span>.<span class="fu">newFixedThreadPool</span>(<span class="dv">1</span>);
-    <span class="kw">private</span> ActorClosure&lt;<span class="bu">String</span>&gt; action    = <span class="kw">new</span> <span class="fu">ActorClosureStub</span>();
-
-    <span class="kw">public</span> <span class="bu">Future</span>&lt;?&gt; <span class="fu">bang</span>(<span class="bu">String</span> event) <span class="kw">throws</span> <span class="bu">InterruptedException</span> {
-        action.<span class="fu">sinkEvent</span>(event);
-        <span class="kw">return</span> scheduler.<span class="fu">submit</span>(action, <span class="kw">null</span>);
-    }
-
-    <span class="kw">public</span> <span class="dt">void</span> <span class="fu">terminate</span>() {
-        scheduler.<span class="fu">shutdown</span>();
-    }
-
-    <span class="kw">public</span> <span class="dt">static</span> <span class="dt">void</span> <span class="fu">main</span>(<span class="bu">String</span>[] args) <span class="kw">throws</span> <span class="bu">Exception</span> {
-        FailedActorWithSameReference actor = <span class="kw">new</span> <span class="fu">FailedActorWithSameReference</span>();
-        <span class="bu">Future</span>&lt;?&gt; f1 = actor.<span class="fu">bang</span>(<span class="st">&quot;a&quot;</span>);
-        <span class="bu">Future</span>&lt;?&gt; f2 = actor.<span class="fu">bang</span>(<span class="st">&quot;b&quot;</span>);
-        f1.<span class="fu">get</span>();
-        f2.<span class="fu">get</span>();
-        actor.<span class="fu">terminate</span>();
-    }
-}</code></pre></div>
-<p>In fact, no need to run this piece of code, we can see that it won't work properly, why? Because we didn't handle the concurrency operation on the ActorClosure properly, the latter bang(!) will replace or corrupt the state in the ActorClosure, If you run the above piece of code, it will print &quot;b&quot; twice, but we do expect &quot;a&quot; and &quot;b&quot; in sequence. But the problem really is the bad concurrency control on ActorClosure? No, If we add concurrency control on ActorClosure, then we go wrong way in the process of modeling an actor.</p>
+<p>Since each event that send to the actor should be processed by one processing logic, At first, we will just let our actor to use only one ActorClosure to process all of the events that’s sent to it. So below is the code :</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode java"><code class="sourceCode java"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw">public</span> <span class="kw">class</span> FailedActorWithSameReference {</a>
+<a class="sourceLine" id="cb3-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb3-3" data-line-number="3">    <span class="kw">private</span> <span class="bu">ExecutorService</span>      scheduler = <span class="bu">Executors</span>.<span class="fu">newFixedThreadPool</span>(<span class="dv">1</span>);</a>
+<a class="sourceLine" id="cb3-4" data-line-number="4">    <span class="kw">private</span> ActorClosure&lt;<span class="bu">String</span>&gt; action    = <span class="kw">new</span> <span class="fu">ActorClosureStub</span>();</a>
+<a class="sourceLine" id="cb3-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb3-6" data-line-number="6">    <span class="kw">public</span> <span class="bu">Future</span>&lt;?&gt; <span class="fu">bang</span>(<span class="bu">String</span> event) <span class="kw">throws</span> <span class="bu">InterruptedException</span> {</a>
+<a class="sourceLine" id="cb3-7" data-line-number="7">        action.<span class="fu">sinkEvent</span>(event);</a>
+<a class="sourceLine" id="cb3-8" data-line-number="8">        <span class="kw">return</span> scheduler.<span class="fu">submit</span>(action, <span class="kw">null</span>);</a>
+<a class="sourceLine" id="cb3-9" data-line-number="9">    }</a>
+<a class="sourceLine" id="cb3-10" data-line-number="10"></a>
+<a class="sourceLine" id="cb3-11" data-line-number="11">    <span class="kw">public</span> <span class="dt">void</span> <span class="fu">terminate</span>() {</a>
+<a class="sourceLine" id="cb3-12" data-line-number="12">        scheduler.<span class="fu">shutdown</span>();</a>
+<a class="sourceLine" id="cb3-13" data-line-number="13">    }</a>
+<a class="sourceLine" id="cb3-14" data-line-number="14"></a>
+<a class="sourceLine" id="cb3-15" data-line-number="15">    <span class="kw">public</span> <span class="dt">static</span> <span class="dt">void</span> <span class="fu">main</span>(<span class="bu">String</span>[] args) <span class="kw">throws</span> <span class="bu">Exception</span> {</a>
+<a class="sourceLine" id="cb3-16" data-line-number="16">        FailedActorWithSameReference actor = <span class="kw">new</span> <span class="fu">FailedActorWithSameReference</span>();</a>
+<a class="sourceLine" id="cb3-17" data-line-number="17">        <span class="bu">Future</span>&lt;?&gt; f1 = actor.<span class="fu">bang</span>(<span class="st">&quot;a&quot;</span>);</a>
+<a class="sourceLine" id="cb3-18" data-line-number="18">        <span class="bu">Future</span>&lt;?&gt; f2 = actor.<span class="fu">bang</span>(<span class="st">&quot;b&quot;</span>);</a>
+<a class="sourceLine" id="cb3-19" data-line-number="19">        f1.<span class="fu">get</span>();</a>
+<a class="sourceLine" id="cb3-20" data-line-number="20">        f2.<span class="fu">get</span>();</a>
+<a class="sourceLine" id="cb3-21" data-line-number="21">        actor.<span class="fu">terminate</span>();</a>
+<a class="sourceLine" id="cb3-22" data-line-number="22">    }</a>
+<a class="sourceLine" id="cb3-23" data-line-number="23">}</a></code></pre></div>
+<p>In fact, no need to run this piece of code, we can see that it won’t work properly, why? Because we didn’t handle the concurrency operation on the ActorClosure properly, the latter bang(!) will replace or corrupt the state in the ActorClosure, If you run the above piece of code, it will print “b” twice, but we do expect “a” and “b” in sequence. But the problem really is the bad concurrency control on ActorClosure? No, If we add concurrency control on ActorClosure, then we go wrong way in the process of modeling an actor.</p>
 <p>So, no concurrency control on ActorClosure, how to avoid the state corruption?</p>
 <h1 id="actor-with-prototype-scope-actionworkable"><span class="header-section-number">2</span> Actor With Prototype Scope Action(Workable)</h1>
 <p>We of course can allocate a new ActorClosure instance for each event, in this way, the state of ActorClosures and their events will be confined into their own boundary without leak and interference.</p>
 <p>With this in mind, we got code piece below:</p>
-<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="co">/**</span>
- <span class="co">*</span> This actor implementation just simply works<span class="co">,</span> but it can<span class="co">&#39;</span>t fully simulate the
- <span class="co">*</span> exact behavior of an actor<span class="co">,</span> e<span class="co">.</span>g<span class="co">.</span> since we will create new action closure for
- <span class="co">*</span> each event<span class="co">,</span> the states of the action closure can<span class="co">&#39;</span>t be kept in the time<span class="co">-</span>line
- <span class="co">*</span> of the actor<span class="co">,</span> maybe we should introduce some copy mechanism to complement
- <span class="co">*</span> this<span class="co">.</span>
- <span class="co">*</span> 
- <span class="co">*</span> <span class="kw">@author </span>fujohnwang
- <span class="co">*</span> <span class="kw">@since </span><span class="co">1.0</span>
- <span class="co">*/</span>
-<span class="kw">public</span> <span class="kw">class</span> ActorWithPrototypeScopeActionClosure {
-
-    <span class="kw">private</span> <span class="bu">ExecutorService</span>                       scheduler  = <span class="bu">Executors</span>.<span class="fu">newFixedThreadPool</span>(<span class="dv">1</span>);
-
-    <span class="kw">private</span> <span class="bu">Class</span>&lt;? <span class="kw">extends</span> ActorClosure&lt;<span class="bu">String</span>&gt;&gt; actionType = ActorClosureStub.<span class="fu">class</span>;
-
-    <span class="kw">public</span> <span class="bu">Future</span>&lt;?&gt; <span class="fu">bang</span>(<span class="bu">String</span> e) <span class="kw">throws</span> <span class="bu">Exception</span> {
-        ActorClosure&lt;<span class="bu">String</span>&gt; action = actionType.<span class="fu">newInstance</span>();
-        action.<span class="fu">sinkEvent</span>(e);
-        <span class="kw">return</span> scheduler.<span class="fu">submit</span>(action, <span class="kw">null</span>);
-    }
-
-    <span class="kw">public</span> <span class="dt">void</span> <span class="fu">setActionType</span>(<span class="bu">Class</span>&lt;? <span class="kw">extends</span> ActorClosure&lt;<span class="bu">String</span>&gt;&gt; actionType) {
-        <span class="kw">this</span>.<span class="fu">actionType</span> = actionType;
-    }
-
-    <span class="kw">public</span> <span class="bu">Class</span>&lt;? <span class="kw">extends</span> ActorClosure&lt;<span class="bu">String</span>&gt;&gt; <span class="fu">getActionType</span>() {
-        <span class="kw">return</span> actionType;
-    }
-
-    <span class="kw">public</span> <span class="dt">void</span> <span class="fu">terminate</span>() {
-        scheduler.<span class="fu">shutdown</span>();
-    }
-
-    <span class="kw">public</span> <span class="dt">static</span> <span class="dt">void</span> <span class="fu">main</span>(<span class="bu">String</span>[] args) <span class="kw">throws</span> <span class="bu">Exception</span> {
-        ActorWithPrototypeScopeActionClosure actor = <span class="kw">new</span> <span class="fu">ActorWithPrototypeScopeActionClosure</span>();
-        <span class="bu">Future</span>&lt;?&gt; f1 = actor.<span class="fu">bang</span>(<span class="st">&quot;a&quot;</span>);
-        <span class="bu">Future</span>&lt;?&gt; f2 = actor.<span class="fu">bang</span>(<span class="st">&quot;b&quot;</span>);
-        <span class="bu">Future</span>&lt;?&gt; f3 = actor.<span class="fu">bang</span>(<span class="st">&quot;c&quot;</span>);
-
-        f3.<span class="fu">get</span>();
-        f2.<span class="fu">get</span>();
-        f1.<span class="fu">get</span>();
-
-        actor.<span class="fu">terminate</span>();
-    }
-}</code></pre></div>
-<p>If we run the above piece of code, the result will be as we expected. Seems it work, but wait, it's not perfect. Why? (Why again ha?) Since we wrap each event(the data) into a ActorClosureStub instance(the task), we lost the smooth timeline state of the processsing. Simply put, the ActorClosureStub runs first has no correlation with other ActorClosureStubs. But in actor's semantics, they should be one. So although this prototyping seems work, but it still have improvement space.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode java"><code class="sourceCode java"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="co">/**</span></a>
+<a class="sourceLine" id="cb4-2" data-line-number="2"> <span class="co">*</span> This actor implementation just simply works<span class="co">,</span> but it can<span class="co">&#39;</span>t fully simulate the</a>
+<a class="sourceLine" id="cb4-3" data-line-number="3"> <span class="co">*</span> exact behavior of an actor<span class="co">,</span> e<span class="co">.</span>g<span class="co">.</span> since we will create new action closure for</a>
+<a class="sourceLine" id="cb4-4" data-line-number="4"> <span class="co">*</span> each event<span class="co">,</span> the states of the action closure can<span class="co">&#39;</span>t be kept in the time<span class="co">-</span>line</a>
+<a class="sourceLine" id="cb4-5" data-line-number="5"> <span class="co">*</span> of the actor<span class="co">,</span> maybe we should introduce some copy mechanism to complement</a>
+<a class="sourceLine" id="cb4-6" data-line-number="6"> <span class="co">*</span> this<span class="co">.</span></a>
+<a class="sourceLine" id="cb4-7" data-line-number="7"> <span class="co">*</span> </a>
+<a class="sourceLine" id="cb4-8" data-line-number="8"> <span class="co">*</span> <span class="kw">@author </span>fujohnwang</a>
+<a class="sourceLine" id="cb4-9" data-line-number="9"> <span class="co">*</span> <span class="kw">@since </span><span class="co">1.0</span></a>
+<a class="sourceLine" id="cb4-10" data-line-number="10"> <span class="co">*/</span></a>
+<a class="sourceLine" id="cb4-11" data-line-number="11"><span class="kw">public</span> <span class="kw">class</span> ActorWithPrototypeScopeActionClosure {</a>
+<a class="sourceLine" id="cb4-12" data-line-number="12"></a>
+<a class="sourceLine" id="cb4-13" data-line-number="13">    <span class="kw">private</span> <span class="bu">ExecutorService</span>                       scheduler  = <span class="bu">Executors</span>.<span class="fu">newFixedThreadPool</span>(<span class="dv">1</span>);</a>
+<a class="sourceLine" id="cb4-14" data-line-number="14"></a>
+<a class="sourceLine" id="cb4-15" data-line-number="15">    <span class="kw">private</span> <span class="bu">Class</span>&lt;? <span class="kw">extends</span> ActorClosure&lt;<span class="bu">String</span>&gt;&gt; actionType = ActorClosureStub.<span class="fu">class</span>;</a>
+<a class="sourceLine" id="cb4-16" data-line-number="16"></a>
+<a class="sourceLine" id="cb4-17" data-line-number="17">    <span class="kw">public</span> <span class="bu">Future</span>&lt;?&gt; <span class="fu">bang</span>(<span class="bu">String</span> e) <span class="kw">throws</span> <span class="bu">Exception</span> {</a>
+<a class="sourceLine" id="cb4-18" data-line-number="18">        ActorClosure&lt;<span class="bu">String</span>&gt; action = actionType.<span class="fu">newInstance</span>();</a>
+<a class="sourceLine" id="cb4-19" data-line-number="19">        action.<span class="fu">sinkEvent</span>(e);</a>
+<a class="sourceLine" id="cb4-20" data-line-number="20">        <span class="kw">return</span> scheduler.<span class="fu">submit</span>(action, <span class="kw">null</span>);</a>
+<a class="sourceLine" id="cb4-21" data-line-number="21">    }</a>
+<a class="sourceLine" id="cb4-22" data-line-number="22"></a>
+<a class="sourceLine" id="cb4-23" data-line-number="23">    <span class="kw">public</span> <span class="dt">void</span> <span class="fu">setActionType</span>(<span class="bu">Class</span>&lt;? <span class="kw">extends</span> ActorClosure&lt;<span class="bu">String</span>&gt;&gt; actionType) {</a>
+<a class="sourceLine" id="cb4-24" data-line-number="24">        <span class="kw">this</span>.<span class="fu">actionType</span> = actionType;</a>
+<a class="sourceLine" id="cb4-25" data-line-number="25">    }</a>
+<a class="sourceLine" id="cb4-26" data-line-number="26"></a>
+<a class="sourceLine" id="cb4-27" data-line-number="27">    <span class="kw">public</span> <span class="bu">Class</span>&lt;? <span class="kw">extends</span> ActorClosure&lt;<span class="bu">String</span>&gt;&gt; <span class="fu">getActionType</span>() {</a>
+<a class="sourceLine" id="cb4-28" data-line-number="28">        <span class="kw">return</span> actionType;</a>
+<a class="sourceLine" id="cb4-29" data-line-number="29">    }</a>
+<a class="sourceLine" id="cb4-30" data-line-number="30"></a>
+<a class="sourceLine" id="cb4-31" data-line-number="31">    <span class="kw">public</span> <span class="dt">void</span> <span class="fu">terminate</span>() {</a>
+<a class="sourceLine" id="cb4-32" data-line-number="32">        scheduler.<span class="fu">shutdown</span>();</a>
+<a class="sourceLine" id="cb4-33" data-line-number="33">    }</a>
+<a class="sourceLine" id="cb4-34" data-line-number="34"></a>
+<a class="sourceLine" id="cb4-35" data-line-number="35">    <span class="kw">public</span> <span class="dt">static</span> <span class="dt">void</span> <span class="fu">main</span>(<span class="bu">String</span>[] args) <span class="kw">throws</span> <span class="bu">Exception</span> {</a>
+<a class="sourceLine" id="cb4-36" data-line-number="36">        ActorWithPrototypeScopeActionClosure actor = <span class="kw">new</span> <span class="fu">ActorWithPrototypeScopeActionClosure</span>();</a>
+<a class="sourceLine" id="cb4-37" data-line-number="37">        <span class="bu">Future</span>&lt;?&gt; f1 = actor.<span class="fu">bang</span>(<span class="st">&quot;a&quot;</span>);</a>
+<a class="sourceLine" id="cb4-38" data-line-number="38">        <span class="bu">Future</span>&lt;?&gt; f2 = actor.<span class="fu">bang</span>(<span class="st">&quot;b&quot;</span>);</a>
+<a class="sourceLine" id="cb4-39" data-line-number="39">        <span class="bu">Future</span>&lt;?&gt; f3 = actor.<span class="fu">bang</span>(<span class="st">&quot;c&quot;</span>);</a>
+<a class="sourceLine" id="cb4-40" data-line-number="40"></a>
+<a class="sourceLine" id="cb4-41" data-line-number="41">        f3.<span class="fu">get</span>();</a>
+<a class="sourceLine" id="cb4-42" data-line-number="42">        f2.<span class="fu">get</span>();</a>
+<a class="sourceLine" id="cb4-43" data-line-number="43">        f1.<span class="fu">get</span>();</a>
+<a class="sourceLine" id="cb4-44" data-line-number="44"></a>
+<a class="sourceLine" id="cb4-45" data-line-number="45">        actor.<span class="fu">terminate</span>();</a>
+<a class="sourceLine" id="cb4-46" data-line-number="46">    }</a>
+<a class="sourceLine" id="cb4-47" data-line-number="47">}</a></code></pre></div>
+<p>If we run the above piece of code, the result will be as we expected. Seems it work, but wait, it’s not perfect. Why? (Why again ha?) Since we wrap each event(the data) into a ActorClosureStub instance(the task), we lost the smooth timeline state of the processsing. Simply put, the ActorClosureStub runs first has no correlation with other ActorClosureStubs. But in actor’s semantics, they should be one. So although this prototyping seems work, but it still have improvement space.</p>
 <h1 id="actor-with-state-copy-between-prototype-scope-actions"><span class="header-section-number">3</span> Actor With State Copy Between Prototype Scope Actions</h1>
 <p>So I hope to copy the state between each ActorClosure after they run, in this way, the 1st ActorClosure will pass its state to the 2nd ActorClosure before the 2nd ActorClosure will run, and the 2nd ActorClosure will pass its state to the 3rd ActorClosure before the 3rd ActorClosure will run, and so on.</p>
-<p>To make this happen, we can recall the hooks the ThreadPoolExecutor has, e.g. afterExecute(), beforeExecute(), furthermore, we can even directly override the execute() of it. Anyway, we can write such-alike code:</p>
-<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="co">/**</span>
- <span class="co">*</span> Although we seek to extend <span class="kw">{@link </span>ActorWithPrototypeScopeActionClosure<span class="kw">}</span> to
- <span class="co">*</span> enable state copy between the action closures<span class="co">,</span> BUT it seems that the Executor
- <span class="co">*</span> implementation doesn<span class="co">&#39;</span>t allow us to go this way<span class="co">.</span><span class="kw">&lt;br&gt;</span>
- <span class="co">*</span> This Actor DOESN<span class="co">&#39;</span>T Work<span class="co">!!!!</span>
- <span class="co">*</span> 
- <span class="co">*</span> <span class="kw">@author </span>fujohnwang
- <span class="co">*</span> <span class="kw">@since </span><span class="co">1.0</span>
- <span class="co">*/</span>
-<span class="kw">public</span> <span class="kw">class</span> ActorWithStateCopy {
-
-    <span class="kw">private</span> ActorClosure&lt;<span class="bu">String</span>&gt;                           lastClosure;
-    <span class="kw">private</span> ActionClosureStateCopier&lt;ActorClosure&lt;<span class="bu">String</span>&gt;&gt; stateCopier = <span class="kw">new</span> ActionClosureStateCopier&lt;ActorClosure&lt;<span class="bu">String</span>&gt;&gt;() {
-                                                                           <span class="kw">public</span> <span class="dt">void</span> <span class="fu">copy</span>(ActorClosure&lt;<span class="bu">String</span>&gt; from,
-                                                                                            ActorClosure&lt;<span class="bu">String</span>&gt; to) {
-                                                                               <span class="bu">System</span>.<span class="fu">out</span>
-                                                                                       .<span class="fu">println</span>(<span class="st">&quot;do copy if necessary&quot;</span>);
-                                                                           }
-
-                                                                       };
-
-    <span class="kw">private</span> <span class="bu">ExecutorService</span>                                scheduler   = <span class="kw">new</span> <span class="bu">ThreadPoolExecutor</span>(
-                                                                               <span class="dv">1</span>,
-                                                                               <span class="dv">1</span>,
-                                                                               <span class="dv">60</span>,
-                                                                               <span class="bu">TimeUnit</span>.<span class="fu">SECONDS</span>,
-                                                                               <span class="kw">new</span> <span class="bu">ArrayBlockingQueue</span>&lt;<span class="bu">Runnable</span>&gt;(
-                                                                                       <span class="dv">10</span>)) {
-
-<span class="co">//                                                                           @Override</span>
-<span class="co">//                                                                           protected void afterExecute(Runnable arg0,</span>
-<span class="co">//                                                                                                       Throwable arg1) {</span>
-<span class="co">//                                                                               super.afterExecute(</span>
-<span class="co">//                                                                                       arg0, arg1);</span>
-<span class="co">//                                                                           }</span>
-<span class="co">//</span>
-<span class="co">//                                                                           @Override</span>
-<span class="co">//                                                                           protected void beforeExecute(Thread arg0,</span>
-<span class="co">//                                                                                                        Runnable arg1) {</span>
-<span class="co">//                                                                               super.beforeExecute(</span>
-<span class="co">//                                                                                       arg0, arg1);</span>
-<span class="co">//                                                                           }</span>
-
-                                                                           <span class="at">@SuppressWarnings</span>(<span class="st">&quot;unchecked&quot;</span>)
-                                                                           <span class="at">@Override</span>
-                                                                           <span class="kw">public</span> <span class="dt">void</span> <span class="fu">execute</span>(<span class="bu">Runnable</span> command) {
-                                                                               ActorClosure&lt;<span class="bu">String</span>&gt; r = (ActorClosure&lt;<span class="bu">String</span>&gt;) command;
-                                                                               <span class="kw">if</span> (lastClosure != <span class="kw">null</span>
-                                                                                       &amp;&amp; stateCopier != <span class="kw">null</span>) {
-                                                                                   <span class="bu">System</span>.<span class="fu">out</span>
-                                                                                           .<span class="fu">println</span>(<span class="st">&quot;copy state before executing&quot;</span>);
-                                                                                   stateCopier
-                                                                                           .<span class="fu">copy</span>(lastClosure,
-                                                                                                   r);
-                                                                               }
-                                                                               <span class="kw">super</span>.<span class="fu">execute</span>(r);
-
-                                                                               lastClosure = r;
-                                                                           }
-
-                                                                       };
-
-    <span class="kw">private</span> <span class="bu">Class</span>&lt;? <span class="kw">extends</span> ActorClosure&lt;<span class="bu">String</span>&gt;&gt;          actionType  = ActorClosureStub.<span class="fu">class</span>;
-
-    <span class="kw">public</span> <span class="bu">Future</span>&lt;?&gt; <span class="fu">bang</span>(<span class="bu">String</span> e) <span class="kw">throws</span> <span class="bu">Exception</span> {
-        ActorClosure&lt;<span class="bu">String</span>&gt; action = actionType.<span class="fu">newInstance</span>();
-        action.<span class="fu">sinkEvent</span>(e);
-        <span class="kw">return</span> scheduler.<span class="fu">submit</span>(action, <span class="kw">null</span>);
-    }
-
-    <span class="kw">public</span> <span class="dt">void</span> <span class="fu">setActionType</span>(<span class="bu">Class</span>&lt;? <span class="kw">extends</span> ActorClosure&lt;<span class="bu">String</span>&gt;&gt; actionType) {
-        <span class="kw">this</span>.<span class="fu">actionType</span> = actionType;
-    }
-
-    <span class="kw">public</span> <span class="bu">Class</span>&lt;? <span class="kw">extends</span> ActorClosure&lt;<span class="bu">String</span>&gt;&gt; <span class="fu">getActionType</span>() {
-        <span class="kw">return</span> actionType;
-    }
-
-    <span class="kw">public</span> <span class="dt">void</span> <span class="fu">terminate</span>() {
-        scheduler.<span class="fu">shutdown</span>();
-    }
-
-    <span class="co">/**</span>
-     <span class="co">* </span><span class="kw">@param args</span>
-     <span class="co">*/</span>
-    <span class="kw">public</span> <span class="dt">static</span> <span class="dt">void</span> <span class="fu">main</span>(<span class="bu">String</span>[] args) <span class="kw">throws</span> <span class="bu">Exception</span> {
-        ActorWithStateCopy actor = <span class="kw">new</span> <span class="fu">ActorWithStateCopy</span>();
-        <span class="bu">Future</span>&lt;?&gt; f1 = actor.<span class="fu">bang</span>(<span class="st">&quot;a&quot;</span>);
-        <span class="bu">Future</span>&lt;?&gt; f2 = actor.<span class="fu">bang</span>(<span class="st">&quot;b&quot;</span>);
-        <span class="bu">Future</span>&lt;?&gt; f3 = actor.<span class="fu">bang</span>(<span class="st">&quot;c&quot;</span>);
-
-        f3.<span class="fu">get</span>();
-        f2.<span class="fu">get</span>();
-        f1.<span class="fu">get</span>();
-
-        actor.<span class="fu">terminate</span>();
-    }
-
-}</code></pre></div>
-<p>Let's run the code. Oops, something goes wrong:</p>
-<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="bu">Exception</span> in thread <span class="st">&quot;main&quot;</span> java.<span class="fu">lang</span>.<span class="fu">ClassCastException</span>: java.<span class="fu">util</span>.<span class="fu">concurrent</span>.<span class="fu">FutureTask</span> cannot be cast to cn.<span class="fu">spring21</span>.<span class="fu">sandbox</span>.<span class="fu">actor</span>.<span class="fu">ActorClosure</span>
- at cn.<span class="fu">spring21</span>.<span class="fu">sandbox</span>.<span class="fu">actor</span>.<span class="fu">ActorWithStateCopy</span>$<span class="fl">2.</span><span class="fu">execute</span>(ActorWithStateCopy.<span class="fu">java</span>:<span class="dv">55</span>)
- at java.<span class="fu">util</span>.<span class="fu">concurrent</span>.<span class="fu">AbstractExecutorService</span>.<span class="fu">submit</span>(<span class="bu">AbstractExecutorService</span>.<span class="fu">java</span>:<span class="dv">85</span>)
- at cn.<span class="fu">spring21</span>.<span class="fu">sandbox</span>.<span class="fu">actor</span>.<span class="fu">ActorWithStateCopy</span>.<span class="fu">bang</span>(ActorWithStateCopy.<span class="fu">java</span>:<span class="dv">76</span>)
- at cn.<span class="fu">spring21</span>.<span class="fu">sandbox</span>.<span class="fu">actor</span>.<span class="fu">ActorWithStateCopy</span>.<span class="fu">main</span>(ActorWithStateCopy.<span class="fu">java</span>:<span class="dv">96</span>) </code></pre></div>
-<p>See the problem? Wow, ThreadPoolExecutor really do some dirty things there, and I tries to bypass it but finally, I found I couldn't :-(</p>
+<p>To make this happen, we can recall the hooks the ThreadPoolExecutor has, e.g. afterExecute(), beforeExecute(), furthermore, we can even directly override the execute() of it. Anyway, we can write such-alike code:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode java"><code class="sourceCode java"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="co">/**</span></a>
+<a class="sourceLine" id="cb5-2" data-line-number="2"> <span class="co">*</span> Although we seek to extend <span class="kw">{@link </span>ActorWithPrototypeScopeActionClosure<span class="kw">}</span> to</a>
+<a class="sourceLine" id="cb5-3" data-line-number="3"> <span class="co">*</span> enable state copy between the action closures<span class="co">,</span> BUT it seems that the Executor</a>
+<a class="sourceLine" id="cb5-4" data-line-number="4"> <span class="co">*</span> implementation doesn<span class="co">&#39;</span>t allow us to go this way<span class="co">.</span><span class="kw">&lt;br&gt;</span></a>
+<a class="sourceLine" id="cb5-5" data-line-number="5"> <span class="co">*</span> This Actor DOESN<span class="co">&#39;</span>T Work<span class="co">!!!!</span></a>
+<a class="sourceLine" id="cb5-6" data-line-number="6"> <span class="co">*</span> </a>
+<a class="sourceLine" id="cb5-7" data-line-number="7"> <span class="co">*</span> <span class="kw">@author </span>fujohnwang</a>
+<a class="sourceLine" id="cb5-8" data-line-number="8"> <span class="co">*</span> <span class="kw">@since </span><span class="co">1.0</span></a>
+<a class="sourceLine" id="cb5-9" data-line-number="9"> <span class="co">*/</span></a>
+<a class="sourceLine" id="cb5-10" data-line-number="10"><span class="kw">public</span> <span class="kw">class</span> ActorWithStateCopy {</a>
+<a class="sourceLine" id="cb5-11" data-line-number="11"></a>
+<a class="sourceLine" id="cb5-12" data-line-number="12">    <span class="kw">private</span> ActorClosure&lt;<span class="bu">String</span>&gt;                           lastClosure;</a>
+<a class="sourceLine" id="cb5-13" data-line-number="13">    <span class="kw">private</span> ActionClosureStateCopier&lt;ActorClosure&lt;<span class="bu">String</span>&gt;&gt; stateCopier = <span class="kw">new</span> ActionClosureStateCopier&lt;ActorClosure&lt;<span class="bu">String</span>&gt;&gt;() {</a>
+<a class="sourceLine" id="cb5-14" data-line-number="14">                                                                           <span class="kw">public</span> <span class="dt">void</span> <span class="fu">copy</span>(ActorClosure&lt;<span class="bu">String</span>&gt; from,</a>
+<a class="sourceLine" id="cb5-15" data-line-number="15">                                                                                            ActorClosure&lt;<span class="bu">String</span>&gt; to) {</a>
+<a class="sourceLine" id="cb5-16" data-line-number="16">                                                                               <span class="bu">System</span>.<span class="fu">out</span></a>
+<a class="sourceLine" id="cb5-17" data-line-number="17">                                                                                       .<span class="fu">println</span>(<span class="st">&quot;do copy if necessary&quot;</span>);</a>
+<a class="sourceLine" id="cb5-18" data-line-number="18">                                                                           }</a>
+<a class="sourceLine" id="cb5-19" data-line-number="19"></a>
+<a class="sourceLine" id="cb5-20" data-line-number="20">                                                                       };</a>
+<a class="sourceLine" id="cb5-21" data-line-number="21"></a>
+<a class="sourceLine" id="cb5-22" data-line-number="22">    <span class="kw">private</span> <span class="bu">ExecutorService</span>                                scheduler   = <span class="kw">new</span> <span class="bu">ThreadPoolExecutor</span>(</a>
+<a class="sourceLine" id="cb5-23" data-line-number="23">                                                                               <span class="dv">1</span>,</a>
+<a class="sourceLine" id="cb5-24" data-line-number="24">                                                                               <span class="dv">1</span>,</a>
+<a class="sourceLine" id="cb5-25" data-line-number="25">                                                                               <span class="dv">60</span>,</a>
+<a class="sourceLine" id="cb5-26" data-line-number="26">                                                                               <span class="bu">TimeUnit</span>.<span class="fu">SECONDS</span>,</a>
+<a class="sourceLine" id="cb5-27" data-line-number="27">                                                                               <span class="kw">new</span> <span class="bu">ArrayBlockingQueue</span>&lt;<span class="bu">Runnable</span>&gt;(</a>
+<a class="sourceLine" id="cb5-28" data-line-number="28">                                                                                       <span class="dv">10</span>)) {</a>
+<a class="sourceLine" id="cb5-29" data-line-number="29"></a>
+<a class="sourceLine" id="cb5-30" data-line-number="30"><span class="co">//                                                                           @Override</span></a>
+<a class="sourceLine" id="cb5-31" data-line-number="31"><span class="co">//                                                                           protected void afterExecute(Runnable arg0,</span></a>
+<a class="sourceLine" id="cb5-32" data-line-number="32"><span class="co">//                                                                                                       Throwable arg1) {</span></a>
+<a class="sourceLine" id="cb5-33" data-line-number="33"><span class="co">//                                                                               super.afterExecute(</span></a>
+<a class="sourceLine" id="cb5-34" data-line-number="34"><span class="co">//                                                                                       arg0, arg1);</span></a>
+<a class="sourceLine" id="cb5-35" data-line-number="35"><span class="co">//                                                                           }</span></a>
+<a class="sourceLine" id="cb5-36" data-line-number="36"><span class="co">//</span></a>
+<a class="sourceLine" id="cb5-37" data-line-number="37"><span class="co">//                                                                           @Override</span></a>
+<a class="sourceLine" id="cb5-38" data-line-number="38"><span class="co">//                                                                           protected void beforeExecute(Thread arg0,</span></a>
+<a class="sourceLine" id="cb5-39" data-line-number="39"><span class="co">//                                                                                                        Runnable arg1) {</span></a>
+<a class="sourceLine" id="cb5-40" data-line-number="40"><span class="co">//                                                                               super.beforeExecute(</span></a>
+<a class="sourceLine" id="cb5-41" data-line-number="41"><span class="co">//                                                                                       arg0, arg1);</span></a>
+<a class="sourceLine" id="cb5-42" data-line-number="42"><span class="co">//                                                                           }</span></a>
+<a class="sourceLine" id="cb5-43" data-line-number="43"></a>
+<a class="sourceLine" id="cb5-44" data-line-number="44">                                                                           <span class="at">@SuppressWarnings</span>(<span class="st">&quot;unchecked&quot;</span>)</a>
+<a class="sourceLine" id="cb5-45" data-line-number="45">                                                                           <span class="at">@Override</span></a>
+<a class="sourceLine" id="cb5-46" data-line-number="46">                                                                           <span class="kw">public</span> <span class="dt">void</span> <span class="fu">execute</span>(<span class="bu">Runnable</span> command) {</a>
+<a class="sourceLine" id="cb5-47" data-line-number="47">                                                                               ActorClosure&lt;<span class="bu">String</span>&gt; r = (ActorClosure&lt;<span class="bu">String</span>&gt;) command;</a>
+<a class="sourceLine" id="cb5-48" data-line-number="48">                                                                               <span class="kw">if</span> (lastClosure != <span class="kw">null</span></a>
+<a class="sourceLine" id="cb5-49" data-line-number="49">                                                                                       &amp;&amp; stateCopier != <span class="kw">null</span>) {</a>
+<a class="sourceLine" id="cb5-50" data-line-number="50">                                                                                   <span class="bu">System</span>.<span class="fu">out</span></a>
+<a class="sourceLine" id="cb5-51" data-line-number="51">                                                                                           .<span class="fu">println</span>(<span class="st">&quot;copy state before executing&quot;</span>);</a>
+<a class="sourceLine" id="cb5-52" data-line-number="52">                                                                                   stateCopier</a>
+<a class="sourceLine" id="cb5-53" data-line-number="53">                                                                                           .<span class="fu">copy</span>(lastClosure,</a>
+<a class="sourceLine" id="cb5-54" data-line-number="54">                                                                                                   r);</a>
+<a class="sourceLine" id="cb5-55" data-line-number="55">                                                                               }</a>
+<a class="sourceLine" id="cb5-56" data-line-number="56">                                                                               <span class="kw">super</span>.<span class="fu">execute</span>(r);</a>
+<a class="sourceLine" id="cb5-57" data-line-number="57"></a>
+<a class="sourceLine" id="cb5-58" data-line-number="58">                                                                               lastClosure = r;</a>
+<a class="sourceLine" id="cb5-59" data-line-number="59">                                                                           }</a>
+<a class="sourceLine" id="cb5-60" data-line-number="60"></a>
+<a class="sourceLine" id="cb5-61" data-line-number="61">                                                                       };</a>
+<a class="sourceLine" id="cb5-62" data-line-number="62"></a>
+<a class="sourceLine" id="cb5-63" data-line-number="63">    <span class="kw">private</span> <span class="bu">Class</span>&lt;? <span class="kw">extends</span> ActorClosure&lt;<span class="bu">String</span>&gt;&gt;          actionType  = ActorClosureStub.<span class="fu">class</span>;</a>
+<a class="sourceLine" id="cb5-64" data-line-number="64"></a>
+<a class="sourceLine" id="cb5-65" data-line-number="65">    <span class="kw">public</span> <span class="bu">Future</span>&lt;?&gt; <span class="fu">bang</span>(<span class="bu">String</span> e) <span class="kw">throws</span> <span class="bu">Exception</span> {</a>
+<a class="sourceLine" id="cb5-66" data-line-number="66">        ActorClosure&lt;<span class="bu">String</span>&gt; action = actionType.<span class="fu">newInstance</span>();</a>
+<a class="sourceLine" id="cb5-67" data-line-number="67">        action.<span class="fu">sinkEvent</span>(e);</a>
+<a class="sourceLine" id="cb5-68" data-line-number="68">        <span class="kw">return</span> scheduler.<span class="fu">submit</span>(action, <span class="kw">null</span>);</a>
+<a class="sourceLine" id="cb5-69" data-line-number="69">    }</a>
+<a class="sourceLine" id="cb5-70" data-line-number="70"></a>
+<a class="sourceLine" id="cb5-71" data-line-number="71">    <span class="kw">public</span> <span class="dt">void</span> <span class="fu">setActionType</span>(<span class="bu">Class</span>&lt;? <span class="kw">extends</span> ActorClosure&lt;<span class="bu">String</span>&gt;&gt; actionType) {</a>
+<a class="sourceLine" id="cb5-72" data-line-number="72">        <span class="kw">this</span>.<span class="fu">actionType</span> = actionType;</a>
+<a class="sourceLine" id="cb5-73" data-line-number="73">    }</a>
+<a class="sourceLine" id="cb5-74" data-line-number="74"></a>
+<a class="sourceLine" id="cb5-75" data-line-number="75">    <span class="kw">public</span> <span class="bu">Class</span>&lt;? <span class="kw">extends</span> ActorClosure&lt;<span class="bu">String</span>&gt;&gt; <span class="fu">getActionType</span>() {</a>
+<a class="sourceLine" id="cb5-76" data-line-number="76">        <span class="kw">return</span> actionType;</a>
+<a class="sourceLine" id="cb5-77" data-line-number="77">    }</a>
+<a class="sourceLine" id="cb5-78" data-line-number="78"></a>
+<a class="sourceLine" id="cb5-79" data-line-number="79">    <span class="kw">public</span> <span class="dt">void</span> <span class="fu">terminate</span>() {</a>
+<a class="sourceLine" id="cb5-80" data-line-number="80">        scheduler.<span class="fu">shutdown</span>();</a>
+<a class="sourceLine" id="cb5-81" data-line-number="81">    }</a>
+<a class="sourceLine" id="cb5-82" data-line-number="82"></a>
+<a class="sourceLine" id="cb5-83" data-line-number="83">    <span class="co">/**</span></a>
+<a class="sourceLine" id="cb5-84" data-line-number="84">     <span class="co">* </span><span class="kw">@param args</span></a>
+<a class="sourceLine" id="cb5-85" data-line-number="85">     <span class="co">*/</span></a>
+<a class="sourceLine" id="cb5-86" data-line-number="86">    <span class="kw">public</span> <span class="dt">static</span> <span class="dt">void</span> <span class="fu">main</span>(<span class="bu">String</span>[] args) <span class="kw">throws</span> <span class="bu">Exception</span> {</a>
+<a class="sourceLine" id="cb5-87" data-line-number="87">        ActorWithStateCopy actor = <span class="kw">new</span> <span class="fu">ActorWithStateCopy</span>();</a>
+<a class="sourceLine" id="cb5-88" data-line-number="88">        <span class="bu">Future</span>&lt;?&gt; f1 = actor.<span class="fu">bang</span>(<span class="st">&quot;a&quot;</span>);</a>
+<a class="sourceLine" id="cb5-89" data-line-number="89">        <span class="bu">Future</span>&lt;?&gt; f2 = actor.<span class="fu">bang</span>(<span class="st">&quot;b&quot;</span>);</a>
+<a class="sourceLine" id="cb5-90" data-line-number="90">        <span class="bu">Future</span>&lt;?&gt; f3 = actor.<span class="fu">bang</span>(<span class="st">&quot;c&quot;</span>);</a>
+<a class="sourceLine" id="cb5-91" data-line-number="91"></a>
+<a class="sourceLine" id="cb5-92" data-line-number="92">        f3.<span class="fu">get</span>();</a>
+<a class="sourceLine" id="cb5-93" data-line-number="93">        f2.<span class="fu">get</span>();</a>
+<a class="sourceLine" id="cb5-94" data-line-number="94">        f1.<span class="fu">get</span>();</a>
+<a class="sourceLine" id="cb5-95" data-line-number="95"></a>
+<a class="sourceLine" id="cb5-96" data-line-number="96">        actor.<span class="fu">terminate</span>();</a>
+<a class="sourceLine" id="cb5-97" data-line-number="97">    }</a>
+<a class="sourceLine" id="cb5-98" data-line-number="98"></a>
+<a class="sourceLine" id="cb5-99" data-line-number="99">}</a></code></pre></div>
+<p>Let’s run the code. Oops, something goes wrong:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode java"><code class="sourceCode java"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="bu">Exception</span> in thread <span class="st">&quot;main&quot;</span> java.<span class="fu">lang</span>.<span class="fu">ClassCastException</span>: java.<span class="fu">util</span>.<span class="fu">concurrent</span>.<span class="fu">FutureTask</span> cannot be cast to cn.<span class="fu">spring21</span>.<span class="fu">sandbox</span>.<span class="fu">actor</span>.<span class="fu">ActorClosure</span></a>
+<a class="sourceLine" id="cb6-2" data-line-number="2"> at cn.<span class="fu">spring21</span>.<span class="fu">sandbox</span>.<span class="fu">actor</span>.<span class="fu">ActorWithStateCopy</span>$<span class="fl">2.</span><span class="fu">execute</span>(ActorWithStateCopy.<span class="fu">java</span>:<span class="dv">55</span>)</a>
+<a class="sourceLine" id="cb6-3" data-line-number="3"> at java.<span class="fu">util</span>.<span class="fu">concurrent</span>.<span class="fu">AbstractExecutorService</span>.<span class="fu">submit</span>(<span class="bu">AbstractExecutorService</span>.<span class="fu">java</span>:<span class="dv">85</span>)</a>
+<a class="sourceLine" id="cb6-4" data-line-number="4"> at cn.<span class="fu">spring21</span>.<span class="fu">sandbox</span>.<span class="fu">actor</span>.<span class="fu">ActorWithStateCopy</span>.<span class="fu">bang</span>(ActorWithStateCopy.<span class="fu">java</span>:<span class="dv">76</span>)</a>
+<a class="sourceLine" id="cb6-5" data-line-number="5"> at cn.<span class="fu">spring21</span>.<span class="fu">sandbox</span>.<span class="fu">actor</span>.<span class="fu">ActorWithStateCopy</span>.<span class="fu">main</span>(ActorWithStateCopy.<span class="fu">java</span>:<span class="dv">96</span>) </a></code></pre></div>
+<p>See the problem? Wow, ThreadPoolExecutor really do some dirty things there, and I tries to bypass it but finally, I found I couldn’t :-(</p>
 <h1 id="raw-thread-based-actor-prototyping-workable"><span class="header-section-number">4</span> Raw Thread Based Actor Prototyping (Workable)</h1>
 <p>I fall back to a raw thread solution for the actor. The final code is listed here:</p>
-<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="kw">public</span> <span class="kw">class</span> ImprovedThreadBasedActor&lt;T&gt; <span class="kw">extends</span> <span class="bu">Thread</span> {
-
-    <span class="kw">private</span> <span class="dt">static</span> <span class="dt">final</span> <span class="bu">Logger</span>            logger  = LoggerFactory
-                                                           .<span class="fu">getLogger</span>(ImprovedThreadBasedActor.<span class="fu">class</span>);
-
-    <span class="kw">private</span> <span class="bu">BlockingQueue</span>&lt;EventWrapper&lt;T&gt;&gt; mailbox;
-    <span class="kw">private</span> <span class="kw">volatile</span> <span class="dt">boolean</span>               running = <span class="kw">true</span>;
-    <span class="kw">private</span> ActorClosure&lt;T&gt;                action;
-
-    <span class="kw">public</span> <span class="fu">ImprovedThreadBasedActor</span>(ActorClosure&lt;T&gt; action) {
-        <span class="kw">this</span>(action, <span class="dv">100</span>);
-    }
-
-    <span class="kw">public</span> <span class="fu">ImprovedThreadBasedActor</span>(ActorClosure&lt;T&gt; action, <span class="dt">int</span> mailboxSize) {
-        Validate.<span class="fu">notNull</span>(action);
-
-        mailbox = <span class="kw">new</span> <span class="bu">ArrayBlockingQueue</span>&lt;EventWrapper&lt;T&gt;&gt;(mailboxSize &lt;= <span class="dv">0</span> ? <span class="dv">100</span> : mailboxSize);
-        <span class="kw">this</span>.<span class="fu">action</span> = action;
-
-    }
-
-    <span class="kw">public</span> <span class="bu">Future</span>&lt;?&gt; <span class="fu">sendAndAsyncWait</span>(T event) <span class="kw">throws</span> <span class="bu">Exception</span> {
-        <span class="kw">if</span> (!running) {
-            <span class="kw">throw</span> <span class="kw">new</span> <span class="bu">Exception</span>(<span class="st">&quot;the actor is down&quot;</span>);
-        }
-        <span class="bu">FutureTask</span>&lt;<span class="bu">Object</span>&gt; future = <span class="kw">new</span> <span class="bu">FutureTask</span>&lt;<span class="bu">Object</span>&gt;(<span class="kw">new</span> <span class="bu">Runnable</span>() {
-            <span class="kw">public</span> <span class="dt">void</span> <span class="fu">run</span>() {
-            }
-        }, <span class="kw">true</span>);
-        EventWrapper&lt;T&gt; wrapper = <span class="kw">new</span> EventWrapper&lt;T&gt;(event, future);
-        mailbox.<span class="fu">put</span>(wrapper);
-        <span class="kw">return</span> future;
-    }
-
-    <span class="at">@Override</span>
-    <span class="kw">public</span> <span class="dt">void</span> <span class="fu">run</span>() {
-        <span class="kw">while</span> (running) {
-            <span class="kw">try</span> {
-                EventWrapper&lt;T&gt; wrapper = mailbox.<span class="fu">take</span>();
-                <span class="kw">try</span> {
-                    action.<span class="fu">sinkEvent</span>(wrapper.<span class="fu">getEvent</span>());
-                    action.<span class="fu">run</span>();
-                    wrapper.<span class="fu">getFuture</span>().<span class="fu">run</span>();
-                } <span class="kw">catch</span> (<span class="bu">Exception</span> e) {
-                    logger.<span class="fu">error</span>(<span class="st">&quot;exception in actor execution which will stop the actor:</span><span class="sc">\n</span><span class="st">{}&quot;</span>,
-                            ExceptionUtils.<span class="fu">getFullStackTrace</span>(e));
-                    <span class="kw">break</span>;
-                }
-            } <span class="kw">catch</span> (<span class="bu">InterruptedException</span> e) {
-                logger.<span class="fu">info</span>(<span class="st">&quot;ImprovedThreadBasedActor running thread is interrupted:{}&quot;</span>,
-                        ExceptionUtils.<span class="fu">getFullStackTrace</span>(e));
-                <span class="kw">continue</span>;
-            }
-        }
-        logger.<span class="fu">info</span>(<span class="st">&quot;ImprovedThreadBasedActor is down.&quot;</span>);
-    }
-
-    <span class="kw">public</span> <span class="dt">void</span> <span class="fu">terminate</span>() {
-        running = <span class="kw">false</span>;
-        <span class="fu">interrupt</span>();
-    }
-
-    <span class="kw">public</span> <span class="dt">static</span> <span class="dt">void</span> <span class="fu">main</span>(<span class="bu">String</span>[] args) <span class="kw">throws</span> <span class="bu">Exception</span> {
-        ImprovedThreadBasedActor&lt;<span class="bu">String</span>&gt; actor = <span class="kw">new</span> ImprovedThreadBasedActor&lt;<span class="bu">String</span>&gt;(
-                <span class="kw">new</span> <span class="fu">ActorClosureStub</span>(), <span class="dv">10</span>);
-        actor.<span class="fu">start</span>();
-
-        <span class="bu">Future</span>&lt;?&gt; f1 = actor.<span class="fu">sendAndAsyncWait</span>(<span class="st">&quot;a&quot;</span>);
-        <span class="bu">Future</span>&lt;?&gt; f2 = actor.<span class="fu">sendAndAsyncWait</span>(<span class="st">&quot;b&quot;</span>);
-        <span class="bu">Future</span>&lt;?&gt; f3 = actor.<span class="fu">sendAndAsyncWait</span>(<span class="st">&quot;c&quot;</span>);
-        f3.<span class="fu">get</span>();
-        <span class="bu">System</span>.<span class="fu">out</span>.<span class="fu">println</span>(<span class="st">&quot;f2 is done? &quot;</span> + f2.<span class="fu">isDone</span>());
-        f2.<span class="fu">get</span>();
-        <span class="bu">System</span>.<span class="fu">out</span>.<span class="fu">println</span>(<span class="st">&quot;f1 is done? &quot;</span> + f2.<span class="fu">isDone</span>());
-        f1.<span class="fu">get</span>();
-        <span class="bu">System</span>.<span class="fu">out</span>.<span class="fu">println</span>(<span class="st">&quot;stop the actor.&quot;</span>);
-        actor.<span class="fu">terminate</span>();
-    }
-}</code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode java"><code class="sourceCode java"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="kw">public</span> <span class="kw">class</span> ImprovedThreadBasedActor&lt;T&gt; <span class="kw">extends</span> <span class="bu">Thread</span> {</a>
+<a class="sourceLine" id="cb7-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb7-3" data-line-number="3">    <span class="kw">private</span> <span class="dt">static</span> <span class="dt">final</span> <span class="bu">Logger</span>            logger  = LoggerFactory</a>
+<a class="sourceLine" id="cb7-4" data-line-number="4">                                                           .<span class="fu">getLogger</span>(ImprovedThreadBasedActor.<span class="fu">class</span>);</a>
+<a class="sourceLine" id="cb7-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb7-6" data-line-number="6">    <span class="kw">private</span> <span class="bu">BlockingQueue</span>&lt;EventWrapper&lt;T&gt;&gt; mailbox;</a>
+<a class="sourceLine" id="cb7-7" data-line-number="7">    <span class="kw">private</span> <span class="kw">volatile</span> <span class="dt">boolean</span>               running = <span class="kw">true</span>;</a>
+<a class="sourceLine" id="cb7-8" data-line-number="8">    <span class="kw">private</span> ActorClosure&lt;T&gt;                action;</a>
+<a class="sourceLine" id="cb7-9" data-line-number="9"></a>
+<a class="sourceLine" id="cb7-10" data-line-number="10">    <span class="kw">public</span> <span class="fu">ImprovedThreadBasedActor</span>(ActorClosure&lt;T&gt; action) {</a>
+<a class="sourceLine" id="cb7-11" data-line-number="11">        <span class="kw">this</span>(action, <span class="dv">100</span>);</a>
+<a class="sourceLine" id="cb7-12" data-line-number="12">    }</a>
+<a class="sourceLine" id="cb7-13" data-line-number="13"></a>
+<a class="sourceLine" id="cb7-14" data-line-number="14">    <span class="kw">public</span> <span class="fu">ImprovedThreadBasedActor</span>(ActorClosure&lt;T&gt; action, <span class="dt">int</span> mailboxSize) {</a>
+<a class="sourceLine" id="cb7-15" data-line-number="15">        Validate.<span class="fu">notNull</span>(action);</a>
+<a class="sourceLine" id="cb7-16" data-line-number="16"></a>
+<a class="sourceLine" id="cb7-17" data-line-number="17">        mailbox = <span class="kw">new</span> <span class="bu">ArrayBlockingQueue</span>&lt;EventWrapper&lt;T&gt;&gt;(mailboxSize &lt;= <span class="dv">0</span> ? <span class="dv">100</span> : mailboxSize);</a>
+<a class="sourceLine" id="cb7-18" data-line-number="18">        <span class="kw">this</span>.<span class="fu">action</span> = action;</a>
+<a class="sourceLine" id="cb7-19" data-line-number="19"></a>
+<a class="sourceLine" id="cb7-20" data-line-number="20">    }</a>
+<a class="sourceLine" id="cb7-21" data-line-number="21"></a>
+<a class="sourceLine" id="cb7-22" data-line-number="22">    <span class="kw">public</span> <span class="bu">Future</span>&lt;?&gt; <span class="fu">sendAndAsyncWait</span>(T event) <span class="kw">throws</span> <span class="bu">Exception</span> {</a>
+<a class="sourceLine" id="cb7-23" data-line-number="23">        <span class="kw">if</span> (!running) {</a>
+<a class="sourceLine" id="cb7-24" data-line-number="24">            <span class="kw">throw</span> <span class="kw">new</span> <span class="bu">Exception</span>(<span class="st">&quot;the actor is down&quot;</span>);</a>
+<a class="sourceLine" id="cb7-25" data-line-number="25">        }</a>
+<a class="sourceLine" id="cb7-26" data-line-number="26">        <span class="bu">FutureTask</span>&lt;<span class="bu">Object</span>&gt; future = <span class="kw">new</span> <span class="bu">FutureTask</span>&lt;<span class="bu">Object</span>&gt;(<span class="kw">new</span> <span class="bu">Runnable</span>() {</a>
+<a class="sourceLine" id="cb7-27" data-line-number="27">            <span class="kw">public</span> <span class="dt">void</span> <span class="fu">run</span>() {</a>
+<a class="sourceLine" id="cb7-28" data-line-number="28">            }</a>
+<a class="sourceLine" id="cb7-29" data-line-number="29">        }, <span class="kw">true</span>);</a>
+<a class="sourceLine" id="cb7-30" data-line-number="30">        EventWrapper&lt;T&gt; wrapper = <span class="kw">new</span> EventWrapper&lt;T&gt;(event, future);</a>
+<a class="sourceLine" id="cb7-31" data-line-number="31">        mailbox.<span class="fu">put</span>(wrapper);</a>
+<a class="sourceLine" id="cb7-32" data-line-number="32">        <span class="kw">return</span> future;</a>
+<a class="sourceLine" id="cb7-33" data-line-number="33">    }</a>
+<a class="sourceLine" id="cb7-34" data-line-number="34"></a>
+<a class="sourceLine" id="cb7-35" data-line-number="35">    <span class="at">@Override</span></a>
+<a class="sourceLine" id="cb7-36" data-line-number="36">    <span class="kw">public</span> <span class="dt">void</span> <span class="fu">run</span>() {</a>
+<a class="sourceLine" id="cb7-37" data-line-number="37">        <span class="kw">while</span> (running) {</a>
+<a class="sourceLine" id="cb7-38" data-line-number="38">            <span class="kw">try</span> {</a>
+<a class="sourceLine" id="cb7-39" data-line-number="39">                EventWrapper&lt;T&gt; wrapper = mailbox.<span class="fu">take</span>();</a>
+<a class="sourceLine" id="cb7-40" data-line-number="40">                <span class="kw">try</span> {</a>
+<a class="sourceLine" id="cb7-41" data-line-number="41">                    action.<span class="fu">sinkEvent</span>(wrapper.<span class="fu">getEvent</span>());</a>
+<a class="sourceLine" id="cb7-42" data-line-number="42">                    action.<span class="fu">run</span>();</a>
+<a class="sourceLine" id="cb7-43" data-line-number="43">                    wrapper.<span class="fu">getFuture</span>().<span class="fu">run</span>();</a>
+<a class="sourceLine" id="cb7-44" data-line-number="44">                } <span class="kw">catch</span> (<span class="bu">Exception</span> e) {</a>
+<a class="sourceLine" id="cb7-45" data-line-number="45">                    logger.<span class="fu">error</span>(<span class="st">&quot;exception in actor execution which will stop the actor:</span><span class="sc">\n</span><span class="st">{}&quot;</span>,</a>
+<a class="sourceLine" id="cb7-46" data-line-number="46">                            ExceptionUtils.<span class="fu">getFullStackTrace</span>(e));</a>
+<a class="sourceLine" id="cb7-47" data-line-number="47">                    <span class="kw">break</span>;</a>
+<a class="sourceLine" id="cb7-48" data-line-number="48">                }</a>
+<a class="sourceLine" id="cb7-49" data-line-number="49">            } <span class="kw">catch</span> (<span class="bu">InterruptedException</span> e) {</a>
+<a class="sourceLine" id="cb7-50" data-line-number="50">                logger.<span class="fu">info</span>(<span class="st">&quot;ImprovedThreadBasedActor running thread is interrupted:{}&quot;</span>,</a>
+<a class="sourceLine" id="cb7-51" data-line-number="51">                        ExceptionUtils.<span class="fu">getFullStackTrace</span>(e));</a>
+<a class="sourceLine" id="cb7-52" data-line-number="52">                <span class="kw">continue</span>;</a>
+<a class="sourceLine" id="cb7-53" data-line-number="53">            }</a>
+<a class="sourceLine" id="cb7-54" data-line-number="54">        }</a>
+<a class="sourceLine" id="cb7-55" data-line-number="55">        logger.<span class="fu">info</span>(<span class="st">&quot;ImprovedThreadBasedActor is down.&quot;</span>);</a>
+<a class="sourceLine" id="cb7-56" data-line-number="56">    }</a>
+<a class="sourceLine" id="cb7-57" data-line-number="57"></a>
+<a class="sourceLine" id="cb7-58" data-line-number="58">    <span class="kw">public</span> <span class="dt">void</span> <span class="fu">terminate</span>() {</a>
+<a class="sourceLine" id="cb7-59" data-line-number="59">        running = <span class="kw">false</span>;</a>
+<a class="sourceLine" id="cb7-60" data-line-number="60">        <span class="fu">interrupt</span>();</a>
+<a class="sourceLine" id="cb7-61" data-line-number="61">    }</a>
+<a class="sourceLine" id="cb7-62" data-line-number="62"></a>
+<a class="sourceLine" id="cb7-63" data-line-number="63">    <span class="kw">public</span> <span class="dt">static</span> <span class="dt">void</span> <span class="fu">main</span>(<span class="bu">String</span>[] args) <span class="kw">throws</span> <span class="bu">Exception</span> {</a>
+<a class="sourceLine" id="cb7-64" data-line-number="64">        ImprovedThreadBasedActor&lt;<span class="bu">String</span>&gt; actor = <span class="kw">new</span> ImprovedThreadBasedActor&lt;<span class="bu">String</span>&gt;(</a>
+<a class="sourceLine" id="cb7-65" data-line-number="65">                <span class="kw">new</span> <span class="fu">ActorClosureStub</span>(), <span class="dv">10</span>);</a>
+<a class="sourceLine" id="cb7-66" data-line-number="66">        actor.<span class="fu">start</span>();</a>
+<a class="sourceLine" id="cb7-67" data-line-number="67"></a>
+<a class="sourceLine" id="cb7-68" data-line-number="68">        <span class="bu">Future</span>&lt;?&gt; f1 = actor.<span class="fu">sendAndAsyncWait</span>(<span class="st">&quot;a&quot;</span>);</a>
+<a class="sourceLine" id="cb7-69" data-line-number="69">        <span class="bu">Future</span>&lt;?&gt; f2 = actor.<span class="fu">sendAndAsyncWait</span>(<span class="st">&quot;b&quot;</span>);</a>
+<a class="sourceLine" id="cb7-70" data-line-number="70">        <span class="bu">Future</span>&lt;?&gt; f3 = actor.<span class="fu">sendAndAsyncWait</span>(<span class="st">&quot;c&quot;</span>);</a>
+<a class="sourceLine" id="cb7-71" data-line-number="71">        f3.<span class="fu">get</span>();</a>
+<a class="sourceLine" id="cb7-72" data-line-number="72">        <span class="bu">System</span>.<span class="fu">out</span>.<span class="fu">println</span>(<span class="st">&quot;f2 is done? &quot;</span> + f2.<span class="fu">isDone</span>());</a>
+<a class="sourceLine" id="cb7-73" data-line-number="73">        f2.<span class="fu">get</span>();</a>
+<a class="sourceLine" id="cb7-74" data-line-number="74">        <span class="bu">System</span>.<span class="fu">out</span>.<span class="fu">println</span>(<span class="st">&quot;f1 is done? &quot;</span> + f2.<span class="fu">isDone</span>());</a>
+<a class="sourceLine" id="cb7-75" data-line-number="75">        f1.<span class="fu">get</span>();</a>
+<a class="sourceLine" id="cb7-76" data-line-number="76">        <span class="bu">System</span>.<span class="fu">out</span>.<span class="fu">println</span>(<span class="st">&quot;stop the actor.&quot;</span>);</a>
+<a class="sourceLine" id="cb7-77" data-line-number="77">        actor.<span class="fu">terminate</span>();</a>
+<a class="sourceLine" id="cb7-78" data-line-number="78">    }</a>
+<a class="sourceLine" id="cb7-79" data-line-number="79">}</a></code></pre></div>
 <p>No explanation on this, you can explore it yourself. There are several tricky things in the code, I hope you can figure out the reason. GL and HF.</p>
 <h2 id="another-version"><span class="header-section-number">4.1</span> Another Version</h2>
-<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="co">/**</span>
- <span class="co">*</span> This is a heavy weight thread based actor implementation<span class="co">.</span><span class="kw">&lt;br&gt;</span>
- <span class="co">*</span> 
- <span class="co">* </span><span class="kw">@author </span>fujohnwang
- <span class="co">*</span> <span class="kw">@param &lt;T&gt;, </span>the event type to be processed
- <span class="co">*</span> <span class="kw">@param &lt;R&gt;, </span>result type after processing the event<span class="co">.</span>
- <span class="co">*/</span>
-<span class="kw">public</span> <span class="kw">class</span> ThreadActor&lt;T, R&gt; <span class="kw">extends</span> <span class="bu">Thread</span> {
-    <span class="kw">private</span> <span class="kw">transient</span> <span class="dt">final</span> <span class="bu">Logger</span>            logger  = LoggerFactory.<span class="fu">getLogger</span>(<span class="kw">this</span>.<span class="fu">getClass</span>());
-
-    <span class="kw">private</span> <span class="kw">volatile</span> <span class="dt">boolean</span>                  running = <span class="kw">true</span>;
-    <span class="kw">private</span> <span class="bu">BlockingQueue</span>&lt;EventWrapper&lt;T, R&gt;&gt; mailbox;
-    <span class="kw">private</span> Reaction&lt;T, R&gt;                    action;
-
-    <span class="kw">public</span> <span class="fu">ThreadActor</span>(Reaction&lt;T, R&gt; action, <span class="dt">int</span> mailboxSize) {
-        <span class="kw">this</span>.<span class="fu">action</span> = action;
-        <span class="kw">this</span>.<span class="fu">mailbox</span> = <span class="kw">new</span> <span class="bu">ArrayBlockingQueue</span>&lt;EventWrapper&lt;T, R&gt;&gt;((mailboxSize &lt;= <span class="dv">0</span>) ? <span class="dv">100</span>
-                : mailboxSize);
-    }
-
-    <span class="kw">public</span> <span class="bu">Future</span>&lt;R&gt; <span class="fu">sendAndAsycAwait</span>(T event) <span class="kw">throws</span> <span class="bu">Exception</span> {
-        <span class="kw">if</span> (!running) {
-            <span class="kw">throw</span> <span class="kw">new</span> <span class="bu">Exception</span>(<span class="st">&quot;the actor is down&quot;</span>);
-        }
-        FutureProxy&lt;R&gt; f = <span class="kw">new</span> FutureProxy&lt;R&gt;(<span class="kw">new</span> <span class="bu">FutureTask</span>&lt;R&gt;(<span class="kw">new</span> <span class="bu">Callable</span>&lt;R&gt;() {
-            <span class="kw">public</span> R <span class="fu">call</span>() <span class="kw">throws</span> <span class="bu">Exception</span> {
-                <span class="kw">return</span> <span class="kw">null</span>;
-            }
-        }));
-        mailbox.<span class="fu">put</span>(<span class="kw">new</span> EventWrapper&lt;T, R&gt;(event, f));
-        <span class="kw">return</span> f;
-    }
-
-    <span class="at">@Override</span>
-    <span class="kw">public</span> <span class="dt">void</span> <span class="fu">run</span>() {
-        <span class="kw">while</span> (running) {
-            <span class="kw">try</span> {
-                EventWrapper&lt;T, R&gt; e = mailbox.<span class="fu">take</span>();
-                action.<span class="fu">sink</span>(e.<span class="fu">getEvent</span>());
-                <span class="kw">try</span> {
-                    R r = action.<span class="fu">call</span>();
-                    e.<span class="fu">getFuture</span>().<span class="fu">setResult</span>(r);
-                } <span class="kw">catch</span> (<span class="bu">Exception</span> e1) {
-                    e.<span class="fu">getFuture</span>().<span class="fu">setCause</span>(e1);
-                } <span class="kw">finally</span> {
-                    e.<span class="fu">getFuture</span>().<span class="fu">getDelegate</span>().<span class="fu">run</span>();
-                }
-            } <span class="kw">catch</span> (<span class="bu">InterruptedException</span> e) {
-                <span class="kw">continue</span>;
-            }
-        }
-        logger.<span class="fu">info</span>(<span class="st">&quot;actor shutdown&quot;</span>);
-    }
-
-    <span class="kw">public</span> <span class="dt">void</span> <span class="fu">terminate</span>() {
-        running = <span class="kw">false</span>;
-        <span class="fu">interrupt</span>();
-    }
-
-    <span class="kw">public</span> <span class="dt">static</span> <span class="dt">void</span> <span class="fu">main</span>(<span class="bu">String</span> args[]) {
-        ThreadActor&lt;<span class="bu">String</span>, <span class="bu">Boolean</span>&gt; actor = <span class="kw">new</span> ThreadActor&lt;<span class="bu">String</span>, <span class="bu">Boolean</span>&gt;(<span class="kw">new</span> <span class="fu">ReactionStub</span>(),
-                <span class="dv">10</span>);
-        actor.<span class="fu">start</span>();
-
-        <span class="kw">try</span> {
-            <span class="kw">for</span> (<span class="dt">int</span> i = <span class="dv">0</span>; i &lt; <span class="dv">10</span>; i++) {
-                <span class="kw">try</span> {
-                    <span class="bu">System</span>.<span class="fu">out</span>.<span class="fu">println</span>(actor.<span class="fu">sendAndAsycAwait</span>(<span class="bu">String</span>.<span class="fu">valueOf</span>(i)).<span class="fu">get</span>());
-                } <span class="kw">catch</span> (<span class="bu">InterruptedException</span> e) {
-                    <span class="co">// TODO Auto-generated catch block</span>
-                    e.<span class="fu">printStackTrace</span>();
-                } <span class="kw">catch</span> (<span class="bu">ExecutionException</span> e) {
-                    <span class="co">// TODO Auto-generated catch block</span>
-                    e.<span class="fu">printStackTrace</span>();
-                } <span class="kw">catch</span> (<span class="bu">Exception</span> e) {
-                    <span class="co">// TODO Auto-generated catch block</span>
-                    e.<span class="fu">printStackTrace</span>();
-                }
-            }
-        } <span class="kw">finally</span> {
-            actor.<span class="fu">terminate</span>();
-        }
-    }
-}
-
-<span class="kw">class</span> ReactionStub <span class="kw">implements</span> Reaction&lt;<span class="bu">String</span>, <span class="bu">Boolean</span>&gt; {
-
-    <span class="kw">private</span> <span class="dt">long</span>   counter;
-    <span class="kw">private</span> <span class="bu">String</span> event;
-
-    <span class="kw">public</span> <span class="bu">Boolean</span> <span class="fu">call</span>() <span class="kw">throws</span> <span class="bu">Exception</span> {
-        <span class="kw">try</span> {
-            <span class="kw">if</span> (counter % <span class="dv">2</span> == <span class="dv">0</span>) {
-                <span class="bu">System</span>.<span class="fu">out</span>.<span class="fu">println</span>(<span class="st">&quot;message received:&quot;</span> + event);
-                <span class="kw">return</span> <span class="kw">true</span>;
-            } <span class="kw">else</span> {
-                <span class="kw">throw</span> <span class="kw">new</span> <span class="bu">Exception</span>(<span class="st">&quot;sample exception&quot;</span>);
-            }
-        } <span class="kw">finally</span> {
-            counter += <span class="dv">1</span>;
-        }
-
-    }
-
-    <span class="kw">public</span> <span class="dt">void</span> <span class="fu">sink</span>(<span class="bu">String</span> event) {
-        <span class="kw">this</span>.<span class="fu">event</span> = event;
-    }
-
-}</code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode java"><code class="sourceCode java"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="co">/**</span></a>
+<a class="sourceLine" id="cb8-2" data-line-number="2"> <span class="co">*</span> This is a heavy weight thread based actor implementation<span class="co">.</span><span class="kw">&lt;br&gt;</span></a>
+<a class="sourceLine" id="cb8-3" data-line-number="3"> <span class="co">*</span> </a>
+<a class="sourceLine" id="cb8-4" data-line-number="4"> <span class="co">* </span><span class="kw">@author </span>fujohnwang</a>
+<a class="sourceLine" id="cb8-5" data-line-number="5"> <span class="co">*</span> <span class="kw">@param &lt;T&gt;, </span>the event type to be processed</a>
+<a class="sourceLine" id="cb8-6" data-line-number="6"> <span class="co">*</span> <span class="kw">@param &lt;R&gt;, </span>result type after processing the event<span class="co">.</span></a>
+<a class="sourceLine" id="cb8-7" data-line-number="7"> <span class="co">*/</span></a>
+<a class="sourceLine" id="cb8-8" data-line-number="8"><span class="kw">public</span> <span class="kw">class</span> ThreadActor&lt;T, R&gt; <span class="kw">extends</span> <span class="bu">Thread</span> {</a>
+<a class="sourceLine" id="cb8-9" data-line-number="9">    <span class="kw">private</span> <span class="kw">transient</span> <span class="dt">final</span> <span class="bu">Logger</span>            logger  = LoggerFactory.<span class="fu">getLogger</span>(<span class="kw">this</span>.<span class="fu">getClass</span>());</a>
+<a class="sourceLine" id="cb8-10" data-line-number="10"></a>
+<a class="sourceLine" id="cb8-11" data-line-number="11">    <span class="kw">private</span> <span class="kw">volatile</span> <span class="dt">boolean</span>                  running = <span class="kw">true</span>;</a>
+<a class="sourceLine" id="cb8-12" data-line-number="12">    <span class="kw">private</span> <span class="bu">BlockingQueue</span>&lt;EventWrapper&lt;T, R&gt;&gt; mailbox;</a>
+<a class="sourceLine" id="cb8-13" data-line-number="13">    <span class="kw">private</span> Reaction&lt;T, R&gt;                    action;</a>
+<a class="sourceLine" id="cb8-14" data-line-number="14"></a>
+<a class="sourceLine" id="cb8-15" data-line-number="15">    <span class="kw">public</span> <span class="fu">ThreadActor</span>(Reaction&lt;T, R&gt; action, <span class="dt">int</span> mailboxSize) {</a>
+<a class="sourceLine" id="cb8-16" data-line-number="16">        <span class="kw">this</span>.<span class="fu">action</span> = action;</a>
+<a class="sourceLine" id="cb8-17" data-line-number="17">        <span class="kw">this</span>.<span class="fu">mailbox</span> = <span class="kw">new</span> <span class="bu">ArrayBlockingQueue</span>&lt;EventWrapper&lt;T, R&gt;&gt;((mailboxSize &lt;= <span class="dv">0</span>) ? <span class="dv">100</span></a>
+<a class="sourceLine" id="cb8-18" data-line-number="18">                : mailboxSize);</a>
+<a class="sourceLine" id="cb8-19" data-line-number="19">    }</a>
+<a class="sourceLine" id="cb8-20" data-line-number="20"></a>
+<a class="sourceLine" id="cb8-21" data-line-number="21">    <span class="kw">public</span> <span class="bu">Future</span>&lt;R&gt; <span class="fu">sendAndAsycAwait</span>(T event) <span class="kw">throws</span> <span class="bu">Exception</span> {</a>
+<a class="sourceLine" id="cb8-22" data-line-number="22">        <span class="kw">if</span> (!running) {</a>
+<a class="sourceLine" id="cb8-23" data-line-number="23">            <span class="kw">throw</span> <span class="kw">new</span> <span class="bu">Exception</span>(<span class="st">&quot;the actor is down&quot;</span>);</a>
+<a class="sourceLine" id="cb8-24" data-line-number="24">        }</a>
+<a class="sourceLine" id="cb8-25" data-line-number="25">        FutureProxy&lt;R&gt; f = <span class="kw">new</span> FutureProxy&lt;R&gt;(<span class="kw">new</span> <span class="bu">FutureTask</span>&lt;R&gt;(<span class="kw">new</span> <span class="bu">Callable</span>&lt;R&gt;() {</a>
+<a class="sourceLine" id="cb8-26" data-line-number="26">            <span class="kw">public</span> R <span class="fu">call</span>() <span class="kw">throws</span> <span class="bu">Exception</span> {</a>
+<a class="sourceLine" id="cb8-27" data-line-number="27">                <span class="kw">return</span> <span class="kw">null</span>;</a>
+<a class="sourceLine" id="cb8-28" data-line-number="28">            }</a>
+<a class="sourceLine" id="cb8-29" data-line-number="29">        }));</a>
+<a class="sourceLine" id="cb8-30" data-line-number="30">        mailbox.<span class="fu">put</span>(<span class="kw">new</span> EventWrapper&lt;T, R&gt;(event, f));</a>
+<a class="sourceLine" id="cb8-31" data-line-number="31">        <span class="kw">return</span> f;</a>
+<a class="sourceLine" id="cb8-32" data-line-number="32">    }</a>
+<a class="sourceLine" id="cb8-33" data-line-number="33"></a>
+<a class="sourceLine" id="cb8-34" data-line-number="34">    <span class="at">@Override</span></a>
+<a class="sourceLine" id="cb8-35" data-line-number="35">    <span class="kw">public</span> <span class="dt">void</span> <span class="fu">run</span>() {</a>
+<a class="sourceLine" id="cb8-36" data-line-number="36">        <span class="kw">while</span> (running) {</a>
+<a class="sourceLine" id="cb8-37" data-line-number="37">            <span class="kw">try</span> {</a>
+<a class="sourceLine" id="cb8-38" data-line-number="38">                EventWrapper&lt;T, R&gt; e = mailbox.<span class="fu">take</span>();</a>
+<a class="sourceLine" id="cb8-39" data-line-number="39">                action.<span class="fu">sink</span>(e.<span class="fu">getEvent</span>());</a>
+<a class="sourceLine" id="cb8-40" data-line-number="40">                <span class="kw">try</span> {</a>
+<a class="sourceLine" id="cb8-41" data-line-number="41">                    R r = action.<span class="fu">call</span>();</a>
+<a class="sourceLine" id="cb8-42" data-line-number="42">                    e.<span class="fu">getFuture</span>().<span class="fu">setResult</span>(r);</a>
+<a class="sourceLine" id="cb8-43" data-line-number="43">                } <span class="kw">catch</span> (<span class="bu">Exception</span> e1) {</a>
+<a class="sourceLine" id="cb8-44" data-line-number="44">                    e.<span class="fu">getFuture</span>().<span class="fu">setCause</span>(e1);</a>
+<a class="sourceLine" id="cb8-45" data-line-number="45">                } <span class="kw">finally</span> {</a>
+<a class="sourceLine" id="cb8-46" data-line-number="46">                    e.<span class="fu">getFuture</span>().<span class="fu">getDelegate</span>().<span class="fu">run</span>();</a>
+<a class="sourceLine" id="cb8-47" data-line-number="47">                }</a>
+<a class="sourceLine" id="cb8-48" data-line-number="48">            } <span class="kw">catch</span> (<span class="bu">InterruptedException</span> e) {</a>
+<a class="sourceLine" id="cb8-49" data-line-number="49">                <span class="kw">continue</span>;</a>
+<a class="sourceLine" id="cb8-50" data-line-number="50">            }</a>
+<a class="sourceLine" id="cb8-51" data-line-number="51">        }</a>
+<a class="sourceLine" id="cb8-52" data-line-number="52">        logger.<span class="fu">info</span>(<span class="st">&quot;actor shutdown&quot;</span>);</a>
+<a class="sourceLine" id="cb8-53" data-line-number="53">    }</a>
+<a class="sourceLine" id="cb8-54" data-line-number="54"></a>
+<a class="sourceLine" id="cb8-55" data-line-number="55">    <span class="kw">public</span> <span class="dt">void</span> <span class="fu">terminate</span>() {</a>
+<a class="sourceLine" id="cb8-56" data-line-number="56">        running = <span class="kw">false</span>;</a>
+<a class="sourceLine" id="cb8-57" data-line-number="57">        <span class="fu">interrupt</span>();</a>
+<a class="sourceLine" id="cb8-58" data-line-number="58">    }</a>
+<a class="sourceLine" id="cb8-59" data-line-number="59"></a>
+<a class="sourceLine" id="cb8-60" data-line-number="60">    <span class="kw">public</span> <span class="dt">static</span> <span class="dt">void</span> <span class="fu">main</span>(<span class="bu">String</span> args[]) {</a>
+<a class="sourceLine" id="cb8-61" data-line-number="61">        ThreadActor&lt;<span class="bu">String</span>, <span class="bu">Boolean</span>&gt; actor = <span class="kw">new</span> ThreadActor&lt;<span class="bu">String</span>, <span class="bu">Boolean</span>&gt;(<span class="kw">new</span> <span class="fu">ReactionStub</span>(),</a>
+<a class="sourceLine" id="cb8-62" data-line-number="62">                <span class="dv">10</span>);</a>
+<a class="sourceLine" id="cb8-63" data-line-number="63">        actor.<span class="fu">start</span>();</a>
+<a class="sourceLine" id="cb8-64" data-line-number="64"></a>
+<a class="sourceLine" id="cb8-65" data-line-number="65">        <span class="kw">try</span> {</a>
+<a class="sourceLine" id="cb8-66" data-line-number="66">            <span class="kw">for</span> (<span class="dt">int</span> i = <span class="dv">0</span>; i &lt; <span class="dv">10</span>; i++) {</a>
+<a class="sourceLine" id="cb8-67" data-line-number="67">                <span class="kw">try</span> {</a>
+<a class="sourceLine" id="cb8-68" data-line-number="68">                    <span class="bu">System</span>.<span class="fu">out</span>.<span class="fu">println</span>(actor.<span class="fu">sendAndAsycAwait</span>(<span class="bu">String</span>.<span class="fu">valueOf</span>(i)).<span class="fu">get</span>());</a>
+<a class="sourceLine" id="cb8-69" data-line-number="69">                } <span class="kw">catch</span> (<span class="bu">InterruptedException</span> e) {</a>
+<a class="sourceLine" id="cb8-70" data-line-number="70">                    <span class="co">// TODO Auto-generated catch block</span></a>
+<a class="sourceLine" id="cb8-71" data-line-number="71">                    e.<span class="fu">printStackTrace</span>();</a>
+<a class="sourceLine" id="cb8-72" data-line-number="72">                } <span class="kw">catch</span> (<span class="bu">ExecutionException</span> e) {</a>
+<a class="sourceLine" id="cb8-73" data-line-number="73">                    <span class="co">// TODO Auto-generated catch block</span></a>
+<a class="sourceLine" id="cb8-74" data-line-number="74">                    e.<span class="fu">printStackTrace</span>();</a>
+<a class="sourceLine" id="cb8-75" data-line-number="75">                } <span class="kw">catch</span> (<span class="bu">Exception</span> e) {</a>
+<a class="sourceLine" id="cb8-76" data-line-number="76">                    <span class="co">// TODO Auto-generated catch block</span></a>
+<a class="sourceLine" id="cb8-77" data-line-number="77">                    e.<span class="fu">printStackTrace</span>();</a>
+<a class="sourceLine" id="cb8-78" data-line-number="78">                }</a>
+<a class="sourceLine" id="cb8-79" data-line-number="79">            }</a>
+<a class="sourceLine" id="cb8-80" data-line-number="80">        } <span class="kw">finally</span> {</a>
+<a class="sourceLine" id="cb8-81" data-line-number="81">            actor.<span class="fu">terminate</span>();</a>
+<a class="sourceLine" id="cb8-82" data-line-number="82">        }</a>
+<a class="sourceLine" id="cb8-83" data-line-number="83">    }</a>
+<a class="sourceLine" id="cb8-84" data-line-number="84">}</a>
+<a class="sourceLine" id="cb8-85" data-line-number="85"></a>
+<a class="sourceLine" id="cb8-86" data-line-number="86"><span class="kw">class</span> ReactionStub <span class="kw">implements</span> Reaction&lt;<span class="bu">String</span>, <span class="bu">Boolean</span>&gt; {</a>
+<a class="sourceLine" id="cb8-87" data-line-number="87"></a>
+<a class="sourceLine" id="cb8-88" data-line-number="88">    <span class="kw">private</span> <span class="dt">long</span>   counter;</a>
+<a class="sourceLine" id="cb8-89" data-line-number="89">    <span class="kw">private</span> <span class="bu">String</span> event;</a>
+<a class="sourceLine" id="cb8-90" data-line-number="90"></a>
+<a class="sourceLine" id="cb8-91" data-line-number="91">    <span class="kw">public</span> <span class="bu">Boolean</span> <span class="fu">call</span>() <span class="kw">throws</span> <span class="bu">Exception</span> {</a>
+<a class="sourceLine" id="cb8-92" data-line-number="92">        <span class="kw">try</span> {</a>
+<a class="sourceLine" id="cb8-93" data-line-number="93">            <span class="kw">if</span> (counter % <span class="dv">2</span> == <span class="dv">0</span>) {</a>
+<a class="sourceLine" id="cb8-94" data-line-number="94">                <span class="bu">System</span>.<span class="fu">out</span>.<span class="fu">println</span>(<span class="st">&quot;message received:&quot;</span> + event);</a>
+<a class="sourceLine" id="cb8-95" data-line-number="95">                <span class="kw">return</span> <span class="kw">true</span>;</a>
+<a class="sourceLine" id="cb8-96" data-line-number="96">            } <span class="kw">else</span> {</a>
+<a class="sourceLine" id="cb8-97" data-line-number="97">                <span class="kw">throw</span> <span class="kw">new</span> <span class="bu">Exception</span>(<span class="st">&quot;sample exception&quot;</span>);</a>
+<a class="sourceLine" id="cb8-98" data-line-number="98">            }</a>
+<a class="sourceLine" id="cb8-99" data-line-number="99">        } <span class="kw">finally</span> {</a>
+<a class="sourceLine" id="cb8-100" data-line-number="100">            counter += <span class="dv">1</span>;</a>
+<a class="sourceLine" id="cb8-101" data-line-number="101">        }</a>
+<a class="sourceLine" id="cb8-102" data-line-number="102"></a>
+<a class="sourceLine" id="cb8-103" data-line-number="103">    }</a>
+<a class="sourceLine" id="cb8-104" data-line-number="104"></a>
+<a class="sourceLine" id="cb8-105" data-line-number="105">    <span class="kw">public</span> <span class="dt">void</span> <span class="fu">sink</span>(<span class="bu">String</span> event) {</a>
+<a class="sourceLine" id="cb8-106" data-line-number="106">        <span class="kw">this</span>.<span class="fu">event</span> = event;</a>
+<a class="sourceLine" id="cb8-107" data-line-number="107">    }</a>
+<a class="sourceLine" id="cb8-108" data-line-number="108"></a>
+<a class="sourceLine" id="cb8-109" data-line-number="109">}</a></code></pre></div>
 <p>优劣不解释。</p>
 <h1 id="conclusion"><span class="header-section-number">5</span> Conclusion</h1>
-<p>The above words just a play-around, don't treat it too serious. It's not rocket science, If you are looking for such thing, get away. These words are not for you.</p>
+<p>The above words just a play-around, don’t treat it too serious. It’s not rocket science, If you are looking for such thing, get away. These words are not for you.</p>
 <p><strong>Caution: The last method still has gotchas, Improvement is still in progress</strong></p>
-<hr>
-<div align="center">
-<img src="/images/wechat-qrcode-footer.png"/>
-</div>
 
-</div>
+    </article>
 
-
-
-</body></html>
+  </body>
+</html>

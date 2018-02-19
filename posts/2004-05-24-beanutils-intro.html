@@ -1,14 +1,81 @@
 <!DOCTYPE html>
-<html lang="zh">
-<head>
+<html>
+  <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>随笔20040524（Beanutils） - 一个架构士的思考与沉</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="王福强的博客， 一个架构士的思考与沉淀">
     <meta name="keywords" content="architecture, book author, thinker, fighter, 架构, 思考, 技术, 武术, 哲学">
     <meta name="author" content="王福强">
-        <link rel="icon" href="/favicon.ico">
-    <title>随笔20040524（Beanutils） - 一个架构士的思考与沉淀</title>
-    <!-- 百度统计 -->
+    <link rel="stylesheet" href="/ivy.css">
+    <link rel="shortcut icon" href="/favicon.ico"/>
+    <style type="text/css">code{white-space: pre;}</style>
+    <style type="text/css">
+    a.sourceLine { display: inline-block; line-height: 1.25; }
+    a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+    a.sourceLine:empty { height: 1.2em; position: absolute; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode { white-space: pre; position: relative; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    code.sourceCode { white-space: pre-wrap; }
+    a.sourceLine { text-indent: -1em; padding-left: 1em; }
+    }
+    pre.numberSource a.sourceLine
+      { position: relative; }
+    pre.numberSource a.sourceLine:empty
+      { position: absolute; }
+    pre.numberSource a.sourceLine::before
+      { content: attr(data-line-number);
+        position: absolute; left: -5em; text-align: right; vertical-align: baseline;
+        border: none; pointer-events: all;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {  }
+    @media screen {
+    a.sourceLine::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+            <!-- 百度统计 -->
     <script>
       var _hmt = _hmt || [];
       (function() {
@@ -18,72 +85,26 @@
           s.parentNode.insertBefore(hm, s);
       })();
     </script>
+  </head>
 
-	<link href="/css/custom.css" rel="stylesheet"/>
-	<link rel="shortcut icon" href="/favicon.ico"/>
+  <body class="node homepage">
 
-<style type="text/css">code{white-space: pre;}</style>
-    <style type="text/css">
-    div.sourceCode { overflow-x: auto; }
-    table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
-      margin: 0; padding: 0; vertical-align: baseline; border: none; }
-    table.sourceCode { width: 100%; line-height: 100%; }
-    td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
-    td.sourceCode { padding-left: 5px; }
-    code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
-    code > span.dt { color: #902000; } /* DataType */
-    code > span.dv { color: #40a070; } /* DecVal */
-    code > span.bn { color: #40a070; } /* BaseN */
-    code > span.fl { color: #40a070; } /* Float */
-    code > span.ch { color: #4070a0; } /* Char */
-    code > span.st { color: #4070a0; } /* String */
-    code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
-    code > span.ot { color: #007020; } /* Other */
-    code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
-    code > span.fu { color: #06287e; } /* Function */
-    code > span.er { color: #ff0000; font-weight: bold; } /* Error */
-    code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-    code > span.cn { color: #880000; } /* Constant */
-    code > span.sc { color: #4070a0; } /* SpecialChar */
-    code > span.vs { color: #4070a0; } /* VerbatimString */
-    code > span.ss { color: #bb6688; } /* SpecialString */
-    code > span.im { } /* Import */
-    code > span.va { color: #19177c; } /* Variable */
-    code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-    code > span.op { color: #666666; } /* Operator */
-    code > span.bu { } /* BuiltIn */
-    code > span.ex { } /* Extension */
-    code > span.pp { color: #bc7a00; } /* Preprocessor */
-    code > span.at { color: #7d9029; } /* Attribute */
-    code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
-    code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-    code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-    code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-  </style>
-        
-	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-	<!--[if lt IE 9]>
-	  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.2/html5shiv.js"></script>
-	  <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-	<![endif]-->
-
-</head>
-
-<body>
-
-    <div class="masthead">
-		<!--
-    <h1 class="masthead-title fq">
-      <a href="/">扶墙老师</a>
-
-    </h1>
-    -->
-    <a href="/"><h1>扶墙老师说</h1></a>
-		<p class="masthead-lead">一个架构士的思考与沉淀</p>
-
-		<hr class="masthead-hr">
-
-	  	<ul class="masthead-nav">
+    <header class="masthead">
+      <h1><a href="/">扶墙老师说</a></h1>
+      <p class="tagline">
+         一个架构士的思考与沉淀
+          <img src="/images/wechat-qrcode-footer.png"/>
+          扶墙老师，辨证施“知”
+      </p>
+      
+      <nav class="menu">
+        <input id="menu-check" type="checkbox"/>
+        <label id="menu-label" for="menu-check" class="unselectable">
+          <span class="icon close-icon">✕</span>
+          <span class="icon open-icon">☰</span>
+          <span class="text">展开</span>
+        </label>
+        <ul>
             <li class="nav-item"><a class="nav-link" href="/favorite.html">我的收藏</a></li>
             <li class="nav-item"><a class="nav-link" href="/dashboard.html">金融看板</a></li>
             <li class="nav-item"><a class="nav-link" href="/columns.html">专栏文章</a></li>
@@ -91,20 +112,12 @@
             <li class="nav-item"><a class="nav-link" href="/whoami.html">我是何人</a></li>
             <li class="nav-item"><a class="nav-link" href="/interlinks.html">友情链接</a></li>
             <li class="nav-item"><a class="nav-link" href="/feeds.xml">RSS订阅</a></li>
-		</ul>
+        </ul>
+      </nav>
+    </header>
 
-  		<hr class="masthead-hr">
-
-	  	<ul class="masthead-nav">
-            <li class="nav-item"><small>©afoo.me</small></li>
-            <li class="nav-item"><small>Powered by <a href="http://pandoc.org/">pandoc</a> and <a href="http://rometools.github.io/rome/">ROME</a></small></li>
-		</ul>
-
-	</div>
-
-
-    <div class="listing">
-
+    <article class="main">
+      
 <div class="row">
 <div id="header">
 <p class="lead">
@@ -122,81 +135,76 @@
 <p>2014年从msn space存档中重新恢复出来！</p>
 </blockquote>
 <p>上午看了一些Hibernate的faq等文档，时间过的也真快，一不留神就中午了。</p>
-<p>下午leader先开了一个会，讨论SFA的CM模块的实现问题，只是让我们先看一下截屏图，星期三再讨论，呵呵，公司想自己做这个CRM，但是好像情况并不乐观，而且是否能跟日立达成汉化改造的协议还难说，所以leader只是打算让我们组的人先从abstract层面了解一下，抽象一些共通的部品。开完会，我也没有去钻研截屏图，呵呵，是不是有些不敬业啊？！:em211:不过，话说回来了，那些东西其实也没有多少花露水，明天研究一下吧！仿制，埃...leader都实说了，自己没有数据源，做这些没有什么东西，所以他也没有让我们从头做到尾，免得到时候日立那边下来，这些都白做，也打击我们的积极性。</p>
+<p>下午leader先开了一个会，讨论SFA的CM模块的实现问题，只是让我们先看一下截屏图，星期三再讨论，呵呵，公司想自己做这个CRM，但是好像情况并不乐观，而且是否能跟日立达成汉化改造的协议还难说，所以leader只是打算让我们组的人先从abstract层面了解一下，抽象一些共通的部品。开完会，我也没有去钻研截屏图，呵呵，是不是有些不敬业啊？！:em211:不过，话说回来了，那些东西其实也没有多少花露水，明天研究一下吧！仿制，埃…leader都实说了，自己没有数据源，做这些没有什么东西，所以他也没有让我们从头做到尾，免得到时候日立那边下来，这些都白做，也打击我们的积极性。</p>
 <p>因为近来又看了些hibernate的documentation，所以联想到VO在各个层之间的数据传递问题，就想起以前看过的commons beanutils，所以重新扫描了一遍，部分内容如下：</p>
-<p>首先需要说明的是PropertyUtils类，这个类提供了对javabean和动态bean的属性进行访问的各种方法，因为beanutils将bean的property分为simple，indexed和mapped三种，所以，这个类提供了get/setSimpleProperty(...),get/setIndexedProperty(...),和get/setMappedProperty(...)等方法分别针对各种property的访问。另外，除了以上这些property访问方法，还有get/setNestedProperty(...)和get/setProperty(...)方法，前两个针对bean的property依然是bean的property的访问问题，后者则是通用的property访问方式。下面是简短的代码实例：</p>
-<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java">Employee employee = ...;
-<span class="bu">String</span> city = (<span class="bu">String</span>) PropertyUtils.<span class="fu">getProperty</span>(employee,
-      <span class="st">&quot;subordinate[3].address(home).city&quot;</span>);</code></pre></div>
+<p>首先需要说明的是PropertyUtils类，这个类提供了对javabean和动态bean的属性进行访问的各种方法，因为beanutils将bean的property分为simple，indexed和mapped三种，所以，这个类提供了get/setSimpleProperty(…),get/setIndexedProperty(…),和get/setMappedProperty(…)等方法分别针对各种property的访问。另外，除了以上这些property访问方法，还有get/setNestedProperty(…)和get/setProperty(…)方法，前两个针对bean的property依然是bean的property的访问问题，后者则是通用的property访问方式。下面是简短的代码实例：</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode java"><code class="sourceCode java"><a class="sourceLine" id="cb1-1" data-line-number="1">Employee employee = ...;</a>
+<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="bu">String</span> city = (<span class="bu">String</span>) PropertyUtils.<span class="fu">getProperty</span>(employee,</a>
+<a class="sourceLine" id="cb1-3" data-line-number="3">      <span class="st">&quot;subordinate[3].address(home).city&quot;</span>);</a></code></pre></div>
 <p>其他的property访问方法的parameter跟这个代码实例类似，如果还不明白可以参考BeanUtils的API。</p>
-<p>除了以上方法，PropertyUtils还提供了copyProperty（...)等静态方法，可以查阅API 文档以取得更多信息。</p>
+<p>除了以上方法，PropertyUtils还提供了copyProperty（…)等静态方法，可以查阅API 文档以取得更多信息。</p>
 <p>其次我们要说的就是DynaBean和DynaClass接口了，我们可以通过为DynaClass的实现类提供DynaProperty类型的数组作为参数，调用其newInstance（）方法返回相应的DynaBean实例，之后，初始化该生成的bean并进行相应的处理。</p>
 <p>下面是代码实例：</p>
-<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"> DynaProperty[] props = <span class="kw">new</span> DynaProperty[]{
-        <span class="kw">new</span> <span class="fu">DynaProperty</span>(<span class="st">&quot;address&quot;</span>, java.<span class="fu">util</span>.<span class="fu">Map</span>.<span class="fu">class</span>),
-        <span class="kw">new</span> <span class="fu">DynaProperty</span>(<span class="st">&quot;subordinate&quot;</span>, mypackage.<span class="fu">Employee</span>[].<span class="fu">class</span>),
-        <span class="kw">new</span> <span class="fu">DynaProperty</span>(<span class="st">&quot;firstName&quot;</span>, <span class="bu">String</span>.<span class="fu">class</span>),
-        <span class="kw">new</span> <span class="fu">DynaProperty</span>(<span class="st">&quot;lastName&quot;</span>,  <span class="bu">String</span>.<span class="fu">class</span>)
-      };
-BasicDynaClass dynaClass = <span class="kw">new</span> <span class="fu">BasicDynaClass</span>(<span class="st">&quot;employee&quot;</span>, <span class="kw">null</span>, props);
-DynaBean employee = dynaClass.<span class="fu">newInstance</span>();
-employee.<span class="fu">set</span>(<span class="st">&quot;address&quot;</span>, <span class="kw">new</span> <span class="bu">HashMap</span>());
-employee.<span class="fu">set</span>(<span class="st">&quot;subordinate&quot;</span>, <span class="kw">new</span> mypackage.<span class="fu">Employee</span>[<span class="dv">0</span>]);
-employee.<span class="fu">set</span>(<span class="st">&quot;firstName&quot;</span>, <span class="st">&quot;Fred&quot;</span>);
-employee.<span class="fu">set</span>(<span class="st">&quot;lastName&quot;</span>, <span class="st">&quot;Flintstone&quot;</span>);</code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode java"><code class="sourceCode java"><a class="sourceLine" id="cb2-1" data-line-number="1"> DynaProperty[] props = <span class="kw">new</span> DynaProperty[]{</a>
+<a class="sourceLine" id="cb2-2" data-line-number="2">        <span class="kw">new</span> <span class="fu">DynaProperty</span>(<span class="st">&quot;address&quot;</span>, java.<span class="fu">util</span>.<span class="fu">Map</span>.<span class="fu">class</span>),</a>
+<a class="sourceLine" id="cb2-3" data-line-number="3">        <span class="kw">new</span> <span class="fu">DynaProperty</span>(<span class="st">&quot;subordinate&quot;</span>, mypackage.<span class="fu">Employee</span>[].<span class="fu">class</span>),</a>
+<a class="sourceLine" id="cb2-4" data-line-number="4">        <span class="kw">new</span> <span class="fu">DynaProperty</span>(<span class="st">&quot;firstName&quot;</span>, <span class="bu">String</span>.<span class="fu">class</span>),</a>
+<a class="sourceLine" id="cb2-5" data-line-number="5">        <span class="kw">new</span> <span class="fu">DynaProperty</span>(<span class="st">&quot;lastName&quot;</span>,  <span class="bu">String</span>.<span class="fu">class</span>)</a>
+<a class="sourceLine" id="cb2-6" data-line-number="6">      };</a>
+<a class="sourceLine" id="cb2-7" data-line-number="7">BasicDynaClass dynaClass = <span class="kw">new</span> <span class="fu">BasicDynaClass</span>(<span class="st">&quot;employee&quot;</span>, <span class="kw">null</span>, props);</a>
+<a class="sourceLine" id="cb2-8" data-line-number="8">DynaBean employee = dynaClass.<span class="fu">newInstance</span>();</a>
+<a class="sourceLine" id="cb2-9" data-line-number="9">employee.<span class="fu">set</span>(<span class="st">&quot;address&quot;</span>, <span class="kw">new</span> <span class="bu">HashMap</span>());</a>
+<a class="sourceLine" id="cb2-10" data-line-number="10">employee.<span class="fu">set</span>(<span class="st">&quot;subordinate&quot;</span>, <span class="kw">new</span> mypackage.<span class="fu">Employee</span>[<span class="dv">0</span>]);</a>
+<a class="sourceLine" id="cb2-11" data-line-number="11">employee.<span class="fu">set</span>(<span class="st">&quot;firstName&quot;</span>, <span class="st">&quot;Fred&quot;</span>);</a>
+<a class="sourceLine" id="cb2-12" data-line-number="12">employee.<span class="fu">set</span>(<span class="st">&quot;lastName&quot;</span>, <span class="st">&quot;Flintstone&quot;</span>);</a></code></pre></div>
 <p>DynaBean和DynaClass的实现类分别可以归纳为【BasicDynaBean,ResultSetIterator,WrapDynaBean】和【BasicDynaClass, ResultSetDynaClass, RowSetDynaClass, WrapDynaClass】两组。其中，BasicDynaBean和BasicDynaClass在上面的代码中已经演示过了，剩下的尤其属ResultSetDynaClass, RowSetDynaClass两个类偶认为最为实用。他们可以对SQL查询后返回的ResultSet进行wrap，这个在web应用中很有用，你可以再也不用就数据在各层之间传递而写无数的相应的VO beans了。不过，二者也存在一定的区别。ResultSetDynaClass只能在保持数据库连接的情况下构造DynaBean并进行处理，这在很大程度上限制了其应用，因为不管怎么样，你应该将connection尽快的返回pool中而不是一直占有它，否则资源将很快的耗尽，这一点显而易见。</p>
 <p>不过，RowSetDynaClass则可以在数据库连接关闭的情况下返回数据bean并处理，它将data拷贝到memory，所以这种方法是以性能和内存的消耗为代价的，不过，这种情况对于web应用来说，却是很划的来。</p>
 <p>下面我们看看Beanutils文档提供的代码实例，不妨做一个比较：</p>
-<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="bu">Connection</span> conn = ...;
-  <span class="bu">Statement</span> stmt = conn.<span class="fu">createStatement</span>();
-  <span class="bu">ResultSet</span> rs = stmt.<span class="fu">executeQuery</span>
-    (<span class="st">&quot;select account_id, name from customers&quot;</span>);
-  <span class="bu">Iterator</span> rows = (<span class="kw">new</span> <span class="fu">ResultSetDynaClass</span>(rs)).<span class="fu">iterator</span>();
-  <span class="kw">while</span> (rows.<span class="fu">hasNext</span>()) {
-    DynaBean row = (DynaBean) rows.<span class="fu">next</span>();
-    <span class="bu">System</span>.<span class="fu">out</span>.<span class="fu">println</span>(<span class="st">&quot;Account number is &quot;</span> +
-                       row.<span class="fu">get</span>(<span class="st">&quot;account_id&quot;</span>) +
-                       <span class="st">&quot; and name is &quot;</span> + row.<span class="fu">get</span>(<span class="st">&quot;name&quot;</span>));
-  }
-  rs.<span class="fu">close</span>();
-  stmt.<span class="fu">close</span>();</code></pre></div>
-<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="bu">Connection</span> conn = ...;  <span class="co">// Acquire connection from pool</span>
-    <span class="bu">Statement</span> stmt = conn.<span class="fu">createStatement</span>();
-    <span class="bu">ResultSet</span> rs = stmt.<span class="fu">executeQuery</span>(<span class="st">&quot;SELECT ...&quot;</span>);
-    RowSetDynaClass rsdc = <span class="kw">new</span> <span class="fu">RowSetDynaClass</span>(rs);
-    rs.<span class="fu">close</span>();
-    stmt.<span class="fu">close</span>();
-    ...;                    <span class="co">// Return connection to pool</span>
-    <span class="bu">List</span> rows = rsdc.<span class="fu">getRows</span>();
-    ...;                   <span class="co">// Process the rows as desired</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode java"><code class="sourceCode java"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="bu">Connection</span> conn = ...;</a>
+<a class="sourceLine" id="cb3-2" data-line-number="2">  <span class="bu">Statement</span> stmt = conn.<span class="fu">createStatement</span>();</a>
+<a class="sourceLine" id="cb3-3" data-line-number="3">  <span class="bu">ResultSet</span> rs = stmt.<span class="fu">executeQuery</span></a>
+<a class="sourceLine" id="cb3-4" data-line-number="4">    (<span class="st">&quot;select account_id, name from customers&quot;</span>);</a>
+<a class="sourceLine" id="cb3-5" data-line-number="5">  <span class="bu">Iterator</span> rows = (<span class="kw">new</span> <span class="fu">ResultSetDynaClass</span>(rs)).<span class="fu">iterator</span>();</a>
+<a class="sourceLine" id="cb3-6" data-line-number="6">  <span class="kw">while</span> (rows.<span class="fu">hasNext</span>()) {</a>
+<a class="sourceLine" id="cb3-7" data-line-number="7">    DynaBean row = (DynaBean) rows.<span class="fu">next</span>();</a>
+<a class="sourceLine" id="cb3-8" data-line-number="8">    <span class="bu">System</span>.<span class="fu">out</span>.<span class="fu">println</span>(<span class="st">&quot;Account number is &quot;</span> +</a>
+<a class="sourceLine" id="cb3-9" data-line-number="9">                       row.<span class="fu">get</span>(<span class="st">&quot;account_id&quot;</span>) +</a>
+<a class="sourceLine" id="cb3-10" data-line-number="10">                       <span class="st">&quot; and name is &quot;</span> + row.<span class="fu">get</span>(<span class="st">&quot;name&quot;</span>));</a>
+<a class="sourceLine" id="cb3-11" data-line-number="11">  }</a>
+<a class="sourceLine" id="cb3-12" data-line-number="12">  rs.<span class="fu">close</span>();</a>
+<a class="sourceLine" id="cb3-13" data-line-number="13">  stmt.<span class="fu">close</span>();</a></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode java"><code class="sourceCode java"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="bu">Connection</span> conn = ...;  <span class="co">// Acquire connection from pool</span></a>
+<a class="sourceLine" id="cb4-2" data-line-number="2">    <span class="bu">Statement</span> stmt = conn.<span class="fu">createStatement</span>();</a>
+<a class="sourceLine" id="cb4-3" data-line-number="3">    <span class="bu">ResultSet</span> rs = stmt.<span class="fu">executeQuery</span>(<span class="st">&quot;SELECT ...&quot;</span>);</a>
+<a class="sourceLine" id="cb4-4" data-line-number="4">    RowSetDynaClass rsdc = <span class="kw">new</span> <span class="fu">RowSetDynaClass</span>(rs);</a>
+<a class="sourceLine" id="cb4-5" data-line-number="5">    rs.<span class="fu">close</span>();</a>
+<a class="sourceLine" id="cb4-6" data-line-number="6">    stmt.<span class="fu">close</span>();</a>
+<a class="sourceLine" id="cb4-7" data-line-number="7">    ...;                    <span class="co">// Return connection to pool</span></a>
+<a class="sourceLine" id="cb4-8" data-line-number="8">    <span class="bu">List</span> rows = rsdc.<span class="fu">getRows</span>();</a>
+<a class="sourceLine" id="cb4-9" data-line-number="9">    ...;                   <span class="co">// Process the rows as desired</span></a></code></pre></div>
 <p>是不是后者更适合web应用那？！</p>
 <p>除了上面的一些实现类，还剩下了WrapDynaBean和WrapDynaClass类，他们同样相应的实现了DynaBean和DynaClass接口，作用就是：如果你愿意所以的bean访问（）都通过beanutils包的PropertyUtils类方式来访问，那么你可以通过这两个类对现有的bean进行wrap，例如：</p>
-<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java">MyBean bean = ...;
-DynaBean wrapper = <span class="kw">new</span> <span class="fu">WrapDynaBean</span>(bean);
-<span class="bu">String</span> firstName = wrapper.<span class="fu">get</span>(<span class="st">&quot;firstName&quot;</span>);</code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode java"><code class="sourceCode java"><a class="sourceLine" id="cb5-1" data-line-number="1">MyBean bean = ...;</a>
+<a class="sourceLine" id="cb5-2" data-line-number="2">DynaBean wrapper = <span class="kw">new</span> <span class="fu">WrapDynaBean</span>(bean);</a>
+<a class="sourceLine" id="cb5-3" data-line-number="3"><span class="bu">String</span> firstName = wrapper.<span class="fu">get</span>(<span class="st">&quot;firstName&quot;</span>);</a></code></pre></div>
 <p>虽然在这里看不到WrapDynaClass的影子，不过不用担心，实际上在程序内部已经构造了它的实例，只是我们无须关心而已。</p>
 <p>以上差不多对beanutils提供 的主要功能类说的差不多了吧，不过，还有一点点儿，呵呵，那就是BeanUtils和ConvertUtils类以及Converter接口。</p>
 <p>其实那，beanutils包的本来目的就是由BeanUtils撑大纲的，如果了解struts的历史，也应该知道这些，或许它的doc提供的这段代码可以很好的解析其原来的用意吧：</p>
-<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java">    HttpServletRequest request = ...;
-    MyBean bean = ...;
-    <span class="bu">HashMap</span> map = <span class="kw">new</span> <span class="bu">HashMap</span>();
-    <span class="bu">Enumeration</span> names = request.<span class="fu">getParameterNames</span>();
-    <span class="kw">while</span> (names.<span class="fu">hasMoreElements</span>()) {
-      <span class="bu">String</span> name = (<span class="bu">String</span>) names.<span class="fu">nextElement</span>();
-      map.<span class="fu">put</span>(name, request.<span class="fu">getParameterValues</span>(name));
-    }
-    BeanUtils.<span class="fu">populate</span>(bean, map);</code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode java"><code class="sourceCode java"><a class="sourceLine" id="cb6-1" data-line-number="1">    HttpServletRequest request = ...;</a>
+<a class="sourceLine" id="cb6-2" data-line-number="2">    MyBean bean = ...;</a>
+<a class="sourceLine" id="cb6-3" data-line-number="3">    <span class="bu">HashMap</span> map = <span class="kw">new</span> <span class="bu">HashMap</span>();</a>
+<a class="sourceLine" id="cb6-4" data-line-number="4">    <span class="bu">Enumeration</span> names = request.<span class="fu">getParameterNames</span>();</a>
+<a class="sourceLine" id="cb6-5" data-line-number="5">    <span class="kw">while</span> (names.<span class="fu">hasMoreElements</span>()) {</a>
+<a class="sourceLine" id="cb6-6" data-line-number="6">      <span class="bu">String</span> name = (<span class="bu">String</span>) names.<span class="fu">nextElement</span>();</a>
+<a class="sourceLine" id="cb6-7" data-line-number="7">      map.<span class="fu">put</span>(name, request.<span class="fu">getParameterValues</span>(name));</a>
+<a class="sourceLine" id="cb6-8" data-line-number="8">    }</a>
+<a class="sourceLine" id="cb6-9" data-line-number="9">    BeanUtils.<span class="fu">populate</span>(bean, map);</a></code></pre></div>
 <p>另外，它底层会使用ConvertUtils进行各种数据类型的cast，而ConvertUtils提供的一些方法也可以直接使用，但是因为版本更新和未来的考虑，并不提倡直接使用它提供的一些方法，而是推荐实现自己的转换类，但前提是implements Converter接口，呵呵</p>
 <p>还有就是如果考虑到I18N的问题，也就是Locale-Aware,可以使用org.apache.commons.beanutils.locale包中提供的相应类，因为缺省的org.apache.commons.beanutils包中提供的类不支持locale-aware。</p>
 <p>最好要说的是，在org.apache.commons.beanutils.converters包下面提供了许多的converter类，至于怎么使用我就想赘述了，只要会查API doc，使用他们就不会有太多问题。</p>
-<p>ok，写的我头疼脖子酸，休息先....</p>
-<hr>
-<div align="center">
-<img src="/images/wechat-qrcode-footer.png"/>
-</div>
+<p>ok，写的我头疼脖子酸，休息先….</p>
 
-</div>
+    </article>
 
-
-
-</body></html>
+  </body>
+</html>

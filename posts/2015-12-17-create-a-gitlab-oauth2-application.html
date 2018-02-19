@@ -1,15 +1,82 @@
 <!DOCTYPE html>
-<html lang="zh">
-<head>
+<html>
+  <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gitlab OAuth2 Application简明教程 - 一个架构士的思考与沉</title>
+        <meta name="date" content="2015-12-17" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="王福强的博客， 一个架构士的思考与沉淀">
     <meta name="keywords" content="architecture, book author, thinker, fighter, 架构, 思考, 技术, 武术, 哲学">
     <meta name="author" content="王福强">
-        <meta name="date" content="2015-12-17" />
-        <link rel="icon" href="/favicon.ico">
-    <title>Gitlab OAuth2 Application简明教程 - 一个架构士的思考与沉淀</title>
-    <!-- 百度统计 -->
+    <link rel="stylesheet" href="/ivy.css">
+    <link rel="shortcut icon" href="/favicon.ico"/>
+    <style type="text/css">code{white-space: pre;}</style>
+    <style type="text/css">
+    a.sourceLine { display: inline-block; line-height: 1.25; }
+    a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+    a.sourceLine:empty { height: 1.2em; position: absolute; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode { white-space: pre; position: relative; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    code.sourceCode { white-space: pre-wrap; }
+    a.sourceLine { text-indent: -1em; padding-left: 1em; }
+    }
+    pre.numberSource a.sourceLine
+      { position: relative; }
+    pre.numberSource a.sourceLine:empty
+      { position: absolute; }
+    pre.numberSource a.sourceLine::before
+      { content: attr(data-line-number);
+        position: absolute; left: -5em; text-align: right; vertical-align: baseline;
+        border: none; pointer-events: all;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {  }
+    @media screen {
+    a.sourceLine::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+            <!-- 百度统计 -->
     <script>
       var _hmt = _hmt || [];
       (function() {
@@ -19,72 +86,26 @@
           s.parentNode.insertBefore(hm, s);
       })();
     </script>
+  </head>
 
-	<link href="/css/custom.css" rel="stylesheet"/>
-	<link rel="shortcut icon" href="/favicon.ico"/>
+  <body class="node homepage">
 
-<style type="text/css">code{white-space: pre;}</style>
-    <style type="text/css">
-    div.sourceCode { overflow-x: auto; }
-    table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
-      margin: 0; padding: 0; vertical-align: baseline; border: none; }
-    table.sourceCode { width: 100%; line-height: 100%; }
-    td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
-    td.sourceCode { padding-left: 5px; }
-    code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
-    code > span.dt { color: #902000; } /* DataType */
-    code > span.dv { color: #40a070; } /* DecVal */
-    code > span.bn { color: #40a070; } /* BaseN */
-    code > span.fl { color: #40a070; } /* Float */
-    code > span.ch { color: #4070a0; } /* Char */
-    code > span.st { color: #4070a0; } /* String */
-    code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
-    code > span.ot { color: #007020; } /* Other */
-    code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
-    code > span.fu { color: #06287e; } /* Function */
-    code > span.er { color: #ff0000; font-weight: bold; } /* Error */
-    code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-    code > span.cn { color: #880000; } /* Constant */
-    code > span.sc { color: #4070a0; } /* SpecialChar */
-    code > span.vs { color: #4070a0; } /* VerbatimString */
-    code > span.ss { color: #bb6688; } /* SpecialString */
-    code > span.im { } /* Import */
-    code > span.va { color: #19177c; } /* Variable */
-    code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-    code > span.op { color: #666666; } /* Operator */
-    code > span.bu { } /* BuiltIn */
-    code > span.ex { } /* Extension */
-    code > span.pp { color: #bc7a00; } /* Preprocessor */
-    code > span.at { color: #7d9029; } /* Attribute */
-    code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
-    code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-    code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-    code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-  </style>
-        
-	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-	<!--[if lt IE 9]>
-	  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.2/html5shiv.js"></script>
-	  <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-	<![endif]-->
-
-</head>
-
-<body>
-
-    <div class="masthead">
-		<!--
-    <h1 class="masthead-title fq">
-      <a href="/">扶墙老师</a>
-
-    </h1>
-    -->
-    <a href="/"><h1>扶墙老师说</h1></a>
-		<p class="masthead-lead">一个架构士的思考与沉淀</p>
-
-		<hr class="masthead-hr">
-
-	  	<ul class="masthead-nav">
+    <header class="masthead">
+      <h1><a href="/">扶墙老师说</a></h1>
+      <p class="tagline">
+         一个架构士的思考与沉淀
+          <img src="/images/wechat-qrcode-footer.png"/>
+          扶墙老师，辨证施“知”
+      </p>
+      
+      <nav class="menu">
+        <input id="menu-check" type="checkbox"/>
+        <label id="menu-label" for="menu-check" class="unselectable">
+          <span class="icon close-icon">✕</span>
+          <span class="icon open-icon">☰</span>
+          <span class="text">展开</span>
+        </label>
+        <ul>
             <li class="nav-item"><a class="nav-link" href="/favorite.html">我的收藏</a></li>
             <li class="nav-item"><a class="nav-link" href="/dashboard.html">金融看板</a></li>
             <li class="nav-item"><a class="nav-link" href="/columns.html">专栏文章</a></li>
@@ -92,20 +113,12 @@
             <li class="nav-item"><a class="nav-link" href="/whoami.html">我是何人</a></li>
             <li class="nav-item"><a class="nav-link" href="/interlinks.html">友情链接</a></li>
             <li class="nav-item"><a class="nav-link" href="/feeds.xml">RSS订阅</a></li>
-		</ul>
+        </ul>
+      </nav>
+    </header>
 
-  		<hr class="masthead-hr">
-
-	  	<ul class="masthead-nav">
-            <li class="nav-item"><small>©afoo.me</small></li>
-            <li class="nav-item"><small>Powered by <a href="http://pandoc.org/">pandoc</a> and <a href="http://rometools.github.io/rome/">ROME</a></small></li>
-		</ul>
-
-	</div>
-
-
-    <div class="listing">
-
+    <article class="main">
+      
 <div class="row">
 <div id="header">
 <p class="lead">
@@ -128,7 +141,7 @@
 <li><a href="#工程实现举例"><span class="toc-section-number">2</span> 工程实现举例</a></li>
 <li><a href="#faqs"><span class="toc-section-number">3</span> FAQs</a><ul>
 <li><a href="#private-token与access-token什么区别"><span class="toc-section-number">3.1</span> Private Token与Access Token什么区别？</a></li>
-<li><a href="#the-redirect-url-included-is-not-valid错误"><span class="toc-section-number">3.2</span> &quot;The redirect url included is not valid&quot;错误</a></li>
+<li><a href="#the-redirect-url-included-is-not-valid错误"><span class="toc-section-number">3.2</span> “The redirect url included is not valid”错误</a></li>
 <li><a href="#为啥没有显示授权页面而是引导我到了登录页面"><span class="toc-section-number">3.3</span> 为啥没有显示授权页面，而是引导我到了登录页面？</a></li>
 </ul></li>
 <li><a href="#小结和补充"><span class="toc-section-number">4</span> 小结和补充</a></li>
@@ -141,249 +154,219 @@
 <h2 id="应用注册"><span class="header-section-number">1.1</span> 应用注册</h2>
 <p>Gitlab允许用户创建Applications， 这些Applications可以通过OAuth2授权来访问Gitlab的相应资源。</p>
 <p>在Gitlab中， Applications分两种, 第一种是用户级别的Application， 这一般通过用户的Profile菜单进入创建：</p>
-<div class="figure">
-<img src="images/profile-application.png" />
-
-</div>
+<p><img src="images/profile-application.png" /></p>
 <p>第二种是系统级别的Application， 这一般只有管理员权限的人通过Admin菜单进入创建:</p>
-<div class="figure">
-<img src="images/system-application.png" />
-
-</div>
+<p><img src="images/system-application.png" /></p>
 <p>我们以系统级别的Application为例， 说明如何创建并注册一个Application：</p>
-<div class="figure">
-<img src="images/create-application.png" />
-
-</div>
-<p>点击&quot;New Application&quot;之后， 会进入要求输入应用注册信息页面：</p>
-<div class="figure">
-<img src="images/new-application-form.png" />
-
-</div>
+<p><img src="images/create-application.png" /></p>
+<p>点击“New Application”之后， 会进入要求输入应用注册信息页面：</p>
+<p><img src="images/new-application-form.png" /></p>
 <p>假设我们创建一个testapp应用，并在本机调试，那么我们填写如下信息：</p>
-<div class="figure">
-<img src="images/new-application-form-submit.png" />
-
-</div>
+<p><img src="images/new-application-form-submit.png" /></p>
 <p>然后点击提交(Submit)， 将得到应用创建后的信息：</p>
-<div class="figure">
-<img src="images/new-application-created.png" />
-
-</div>
+<p><img src="images/new-application-created.png" /></p>
 <blockquote>
 <p>这个页面的信息将由创建应用的管理员分发给相应的Application负责人， 后面， Application应用负责人将使用这些信息做认证。</p>
 </blockquote>
 <p>注册完成后， 我们可以看到应用现在只有0个Clients， 即还没有任何实例作为这个Application的实例进行认证：</p>
-<div class="figure">
-<img src="images/application-list-before-authorize.png" />
-
-</div>
+<p><img src="images/application-list-before-authorize.png" /></p>
 <p>但不管怎么说， 应用注册这一步我们算成功完成啦！ Give Me Five~</p>
 <h2 id="应用授权"><span class="header-section-number">1.2</span> 应用授权</h2>
 <p>应用注册成功后， 应用的实例就可以作为一个认证实体向Gitlab认证自己啦， 如果认证成功， 就可以获取一个代表某个用户权限的access token对Gitlab的资源进行访问了。</p>
 <p><a href="http://doc.gitlab.com/ce/api/oauth2.html">GitLab as an OAuth2 client</a>这篇帮助文档其实说的就是这个过程， 但其实只是看， 不自己动动手很难搞清楚这个过程是怎么回事， 尤其是， 帮助文档中没有清楚的表达出Gitlab和Application实例双方的交互流程，初看起来更是让人百思不得其解。</p>
-<p>下面我简单通过图例说明这个交互的过程，后面再通过工程实例代码演示这个过程是如何实现的...</p>
+<p>下面我简单通过图例说明这个交互的过程，后面再通过工程实例代码演示这个过程是如何实现的…</p>
 <p>首先， 我们需要创建一个Web应用， 这个Web应用就是我们注册为Gitlab上的那个Application， 当用户初次访问这个Application的时候（比如访问http://your.application.host/)， 我们需要获得Gitlab上某个用户的授权，以便代表这个用户来访问Gitlab上的资源并做一些事情， 所以，我们直接将用户请求redirect到gitlab的某个url下， 这个url就是<code>http://{your.gitlab.server}/oauth/authorize</code>， 当然， 我们需要通过参数带上一些必要的请求信息，以便gitlab可以决定给谁授权， 所以， 这个url后面一般需要带上以下几个参数：</p>
-<ol style="list-style-type: decimal">
+<ol type="1">
 <li><strong>client_id</strong>， 也就是我们注册Application成功后分发给你这个Application的<strong>Application Id</strong>;</li>
 <li><strong>redirect_uri</strong>, 在注册Application的时候我们自己提交的Callback url， 因为我们在本地调试， 所以其实就是<code>http://localhost:8080/callback</code>这个url， 如果是线上应用，一般直接在注册的时候（或者之后Edit）输入对应的域名标识的url；</li>
 <li><code>response_type=code</code>, 固定字符串， 表示我们使用OAuth2的<code>Authorization Code Grant</code>授权模式；</li>
 </ol>
 <p>当请求被重定向到以上gitlab的url的时候， gitlab会显示如下类似的页面要求当前已经登录gitlab的用户授权当前Application代表他/她来访问Gitlab的各项资源：</p>
-<div class="figure">
-<img src="images/authorize-required.png" />
-
-</div>
-<p>不管用户是点击了&quot;Authorize&quot;同意授权还是“Deny”拒绝授权， gitlab都会将web请求重定向到Application注册的时候提供的Callback url地址上（在这里是我们的<code>http://localhost:8080/callback</code>）， 然后Application的对应这个url地址的Action就可以根据授权结果来决定后继行为了。</p>
+<p><img src="images/authorize-required.png" /></p>
+<p>不管用户是点击了“Authorize”同意授权还是“Deny”拒绝授权， gitlab都会将web请求重定向到Application注册的时候提供的Callback url地址上（在这里是我们的<code>http://localhost:8080/callback</code>）， 然后Application的对应这个url地址的Action就可以根据授权结果来决定后继行为了。</p>
 <p>如果用户授权， 则Application会收到一个授权code， 使用这个授权code结合之前分配的Secret（即client secret）和一些其它必要信息，就可以访问<code>http://{your.gitlab.server}/oauth/token</code>并从请求返回的响应(Response)中获得一个AccessToken(当然，还有其他信息，比如Expire时间窗口有多长， RefreshToken，以及授权访问的scope是什么等）， 之后， Application就可以使用这个AccessToken并结合gitlab的API来访问相应的资源（只要授权的这个用户有权限访问）。</p>
 <h1 id="工程实现举例"><span class="header-section-number">2</span> 工程实现举例</h1>
 <p>我们使用Apache的OLTU这个库来构建OAuth2交互流程，所以需要先把它加到项目依赖之中：</p>
-<div class="sourceCode"><pre class="sourceCode xml"><code class="sourceCode xml">    <span class="kw">&lt;dependency&gt;</span>
-        <span class="kw">&lt;groupId&gt;</span>org.apache.oltu.oauth2<span class="kw">&lt;/groupId&gt;</span>
-        <span class="kw">&lt;artifactId&gt;</span>org.apache.oltu.oauth2.client<span class="kw">&lt;/artifactId&gt;</span>
-        <span class="kw">&lt;version&gt;</span>1.0.1<span class="kw">&lt;/version&gt;</span>
-    <span class="kw">&lt;/dependency&gt;</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode xml"><code class="sourceCode xml"><a class="sourceLine" id="cb1-1" data-line-number="1">    <span class="kw">&lt;dependency&gt;</span></a>
+<a class="sourceLine" id="cb1-2" data-line-number="2">        <span class="kw">&lt;groupId&gt;</span>org.apache.oltu.oauth2<span class="kw">&lt;/groupId&gt;</span></a>
+<a class="sourceLine" id="cb1-3" data-line-number="3">        <span class="kw">&lt;artifactId&gt;</span>org.apache.oltu.oauth2.client<span class="kw">&lt;/artifactId&gt;</span></a>
+<a class="sourceLine" id="cb1-4" data-line-number="4">        <span class="kw">&lt;version&gt;</span>1.0.1<span class="kw">&lt;/version&gt;</span></a>
+<a class="sourceLine" id="cb1-5" data-line-number="5">    <span class="kw">&lt;/dependency&gt;</span></a></code></pre></div>
 <p>简单起见，我们使用SpringBoot构建一个Web应用oauth2-app-proto， 项目的POM大体看起来像这样：</p>
-<div class="sourceCode"><pre class="sourceCode xml"><code class="sourceCode xml"><span class="kw">&lt;?xml</span> version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;<span class="kw">?&gt;</span>
-<span class="kw">&lt;project</span><span class="ot"> xmlns=</span><span class="st">&quot;http://maven.apache.org/POM/4.0.0&quot;</span><span class="ot"> xmlns:xsi=</span><span class="st">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span>
-<span class="ot">    xsi:schemaLocation=</span><span class="st">&quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&quot;</span><span class="kw">&gt;</span>
-    <span class="kw">&lt;modelVersion&gt;</span>4.0.0<span class="kw">&lt;/modelVersion&gt;</span>
-
-    <span class="kw">&lt;groupId&gt;</span>com.keevol<span class="kw">&lt;/groupId&gt;</span>
-    <span class="kw">&lt;artifactId&gt;</span>oauth2-app-proto<span class="kw">&lt;/artifactId&gt;</span>
-    <span class="kw">&lt;version&gt;</span>0.0.1-SNAPSHOT<span class="kw">&lt;/version&gt;</span>
-    <span class="kw">&lt;packaging&gt;</span>jar<span class="kw">&lt;/packaging&gt;</span>
-
-    <span class="kw">&lt;name&gt;</span>oauth2-app-proto<span class="kw">&lt;/name&gt;</span>
-    <span class="kw">&lt;description&gt;</span>Demo project for Spring Boot<span class="kw">&lt;/description&gt;</span>
-
-    <span class="kw">&lt;parent&gt;</span>
-        <span class="kw">&lt;groupId&gt;</span>org.springframework.boot<span class="kw">&lt;/groupId&gt;</span>
-        <span class="kw">&lt;artifactId&gt;</span>spring-boot-starter-parent<span class="kw">&lt;/artifactId&gt;</span>
-        <span class="kw">&lt;version&gt;</span>1.3.0.RELEASE<span class="kw">&lt;/version&gt;</span>
-        <span class="kw">&lt;relativePath/&gt;</span> <span class="co">&lt;!-- lookup parent from repository --&gt;</span>
-    <span class="kw">&lt;/parent&gt;</span>
-
-    <span class="kw">&lt;properties&gt;</span>
-        <span class="kw">&lt;project.build.sourceEncoding&gt;</span>UTF-8<span class="kw">&lt;/project.build.sourceEncoding&gt;</span>
-        <span class="kw">&lt;java.version&gt;</span>1.8<span class="kw">&lt;/java.version&gt;</span>
-    <span class="kw">&lt;/properties&gt;</span>
-
-    <span class="kw">&lt;dependencies&gt;</span>
-        <span class="kw">&lt;dependency&gt;</span>
-            <span class="kw">&lt;groupId&gt;</span>org.springframework.boot<span class="kw">&lt;/groupId&gt;</span>
-            <span class="kw">&lt;artifactId&gt;</span>spring-boot-starter-web<span class="kw">&lt;/artifactId&gt;</span>
-        <span class="kw">&lt;/dependency&gt;</span>
-        <span class="kw">&lt;dependency&gt;</span>
-            <span class="kw">&lt;groupId&gt;</span>org.apache.oltu.oauth2<span class="kw">&lt;/groupId&gt;</span>
-            <span class="kw">&lt;artifactId&gt;</span>org.apache.oltu.oauth2.client<span class="kw">&lt;/artifactId&gt;</span>
-            <span class="kw">&lt;version&gt;</span>1.0.1<span class="kw">&lt;/version&gt;</span>
-        <span class="kw">&lt;/dependency&gt;</span>
-    <span class="kw">&lt;/dependencies&gt;</span>
-    
-    <span class="kw">&lt;build&gt;</span>
-        <span class="kw">&lt;plugins&gt;</span>
-            <span class="kw">&lt;plugin&gt;</span>
-                <span class="kw">&lt;groupId&gt;</span>org.springframework.boot<span class="kw">&lt;/groupId&gt;</span>
-                <span class="kw">&lt;artifactId&gt;</span>spring-boot-maven-plugin<span class="kw">&lt;/artifactId&gt;</span>
-            <span class="kw">&lt;/plugin&gt;</span>
-        <span class="kw">&lt;/plugins&gt;</span>
-    <span class="kw">&lt;/build&gt;</span>
-
-<span class="kw">&lt;/project&gt;</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode xml"><code class="sourceCode xml"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw">&lt;?xml</span> version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;<span class="kw">?&gt;</span></a>
+<a class="sourceLine" id="cb2-2" data-line-number="2"><span class="kw">&lt;project</span><span class="ot"> xmlns=</span><span class="st">&quot;http://maven.apache.org/POM/4.0.0&quot;</span><span class="ot"> xmlns:xsi=</span><span class="st">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span></a>
+<a class="sourceLine" id="cb2-3" data-line-number="3"><span class="ot">    xsi:schemaLocation=</span><span class="st">&quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&quot;</span><span class="kw">&gt;</span></a>
+<a class="sourceLine" id="cb2-4" data-line-number="4">    <span class="kw">&lt;modelVersion&gt;</span>4.0.0<span class="kw">&lt;/modelVersion&gt;</span></a>
+<a class="sourceLine" id="cb2-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb2-6" data-line-number="6">    <span class="kw">&lt;groupId&gt;</span>com.keevol<span class="kw">&lt;/groupId&gt;</span></a>
+<a class="sourceLine" id="cb2-7" data-line-number="7">    <span class="kw">&lt;artifactId&gt;</span>oauth2-app-proto<span class="kw">&lt;/artifactId&gt;</span></a>
+<a class="sourceLine" id="cb2-8" data-line-number="8">    <span class="kw">&lt;version&gt;</span>0.0.1-SNAPSHOT<span class="kw">&lt;/version&gt;</span></a>
+<a class="sourceLine" id="cb2-9" data-line-number="9">    <span class="kw">&lt;packaging&gt;</span>jar<span class="kw">&lt;/packaging&gt;</span></a>
+<a class="sourceLine" id="cb2-10" data-line-number="10"></a>
+<a class="sourceLine" id="cb2-11" data-line-number="11">    <span class="kw">&lt;name&gt;</span>oauth2-app-proto<span class="kw">&lt;/name&gt;</span></a>
+<a class="sourceLine" id="cb2-12" data-line-number="12">    <span class="kw">&lt;description&gt;</span>Demo project for Spring Boot<span class="kw">&lt;/description&gt;</span></a>
+<a class="sourceLine" id="cb2-13" data-line-number="13"></a>
+<a class="sourceLine" id="cb2-14" data-line-number="14">    <span class="kw">&lt;parent&gt;</span></a>
+<a class="sourceLine" id="cb2-15" data-line-number="15">        <span class="kw">&lt;groupId&gt;</span>org.springframework.boot<span class="kw">&lt;/groupId&gt;</span></a>
+<a class="sourceLine" id="cb2-16" data-line-number="16">        <span class="kw">&lt;artifactId&gt;</span>spring-boot-starter-parent<span class="kw">&lt;/artifactId&gt;</span></a>
+<a class="sourceLine" id="cb2-17" data-line-number="17">        <span class="kw">&lt;version&gt;</span>1.3.0.RELEASE<span class="kw">&lt;/version&gt;</span></a>
+<a class="sourceLine" id="cb2-18" data-line-number="18">        <span class="kw">&lt;relativePath/&gt;</span> <span class="co">&lt;!-- lookup parent from repository --&gt;</span></a>
+<a class="sourceLine" id="cb2-19" data-line-number="19">    <span class="kw">&lt;/parent&gt;</span></a>
+<a class="sourceLine" id="cb2-20" data-line-number="20"></a>
+<a class="sourceLine" id="cb2-21" data-line-number="21">    <span class="kw">&lt;properties&gt;</span></a>
+<a class="sourceLine" id="cb2-22" data-line-number="22">        <span class="kw">&lt;project.build.sourceEncoding&gt;</span>UTF-8<span class="kw">&lt;/project.build.sourceEncoding&gt;</span></a>
+<a class="sourceLine" id="cb2-23" data-line-number="23">        <span class="kw">&lt;java.version&gt;</span>1.8<span class="kw">&lt;/java.version&gt;</span></a>
+<a class="sourceLine" id="cb2-24" data-line-number="24">    <span class="kw">&lt;/properties&gt;</span></a>
+<a class="sourceLine" id="cb2-25" data-line-number="25"></a>
+<a class="sourceLine" id="cb2-26" data-line-number="26">    <span class="kw">&lt;dependencies&gt;</span></a>
+<a class="sourceLine" id="cb2-27" data-line-number="27">        <span class="kw">&lt;dependency&gt;</span></a>
+<a class="sourceLine" id="cb2-28" data-line-number="28">            <span class="kw">&lt;groupId&gt;</span>org.springframework.boot<span class="kw">&lt;/groupId&gt;</span></a>
+<a class="sourceLine" id="cb2-29" data-line-number="29">            <span class="kw">&lt;artifactId&gt;</span>spring-boot-starter-web<span class="kw">&lt;/artifactId&gt;</span></a>
+<a class="sourceLine" id="cb2-30" data-line-number="30">        <span class="kw">&lt;/dependency&gt;</span></a>
+<a class="sourceLine" id="cb2-31" data-line-number="31">        <span class="kw">&lt;dependency&gt;</span></a>
+<a class="sourceLine" id="cb2-32" data-line-number="32">            <span class="kw">&lt;groupId&gt;</span>org.apache.oltu.oauth2<span class="kw">&lt;/groupId&gt;</span></a>
+<a class="sourceLine" id="cb2-33" data-line-number="33">            <span class="kw">&lt;artifactId&gt;</span>org.apache.oltu.oauth2.client<span class="kw">&lt;/artifactId&gt;</span></a>
+<a class="sourceLine" id="cb2-34" data-line-number="34">            <span class="kw">&lt;version&gt;</span>1.0.1<span class="kw">&lt;/version&gt;</span></a>
+<a class="sourceLine" id="cb2-35" data-line-number="35">        <span class="kw">&lt;/dependency&gt;</span></a>
+<a class="sourceLine" id="cb2-36" data-line-number="36">    <span class="kw">&lt;/dependencies&gt;</span></a>
+<a class="sourceLine" id="cb2-37" data-line-number="37">    </a>
+<a class="sourceLine" id="cb2-38" data-line-number="38">    <span class="kw">&lt;build&gt;</span></a>
+<a class="sourceLine" id="cb2-39" data-line-number="39">        <span class="kw">&lt;plugins&gt;</span></a>
+<a class="sourceLine" id="cb2-40" data-line-number="40">            <span class="kw">&lt;plugin&gt;</span></a>
+<a class="sourceLine" id="cb2-41" data-line-number="41">                <span class="kw">&lt;groupId&gt;</span>org.springframework.boot<span class="kw">&lt;/groupId&gt;</span></a>
+<a class="sourceLine" id="cb2-42" data-line-number="42">                <span class="kw">&lt;artifactId&gt;</span>spring-boot-maven-plugin<span class="kw">&lt;/artifactId&gt;</span></a>
+<a class="sourceLine" id="cb2-43" data-line-number="43">            <span class="kw">&lt;/plugin&gt;</span></a>
+<a class="sourceLine" id="cb2-44" data-line-number="44">        <span class="kw">&lt;/plugins&gt;</span></a>
+<a class="sourceLine" id="cb2-45" data-line-number="45">    <span class="kw">&lt;/build&gt;</span></a>
+<a class="sourceLine" id="cb2-46" data-line-number="46"></a>
+<a class="sourceLine" id="cb2-47" data-line-number="47"><span class="kw">&lt;/project&gt;</span></a></code></pre></div>
 <p>我们核心类就一个:</p>
-<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java"><span class="at">@Controller</span>
-<span class="kw">public</span> <span class="kw">class</span> IndexController {
-    <span class="kw">protected</span> <span class="kw">transient</span> <span class="dt">final</span> <span class="bu">Logger</span> logger = LoggerFactory.<span class="fu">getLogger</span>(<span class="fu">getClass</span>());
-
-    <span class="at">@Value</span>(<span class="st">&quot;${oauth2.server.url}&quot;</span>)
-    <span class="kw">private</span> <span class="bu">String</span> gitlabServerUrl;
-    <span class="at">@Value</span>(<span class="st">&quot;${oauth2.server.url.authorize.path:/oauth/authorize}&quot;</span>)
-    <span class="kw">private</span> <span class="bu">String</span> authorizePath;
-    <span class="at">@Value</span>(<span class="st">&quot;${oauth2.server.url.token.path:/oauth/token}&quot;</span>)
-    <span class="kw">private</span> <span class="bu">String</span> tokenPath;
-
-    <span class="at">@Value</span>(<span class="st">&quot;${oauth2.client.id:260f7b273e13b9264b22bba3c5f1db53d55c8cb86fe3d02d7c11725ea52b0fe7}&quot;</span>)
-    <span class="kw">private</span> <span class="bu">String</span> clientId;
-    <span class="at">@Value</span>(<span class="st">&quot;${oauth2.client.secret:15cebdce7a671fee9a7929b5a2c2bca006bb5afa92b36352586ccb6089004765}&quot;</span>)
-    <span class="kw">private</span> <span class="bu">String</span> clientSecret;
-    <span class="at">@Value</span>(<span class="st">&quot;${oauth2.client.callback.url:http://localhost:8080/callback}&quot;</span>)
-    <span class="kw">private</span> <span class="bu">String</span> callbackUrl;
-
-    <span class="at">@Autowired</span>
-    TokenRepository tokenRepository;
-
-    OAuthClient oAuthClient = <span class="kw">new</span> <span class="fu">OAuthClient</span>(<span class="kw">new</span> <span class="fu">URLConnectionClient</span>());
-
-    <span class="bu">String</span> currentUserMock = <span class="st">&quot;yunshi&quot;</span>;
-
-    <span class="at">@PreDestroy</span>
-    <span class="kw">public</span> <span class="dt">void</span> <span class="fu">cleanUp</span>() {
-        oAuthClient.<span class="fu">shutdown</span>();
-    }
-
-    <span class="at">@RequestMapping</span>(<span class="st">&quot;/main&quot;</span>)
-    <span class="at">@ResponseBody</span>
-    <span class="kw">public</span> <span class="bu">String</span> <span class="fu">main</span>() {
-        <span class="kw">if</span> (tokenRepository.<span class="fu">getTokenOf</span>(currentUserMock).<span class="fu">isPresent</span>()) {
-            <span class="kw">return</span> <span class="st">&quot;authorization is done, you are good to go with access token: &quot;</span> + tokenRepository.<span class="fu">getTokenOf</span>(currentUserMock).<span class="fu">get</span>();
-        } <span class="kw">else</span> {
-            <span class="kw">return</span> <span class="st">&quot;no authority.&quot;</span>;
-        }
-    }
-
-    <span class="at">@RequestMapping</span>(<span class="st">&quot;/&quot;</span>)
-    <span class="kw">public</span> <span class="bu">String</span> <span class="fu">index</span>(HttpServletRequest req, HttpServletResponse response) <span class="kw">throws</span> <span class="bu">Throwable</span> {
-        <span class="kw">if</span> (tokenRepository.<span class="fu">getTokenOf</span>(currentUserMock).<span class="fu">isPresent</span>()) {
-            logger.<span class="fu">info</span>(<span class="st">&quot;query user information with access token...&quot;</span>);
-            OAuthClientRequest bearerClientRequest = <span class="kw">new</span> <span class="fu">OAuthBearerClientRequest</span>(gitlabServerUrl + <span class="st">&quot;/api/v3/user&quot;</span>).<span class="fu">setAccessToken</span>(tokenRepository.<span class="fu">getTokenOf</span>(currentUserMock).<span class="fu">get</span>()).<span class="fu">buildQueryMessage</span>();
-            OAuthResourceResponse resourceResponse = oAuthClient.<span class="fu">resource</span>(bearerClientRequest, OAuth.<span class="fu">HttpMethod</span>.<span class="fu">GET</span>, OAuthResourceResponse.<span class="fu">class</span>);
-            logger.<span class="fu">info</span>(<span class="st">&quot;had authorized, just query for user information...&quot;</span>);
-            logger.<span class="fu">info</span>(<span class="st">&quot;user information: &quot;</span> + resourceResponse.<span class="fu">getBody</span>());
-            <span class="kw">return</span> <span class="st">&quot;redirect:/main&quot;</span>;
-        } <span class="kw">else</span> {
-            logger.<span class="fu">info</span>(<span class="st">&quot;first login, build oauth request &gt;..&quot;</span>);
-            OAuthClientRequest request = OAuthClientRequest
-                    .<span class="fu">authorizationLocation</span>(gitlabServerUrl + authorizePath)
-                    .<span class="fu">setClientId</span>(clientId)
-                    .<span class="fu">setRedirectURI</span>(callbackUrl)
-                    .<span class="fu">setResponseType</span>(<span class="st">&quot;code&quot;</span>)
-                    .<span class="fu">buildQueryMessage</span>();
-
-            <span class="bu">String</span> gitlabAuthUrl = request.<span class="fu">getLocationUri</span>();
-
-            logger.<span class="fu">info</span>(<span class="st">&quot;redirect to : &quot;</span> + gitlabAuthUrl);
-            <span class="kw">return</span> <span class="st">&quot;redirect:&quot;</span> + gitlabAuthUrl;
-        }
-    }
-
-
-    <span class="at">@RequestMapping</span>(<span class="st">&quot;/callback&quot;</span>)
-    <span class="kw">public</span> <span class="bu">String</span> <span class="fu">callback</span>(<span class="at">@RequestParam</span>(value = <span class="st">&quot;code&quot;</span>, required = <span class="kw">false</span>) <span class="bu">String</span> code,
-                           <span class="at">@RequestParam</span>(value = <span class="st">&quot;error&quot;</span>, required = <span class="kw">false</span>) <span class="bu">String</span> error,
-                           <span class="at">@RequestParam</span>(value = <span class="st">&quot;error_description&quot;</span>, required = <span class="kw">false</span>) <span class="bu">String</span> errorDescription) <span class="kw">throws</span> <span class="bu">Throwable</span> {
-
-        <span class="kw">if</span> (StringUtils.<span class="fu">hasLength</span>(error)) {
-            logger.<span class="fu">error</span>(<span class="st">&quot;authorization fails with error={} and error description={}&quot;</span>, error, errorDescription);
-        } <span class="kw">else</span> {
-            logger.<span class="fu">info</span>(<span class="st">&quot;callback request receives with code={}&quot;</span>, code);
-
-            OAuthClientRequest request = OAuthClientRequest
-                    .<span class="fu">tokenLocation</span>(gitlabServerUrl + tokenPath)
-                    .<span class="fu">setGrantType</span>(GrantType.<span class="fu">AUTHORIZATION_CODE</span>)
-                    .<span class="fu">setClientId</span>(clientId)
-                    .<span class="fu">setClientSecret</span>(clientSecret)
-                    .<span class="fu">setRedirectURI</span>(callbackUrl)
-                    .<span class="fu">setGrantType</span>(GrantType.<span class="fu">AUTHORIZATION_CODE</span>)
-                    .<span class="fu">setCode</span>(code)
-                    .<span class="fu">buildQueryMessage</span>();
-
-            logger.<span class="fu">info</span>(<span class="st">&quot;build authorize request with code:{} and client secret&quot;</span>, code);
-
-            OAuthJSONAccessTokenResponse response = oAuthClient.<span class="fu">accessToken</span>(request);
-            <span class="bu">String</span> accessToken = response.<span class="fu">getAccessToken</span>();
-            logger.<span class="fu">info</span>(<span class="st">&quot;access token got: {}&quot;</span>, accessToken);
-
-            <span class="co">// save access token for further use, then redirect user to another url in our own application.</span>
-            tokenRepository.<span class="fu">store</span>(currentUserMock, accessToken);
-        }
-
-        <span class="kw">return</span> <span class="st">&quot;redirect:/main&quot;</span>;
-    }
-    <span class="co">// ...</span>
-}</code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode java"><code class="sourceCode java"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="at">@Controller</span></a>
+<a class="sourceLine" id="cb3-2" data-line-number="2"><span class="kw">public</span> <span class="kw">class</span> IndexController {</a>
+<a class="sourceLine" id="cb3-3" data-line-number="3">    <span class="kw">protected</span> <span class="kw">transient</span> <span class="dt">final</span> <span class="bu">Logger</span> logger = LoggerFactory.<span class="fu">getLogger</span>(<span class="fu">getClass</span>());</a>
+<a class="sourceLine" id="cb3-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb3-5" data-line-number="5">    <span class="at">@Value</span>(<span class="st">&quot;${oauth2.server.url}&quot;</span>)</a>
+<a class="sourceLine" id="cb3-6" data-line-number="6">    <span class="kw">private</span> <span class="bu">String</span> gitlabServerUrl;</a>
+<a class="sourceLine" id="cb3-7" data-line-number="7">    <span class="at">@Value</span>(<span class="st">&quot;${oauth2.server.url.authorize.path:/oauth/authorize}&quot;</span>)</a>
+<a class="sourceLine" id="cb3-8" data-line-number="8">    <span class="kw">private</span> <span class="bu">String</span> authorizePath;</a>
+<a class="sourceLine" id="cb3-9" data-line-number="9">    <span class="at">@Value</span>(<span class="st">&quot;${oauth2.server.url.token.path:/oauth/token}&quot;</span>)</a>
+<a class="sourceLine" id="cb3-10" data-line-number="10">    <span class="kw">private</span> <span class="bu">String</span> tokenPath;</a>
+<a class="sourceLine" id="cb3-11" data-line-number="11"></a>
+<a class="sourceLine" id="cb3-12" data-line-number="12">    <span class="at">@Value</span>(<span class="st">&quot;${oauth2.client.id:260f7b273e13b9264b22bba3c5f1db53d55c8cb86fe3d02d7c11725ea52b0fe7}&quot;</span>)</a>
+<a class="sourceLine" id="cb3-13" data-line-number="13">    <span class="kw">private</span> <span class="bu">String</span> clientId;</a>
+<a class="sourceLine" id="cb3-14" data-line-number="14">    <span class="at">@Value</span>(<span class="st">&quot;${oauth2.client.secret:15cebdce7a671fee9a7929b5a2c2bca006bb5afa92b36352586ccb6089004765}&quot;</span>)</a>
+<a class="sourceLine" id="cb3-15" data-line-number="15">    <span class="kw">private</span> <span class="bu">String</span> clientSecret;</a>
+<a class="sourceLine" id="cb3-16" data-line-number="16">    <span class="at">@Value</span>(<span class="st">&quot;${oauth2.client.callback.url:http://localhost:8080/callback}&quot;</span>)</a>
+<a class="sourceLine" id="cb3-17" data-line-number="17">    <span class="kw">private</span> <span class="bu">String</span> callbackUrl;</a>
+<a class="sourceLine" id="cb3-18" data-line-number="18"></a>
+<a class="sourceLine" id="cb3-19" data-line-number="19">    <span class="at">@Autowired</span></a>
+<a class="sourceLine" id="cb3-20" data-line-number="20">    TokenRepository tokenRepository;</a>
+<a class="sourceLine" id="cb3-21" data-line-number="21"></a>
+<a class="sourceLine" id="cb3-22" data-line-number="22">    OAuthClient oAuthClient = <span class="kw">new</span> <span class="fu">OAuthClient</span>(<span class="kw">new</span> <span class="fu">URLConnectionClient</span>());</a>
+<a class="sourceLine" id="cb3-23" data-line-number="23"></a>
+<a class="sourceLine" id="cb3-24" data-line-number="24">    <span class="bu">String</span> currentUserMock = <span class="st">&quot;yunshi&quot;</span>;</a>
+<a class="sourceLine" id="cb3-25" data-line-number="25"></a>
+<a class="sourceLine" id="cb3-26" data-line-number="26">    <span class="at">@PreDestroy</span></a>
+<a class="sourceLine" id="cb3-27" data-line-number="27">    <span class="kw">public</span> <span class="dt">void</span> <span class="fu">cleanUp</span>() {</a>
+<a class="sourceLine" id="cb3-28" data-line-number="28">        oAuthClient.<span class="fu">shutdown</span>();</a>
+<a class="sourceLine" id="cb3-29" data-line-number="29">    }</a>
+<a class="sourceLine" id="cb3-30" data-line-number="30"></a>
+<a class="sourceLine" id="cb3-31" data-line-number="31">    <span class="at">@RequestMapping</span>(<span class="st">&quot;/main&quot;</span>)</a>
+<a class="sourceLine" id="cb3-32" data-line-number="32">    <span class="at">@ResponseBody</span></a>
+<a class="sourceLine" id="cb3-33" data-line-number="33">    <span class="kw">public</span> <span class="bu">String</span> <span class="fu">main</span>() {</a>
+<a class="sourceLine" id="cb3-34" data-line-number="34">        <span class="kw">if</span> (tokenRepository.<span class="fu">getTokenOf</span>(currentUserMock).<span class="fu">isPresent</span>()) {</a>
+<a class="sourceLine" id="cb3-35" data-line-number="35">            <span class="kw">return</span> <span class="st">&quot;authorization is done, you are good to go with access token: &quot;</span> + tokenRepository.<span class="fu">getTokenOf</span>(currentUserMock).<span class="fu">get</span>();</a>
+<a class="sourceLine" id="cb3-36" data-line-number="36">        } <span class="kw">else</span> {</a>
+<a class="sourceLine" id="cb3-37" data-line-number="37">            <span class="kw">return</span> <span class="st">&quot;no authority.&quot;</span>;</a>
+<a class="sourceLine" id="cb3-38" data-line-number="38">        }</a>
+<a class="sourceLine" id="cb3-39" data-line-number="39">    }</a>
+<a class="sourceLine" id="cb3-40" data-line-number="40"></a>
+<a class="sourceLine" id="cb3-41" data-line-number="41">    <span class="at">@RequestMapping</span>(<span class="st">&quot;/&quot;</span>)</a>
+<a class="sourceLine" id="cb3-42" data-line-number="42">    <span class="kw">public</span> <span class="bu">String</span> <span class="fu">index</span>(HttpServletRequest req, HttpServletResponse response) <span class="kw">throws</span> <span class="bu">Throwable</span> {</a>
+<a class="sourceLine" id="cb3-43" data-line-number="43">        <span class="kw">if</span> (tokenRepository.<span class="fu">getTokenOf</span>(currentUserMock).<span class="fu">isPresent</span>()) {</a>
+<a class="sourceLine" id="cb3-44" data-line-number="44">            logger.<span class="fu">info</span>(<span class="st">&quot;query user information with access token...&quot;</span>);</a>
+<a class="sourceLine" id="cb3-45" data-line-number="45">            OAuthClientRequest bearerClientRequest = <span class="kw">new</span> <span class="fu">OAuthBearerClientRequest</span>(gitlabServerUrl + <span class="st">&quot;/api/v3/user&quot;</span>).<span class="fu">setAccessToken</span>(tokenRepository.<span class="fu">getTokenOf</span>(currentUserMock).<span class="fu">get</span>()).<span class="fu">buildQueryMessage</span>();</a>
+<a class="sourceLine" id="cb3-46" data-line-number="46">            OAuthResourceResponse resourceResponse = oAuthClient.<span class="fu">resource</span>(bearerClientRequest, OAuth.<span class="fu">HttpMethod</span>.<span class="fu">GET</span>, OAuthResourceResponse.<span class="fu">class</span>);</a>
+<a class="sourceLine" id="cb3-47" data-line-number="47">            logger.<span class="fu">info</span>(<span class="st">&quot;had authorized, just query for user information...&quot;</span>);</a>
+<a class="sourceLine" id="cb3-48" data-line-number="48">            logger.<span class="fu">info</span>(<span class="st">&quot;user information: &quot;</span> + resourceResponse.<span class="fu">getBody</span>());</a>
+<a class="sourceLine" id="cb3-49" data-line-number="49">            <span class="kw">return</span> <span class="st">&quot;redirect:/main&quot;</span>;</a>
+<a class="sourceLine" id="cb3-50" data-line-number="50">        } <span class="kw">else</span> {</a>
+<a class="sourceLine" id="cb3-51" data-line-number="51">            logger.<span class="fu">info</span>(<span class="st">&quot;first login, build oauth request &gt;..&quot;</span>);</a>
+<a class="sourceLine" id="cb3-52" data-line-number="52">            OAuthClientRequest request = OAuthClientRequest</a>
+<a class="sourceLine" id="cb3-53" data-line-number="53">                    .<span class="fu">authorizationLocation</span>(gitlabServerUrl + authorizePath)</a>
+<a class="sourceLine" id="cb3-54" data-line-number="54">                    .<span class="fu">setClientId</span>(clientId)</a>
+<a class="sourceLine" id="cb3-55" data-line-number="55">                    .<span class="fu">setRedirectURI</span>(callbackUrl)</a>
+<a class="sourceLine" id="cb3-56" data-line-number="56">                    .<span class="fu">setResponseType</span>(<span class="st">&quot;code&quot;</span>)</a>
+<a class="sourceLine" id="cb3-57" data-line-number="57">                    .<span class="fu">buildQueryMessage</span>();</a>
+<a class="sourceLine" id="cb3-58" data-line-number="58"></a>
+<a class="sourceLine" id="cb3-59" data-line-number="59">            <span class="bu">String</span> gitlabAuthUrl = request.<span class="fu">getLocationUri</span>();</a>
+<a class="sourceLine" id="cb3-60" data-line-number="60"></a>
+<a class="sourceLine" id="cb3-61" data-line-number="61">            logger.<span class="fu">info</span>(<span class="st">&quot;redirect to : &quot;</span> + gitlabAuthUrl);</a>
+<a class="sourceLine" id="cb3-62" data-line-number="62">            <span class="kw">return</span> <span class="st">&quot;redirect:&quot;</span> + gitlabAuthUrl;</a>
+<a class="sourceLine" id="cb3-63" data-line-number="63">        }</a>
+<a class="sourceLine" id="cb3-64" data-line-number="64">    }</a>
+<a class="sourceLine" id="cb3-65" data-line-number="65"></a>
+<a class="sourceLine" id="cb3-66" data-line-number="66"></a>
+<a class="sourceLine" id="cb3-67" data-line-number="67">    <span class="at">@RequestMapping</span>(<span class="st">&quot;/callback&quot;</span>)</a>
+<a class="sourceLine" id="cb3-68" data-line-number="68">    <span class="kw">public</span> <span class="bu">String</span> <span class="fu">callback</span>(<span class="at">@RequestParam</span>(value = <span class="st">&quot;code&quot;</span>, required = <span class="kw">false</span>) <span class="bu">String</span> code,</a>
+<a class="sourceLine" id="cb3-69" data-line-number="69">                           <span class="at">@RequestParam</span>(value = <span class="st">&quot;error&quot;</span>, required = <span class="kw">false</span>) <span class="bu">String</span> error,</a>
+<a class="sourceLine" id="cb3-70" data-line-number="70">                           <span class="at">@RequestParam</span>(value = <span class="st">&quot;error_description&quot;</span>, required = <span class="kw">false</span>) <span class="bu">String</span> errorDescription) <span class="kw">throws</span> <span class="bu">Throwable</span> {</a>
+<a class="sourceLine" id="cb3-71" data-line-number="71"></a>
+<a class="sourceLine" id="cb3-72" data-line-number="72">        <span class="kw">if</span> (StringUtils.<span class="fu">hasLength</span>(error)) {</a>
+<a class="sourceLine" id="cb3-73" data-line-number="73">            logger.<span class="fu">error</span>(<span class="st">&quot;authorization fails with error={} and error description={}&quot;</span>, error, errorDescription);</a>
+<a class="sourceLine" id="cb3-74" data-line-number="74">        } <span class="kw">else</span> {</a>
+<a class="sourceLine" id="cb3-75" data-line-number="75">            logger.<span class="fu">info</span>(<span class="st">&quot;callback request receives with code={}&quot;</span>, code);</a>
+<a class="sourceLine" id="cb3-76" data-line-number="76"></a>
+<a class="sourceLine" id="cb3-77" data-line-number="77">            OAuthClientRequest request = OAuthClientRequest</a>
+<a class="sourceLine" id="cb3-78" data-line-number="78">                    .<span class="fu">tokenLocation</span>(gitlabServerUrl + tokenPath)</a>
+<a class="sourceLine" id="cb3-79" data-line-number="79">                    .<span class="fu">setGrantType</span>(GrantType.<span class="fu">AUTHORIZATION_CODE</span>)</a>
+<a class="sourceLine" id="cb3-80" data-line-number="80">                    .<span class="fu">setClientId</span>(clientId)</a>
+<a class="sourceLine" id="cb3-81" data-line-number="81">                    .<span class="fu">setClientSecret</span>(clientSecret)</a>
+<a class="sourceLine" id="cb3-82" data-line-number="82">                    .<span class="fu">setRedirectURI</span>(callbackUrl)</a>
+<a class="sourceLine" id="cb3-83" data-line-number="83">                    .<span class="fu">setGrantType</span>(GrantType.<span class="fu">AUTHORIZATION_CODE</span>)</a>
+<a class="sourceLine" id="cb3-84" data-line-number="84">                    .<span class="fu">setCode</span>(code)</a>
+<a class="sourceLine" id="cb3-85" data-line-number="85">                    .<span class="fu">buildQueryMessage</span>();</a>
+<a class="sourceLine" id="cb3-86" data-line-number="86"></a>
+<a class="sourceLine" id="cb3-87" data-line-number="87">            logger.<span class="fu">info</span>(<span class="st">&quot;build authorize request with code:{} and client secret&quot;</span>, code);</a>
+<a class="sourceLine" id="cb3-88" data-line-number="88"></a>
+<a class="sourceLine" id="cb3-89" data-line-number="89">            OAuthJSONAccessTokenResponse response = oAuthClient.<span class="fu">accessToken</span>(request);</a>
+<a class="sourceLine" id="cb3-90" data-line-number="90">            <span class="bu">String</span> accessToken = response.<span class="fu">getAccessToken</span>();</a>
+<a class="sourceLine" id="cb3-91" data-line-number="91">            logger.<span class="fu">info</span>(<span class="st">&quot;access token got: {}&quot;</span>, accessToken);</a>
+<a class="sourceLine" id="cb3-92" data-line-number="92"></a>
+<a class="sourceLine" id="cb3-93" data-line-number="93">            <span class="co">// save access token for further use, then redirect user to another url in our own application.</span></a>
+<a class="sourceLine" id="cb3-94" data-line-number="94">            tokenRepository.<span class="fu">store</span>(currentUserMock, accessToken);</a>
+<a class="sourceLine" id="cb3-95" data-line-number="95">        }</a>
+<a class="sourceLine" id="cb3-96" data-line-number="96"></a>
+<a class="sourceLine" id="cb3-97" data-line-number="97">        <span class="kw">return</span> <span class="st">&quot;redirect:/main&quot;</span>;</a>
+<a class="sourceLine" id="cb3-98" data-line-number="98">    }</a>
+<a class="sourceLine" id="cb3-99" data-line-number="99">    <span class="co">// ...</span></a>
+<a class="sourceLine" id="cb3-100" data-line-number="100">}</a></code></pre></div>
 <p>首先重点关注映射处理根路径请求的index()方法，这个endpoint负责触发授权行为， 你会看到，如果我们发现当前用户在我们应用这边没有任何授权状态（比如没有相应的access token）， 那么，代码逻辑走else分支， 我们将构建一个要求gitlab服务器授权的请求，并将当前针对我们自己应用的web请求重定向到gitlab服务器的授权地址， 之后你就会看到以下的页面：</p>
-<div class="figure">
-<img src="images/authorize-required.png" />
-
-</div>
+<p><img src="images/authorize-required.png" /></p>
 <p>gitlab的当前登录用户如果点击<code>Authorize</code>同意授权之后， gitlab将会传递一个授权code给应用注册时候提供的callback地址， 这样， 请求就会轮转重定向到这个callback地址， 这个callback地址，在我们的Controller实现中是对应<code>callback()</code>这个endpoint方法进行处理的。</p>
 <blockquote>
 <p>如果用户点击<code>Deny</code>拒绝授权， 请求也同样会重定向到callback地址，只不过传递的参数不是一个授权code， 而是一个error和error_description， 所以，你会看到我们的callback()方法声明了三个非必须的参数。</p>
 <p>未授权的处理很简单，重定向到应用的某个公开页面就可以了，这里不再细说。</p>
 </blockquote>
 <p>应用的callback()处理方法收到授权code之后， 会使用这个授权code加上应用注册时候配发的相应clientId和clientSecret等信息构建一个请求access token的oauth2请求，并发往gitlab服务器， 即这一段代码:</p>
-<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java">            OAuthClientRequest request = OAuthClientRequest
-                    .<span class="fu">tokenLocation</span>(gitlabServerUrl + tokenPath)
-                    .<span class="fu">setGrantType</span>(GrantType.<span class="fu">AUTHORIZATION_CODE</span>)
-                    .<span class="fu">setClientId</span>(clientId)
-                    .<span class="fu">setClientSecret</span>(clientSecret)
-                    .<span class="fu">setRedirectURI</span>(callbackUrl)
-                    .<span class="fu">setGrantType</span>(GrantType.<span class="fu">AUTHORIZATION_CODE</span>)
-                    .<span class="fu">setCode</span>(code)
-                    .<span class="fu">buildQueryMessage</span>();
-
-            logger.<span class="fu">info</span>(<span class="st">&quot;build authorize request with code:{} and client secret&quot;</span>, code);
-
-            OAuthJSONAccessTokenResponse response = oAuthClient.<span class="fu">accessToken</span>(request);</code></pre></div>
-<p>请求成功之后，我们就可以获得相应的access token（以及对应refresh token， expires时间等）， 之后，我们就可以使用这个access token畅通无阻的访问授权用户的各项gitlab服务器上的资源了 <a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a>。</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode java"><code class="sourceCode java"><a class="sourceLine" id="cb4-1" data-line-number="1">            OAuthClientRequest request = OAuthClientRequest</a>
+<a class="sourceLine" id="cb4-2" data-line-number="2">                    .<span class="fu">tokenLocation</span>(gitlabServerUrl + tokenPath)</a>
+<a class="sourceLine" id="cb4-3" data-line-number="3">                    .<span class="fu">setGrantType</span>(GrantType.<span class="fu">AUTHORIZATION_CODE</span>)</a>
+<a class="sourceLine" id="cb4-4" data-line-number="4">                    .<span class="fu">setClientId</span>(clientId)</a>
+<a class="sourceLine" id="cb4-5" data-line-number="5">                    .<span class="fu">setClientSecret</span>(clientSecret)</a>
+<a class="sourceLine" id="cb4-6" data-line-number="6">                    .<span class="fu">setRedirectURI</span>(callbackUrl)</a>
+<a class="sourceLine" id="cb4-7" data-line-number="7">                    .<span class="fu">setGrantType</span>(GrantType.<span class="fu">AUTHORIZATION_CODE</span>)</a>
+<a class="sourceLine" id="cb4-8" data-line-number="8">                    .<span class="fu">setCode</span>(code)</a>
+<a class="sourceLine" id="cb4-9" data-line-number="9">                    .<span class="fu">buildQueryMessage</span>();</a>
+<a class="sourceLine" id="cb4-10" data-line-number="10"></a>
+<a class="sourceLine" id="cb4-11" data-line-number="11">            logger.<span class="fu">info</span>(<span class="st">&quot;build authorize request with code:{} and client secret&quot;</span>, code);</a>
+<a class="sourceLine" id="cb4-12" data-line-number="12"></a>
+<a class="sourceLine" id="cb4-13" data-line-number="13">            OAuthJSONAccessTokenResponse response = oAuthClient.<span class="fu">accessToken</span>(request);</a></code></pre></div>
+<p>请求成功之后，我们就可以获得相应的access token（以及对应refresh token， expires时间等）， 之后，我们就可以使用这个access token畅通无阻的访问授权用户的各项gitlab服务器上的资源了 <a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>。</p>
 <p>我们的代码实例中，只是先存下来，然后将用户引导到一个无关的展示页面（<code>/main</code>）， 在实际应用中，可以考虑直接将用户引导到授权之后有权限访问的页面。</p>
 <p>到此， 基本上一个与Gitlab服务器正常交互的OAuth2处理流程就完成啦！</p>
 <p>如果你再次去查看gitlab服务器上Application的列表， 会发现我们注册的Application已经有1个Clients啦:</p>
-<div class="figure">
-<img src="images/application-list-after-authorize.png" />
-
-</div>
+<p><img src="images/application-list-after-authorize.png" /></p>
 <p>有咩有一点儿小兴奋？ ^_-</p>
 <h1 id="faqs"><span class="header-section-number">3</span> FAQs</h1>
 <h2 id="private-token与access-token什么区别"><span class="header-section-number">3.1</span> Private Token与Access Token什么区别？</h2>
@@ -393,41 +376,27 @@
 <blockquote>
 <p>Gitlab用户如果没有登录的话， 授权其实是不会进行的， gitlab会引导用户到登陆页面登录， 只有登录成功的用户才会授权oauth2客户端应用访问。</p>
 </blockquote>
-<h2 id="the-redirect-url-included-is-not-valid错误"><span class="header-section-number">3.2</span> &quot;The redirect url included is not valid&quot;错误</h2>
-<div class="figure">
-<img src="images/invalid-callback-url.png" />
-
-</div>
+<h2 id="the-redirect-url-included-is-not-valid错误"><span class="header-section-number">3.2</span> “The redirect url included is not valid”错误</h2>
+<p><img src="images/invalid-callback-url.png" /></p>
 <p>一般情况下， 出现这种错误信息是因为应用注册的时候提供的callback地址跟我们在发起授权请求时候提供的callback地址不一致， 比如我们在注册的时候提供callback地址为<code>http://localhost:8080</code>，而在发起授权请求时提供的callback地址却是<code>http://localhost:8080/callback</code>。</p>
 <h2 id="为啥没有显示授权页面而是引导我到了登录页面"><span class="header-section-number">3.3</span> 为啥没有显示授权页面，而是引导我到了登录页面？</h2>
 <p>如果当前机器上无任何用户登录gitlab，当gitlab收到要求授权的请求时（即接收到重定向到<code>http://your.gitlab.server/oauth/authorize</code>的请求）， gitlab会再次将请求重定向到gitlab的登录页面, 要求使用Application的用户登录Gitlab从而可以作为一个主体授权Application访问:</p>
-<div class="figure">
-<img src="images/gitlab-login.png" />
-
-</div>
+<p><img src="images/gitlab-login.png" /></p>
 <p>用户成功登陆后，则被gitlab引导进入Dashboard页面：</p>
-<div class="figure">
-<img src="images/login-success.png" />
-
-</div>
+<p><img src="images/login-success.png" /></p>
 <p>这里有点儿不够友好， 需要用户重新访问要求授权的Application的某个URL以便重新发起授权请求。</p>
 <h1 id="小结和补充"><span class="header-section-number">4</span> 小结和补充</h1>
 <p>使用Controller来演示通过OAuth2与Gitlab服务器交互实际上只是为了简化， 正常来说， 使用拦截器或者Filter来管理授权行为的触发和认证才是比较合适的做法，尤其是封装成一个spring-boot-starter-gitlab-oauth2之类的自动配置模块， 可以大大简化开发的复杂度提升集成效率， 也不需要应用研发用户去了解以上流程交互细节（当然啦，从研发人员的角度， 还是了解这些细节比较好）。</p>
 <p>授权成功后，我们其实可以拿到不止一个Access Token， 随同的还有Refresh Token, Access Token的超时时间(Expires)， 以及授权的范围(scope)， 各位客官可以根据请求选用。</p>
 <p>有了以上与Gitlab服务器通过OAuth2集成授权的神功， 各位客官可以尽情的构建围绕Gitlab的各种有趣的应用啦，你可以写个小Robot来跟踪issue并回复， 你也可以写一个围绕project自动配置各种资源的持续交付和运维平台， 就看你怎么玩啦，GL &amp; HF</p>
-<div class="footnotes">
+<section class="footnotes">
 <hr />
 <ol>
-<li id="fn1"><p>比如在index()方法中，如果我们发现当前用户是已经授权成功的用户，则可以直接使用他/她对应的access token结合gitlab API来访问他/她的个人信息以及一系列资源<a href="#fnref1">↩</a></p></li>
+<li id="fn1"><p>比如在index()方法中，如果我们发现当前用户是已经授权成功的用户，则可以直接使用他/她对应的access token结合gitlab API来访问他/她的个人信息以及一系列资源<a href="#fnref1" class="footnote-back">↩</a></p></li>
 </ol>
-</div>
-<hr>
-<div align="center">
-<img src="/images/wechat-qrcode-footer.png"/>
-</div>
+</section>
 
-</div>
+    </article>
 
-
-
-</body></html>
+  </body>
+</html>

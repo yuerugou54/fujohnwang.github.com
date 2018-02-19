@@ -1,14 +1,16 @@
 <!DOCTYPE html>
-<html lang="zh">
-<head>
+<html>
+  <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>自用二维码Chrome插件/扩展 (A Chrome Extension of QR Code) - 一个架构士的思考与沉</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="王福强的博客， 一个架构士的思考与沉淀">
     <meta name="keywords" content="architecture, book author, thinker, fighter, 架构, 思考, 技术, 武术, 哲学">
     <meta name="author" content="王福强">
-        <link rel="icon" href="/favicon.ico">
-    <title>自用二维码Chrome插件/扩展 (A Chrome Extension of QR Code) - 一个架构士的思考与沉淀</title>
-    <!-- 百度统计 -->
+    <link rel="stylesheet" href="/ivy.css">
+    <link rel="shortcut icon" href="/favicon.ico"/>
+    <style type="text/css">code{white-space: pre;}</style>
+            <!-- 百度统计 -->
     <script>
       var _hmt = _hmt || [];
       (function() {
@@ -18,35 +20,26 @@
           s.parentNode.insertBefore(hm, s);
       })();
     </script>
+  </head>
 
-	<link href="/css/custom.css" rel="stylesheet"/>
-	<link rel="shortcut icon" href="/favicon.ico"/>
+  <body class="node homepage">
 
-<style type="text/css">code{white-space: pre;}</style>
-        
-	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-	<!--[if lt IE 9]>
-	  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.2/html5shiv.js"></script>
-	  <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-	<![endif]-->
-
-</head>
-
-<body>
-
-    <div class="masthead">
-		<!--
-    <h1 class="masthead-title fq">
-      <a href="/">扶墙老师</a>
-
-    </h1>
-    -->
-    <a href="/"><h1>扶墙老师说</h1></a>
-		<p class="masthead-lead">一个架构士的思考与沉淀</p>
-
-		<hr class="masthead-hr">
-
-	  	<ul class="masthead-nav">
+    <header class="masthead">
+      <h1><a href="/">扶墙老师说</a></h1>
+      <p class="tagline">
+         一个架构士的思考与沉淀
+          <img src="/images/wechat-qrcode-footer.png"/>
+          扶墙老师，辨证施“知”
+      </p>
+      
+      <nav class="menu">
+        <input id="menu-check" type="checkbox"/>
+        <label id="menu-label" for="menu-check" class="unselectable">
+          <span class="icon close-icon">✕</span>
+          <span class="icon open-icon">☰</span>
+          <span class="text">展开</span>
+        </label>
+        <ul>
             <li class="nav-item"><a class="nav-link" href="/favorite.html">我的收藏</a></li>
             <li class="nav-item"><a class="nav-link" href="/dashboard.html">金融看板</a></li>
             <li class="nav-item"><a class="nav-link" href="/columns.html">专栏文章</a></li>
@@ -54,20 +47,12 @@
             <li class="nav-item"><a class="nav-link" href="/whoami.html">我是何人</a></li>
             <li class="nav-item"><a class="nav-link" href="/interlinks.html">友情链接</a></li>
             <li class="nav-item"><a class="nav-link" href="/feeds.xml">RSS订阅</a></li>
-		</ul>
+        </ul>
+      </nav>
+    </header>
 
-  		<hr class="masthead-hr">
-
-	  	<ul class="masthead-nav">
-            <li class="nav-item"><small>©afoo.me</small></li>
-            <li class="nav-item"><small>Powered by <a href="http://pandoc.org/">pandoc</a> and <a href="http://rometools.github.io/rome/">ROME</a></small></li>
-		</ul>
-
-	</div>
-
-
-    <div class="listing">
-
+    <article class="main">
+      
 <div class="row">
 <div id="header">
 <p class="lead">
@@ -96,35 +81,27 @@
 <p>效果如下: <img src="images/goqr-snapshot.png" alt="goqr-snapshot.png" /></p>
 <h1 id="安装使用"><span class="header-section-number">2</span> 安装使用</h1>
 <p>不想发布到google的store里面， 所以， 各位客官如果要用，简单说一下安装和使用的过程吧！</p>
-<p>可以直接<code>git clone https://github.com/fujohnwang/goqr.git</code> 下来， 或者直接下载（<a href="https://github.com/fujohnwang/goqr/archive/master.zip">&quot;Download ZIP&quot;</a>）并解压, 在Chrome地址栏输入：</p>
+<p>可以直接<code>git clone https://github.com/fujohnwang/goqr.git</code> 下来， 或者直接下载（<a href="https://github.com/fujohnwang/goqr/archive/master.zip">“Download ZIP”</a>）并解压, 在Chrome地址栏输入：</p>
 <blockquote>
 <p>chrome://extensions</p>
 </blockquote>
-<div class="figure">
-<img src="images/chrome-extension-install.png" />
-
-</div>
-<p>选择右上角的&quot;Developer mode&quot;, 之后点击“load unpacked extension...”按钮， 然后选择下载到本地的扩展的目录即可， 之后就能看到chrome浏览器地址栏上多了一个图标，安装完成。</p>
+<p><img src="images/chrome-extension-install.png" /></p>
+<p>选择右上角的“Developer mode”, 之后点击“load unpacked extension…”按钮， 然后选择下载到本地的扩展的目录即可， 之后就能看到chrome浏览器地址栏上多了一个图标，安装完成。</p>
 <blockquote>
-<p>对于非开发者来说，安装完后可以将&quot;Developer mode&quot;取消选取</p>
+<p>对于非开发者来说，安装完后可以将“Developer mode”取消选取</p>
 </blockquote>
 <p>现在，看到那个页面想分享，直接点那个新的按钮吧！</p>
 <blockquote>
 <p>如果哪位客官脑瓜灵光点儿，可以在这个基础上做更多事情哦， 将来发了的话，记得请我吃饭就好，哈哈</p>
 </blockquote>
 <h1 id="refrence"><span class="header-section-number">3</span> Refrence</h1>
-<ol style="list-style-type: decimal">
+<ol type="1">
 <li><a href="https://developer.chrome.com/extensions/getstarted">Getting Started: Building a Chrome Extension</a></li>
 <li><a href="https://developer.chrome.com/extensions/overview" class="uri">https://developer.chrome.com/extensions/overview</a></li>
 <li><a href="https://developer.chrome.com/extensions/api_index" class="uri">https://developer.chrome.com/extensions/api_index</a></li>
 </ol>
-<hr>
-<div align="center">
-<img src="/images/wechat-qrcode-footer.png"/>
-</div>
 
-</div>
+    </article>
 
-
-
-</body></html>
+  </body>
+</html>

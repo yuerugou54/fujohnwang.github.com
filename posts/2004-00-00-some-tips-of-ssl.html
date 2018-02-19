@@ -1,14 +1,81 @@
 <!DOCTYPE html>
-<html lang="zh">
-<head>
+<html>
+  <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>有关SSL的一些tips - 一个架构士的思考与沉</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="王福强的博客， 一个架构士的思考与沉淀">
     <meta name="keywords" content="architecture, book author, thinker, fighter, 架构, 思考, 技术, 武术, 哲学">
     <meta name="author" content="王福强">
-        <link rel="icon" href="/favicon.ico">
-    <title>有关SSL的一些tips - 一个架构士的思考与沉淀</title>
-    <!-- 百度统计 -->
+    <link rel="stylesheet" href="/ivy.css">
+    <link rel="shortcut icon" href="/favicon.ico"/>
+    <style type="text/css">code{white-space: pre;}</style>
+    <style type="text/css">
+    a.sourceLine { display: inline-block; line-height: 1.25; }
+    a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+    a.sourceLine:empty { height: 1.2em; position: absolute; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode { white-space: pre; position: relative; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    code.sourceCode { white-space: pre-wrap; }
+    a.sourceLine { text-indent: -1em; padding-left: 1em; }
+    }
+    pre.numberSource a.sourceLine
+      { position: relative; }
+    pre.numberSource a.sourceLine:empty
+      { position: absolute; }
+    pre.numberSource a.sourceLine::before
+      { content: attr(data-line-number);
+        position: absolute; left: -5em; text-align: right; vertical-align: baseline;
+        border: none; pointer-events: all;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {  }
+    @media screen {
+    a.sourceLine::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+            <!-- 百度统计 -->
     <script>
       var _hmt = _hmt || [];
       (function() {
@@ -18,72 +85,26 @@
           s.parentNode.insertBefore(hm, s);
       })();
     </script>
+  </head>
 
-	<link href="/css/custom.css" rel="stylesheet"/>
-	<link rel="shortcut icon" href="/favicon.ico"/>
+  <body class="node homepage">
 
-<style type="text/css">code{white-space: pre;}</style>
-    <style type="text/css">
-    div.sourceCode { overflow-x: auto; }
-    table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
-      margin: 0; padding: 0; vertical-align: baseline; border: none; }
-    table.sourceCode { width: 100%; line-height: 100%; }
-    td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
-    td.sourceCode { padding-left: 5px; }
-    code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
-    code > span.dt { color: #902000; } /* DataType */
-    code > span.dv { color: #40a070; } /* DecVal */
-    code > span.bn { color: #40a070; } /* BaseN */
-    code > span.fl { color: #40a070; } /* Float */
-    code > span.ch { color: #4070a0; } /* Char */
-    code > span.st { color: #4070a0; } /* String */
-    code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
-    code > span.ot { color: #007020; } /* Other */
-    code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
-    code > span.fu { color: #06287e; } /* Function */
-    code > span.er { color: #ff0000; font-weight: bold; } /* Error */
-    code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-    code > span.cn { color: #880000; } /* Constant */
-    code > span.sc { color: #4070a0; } /* SpecialChar */
-    code > span.vs { color: #4070a0; } /* VerbatimString */
-    code > span.ss { color: #bb6688; } /* SpecialString */
-    code > span.im { } /* Import */
-    code > span.va { color: #19177c; } /* Variable */
-    code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-    code > span.op { color: #666666; } /* Operator */
-    code > span.bu { } /* BuiltIn */
-    code > span.ex { } /* Extension */
-    code > span.pp { color: #bc7a00; } /* Preprocessor */
-    code > span.at { color: #7d9029; } /* Attribute */
-    code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
-    code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-    code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-    code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-  </style>
-        
-	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-	<!--[if lt IE 9]>
-	  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.2/html5shiv.js"></script>
-	  <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-	<![endif]-->
-
-</head>
-
-<body>
-
-    <div class="masthead">
-		<!--
-    <h1 class="masthead-title fq">
-      <a href="/">扶墙老师</a>
-
-    </h1>
-    -->
-    <a href="/"><h1>扶墙老师说</h1></a>
-		<p class="masthead-lead">一个架构士的思考与沉淀</p>
-
-		<hr class="masthead-hr">
-
-	  	<ul class="masthead-nav">
+    <header class="masthead">
+      <h1><a href="/">扶墙老师说</a></h1>
+      <p class="tagline">
+         一个架构士的思考与沉淀
+          <img src="/images/wechat-qrcode-footer.png"/>
+          扶墙老师，辨证施“知”
+      </p>
+      
+      <nav class="menu">
+        <input id="menu-check" type="checkbox"/>
+        <label id="menu-label" for="menu-check" class="unselectable">
+          <span class="icon close-icon">✕</span>
+          <span class="icon open-icon">☰</span>
+          <span class="text">展开</span>
+        </label>
+        <ul>
             <li class="nav-item"><a class="nav-link" href="/favorite.html">我的收藏</a></li>
             <li class="nav-item"><a class="nav-link" href="/dashboard.html">金融看板</a></li>
             <li class="nav-item"><a class="nav-link" href="/columns.html">专栏文章</a></li>
@@ -91,20 +112,12 @@
             <li class="nav-item"><a class="nav-link" href="/whoami.html">我是何人</a></li>
             <li class="nav-item"><a class="nav-link" href="/interlinks.html">友情链接</a></li>
             <li class="nav-item"><a class="nav-link" href="/feeds.xml">RSS订阅</a></li>
-		</ul>
+        </ul>
+      </nav>
+    </header>
 
-  		<hr class="masthead-hr">
-
-	  	<ul class="masthead-nav">
-            <li class="nav-item"><small>©afoo.me</small></li>
-            <li class="nav-item"><small>Powered by <a href="http://pandoc.org/">pandoc</a> and <a href="http://rometools.github.io/rome/">ROME</a></small></li>
-		</ul>
-
-	</div>
-
-
-    <div class="listing">
-
+    <article class="main">
+      
 <div class="row">
 <div id="header">
 <p class="lead">
@@ -121,63 +134,58 @@
 <blockquote>
 <p>2014年从msn space存档中重新恢复出来！</p>
 </blockquote>
-<p>回大连后几天一直忙，所以没有时间写blog，今天忙里偷闲，写写回大连后的第一篇blog...</p>
+<p>回大连后几天一直忙，所以没有时间写blog，今天忙里偷闲，写写回大连后的第一篇blog…</p>
 <p>这一天到两天我在搞SSL，在客户端程序里面实现https连接，以实现用户认证信息的安全传输。因为原来一直做web方面的，现在转到c/s模式有些不适应，而且，以前对java security也没有深入过，所以，现在有些费力。</p>
 <p>开始是使用URLConnection和HttpsURLConnection做，但是当时因为证书的问题一直没有能够成功，也查了国外各个网站和forum，大部分说得都差不多，呵呵，就是不成功阿，后来转向Apache 的httpClient，用它先实现了简单的客户端基于http的通信，当转向https的时候同样遇到不可信任证书的问题，后来通过他的custom功能才可以解决。不过，现在对于整个知识的完整性还是欠缺，有时间的话，需要好好研究一下java的security部分。</p>
 <p>下面是在resin应用服务器中配置ssl的脚本配置片断，列于下，只作记录, 需要两步：</p>
-<ol style="list-style-type: decimal">
+<ol type="1">
 <li>添加security provider：<code>&lt;security-provider id='com.sun.net.ssl.internal.ssl.Provider'/&gt;</code></li>
 <li>配置ssl端口和keystore等</li>
 </ol>
-<div class="sourceCode"><pre class="sourceCode xml"><code class="sourceCode xml"><span class="kw">&lt;http</span><span class="ot"> port=</span><span class="er">8443&gt;</span>
- <span class="er">&lt;ssl&gt;true&lt;/ssl&gt;</span>
- <span class="er">&lt;key-store-type&gt;jks&lt;/key-store-type&gt;</span>
- <span class="er">&lt;key-store-file&gt;file://D:/resin-2.1.9/keys/private.keystore&lt;/key-store-file&gt;</span>
- <span class="er">&lt;key-store-password&gt;darrenwang&lt;/key-store-password&gt;</span>
-<span class="er">&lt;/http&gt;</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode xml"><code class="sourceCode xml"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">&lt;http</span><span class="ot"> port=</span><span class="er">8443&gt;</span></a>
+<a class="sourceLine" id="cb1-2" data-line-number="2"> <span class="er">&lt;ssl&gt;true&lt;/ssl&gt;</span></a>
+<a class="sourceLine" id="cb1-3" data-line-number="3"> <span class="er">&lt;key-store-type&gt;jks&lt;/key-store-type&gt;</span></a>
+<a class="sourceLine" id="cb1-4" data-line-number="4"> <span class="er">&lt;key-store-file&gt;file://D:/resin-2.1.9/keys/private.keystore&lt;/key-store-file&gt;</span></a>
+<a class="sourceLine" id="cb1-5" data-line-number="5"> <span class="er">&lt;key-store-password&gt;darrenwang&lt;/key-store-password&gt;</span></a>
+<a class="sourceLine" id="cb1-6" data-line-number="6"><span class="er">&lt;/http&gt;</span></a></code></pre></div>
 <p>这些可以在resin的conf里面找到实例，另外，其实要使之ssl运行，在此之前需要配置JSSE或者是OpenSSL，但是因为笔者使用了jdk1.4.x，而jdk1.4.x已经集成了JSSE，所以这些可以省略，如果使用jdk1.3或者以前的jdk，需要单独下载JSSE，并按照JSSE提供的步骤进行JSSE的安装。</p>
 <p>然后，通过keytool为keystore加入相应的证书。</p>
 <p>最后，就可以使用HttpClient来访问server端程序了，比如servlet等。</p>
 <p>下面是使用HttpClient进行https连接的demo代码片断：</p>
-<div class="sourceCode"><pre class="sourceCode java"><code class="sourceCode java">Protocol myhttps = <span class="kw">new</span> <span class="fu">Protocol</span>(<span class="st">&quot;https&quot;</span>, <span class="kw">new</span> <span class="fu">EasySSLProtocolSocketFactory</span>(), <span class="dv">8443</span>);
-Protocol.<span class="fu">registerProtocol</span>(<span class="st">&quot;https&quot;</span>,myhttps);
-
-HttpClient client = <span class="kw">new</span> <span class="fu">HttpClient</span>();
-client.<span class="fu">getHostConfiguration</span>().<span class="fu">setHost</span>(<span class="st">&quot;127.0.0.1&quot;</span>, <span class="dv">8443</span>, myhttps);
-
-PostMethod method = <span class="kw">new</span> <span class="fu">PostMethod</span>(<span class="st">&quot;/examples/basic/servlet/UserAuthServlet&quot;</span>;
-<span class="co">//PostMethod method = new PostMethod(&quot;::URL::http://localhost:8080/examples/basic/servlet/UserAuthServlet&quot; ;</span>
-<span class="bu">NameValuePair</span> nameParam = <span class="kw">new</span> <span class="bu">NameValuePair</span>(<span class="st">&quot;username&quot;</span>,name);
-<span class="bu">NameValuePair</span> pwdParam = <span class="kw">new</span> <span class="bu">NameValuePair</span>(<span class="st">&quot;psssword&quot;</span>,pwd);
-method.<span class="fu">setRequestBody</span>(<span class="kw">new</span> <span class="bu">NameValuePair</span>[]{nameParam,pwdParam});
-
-method.<span class="fu">setDoAuthentication</span>(<span class="kw">false</span>);
-
-<span class="dt">int</span> statusCode = client.<span class="fu">executeMethod</span>(method);
-<span class="kw">if</span>(statusCode==-<span class="dv">1</span>)
-{
-<span class="kw">throw</span> <span class="kw">new</span> <span class="bu">Exception</span>(<span class="st">&quot;[Post method execute Exception Failed!]&quot;</span>;
-}
-<span class="co">//get Response info</span>
-<span class="bu">InputStream</span> ins = method.<span class="fu">getResponseBodyAsStream</span>();
-<span class="bu">BufferedReader</span> in = <span class="kw">new</span> <span class="bu">BufferedReader</span>(<span class="kw">new</span> <span class="bu">InputStreamReader</span>(ins));
-<span class="bu">StringBuffer</span> resultBuffer = <span class="kw">new</span> <span class="bu">StringBuffer</span>();
-<span class="bu">String</span> line;
-<span class="kw">while</span>((line = in.<span class="fu">readLine</span>())!=<span class="kw">null</span>)
-{
-resultBuffer.<span class="fu">append</span>(line);
-}
-in.<span class="fu">close</span>();
-ins.<span class="fu">close</span>();
-method.<span class="fu">releaseConnection</span>();</code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode java"><code class="sourceCode java"><a class="sourceLine" id="cb2-1" data-line-number="1">Protocol myhttps = <span class="kw">new</span> <span class="fu">Protocol</span>(<span class="st">&quot;https&quot;</span>, <span class="kw">new</span> <span class="fu">EasySSLProtocolSocketFactory</span>(), <span class="dv">8443</span>);</a>
+<a class="sourceLine" id="cb2-2" data-line-number="2">Protocol.<span class="fu">registerProtocol</span>(<span class="st">&quot;https&quot;</span>,myhttps);</a>
+<a class="sourceLine" id="cb2-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb2-4" data-line-number="4">HttpClient client = <span class="kw">new</span> <span class="fu">HttpClient</span>();</a>
+<a class="sourceLine" id="cb2-5" data-line-number="5">client.<span class="fu">getHostConfiguration</span>().<span class="fu">setHost</span>(<span class="st">&quot;127.0.0.1&quot;</span>, <span class="dv">8443</span>, myhttps);</a>
+<a class="sourceLine" id="cb2-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb2-7" data-line-number="7">PostMethod method = <span class="kw">new</span> <span class="fu">PostMethod</span>(<span class="st">&quot;/examples/basic/servlet/UserAuthServlet&quot;</span>;</a>
+<a class="sourceLine" id="cb2-8" data-line-number="8"><span class="co">//PostMethod method = new PostMethod(&quot;::URL::http://localhost:8080/examples/basic/servlet/UserAuthServlet&quot; ;</span></a>
+<a class="sourceLine" id="cb2-9" data-line-number="9"><span class="bu">NameValuePair</span> nameParam = <span class="kw">new</span> <span class="bu">NameValuePair</span>(<span class="st">&quot;username&quot;</span>,name);</a>
+<a class="sourceLine" id="cb2-10" data-line-number="10"><span class="bu">NameValuePair</span> pwdParam = <span class="kw">new</span> <span class="bu">NameValuePair</span>(<span class="st">&quot;psssword&quot;</span>,pwd);</a>
+<a class="sourceLine" id="cb2-11" data-line-number="11">method.<span class="fu">setRequestBody</span>(<span class="kw">new</span> <span class="bu">NameValuePair</span>[]{nameParam,pwdParam});</a>
+<a class="sourceLine" id="cb2-12" data-line-number="12"></a>
+<a class="sourceLine" id="cb2-13" data-line-number="13">method.<span class="fu">setDoAuthentication</span>(<span class="kw">false</span>);</a>
+<a class="sourceLine" id="cb2-14" data-line-number="14"></a>
+<a class="sourceLine" id="cb2-15" data-line-number="15"><span class="dt">int</span> statusCode = client.<span class="fu">executeMethod</span>(method);</a>
+<a class="sourceLine" id="cb2-16" data-line-number="16"><span class="kw">if</span>(statusCode==-<span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb2-17" data-line-number="17">{</a>
+<a class="sourceLine" id="cb2-18" data-line-number="18"><span class="kw">throw</span> <span class="kw">new</span> <span class="bu">Exception</span>(<span class="st">&quot;[Post method execute Exception Failed!]&quot;</span>;</a>
+<a class="sourceLine" id="cb2-19" data-line-number="19">}</a>
+<a class="sourceLine" id="cb2-20" data-line-number="20"><span class="co">//get Response info</span></a>
+<a class="sourceLine" id="cb2-21" data-line-number="21"><span class="bu">InputStream</span> ins = method.<span class="fu">getResponseBodyAsStream</span>();</a>
+<a class="sourceLine" id="cb2-22" data-line-number="22"><span class="bu">BufferedReader</span> in = <span class="kw">new</span> <span class="bu">BufferedReader</span>(<span class="kw">new</span> <span class="bu">InputStreamReader</span>(ins));</a>
+<a class="sourceLine" id="cb2-23" data-line-number="23"><span class="bu">StringBuffer</span> resultBuffer = <span class="kw">new</span> <span class="bu">StringBuffer</span>();</a>
+<a class="sourceLine" id="cb2-24" data-line-number="24"><span class="bu">String</span> line;</a>
+<a class="sourceLine" id="cb2-25" data-line-number="25"><span class="kw">while</span>((line = in.<span class="fu">readLine</span>())!=<span class="kw">null</span>)</a>
+<a class="sourceLine" id="cb2-26" data-line-number="26">{</a>
+<a class="sourceLine" id="cb2-27" data-line-number="27">resultBuffer.<span class="fu">append</span>(line);</a>
+<a class="sourceLine" id="cb2-28" data-line-number="28">}</a>
+<a class="sourceLine" id="cb2-29" data-line-number="29">in.<span class="fu">close</span>();</a>
+<a class="sourceLine" id="cb2-30" data-line-number="30">ins.<span class="fu">close</span>();</a>
+<a class="sourceLine" id="cb2-31" data-line-number="31">method.<span class="fu">releaseConnection</span>();</a></code></pre></div>
 <p>OK，先写这些，以后有时间将对SSL以及java security方面进行更多阐述。</p>
-<hr>
-<div align="center">
-<img src="/images/wechat-qrcode-footer.png"/>
-</div>
 
-</div>
+    </article>
 
-
-
-</body></html>
+  </body>
+</html>

@@ -1,14 +1,16 @@
 <!DOCTYPE html>
-<html lang="zh">
-<head>
+<html>
+  <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>记远去的那份情怀 - 一个架构士的思考与沉</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="王福强的博客， 一个架构士的思考与沉淀">
     <meta name="keywords" content="architecture, book author, thinker, fighter, 架构, 思考, 技术, 武术, 哲学">
     <meta name="author" content="王福强">
-        <link rel="icon" href="/favicon.ico">
-    <title>记远去的那份情怀 - 一个架构士的思考与沉淀</title>
-    <!-- 百度统计 -->
+    <link rel="stylesheet" href="/ivy.css">
+    <link rel="shortcut icon" href="/favicon.ico"/>
+    <style type="text/css">code{white-space: pre;}</style>
+            <!-- 百度统计 -->
     <script>
       var _hmt = _hmt || [];
       (function() {
@@ -18,35 +20,26 @@
           s.parentNode.insertBefore(hm, s);
       })();
     </script>
+  </head>
 
-	<link href="/css/custom.css" rel="stylesheet"/>
-	<link rel="shortcut icon" href="/favicon.ico"/>
+  <body class="node homepage">
 
-<style type="text/css">code{white-space: pre;}</style>
-        
-	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-	<!--[if lt IE 9]>
-	  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.2/html5shiv.js"></script>
-	  <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-	<![endif]-->
-
-</head>
-
-<body>
-
-    <div class="masthead">
-		<!--
-    <h1 class="masthead-title fq">
-      <a href="/">扶墙老师</a>
-
-    </h1>
-    -->
-    <a href="/"><h1>扶墙老师说</h1></a>
-		<p class="masthead-lead">一个架构士的思考与沉淀</p>
-
-		<hr class="masthead-hr">
-
-	  	<ul class="masthead-nav">
+    <header class="masthead">
+      <h1><a href="/">扶墙老师说</a></h1>
+      <p class="tagline">
+         一个架构士的思考与沉淀
+          <img src="/images/wechat-qrcode-footer.png"/>
+          扶墙老师，辨证施“知”
+      </p>
+      
+      <nav class="menu">
+        <input id="menu-check" type="checkbox"/>
+        <label id="menu-label" for="menu-check" class="unselectable">
+          <span class="icon close-icon">✕</span>
+          <span class="icon open-icon">☰</span>
+          <span class="text">展开</span>
+        </label>
+        <ul>
             <li class="nav-item"><a class="nav-link" href="/favorite.html">我的收藏</a></li>
             <li class="nav-item"><a class="nav-link" href="/dashboard.html">金融看板</a></li>
             <li class="nav-item"><a class="nav-link" href="/columns.html">专栏文章</a></li>
@@ -54,20 +47,12 @@
             <li class="nav-item"><a class="nav-link" href="/whoami.html">我是何人</a></li>
             <li class="nav-item"><a class="nav-link" href="/interlinks.html">友情链接</a></li>
             <li class="nav-item"><a class="nav-link" href="/feeds.xml">RSS订阅</a></li>
-		</ul>
+        </ul>
+      </nav>
+    </header>
 
-  		<hr class="masthead-hr">
-
-	  	<ul class="masthead-nav">
-            <li class="nav-item"><small>©afoo.me</small></li>
-            <li class="nav-item"><small>Powered by <a href="http://pandoc.org/">pandoc</a> and <a href="http://rometools.github.io/rome/">ROME</a></small></li>
-		</ul>
-
-	</div>
-
-
-    <div class="listing">
-
+    <article class="main">
+      
 <div class="row">
 <div id="header">
 <p class="lead">
@@ -81,9 +66,9 @@
 <blockquote>
 <p>2014年从msn space存档中重新恢复出来！</p>
 </blockquote>
-<p>热，真热，天怎么这么热呀，根本就睡不着觉，本子上看文档看累了，伸伸懒腰，却不经意之间发现一本很早以前的书-《归有光抒情散文》，在我的印象里，这种书应该锁在老家的箱子里才对，怎么会出现在这边那？！不过，这多少勾起我些许美好的回忆...</p>
+<p>热，真热，天怎么这么热呀，根本就睡不着觉，本子上看文档看累了，伸伸懒腰，却不经意之间发现一本很早以前的书-《归有光抒情散文》，在我的印象里，这种书应该锁在老家的箱子里才对，怎么会出现在这边那？！不过，这多少勾起我些许美好的回忆…</p>
 <p>我还真不确定这本《归有光抒情散文》到底是在哪里的书店买的，但是，个人感觉在招远的某个书店买的可能性要更大一些，因为只有那时候的我（还是一个不甚合格的文学青年的时候，虽然可能从来就没合格过）才会流连于类似的书籍当中，虽然买书之时大部分细节都记不得了，但有一件事情却让当时的我倍感兴奋，故此脑海中还算保留了一些相关片段，只记得一位慈善的老大爷见我要买这本书，就跟我说了一些“喜欢这本书啊？”之类的话，让自己感觉，哇，是不是遇到知音了呀？！ ^_^</p>
-<p>归有光的这本抒情散文，说是抒情，实际上更多的却是叙事，于叙事间流露真情，整本书的详细内容经过这么多年，自然早就不记得了，但有一段描述他家丫鬟的散文，却着实让当年的我“热泪盈眶”了一把，所以，记忆尤深，文中寥寥数字，就让一个可爱顽皮的丫鬟形象跃然于纸上，虽是记述丫鬟，事实却是愈加思念已故去的夫人，读到此处，回想此景，不免为归有光当时的神伤而落泪，呜呼...</p>
+<p>归有光的这本抒情散文，说是抒情，实际上更多的却是叙事，于叙事间流露真情，整本书的详细内容经过这么多年，自然早就不记得了，但有一段描述他家丫鬟的散文，却着实让当年的我“热泪盈眶”了一把，所以，记忆尤深，文中寥寥数字，就让一个可爱顽皮的丫鬟形象跃然于纸上，虽是记述丫鬟，事实却是愈加思念已故去的夫人，读到此处，回想此景，不免为归有光当时的神伤而落泪，呜呼…</p>
 <p>从进入大学或者出了大学之后，渐渐因为工作以及个人发展的考虑而远离了当年对文学的那份热情与憧憬，也就让那些或许本来就存在于每个人心中或者灵魂内的独有的个人财富，暂时或者长时间的搁置于某个落满灰尘的角落，当今天不经意间发现归有光的这本抒情散文的时候，才发现，原来当年的那份情怀现在是那么地难以寻觅，因为我的心好像对这些早已封闭，再也不会有当年那么强烈的感受了。</p>
 <p>悲夫？！幸哉？！</p>
 <hr />
@@ -92,15 +77,10 @@
 <p>鬼二 不鬼的 - 8/4/2008 12:12:38 AM</p>
 <p>曾经的文学曾经的情怀曾经的青春，呜呼 凝 水 - 8/4/2008 4:13:49 PM</p>
 <p>你就酸吧　还说我 ℡踩烂苹果 - 8/5/2008 1:43:09 PM</p>
-o(∩_∩)o...
+o(∩_∩)o…
 </blockquote>
-<hr>
-<div align="center">
-<img src="/images/wechat-qrcode-footer.png"/>
-</div>
 
-</div>
+    </article>
 
-
-
-</body></html>
+  </body>
+</html>

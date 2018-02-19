@@ -1,14 +1,81 @@
 <!DOCTYPE html>
-<html lang="zh">
-<head>
+<html>
+  <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>有关JbossAop编译部署的ant脚本！ - 一个架构士的思考与沉</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="王福强的博客， 一个架构士的思考与沉淀">
     <meta name="keywords" content="architecture, book author, thinker, fighter, 架构, 思考, 技术, 武术, 哲学">
     <meta name="author" content="王福强">
-        <link rel="icon" href="/favicon.ico">
-    <title>有关JbossAop编译部署的ant脚本！ - 一个架构士的思考与沉淀</title>
-    <!-- 百度统计 -->
+    <link rel="stylesheet" href="/ivy.css">
+    <link rel="shortcut icon" href="/favicon.ico"/>
+    <style type="text/css">code{white-space: pre;}</style>
+    <style type="text/css">
+    a.sourceLine { display: inline-block; line-height: 1.25; }
+    a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+    a.sourceLine:empty { height: 1.2em; position: absolute; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode { white-space: pre; position: relative; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    code.sourceCode { white-space: pre-wrap; }
+    a.sourceLine { text-indent: -1em; padding-left: 1em; }
+    }
+    pre.numberSource a.sourceLine
+      { position: relative; }
+    pre.numberSource a.sourceLine:empty
+      { position: absolute; }
+    pre.numberSource a.sourceLine::before
+      { content: attr(data-line-number);
+        position: absolute; left: -5em; text-align: right; vertical-align: baseline;
+        border: none; pointer-events: all;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {  }
+    @media screen {
+    a.sourceLine::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+            <!-- 百度统计 -->
     <script>
       var _hmt = _hmt || [];
       (function() {
@@ -18,72 +85,26 @@
           s.parentNode.insertBefore(hm, s);
       })();
     </script>
+  </head>
 
-	<link href="/css/custom.css" rel="stylesheet"/>
-	<link rel="shortcut icon" href="/favicon.ico"/>
+  <body class="node homepage">
 
-<style type="text/css">code{white-space: pre;}</style>
-    <style type="text/css">
-    div.sourceCode { overflow-x: auto; }
-    table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
-      margin: 0; padding: 0; vertical-align: baseline; border: none; }
-    table.sourceCode { width: 100%; line-height: 100%; }
-    td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
-    td.sourceCode { padding-left: 5px; }
-    code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
-    code > span.dt { color: #902000; } /* DataType */
-    code > span.dv { color: #40a070; } /* DecVal */
-    code > span.bn { color: #40a070; } /* BaseN */
-    code > span.fl { color: #40a070; } /* Float */
-    code > span.ch { color: #4070a0; } /* Char */
-    code > span.st { color: #4070a0; } /* String */
-    code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
-    code > span.ot { color: #007020; } /* Other */
-    code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
-    code > span.fu { color: #06287e; } /* Function */
-    code > span.er { color: #ff0000; font-weight: bold; } /* Error */
-    code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-    code > span.cn { color: #880000; } /* Constant */
-    code > span.sc { color: #4070a0; } /* SpecialChar */
-    code > span.vs { color: #4070a0; } /* VerbatimString */
-    code > span.ss { color: #bb6688; } /* SpecialString */
-    code > span.im { } /* Import */
-    code > span.va { color: #19177c; } /* Variable */
-    code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-    code > span.op { color: #666666; } /* Operator */
-    code > span.bu { } /* BuiltIn */
-    code > span.ex { } /* Extension */
-    code > span.pp { color: #bc7a00; } /* Preprocessor */
-    code > span.at { color: #7d9029; } /* Attribute */
-    code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
-    code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-    code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-    code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-  </style>
-        
-	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-	<!--[if lt IE 9]>
-	  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.2/html5shiv.js"></script>
-	  <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-	<![endif]-->
-
-</head>
-
-<body>
-
-    <div class="masthead">
-		<!--
-    <h1 class="masthead-title fq">
-      <a href="/">扶墙老师</a>
-
-    </h1>
-    -->
-    <a href="/"><h1>扶墙老师说</h1></a>
-		<p class="masthead-lead">一个架构士的思考与沉淀</p>
-
-		<hr class="masthead-hr">
-
-	  	<ul class="masthead-nav">
+    <header class="masthead">
+      <h1><a href="/">扶墙老师说</a></h1>
+      <p class="tagline">
+         一个架构士的思考与沉淀
+          <img src="/images/wechat-qrcode-footer.png"/>
+          扶墙老师，辨证施“知”
+      </p>
+      
+      <nav class="menu">
+        <input id="menu-check" type="checkbox"/>
+        <label id="menu-label" for="menu-check" class="unselectable">
+          <span class="icon close-icon">✕</span>
+          <span class="icon open-icon">☰</span>
+          <span class="text">展开</span>
+        </label>
+        <ul>
             <li class="nav-item"><a class="nav-link" href="/favorite.html">我的收藏</a></li>
             <li class="nav-item"><a class="nav-link" href="/dashboard.html">金融看板</a></li>
             <li class="nav-item"><a class="nav-link" href="/columns.html">专栏文章</a></li>
@@ -91,20 +112,12 @@
             <li class="nav-item"><a class="nav-link" href="/whoami.html">我是何人</a></li>
             <li class="nav-item"><a class="nav-link" href="/interlinks.html">友情链接</a></li>
             <li class="nav-item"><a class="nav-link" href="/feeds.xml">RSS订阅</a></li>
-		</ul>
+        </ul>
+      </nav>
+    </header>
 
-  		<hr class="masthead-hr">
-
-	  	<ul class="masthead-nav">
-            <li class="nav-item"><small>©afoo.me</small></li>
-            <li class="nav-item"><small>Powered by <a href="http://pandoc.org/">pandoc</a> and <a href="http://rometools.github.io/rome/">ROME</a></small></li>
-		</ul>
-
-	</div>
-
-
-    <div class="listing">
-
+    <article class="main">
+      
 <div class="row">
 <div id="header">
 <p class="lead">
@@ -122,121 +135,116 @@
 <p>2014年从msn space存档中重新恢复出来！</p>
 </blockquote>
 <p>近来看了JbossAop的相关资料，也做过几个demo，对于其原理也稍有了解，现将编译用的ant脚本罗列如下，以备后查。呵呵，十分简单，但是本人记性不好，所以，为了以后copy好用。</p>
-<div class="sourceCode"><pre class="sourceCode xml"><code class="sourceCode xml"><span class="kw">&lt;?xml</span> version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;<span class="kw">?&gt;</span>
-
-<span class="kw">&lt;project</span><span class="ot"> default=</span><span class="st">&quot;simple.run&quot;</span><span class="ot"> name=</span><span class="st">&quot;JBoss/AOP&quot;</span><span class="ot"> basedir=</span><span class="st">&quot;.&quot;</span><span class="kw">&gt;</span>
- 
- <span class="co">&lt;!--</span>
-<span class="co">  |Properties for Project</span>
-<span class="co"> --&gt;</span>
- <span class="kw">&lt;property</span><span class="ot"> name=</span><span class="st">&quot;src.dir&quot;</span><span class="ot"> value=</span><span class="st">&quot;src&quot;</span><span class="kw">/&gt;</span>
- <span class="kw">&lt;property</span><span class="ot"> name=</span><span class="st">&quot;lib.dir&quot;</span><span class="ot"> value=</span><span class="st">&quot;lib&quot;</span><span class="kw">/&gt;</span>
- <span class="kw">&lt;property</span><span class="ot"> name=</span><span class="st">&quot;build.dir&quot;</span><span class="ot"> value=</span><span class="st">&quot;build&quot;</span><span class="kw">/&gt;</span>
- <span class="kw">&lt;property</span><span class="ot"> name=</span><span class="st">&quot;build.classes.dir&quot;</span><span class="ot"> value=</span><span class="st">&quot;{build.dir}/classes&quot;</span><span class="kw">/&gt;</span>
- <span class="kw">&lt;property</span><span class="ot"> name=</span><span class="st">&quot;build.jar.dir&quot;</span><span class="ot"> value=</span><span class="st">&quot;{build.dir}/jar&quot;</span><span class="kw">&gt;&lt;/property&gt;</span>
- <span class="kw">&lt;property</span><span class="ot"> name=</span><span class="st">&quot;jdk.lib.dir&quot;</span><span class="ot"> value=</span><span class="st">&quot;&quot;</span><span class="kw">/&gt;</span>
- <span class="kw">&lt;property</span><span class="ot"> name=</span><span class="st">&quot;dist.dir&quot;</span><span class="ot"> value=</span><span class="st">&quot;dist&quot;</span><span class="kw">/&gt;</span>
- <span class="kw">&lt;property</span><span class="ot"> name=</span><span class="st">&quot;aop.config.path&quot;</span><span class="ot"> value=</span><span class="st">&quot;jboss-aop.xml&quot;</span><span class="kw">/&gt;</span>
- 
-    <span class="kw">&lt;path</span><span class="ot"> id=</span><span class="st">&quot;jbossaop.classpath&quot;</span><span class="kw">&gt;</span>
-         <span class="kw">&lt;fileset</span><span class="ot"> dir=</span><span class="st">&quot;{lib.dir}&quot;</span><span class="kw">&gt;</span>
-            <span class="kw">&lt;include</span><span class="ot"> name=</span><span class="st">&quot;**/*.jar&quot;</span><span class="kw">/&gt;</span>
-         <span class="kw">&lt;/fileset&gt;</span>
- <span class="kw">&lt;/path&gt;</span>
- 
-    <span class="kw">&lt;path</span><span class="ot"> id=</span><span class="st">&quot;runtime.classpath&quot;</span><span class="kw">&gt;</span>
-       <span class="kw">&lt;path</span><span class="ot"> refid=</span><span class="st">&quot;jbossaop.classpath&quot;</span><span class="kw">/&gt;</span>
-       <span class="kw">&lt;pathelement</span><span class="ot"> location=</span><span class="st">&quot;{build.classes.dir}&quot;</span><span class="kw">/&gt;</span>
-    <span class="kw">&lt;/path&gt;</span>
- 
- <span class="kw">&lt;target</span><span class="ot"> name=</span><span class="st">&quot;init&quot;</span><span class="kw">&gt;</span>
-  <span class="kw">&lt;mkdir</span><span class="ot"> dir=</span><span class="st">&quot;{build.dir}&quot;</span><span class="kw">/&gt;</span>
-  <span class="kw">&lt;mkdir</span><span class="ot"> dir=</span><span class="st">&quot;{build.classes.dir}&quot;</span><span class="kw">/&gt;</span>
-  <span class="kw">&lt;mkdir</span><span class="ot"> dir=</span><span class="st">&quot;{build.jar.dir}&quot;</span><span class="kw">/&gt;</span>
-  <span class="kw">&lt;mkdir</span><span class="ot"> dir=</span><span class="st">&quot;{dist.dir}&quot;</span><span class="kw">/&gt;</span>
-  
-     <span class="kw">&lt;taskdef</span><span class="ot"> name=</span><span class="st">&quot;annotationc&quot;</span><span class="ot"> classname=</span><span class="st">&quot;org.jboss.aop.ant.AnnotationC&quot;</span><span class="ot"> classpathref=</span><span class="st">&quot;jbossaop.classpath&quot;</span><span class="kw">/&gt;</span>
-     <span class="kw">&lt;taskdef</span><span class="ot"> name=</span><span class="st">&quot;aopc&quot;</span><span class="ot"> classname=</span><span class="st">&quot;org.jboss.aop.ant.AopC&quot;</span><span class="ot"> classpathref=</span><span class="st">&quot;jbossaop.classpath&quot;</span><span class="kw">/&gt;</span>
- <span class="kw">&lt;/target&gt;</span>
-
- <span class="kw">&lt;target</span><span class="ot"> name=</span><span class="st">&quot;compile&quot;</span><span class="ot"> depends=</span><span class="st">&quot;init&quot;</span><span class="ot"> description=</span><span class="st">&quot;Compile the Java File to Class for Later usage!&quot;</span><span class="kw">&gt;</span>
-  <span class="kw">&lt;javac</span><span class="ot"> srcdir=</span><span class="st">&quot;{src.dir}&quot;</span><span class="ot"> destdir=</span><span class="st">&quot;{build.classes.dir}&quot;</span><span class="ot"> debug=</span><span class="st">&quot;on&quot;</span><span class="kw">&gt;</span>
-   <span class="kw">&lt;classpath</span><span class="ot"> refid=</span><span class="st">&quot;jbossaop.classpath&quot;</span><span class="kw">&gt;&lt;/classpath&gt;</span>
-  <span class="kw">&lt;/javac&gt;</span>
- <span class="kw">&lt;/target&gt;</span>
- 
- <span class="kw">&lt;target</span><span class="ot"> name=</span><span class="st">&quot;annotationc&quot;</span><span class="ot"> depends=</span><span class="st">&quot;compile&quot;</span><span class="ot"> description=</span><span class="st">&quot;Compile for Annotation in JDK1.4! &quot;</span><span class="kw">&gt;</span>
-       <span class="kw">&lt;annotationc</span><span class="ot"> compilerclasspathref=</span><span class="st">&quot;runtime.classpath&quot;</span><span class="ot"> classpathref=</span><span class="st">&quot;runtime.classpath&quot;</span><span class="ot"> bytecode=</span><span class="st">&quot;true&quot;</span><span class="kw">&gt;</span>
-          <span class="kw">&lt;src</span><span class="ot"> path=</span><span class="st">&quot;{build.classes.dir}&quot;</span><span class="kw">/&gt;</span>
-       <span class="kw">&lt;/annotationc&gt;</span>
- <span class="kw">&lt;/target&gt;</span>
- 
- <span class="kw">&lt;target</span><span class="ot"> name=</span><span class="st">&quot;aopc&quot;</span><span class="ot"> depends=</span><span class="st">&quot;compile&quot;</span><span class="kw">&gt;</span>
-  <span class="kw">&lt;aopc</span><span class="ot"> compilerclasspathref=</span><span class="st">&quot;runtime.classpath&quot;</span><span class="ot"> classpathref=</span><span class="st">&quot;runtime.classpath&quot;</span><span class="ot"> verbose=</span><span class="st">&quot;true&quot;</span><span class="kw">&gt;</span>
-   <span class="kw">&lt;src</span><span class="ot"> path=</span><span class="st">&quot;{build.classes.dir}&quot;</span><span class="kw">&gt;&lt;/src&gt;</span>
-   <span class="kw">&lt;aoppath&gt;</span>
-    <span class="kw">&lt;pathelement</span><span class="ot"> path=</span><span class="st">&quot;{aop.config.path}&quot;</span><span class="kw">/&gt;</span>
-   <span class="kw">&lt;/aoppath&gt;</span>
-  <span class="kw">&lt;/aopc&gt;</span>
- <span class="kw">&lt;/target&gt;</span>
- 
- <span class="kw">&lt;target</span><span class="ot"> name=</span><span class="st">&quot;simple.run&quot;</span><span class="ot"> depends=</span><span class="st">&quot;aopc&quot;</span><span class="ot"> description=</span><span class="st">&quot;Run Simple Example!&quot;</span><span class="kw">&gt;</span>
-       <span class="kw">&lt;java</span><span class="ot"> fork=</span><span class="st">&quot;yes&quot;</span><span class="ot"> failOnError=</span><span class="st">&quot;true&quot;</span><span class="ot"> className=</span><span class="st">&quot;org.dwstudio.aop.simple.business.AopDriver&quot;</span><span class="kw">&gt;</span>
-          <span class="kw">&lt;sysproperty</span><span class="ot"> key=</span><span class="st">&quot;jboss.aop.path&quot;</span><span class="ot"> value=</span><span class="st">&quot;{aop.config.path}&quot;</span><span class="kw">/&gt;</span>
-          <span class="kw">&lt;classpath</span><span class="ot"> refid=</span><span class="st">&quot;runtime.classpath&quot;</span><span class="kw">/&gt;</span>
-       <span class="kw">&lt;/java&gt;</span>
- <span class="kw">&lt;/target&gt;</span>
- 
- <span class="kw">&lt;target</span><span class="ot"> name=</span><span class="st">&quot;ui.run&quot;</span><span class="kw">&gt;</span>
-       <span class="kw">&lt;java</span><span class="ot"> fork=</span><span class="st">&quot;yes&quot;</span><span class="ot"> failOnError=</span><span class="st">&quot;true&quot;</span><span class="ot"> className=</span><span class="st">&quot;org.dwstudio.aop.simple.business.AopDriver&quot;</span><span class="kw">&gt;</span>
-          <span class="kw">&lt;sysproperty</span><span class="ot"> key=</span><span class="st">&quot;jboss.aop.path&quot;</span><span class="ot"> value=</span><span class="st">&quot;{aop.config.path}&quot;</span><span class="kw">/&gt;</span>
-          <span class="kw">&lt;classpath</span><span class="ot"> refid=</span><span class="st">&quot;runtime.classpath&quot;</span><span class="kw">/&gt;</span>
-       <span class="kw">&lt;/java&gt;</span>
- <span class="kw">&lt;/target&gt;</span>
- 
- <span class="kw">&lt;target</span><span class="ot"> name=</span><span class="st">&quot;release&quot;</span><span class="ot"> depends=</span><span class="st">&quot;aopc&quot;</span><span class="ot"> description=</span><span class="st">&quot;Release the Aop Project!&quot;</span><span class="kw">&gt;</span>
-  <span class="kw">&lt;jar</span><span class="ot"> destfile=</span><span class="st">&quot;{build.jar.dir}/dwaop.jar&quot;</span><span class="kw">&gt;</span>
-   <span class="kw">&lt;fileset</span><span class="ot"> dir=</span><span class="st">&quot;{build.classes.dir}&quot;</span><span class="kw">&gt;</span>
-   <span class="kw">&lt;/fileset&gt;</span>
-  <span class="kw">&lt;/jar&gt;</span>
-  <span class="kw">&lt;jar</span><span class="ot"> destfile=</span><span class="st">&quot;{dist.dir}/final.jar&quot;</span><span class="kw">&gt;</span>
-   <span class="kw">&lt;manifest&gt;</span>
-    <span class="kw">&lt;attribute</span><span class="ot"> name=</span><span class="st">&quot;Created-By&quot;</span><span class="ot"> value=</span><span class="st">&quot;Darren.Wang&quot;</span><span class="kw">/&gt;</span>
-    <span class="kw">&lt;attribute</span><span class="ot"> name=</span><span class="st">&quot;Class-Path&quot;</span><span class="ot"> value=</span><span class="st">&quot;dwaop.jar concurrent.jar javassist.jar jboss-aop.jar jboss-aspect-library.jar jboss-common.jar qdox.jar trove.jar&quot;</span><span class="kw">/&gt;</span>
-    <span class="kw">&lt;attribute</span><span class="ot"> name=</span><span class="st">&quot;Main-Class&quot;</span><span class="ot"> value=</span><span class="st">&quot;org.dwstudio.aop.simple.business.AopDriver&quot;</span><span class="kw">/&gt;</span>
-   <span class="kw">&lt;/manifest&gt;</span>
-   <span class="kw">&lt;metainf</span><span class="ot"> dir=</span><span class="st">&quot;.&quot;</span><span class="ot"> includes=</span><span class="st">&quot;{aop.config.path}&quot;</span><span class="kw">&gt;&lt;/metainf&gt;</span>
-   <span class="kw">&lt;fileset</span><span class="ot"> dir=</span><span class="st">&quot;{lib.dir}&quot;</span><span class="kw">&gt;</span>
-    <span class="kw">&lt;include</span><span class="ot"> name=</span><span class="st">&quot;**/*.jar&quot;</span><span class="kw">/&gt;</span>
-   <span class="kw">&lt;/fileset&gt;</span>
-   <span class="kw">&lt;fileset</span><span class="ot"> dir=</span><span class="st">&quot;{build.jar.dir}&quot;</span><span class="kw">&gt;</span>
-   <span class="kw">&lt;/fileset&gt;</span>
-  <span class="kw">&lt;/jar&gt;</span>
- <span class="kw">&lt;/target&gt;</span>
- 
- <span class="kw">&lt;target</span><span class="ot"> name=</span><span class="st">&quot;clean&quot;</span><span class="ot"> description=</span><span class="st">&quot;Clean the Workplace for a new building!&quot;</span><span class="kw">&gt;</span>
-  <span class="kw">&lt;delete</span><span class="ot"> dir=</span><span class="st">&quot;{build.dir}&quot;</span><span class="kw">&gt;&lt;/delete&gt;</span>
-  <span class="kw">&lt;delete</span><span class="ot"> dir=</span><span class="st">&quot;{dist.dir}&quot;</span><span class="kw">&gt;&lt;/delete&gt;</span>
- <span class="kw">&lt;/target&gt;</span>
-
-<span class="kw">&lt;/project&gt;</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode xml"><code class="sourceCode xml"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">&lt;?xml</span> version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;<span class="kw">?&gt;</span></a>
+<a class="sourceLine" id="cb1-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb1-3" data-line-number="3"><span class="kw">&lt;project</span><span class="ot"> default=</span><span class="st">&quot;simple.run&quot;</span><span class="ot"> name=</span><span class="st">&quot;JBoss/AOP&quot;</span><span class="ot"> basedir=</span><span class="st">&quot;.&quot;</span><span class="kw">&gt;</span></a>
+<a class="sourceLine" id="cb1-4" data-line-number="4"> </a>
+<a class="sourceLine" id="cb1-5" data-line-number="5"> <span class="co">&lt;!--</span></a>
+<a class="sourceLine" id="cb1-6" data-line-number="6"><span class="co">  |Properties for Project</span></a>
+<a class="sourceLine" id="cb1-7" data-line-number="7"><span class="co"> --&gt;</span></a>
+<a class="sourceLine" id="cb1-8" data-line-number="8"> <span class="kw">&lt;property</span><span class="ot"> name=</span><span class="st">&quot;src.dir&quot;</span><span class="ot"> value=</span><span class="st">&quot;src&quot;</span><span class="kw">/&gt;</span></a>
+<a class="sourceLine" id="cb1-9" data-line-number="9"> <span class="kw">&lt;property</span><span class="ot"> name=</span><span class="st">&quot;lib.dir&quot;</span><span class="ot"> value=</span><span class="st">&quot;lib&quot;</span><span class="kw">/&gt;</span></a>
+<a class="sourceLine" id="cb1-10" data-line-number="10"> <span class="kw">&lt;property</span><span class="ot"> name=</span><span class="st">&quot;build.dir&quot;</span><span class="ot"> value=</span><span class="st">&quot;build&quot;</span><span class="kw">/&gt;</span></a>
+<a class="sourceLine" id="cb1-11" data-line-number="11"> <span class="kw">&lt;property</span><span class="ot"> name=</span><span class="st">&quot;build.classes.dir&quot;</span><span class="ot"> value=</span><span class="st">&quot;{build.dir}/classes&quot;</span><span class="kw">/&gt;</span></a>
+<a class="sourceLine" id="cb1-12" data-line-number="12"> <span class="kw">&lt;property</span><span class="ot"> name=</span><span class="st">&quot;build.jar.dir&quot;</span><span class="ot"> value=</span><span class="st">&quot;{build.dir}/jar&quot;</span><span class="kw">&gt;&lt;/property&gt;</span></a>
+<a class="sourceLine" id="cb1-13" data-line-number="13"> <span class="kw">&lt;property</span><span class="ot"> name=</span><span class="st">&quot;jdk.lib.dir&quot;</span><span class="ot"> value=</span><span class="st">&quot;&quot;</span><span class="kw">/&gt;</span></a>
+<a class="sourceLine" id="cb1-14" data-line-number="14"> <span class="kw">&lt;property</span><span class="ot"> name=</span><span class="st">&quot;dist.dir&quot;</span><span class="ot"> value=</span><span class="st">&quot;dist&quot;</span><span class="kw">/&gt;</span></a>
+<a class="sourceLine" id="cb1-15" data-line-number="15"> <span class="kw">&lt;property</span><span class="ot"> name=</span><span class="st">&quot;aop.config.path&quot;</span><span class="ot"> value=</span><span class="st">&quot;jboss-aop.xml&quot;</span><span class="kw">/&gt;</span></a>
+<a class="sourceLine" id="cb1-16" data-line-number="16"> </a>
+<a class="sourceLine" id="cb1-17" data-line-number="17">    <span class="kw">&lt;path</span><span class="ot"> id=</span><span class="st">&quot;jbossaop.classpath&quot;</span><span class="kw">&gt;</span></a>
+<a class="sourceLine" id="cb1-18" data-line-number="18">         <span class="kw">&lt;fileset</span><span class="ot"> dir=</span><span class="st">&quot;{lib.dir}&quot;</span><span class="kw">&gt;</span></a>
+<a class="sourceLine" id="cb1-19" data-line-number="19">            <span class="kw">&lt;include</span><span class="ot"> name=</span><span class="st">&quot;**/*.jar&quot;</span><span class="kw">/&gt;</span></a>
+<a class="sourceLine" id="cb1-20" data-line-number="20">         <span class="kw">&lt;/fileset&gt;</span></a>
+<a class="sourceLine" id="cb1-21" data-line-number="21"> <span class="kw">&lt;/path&gt;</span></a>
+<a class="sourceLine" id="cb1-22" data-line-number="22"> </a>
+<a class="sourceLine" id="cb1-23" data-line-number="23">    <span class="kw">&lt;path</span><span class="ot"> id=</span><span class="st">&quot;runtime.classpath&quot;</span><span class="kw">&gt;</span></a>
+<a class="sourceLine" id="cb1-24" data-line-number="24">       <span class="kw">&lt;path</span><span class="ot"> refid=</span><span class="st">&quot;jbossaop.classpath&quot;</span><span class="kw">/&gt;</span></a>
+<a class="sourceLine" id="cb1-25" data-line-number="25">       <span class="kw">&lt;pathelement</span><span class="ot"> location=</span><span class="st">&quot;{build.classes.dir}&quot;</span><span class="kw">/&gt;</span></a>
+<a class="sourceLine" id="cb1-26" data-line-number="26">    <span class="kw">&lt;/path&gt;</span></a>
+<a class="sourceLine" id="cb1-27" data-line-number="27"> </a>
+<a class="sourceLine" id="cb1-28" data-line-number="28"> <span class="kw">&lt;target</span><span class="ot"> name=</span><span class="st">&quot;init&quot;</span><span class="kw">&gt;</span></a>
+<a class="sourceLine" id="cb1-29" data-line-number="29">  <span class="kw">&lt;mkdir</span><span class="ot"> dir=</span><span class="st">&quot;{build.dir}&quot;</span><span class="kw">/&gt;</span></a>
+<a class="sourceLine" id="cb1-30" data-line-number="30">  <span class="kw">&lt;mkdir</span><span class="ot"> dir=</span><span class="st">&quot;{build.classes.dir}&quot;</span><span class="kw">/&gt;</span></a>
+<a class="sourceLine" id="cb1-31" data-line-number="31">  <span class="kw">&lt;mkdir</span><span class="ot"> dir=</span><span class="st">&quot;{build.jar.dir}&quot;</span><span class="kw">/&gt;</span></a>
+<a class="sourceLine" id="cb1-32" data-line-number="32">  <span class="kw">&lt;mkdir</span><span class="ot"> dir=</span><span class="st">&quot;{dist.dir}&quot;</span><span class="kw">/&gt;</span></a>
+<a class="sourceLine" id="cb1-33" data-line-number="33">  </a>
+<a class="sourceLine" id="cb1-34" data-line-number="34">     <span class="kw">&lt;taskdef</span><span class="ot"> name=</span><span class="st">&quot;annotationc&quot;</span><span class="ot"> classname=</span><span class="st">&quot;org.jboss.aop.ant.AnnotationC&quot;</span><span class="ot"> classpathref=</span><span class="st">&quot;jbossaop.classpath&quot;</span><span class="kw">/&gt;</span></a>
+<a class="sourceLine" id="cb1-35" data-line-number="35">     <span class="kw">&lt;taskdef</span><span class="ot"> name=</span><span class="st">&quot;aopc&quot;</span><span class="ot"> classname=</span><span class="st">&quot;org.jboss.aop.ant.AopC&quot;</span><span class="ot"> classpathref=</span><span class="st">&quot;jbossaop.classpath&quot;</span><span class="kw">/&gt;</span></a>
+<a class="sourceLine" id="cb1-36" data-line-number="36"> <span class="kw">&lt;/target&gt;</span></a>
+<a class="sourceLine" id="cb1-37" data-line-number="37"></a>
+<a class="sourceLine" id="cb1-38" data-line-number="38"> <span class="kw">&lt;target</span><span class="ot"> name=</span><span class="st">&quot;compile&quot;</span><span class="ot"> depends=</span><span class="st">&quot;init&quot;</span><span class="ot"> description=</span><span class="st">&quot;Compile the Java File to Class for Later usage!&quot;</span><span class="kw">&gt;</span></a>
+<a class="sourceLine" id="cb1-39" data-line-number="39">  <span class="kw">&lt;javac</span><span class="ot"> srcdir=</span><span class="st">&quot;{src.dir}&quot;</span><span class="ot"> destdir=</span><span class="st">&quot;{build.classes.dir}&quot;</span><span class="ot"> debug=</span><span class="st">&quot;on&quot;</span><span class="kw">&gt;</span></a>
+<a class="sourceLine" id="cb1-40" data-line-number="40">   <span class="kw">&lt;classpath</span><span class="ot"> refid=</span><span class="st">&quot;jbossaop.classpath&quot;</span><span class="kw">&gt;&lt;/classpath&gt;</span></a>
+<a class="sourceLine" id="cb1-41" data-line-number="41">  <span class="kw">&lt;/javac&gt;</span></a>
+<a class="sourceLine" id="cb1-42" data-line-number="42"> <span class="kw">&lt;/target&gt;</span></a>
+<a class="sourceLine" id="cb1-43" data-line-number="43"> </a>
+<a class="sourceLine" id="cb1-44" data-line-number="44"> <span class="kw">&lt;target</span><span class="ot"> name=</span><span class="st">&quot;annotationc&quot;</span><span class="ot"> depends=</span><span class="st">&quot;compile&quot;</span><span class="ot"> description=</span><span class="st">&quot;Compile for Annotation in JDK1.4! &quot;</span><span class="kw">&gt;</span></a>
+<a class="sourceLine" id="cb1-45" data-line-number="45">       <span class="kw">&lt;annotationc</span><span class="ot"> compilerclasspathref=</span><span class="st">&quot;runtime.classpath&quot;</span><span class="ot"> classpathref=</span><span class="st">&quot;runtime.classpath&quot;</span><span class="ot"> bytecode=</span><span class="st">&quot;true&quot;</span><span class="kw">&gt;</span></a>
+<a class="sourceLine" id="cb1-46" data-line-number="46">          <span class="kw">&lt;src</span><span class="ot"> path=</span><span class="st">&quot;{build.classes.dir}&quot;</span><span class="kw">/&gt;</span></a>
+<a class="sourceLine" id="cb1-47" data-line-number="47">       <span class="kw">&lt;/annotationc&gt;</span></a>
+<a class="sourceLine" id="cb1-48" data-line-number="48"> <span class="kw">&lt;/target&gt;</span></a>
+<a class="sourceLine" id="cb1-49" data-line-number="49"> </a>
+<a class="sourceLine" id="cb1-50" data-line-number="50"> <span class="kw">&lt;target</span><span class="ot"> name=</span><span class="st">&quot;aopc&quot;</span><span class="ot"> depends=</span><span class="st">&quot;compile&quot;</span><span class="kw">&gt;</span></a>
+<a class="sourceLine" id="cb1-51" data-line-number="51">  <span class="kw">&lt;aopc</span><span class="ot"> compilerclasspathref=</span><span class="st">&quot;runtime.classpath&quot;</span><span class="ot"> classpathref=</span><span class="st">&quot;runtime.classpath&quot;</span><span class="ot"> verbose=</span><span class="st">&quot;true&quot;</span><span class="kw">&gt;</span></a>
+<a class="sourceLine" id="cb1-52" data-line-number="52">   <span class="kw">&lt;src</span><span class="ot"> path=</span><span class="st">&quot;{build.classes.dir}&quot;</span><span class="kw">&gt;&lt;/src&gt;</span></a>
+<a class="sourceLine" id="cb1-53" data-line-number="53">   <span class="kw">&lt;aoppath&gt;</span></a>
+<a class="sourceLine" id="cb1-54" data-line-number="54">    <span class="kw">&lt;pathelement</span><span class="ot"> path=</span><span class="st">&quot;{aop.config.path}&quot;</span><span class="kw">/&gt;</span></a>
+<a class="sourceLine" id="cb1-55" data-line-number="55">   <span class="kw">&lt;/aoppath&gt;</span></a>
+<a class="sourceLine" id="cb1-56" data-line-number="56">  <span class="kw">&lt;/aopc&gt;</span></a>
+<a class="sourceLine" id="cb1-57" data-line-number="57"> <span class="kw">&lt;/target&gt;</span></a>
+<a class="sourceLine" id="cb1-58" data-line-number="58"> </a>
+<a class="sourceLine" id="cb1-59" data-line-number="59"> <span class="kw">&lt;target</span><span class="ot"> name=</span><span class="st">&quot;simple.run&quot;</span><span class="ot"> depends=</span><span class="st">&quot;aopc&quot;</span><span class="ot"> description=</span><span class="st">&quot;Run Simple Example!&quot;</span><span class="kw">&gt;</span></a>
+<a class="sourceLine" id="cb1-60" data-line-number="60">       <span class="kw">&lt;java</span><span class="ot"> fork=</span><span class="st">&quot;yes&quot;</span><span class="ot"> failOnError=</span><span class="st">&quot;true&quot;</span><span class="ot"> className=</span><span class="st">&quot;org.dwstudio.aop.simple.business.AopDriver&quot;</span><span class="kw">&gt;</span></a>
+<a class="sourceLine" id="cb1-61" data-line-number="61">          <span class="kw">&lt;sysproperty</span><span class="ot"> key=</span><span class="st">&quot;jboss.aop.path&quot;</span><span class="ot"> value=</span><span class="st">&quot;{aop.config.path}&quot;</span><span class="kw">/&gt;</span></a>
+<a class="sourceLine" id="cb1-62" data-line-number="62">          <span class="kw">&lt;classpath</span><span class="ot"> refid=</span><span class="st">&quot;runtime.classpath&quot;</span><span class="kw">/&gt;</span></a>
+<a class="sourceLine" id="cb1-63" data-line-number="63">       <span class="kw">&lt;/java&gt;</span></a>
+<a class="sourceLine" id="cb1-64" data-line-number="64"> <span class="kw">&lt;/target&gt;</span></a>
+<a class="sourceLine" id="cb1-65" data-line-number="65"> </a>
+<a class="sourceLine" id="cb1-66" data-line-number="66"> <span class="kw">&lt;target</span><span class="ot"> name=</span><span class="st">&quot;ui.run&quot;</span><span class="kw">&gt;</span></a>
+<a class="sourceLine" id="cb1-67" data-line-number="67">       <span class="kw">&lt;java</span><span class="ot"> fork=</span><span class="st">&quot;yes&quot;</span><span class="ot"> failOnError=</span><span class="st">&quot;true&quot;</span><span class="ot"> className=</span><span class="st">&quot;org.dwstudio.aop.simple.business.AopDriver&quot;</span><span class="kw">&gt;</span></a>
+<a class="sourceLine" id="cb1-68" data-line-number="68">          <span class="kw">&lt;sysproperty</span><span class="ot"> key=</span><span class="st">&quot;jboss.aop.path&quot;</span><span class="ot"> value=</span><span class="st">&quot;{aop.config.path}&quot;</span><span class="kw">/&gt;</span></a>
+<a class="sourceLine" id="cb1-69" data-line-number="69">          <span class="kw">&lt;classpath</span><span class="ot"> refid=</span><span class="st">&quot;runtime.classpath&quot;</span><span class="kw">/&gt;</span></a>
+<a class="sourceLine" id="cb1-70" data-line-number="70">       <span class="kw">&lt;/java&gt;</span></a>
+<a class="sourceLine" id="cb1-71" data-line-number="71"> <span class="kw">&lt;/target&gt;</span></a>
+<a class="sourceLine" id="cb1-72" data-line-number="72"> </a>
+<a class="sourceLine" id="cb1-73" data-line-number="73"> <span class="kw">&lt;target</span><span class="ot"> name=</span><span class="st">&quot;release&quot;</span><span class="ot"> depends=</span><span class="st">&quot;aopc&quot;</span><span class="ot"> description=</span><span class="st">&quot;Release the Aop Project!&quot;</span><span class="kw">&gt;</span></a>
+<a class="sourceLine" id="cb1-74" data-line-number="74">  <span class="kw">&lt;jar</span><span class="ot"> destfile=</span><span class="st">&quot;{build.jar.dir}/dwaop.jar&quot;</span><span class="kw">&gt;</span></a>
+<a class="sourceLine" id="cb1-75" data-line-number="75">   <span class="kw">&lt;fileset</span><span class="ot"> dir=</span><span class="st">&quot;{build.classes.dir}&quot;</span><span class="kw">&gt;</span></a>
+<a class="sourceLine" id="cb1-76" data-line-number="76">   <span class="kw">&lt;/fileset&gt;</span></a>
+<a class="sourceLine" id="cb1-77" data-line-number="77">  <span class="kw">&lt;/jar&gt;</span></a>
+<a class="sourceLine" id="cb1-78" data-line-number="78">  <span class="kw">&lt;jar</span><span class="ot"> destfile=</span><span class="st">&quot;{dist.dir}/final.jar&quot;</span><span class="kw">&gt;</span></a>
+<a class="sourceLine" id="cb1-79" data-line-number="79">   <span class="kw">&lt;manifest&gt;</span></a>
+<a class="sourceLine" id="cb1-80" data-line-number="80">    <span class="kw">&lt;attribute</span><span class="ot"> name=</span><span class="st">&quot;Created-By&quot;</span><span class="ot"> value=</span><span class="st">&quot;Darren.Wang&quot;</span><span class="kw">/&gt;</span></a>
+<a class="sourceLine" id="cb1-81" data-line-number="81">    <span class="kw">&lt;attribute</span><span class="ot"> name=</span><span class="st">&quot;Class-Path&quot;</span><span class="ot"> value=</span><span class="st">&quot;dwaop.jar concurrent.jar javassist.jar jboss-aop.jar jboss-aspect-library.jar jboss-common.jar qdox.jar trove.jar&quot;</span><span class="kw">/&gt;</span></a>
+<a class="sourceLine" id="cb1-82" data-line-number="82">    <span class="kw">&lt;attribute</span><span class="ot"> name=</span><span class="st">&quot;Main-Class&quot;</span><span class="ot"> value=</span><span class="st">&quot;org.dwstudio.aop.simple.business.AopDriver&quot;</span><span class="kw">/&gt;</span></a>
+<a class="sourceLine" id="cb1-83" data-line-number="83">   <span class="kw">&lt;/manifest&gt;</span></a>
+<a class="sourceLine" id="cb1-84" data-line-number="84">   <span class="kw">&lt;metainf</span><span class="ot"> dir=</span><span class="st">&quot;.&quot;</span><span class="ot"> includes=</span><span class="st">&quot;{aop.config.path}&quot;</span><span class="kw">&gt;&lt;/metainf&gt;</span></a>
+<a class="sourceLine" id="cb1-85" data-line-number="85">   <span class="kw">&lt;fileset</span><span class="ot"> dir=</span><span class="st">&quot;{lib.dir}&quot;</span><span class="kw">&gt;</span></a>
+<a class="sourceLine" id="cb1-86" data-line-number="86">    <span class="kw">&lt;include</span><span class="ot"> name=</span><span class="st">&quot;**/*.jar&quot;</span><span class="kw">/&gt;</span></a>
+<a class="sourceLine" id="cb1-87" data-line-number="87">   <span class="kw">&lt;/fileset&gt;</span></a>
+<a class="sourceLine" id="cb1-88" data-line-number="88">   <span class="kw">&lt;fileset</span><span class="ot"> dir=</span><span class="st">&quot;{build.jar.dir}&quot;</span><span class="kw">&gt;</span></a>
+<a class="sourceLine" id="cb1-89" data-line-number="89">   <span class="kw">&lt;/fileset&gt;</span></a>
+<a class="sourceLine" id="cb1-90" data-line-number="90">  <span class="kw">&lt;/jar&gt;</span></a>
+<a class="sourceLine" id="cb1-91" data-line-number="91"> <span class="kw">&lt;/target&gt;</span></a>
+<a class="sourceLine" id="cb1-92" data-line-number="92"> </a>
+<a class="sourceLine" id="cb1-93" data-line-number="93"> <span class="kw">&lt;target</span><span class="ot"> name=</span><span class="st">&quot;clean&quot;</span><span class="ot"> description=</span><span class="st">&quot;Clean the Workplace for a new building!&quot;</span><span class="kw">&gt;</span></a>
+<a class="sourceLine" id="cb1-94" data-line-number="94">  <span class="kw">&lt;delete</span><span class="ot"> dir=</span><span class="st">&quot;{build.dir}&quot;</span><span class="kw">&gt;&lt;/delete&gt;</span></a>
+<a class="sourceLine" id="cb1-95" data-line-number="95">  <span class="kw">&lt;delete</span><span class="ot"> dir=</span><span class="st">&quot;{dist.dir}&quot;</span><span class="kw">&gt;&lt;/delete&gt;</span></a>
+<a class="sourceLine" id="cb1-96" data-line-number="96"> <span class="kw">&lt;/target&gt;</span></a>
+<a class="sourceLine" id="cb1-97" data-line-number="97"></a>
+<a class="sourceLine" id="cb1-98" data-line-number="98"><span class="kw">&lt;/project&gt;</span></a></code></pre></div>
 <p>对于JbossAOP来说，因为其weaving过程是在runtime进行的，所以需要在运行的时候为其classloader指定jboss-aop.xml文件。</p>
 <p>其实，jbossaop虽然说是随jboss as发布的，但是，也可作为standalone使用，只是，与其他不同的java文件编译所不同的是，在javac之后，我们还需要对于javac生成后的class进行aopc编译，为jbossaop的classloader做准备，其中annotationc是可选的（对于jdk5来说，因为已经提供了annotation的支持，所以无需另外处理，因为其annotation支持runtime类型，所以，可以在runtime时期直接取得并处理），只是对于jdk1.4,并且需要使用annotation的场合，才会需要该task对jbossaop规定的1.4形势的annotation进行预处理。</p>
 <p>因为现在机器上使用的是1.4的jdk，所以，以上ant脚本是针对1.4的，如果像我笔记本上那样使用jdk5.0的环境，在运行前，根本不需要执行annotationc和aopc这两个任务。具体情况可以参照jbossaop的reference。</p>
-<p>另外，对于&quot;release&quot;这个target，其实打包成jar是没有问题的，但是，self-execute确实不可能的，因为这个是由jar文件的classloader类装载逻辑所限制的，对于这种问题的产生和处理方法，可以参照一下两个URL：</p>
-<ol style="list-style-type: decimal">
+<p>另外，对于“release”这个target，其实打包成jar是没有问题的，但是，self-execute确实不可能的，因为这个是由jar文件的classloader类装载逻辑所限制的，对于这种问题的产生和处理方法，可以参照一下两个URL：</p>
+<ol type="1">
 <li>http://forum.java.sun.com/thread.jspa?forumID=22&amp;threadID=161143</li>
 <li>http://www-900.ibm.com/developerWorks/cn/java/j-onejar/index.shtml</li>
 </ol>
 <p>他们对于这个问题都有详细的讲解。</p>
-<p>其他有关JbossAop的更多信息将会在不久的将来陆续给出，呵呵，OK，let''s stop here today!:em510:</p>
-<hr>
-<div align="center">
-<img src="/images/wechat-qrcode-footer.png"/>
-</div>
+<p>其他有关JbossAop的更多信息将会在不久的将来陆续给出，呵呵，OK，let’’s stop here today!:em510:</p>
 
-</div>
+    </article>
 
-
-
-</body></html>
+  </body>
+</html>

@@ -1,15 +1,17 @@
 <!DOCTYPE html>
-<html lang="zh">
-<head>
+<html>
+  <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>扶墙老师谈微服务(Microservices Essential) - 一个架构士的思考与沉</title>
+        <meta name="date" content="2015-07-20" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="王福强的博客， 一个架构士的思考与沉淀">
     <meta name="keywords" content="architecture, book author, thinker, fighter, 架构, 思考, 技术, 武术, 哲学">
     <meta name="author" content="王福强">
-        <meta name="date" content="2015-07-20" />
-        <link rel="icon" href="/favicon.ico">
-    <title>扶墙老师谈微服务(Microservices Essential) - 一个架构士的思考与沉淀</title>
-    <!-- 百度统计 -->
+    <link rel="stylesheet" href="/ivy.css">
+    <link rel="shortcut icon" href="/favicon.ico"/>
+    <style type="text/css">code{white-space: pre;}</style>
+            <!-- 百度统计 -->
     <script>
       var _hmt = _hmt || [];
       (function() {
@@ -19,35 +21,26 @@
           s.parentNode.insertBefore(hm, s);
       })();
     </script>
+  </head>
 
-	<link href="/css/custom.css" rel="stylesheet"/>
-	<link rel="shortcut icon" href="/favicon.ico"/>
+  <body class="node homepage">
 
-<style type="text/css">code{white-space: pre;}</style>
-        
-	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-	<!--[if lt IE 9]>
-	  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.2/html5shiv.js"></script>
-	  <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-	<![endif]-->
-
-</head>
-
-<body>
-
-    <div class="masthead">
-		<!--
-    <h1 class="masthead-title fq">
-      <a href="/">扶墙老师</a>
-
-    </h1>
-    -->
-    <a href="/"><h1>扶墙老师说</h1></a>
-		<p class="masthead-lead">一个架构士的思考与沉淀</p>
-
-		<hr class="masthead-hr">
-
-	  	<ul class="masthead-nav">
+    <header class="masthead">
+      <h1><a href="/">扶墙老师说</a></h1>
+      <p class="tagline">
+         一个架构士的思考与沉淀
+          <img src="/images/wechat-qrcode-footer.png"/>
+          扶墙老师，辨证施“知”
+      </p>
+      
+      <nav class="menu">
+        <input id="menu-check" type="checkbox"/>
+        <label id="menu-label" for="menu-check" class="unselectable">
+          <span class="icon close-icon">✕</span>
+          <span class="icon open-icon">☰</span>
+          <span class="text">展开</span>
+        </label>
+        <ul>
             <li class="nav-item"><a class="nav-link" href="/favorite.html">我的收藏</a></li>
             <li class="nav-item"><a class="nav-link" href="/dashboard.html">金融看板</a></li>
             <li class="nav-item"><a class="nav-link" href="/columns.html">专栏文章</a></li>
@@ -55,20 +48,12 @@
             <li class="nav-item"><a class="nav-link" href="/whoami.html">我是何人</a></li>
             <li class="nav-item"><a class="nav-link" href="/interlinks.html">友情链接</a></li>
             <li class="nav-item"><a class="nav-link" href="/feeds.xml">RSS订阅</a></li>
-		</ul>
+        </ul>
+      </nav>
+    </header>
 
-  		<hr class="masthead-hr">
-
-	  	<ul class="masthead-nav">
-            <li class="nav-item"><small>©afoo.me</small></li>
-            <li class="nav-item"><small>Powered by <a href="http://pandoc.org/">pandoc</a> and <a href="http://rometools.github.io/rome/">ROME</a></small></li>
-		</ul>
-
-	</div>
-
-
-    <div class="listing">
-
+    <article class="main">
+      
 <div class="row">
 <div id="header">
 <p class="lead">
@@ -97,14 +82,13 @@
 </div>
 <hr/>
 
-<p>微服务的概念甚嚣尘上，你又是否为其迷茫而感伤？！<a href="#fn1" class="footnoteRef" id="fnref1"><sup>1</sup></a></p>
+<p>微服务的概念甚嚣尘上，你又是否为其迷茫而感伤？！<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a></p>
 <p>今天，扶墙老师将和你一起探究微服务背后的奥秘，请系紧安全带， 让哥带你装逼带你飞 ;-)</p>
 <h1 id="什么是微服务"><span class="header-section-number">1</span> 什么是微服务？</h1>
-<p>扶墙老师觉得吧，微服务真没那么神秘， 其实它也就是一种SOA的演化形式， 而且他更加侧重于<strong>在服务的物理结构层面进行细分演化</strong> <a href="#fn2" class="footnoteRef" id="fnref2"><sup>2</sup></a>， 你可以理解为，微服务其实是指引服务的具体落地方案层面的一种实践方式， 而SOA实际上更侧重于相关的原则(Principle)或者理念。</p>
-<div class="figure">
-<img src="images/donald-trump.png" alt="来自Google搜索的Donald Trump的图片" />
-<p class="caption">来自Google搜索的Donald Trump的图片</p>
-</div>
+<p>扶墙老师觉得吧，微服务真没那么神秘， 其实它也就是一种SOA的演化形式， 而且他更加侧重于<strong>在服务的物理结构层面进行细分演化</strong> <a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a>， 你可以理解为，微服务其实是指引服务的具体落地方案层面的一种实践方式， 而SOA实际上更侧重于相关的原则(Principle)或者理念。</p>
+<figure>
+<img src="images/donald-trump.png" alt="来自Google搜索的Donald Trump的图片" /><figcaption>来自Google搜索的Donald Trump的图片</figcaption>
+</figure>
 <p>虽然我认为作为一个总统候选人，Donald J. Trump有点儿逗比且很得瑟， 但哥想当年也是相当铁粉之的，他说的有些话还是很值得回味，比如这句：</p>
 <blockquote>
 <p>Before you lift into the sky, make sure you look down hard into the ground.</p>
@@ -119,7 +103,7 @@
 * ...</code></pre>
 <p>有没有觉得很匪夷所思？！ 其实一点儿也不用匪夷所思，我想在很多团队中也有可能存在这种现象（那些闷声发大财使用SOA很多年的公司现在是不是对此很不屑？）， 为什么那？ 因为如果你没有真正理解SOA的理念，或者你缺少一些正确的指引，只能自己摸着石头过河，那么你就是会做出这样的实践方式，要知道SOA更多强调的是逻辑上的理念， 而分层架构恰好又是提到的最多的架构逻辑上的典范， 自然而然的，按照分层(layers)将项目划分为如上结构，也就很是“自然”了！</p>
 <p>但是，这样设置项目结构所带来的影响却是：</p>
-<ol style="list-style-type: decimal">
+<ol type="1">
 <li>开发一个功能，我不得不在多个project之间“辗转腾挪”；</li>
 <li>要发布和部署， 我首先需要等待并确认所有功能代码都测试通过待发布，然后再将包括了所有待发布功能的这些project一起打包发布， 如果有一个功能没有测试通过，不好意思，你就得等，这其实也就是早年淘宝架构师略显自豪提的“火车模型”，你得等所有车厢都装上才可以发车/发布；另外， 一旦我没有对当前发布基线要发布的所有功能进行确认就发布，只要有一个功能代码没提交完全，你发布就会失败，甚至发布了，上线就出问题；</li>
 </ol>
@@ -140,7 +124,7 @@
     - ...
 * ...</code></pre>
 <p>现在这种落地方式(into the ground)带来了哪些好的转变那？</p>
-<ol style="list-style-type: decimal">
+<ol type="1">
 <li>功能独立开发和测试，开发一个功能不要在多个project之间“辗转腾挪”，团队成员分工有明确分配的目标指向，工作的目的project明确而单一，而原来你开发一个功能要同时面对多个project；</li>
 <li>项目所关注的功能只要测试通过就可以直接发布，不需要等其它人(当然，并非绝对)，耦合更松散，大家可以独立快跑；</li>
 </ol>
@@ -159,9 +143,9 @@
 <p>“嘿，醒醒！”， 你不会真的如此乐观的活在扶墙老师上面给你描绘的微服务的美好憧憬之中了吧？！ come on， 这个世界上从来就没有只“得”不“舍”的事儿！</p>
 <p>选择了微服务化，确实可以带来一系列的好处，但是，也会对整个软件交付链路造成一系列的冲击！</p>
 <h2 id="开发与测试"><span class="header-section-number">3.1</span> 开发与测试</h2>
-<p>我们说，微服务之后， 服务可以独立开发和测试， 团队或者成员之间可以并行快跑， 这极大提高了系统的研发效率，但这也只是更多地关注了微服务个体内部的好处，可是微服务不是一个个的孤岛，它依然需要跟外部的其它系统或者微服务打交道，这个时候，你就会发现战场形势变了...</p>
+<p>我们说，微服务之后， 服务可以独立开发和测试， 团队或者成员之间可以并行快跑， 这极大提高了系统的研发效率，但这也只是更多地关注了微服务个体内部的好处，可是微服务不是一个个的孤岛，它依然需要跟外部的其它系统或者微服务打交道，这个时候，你就会发现战场形势变了…</p>
 <p>首先，微服务化之后，微服务的数量极大增多了，原来一个monolith应用，可能开发或者测试在自己的本机搭建一套环境就能进行工作了， 可是现在， 如果你的一个微服务或者多个微服务依赖了n个其它微服务，那么， 为了不影响开发和测试效率，你需要为开发和测试分别提供一套运行环境，在各自独立的开发和测试环境中，成百上千的微服务将持续运行，以保障开发和测试工作的快速迭代；</p>
-<p>其次， 微服务虽然可以支持系统的多样性（比如不同语言，不同架构），但不意味着你一定要这样做，因为引入越多的差异性因素，你的整体交付链路上的复杂度就会呈指数级上升(微服务的数量 * 差异因素1 * 差异因素2 * ...差异因素n)， 敢于发动微服务的独立战争意味着你有足够的资源和后勤保障，但你还是要掂量一下在开战之后这些资源保障是否经得起进一步的折腾？！ 实际上， 选择了微服务，就相当于你选择了企业战略中的“成本优先战略”， 你在拼成本和产量，为了能够批量生产又有盈利， 一个比较好的做法是标准化生产，即固定生产线，只提供标品生产， 只有少量的定制化生产。 这种思路落到软件研发的微服务战略里就是， 标准化一个主要的技术栈（解决80%的主要问题）， 只在特殊情况下允许少量的差异化生产(20%的特殊情况）， Parato Principle Stands Here Too！</p>
+<p>其次， 微服务虽然可以支持系统的多样性（比如不同语言，不同架构），但不意味着你一定要这样做，因为引入越多的差异性因素，你的整体交付链路上的复杂度就会呈指数级上升(微服务的数量 * 差异因素1 * 差异因素2 * …差异因素n)， 敢于发动微服务的独立战争意味着你有足够的资源和后勤保障，但你还是要掂量一下在开战之后这些资源保障是否经得起进一步的折腾？！ 实际上， 选择了微服务，就相当于你选择了企业战略中的“成本优先战略”， 你在拼成本和产量，为了能够批量生产又有盈利， 一个比较好的做法是标准化生产，即固定生产线，只提供标品生产， 只有少量的定制化生产。 这种思路落到软件研发的微服务战略里就是， 标准化一个主要的技术栈（解决80%的主要问题）， 只在特殊情况下允许少量的差异化生产(20%的特殊情况）， Parato Principle Stands Here Too！</p>
 <blockquote>
 <p>WARN</p>
 <p>Diversity is a good thing, but should be managed properly.</p>
@@ -170,10 +154,10 @@
 <blockquote>
 <p>我知道很多技术人员对性能有近乎偏执的喜好，但是，退一步讲， 对于应用研发来说，最成熟最合适的技术和方案或许才是你应该考虑的首要因素。</p>
 </blockquote>
-<p>关于微服务化对开发和测试的挑战，扶墙老师就谈这些了...</p>
+<p>关于微服务化对开发和测试的挑战，扶墙老师就谈这些了…</p>
 <h2 id="发布和部署"><span class="header-section-number">3.2</span> 发布和部署</h2>
 <p>微服务开发和测试之后接着就进入了发布和部署， 依然源于微服务的数量特征， 在发布和部署的时候， 有两种可能的选择：</p>
-<ol style="list-style-type: decimal">
+<ol type="1">
 <li>一般的微服务都是标准化的打包发布和部署，所以， 即使没有任何平台性的支持， 开发或者对应的应用运维团队依然可以根据自己负责的项目，采用各种手工或者自动化脚本的方式完成微服务的发布和部署；这种方式的好处是灵活，坏处也很明显， 很多东西可能无法复用，服务的注册和治理没有管控；</li>
 <li>为了管理海量的微服务的发布和部署，构建发布和部署平台， 完成微服务与整条链路上各系统和资源的映射管理和对接， 好处是即使微服务数量再多，我们也有一个集中管控的地方，坏处嘛， 发布和部署平台可能成为瓶颈， 需要更强的质量保障。</li>
 </ol>
@@ -181,27 +165,24 @@
 <p>总的来说，选择了微服务化， 就意味着不光研发，整条链路上的基础设施建设都需要跟上，而这就意味着要投入更多的资源保障，瞧，打仗是需要底气的！</p>
 <p>我们说， 为了微服务的快速交付和迭代，我们在开发阶段选择了标准化生产， 到了发布和部署阶段， 标准化的发布和部署形式依然必要！</p>
 <p>现在大家都在讲docker， 不得不说，这是一种比较好的发布和部署方案， 但不用docker也不意味着你就不叫微服务化，甚至不能微服务化。 比如， jar， rpm， docker image等形式都可以成为微服务的发布和部署形式：</p>
-<div class="figure">
-<img src="images/ops.pipelines.png" />
-
-</div>
+<p><img src="images/ops.pipelines.png" /></p>
 <p>最主要的，你要选择一种适合公司内部标准的发布和部署形式，至于具体采用哪一种，it depends。</p>
 <h2 id="运维"><span class="header-section-number">3.3</span> 运维</h2>
 <p>扶墙老师是做Java出身的，所以， 这部分主要以Java界的案例和场景为主要阐述话题。</p>
-<p>JavaEE/J2EE的规范统治了Java界多年之后， 服务化和微服务化吹响了独立战争的解放号角...</p>
+<p>JavaEE/J2EE的规范统治了Java界多年之后， 服务化和微服务化吹响了独立战争的解放号角…</p>
 <p>原来Java界的web应用或者web服务都是需要跑在Web Container里的， Web Container为他们提供基本的“生活环境”，包括但不限于电话费（网络通信）， 安保（监控）等横向关注点， 但是这些应用同时也失去了独立生存的能力， 如果某个应用“闹事”，其它生活在同一环境下的应用多少都会受影响， 公共交通大家都坐过， 停车开车你是说了不算的， 但是tmd车费便宜啊！</p>
 <p>微服务化之后， 每个应用跳出了Web Container的怀抱， 选择勇敢的独立生存， 他们自己搞私家车， 自己赚电话费，自己寻求安全保障，就算是出了事儿， 基本也不会影响其他人，除非撞车（依赖故障）。</p>
 <p>这其实也是一种IoC， 原来控制权更多在Web Container手里，现在控制权掌握在了微服务自己的手中。</p>
 <p>好处当然很明显， 故障隔离的更彻底， 资源分配和使用更明确等等， 但是坏处也有， 逻辑上的网络通信啦， 安全管控啦，现在都需要微服务在实现和运行的时候，采用同一种方案，但运行在多个实例中，假设某个这种横切关注点逻辑的实现模块或者组件存在问题，那么， 所有的微服务都需要升级， 这恐怕就会引发一系列的发布和部署风暴， 所以， 对这些技术的选型上要更加慎重，尽量选择成熟合适的方案，不要闲得蛋疼或者搞技术炫耀，否则，到时候可就不光是蛋疼了。</p>
 <p>微服务运行之后的管理也会对团队存在一些挑战，比如：</p>
-<ol style="list-style-type: decimal">
+<ol type="1">
 <li>系统监控，应用监控和业务监控的数量点更多了；</li>
 <li>系统分布的更多了， 对系统故障的定位和分析更复杂了（分布式的tracing方案和工具要跟上）；</li>
 <li>单机工具不足以支撑海量服务的管理了， 登录某台服务器上去<code>tail -f xx.log</code>或者dump堆栈之类的操作已经无法解决整体上的问题了；</li>
 </ol>
 <p>所以，我们就不得不构建一整套新的支撑平台， 从日志采集分析， 到运维监控，再到整体系统的tracing等等一系列的功能，都要跳出单机思维去重新思考，等所有这些都做完了之后，你或许才能长舒一口气， 在此之前， 只要上了微服务而且服务数量持续增长，你就一定会提心吊胆，如履薄冰。</p>
 <p>另外， 系统弹性层面你也同样需要投入更多的人力和资源：</p>
-<ol style="list-style-type: decimal">
+<ol type="1">
 <li>强弱依赖管理</li>
 <li>限流</li>
 <li>负载均衡与服务调度等等</li>
@@ -210,7 +191,7 @@
 <h1 id="挖财2015技术年的springboot微服务战略"><span class="header-section-number">4</span> 挖财2015技术年的SpringBoot微服务战略</h1>
 <p>最后，扶墙老师乐意晒一下2015年下半年挖财打算推行的基于SpringBoot微框架的微服务战略的Roadmap和生态环境， 希望对同道有所启发和借鉴，当然，也希望收到同道中人更好的建议。</p>
 <p>我们的微服务战略生态环境大体归纳如下：</p>
-<ol style="list-style-type: decimal">
+<ol type="1">
 <li>基于SpringBoot微框架规范化和标准化微服务的研发；</li>
 <li>基于一键发布/部署平台<code>obelisk</code>进行所有微服务的发布和部署；
 <ul>
@@ -225,29 +206,21 @@
 </ol>
 <p>当然，我们还会随着微服务的实践进程持续完善这套生态环境， 以期微服务可以在挖财落地开花，持续的为挖财的业务可以快速迭代和组合提供强大的基础支撑。</p>
 <p>Roadmap没有什么新意， 如果你要完全微服务化，那么，基本上也会是类似的路线图：</p>
-<div class="figure">
-<img src="images/lift-steps.png" />
-
-</div>
+<p><img src="images/lift-steps.png" /></p>
 <p>大意上就是说， 所有周边支持系统， 工具和平台都ready之后， 再通过培训等一系列渠道或者手段完成整体上的转变。当然，这是最理想的路线， 现实中一定是像瞎子摸象一样， 一块儿一块儿来，不会等整个大象都摸完了，才恍然大悟，那个时候黄花菜都凉了。</p>
 <h1 id="小结"><span class="header-section-number">5</span> 小结</h1>
 <p>微服务并不神秘， 微服务也不是万能药，只有你的系统复杂度持续增加， 而且业务对技术的支撑要求和预期越加强烈的时候， 考虑服务化以及微服务化才是合理的，因为起码公司层面会支持你投入更多的资源和后勤保障，一家很小的创业公司， 或许monolith的策略会更加合适。</p>
 <p>微服务的成本增加可以通过标准化的方式来对冲， 但一定比不引入微服务要耗费更多的资源，所以，就算有再多的资源， 实施微服务战略的过程中也还是适当的减少生态圈的多样性吧， 否则怕你的生态圈承载能力被压垮。</p>
 <p>合适的， 才是最好的！</p>
-<div class="footnotes">
+<section class="footnotes">
 <hr />
 <ol>
-<li id="fn1"><p><a href="http://weibo.com/p/1005051898667134">曹老师</a>认为他之前看到的讲微服务的文章都没有戳到G点，所以受其所托， 谱下本篇文字。<a href="#fnref1">↩</a></p></li>
-<li id="fn2"><p>其独立部署的特点尤其突出<a href="#fnref2">↩</a></p></li>
+<li id="fn1"><p><a href="http://weibo.com/p/1005051898667134">曹老师</a>认为他之前看到的讲微服务的文章都没有戳到G点，所以受其所托， 谱下本篇文字。<a href="#fnref1" class="footnote-back">↩</a></p></li>
+<li id="fn2"><p>其独立部署的特点尤其突出<a href="#fnref2" class="footnote-back">↩</a></p></li>
 </ol>
-</div>
-<hr>
-<div align="center">
-<img src="/images/wechat-qrcode-footer.png"/>
-</div>
+</section>
 
-</div>
+    </article>
 
-
-
-</body></html>
+  </body>
+</html>

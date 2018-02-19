@@ -1,15 +1,17 @@
 <!DOCTYPE html>
-<html lang="zh">
-<head>
+<html>
+  <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>家底儿 - 一个架构士的思考与沉</title>
+        <meta name="date" content="2009-05-28" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="王福强的博客， 一个架构士的思考与沉淀">
     <meta name="keywords" content="architecture, book author, thinker, fighter, 架构, 思考, 技术, 武术, 哲学">
     <meta name="author" content="王福强">
-        <meta name="date" content="2009-05-28" />
-        <link rel="icon" href="/favicon.ico">
-    <title>家底儿 - 一个架构士的思考与沉淀</title>
-    <!-- 百度统计 -->
+    <link rel="stylesheet" href="/ivy.css">
+    <link rel="shortcut icon" href="/favicon.ico"/>
+    <style type="text/css">code{white-space: pre;}</style>
+            <!-- 百度统计 -->
     <script>
       var _hmt = _hmt || [];
       (function() {
@@ -19,35 +21,26 @@
           s.parentNode.insertBefore(hm, s);
       })();
     </script>
+  </head>
 
-	<link href="/css/custom.css" rel="stylesheet"/>
-	<link rel="shortcut icon" href="/favicon.ico"/>
+  <body class="node homepage">
 
-<style type="text/css">code{white-space: pre;}</style>
-        
-	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-	<!--[if lt IE 9]>
-	  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.2/html5shiv.js"></script>
-	  <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-	<![endif]-->
-
-</head>
-
-<body>
-
-    <div class="masthead">
-		<!--
-    <h1 class="masthead-title fq">
-      <a href="/">扶墙老师</a>
-
-    </h1>
-    -->
-    <a href="/"><h1>扶墙老师说</h1></a>
-		<p class="masthead-lead">一个架构士的思考与沉淀</p>
-
-		<hr class="masthead-hr">
-
-	  	<ul class="masthead-nav">
+    <header class="masthead">
+      <h1><a href="/">扶墙老师说</a></h1>
+      <p class="tagline">
+         一个架构士的思考与沉淀
+          <img src="/images/wechat-qrcode-footer.png"/>
+          扶墙老师，辨证施“知”
+      </p>
+      
+      <nav class="menu">
+        <input id="menu-check" type="checkbox"/>
+        <label id="menu-label" for="menu-check" class="unselectable">
+          <span class="icon close-icon">✕</span>
+          <span class="icon open-icon">☰</span>
+          <span class="text">展开</span>
+        </label>
+        <ul>
             <li class="nav-item"><a class="nav-link" href="/favorite.html">我的收藏</a></li>
             <li class="nav-item"><a class="nav-link" href="/dashboard.html">金融看板</a></li>
             <li class="nav-item"><a class="nav-link" href="/columns.html">专栏文章</a></li>
@@ -55,20 +48,12 @@
             <li class="nav-item"><a class="nav-link" href="/whoami.html">我是何人</a></li>
             <li class="nav-item"><a class="nav-link" href="/interlinks.html">友情链接</a></li>
             <li class="nav-item"><a class="nav-link" href="/feeds.xml">RSS订阅</a></li>
-		</ul>
+        </ul>
+      </nav>
+    </header>
 
-  		<hr class="masthead-hr">
-
-	  	<ul class="masthead-nav">
-            <li class="nav-item"><small>©afoo.me</small></li>
-            <li class="nav-item"><small>Powered by <a href="http://pandoc.org/">pandoc</a> and <a href="http://rometools.github.io/rome/">ROME</a></small></li>
-		</ul>
-
-	</div>
-
-
-    <div class="listing">
-
+    <article class="main">
+      
 <div class="row">
 <div id="header">
 <p class="lead">
@@ -83,18 +68,13 @@
 <hr>
 
 
-<p>今天开始整理家当，该扔的扔，该打包的打包，发现这几年倒是积攒了不少文档，虽然扔掉了不少，可还是留下了一堆， 舍不得扔， 打算送给现在公司的同事吧， 物尽其用嘛， 看着这一摞东西，心里不知道是一种什么滋味， 沉甸甸的，有几分成就感或者自豪感？ 可是，又或许有几分苦涩，说不出来的感觉， 居然还发现了一本Spring1.1.4时候打印的一大本文档， 呜呼...</p>
+<p>今天开始整理家当，该扔的扔，该打包的打包，发现这几年倒是积攒了不少文档，虽然扔掉了不少，可还是留下了一堆， 舍不得扔， 打算送给现在公司的同事吧， 物尽其用嘛， 看着这一摞东西，心里不知道是一种什么滋味， 沉甸甸的，有几分成就感或者自豪感？ 可是，又或许有几分苦涩，说不出来的感觉， 居然还发现了一本Spring1.1.4时候打印的一大本文档， 呜呼…</p>
 <p><img src="images/jiadier1.png" alt=""/></p>
 <p><img src="images/jiadier2.png" alt=""/></p>
 <p>书先装了一箱子，发现太沉，基本不成，等周末去小郭儿那里搞几个小一些的吧， “小规模转储”一下，不然这些宝贝书籍还真让人头疼， 书呆子，所以，家底儿最多的也是书，呵呵</p>
 <p>剩下的小冰箱， 微波炉，电脑桌，椅子，热水器，哦，还有个折叠自行车(A Bike)， 如果哪位大连的朋友愿意要可以跟我说，呵呵， 变卖家当啦!</p>
-<hr>
-<div align="center">
-<img src="/images/wechat-qrcode-footer.png"/>
-</div>
 
-</div>
+    </article>
 
-
-
-</body></html>
+  </body>
+</html>

@@ -1,14 +1,16 @@
 <!DOCTYPE html>
-<html lang="zh">
-<head>
+<html>
+  <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>分布式数据访问与同步场景浅析 - 一个架构士的思考与沉</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="王福强的博客， 一个架构士的思考与沉淀">
     <meta name="keywords" content="architecture, book author, thinker, fighter, 架构, 思考, 技术, 武术, 哲学">
     <meta name="author" content="王福强">
-        <link rel="icon" href="/favicon.ico">
-    <title>分布式数据访问与同步场景浅析 - 一个架构士的思考与沉淀</title>
-    <!-- 百度统计 -->
+    <link rel="stylesheet" href="/ivy.css">
+    <link rel="shortcut icon" href="/favicon.ico"/>
+    <style type="text/css">code{white-space: pre;}</style>
+            <!-- 百度统计 -->
     <script>
       var _hmt = _hmt || [];
       (function() {
@@ -18,35 +20,26 @@
           s.parentNode.insertBefore(hm, s);
       })();
     </script>
+  </head>
 
-	<link href="/css/custom.css" rel="stylesheet"/>
-	<link rel="shortcut icon" href="/favicon.ico"/>
+  <body class="node homepage">
 
-<style type="text/css">code{white-space: pre;}</style>
-        
-	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-	<!--[if lt IE 9]>
-	  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.2/html5shiv.js"></script>
-	  <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-	<![endif]-->
-
-</head>
-
-<body>
-
-    <div class="masthead">
-		<!--
-    <h1 class="masthead-title fq">
-      <a href="/">扶墙老师</a>
-
-    </h1>
-    -->
-    <a href="/"><h1>扶墙老师说</h1></a>
-		<p class="masthead-lead">一个架构士的思考与沉淀</p>
-
-		<hr class="masthead-hr">
-
-	  	<ul class="masthead-nav">
+    <header class="masthead">
+      <h1><a href="/">扶墙老师说</a></h1>
+      <p class="tagline">
+         一个架构士的思考与沉淀
+          <img src="/images/wechat-qrcode-footer.png"/>
+          扶墙老师，辨证施“知”
+      </p>
+      
+      <nav class="menu">
+        <input id="menu-check" type="checkbox"/>
+        <label id="menu-label" for="menu-check" class="unselectable">
+          <span class="icon close-icon">✕</span>
+          <span class="icon open-icon">☰</span>
+          <span class="text">展开</span>
+        </label>
+        <ul>
             <li class="nav-item"><a class="nav-link" href="/favorite.html">我的收藏</a></li>
             <li class="nav-item"><a class="nav-link" href="/dashboard.html">金融看板</a></li>
             <li class="nav-item"><a class="nav-link" href="/columns.html">专栏文章</a></li>
@@ -54,20 +47,12 @@
             <li class="nav-item"><a class="nav-link" href="/whoami.html">我是何人</a></li>
             <li class="nav-item"><a class="nav-link" href="/interlinks.html">友情链接</a></li>
             <li class="nav-item"><a class="nav-link" href="/feeds.xml">RSS订阅</a></li>
-		</ul>
+        </ul>
+      </nav>
+    </header>
 
-  		<hr class="masthead-hr">
-
-	  	<ul class="masthead-nav">
-            <li class="nav-item"><small>©afoo.me</small></li>
-            <li class="nav-item"><small>Powered by <a href="http://pandoc.org/">pandoc</a> and <a href="http://rometools.github.io/rome/">ROME</a></small></li>
-		</ul>
-
-	</div>
-
-
-    <div class="listing">
-
+    <article class="main">
+      
 <div class="row">
 <div id="header">
 <p class="lead">
@@ -86,7 +71,7 @@
 </div>
 <hr/>
 
-<p>其实不想说这东西， 因为我也不知道正宗不正宗，完善不完善， 而且， 往简单了说，就2点， 简单的要死， 不过，我感觉我要真的不说，有些人可能也真的不知道我在说什么，而且今天有点儿小破事儿， 也促使我 就此 “嚼嚼舌头 ” 。当然一家之言， 看官自己掂量。</p>
+<p>其实不想说这东西， 因为我也不知道正宗不正宗，完善不完善， 而且， 往简单了说，就2点， 简单的要死， 不过，我感觉我要真的不说，有些人可能也真的不知道我在说什么，而且今天有点儿小破事儿， 也促使我 就此 “嚼嚼舌头” 。当然一家之言， 看官自己掂量。</p>
 <p>随着应用数据规模的增长， 相应的数据库集群自然而然的浮出水面， 进而， 为了应用和管理位于这些数据库集群中的海量数据，你通常会提供一个分布式的数据访问层， 由这一层来屏蔽分布式环境下数据库集群的数据访问复杂度，此为一；另外，你要保证系统的高可用性， 或许会对数据库集群整体或者某些节点进行备份， 这些备份或许发生在在同一个数据中心，或许发生在位于不同地理区域内的数据中心， 因此，你或许会寻求数据复制技术来达此目的，此为二；另外，面对海量的数据，不同的应用有不同的使用角度，如何将同一份数据有效的分发给不同的应用来使用，也是需要你来考虑的问题。</p>
 <p>要处理这些东西， 我们可以以数据存储为中心， 从前面和后面两个角度来解决。 Just like this:</p>
 <p><img src="images/dist-data-access-and-sync.png" alt=""/></p>
@@ -94,7 +79,7 @@
 <p>不用说大家都知道， 要做数据访问（不管他是不是分布式的）， 指定得从数据存储前面进行。 分布式的数据访问解决方案大都如此， 要是我漏了啥，欢迎补充，呵呵。</p>
 <p>尽管都是为了做分布式的数据访问， 大家的具体解决方案可能会稍有不同， 比如， 我们的ＤＡＬ或许只是一个简单的jar随应用一同部署， 又或许我们的ＤＡＬ是一个独立的服务， 比如MySQL Proxy, Ameoba等。</p>
 <p>不过， ＤＡＬ不单单就这点儿料儿， 我们还可以让它帮我们做数据同步与数据备份之类的事情， 打个比方， 在做数据访问的同时，我们可以将同一笔数据的更新分发给其它服务节点， 这包括(但不限于):</p>
-<ol style="list-style-type: decimal">
+<ol type="1">
 <li>分发数据给search index builder， 以便实时的构建search index；</li>
 <li>分发数据给备份节点， 以便做数据冗余备份；</li>
 <li>分发数据给其它应用的数据存储，以便应用可以根据情况来进行相应的数据处理， 而不用对主要的数据服务造成访问压力；</li>
@@ -107,14 +92,9 @@
 <p>总之， 有些路并非总是一路坦途，呵呵</p>
 <h1 id="the-end"><span class="header-section-number">3</span> The end</h1>
 <p>应该说， 这两个角度的方案都不见得尽美， 但合适的场景选择合适的方案， 甚至结合起来使用， 这些方案完全可以帮助你达成目标。</p>
-<p>What do u think about what I said? bullshit(fucking easy)? or something that's useful to you? Your feedback will be welcome.</p>
-<hr>
-<div align="center">
-<img src="/images/wechat-qrcode-footer.png"/>
-</div>
+<p>What do u think about what I said? bullshit(fucking easy)? or something that’s useful to you? Your feedback will be welcome.</p>
 
-</div>
+    </article>
 
-
-
-</body></html>
+  </body>
+</html>

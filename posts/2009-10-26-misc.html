@@ -1,14 +1,16 @@
 <!DOCTYPE html>
-<html lang="zh">
-<head>
+<html>
+  <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>杂记 - 一个架构士的思考与沉</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="王福强的博客， 一个架构士的思考与沉淀">
     <meta name="keywords" content="architecture, book author, thinker, fighter, 架构, 思考, 技术, 武术, 哲学">
     <meta name="author" content="王福强">
-        <link rel="icon" href="/favicon.ico">
-    <title>杂记 - 一个架构士的思考与沉淀</title>
-    <!-- 百度统计 -->
+    <link rel="stylesheet" href="/ivy.css">
+    <link rel="shortcut icon" href="/favicon.ico"/>
+    <style type="text/css">code{white-space: pre;}</style>
+            <!-- 百度统计 -->
     <script>
       var _hmt = _hmt || [];
       (function() {
@@ -18,35 +20,26 @@
           s.parentNode.insertBefore(hm, s);
       })();
     </script>
+  </head>
 
-	<link href="/css/custom.css" rel="stylesheet"/>
-	<link rel="shortcut icon" href="/favicon.ico"/>
+  <body class="node homepage">
 
-<style type="text/css">code{white-space: pre;}</style>
-        
-	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-	<!--[if lt IE 9]>
-	  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.2/html5shiv.js"></script>
-	  <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-	<![endif]-->
-
-</head>
-
-<body>
-
-    <div class="masthead">
-		<!--
-    <h1 class="masthead-title fq">
-      <a href="/">扶墙老师</a>
-
-    </h1>
-    -->
-    <a href="/"><h1>扶墙老师说</h1></a>
-		<p class="masthead-lead">一个架构士的思考与沉淀</p>
-
-		<hr class="masthead-hr">
-
-	  	<ul class="masthead-nav">
+    <header class="masthead">
+      <h1><a href="/">扶墙老师说</a></h1>
+      <p class="tagline">
+         一个架构士的思考与沉淀
+          <img src="/images/wechat-qrcode-footer.png"/>
+          扶墙老师，辨证施“知”
+      </p>
+      
+      <nav class="menu">
+        <input id="menu-check" type="checkbox"/>
+        <label id="menu-label" for="menu-check" class="unselectable">
+          <span class="icon close-icon">✕</span>
+          <span class="icon open-icon">☰</span>
+          <span class="text">展开</span>
+        </label>
+        <ul>
             <li class="nav-item"><a class="nav-link" href="/favorite.html">我的收藏</a></li>
             <li class="nav-item"><a class="nav-link" href="/dashboard.html">金融看板</a></li>
             <li class="nav-item"><a class="nav-link" href="/columns.html">专栏文章</a></li>
@@ -54,20 +47,12 @@
             <li class="nav-item"><a class="nav-link" href="/whoami.html">我是何人</a></li>
             <li class="nav-item"><a class="nav-link" href="/interlinks.html">友情链接</a></li>
             <li class="nav-item"><a class="nav-link" href="/feeds.xml">RSS订阅</a></li>
-		</ul>
+        </ul>
+      </nav>
+    </header>
 
-  		<hr class="masthead-hr">
-
-	  	<ul class="masthead-nav">
-            <li class="nav-item"><small>©afoo.me</small></li>
-            <li class="nav-item"><small>Powered by <a href="http://pandoc.org/">pandoc</a> and <a href="http://rometools.github.io/rome/">ROME</a></small></li>
-		</ul>
-
-	</div>
-
-
-    <div class="listing">
-
+    <article class="main">
+      
 <div class="row">
 <div id="header">
 <p class="lead">
@@ -99,29 +84,29 @@
 <p>为了一个目标， 一个人可以用几年的时间来准备，不管自身条件现在有多么的困难和尴尬； 为了一个目标，可以忍受某种付出，比如几万块钱，几年时间， 通过换取一个权威的证书， 就为了将来移民的时候可以多加几分； 说实在的，我很敬佩这种人，不管是被逼出来的，还是自身驱动的。</p>
 <p>“<strong>わたしわ　わたしですから</strong>”，但欣赏一下沿途的“风景”也不错，总是可以从别人那里学到点儿什么，不是吗？</p>
 <h1 id="片段二"><span class="header-section-number">2</span> 片段二</h1>
-<p>当有的人说“自己现在就为了钱”，当有人说，“他是穷怕了”，我就会想起一些东西，然后做一个不完全的假设“某种富有， 有时候是被逼出来的”。在有了某些第一手资料之后， 或许可以更加果断＋武断的做出这样的假设。穷的时候， 被人瞧不起； 穷的时候，处处遭人白眼；穷的时候， 很多时候没人屌你；我想这样的现象谁都见过， 或许也亲身经历过。然后那， 然后有志气的人当然就发下誓言，甚至是毒誓， “老子一定要出人头地，老子一定要有钱，老子...”， 这样的信念， 不管有没有局限性，终究可以鞭策着他们向着那个简单却很明确的目标迈进， 我想， 大家也看到了， 也听到了，或许时不时自己也掺和一下， 骂某些富人为富不仁， 进而转变成整个社会中的一种仇富情绪的蔓延。可是，回头想一下， 这样的为富不仁， 难道错都出在那些人身上吗？其实我倒是觉得，因果在这里表现的淋漓尽致， “施主， 报应，报应啊！”</p>
-<p>想一下吧，当年他被人鄙夷的时候，又有没有人顾忌他的感受那？既然如此，当他得以泄愤的时候， 下面的故事，自然就不用再多说了...</p>
+<p>当有的人说“自己现在就为了钱”，当有人说，“他是穷怕了”，我就会想起一些东西，然后做一个不完全的假设“某种富有， 有时候是被逼出来的”。在有了某些第一手资料之后， 或许可以更加果断＋武断的做出这样的假设。穷的时候， 被人瞧不起； 穷的时候，处处遭人白眼；穷的时候， 很多时候没人屌你；我想这样的现象谁都见过， 或许也亲身经历过。然后那， 然后有志气的人当然就发下誓言，甚至是毒誓， “老子一定要出人头地，老子一定要有钱，老子…”， 这样的信念， 不管有没有局限性，终究可以鞭策着他们向着那个简单却很明确的目标迈进， 我想， 大家也看到了， 也听到了，或许时不时自己也掺和一下， 骂某些富人为富不仁， 进而转变成整个社会中的一种仇富情绪的蔓延。可是，回头想一下， 这样的为富不仁， 难道错都出在那些人身上吗？其实我倒是觉得，因果在这里表现的淋漓尽致， “施主， 报应，报应啊！”</p>
+<p>想一下吧，当年他被人鄙夷的时候，又有没有人顾忌他的感受那？既然如此，当他得以泄愤的时候， 下面的故事，自然就不用再多说了…</p>
 <p>为富又仁的人有没？指定有阿， 有阴必有阳， 所以，没必要一棒子打死一群人。其实，人都是逼出来的，哈哈</p>
 <h1 id="片段三"><span class="header-section-number">3</span> 片段三</h1>
 <p>我承认我很单纯， 虽然某些东西也见多了，听多了， 但从来就不屑那么做，或许就是假清高，谁知道那？！连我自己都不清楚。今天听一个哥们跟我讲，他也要出一本书， 是他自己写的， 但签三个人的名字， 其中一个名字， 需要对方花五万到十万块钱买这个“席位”， 哈， 很现实的问题， 我不能指责什么，因为我知道穷怕了意味着什么，也知道，他的辛勤劳动应该得到某种回报。情理之中， 没啥好去评判的。</p>
-<p>知道自己有什么， 知道自己所有的东西可以给你带来什么， 至于你要怎么来用，那完全是由你自己来决定了。 以权谋私， 很长见的现象吧？ “有权不用，过期作废”，很长见的言论吧？假公济私， 不少见吧？ 这些人知道自己有什么资本， 然后以某种方式使用了这些资本去换取了对自己有利的东西， 这些人很聪明， 但不一定让人瞧得起，甚至被社会舆论唾弃。 那那些没有这么做的人那？ 是他们就那么清正廉明？ 还是他们根本就没有想过？很难说，或许他们根本就没有想到自己手里的东西可以这么用，也或许他们的价值观不允许他们这么作， 又或许， 他们还没有来得及这么做。哈...</p>
+<p>知道自己有什么， 知道自己所有的东西可以给你带来什么， 至于你要怎么来用，那完全是由你自己来决定了。 以权谋私， 很长见的现象吧？ “有权不用，过期作废”，很长见的言论吧？假公济私， 不少见吧？ 这些人知道自己有什么资本， 然后以某种方式使用了这些资本去换取了对自己有利的东西， 这些人很聪明， 但不一定让人瞧得起，甚至被社会舆论唾弃。 那那些没有这么做的人那？ 是他们就那么清正廉明？ 还是他们根本就没有想过？很难说，或许他们根本就没有想到自己手里的东西可以这么用，也或许他们的价值观不允许他们这么作， 又或许， 他们还没有来得及这么做。哈…</p>
 <h1 id="片段四"><span class="header-section-number">4</span> 片段四</h1>
 <p>轻松一下，说一个比较搞笑的场景， 是9月10号阿里巴巴10周年大会那天发现的。因为那个场景我回想起来还时不时的乐和一下。暂且将其这个场景命名为“爱show的102棒”吧！</p>
-<p>阿里巴巴10周年当然得搞点儿什么啊， 马云要把阿里巴巴做成102年的企业， 搞个火炬接力当然也得凑够102棒吧，这个火炬接力活动叫阿牛过江， 前一天跑过一次了，大会上在黄龙体育场又重复了一遍小规模的。之后，“挑三拣四”的找其中几个火炬手抒发一下感想， 最后， 火炬交给了最后一棒那个人手里，也就是第102棒， 由他转给主席台上的卫哲，下面的节目才刚刚开始...</p>
+<p>阿里巴巴10周年当然得搞点儿什么啊， 马云要把阿里巴巴做成102年的企业， 搞个火炬接力当然也得凑够102棒吧，这个火炬接力活动叫阿牛过江， 前一天跑过一次了，大会上在黄龙体育场又重复了一遍小规模的。之后，“挑三拣四”的找其中几个火炬手抒发一下感想， 最后， 火炬交给了最后一棒那个人手里，也就是第102棒， 由他转给主席台上的卫哲，下面的节目才刚刚开始…</p>
 <p>102棒上了主席台， 转身向观众席上挥手致意，卫哲估计这小子挥手致意得也差不错了，想要伸手去接火炬棒， 没想到那小子兴致又起， 转而继续又挥手致意， 双手在空中陶醉般的摇摆，挥动着， 这个时候，我就注意到卫哲只能很失落，很尴尬，甚至是灰溜溜的把伸出一半的手又缩了回去， 侧身老老实实的等这个102棒陶醉完之后，才接过了火炬， 哈哈， 想起来还是很乐。</p>
-<p>这种爱show的人也见过，没想到在这里表现的真是活灵活现啊...</p>
+<p>这种爱show的人也见过，没想到在这里表现的真是活灵活现啊…</p>
 <h1 id="片段五"><span class="header-section-number">5</span> 片段五</h1>
-<p>我tnd“穷”得就剩下电脑了...</p>
+<p>我tnd“穷”得就剩下电脑了…</p>
 <p>好像我本来就可以申请笔记本的， 不过，已经有台式机了， 我也就没当回事，前几天王齐发现我在用自己的笔记本，才发现我没有公司的笔记本用， 然后就让钱总帮我申请一个。</p>
-<p>钱总周五晚上随便溜达过来的时候，想起了这个话题，让我再“艰苦”一下， OMG， 我心想，我是很艰苦啊， 自己就有一个本子，一个台式机，再加上公司一台台式机外加一个本子， 我tmd就四台机器了， 我要那么多干嘛阿， 天天净“同步”文件资料玩了...</p>
+<p>钱总周五晚上随便溜达过来的时候，想起了这个话题，让我再“艰苦”一下， OMG， 我心想，我是很艰苦啊， 自己就有一个本子，一个台式机，再加上公司一台台式机外加一个本子， 我tmd就四台机器了， 我要那么多干嘛阿， 天天净“同步”文件资料玩了…</p>
 <h1 id="片段六"><span class="header-section-number">6</span> 片段六</h1>
 <blockquote>
 <p>只要捡回一条命，就可以重新再来。</p>
 </blockquote>
 <p>《女座头市》里面最牛P的bad guy说的话， 暂记于此，哈</p>
-<p>哪里来的那么多正邪之分啊...</p>
+<p>哪里来的那么多正邪之分啊…</p>
 <h1 id="片段七"><span class="header-section-number">7</span> 片段七</h1>
-<p>“叮铃铃铃...”，走在河坊街上，身后传来清脆的铃声， 回头一看，是那种代步的游览车， 欣然挪身为其让路；</p>
+<p>“叮铃铃铃…”，走在河坊街上，身后传来清脆的铃声， 回头一看，是那种代步的游览车， 欣然挪身为其让路；</p>
 <p>过人行横道， 面前汽车鸣笛， 刺耳的很， 骂它几句还是轻的， 甚至有上去扁它的冲动。</p>
 <p>为啥可以达到同样的目的， 两种方式却带来如此迥异的效果那？</p>
 <p>反正我不知道现在的汽车这个喇叭当初设计的目的和出于什么声学方面的考虑，不过，从对路人的感受这个角度来讲，老祖宗的做法好像更高明一些，你说那？</p>
@@ -131,13 +116,8 @@
 <p>Comments</p>
 <p>xl33 liu - 10/28/2009 10:15:00 PM</p>
 <p>呵呵，终于有时间去河坊街了啊。</p>
-<hr>
-<div align="center">
-<img src="/images/wechat-qrcode-footer.png"/>
-</div>
 
-</div>
+    </article>
 
-
-
-</body></html>
+  </body>
+</html>
