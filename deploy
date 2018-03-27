@@ -1,1 +1,1 @@
-ansible linode -m shell -a "cd /opt/afoo.me; git pull" 
+ansible yisuyun -m shell -a "cd /root/afoo.me; git pull" 
