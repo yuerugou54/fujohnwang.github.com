@@ -5,6 +5,13 @@
     <link>http://afoo.me</link>
     <description>扶墙老师的博客 - 一个架构士的思考与实践之地</description>
     <item>
+      <title>扶墙老师教你如何用pandoc写一本书</title>
+      <link>http://afoo.me/posts/2018-03-27-write-a-book-with-pandoc.html</link>
+      <pubDate>Mon, 26 Mar 2018 16:00:00 GMT</pubDate>
+      <guid>http://afoo.me/posts/2018-03-27-write-a-book-with-pandoc.html</guid>
+      <dc:date>2018-03-26T16:00:00Z</dc:date>
+    </item>
+    <item>
       <title>SaaS在中国更多是个伪概念</title>
       <link>http://afoo.me/posts/2018-02-18-SaaS-at-China.html</link>
       <pubDate>Sat, 17 Feb 2018 16:00:00 GMT</pubDate>
@@ -73,13 +80,6 @@
       <pubDate>Thu, 12 Oct 2017 16:00:00 GMT</pubDate>
       <guid>http://afoo.me/posts/2017-10-13-will-and-hold-on.html</guid>
       <dc:date>2017-10-12T16:00:00Z</dc:date>
-    </item>
-    <item>
-      <title>你的迷茫我解答不了</title>
-      <link>http://afoo.me/posts/2017-10-08-run-your-own-way.html</link>
-      <pubDate>Sat, 07 Oct 2017 16:00:00 GMT</pubDate>
-      <guid>http://afoo.me/posts/2017-10-08-run-your-own-way.html</guid>
-      <dc:date>2017-10-07T16:00:00Z</dc:date>
     </item>
   </channel>
 </rss>
