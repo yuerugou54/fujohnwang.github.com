@@ -1,1 +1,1 @@
-ansible yisuyun -m shell -a "cd /root/afoo.me; git pull" 
+ansible -i $HOME/FuqiangWorks/templates/config/ansible/hosts yisuyun -m shell -a "cd /root/afoo.me; git pull" 
