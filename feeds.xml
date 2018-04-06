@@ -5,6 +5,20 @@
     <link>http://afoo.me</link>
     <description>扶墙老师的博客 - 一个架构士的思考与实践之地</description>
     <item>
+      <title>为什么很多公司觉得请顾问没有什么效果？</title>
+      <link>http://afoo.me/posts/2018-04-06-value_of_consulting.html</link>
+      <pubDate>Thu, 05 Apr 2018 16:00:00 GMT</pubDate>
+      <guid>http://afoo.me/posts/2018-04-06-value_of_consulting.html</guid>
+      <dc:date>2018-04-05T16:00:00Z</dc:date>
+    </item>
+    <item>
+      <title>预期， 激励与机会成本</title>
+      <link>http://afoo.me/posts/2018-04-05-expect_incentive_and_opportunity_cost.html</link>
+      <pubDate>Wed, 04 Apr 2018 16:00:00 GMT</pubDate>
+      <guid>http://afoo.me/posts/2018-04-05-expect_incentive_and_opportunity_cost.html</guid>
+      <dc:date>2018-04-04T16:00:00Z</dc:date>
+    </item>
+    <item>
       <title>扶墙老师教你如何用pandoc写一本书</title>
       <link>http://afoo.me/posts/2018-03-27-write-a-book-with-pandoc.html</link>
       <pubDate>Mon, 26 Mar 2018 16:00:00 GMT</pubDate>
@@ -66,20 +80,6 @@
       <pubDate>Sat, 14 Oct 2017 16:00:00 GMT</pubDate>
       <guid>http://afoo.me/posts/2017-10-15-find-a-successor-instead-of-backup.html</guid>
       <dc:date>2017-10-14T16:00:00Z</dc:date>
-    </item>
-    <item>
-      <title>到底应该“扬善于公堂，规过于私室”还是“扬善于私室，规过于公堂”？</title>
-      <link>http://afoo.me/posts/2017-10-14-when-to-encourage-when-to-criticize.html</link>
-      <pubDate>Fri, 13 Oct 2017 16:00:00 GMT</pubDate>
-      <guid>http://afoo.me/posts/2017-10-14-when-to-encourage-when-to-criticize.html</guid>
-      <dc:date>2017-10-13T16:00:00Z</dc:date>
-    </item>
-    <item>
-      <title>扶墙老师谈管理之再说“心硬”</title>
-      <link>http://afoo.me/posts/2017-10-13-will-and-hold-on.html</link>
-      <pubDate>Thu, 12 Oct 2017 16:00:00 GMT</pubDate>
-      <guid>http://afoo.me/posts/2017-10-13-will-and-hold-on.html</guid>
-      <dc:date>2017-10-12T16:00:00Z</dc:date>
     </item>
   </channel>
 </rss>
