@@ -5,6 +5,13 @@
     <link>http://afoo.me</link>
     <description>扶墙老师的博客 - 一个架构士的思考与实践之地</description>
     <item>
+      <title>《扶墙老师极简管理课》小密圈尝鲜首发</title>
+      <link>http://afoo.me/posts/2018-04-23-lite-mgt-class.html</link>
+      <pubDate>Sun, 22 Apr 2018 16:00:00 GMT</pubDate>
+      <guid>http://afoo.me/posts/2018-04-23-lite-mgt-class.html</guid>
+      <dc:date>2018-04-22T16:00:00Z</dc:date>
+    </item>
+    <item>
       <title>为什么很多公司觉得请顾问没有什么效果？</title>
       <link>http://afoo.me/posts/2018-04-06-value_of_consulting.html</link>
       <pubDate>Thu, 05 Apr 2018 16:00:00 GMT</pubDate>
@@ -73,13 +80,6 @@
       <pubDate>Thu, 19 Oct 2017 16:00:00 GMT</pubDate>
       <guid>http://afoo.me/posts/2017-10-20-hold-your-dream-by-yourself.html</guid>
       <dc:date>2017-10-19T16:00:00Z</dc:date>
-    </item>
-    <item>
-      <title>扶墙老师谈管理：到底应不应该找backup</title>
-      <link>http://afoo.me/posts/2017-10-15-find-a-successor-instead-of-backup.html</link>
-      <pubDate>Sat, 14 Oct 2017 16:00:00 GMT</pubDate>
-      <guid>http://afoo.me/posts/2017-10-15-find-a-successor-instead-of-backup.html</guid>
-      <dc:date>2017-10-14T16:00:00Z</dc:date>
     </item>
   </channel>
 </rss>
