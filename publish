@@ -8,6 +8,7 @@
 ./compile references.md
 ./compile interlinks.md
 ./compile columns.md
+./compile payme.md
 
 for f in `ls columns/**/*.m*`
 do
@@ -19,4 +20,5 @@ do
 	./compile $f
 done
 
-sbt run
+amm build.sc
+# sbt run
