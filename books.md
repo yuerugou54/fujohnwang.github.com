@@ -28,7 +28,7 @@ aka. 《The Way of Deep Thinking》
 
 ## 比特币
 
-**0.01 BTC** => `1KMSDDmvb5vTabNNDweJDzYY2YxbUKmxhS`
+**0.01 BTC** => **`1KMSDDmvb5vTabNNDweJDzYY2YxbUKmxhS`**
 
 ![](images/btc_addr.jpeg)
 
@@ -36,5 +36,6 @@ aka. 《The Way of Deep Thinking》
 
 ## 以太坊(Ether)
 
-**0.1 ETH** ==>  **0xc7ed1af5a00f7e5b73e576fae3e1e9330b95c9df**
+**0.1 ETH** =>  **`0xc7ed1af5a00f7e5b73e576fae3e1e9330b95c9df`**
 
+![](images/eth_addr_metamask.png)
