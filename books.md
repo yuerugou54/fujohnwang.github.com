@@ -36,7 +36,5 @@ aka. 《The Way of Deep Thinking》
 
 ## 以太坊(Ether)
 
-**0.1 Eth** ==>  `0xe04C9df255a36D230e7275DAC4140E18EBa9C4D5`
-
-![](images/ether_wallet.png)
+**0.1 ETH** ==>  **0xc7ed1af5a00f7e5b73e576fae3e1e9330b95c9df**
 
