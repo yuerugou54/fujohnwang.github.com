@@ -16,13 +16,19 @@ aka. 《The Way of Deep Thinking》
 
 # 购买渠道与支付方式
 
+> 重要 - Important!
+>
+> 
+>
+> 支付之前或者之后一定要附带上自己的email地址，这是你接收ebooks和后继信息的唯一渠道！
+
 ## 知识星球(原小密圈)
 
 ![](images/xiaomiquan.jpg)
 
 ## 比特币
 
-`1KMSDDmvb5vTabNNDweJDzYY2YxbUKmxhS`
+**0.01 BTC** => `1KMSDDmvb5vTabNNDweJDzYY2YxbUKmxhS`
 
 ![](images/btc_addr.jpeg)
 
@@ -30,7 +36,7 @@ aka. 《The Way of Deep Thinking》
 
 ## 以太坊(Ether)
 
-`0xe04C9df255a36D230e7275DAC4140E18EBa9C4D5`
+**0.1 Eth** ==>  `0xe04C9df255a36D230e7275DAC4140E18EBa9C4D5`
 
 ![](images/ether_wallet.png)
 
