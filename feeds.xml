@@ -5,6 +5,13 @@
     <link>http://afoo.me</link>
     <description>扶墙老师的博客 - 一个架构士的思考与实践之地</description>
     <item>
+      <title>不要以穿越沙漠为荣</title>
+      <link>http://afoo.me/posts/2018-06-20-cross_desert_sucks.html</link>
+      <pubDate>Tue, 19 Jun 2018 16:00:00 GMT</pubDate>
+      <guid>http://afoo.me/posts/2018-06-20-cross_desert_sucks.html</guid>
+      <dc:date>2018-06-19T16:00:00Z</dc:date>
+    </item>
+    <item>
       <title>关于区块链的三点看法</title>
       <link>http://afoo.me/posts/2018-06-04-blockchain-thoughts.html</link>
       <pubDate>Sun, 03 Jun 2018 16:00:00 GMT</pubDate>
@@ -73,13 +80,6 @@
       <pubDate>Tue, 28 Nov 2017 16:00:00 GMT</pubDate>
       <guid>http://afoo.me/posts/2017-11-29-bomber-train-and-autopilot.html</guid>
       <dc:date>2017-11-28T16:00:00Z</dc:date>
-    </item>
-    <item>
-      <title>不提Serverless你就过时了？ Are You Kidding Me？</title>
-      <link>http://afoo.me/posts/2017-11-07-serverless-bullshit.html</link>
-      <pubDate>Mon, 06 Nov 2017 16:00:00 GMT</pubDate>
-      <guid>http://afoo.me/posts/2017-11-07-serverless-bullshit.html</guid>
-      <dc:date>2017-11-06T16:00:00Z</dc:date>
     </item>
   </channel>
 </rss>
