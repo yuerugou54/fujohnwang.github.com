@@ -9,6 +9,7 @@
 ./compile interlinks.md
 ./compile columns.md
 ./compile payme.md
+./compile books.md
 
 for f in `ls columns/**/*.m*`
 do

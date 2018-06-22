@@ -106,12 +106,12 @@
         </label>
         <ul>
           <li class="nav-item"><a class="nav-link" href="https://www.keevol.com">福强科技</a></li>
+            <li class="nav-item"><a class="nav-link" href="/whoami.html">我是何人</a></li>
+            <li class="nav-item"><a class="nav-link" href="/books.html">我的著作</a></li>
             <li class="nav-item"><a class="nav-link" href="/favorite.html">我的收藏</a></li>
             <li class="nav-item"><a class="nav-link" href="/dashboard.html">金融看板</a></li>
             <li class="nav-item"><a class="nav-link" href="/columns.html">专栏文章</a></li>
             <li class="nav-item"><a class="nav-link" href="/references.html">快捷参考</a></li>
-            <li class="nav-item"><a class="nav-link" href="/whoami.html">我是何人</a></li>
-            <li class="nav-item"><a class="nav-link" href="/interlinks.html">友情链接</a></li>
             <li class="nav-item"><a class="nav-link" href="/feeds.xml">RSS订阅</a></li>
         </ul>
       </nav>
@@ -225,8 +225,11 @@ Tip
 <a class="sourceLine" id="cb3-7" data-line-number="7"><span class="bu">System</span>.<span class="fu">out</span>.<span class="fu">println</span>(annotationMD.<span class="fu">hasAnnotation</span>(<span class="st">&quot;org.springframework.stereotype.Component&quot;</span>));</a>
 <a class="sourceLine" id="cb3-8" data-line-number="8"><span class="bu">System</span>.<span class="fu">out</span>.<span class="fu">println</span>(clazzMD.<span class="fu">getClassName</span>());</a></code></pre></div>
 <p>ResourcePatternResolver主要用于加载相应的Resources， 这里就是class文件， MetadataReaderFactory用于构造相应的MetadataReader，它有两个实现类，即SimpleMetadataReaderFactory和CachingMetadataReaderFactory。通过相应MetadataReaderFactory实现类获得可用的MetadataReader之后，就可以根据MetadataReader的getAnnotationMetadata()和getClassMetadata()返回的值对象来提取自己需要的信息了。</p>
-
+    
+    <hr>
+    <img src="/images/mp_footer.jpeg">
     </article>
+    
 
   </body>
 </html>

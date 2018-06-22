@@ -106,12 +106,12 @@
         </label>
         <ul>
           <li class="nav-item"><a class="nav-link" href="https://www.keevol.com">福强科技</a></li>
+            <li class="nav-item"><a class="nav-link" href="/whoami.html">我是何人</a></li>
+            <li class="nav-item"><a class="nav-link" href="/books.html">我的著作</a></li>
             <li class="nav-item"><a class="nav-link" href="/favorite.html">我的收藏</a></li>
             <li class="nav-item"><a class="nav-link" href="/dashboard.html">金融看板</a></li>
             <li class="nav-item"><a class="nav-link" href="/columns.html">专栏文章</a></li>
             <li class="nav-item"><a class="nav-link" href="/references.html">快捷参考</a></li>
-            <li class="nav-item"><a class="nav-link" href="/whoami.html">我是何人</a></li>
-            <li class="nav-item"><a class="nav-link" href="/interlinks.html">友情链接</a></li>
             <li class="nav-item"><a class="nav-link" href="/feeds.xml">RSS订阅</a></li>
         </ul>
       </nav>
@@ -208,8 +208,11 @@ age_=方法编译为字节码后，名称是age_$eq(…), 因为Java里=不能�
 <div class="sourceCode" id="cb8"><pre class="sourceCode scala"><code class="sourceCode scala"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="kw">class</span> Pair[T &lt;: Comparable[T]]</a>
 <a class="sourceLine" id="cb8-2" data-line-number="2"><span class="kw">class</span> Pair[T &lt;% Comparable[T]]</a></code></pre></div>
 <p>前者对Int类型来说不能编译通过，因为Scala里的Int不是Comparable[Int]的子类，不过RichInt是，而且有相应的从Int到RIchInt的implict conversion，所以第二种形式可以。</p>
-
+    
+    <hr>
+    <img src="/images/mp_footer.jpeg">
     </article>
+    
 
   </body>
 </html>

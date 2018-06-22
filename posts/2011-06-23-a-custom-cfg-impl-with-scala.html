@@ -106,12 +106,12 @@
         </label>
         <ul>
           <li class="nav-item"><a class="nav-link" href="https://www.keevol.com">福强科技</a></li>
+            <li class="nav-item"><a class="nav-link" href="/whoami.html">我是何人</a></li>
+            <li class="nav-item"><a class="nav-link" href="/books.html">我的著作</a></li>
             <li class="nav-item"><a class="nav-link" href="/favorite.html">我的收藏</a></li>
             <li class="nav-item"><a class="nav-link" href="/dashboard.html">金融看板</a></li>
             <li class="nav-item"><a class="nav-link" href="/columns.html">专栏文章</a></li>
             <li class="nav-item"><a class="nav-link" href="/references.html">快捷参考</a></li>
-            <li class="nav-item"><a class="nav-link" href="/whoami.html">我是何人</a></li>
-            <li class="nav-item"><a class="nav-link" href="/interlinks.html">友情链接</a></li>
             <li class="nav-item"><a class="nav-link" href="/feeds.xml">RSS订阅</a></li>
         </ul>
       </nav>
@@ -176,7 +176,7 @@ groupId = {
 <a class="sourceLine" id="cb1-33" data-line-number="33"></a>
 <a class="sourceLine" id="cb1-34" data-line-number="34">  <span class="kw">def</span> nullLiteral = <span class="st">&quot;null&quot;</span> ^^^ <span class="kw">null</span></a>
 <a class="sourceLine" id="cb1-35" data-line-number="35">}</a></code></pre></div>
-<p>代码写的有点儿矬， 将就看吧，呵呵， 本来用的JavaTokenParsers.stringLiteral， 但后来发现他没有去掉引号“, 所以，只能自己重新定义一个， 当然，代码直接拷贝它的。</p>
+<p>代码写的有点儿矬， 将就看吧，呵呵， 本来用的JavaTokenParsers.stringLiteral， 但后来发现他没有去掉引号&quot;, 所以，只能自己重新定义一个， 当然，代码直接拷贝它的。</p>
 <p>有了parser之后， 就可以定义一个Configurator，比如：</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode numberSource scala numberLines"><code class="sourceCode scala"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw">class</span> <span class="fu">SimpleConfigurator</span>(configFile:File) {</a>
 <a class="sourceLine" id="cb2-2" data-line-number="2">   <span class="kw">val</span> p = <span class="kw">new</span> BlockOrItemConfigurationParser</a>
@@ -186,8 +186,11 @@ groupId = {
 <a class="sourceLine" id="cb2-6" data-line-number="6">   }</a>
 <a class="sourceLine" id="cb2-7" data-line-number="7">}</a></code></pre></div>
 <p>OK， That’s it！Have Fun!</p>
-
+    
+    <hr>
+    <img src="/images/mp_footer.jpeg">
     </article>
+    
 
   </body>
 </html>

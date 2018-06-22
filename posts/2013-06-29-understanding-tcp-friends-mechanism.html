@@ -41,12 +41,12 @@
         </label>
         <ul>
           <li class="nav-item"><a class="nav-link" href="https://www.keevol.com">福强科技</a></li>
+            <li class="nav-item"><a class="nav-link" href="/whoami.html">我是何人</a></li>
+            <li class="nav-item"><a class="nav-link" href="/books.html">我的著作</a></li>
             <li class="nav-item"><a class="nav-link" href="/favorite.html">我的收藏</a></li>
             <li class="nav-item"><a class="nav-link" href="/dashboard.html">金融看板</a></li>
             <li class="nav-item"><a class="nav-link" href="/columns.html">专栏文章</a></li>
             <li class="nav-item"><a class="nav-link" href="/references.html">快捷参考</a></li>
-            <li class="nav-item"><a class="nav-link" href="/whoami.html">我是何人</a></li>
-            <li class="nav-item"><a class="nav-link" href="/interlinks.html">友情链接</a></li>
             <li class="nav-item"><a class="nav-link" href="/feeds.xml">RSS订阅</a></li>
         </ul>
       </nav>
@@ -73,7 +73,7 @@
 </div>
 <hr/>
 
-<p>在今年的ADC试讲会上听日子哥在其PPT中提到tcp friends，之前没有了解过，遂打算简单了解一下， 而且感觉这东西可能对早先几年我的那个“实现一个基于网络层面抽象的actor库”“的念想的实现有些好处，只可惜当时只是想简单的通过loopback走，却不知道有这东东…</p>
+<p>在今年的ADC试讲会上听日子哥在其PPT中提到tcp friends，之前没有了解过，遂打算简单了解一下， 而且感觉这东西可能对早先几年我的那个“实现一个基于网络层面抽象的actor库”&quot;的念想的实现有些好处，只可惜当时只是想简单的通过loopback走，却不知道有这东东…</p>
 <p>tcp stack层面的短路， 比loopback更近一步的减少了不必要的开销</p>
 <p>loopback是避免了网路上的开销，而tcp friends则是进一步的减少了内核tcp stack层面的开销；</p>
 <p>使用网络层面的抽象来实现actor， 一个好处就是可以使得本地actor跟远程actor之间的差异透明化； 另外一个就是调度可以直接走NIO的API， 并利用网络层的一些基础设施和功能，比如buffer， 流控等；最最根本的是， 相对于akka actor的实现，偶一直很怀念最早scala类库里的那个actor实现， 不管是内存语意上跟jvm的规定相吻合也好，还是actor定义和行为控制也罢；</p>
@@ -87,8 +87,11 @@
 <li><a href="http://lwn.net/Articles/511079/">net-tcp: TCP/IP stack bypass for loopback connections</a></li>
 <li><a href="http://kernel.taobao.org/index.php/%E5%86%85%E6%A0%B8%E6%9C%88%E6%8A%A52012-08">http://kernel.taobao.org/index.php/%E5%86%85%E6%A0%B8%E6%9C%88%E6%8A%A52012-08</a></li>
 </ol>
-
+    
+    <hr>
+    <img src="/images/mp_footer.jpeg">
     </article>
+    
 
   </body>
 </html>

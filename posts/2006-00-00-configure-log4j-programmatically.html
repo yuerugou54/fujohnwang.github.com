@@ -106,12 +106,12 @@
         </label>
         <ul>
           <li class="nav-item"><a class="nav-link" href="https://www.keevol.com">福强科技</a></li>
+            <li class="nav-item"><a class="nav-link" href="/whoami.html">我是何人</a></li>
+            <li class="nav-item"><a class="nav-link" href="/books.html">我的著作</a></li>
             <li class="nav-item"><a class="nav-link" href="/favorite.html">我的收藏</a></li>
             <li class="nav-item"><a class="nav-link" href="/dashboard.html">金融看板</a></li>
             <li class="nav-item"><a class="nav-link" href="/columns.html">专栏文章</a></li>
             <li class="nav-item"><a class="nav-link" href="/references.html">快捷参考</a></li>
-            <li class="nav-item"><a class="nav-link" href="/whoami.html">我是何人</a></li>
-            <li class="nav-item"><a class="nav-link" href="/interlinks.html">友情链接</a></li>
             <li class="nav-item"><a class="nav-link" href="/feeds.xml">RSS订阅</a></li>
         </ul>
       </nav>
@@ -158,8 +158,11 @@
 <p>这里牵扯出一个细节，如果你不注意的话，就会掉进去，其实你可以不用Commons IO里的这个FilenameUtils类，完全可以直接用String来替换掉“”就可以，不过，如果你选择不对的话，Exception又会给你好看了，呵呵…</p>
 <p>String提供了2个适用于我们现在场景的替换方法:String.replace和String.replaceAll，前者不使用Regex进行替换，所以，对于我们这里可以直接winpath.replace(“\”,“/”)就可以；但是，如果要使用String.replaceAll的话，你就要小心了，必须winPath.replaceAll(“\\”,“/”),也就是说，他是用Regex来进行替换的，相当于<code>Pattern.compile(regex).matcher(str).replaceAll(repl)</code></p>
 <p>而如果你还像replace那样传入“\“，那么，sorry，俺不干，呵呵，虽然是经常用的String类，不过，不注意依然让你难堪…</p>
-
+    
+    <hr>
+    <img src="/images/mp_footer.jpeg">
     </article>
+    
 
   </body>
 </html>

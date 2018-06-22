@@ -106,12 +106,12 @@
         </label>
         <ul>
           <li class="nav-item"><a class="nav-link" href="https://www.keevol.com">福强科技</a></li>
+            <li class="nav-item"><a class="nav-link" href="/whoami.html">我是何人</a></li>
+            <li class="nav-item"><a class="nav-link" href="/books.html">我的著作</a></li>
             <li class="nav-item"><a class="nav-link" href="/favorite.html">我的收藏</a></li>
             <li class="nav-item"><a class="nav-link" href="/dashboard.html">金融看板</a></li>
             <li class="nav-item"><a class="nav-link" href="/columns.html">专栏文章</a></li>
             <li class="nav-item"><a class="nav-link" href="/references.html">快捷参考</a></li>
-            <li class="nav-item"><a class="nav-link" href="/whoami.html">我是何人</a></li>
-            <li class="nav-item"><a class="nav-link" href="/interlinks.html">友情链接</a></li>
             <li class="nav-item"><a class="nav-link" href="/feeds.xml">RSS订阅</a></li>
         </ul>
       </nav>
@@ -193,7 +193,7 @@ packageArchetype.java_application
 <h2 id="命令行参数指定应用配置"><span class="header-section-number">3.2</span> 命令行参数指定应用配置</h2>
 <p>比如logback或者typesafe config等库可以通过启动参数指定配置(<code>-Dconfig.file=...</code>), 为了把这些配置文件的位置也添加到启动脚本， 我们需要在build.sbt中添加配置:</p>
 <blockquote>
-<p>bashScriptExtraDefines += “”“addJava”-Dconfig.file=${app_home}/../conf/app.config“”“”</p>
+<p>bashScriptExtraDefines += &quot;&quot;“addJava”-Dconfig.file=${app_home}/../conf/app.config&quot;&quot;&quot;&quot;</p>
 </blockquote>
 <p>当然了，假设我们不通过命令行参数使用这些配置文件，那么我们完全可以通过相对路径来加载指定目录conf下的配置文件。</p>
 <h1 id="覆盖默认脚本"><span class="header-section-number">4</span> 覆盖默认脚本</h1>
@@ -209,8 +209,11 @@ packageArchetype.java_application
 <a class="sourceLine" id="cb1-8" data-line-number="8">mappings in Universal ++= <span class="fu">directory</span>(<span class="st">&quot;conf&quot;</span>)</a>
 <a class="sourceLine" id="cb1-9" data-line-number="9"></a>
 <a class="sourceLine" id="cb1-10" data-line-number="10">mappings in Universal ++= <span class="fu">directory</span>(<span class="st">&quot;agent&quot;</span>)</a></code></pre></div>
-
+    
+    <hr>
+    <img src="/images/mp_footer.jpeg">
     </article>
+    
 
   </body>
 </html>
